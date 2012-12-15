@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # encoding: utf-8
 # Django settings for codebar project.
+from __future__ import division, print_function, unicode_literals
 
 import os
+
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 def projectPath(filename):
     return os.path.join(PROJECT_DIR, filename)
