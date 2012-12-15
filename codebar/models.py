@@ -23,18 +23,20 @@ class UserProfile(models.Model):
     Contains a textual description and a list of Users this User follows.
     """
     # The user this profile belongs to
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(
+        User,
+        related_name='profile')
 
     description = models.TextField(
         blank=True,
         help_text="Self-description")
 
     following = models.ManyToManyField(
-        User,
+        'self',
         related_name='followers',
         symmetrical=False,
         blank=True,
-        help_text="List of users this user follows.")
+        help_text="Profiles of users this user follows.")
 
     def __unicode__(self):
         return '<Profile of %s>' % self.user.username
@@ -44,6 +46,9 @@ class UserProfile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
+    else:
+        # also save the profile when the user is saved
+        instance.profile.save()
 
 signals.post_save.connect(create_user_profile, sender=User)
 
