@@ -38,6 +38,18 @@ class UserProfile(models.Model):
         blank=True,
         help_text="Profiles of users this user follows.")
 
+    # Override the save method to prevent integrity errors
+    # These happen because both teh post_save signal and the inlined admin
+    # interface try to create the UserProfile. See:
+    # http://stackoverflow.com/questions/2813189
+    def save(self, *args, **kwargs):
+        try:
+            existing = UserProfile.objects.get(user=self.user)
+            self.id = existing.id #force update instead of insert
+        except UserProfile.DoesNotExist:
+            pass
+        models.Model.save(self, *args, **kwargs)
+
     def __unicode__(self):
         return '<Profile of %s>' % self.user.username
 
@@ -45,7 +57,7 @@ class UserProfile(models.Model):
 # when a user is created (saved for the first time)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        UserProfile.objects.get_or_create(user=instance)
     else:
         # also save the profile when the user is saved
         instance.profile.save()
