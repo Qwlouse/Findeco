@@ -26,12 +26,13 @@
 ################################################################################
 """
 Paths are of the form:
-  PATH = '/' + (SHORT_TITLE + '.' + ID + '/')* + [SUFFIX] + ['/']
+  PATH = '/' + (NODE + '/')* + [SUFFIX] + ['/']
   SHORT_TITLE = ALPHA + (ALPHANUM | '_' | '-'){0:19}
   ID = POSITIVE_INT
-  SUFFIX = SLOT_SUFFIX | ARGUMENT_SPEC
-  SLOT_SUFFIX = '/' + SHORT_TITLE
-  ARGUMENT_SUFFIX = '.' + ('pro' | 'neut' | 'con') + ['.' + ID]
+  SUFFIX = ARGUMENT_SUFFIX | SLOT_SUFFIX | NODE_SUFFIX
+  SLOT_SUFFIX = SHORT_TITLE
+  NODE_SUFFIX = SLOT_SUFFIX + '.' + ID
+  ARGUMENT_SUFFIX = NODE_SUFFIX + '.' + ('pro' | 'neut' | 'con') + ['.' + ID]
 
 Examples:
   /
@@ -48,9 +49,10 @@ import re
 
 SHORT_TITLE = r'([a-zA-Z][a-zA-Z0-9-_]{0,19})'
 ID = r'([0-9]+)'
-SLOT_SUFFIX = '(/'+SHORT_TITLE+')'
-ARG_SUFFIX = r'((\.pro' + '|' + r'\.neut' + '|' + r'\.con)' + r'(\.' + ID +')?)'
-SUFFIX = r'(' + SLOT_SUFFIX + '|' + ARG_SUFFIX + ')'
-PATH = r'(?P<path>(/' + SHORT_TITLE + r'\.' + ID + ')*' + SUFFIX + '?)/?'
+SLOT = SHORT_TITLE
+NODE = '(' + SLOT + r'\.' + ID + ')'
+ARG = r'(' + NODE + '(\.pro' + '|' + r'\.neut' + '|' + r'\.con)' + r'(\.' + ID + ')?)'
+SUFFIX = r'(' + ARG + '|' + NODE + '|' +  SLOT + ')'
+PATH = '(?P<path>' + '/' + '(' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
 
 pathMatcher = re.compile(PATH)

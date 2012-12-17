@@ -56,10 +56,14 @@ class PathRegExTest(unittest.TestCase):
             "/path.4/with.2/argument.2.con.7"
         ]
         for vp in valid_paths:
-            self.assertEqual(pathMatcher.match(vp).group(), vp)
+            m = pathMatcher.match(vp)
+            self.assertIsNotNone(m)
+            self.assertEqual(m.group(), vp)
 
     def test_does_not_match_invalid_paths(self):
         invalid_paths = [
+            "",
+            "//"
             "noStartingSlash",
             "noStartingSlash.12/but_rest_ok.1",
             "/two.dots.12/foo",
@@ -82,4 +86,6 @@ class PathRegExTest(unittest.TestCase):
             "/path.4/with.2/argument.2.con.6/inbetween",
             ]
         for ip in invalid_paths:
-            self.assertNotEqual(pathMatcher.match(ip).group(), ip)
+            m = pathMatcher.match(ip)
+            if m :
+                self.assertNotEqual(m.group(), ip)
