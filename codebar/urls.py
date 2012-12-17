@@ -37,7 +37,8 @@ MARK_TYPE = r'(?P<mark_type>(spam)|(notspam)|(follow)|(unfollow))'
 
 
 urlpatterns = patterns('',
-    url(r'^$', 'codebar.views.home', name='home'),
+    url(r'^' + PATH + '$', 'codebar.views.home', name='home'),
+
 
     url(r'^\.json_loadUserSettings/?$',
         'codebar.views.load_user_settings',

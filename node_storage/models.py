@@ -28,6 +28,9 @@ from __future__ import division, print_function, unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
+#TODO type for node
+#Todo get a path to root
+
 class Node(models.Model):
     parents = models.ManyToManyField(
         'self',
