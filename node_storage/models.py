@@ -60,7 +60,7 @@ class Derivation(models.Model):
     argument=models.ForeignKey(Argument)
 
     class Meta:
-        unique_together = (('parent', 'child'), )
+        unique_together = (('source', 'derivate'), )
 
 class NodeOrder(models.Model):
     parent = models.ForeignKey(Node)
