@@ -79,6 +79,9 @@ urlpatterns = patterns('',
         'codebar.views.store_microblog_post',
         name='store_microblog_post'),
 
+    url(r'^\.json_storeSettings/?$',
+        'codebar.views.store_settings',
+        name='store_settings'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
