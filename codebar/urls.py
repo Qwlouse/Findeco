@@ -40,7 +40,7 @@ urlpatterns = patterns('',
         'codebar.views.load_user_settings',
         name='load_user_settings'),
 
-    url(r'^\.json_loadGraphData/' + GRAPH_TYPE + PATH + '$',
+    url(r'^\.json_loadGraphData/' + GRAPH_TYPE + '/' + PATH + '$',
         'codebar.views.load_graph_data',
         name='load_graph_data'),
 
