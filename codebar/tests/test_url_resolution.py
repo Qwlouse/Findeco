@@ -29,14 +29,25 @@ from django.core.urlresolvers import resolve, Resolver404
 
 import unittest
 
-from ..views import load_user_settings, load_index, load_graph_data
+from ..views import load_user_settings, load_index, load_graph_data, load_microblogging, load_text, load_user_info
 
 ########################### Test the API calls #################################
 valid_routes = [
-    #### loadUserSettings
-    dict(url='/.json_loadUserSettings',
-        func=load_user_settings,
-        url_name='load_user_settings'),
+    #### loadGraphData
+    dict(url='/.json_loadGraphData/default/some.1/path.2',
+        func=load_graph_data,
+        url_name='load_graph_data',
+        kwargs=dict(graph_data_type='default', path='/some.1/path.2')),
+
+    dict(url='/.json_loadGraphData/full/some.1/path.2',
+        func=load_graph_data,
+        url_name='load_graph_data',
+        kwargs=dict(graph_data_type='full', path='/some.1/path.2')),
+
+    dict(url='/.json_loadGraphData/withSpam/some.1/path.2',
+        func=load_graph_data,
+        url_name='load_graph_data',
+        kwargs=dict(graph_data_type='withSpam', path='/some.1/path.2')),
 
     #### loadIndex
     dict(url='/.json_loadIndex/some.1/path.2',
@@ -59,21 +70,43 @@ valid_routes = [
         url_name='load_index',
         kwargs=dict(path='/some.1/path.2.con')),
 
-    #### loadGraphData
-    dict(url='/.json_loadGraphData/default/some.1/path.2',
-        func=load_graph_data,
-        url_name='load_graph_data',
-        kwargs=dict(graph_data_type='default', path='/some.1/path.2')),
+    #### loadMicroBlogging
+    dict(url='/.json_loadMicroBlogging/0/newer/some.1/path.2',
+        func=load_microblogging,
+        url_name='load_microblogging',
+        kwargs=dict(path='/some.1/path.2', select_id='0', microblogging_load_type='newer')),
 
-    dict(url='/.json_loadGraphData/full/some.1/path.2',
-        func=load_graph_data,
-        url_name='load_graph_data',
-        kwargs=dict(graph_data_type='full', path='/some.1/path.2')),
+    dict(url='/.json_loadMicroBlogging/74/newer/some.1/path.2',
+        func=load_microblogging,
+        url_name='load_microblogging',
+        kwargs=dict(path='/some.1/path.2', select_id='74', microblogging_load_type='newer')),
 
-    dict(url='/.json_loadGraphData/withSpam/some.1/path.2',
-        func=load_graph_data,
-        url_name='load_graph_data',
-        kwargs=dict(graph_data_type='withSpam', path='/some.1/path.2')),
+    dict(url='/.json_loadMicroBlogging/0/older/some.1/path.2',
+        func=load_microblogging,
+        url_name='load_microblogging',
+        kwargs=dict(path='/some.1/path.2', select_id='0', microblogging_load_type='older')),
+
+    dict(url='/.json_loadMicroBlogging/74/older/some.1/path.2',
+        func=load_microblogging,
+        url_name='load_microblogging',
+        kwargs=dict(path='/some.1/path.2', select_id='74', microblogging_load_type='older')),
+
+    #### loadText
+    dict(url='/.json_loadText/some.1/path.2',
+        func=load_text,
+        url_name='load_text',
+        kwargs=dict(path='/some.1/path.2')),
+
+    #### loadUserInfo
+    dict(url='/.json_loadUserInfo/somebody',
+        func=load_user_info,
+        url_name='load_user_info',
+        kwargs=dict(name='somebody')),
+
+    #### loadUserSettings
+    dict(url='/.json_loadUserSettings',
+        func=load_user_settings,
+        url_name='load_user_settings'),
     ]
 
 class UrlResolutionTest(unittest.TestCase):
