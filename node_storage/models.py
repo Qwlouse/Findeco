@@ -43,11 +43,17 @@ class Node(models.Model):
         through=Derivation
     )
 
+ARGUMENTTYPE = (
+    ('p', 'pro'),
+    ('c', 'con'),
+    ('n', 'neut'),
+)
 class Argument(Node):
     concerns = models.ManyToManyField(
         Node,
         related_name='arguments'
     )
+    type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
 
 
 class Text(models.Model):
