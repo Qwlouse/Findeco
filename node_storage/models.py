@@ -26,6 +26,7 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.db import models
+from django.contrib.auth.models import User
 
 class Node(models.Model):
     parents = models.ManyToManyField(
@@ -59,6 +60,8 @@ class Argument(Node):
 class Text(models.Model):
     node = models.ForeignKey(Node)
     text = models.TextField()
+    author = models.ForeignKey(User)
+
 
 class Derivation(models.Model):
     source=models.ForeignKey(Node)
@@ -75,3 +78,17 @@ class NodeOrder(models.Model):
 
     class Meta:
         unique_together = (('parent', 'child'), )
+
+class Vote(models.Model):
+    user = models.ForeignKey(User)
+    nodes = models.ManyToManyField(
+        Node,
+        related_name='votes'
+    )
+
+class SpamFlag(models.Model):
+    user = models.ForeignKey(User)
+    nodes = models.ManyToManyField(
+        Node,
+        related_name='spam_flags'
+    )
