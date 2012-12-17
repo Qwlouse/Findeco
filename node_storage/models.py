@@ -31,13 +31,17 @@ class Node(models.Model):
     parents = models.ManyToManyField(
         'self',
         symmetrical=False,
-        related_name="children")
+        related_name="children",
+        through=NodeOrder
+    )
 
     sources = models.ManyToManyField(
         'self',
         symmetrical=False,
         related_name="derivates",
-        blank=True)
+        blank=True,
+        through=Derivation
+    )
 
 class Argument(Node):
     concerns = models.ManyToManyField(
@@ -50,7 +54,15 @@ class Text(models.Model):
     node = models.ForeignKey(Node)
     text = models.TextField()
 
-class NodeOrder(models):
+class Derivation(models.Model):
+    source=models.ForeignKey(Node)
+    derivate=models.ForeignKey(Node)
+    argument=models.ForeignKey(Argument)
+
+    class Meta:
+        unique_together = (('parent', 'child'), )
+
+class NodeOrder(models.Model):
     parent = models.ForeignKey(Node)
     child = models.ForeignKey(Node)
     position = models.IntegerField()
