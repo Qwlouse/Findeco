@@ -116,7 +116,7 @@ valid_routes = [
     dict(url='/.json_loadText/some.1/path.2.con.1/',
         func=load_text,
         url_name='load_text',
-        kwargs=dict(path='some.1/path.2.con.1/')),
+        kwargs=dict(path='some.1/path.2.con.1')),
 
     dict(url='/.json_loadText/some.1/path.2.pro.144',
         func=load_text,
