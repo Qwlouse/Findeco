@@ -59,9 +59,13 @@ urlpatterns = patterns('',
         'codebar.views.load_text',
         name='load_text'),
 
-    url(r'^\.json_loadUserInfo/' + USERNAME + '$',
+    url(r'^\.json_loadUserInfo/' + USERNAME + '/?$',
         'codebar.views.load_user_info',
         name='load_user_info'),
+
+    url(r'^\.json_login/?$',
+        'codebar.views.login',
+        name='login'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
