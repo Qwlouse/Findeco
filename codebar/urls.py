@@ -27,9 +27,11 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from codebar.paths import PATH
+from codebar.paths import PATH, ID
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
+BLOG_ID = r'(?P<select_id>' + ID + ')'
+BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
 
 admin.autodiscover()
 
@@ -47,6 +49,10 @@ urlpatterns = patterns('',
     url(r'^\.json_loadIndex/' + PATH + '$',
         'codebar.views.load_index',
         name='load_index'),
+
+    url(r'^\.json_loadMicroBlogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + PATH + '$',
+        'codebar.views.load_microblogging',
+        name='load_microblogging'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
