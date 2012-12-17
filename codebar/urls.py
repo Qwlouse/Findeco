@@ -67,6 +67,10 @@ urlpatterns = patterns('',
         'codebar.views.login',
         name='login'),
 
+    url(r'^\.json_logout/?$',
+        'codebar.views.logout',
+        name='logout'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
 
