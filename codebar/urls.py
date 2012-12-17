@@ -54,6 +54,10 @@ urlpatterns = patterns('',
         'codebar.views.load_microblogging',
         name='load_microblogging'),
 
+    url(r'^\.json_loadText/' + PATH + '$',
+        'codebar.views.load_text',
+        name='load_text'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
 
