@@ -27,7 +27,6 @@
 from __future__ import division, print_function, unicode_literals
 from django.db import models
 
-# Create your models here.
 class Node(models.Model):
     parents = models.ManyToManyField(
         'self',
@@ -43,3 +42,11 @@ class Node(models.Model):
 class Text(models.Model):
     node = models.ForeignKey(Node)
     text = models.TextField()
+
+class NodeOrder(models):
+    parent = models.ForeignKey(Node)
+    child = models.ForeignKey(Node)
+    position = models.IntegerField()
+
+    class Meta:
+        unique_together = (('parent', 'child'), )
