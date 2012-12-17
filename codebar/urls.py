@@ -32,13 +32,14 @@ from codebar.paths import PATH, ID
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
 BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
+USERNAME = r'(?P<name>[a-zA-Z][a-zA-Z0-9-_]{0,19})'
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'codebar.views.home', name='home'),
 
-    url(r'^\.json_loadUserSettings$',
+    url(r'^\.json_loadUserSettings/?$',
         'codebar.views.load_user_settings',
         name='load_user_settings'),
 
@@ -57,6 +58,10 @@ urlpatterns = patterns('',
     url(r'^\.json_loadText/' + PATH + '$',
         'codebar.views.load_text',
         name='load_text'),
+
+    url(r'^\.json_loadUserInfo/' + USERNAME + '$',
+        'codebar.views.load_user_info',
+        name='load_user_info'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
