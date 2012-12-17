@@ -29,5 +29,13 @@ from django.db import models
 
 # Create your models here.
 class Node(models.Model):
-    parents = models.ManyToManyField('self', symmetrical=False,
+    parents = models.ManyToManyField(
+        'self',
+        symmetrical=False,
         related_name="children")
+
+    sources = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        related_name="derivates",
+        blank=True)
