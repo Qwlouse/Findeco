@@ -30,6 +30,7 @@ from django.core.urlresolvers import resolve, Resolver404
 import unittest
 
 from ..views import load_user_settings, load_index, load_graph_data, load_microblogging, load_text, load_user_info
+from ..views import login
 
 ########################### Test the API calls #################################
 valid_routes = [
@@ -114,10 +115,11 @@ valid_routes = [
         url_name='load_user_settings',
         kwargs=dict()),
 
-    #### loadUserSettings
-    dict(url='/.json_loadUserSettings',
-        func=load_user_settings,
-        url_name='load_user_settings'),
+    #### login
+    dict(url='/.json_login/',
+        func=login,
+        url_name='login',
+        kwargs=dict()),
     ]
 
 class UrlResolutionTest(unittest.TestCase):
