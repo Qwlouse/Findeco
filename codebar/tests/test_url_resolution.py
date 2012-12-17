@@ -30,6 +30,7 @@ from django.core.urlresolvers import resolve, Resolver404
 import unittest
 
 from ..views import load_user_settings, load_index, load_graph_data, load_microblogging, load_text, load_user_info
+from ..views import login, logout, mark_node, store_microblog_post
 
 ########################### Test the API calls #################################
 valid_routes = [
@@ -104,9 +105,54 @@ valid_routes = [
         kwargs=dict(name='somebody')),
 
     #### loadUserSettings
+    dict(url='/.json_loadUserSettings/',
+        func=load_user_settings,
+        url_name='load_user_settings',
+        kwargs=dict()),
+
     dict(url='/.json_loadUserSettings',
         func=load_user_settings,
-        url_name='load_user_settings'),
+        url_name='load_user_settings',
+        kwargs=dict()),
+
+    #### login
+    dict(url='/.json_login/',
+        func=login,
+        url_name='login',
+        kwargs=dict()),
+
+    #### logout
+    dict(url='/.json_logout/',
+        func=logout,
+        url_name='logout',
+        kwargs=dict()),
+
+    #### markNode
+    dict(url='/.json_markNode/spam/some.1/path.2',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='/some.1/path.2', mark_type='spam')),
+
+    dict(url='/.json_markNode/notspam/some.1/path.2',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='/some.1/path.2', mark_type='notspam')),
+
+    dict(url='/.json_markNode/follow/some.1/path.2',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='/some.1/path.2', mark_type='follow')),
+
+    dict(url='/.json_markNode/unfollow/some.1/path.2',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='/some.1/path.2', mark_type='unfollow')),
+
+    #### storeMicroBlogPost
+    dict(url='/.json_storeMicroBlogPost/some.1/path.2',
+        func=store_microblog_post,
+        url_name='store_microblog_post',
+        kwargs=dict(path='/some.1/path.2')),
     ]
 
 class UrlResolutionTest(unittest.TestCase):
