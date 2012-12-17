@@ -51,7 +51,7 @@ SHORT_TITLE = r'([a-zA-Z][a-zA-Z0-9-_]{0,19})'
 ID = r'([0-9]+)'
 SLOT = SHORT_TITLE
 NODE = '(' + SLOT + r'\.' + ID + ')'
-ARG = r'(' + NODE + '(\.pro' + '|' + r'\.neut' + '|' + r'\.con)' + r'(\.' + ID + ')?)'
+ARG = r'(' + NODE + r'\.' + '(pro|neut|con|all)' + r'(\.' + ID + ')?)'
 SUFFIX = r'(' + ARG + '|' + NODE + '|' +  SLOT + ')'
 PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
 
