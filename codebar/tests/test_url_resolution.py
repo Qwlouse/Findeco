@@ -272,6 +272,66 @@ valid_routes = [
         kwargs=dict(path='some.1/path.2.pro.1')),
     ]
 
+invalid_routes = [
+    #### loadGraphData
+    dict(url='/.json_loadGraphData/defualt/some.1/path.2'),
+    dict(url='/.json_loadGraphData/fuell/some.1/path.2'),
+    dict(url='/.json_loadGraphData/witSpam/some.1/path.2'),
+    #### loadIndex
+    dict(url='/.json_loadIndex/some.1\path.2'),
+    dict(url='/.json_loadIndex/some.1/path.2.proo'),
+    dict(url='/.json_loadIndex/some.1/path.2.newt'),
+    dict(url='/.json_loadIndex/some.1/path.2.bon'),
+    dict(url='/.json_loadIndex/some.1/path.2.ill'),
+    #### loadMicroBlogging
+    dict(url='/.json_loadMicroBlogging/-1/newer/some.1/path.2'),
+    dict(url='/.json_loadMicroBlogging/74/newwer/some.1/path.2'),
+    dict(url='/.json_loadMicroBlogging/older/12/some.1/path.2'),
+    dict(url='/.json_loadMicroBlogging/74/older/newer/some.1/path.2'),
+    #### loadText
+    dict(url='/.json_loadText/1.some/path.2'),
+    dict(url='/.json_loadText/some.1/2.path'),
+    dict(url='/.json_loadText/some.1/path.2.17'),
+    dict(url='/.json_loadText/some.1/path.2.conn.1/'),
+    dict(url='/.json_loadText/some.1/path.2.pro.name.144'),
+    #### loadUserInfo
+    dict(url='/.json_loadUserInfo/somebody/some.1/path.2'),
+    dict(url='/.json_loadUserInfo/'),
+    #### loadUserSettings
+    dict(url='/.json_loadUserSettings/some.1/path.2'),
+    dict(url='/.json_loadUserSettings/username'),
+    #### login
+    dict(url='/.json_login/some.1/path.2'),
+    #### logout
+    dict(url='/.json_logout/some.1/path.2'),
+    #### markNode
+    dict(url='/.json_markNode/spamm/some.1/path.2'),
+    dict(url='/.json_markNode/nospam/some.1/path.2'),
+    dict(url='/.json_markNode/follows/some.1/path.2'),
+    dict(url='/.json_markNode/unfollows/some.1/path.2'),
+    dict(url='/.json_markNode/some.1/path.2.pro.1'),
+    dict(url='/.json_markNode/some.1/path.2.pro.1'),
+    dict(url='/.json_markNode/123/some.1/path.2.pro.1'),
+    dict(url='/.json_markNode/unspam/some.1/path.2.pro.1'),
+    dict(url='/.json_markNode/003/some.1/path.2.con.003'),
+    dict(url='/.json_markNode/notspam/some.1/path.2.conn.003'),
+    dict(url='/.json_markNode/follow/some.1/path.2.con.name.003'),
+    dict(url='/.json_markNode/unfollow/1/path.2.con.003'),
+    dict(url='/.json_markNode/spam/some.1/path.2.newt.8437569384'),
+    dict(url='/.json_markNode/notspam/some.1/path.2.8437569384'),
+    dict(url='/.json_markNode/follow/some.1/path.2.neut.name.8437569384'),
+    dict(url='/.json_markNode/unfollow/some.1/path.2.num.8437569384'),
+    #### storeMicroBlogPost
+    dict(url='/.json_storeMicroBlogPost/'),
+    #### storeSettings
+    dict(url='/.json_storeSettings/some.1/path.2'),
+    #### storeText
+    dict(url='/.json_storeText/some.1/path.2.5'),
+    dict(url='/.json_storeText/bla/some.1/path.2.neut.5'),
+    dict(url='/.json_storeText/some.1/path.2.con.995.77'),
+    dict(url='/.json_storeText/some.1/path.2.prow.1'),
+    ]
+
 class UrlResolutionTest(unittest.TestCase):
     def test_routing(self):
         for route in valid_routes:
@@ -283,3 +343,7 @@ class UrlResolutionTest(unittest.TestCase):
             self.assertEqual(res.func, route['func'])
             if 'kwargs' in route:
                 self.assertEqual(res.kwargs, route['kwargs'])
+
+    def test_routing_fail(self):
+        for route in invalid_routes:
+            self.assertRaises(Resolver404,resolve,(route['url']))
