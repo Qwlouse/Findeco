@@ -29,33 +29,33 @@ from django.core.urlresolvers import resolve
 
 import unittest
 
-from ..views import loadUserSettings, loadIndex
+from ..views import load_user_settings, load_index
 
 ########################### Test the API calls #################################
 valid_routes = [
     #### loadUserSettings
     dict(url='/.json_loadUserSettings',
-        func=loadUserSettings,
+        func=load_user_settings,
         url_name='load_user_settings'),
 
     #### loadIndex
     dict(url='/.json_loadIndex/some.1/path.2',
-        func=loadIndex,
+        func=load_index,
         url_name='load_index',
         kwargs=dict(path='/some.1/path.2', arguments='')),
 
     dict(url='/.json_loadIndex/some.1/path.2.pro',
-        func=loadIndex,
+        func=load_index,
         url_name='load_index',
         kwargs=dict(path='/some.1/path.2', arguments='pro')),
 
     dict(url='/.json_loadIndex/some.1/path.2.neut',
-        func=loadIndex,
+        func=load_index,
         url_name='load_index',
         kwargs=dict(path='/some.1/path.2', arguments='neut')),
 
     dict(url='/.json_loadIndex/some.1/path.2.con',
-        func=loadIndex,
+        func=load_index,
         url_name='load_index',
         kwargs=dict(path='/some.1/path.2', arguments='con')),
 

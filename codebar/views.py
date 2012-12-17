@@ -58,7 +58,7 @@ def load_user_info(name):
     data = "Yes, we can!"
     return json.dumps(data)
 
-def load_user_setting(request):
+def load_user_settings(request):
     # Backend foo
     data = "Yes, we can!"
     return json.dumps(data)
