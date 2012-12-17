@@ -45,6 +45,7 @@ Examples:
   /Transparenz.2.con.12
 """
 from __future__ import division, print_function, unicode_literals
+from collections import namedtuple
 import re
 
 SHORT_TITLE = r'([a-zA-Z][a-zA-Z0-9-_]{0,19})'
@@ -56,3 +57,29 @@ SUFFIX = r'(' + ARG + '|' + NODE + '|' +  SLOT + ')'
 PATH = '(?P<path>' + '/' + '(' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
 
 pathMatcher = re.compile(PATH)
+
+NodeIdentifier = namedtuple('NodeIdentifier', ['short_title', 'id'])
+
+def parse_path(path):
+    path = path.strip('/')  # strip leading and trailing slashes
+    parts = path.split('/')
+    nodes = []
+    for p in parts[:-1]:
+        short_title, id = p.split('.')
+        nodes.append((short_title, int(id)))
+    last = parts[-1].split('.')
+    if len(last) == 1:
+        if last[0] :
+            last = dict(slot=last[0])
+        else:
+            last = {}
+    else: # len(last) >= 2 because zero is impossible
+        nodes.append((last[0], int(last[1])))
+        last = dict(zip(['arg_type', 'arg_id'], last[2:]))
+        if 'arg_id' in last:
+            last['arg_id'] = int(last['arg_id'])
+    return nodes, last
+
+
+
+
