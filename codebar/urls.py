@@ -44,6 +44,10 @@ urlpatterns = patterns('',
         'codebar.views.load_graph_data',
         name='load_graph_data'),
 
+    url(r'^\.json_loadIndex/' + PATH + '$',
+        'codebar.views.load_index',
+        name='load_index'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
 
