@@ -74,6 +74,10 @@ def logout(request):
     return json.dumps(data)
 
 def mark_node(path, mark_type):
+    """
+    If an argument is marked but wasn't created at this location it must be copied and the marking is to apply to the
+    copied one.
+    """
     # Backend foo
     data = "Yes, we can!"
     return json.dumps(data)
