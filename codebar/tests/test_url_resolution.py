@@ -104,6 +104,17 @@ valid_routes = [
         kwargs=dict(name='somebody')),
 
     #### loadUserSettings
+    dict(url='/.json_loadUserSettings/',
+        func=load_user_settings,
+        url_name='load_user_settings',
+        kwargs=dict()),
+
+    dict(url='/.json_loadUserSettings',
+        func=load_user_settings,
+        url_name='load_user_settings',
+        kwargs=dict()),
+
+    #### loadUserSettings
     dict(url='/.json_loadUserSettings',
         func=load_user_settings,
         url_name='load_user_settings'),
