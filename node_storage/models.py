@@ -28,3 +28,6 @@ from __future__ import division, print_function, unicode_literals
 from django.db import models
 
 # Create your models here.
+class Node(models.Model):
+    parents = models.ManyToManyField('self', symmetrical=False,
+        related_name="children")
