@@ -27,7 +27,68 @@
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+import json
 
 def home(request):
     return render_to_response("index.html", {"pagename":"Root"},
         context_instance=RequestContext(request))
+
+def load_index(path):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def load_graph_data(graph_data_type, path):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def load_microblogging(path, select_id, microblogging_load_type):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def load_text(path):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def load_user_info(name):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def load_user_setting(request):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def login(request):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def logout(request):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def mark_node(path, mark_type):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def store_microblog_post(path):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def store_settings(request):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
+
+def store_text(path):
+    # Backend foo
+    data = "Yes, we can!"
+    return json.dumps(data)
