@@ -39,3 +39,7 @@ class Node(models.Model):
         symmetrical=False,
         related_name="derivates",
         blank=True)
+
+class Text(models.Model):
+    node = models.ForeignKey(Node)
+    text = models.TextField()
