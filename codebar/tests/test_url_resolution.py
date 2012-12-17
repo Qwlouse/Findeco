@@ -25,7 +25,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from django.core.urlresolvers import resolve
+from django.core.urlresolvers import resolve, Resolver404
 
 import unittest
 
@@ -78,9 +78,12 @@ valid_routes = [
 
 class UrlResolutionTest(unittest.TestCase):
     def test_routing(self):
-        for r in valid_routes:
-            resp = resolve(r['url'])
-            self.assertEqual(resp['url_name'], r['url_name'])
-            self.assertEqual(resp['func'], r['func'])
-            if 'kwargs' in r:
-                self.assertEqual(resp['kwargs'], r['kwargs'])
+        for route in valid_routes:
+            try:
+                res = resolve(route['url'])
+            except Resolver404:
+                self.fail("Could not resolve: '%s'"%route['url'])
+            self.assertEqual(res.url_name, route['url_name'])
+            self.assertEqual(res.func, route['func'])
+            if 'kwargs' in route:
+                self.assertEqual(res.kwargs, route['kwargs'])
