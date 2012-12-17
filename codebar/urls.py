@@ -83,6 +83,10 @@ urlpatterns = patterns('',
         'codebar.views.store_settings',
         name='store_settings'),
 
+    url(r'^\.json_storeText/' + PATH + '$',
+        'codebar.views.store_text',
+        name='store_text'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
 
