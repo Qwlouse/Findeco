@@ -42,22 +42,22 @@ valid_routes = [
     dict(url='/.json_loadIndex/some.1/path.2',
         func=load_index,
         url_name='load_index',
-        kwargs=dict(path='/some.1/path.2', arguments='')),
+        kwargs=dict(path='/some.1/path.2')),
 
     dict(url='/.json_loadIndex/some.1/path.2.pro',
         func=load_index,
         url_name='load_index',
-        kwargs=dict(path='/some.1/path.2', arguments='pro')),
+        kwargs=dict(path='/some.1/path.2.pro')),
 
     dict(url='/.json_loadIndex/some.1/path.2.neut',
         func=load_index,
         url_name='load_index',
-        kwargs=dict(path='/some.1/path.2', arguments='neut')),
+        kwargs=dict(path='/some.1/path.2.neut')),
 
     dict(url='/.json_loadIndex/some.1/path.2.con',
         func=load_index,
         url_name='load_index',
-        kwargs=dict(path='/some.1/path.2', arguments='con')),
+        kwargs=dict(path='/some.1/path.2.con')),
 
     ]
 
