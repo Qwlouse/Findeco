@@ -30,7 +30,7 @@ from django.core.urlresolvers import resolve, Resolver404
 import unittest
 
 from ..views import load_user_settings, load_index, load_graph_data, load_microblogging, load_text, load_user_info
-from ..views import login, logout, mark_node
+from ..views import login, logout, mark_node, store_microblog_post
 
 ########################### Test the API calls #################################
 valid_routes = [
@@ -147,6 +147,12 @@ valid_routes = [
         func=mark_node,
         url_name='mark_node',
         kwargs=dict(path='/some.1/path.2', mark_type='unfollow')),
+
+    #### storeMicroBlogPost
+    dict(url='/.json_storeMicroBlogPost/some.1/path.2',
+        func=store_microblog_post,
+        url_name='store_microblog_post',
+        kwargs=dict(path='/some.1/path.2')),
     ]
 
 class UrlResolutionTest(unittest.TestCase):
