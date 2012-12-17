@@ -346,4 +346,8 @@ class UrlResolutionTest(unittest.TestCase):
 
     def test_routing_fail(self):
         for route in invalid_routes:
-            self.assertRaises(Resolver404,resolve,(route['url']))
+            try:
+                res = resolve(route['url'])
+                self.fail("Resolved invalid url: '%s' as %s"%(route['url'],res.url_name))
+            except Resolver404:
+                pass
