@@ -71,6 +71,11 @@ valid_routes = [
         url_name='load_index',
         kwargs=dict(path='some.1/path.2.con')),
 
+    dict(url='/.json_loadIndex/some.1/path.2.all',
+        func=load_index,
+        url_name='load_index',
+        kwargs=dict(path='some.1/path.2.all')),
+
     #### loadMicroBlogging
     dict(url='/.json_loadMicroBlogging/0/newer/some.1/path.2',
         func=load_microblogging,
@@ -98,8 +103,33 @@ valid_routes = [
         url_name='load_text',
         kwargs=dict(path='some.1/path.2')),
 
+    dict(url='/.json_loadText/some.1/path',
+        func=load_text,
+        url_name='load_text',
+        kwargs=dict(path='some.1/path')),
+
+    dict(url='/.json_loadText/some.1/path.2.neut.17',
+        func=load_text,
+        url_name='load_text',
+        kwargs=dict(path='some.1/path.2.neut.17')),
+
+    dict(url='/.json_loadText/some.1/path.2.con.1/',
+        func=load_text,
+        url_name='load_text',
+        kwargs=dict(path='some.1/path.2.con.1/')),
+
+    dict(url='/.json_loadText/some.1/path.2.pro.144',
+        func=load_text,
+        url_name='load_text',
+        kwargs=dict(path='some.1/path.2.pro.144')),
+
     #### loadUserInfo
     dict(url='/.json_loadUserInfo/somebody',
+        func=load_user_info,
+        url_name='load_user_info',
+        kwargs=dict(name='somebody')),
+
+    dict(url='/.json_loadUserInfo/somebody/',
         func=load_user_info,
         url_name='load_user_info',
         kwargs=dict(name='somebody')),
@@ -148,6 +178,66 @@ valid_routes = [
         url_name='mark_node',
         kwargs=dict(path='some.1/path.2', mark_type='unfollow')),
 
+    dict(url='/.json_markNode/spam/some.1/path.2.pro.1',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.pro.1', mark_type='spam')),
+
+    dict(url='/.json_markNode/notspam/some.1/path.2.pro.1',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.pro.1', mark_type='notspam')),
+
+    dict(url='/.json_markNode/follow/some.1/path.2.pro.1',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.pro.1', mark_type='follow')),
+
+    dict(url='/.json_markNode/unfollow/some.1/path.2.pro.1',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.pro.1', mark_type='unfollow')),
+
+    dict(url='/.json_markNode/spam/some.1/path.2.con.003',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.con.003', mark_type='spam')),
+
+    dict(url='/.json_markNode/notspam/some.1/path.2.con.003',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.con.003', mark_type='notspam')),
+
+    dict(url='/.json_markNode/follow/some.1/path.2.con.003',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.con.003', mark_type='follow')),
+
+    dict(url='/.json_markNode/unfollow/some.1/path.2.con.003',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.con.003', mark_type='unfollow')),
+
+    dict(url='/.json_markNode/spam/some.1/path.2.neut.8437569384',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.neut.8437569384', mark_type='spam')),
+
+    dict(url='/.json_markNode/notspam/some.1/path.2.neut.8437569384',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.neut.8437569384', mark_type='notspam')),
+
+    dict(url='/.json_markNode/follow/some.1/path.2.neut.8437569384',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.neut.8437569384', mark_type='follow')),
+
+    dict(url='/.json_markNode/unfollow/some.1/path.2.neut.8437569384',
+        func=mark_node,
+        url_name='mark_node',
+        kwargs=dict(path='some.1/path.2.neut.8437569384', mark_type='unfollow')),
+
     #### storeMicroBlogPost
     dict(url='/.json_storeMicroBlogPost/some.1/path.2',
         func=store_microblog_post,
@@ -159,6 +249,27 @@ valid_routes = [
         func=store_settings,
         url_name='store_settings',
         kwargs=dict()),
+
+    #### storeText
+    dict(url='/.json_storeText/some.1/path.2',
+        func=store_text,
+        url_name='store_text',
+        kwargs=dict(path='some.1/path.2')),
+
+    dict(url='/.json_storeText/some.1/path.2.neut.5',
+        func=store_text,
+        url_name='store_text',
+        kwargs=dict(path='some.1/path.2.neut.5')),
+
+    dict(url='/.json_storeText/some.1/path.2.con.995',
+        func=store_text,
+        url_name='store_text',
+        kwargs=dict(path='some.1/path.2.con.995')),
+
+    dict(url='/.json_storeText/some.1/path.2.pro.1',
+        func=store_text,
+        url_name='store_text',
+        kwargs=dict(path='some.1/path.2.pro.1')),
     ]
 
 class UrlResolutionTest(unittest.TestCase):
