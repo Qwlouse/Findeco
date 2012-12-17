@@ -322,7 +322,7 @@ invalid_routes = [
     dict(url='/.json_markNode/follow/some.1/path.2.neut.name.8437569384'),
     dict(url='/.json_markNode/unfollow/some.1/path.2.num.8437569384'),
     #### storeMicroBlogPost
-    dict(url='/.json_storeMicroBlogPost/'),
+    dict(url='/.json_storeMicruBlogPost/'),
     #### storeSettings
     dict(url='/.json_storeSettings/some.1/path.2'),
     #### storeText
