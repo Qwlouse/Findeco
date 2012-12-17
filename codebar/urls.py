@@ -29,8 +29,10 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
     url(r'^$', 'codebar.views.home', name='home'),
+
+    url(r'^\.json_loadUserSettings$', 'codebar.views.load_user_settings',
+        name='load_user_settings'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
