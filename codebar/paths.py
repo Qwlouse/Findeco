@@ -26,7 +26,7 @@
 ################################################################################
 """
 Paths are of the form:
-  PATH = '/' + (NODE + '/')* + [SUFFIX] + ['/']
+  PATH = (NODE + '/')* + [SUFFIX] + ['/']
   SHORT_TITLE = ALPHA + (ALPHANUM | '_' | '-'){0:19}
   ID = POSITIVE_INT
   SUFFIX = ARGUMENT_SUFFIX | SLOT_SUFFIX | NODE_SUFFIX
@@ -35,14 +35,14 @@ Paths are of the form:
   ARGUMENT_SUFFIX = NODE_SUFFIX + '.' + ('pro' | 'neut' | 'con') + ['.' + ID]
 
 Examples:
-  /
-  /Bildung
-  /Bildung.7/
-  /Bildung.7/Hochschule.8/Akkreditierung.1
-  /Foo_bar.1/L33.7
-  /Datenschutz.1/Einleitung
-  /Transparenz.2.pro
-  /Transparenz.2.con.12
+
+  Bildung
+  Bildung.7/
+  Bildung.7/Hochschule.8/Akkreditierung.1
+  Foo_bar.1/L33.7
+  Datenschutz.1/Einleitung
+  Transparenz.2.pro
+  Transparenz.2.con.12
 """
 from __future__ import division, print_function, unicode_literals
 import re
@@ -53,7 +53,7 @@ SLOT = SHORT_TITLE
 NODE = '(' + SLOT + r'\.' + ID + ')'
 ARG = r'(' + NODE + '(\.pro' + '|' + r'\.neut' + '|' + r'\.con)' + r'(\.' + ID + ')?)'
 SUFFIX = r'(' + ARG + '|' + NODE + '|' +  SLOT + ')'
-PATH = '(?P<path>' + '/' + '(' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
+PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
 
 pathMatcher = re.compile(PATH)
 
