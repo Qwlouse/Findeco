@@ -26,13 +26,23 @@
 ################################################################################
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+
+from codebar.paths import PATH
+
+GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'codebar.views.home', name='home'),
 
-    url(r'^\.json_loadUserSettings$', 'codebar.views.load_user_settings',
+    url(r'^\.json_loadUserSettings$',
+        'codebar.views.load_user_settings',
         name='load_user_settings'),
+
+    url(r'^\.json_loadGraphData/' + GRAPH_TYPE + PATH + '$',
+        'codebar.views.load_graph_data',
+        name='load_graph_data'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
