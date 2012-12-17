@@ -26,15 +26,15 @@
 ################################################################################
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-
+admin.autodiscover()
 from codebar.paths import PATH, ID
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
 BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
 USERNAME = r'(?P<name>[a-zA-Z][a-zA-Z0-9-_]{0,19})'
+MARK_TYPE = r'(?P<mark_type>(spam)|(notspam)|(follow)|(unfollow))'
 
-admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'codebar.views.home', name='home'),
@@ -70,6 +70,10 @@ urlpatterns = patterns('',
     url(r'^\.json_logout/?$',
         'codebar.views.logout',
         name='logout'),
+
+    url(r'^\.json_markNode/' + MARK_TYPE + '/' + PATH + '$',
+        'codebar.views.mark_node',
+        name='mark_node'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
