@@ -39,6 +39,13 @@ class Node(models.Model):
         related_name="derivates",
         blank=True)
 
+class Argument(Node):
+    concerns = models.ManyToManyField(
+        Node,
+        related_name='arguments'
+    )
+
+
 class Text(models.Model):
     node = models.ForeignKey(Node)
     text = models.TextField()
