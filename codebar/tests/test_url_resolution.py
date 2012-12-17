@@ -29,7 +29,7 @@ from django.core.urlresolvers import resolve
 
 import unittest
 
-from ..views import load_user_settings, load_index
+from ..views import load_user_settings, load_index, load_graph_data
 
 ########################### Test the API calls #################################
 valid_routes = [
@@ -59,6 +59,21 @@ valid_routes = [
         url_name='load_index',
         kwargs=dict(path='/some.1/path.2.con')),
 
+    #### loadGraphData
+    dict(url='/.json_loadGraphData/default/some.1/path.2',
+        func=load_graph_data,
+        url_name='load_graph_data',
+        kwargs=dict(graph_data_type='default', path='/some.1/path.2')),
+
+    dict(url='/.json_loadGraphData/full/some.1/path.2',
+        func=load_graph_data,
+        url_name='load_graph_data',
+        kwargs=dict(graph_data_type='full', path='/some.1/path.2')),
+
+    dict(url='/.json_loadGraphData/withSpam/some.1/path.2',
+        func=load_graph_data,
+        url_name='load_graph_data',
+        kwargs=dict(graph_data_type='withSpam', path='/some.1/path.2')),
     ]
 
 class UrlResolutionTest(unittest.TestCase):
