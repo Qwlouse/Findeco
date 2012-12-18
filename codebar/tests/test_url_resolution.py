@@ -280,7 +280,6 @@ invalid_routes = [
     dict(url='/.json_loadGraphData/witSpam/some.1/path.2'),
     #### loadIndex
     dict(url='/.json_loadIndex/some.1\path.2'),
-    dict(url='/.json_loadIndex/some.1/path'),
     dict(url='/.json_loadIndex/some.1/path.2.proo'),
     dict(url='/.json_loadIndex/some.1/path.2.newt'),
     dict(url='/.json_loadIndex/some.1/path.2.bon'),
