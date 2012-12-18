@@ -28,6 +28,7 @@
 
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 import re
 import node_storage as backend
 from django.contrib.auth.models import User
@@ -116,3 +117,17 @@ class Reference(models.Model):
 
     def __unicode__(self):
         return u'%s references "%s" on %s' % (self.referencer.username, self.entry, self.time)
+
+
+def getFeedForUser(user):
+    references = Reference.objects.filter(referencer=user).order_by('-time')
+    referenced_entries = set()
+    references_and_entries = []
+    for reference in references:
+        if not reference.entry_id in referenced_entries:
+            referenced_entries.add(reference.entry_id)
+            references_and_entries.append((reference, reference.entry))
+    followed = Q(user__followers=user)
+    own = Q(user = user)
+    entries = Post.objects.filter(followed | own).order_by('-time')
+    return [e for e in entries if not e.id in referenced_entries], references_and_entries
