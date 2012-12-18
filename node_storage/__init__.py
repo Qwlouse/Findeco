@@ -27,4 +27,4 @@
 from __future__ import division, print_function, unicode_literals
 
 from models import Node
-from path_helpers import getNodeWithTextForPath
+from path_helpers import get_node_with_text_for_path

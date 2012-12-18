@@ -28,5 +28,5 @@
 from __future__ import division, print_function, unicode_literals
 from models import Node
 
-def getNodeWithTextForPath(path):
+def get_node_with_text_for_path(path):
     return Node.objects.filter(id=0)[0]
