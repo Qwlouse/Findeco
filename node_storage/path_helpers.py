@@ -3,7 +3,8 @@
 # CoDebAr is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
+# Johannes Merkert <jonny@pinae.net>
 # This file is part of CoDebAr.
 #
 # CoDebAr is free software; you can redistribute it and/or modify it under
@@ -25,6 +26,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-
 from models import Node
-from path_helpers import getNodeWithTextForPath
+
+def getNodeWithTextForPath(path):
+    return Node.objects.filter(id=0)[0]
