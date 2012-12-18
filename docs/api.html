@@ -1,219 +1,567 @@
-<html>
-<body>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body>
 <h1>CoDeBar<a href="#WorkingTitle">*</a> API</h1>
 <h3>General Information</h3>
-The CoDeBar<a href="#WorkingTitle">*</a> API allows for access to the full data available to the original CoDeBar<a href="#WorkingTitle">*</a> Client.<br>
+The CoDeBar<a href="#WorkingTitle">*</a> API allows for access to the full scope of functions and data available to the original CoDeBar<a href="#WorkingTitle">*</a> Client.<br>
 The general API call is setup like this: .json_FUNCTION/DATA<br>
 In return you get a JSON response from the server.
 <br>
 <br>
 <h3>Functions</h3>
 <br>
-<b><a name="FunctionSearch">Function::login</a></b>
+<b><a name="FunctionLoadGraphData">Function::loadGraphData</a></b>
 <table>
-	<tr><td>Call Structure:</td><td>.json_login</td></tr>
-	<tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
-	<tr><td>POST Parameters:</td><td><a href="#ValueUsername">(String) username</a></td></tr>
-	<tr><td>&nbsp;</td><td><a href="#ValuePassword">(String) password</a></td></tr>
-	<tr><td>Description:</td><td>Login function to get access to use of the API.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONloginResponse">JSON::loginResponse</a></td></tr>
-</table>
-
-<br>
-<b><a name="FunctionSearch">Function::logout</a></b>
-<table>
-	<tr><td>Call Structure:</td><td>.json_logout</td></tr>
-	<tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
-	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-	<tr><td>Description:</td><td>Logout function.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONlogoutResponse">JSON::logoutResponse</a></td></tr>
-</table>
-
-<br>
-<b><a name="FunctionloadIndex">Function::loadIndex</a></b>
-<table>
-	<tr><td>Call Structure:</td><td>.json_loadIndex/path</td></tr>
-	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
-	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-	<tr><td>Description:</td><td>Loads the index of the given path.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONloadIndexResponse">JSON::loadIndexResponse</a></td></tr>
-</table>
-
-<br>
-<b><a name="FunctionloadIndex">Function::loadGraphData</a></b>
-<table>
-	<tr><td>Call Structure:</td><td>.json_loadGraphData/graphDataType/path</td></tr>
+	<tbody><tr><td>Call Structure:</td><td>.json_loadGraphData/graphDataType/path</td></tr>
 	<tr><td>GET Parameters:</td><td><a href="#ValueGraphDataType">(String) graphDataType</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValuePath">(String) path</a></td></tr>
 	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
 	<tr><td>Description:</td><td>Loads the requested graph data of the given path.</td></tr>
 	<tr><td>Return:</td><td><a href="#JSONloadGraphDataResponse">JSON::loadGraphDataResponse</a></td></tr>
-</table>
+</tbody></table>
+
+<br>
+<b><a name="FunctionLoadIndex">Function::loadIndex</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_loadIndex/path</td></tr>
+	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>Description:</td><td>Loads the index of the given path.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadIndexResponse">JSON::loadIndexResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionLoadMicroBlogging">Function::loadMicroBlogging</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_loadMicroBlogging/selectID/microBloggingLoadType/path</td></tr>
+	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueSelectID">(Integer) selectID</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueMicroBloggingLoadType">(String) microBloggingLoadType</a></td></tr>
+	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>Description:</td><td>Loads the microblogging entrys of the given path.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadMicroBloggingResponse">JSON::loadMicroBloggingResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionLoadText">Function::loadText</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_loadText/path</td></tr>
+	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>Description:</td><td>Loads the textview of the given path.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadTextResponse">JSON::loadTextResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionLoadUserInfo">Function::loadUserInfo</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_loadUserInfo/displayName</td></tr>
+	<tr><td>GET Parameters:</td><td><a href="#ValueDisplayName">(String) displayName</a></td></tr>
+	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>Description:</td><td>Loads infos to the requested user. </td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadUserInfoResponse">JSON::loadUserInfoResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionLoadUserSettings">Function::loadUserSettings</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_loadUserSettings</td></tr>
+	<tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>Description:</td><td>Loads the settings for the currently logged in user. </td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadUserSettingsResponse">JSON::loadUserSettingsResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionSearch">Function::login</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_login</td></tr>
+	<tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>POST Parameters:</td><td><a href="#ValueUsername">(String) username</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValuePassword">(String) password</a></td></tr>
+	<tr><td>Description:</td><td>Login function to get access to use of the API.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloginResponse">JSON::loginResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionLogout">Function::logout</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_logout</td></tr>
+	<tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>Description:</td><td>Logout function.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONlogoutResponse">JSON::logoutResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionMarkNode">Function::markNode</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_markNode/markType/path</td></tr>
+	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueMarkType">(String) markType</a></td></tr>
+	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>Description:</td><td>Mark a node as spam or follow it.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONmarkNodeResponse">JSON::markNodeResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionStoreMicroBlogPost">Function::storeMicroBlogPost</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_storeMicroBlogPost/path</td></tr>
+	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+	<tr><td>POST Parameters:</td><td><a href="#ValueMicroBlogText">(String) microBlogText</a></td></tr>
+	<tr><td>Description:</td><td>Store a Microblogpost.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONstoreMicroBlogPostResponse">JSON::storeMicroBlogPostResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionStoreSettings">Function::storeSettings</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_storeSettings</td></tr>
+	<tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
+	<tr><td>POST Parameters:</td><td><a href="#ValueDisplayName">(String) displayName</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueDescription">(String) description</a></td></tr>
+	<tr><td>Description:</td><td>Store settings for the current user.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONstoreSettingsResponse">JSON::storeSettingsResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionStoreText">Function::storeText</a></b>
+<table>
+	<tbody><tr><td>Call Structure:</td><td>.json_storeText/path</td></tr>
+	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+	<tr><td>POST Parameters:</td><td><a href="#ValueWikiText">(String) wikiText</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueArgumentType">(String) argumentType</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueWikiTextAlternative">(String) wikiTextAlternative</a></td></tr>
+	<tr><td>Description:</td><td>Store a new Textnode in the hierarchy.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONstoreTextResponse">JSON::storeTextResponse</a></td></tr>
+</tbody></table>
 
 <br>
 <br>
 <h3>Variable Values</h3>
-<br>
-<b><a name="ValueUsername">Value::username</a></b>
-<table>
-	<tr><td>Parametername:</td><td>username</td></tr>
-	<tr><td>Type:</td><td>String</td></tr>
-	<tr><td>Description:</td><td>The username to login for use of the API.</td></tr>
-	<tr><td>Supported Values:</td><td>Any user that is registered in the database.</td></tr>
-</table>
-
-<br>
-<b><a name="ValuePassword">Value::password</a></b>
-<table>
-	<tr><td>Parametername:</td><td>password</td></tr>
-	<tr><td>Type:</td><td>String</td></tr>
-	<tr><td>Description:</td><td>The password to login for use of the API.</td></tr>
-	<tr><td>Supported Values:</td><td>Any password that is registered in the database and matches the selected user.</td></tr>
-</table>
-
-<br>
-<b><a name="ValueSuccess">Value::success</a></b>
-<table>
-	<tr><td>Parametername:</td><td>success</td></tr>
-	<tr><td>Type:</td><td>Boolean</td></tr>
-	<tr><td>Description:</td><td>The information wether the last action was successfull or not.</td></tr>
-	<tr><td>Supported Values:</td><td>Output only.</td></tr>
-</table>
-
-<br>
-<b><a name="ValueDisplayName">Value::displayName</a></b>
-<table>
-	<tr><td>Parametername:</td><td>displayName</td></tr>
-	<tr><td>Type:</td><td>String</td></tr>
-	<tr><td>Description:</td><td>The name the user has setup to be his displayed name. </td></tr>
-	<tr><td>Default:</td><td>Anonymous</td></tr>
-	<tr><td>Supported Values:</td><td>Output only.</td></tr>
-</table>
-
-<br>
-<b><a name="ValueDescription">Value::description</a></b>
-<table>
-	<tr><td>Parametername:</td><td>description</td></tr>
-	<tr><td>Type:</td><td>String</td></tr>
-	<tr><td>Description:</td><td>The description the user has setup. </td></tr>
-	<tr><td>Supported Values:</td><td>Output only.</td></tr>
-</table>
-
-<br>
-<b><a name="ValuePath">Value::path</a></b>
-<table>
-	<tr><td>Parametername:</td><td>path</td></tr>
-	<tr><td>Type:</td><td>String</td></tr>
-	<tr><td>Description:</td><td>The path to any node in the hierarchy. Paths are built out of <a href="#ValueShortTitle">Value::shortTitle</a> and <a href="#ValueIndex">Value::index</a> by concatenating them with a &quot;.&quot;, these individual parts of the path are concatenated by &quot;/&quot; but any path may also be trailed by a set of <a href="#ValueArgumentDenominator">Value::argumentDenominator</a> with or without a <a href="#ValueIndex">Value::index</a> that is appended using a &quot;.&quot; behind the <a href="#ValueIndex">Value::index</a> of the respective node.</td></tr>
-	<tr><td>Supported Values:</td><td>Any path leading to an existing node in the database. <br>Examples: &quot;top.1/subtop.2&quot;, &quot;top.1/subtop.2/subsubtop&quot;, &quot;top.1/subtop.2/subsubtop.3&quot;, &quot;top.1/subtop.2/subsubtop.3.neut&quot;, &quot;top.1/subtop.2/subsubtop.3.neut.2&quot;</td></tr>
-</table>
-
-<br>
-<b><a name="ValueShortTitle">Value::shortTitle</a></b>
-<table>
-	<tr><td>Parametername:</td><td>shortTitle</td></tr>
-	<tr><td>Type:</td><td>String</td></tr>
-	<tr><td>Description:</td><td>The short title of a node in the hierarchy, these are generated out of <a href="#ValueFullTitle">Value::fullTitle</a> of the respective or a previous conflicting node. </td></tr>
-	<tr><td>Supported Values:</td><td>Output only.</td></tr>
-</table>
-
-<br>
-<b><a name="ValueIndex">Value::index</a></b>
-<table>
-	<tr><td>Parametername:</td><td>index</td></tr>
-	<tr><td>Type:</td><td>Integer</td></tr>
-	<tr><td>Description:</td><td>The index of a node in the hierarchy, most important in case of conflicting nodes to the same <a href="#ValueShortTitle">Value::shortTitle</a>. </td></tr>
-	<tr><td>Supported Values:</td><td>Output only.</td></tr>
-</table>
-
-<br>
-<b><a name="ValueFullTitle">Value::fullTitle</a></b>
-<table>
-	<tr><td>Parametername:</td><td>fullTitle</td></tr>
-	<tr><td>Type:</td><td>String</td></tr>
-	<tr><td>Description:</td><td>The full title of a node in the hierarchy, these are set by the user. </td></tr>
-	<tr><td>Supported Values:</td><td>Any string.</td></tr>
-</table>
 
 <br>
 <b><a name="ValueArgumentDenominator">Value::argumentDenominator</a></b>
 <table>
-	<tr><td>Parametername:</td><td>argumentDenominator</td></tr>
+	<tbody><tr><td>Parametername:</td><td>argumentDenominator</td></tr>
 	<tr><td>Type:</td><td>String</td></tr>
-	<tr><td>Description:</td><td>The denominator for arguments to decide wether they are pro, contra or neutral arguments. </td></tr>
+	<tr><td>Description:</td><td>The denominator for arguments to decide wether they are pro, contra or neutral arguments. The "all" denominator ignores any <a href="#ValueIndex">Value::index</a> after it. </td></tr>
+	<tr><td>Supported Values:</td><td>[pro|con|neut|all]</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueArgumentType">Value::argumentType</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>argumentType</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The type for arguments to decide wether they are pro, contra or neutral arguments. </td></tr>
 	<tr><td>Supported Values:</td><td>[pro|con|neut]</td></tr>
-</table>
+</tbody></table>
+
+<br>
+<b><a name="ValueDescription">Value::description</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>description</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The description the user has setup. </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueDisplayName">Value::displayName</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>displayName</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The name the user has setup to be his displayed name. </td></tr>
+	<tr><td>Default:</td><td>Anonymous</td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueFollows">Value::follows</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>follows</td></tr>
+	<tr><td>Type:</td><td>Integer</td></tr>
+	<tr><td>Description:</td><td>The number of followers for a node. </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueFullTitle">Value::fullTitle</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>fullTitle</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The full title of a node in the hierarchy, these are set by the user. </td></tr>
+	<tr><td>Supported Values:</td><td>Any string.</td></tr>
+</tbody></table>
 
 <br>
 <b><a name="ValueGraphDataType">Value::graphDataType</a></b>
 <table>
-	<tr><td>Parametername:</td><td>graphDataType</td></tr>
+	<tbody><tr><td>Parametername:</td><td>graphDataType</td></tr>
 	<tr><td>Type:</td><td>String</td></tr>
 	<tr><td>Description:</td><td>The requested type of graph data. </td></tr>
 	<tr><td>Supported Values:</td><td>[default|full|withSpam]</td></tr>
-</table>
+</tbody></table>
+
+<br>
+<b><a name="ValueIndex">Value::index</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>index</td></tr>
+	<tr><td>Type:</td><td>Integer</td></tr>
+	<tr><td>Description:</td><td>The index of a node in the hierarchy, most important in case of conflicting nodes to the same <a href="#ValueShortTitle">Value::shortTitle</a>. </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueIsFollowing">Value::isFollowing</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>isFollowing</td></tr>
+	<tr><td>Type:</td><td>Integer</td></tr>
+	<tr><td>Description:</td><td>Shows wether the currently logged in user is following a node. </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueMarkType">Value::markType</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>markType</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The type of marking to associate with the given Node. </td></tr>
+	<tr><td>Supported Values:</td><td>[spam|notspam|follow|unfollow]</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueMicroBloggingLoadType">Value::microBloggingLoadType</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>microBloggingLoadType</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The requested load type for loadMicroBlogging. </td></tr>
+	<tr><td>Supported Values:</td><td>[newer|older]</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueMicroBlogID">Value::microBlogID</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>microBlogID</td></tr>
+	<tr><td>Type:</td><td>Integer</td></tr>
+	<tr><td>Description:</td><td>The ID of a microblog post.</td></tr>
+	<tr><td>Supported Values:</td><td>Any ID leading to an existing microblogpost in the db.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueMicroBlogText">Value::microBlogText</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>microBlogText</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The text of a microblog post.</td></tr>
+	<tr><td>Supported Values:</td><td>Any unformatted String.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueMicroBlogTime">Value::microBlogTime</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>microBlogTime</td></tr>
+	<tr><td>Type:</td><td>Integer</td></tr>
+	<tr><td>Description:</td><td>The unix timestamp of a microblog post.</td></tr>
+	<tr><td>Supported Values:</td><td>Any unix timestamp.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueNewFollows">Value::newFollows</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>newFollows</td></tr>
+	<tr><td>Type:</td><td>Integer</td></tr>
+	<tr><td>Description:</td><td>The number of new followers for a node. </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueOrigin">Value::origin</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>origin</td></tr>
+	<tr><td>Type:</td><td><a href="#ValuePath">Value::path</a></td></tr>
+	<tr><td>Description:</td><td>The origin of a node. </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValuePassword">Value::password</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>password</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The password to login for use of the API.</td></tr>
+	<tr><td>Supported Values:</td><td>Any password that is registered in the database and matches the selected user.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValuePath">Value::path</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>path</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The path to any node in the hierarchy. Paths are built out of <a href="#ValueShortTitle">Value::shortTitle</a> and <a href="#ValueIndex">Value::index</a>
+ by concatenating them with a ".", these individual parts of the path 
+are concatenated by "/" but any path may also be trailed by a set of <a href="#ValueArgumentDenominator">Value::argumentDenominator</a> with or without a <a href="#ValueIndex">Value::index</a> that is appended using a "." behind the <a href="#ValueIndex">Value::index</a> of the respective node.</td></tr>
+	<tr><td>Supported Values:</td><td>Any path leading to an existing node in the database. <br>Examples:
+ "top.1/subtop.2", "top.1/subtop.2/subsubtop", 
+"top.1/subtop.2/subsubtop.3", "top.1/subtop.2/subsubtop.3.neut", 
+"top.1/subtop.2/subsubtop.3.neut.2"</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueSelectID">Value::selectID</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>selectID</td></tr>
+	<tr><td>Type:</td><td>Integer</td></tr>
+	<tr><td>Description:</td><td>The reference ID of an allready loaded microblogging entry. Usually the first loaded for <a href="#ValueMicroBloggingLoadType">Value::microBloggingLoadType</a> "older" and the last for "newer" </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueShortTitle">Value::shortTitle</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>shortTitle</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The short title of a node in the hierarchy, these are generated out of <a href="#ValueFullTitle">Value::fullTitle</a> of the respective or a previous conflicting node. </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueSuccess">Value::success</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>success</td></tr>
+	<tr><td>Type:</td><td>Boolean</td></tr>
+	<tr><td>Description:</td><td>The information wether the last action was successfull or not.</td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueUsername">Value::username</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>username</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The username to login for use of the API.</td></tr>
+	<tr><td>Supported Values:</td><td>Any user that is registered in the database.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueUnFollows">Value::unFollows</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>unFollows</td></tr>
+	<tr><td>Type:</td><td>Integer</td></tr>
+	<tr><td>Description:</td><td>The number of followers that unfollowed a node. </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueWikiText">Value::wikiText</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>wikiText</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>Wikisyntax formatted text. </td></tr>
+	<tr><td>Supported Values:</td><td>Any wikisyntax compatible text.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueWikiTextAlternative">Value::wikiTextAlternative</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>wikiTextAlternative</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>Wikisyntax formatted text that is used as an alternative proposition in case of posting a neutral or contrary argument. </td></tr>
+	<tr><td>Supported Values:</td><td>Any wikisyntax compatible text.</td></tr>
+</tbody></table>
 
 <br>
 <br>
 <h3>Responses</h3>
-<br>
-<b><a name="JSONloginResponse">JSON::LoginResponse</a></b>
-<table>
-	<tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
-	<tr><td>&nbsp;</td><td><a href="#JSONuserData">JSON::userData</a></td></tr>
-</table>
 
 <br>
-<b><a name="JSONlogoutResponse">JSON::LogoutResponse</a></b>
+<b><a name="JSONauthorGroup">JSON::authorGroup</a></b>
 <table>
-	<tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
-</table>
-
-<br>
-<b><a name="JSONuserData">JSON::userData</a></b>
-<table>
-	<tr><td>Content:</td><td><a href="#ValueDisplayName">Value::displayName</a></td></tr>
-	<tr><td>&nbsp;</td><td><a href="#ValueDescription">Value::description</a></td></tr>
-	<tr><td>&nbsp;</td><td><a href="#JSONfollowees">JSON::followees</a></td></tr>
-	<tr><td>&nbsp;</td><td><a href="#JSONblockedUsers">JSON::blockedUsers</a></td></tr>
-</table>
-
-<br>
-<b><a name="JSONfollowees">JSON::followees</a></b>
-<table>
-	<tr><td>Content:</td><td><a href="#JSONuser">JSON::user</a></td></tr>
+	<tbody><tr><td>Content:</td><td><a href="#JSONuser">JSON::user</a></td></tr>
 	<tr><td>Comment:</td><td>May contain multiple users.</td></tr>
-</table>
+</tbody></table>
 
 <br>
 <b><a name="JSONblockedUsers">JSON::blockedUsers</a></b>
 <table>
-	<tr><td>Content:</td><td><a href="#JSONuser">JSON::user</a></td></tr>
+	<tbody><tr><td>Content:</td><td><a href="#JSONuser">JSON::user</a></td></tr>
 	<tr><td>Comment:</td><td>May contain multiple users.</td></tr>
-</table>
+</tbody></table>
 
 <br>
-<b><a name="JSONuser">JSON::user</a></b>
+<b><a name="JSONfollowees">JSON::followees</a></b>
 <table>
-	<tr><td>Content:</td><td><a href="#ValueDisplayName">Value::displayName</a></td></tr>
-</table>
+	<tbody><tr><td>Content:</td><td><a href="#JSONuser">JSON::user</a></td></tr>
+	<tr><td>Comment:</td><td>May contain multiple users.</td></tr>
+</tbody></table>
 
 <br>
-<b><a name="JSONloadIndexResponse">JSON::loadIndexResponse</a></b>
+<b><a name="JSONfollowers">JSON::followers</a></b>
 <table>
-	<tr><td>Content:</td><td><a href="#JSONindexNode">JSON::indexNode</a></td></tr>
-	<tr><td>Comment:</td><td>May contain multiple indices.</td></tr>
-</table>
+	<tbody><tr><td>Content:</td><td><a href="#JSONuser">JSON::user</a></td></tr>
+	<tr><td>Comment:</td><td>May contain multiple users.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONgraphDataChildren">JSON::graphDataChildren</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#JSONgraphDataNode">JSON::graphDataNode</a></td></tr>
+	<tr><td>Comment:</td><td>Childnodes to a loadGraphData Request. May contain multiple nodes.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONgraphDataRelated">JSON::graphDataRelated</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#JSONgraphDataNode">JSON::graphDataNode</a></td></tr>
+	<tr><td>Comment:</td><td>Related nodes to a loadGraphData Request. May contain multiple nodes.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONgraphDataNode">JSON::graphDataNode</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueIndex">Value::index</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONauthorGroup">JSON::authorGroup</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueFollows">Value::follows</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueUnFollows">Value::unFollows</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueNewFollows">Value::newFollows</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueOrigin">Value::origin</a></td></tr>
+	<tr><td>Comment:</td><td>Graph data is only available to nodes in the hierarchy that have multiple conflicting children, so called slots. <br>These paths <b>never</b> end with a <a href="#ValueIndex">Value::index</a> but allways with a <a href="#ValueShortTitle">Value::shortTitle</a>.<br> This element may or may not contain <a href="#ValueOrigin">Value::origin</a> since this value is only present if the node is a direct part of the currently loaded slot.<br>If the node is an external origin instead this value will not be present. </td></tr>
+</tbody></table>
 
 <br>
 <b><a name="JSONindexNode">JSON::indexNode</a></b>
 <table>
-	<tr><td>Content:</td><td><a href="#ValueShortTitle">Value::shortTitle</a></td></tr>
+	<tbody><tr><td>Content:</td><td><a href="#ValueShortTitle">Value::shortTitle</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueFullTitle">Value::fullTitle</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueIndex">Value::index</a></td></tr>
-</table>
+	<tr><td>&nbsp;</td><td><a href="#JSONauthorGroup">JSON::authorGroup</a></td></tr>
+</tbody></table>
 
+<br>
+<b><a name="JSONloadGraphDataResponse">JSON::loadGraphDataResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#JSONgraphDataChildren">JSON::graphDataChildren</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONgraphDataRelated">JSON::graphDataRelated</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONloadIndexResponse">JSON::loadIndexResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#JSONindexNode">JSON::indexNode</a></td></tr>
+	<tr><td>Comment:</td><td>May contain multiple nodes.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONloadMicroBloggingResponse">JSON::loadMicroBloggingResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#JSONmicroBlogNode">JSON::microBlogNode</a></td></tr>
+	<tr><td>Comment:</td><td>May contain multiple nodes.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONloadTextResponse">JSON::loadTextResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#JSONparagraph">JSON::paragraphs</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueIndex">Value::index</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueIsFollowing">Value::isFollowing</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONloadUserInfoResponse">JSON::loadUserInfoResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueDisplayName">Value::displayName</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueDescription">Value::description</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONfollowers">JSON::followers</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONfollowees">JSON::followees</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONloadUserSettingsResponse">JSON::loadUserSettingsResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONuserData">JSON::userData</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONloginResponse">JSON::loginResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONuserData">JSON::userData</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONlogoutResponse">JSON::logoutResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONmarkNodeResponse">JSON::markNodeResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONmicroBlogNode">JSON::microBlogNode</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueMicroBlogText">Value::microBlogText</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONauthorGroup">JSON::authorGroup</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueMicroBlogTime">Value::microBlogTime</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueMicroBlogID">Value::microBlogID</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONparagraph">JSON::paragraphs</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#JSONtextNode">JSON::textNode</a></td></tr>
+	<tr><td>Comment:</td><td>May contain multiple nodes.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONstoreMicroBlogPostResponse">JSON::storeMicroBlogPostResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONstoreSettingsResponse">JSON::storeSettingsResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONstoreTextResponse">JSON::storeTextResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONtextNode">JSON::textNode</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueWikiText">Value::wikiText</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValuePath">Value::path</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueIsFollowing">Value::isFollowing</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONauthorGroup">JSON::authorGroup</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONuser">JSON::user</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueDisplayName">Value::displayName</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONuserData">JSON::userData</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueDisplayName">Value::displayName</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueDescription">Value::description</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONfollowees">JSON::followees</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#JSONblockedUsers">JSON::blockedUsers</a></td></tr>
+</tbody></table>
+<br>
+<br>
 <b><a name="WorkingTitle">CoDeBar is a working title and it as well as this API are subject to immediate change without notice.</a></b>
 <div style="height:100%;margin-top:-10px;"></div>
-</body>
-</html>
+
+</body></html>
