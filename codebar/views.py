@@ -44,15 +44,6 @@ def home(request, path):
     return render_to_response("index.html",
         context_instance=RequestContext(request))
 
-'''JSON::loadIndexResponse
-Content:	JSON::indexNode
-Comment:	May contain multiple indices.
-
-JSON::indexNode
-Content:	Value::shortTitle
- 	Value::fullTitle
- 	Value::index'''
-
 def load_index(request, path):
     prefix, path_type = parse_suffix(path)
     if 'arg_id' in path_type:
