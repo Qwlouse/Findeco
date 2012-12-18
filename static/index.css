@@ -81,11 +81,11 @@ br,.clear {
     position: absolute;
     top: 25px; 
     bottom: 25px; 
-    width: 25%;
+    width: 35%;
     border: 1px solid black;
 }
 .center {
-    left: 37.5%;
+    left: 20%;
 }
 .right {
     right: 0;
@@ -95,9 +95,10 @@ br,.clear {
     width: auto;
 }
 .swap {
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-left: 5px;
-    width: 25%;
+    width: 35%;
     height: 100%;
     float: left;
     overflow: hidden;
@@ -110,4 +111,5 @@ br,.clear {
     height: 100%;
     background: grey;
     margin-left: 5px;
+    border: 1px solid white;
 }
