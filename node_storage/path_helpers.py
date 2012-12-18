@@ -29,7 +29,26 @@ from __future__ import division, print_function, unicode_literals
 from models import Node
 
 def get_node_for_path(path):
+    """
+    Return the node corresponding to given path.
+    """
     return Node.objects.filter(id=0)[0]
 
 def get_favorite_if_slot(node):
+    """
+    Returns the favorite child if given a slot and returns node otherwise.
+    """
     return None
+
+def get_arguments_for(node, arg_type='all'):
+    """
+    Return a list of arguments for node.
+    arg_type can be one of: 'pro', 'con', 'neut', 'all'
+    """
+    return []
+
+def get_ordered_children_for(node):
+    """
+    Return a list of children for given node ordered by their position.
+    """
+    return []

@@ -34,16 +34,42 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 
+from codebar.paths import parse_suffix
+import node_storage as backend
+
 def json_response(data):
     return HttpResponse(json.dumps(data), mimetype='application/json')
 
 def home(request, path):
-    return render_to_response("index.html", {"pagename":"Root"},
+    return render_to_response("index.html",
         context_instance=RequestContext(request))
 
+'''JSON::loadIndexResponse
+Content:	JSON::indexNode
+Comment:	May contain multiple indices.
+
+JSON::indexNode
+Content:	Value::shortTitle
+ 	Value::fullTitle
+ 	Value::index'''
+
 def load_index(request, path):
+    prefix, path_type = parse_suffix(path)
+    if 'arg_id' in path_type:
+        return json_response({'error':'NotPossibleForSingleArgument'})
+
+    node = backend.get_node_for_path(prefix)
+
+    if 'arg_type' in path_type:
+        nodelist = backend.get_arguments_for(node, path_type['arg_type'])
+    else:
+        nodelist = backend.get_ordered_children_for(node)
+
     # Backend foo
-    data = "Yes, we can!"
+    data = [{'shortTitle':n.get_short_title(),
+             'fullTitle':n.get_full_title(),
+             'index':n.get_index()
+            } for n in nodelist]
     return json_response(data)
 
 def load_graph_data(request, graph_data_type, path):

@@ -67,13 +67,13 @@ def parse_suffix(path):
     if len(parts) == 1:
         return prefix, {'slot':suffix}
     prefix = (prefix + '/' + parts[0] + '.' + parts[1]).strip('/')
-    node_type = {}
+    path_type = {}
     if len(parts) >= 3:
-        node_type['arg_type'] = parts[2]
+        path_type['arg_type'] = parts[2]
     if len(parts) == 4:
-        node_type['arg_id'] = int(parts[3])
+        path_type['arg_id'] = int(parts[3])
 
-    return prefix, node_type
+    return prefix, path_type
 
 
 def parse_path(path):

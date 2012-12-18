@@ -36,7 +36,7 @@ class Node(models.Model):
         'self',
         symmetrical=False,
         related_name="children",
-        through=NodeOrder
+        through='NodeOrder'
     )
 
     sources = models.ManyToManyField(
@@ -44,8 +44,26 @@ class Node(models.Model):
         symmetrical=False,
         related_name="derivates",
         blank=True,
-        through=Derivation
+        through='Derivation'
     )
+
+    def get_short_title(self, parent):
+        """
+        Return the short title used to identify this node in parent.
+        """
+        pass
+
+    def get_full_title(self):
+        """
+        Return the full title of this node.
+        """
+        pass
+
+    def get_index(self, parent):
+        """
+        Return the index of this node within parent.
+        """
+        pass
 
 ARGUMENTTYPE = (
     ('p', 'pro'),
