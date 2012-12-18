@@ -25,6 +25,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
+from django.http import HttpResponse
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -33,6 +34,9 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 
+def json_response(data):
+    return HttpResponse(json.dumps(data), mimetype='application/json')
+
 def home(request, path):
     return render_to_response("index.html", {"pagename":"Root"},
         context_instance=RequestContext(request))
@@ -40,32 +44,32 @@ def home(request, path):
 def load_index(request, path):
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
 
 def load_graph_data(request, graph_data_type, path):
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
 
 def load_microblogging(request, path, select_id, microblogging_load_type):
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
 
 def load_text(request, path):
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
 
 def load_user_info(request, name):
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
 
 def load_user_settings(request):
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
 
 def get_user_data(user):
     return {
@@ -82,25 +86,25 @@ def login(request):
     if user is not None:
         if user.is_active:
             django_login(request, user)
-            return json.dumps({
+            return json_response({
                 'success':True,
                 'userData':get_user_data(user)
             })
         else:
-            return json.dumps({
+            return json_response({
                 'success':False,
                 'error':'DisabledAccount.',
                 'userData':get_user_data(user)
             })
     else:
-        return json.dumps({
+        return json_response({
             'success':False,
             'error':'InvalidLogin'
         })
 
 def logout(request):
     django_logout(request)
-    return json.dumps({'success':True})
+    return json_response({'success':True})
 
 def mark_node(request, path, mark_type):
     """
@@ -109,19 +113,19 @@ def mark_node(request, path, mark_type):
     """
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
 
 def store_microblog_post(request, path):
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
 
 def store_settings(request):
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
 
 def store_text(request, path):
     # Backend foo
     data = "Yes, we can!"
-    return json.dumps(data)
+    return json_response(data)
