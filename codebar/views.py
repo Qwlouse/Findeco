@@ -29,6 +29,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import json
+from django.contrib.auth import authenticate, login
 
 def home(request, path):
     return render_to_response("index.html", {"pagename":"Root"},
@@ -64,10 +65,36 @@ def load_user_settings(request):
     data = "Yes, we can!"
     return json.dumps(data)
 
+def get_user_data(user):
+    return {
+        'displayName':user.username,
+        'description':user.profile.description,
+        'followees':user.profile.followees.all(),
+        'blockedUsers':[]
+    }
+
 def login(request):
-    # Backend foo
-    data = "Yes, we can!"
-    return json.dumps(data)
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return json.dumps({
+                'success':True,
+                'userData':get_user_data(user)
+            })
+        else:
+            return json.dumps({
+                'success':False,
+                'error':'DisabledAccount.',
+                'userData':get_user_data(user)
+            })
+    else:
+        return json.dumps({
+            'success':False,
+            'error':'InvalidLogin'
+        })
 
 def logout(request):
     # Backend foo
