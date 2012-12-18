@@ -62,7 +62,7 @@ def create_post(text, author):
     for i in range(1, len(split_text), 2):
         path = split_text[i]
         try:
-            n = backend.get_node_with_text_for_path(path)
+            n = backend.get_favorite_if_slot(backend.get_node_for_path(path))
             split_text[i] = '<a href="{0}">{1}</a>'.format(path, path.rsplit('/',1)[1])
             nodes.append(n)
         except ObjectDoesNotExist:
