@@ -57,6 +57,25 @@ PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
 
 pathMatcher = re.compile(PATH)
 
+def parse_suffix(path):
+    path = path.strip('/')
+    if not path:
+        return "", {}
+    parts = path.rsplit('/',1)
+    prefix, suffix = parts if len(parts) == 2 else ("", path)
+    parts = suffix.split('.')
+    if len(parts) == 1:
+        return prefix, {'slot':suffix}
+    prefix = (prefix + '/' + parts[0] + '.' + parts[1]).strip('/')
+    node_type = {}
+    if len(parts) >= 3:
+        node_type['arg_type'] = parts[2]
+    if len(parts) == 4:
+        node_type['arg_id'] = int(parts[3])
+
+    return prefix, node_type
+
+
 def parse_path(path):
     path = path.strip('/')  # strip leading and trailing slashes
     parts = path.split('/')
