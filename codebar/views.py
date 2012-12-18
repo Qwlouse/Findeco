@@ -37,27 +37,27 @@ def home(request, path):
     return render_to_response("index.html", {"pagename":"Root"},
         context_instance=RequestContext(request))
 
-def load_index(path):
+def load_index(request, path):
     # Backend foo
     data = "Yes, we can!"
     return json.dumps(data)
 
-def load_graph_data(graph_data_type, path):
+def load_graph_data(request, graph_data_type, path):
     # Backend foo
     data = "Yes, we can!"
     return json.dumps(data)
 
-def load_microblogging(path, select_id, microblogging_load_type):
+def load_microblogging(request, path, select_id, microblogging_load_type):
     # Backend foo
     data = "Yes, we can!"
     return json.dumps(data)
 
-def load_text(path):
+def load_text(request, path):
     # Backend foo
     data = "Yes, we can!"
     return json.dumps(data)
 
-def load_user_info(name):
+def load_user_info(request, name):
     # Backend foo
     data = "Yes, we can!"
     return json.dumps(data)
@@ -102,7 +102,7 @@ def logout(request):
     django_logout(request)
     return json.dumps({'success':True})
 
-def mark_node(path, mark_type):
+def mark_node(request, path, mark_type):
     """
     If an argument is marked but wasn't created at this location it must be copied and the marking is to apply to the
     copied one.
@@ -111,7 +111,7 @@ def mark_node(path, mark_type):
     data = "Yes, we can!"
     return json.dumps(data)
 
-def store_microblog_post(path):
+def store_microblog_post(request, path):
     # Backend foo
     data = "Yes, we can!"
     return json.dumps(data)
@@ -121,7 +121,7 @@ def store_settings(request):
     data = "Yes, we can!"
     return json.dumps(data)
 
-def store_text(path):
+def store_text(request, path):
     # Backend foo
     data = "Yes, we can!"
     return json.dumps(data)
