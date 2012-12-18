@@ -24,3 +24,19 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
+from models import get_feed_for_user
+from codebar.views import json_response
+
+def load_microblogging(request, path, select_id, microblogging_load_type):
+    # Backend foo
+    data = "Yes, we can!"
+    return json_response(data)
+
+def load_timeline(request):
+    feed = get_feed_for_user(request.user)
+    return json_response(feed)
+
+def store_microblog_post(request, path):
+    # Backend foo
+    data = "Yes, we can!"
+    return json_response(data)

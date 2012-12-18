@@ -119,7 +119,7 @@ class Reference(models.Model):
         return u'%s references "%s" on %s' % (self.referencer.username, self.entry, self.time)
 
 
-def getFeedForUser(user):
+def get_feed_for_user(user):
     references = Reference.objects.filter(referencer=user).order_by('-time')
     referenced_entries = set()
     references_and_entries = []

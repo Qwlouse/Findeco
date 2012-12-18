@@ -30,8 +30,9 @@ from django.core.urlresolvers import resolve, Resolver404
 
 import unittest
 
-from ..views import load_user_settings, load_index, load_graph_data, load_microblogging, load_text, load_user_info
-from ..views import login, logout, mark_node, store_microblog_post, store_settings, store_text
+from ..views import load_user_settings, load_index, load_graph_data, load_text, load_user_info
+from ..views import login, logout, mark_node, store_settings, store_text
+from microblogging.views import load_microblogging, store_microblog_post
 
 ########################### Test the API calls #################################
 valid_routes = [

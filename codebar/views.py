@@ -68,11 +68,6 @@ def load_graph_data(request, graph_data_type, path):
     data = "Yes, we can!"
     return json_response(data)
 
-def load_microblogging(request, path, select_id, microblogging_load_type):
-    # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
-
 def load_text(request, path):
     # Backend foo
     data = "Yes, we can!"
@@ -128,11 +123,6 @@ def mark_node(request, path, mark_type):
     If an argument is marked but wasn't created at this location it must be copied and the marking is to apply to the
     copied one.
     """
-    # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
-
-def store_microblog_post(request, path):
     # Backend foo
     data = "Yes, we can!"
     return json_response(data)
