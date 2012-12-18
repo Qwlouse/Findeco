@@ -29,7 +29,9 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import json
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as django_login
+from django.contrib.auth import logout as django_logout
 
 def home(request, path):
     return render_to_response("index.html", {"pagename":"Root"},
@@ -79,7 +81,7 @@ def login(request):
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
-            login(request, user)
+            django_login(request, user)
             return json.dumps({
                 'success':True,
                 'userData':get_user_data(user)
@@ -97,9 +99,8 @@ def login(request):
         })
 
 def logout(request):
-    # Backend foo
-    data = "Yes, we can!"
-    return json.dumps(data)
+    django_logout(request)
+    return json.dumps({'success':True})
 
 def mark_node(path, mark_type):
     """
