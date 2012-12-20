@@ -101,33 +101,26 @@ class Post(models.Model):
         symmetrical=False,
         blank=True)
     time = models.DateTimeField('date posted', auto_now=True)
+    is_reference_to = models.ForeignKey(
+        'self',
+        related_name='referenced',
+        blank=True,
+        null=True)
 
     def __unicode__(self):
-        return u'%s says "%s" on %s' % (self.author.username, self.text, self.time)
-
-
-class Reference(models.Model):
-    entry = models.ForeignKey(
-        Post,
-        related_name='references')
-    time = models.DateTimeField('date referenced', auto_now=True)
-    referencer = models.ForeignKey(
-        User,
-        related_name='microblogging_references')
-
-    def __unicode__(self):
-        return u'%s references "%s" on %s' % (self.referencer.username, self.entry, self.time)
+        if self.is_reference_to:
+            return u'%s references "%s" by %s on %s' % (
+            self.author.username, self.text, self.is_reference_to.author.username, self.time)
+        else:
+            return u'%s says "%s" on %s' % (self.author.username, self.text, self.time)
 
 
 def get_feed_for_user(user):
-    references = Reference.objects.filter(referencer=user).order_by('-time')
-    referenced_entries = set()
-    references_and_entries = []
-    for reference in references:
-        if not reference.entry_id in referenced_entries:
-            referenced_entries.add(reference.entry_id)
-            references_and_entries.append((reference, reference.entry))
-    followed = Q(user__followers=user)
-    own = Q(user = user)
-    entries = Post.objects.filter(followed | own).order_by('-time')
-    return [e for e in entries if not e.id in referenced_entries], references_and_entries
+    """
+    Use this function to get the timeline for the given user.
+
+    Referenced posts will show up in the timeline as the originals do. Hiding of the original posts for a tidy
+    timeline should be done in the frontend due to performance resons.
+    """
+    posts = Post.objects.filter(followed | own).order_by('-time')
+    return posts
