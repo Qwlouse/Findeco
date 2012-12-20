@@ -122,5 +122,7 @@ def get_feed_for_user(user):
     Referenced posts will show up in the timeline as the originals do. Hiding of the original posts for a tidy
     timeline should be done in the frontend due to performance resons.
     """
+    followed = Q(user__followers=user)
+    own = Q(user = user)
     posts = Post.objects.filter(followed | own).order_by('-time')
     return posts
