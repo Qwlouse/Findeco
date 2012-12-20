@@ -24,19 +24,35 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-from models import get_feed_for_user
+from django.db.models import Q
+from models import Post, get_feed_for_user, create_post
 from codebar.views import json_response
+import node_storage as backend
 
 def load_microblogging(request, path, select_id, microblogging_load_type):
-    # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
+    node = backend.get_node_for_path(path)
+    if microblogging_load_type == "newer":
+        startpoint = Q(pk__gt=select_id)
+    else: # older
+        startpoint = Q(pk__st=select_id)
+    posts = Post.objects.filter(node_references__in=node).filter(startpoint)[:20]
+    response_list = []
+    for post in posts:
+        authors = [{'displayName': post.author.username}]
+        if post.is_reference_to: authors.append({'displayName': post.is_reference_to.author.username})
+        response_list.append({'microBlogText': post.text,
+                              'authorGroup': authors,
+                              'microBlogTime': post.time,
+                              'microBlogID': post.pk})
+    return json_response(response_list)
 
 def load_timeline(request):
     feed = get_feed_for_user(request.user)
     return json_response(feed)
 
 def store_microblog_post(request, path):
-    # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            create_post(request.POST['microBlogText'], request.user)
+            return json_response({'success': True})
+    return json_response({'success': False})
