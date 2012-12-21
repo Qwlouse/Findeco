@@ -26,9 +26,40 @@
 ################################################################################
 
 from django.test import TestCase
-
+from django.contrib.auth.models import User
+from ..models import create_post
+from ..views import load_microblogging
+import node_storage as backend
 
 class SimpleTest(TestCase):
+    def test_post_creation(self):
+        node1 = backend.models.Node()
+        text1 = backend.models.Text()
+        text1.node = node1
+        text1.text = "Testtext"
+        max = User()
+        max.username = "max"
+        text1.author = max
+        text2 = backend.models.Text()
+        node2 = backend.models.Node()
+        text2.node = node2
+        text2.text = "Testtext Nummer 2"
+        text2.author = max
+        max.save()
+        node1.save()
+        node2.save()
+        text1.save()
+        text2.save()
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla gut.",max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", max))
+        request = False
+        request.user = max
+        response = load_microblogging(request,"/Bla.1",0,"older")
+        print(response)
+        self.assertEqual(response,"{Zeuch}")
+
     def test_basic_addition(self):
         """
         Tests that 1 + 1 always equals 2.
