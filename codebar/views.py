@@ -166,7 +166,10 @@ def mark_node(request, path, mark_type):
             mark.nodes.create(node)
             mark.save()
             return json_response({'success':True})
-    return json_response({'success':False})
+        else:
+            return json_response({'success':False, 'error': "Invalid path."})
+    else:
+        return json_response({'success':False, 'error': "You're not authenticated."})
 
 def store_settings(request):
     # Backend foo
