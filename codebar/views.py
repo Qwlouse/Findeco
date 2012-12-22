@@ -137,9 +137,17 @@ def mark_node(request, path, mark_type):
         node = backend.get_node_for_path(path)
         if node:
             if mark_type in ("spam", "notspam"):
-                mark = backend.SpamFlag()
+                marks = backend.SpamFlag.objects.filter(node=node)
+                if len(marks) >= 1:
+                    mark = marks[0]
+                else:
+                    mark = backend.SpamFlag()
             else: # follow or unfollow
-                mark = backend.Vote()
+                marks = backend.Vote.objects.filter(node=node)
+                if len(marks) >= 1:
+                    mark = marks[0]
+                else:
+                    mark = backend.Vote()
             mark.user = request.user
             mark.nodes.create(node)
             mark.save()
