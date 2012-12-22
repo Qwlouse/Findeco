@@ -3,7 +3,8 @@
 # CoDebAr is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
+# Johannes Merkert <jonny@pinae.net>
 # This file is part of CoDebAr.
 #
 # CoDebAr is free software; you can redistribute it and/or modify it under
@@ -25,7 +26,35 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
+from models import Node
 
-from models import Node, Vote
-from path_helpers import get_node_for_path, get_favorite_if_slot
-from path_helpers import get_arguments_for, get_ordered_children_for, get_similar_path
+def get_node_for_path(path):
+    """
+    Return the node corresponding to given path.
+    """
+    return Node.objects.filter(id=0)[0]
+
+def get_favorite_if_slot(node):
+    """
+    Returns the favorite child if given a slot and returns node otherwise.
+    """
+    return None
+
+def get_arguments_for(node, arg_type='all'):
+    """
+    Return a list of arguments for node.
+    arg_type can be one of: 'pro', 'con', 'neut', 'all'
+    """
+    return []
+
+def get_ordered_children_for(node):
+    """
+    Return a list of children for given node ordered by their position.
+    """
+    return []
+
+def get_similar_path(node, path=None):
+    """
+    Return a path to the node which corresponds to the given path if possible.
+    """
+    return "Not.1/Implemented.7"

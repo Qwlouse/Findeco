@@ -28,7 +28,7 @@ from __future__ import division, print_function, unicode_literals
 
 import unittest
 
-from codebar.paths import pathMatcher, parse_path
+from codebar.paths import pathMatcher, parse_path, parse_suffix
 
 class PathRegExTest(unittest.TestCase):
     def test_matches_valid_paths(self):
@@ -88,6 +88,36 @@ class PathRegExTest(unittest.TestCase):
             m = pathMatcher.match(ip)
             if m :
                 self.assertNotEqual(m.group(), ip)
+
+    def test_parse_suffix(self):
+        desired = [
+            ("", "", {}),
+            ("Bildung", "", {'slot':'Bildung'}),
+            ("Bildung/", "", {'slot':'Bildung'}),
+            ("Bildung.2", "Bildung.2", {}),
+            ("Bildung.8/", "Bildung.8", {}),
+            ("Bildung.6/Einleitung", "Bildung.6", {'slot':'Einleitung'}),
+            ("Bildung.7/Einleitung.4", "Bildung.7/Einleitung.4", {}),
+            ("Bildung.1/Einleitung.3/foo.7",
+             "Bildung.1/Einleitung.3/foo.7",
+             {}),
+            ("path.4/with.2/argument.2.pro",
+             "path.4/with.2/argument.2",
+             {'arg_type':'pro'}),
+            ("path.4/with.2/argument.2.neut",
+             "path.4/with.2/argument.2",
+             {'arg_type':'neut'}),
+            ("path.4/with.2/argument.2.con",
+             "path.4/with.2/argument.2",
+             {'arg_type':'con'}),
+            ("path.4/foo.2.con.7",
+             "path.4/foo.2",
+             {'arg_type':'con', 'arg_id':7})
+        ]
+        for path, nodes, last in desired:
+            n, l = parse_suffix(path)
+            self.assertEqual(nodes, n)
+            self.assertEqual(last, l)
 
     def test_path_parsing(self):
         desired = [

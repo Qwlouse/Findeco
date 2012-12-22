@@ -53,8 +53,10 @@ urlpatterns = patterns('',
         name='load_index'),
 
     url(r'^\.json_loadMicroBlogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + PATH + '$',
-        'codebar.views.load_microblogging',
+        'microblogging.views.load_microblogging',
         name='load_microblogging'),
+
+    #TODO: load_timeline
 
     url(r'^\.json_loadText/' + PATH + '$',
         'codebar.views.load_text',
@@ -77,7 +79,7 @@ urlpatterns = patterns('',
         name='mark_node'),
 
     url(r'^\.json_storeMicroBlogPost/' + PATH + '$',
-        'codebar.views.store_microblog_post',
+        'microblogging.views.store_microblog_post',
         name='store_microblog_post'),
 
     url(r'^\.json_storeSettings/?$',

@@ -3,7 +3,7 @@
 # CoDebAr is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2012 Johannes Merkert <jonny@pinae.net>
 # This file is part of CoDebAr.
 #
 # CoDebAr is free software; you can redistribute it and/or modify it under
@@ -24,8 +24,5 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-from __future__ import division, print_function, unicode_literals
 
-from models import Node, Vote
-from path_helpers import get_node_for_path, get_favorite_if_slot
-from path_helpers import get_arguments_for, get_ordered_children_for, get_similar_path
+# This empty file tells Python that this directory is a package

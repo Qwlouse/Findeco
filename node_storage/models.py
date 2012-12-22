@@ -29,14 +29,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 #TODO type for node
-#Todo get a path to root
+#Todo get a path to root (see path_helpers)
 
 class Node(models.Model):
     parents = models.ManyToManyField(
         'self',
         symmetrical=False,
         related_name="children",
-        through=NodeOrder
+        through='NodeOrder'
     )
 
     sources = models.ManyToManyField(
@@ -44,8 +44,26 @@ class Node(models.Model):
         symmetrical=False,
         related_name="derivates",
         blank=True,
-        through=Derivation
+        through='Derivation'
     )
+
+    def get_short_title(self, parent): # This is deprecated
+        """
+        Return the short title used to identify this node in parent.
+        """
+        pass
+
+    def get_full_title(self):
+        """
+        Return the full title of this node.
+        """
+        pass
+
+    def get_index(self, parent):
+        """
+        Return the index of this node within parent.
+        """
+        pass
 
 ARGUMENTTYPE = (
     ('p', 'pro'),
@@ -59,12 +77,13 @@ class Argument(Node):
     )
     type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
 
-
 class Text(models.Model):
-    node = models.ForeignKey(Node)
+    node = models.ForeignKey(Node, related_name="text_object")
     text = models.TextField()
-    author = models.ForeignKey(User)
-
+    authors = models.ManyToManyField(
+        User,
+        related_name='author_in'
+    )
 
 class Derivation(models.Model):
     source=models.ForeignKey(Node)
