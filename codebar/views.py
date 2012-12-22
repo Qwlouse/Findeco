@@ -100,9 +100,11 @@ def load_text(request, path):
                           'isFollowing': len(backend.Vote.objects.filter(nodes__in=node).filter(user=request.user))})
 
 def load_user_info(request, name):
-    # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
+    # This is an example
+    return json_response({'displayName':"Maria Musterfrau",
+                          'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
+                          'followers':[{'displayName':"Max Mustermann"},{'displayName':"Egon Mustermann"}],
+                          'followees':[{'displayName':"Max Mustermann"},{'displayName':"Egon Mustermann"}]})
 
 def load_user_settings(request):
     # Backend foo
