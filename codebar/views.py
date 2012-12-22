@@ -64,9 +64,25 @@ def load_index(request, path):
     return json_response(data)
 
 def load_graph_data(request, graph_data_type, path):
-    # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
+    # This is an example
+    return json_response({'graphDataChildren':[{'index':1,
+                                                'authorGroup':[{'displayName':"Max Mustermann"}],
+                                                'follows':210,
+                                                'unFollows':136,
+                                                'newFollows':13,
+                                                'origin':"Bla.4/blubb.3"},
+                                               {'index':2,
+                                                'authorGroup':[{'displayName':"Max Mustermann"}],
+                                                'follows':10,
+                                                'unFollows':536,
+                                                'newFollows':500,
+                                                'origin':"Bla.4/blubb.4"}],
+                          'graphDataRelated':[{'index':14,
+                                               'authorGroup':[{'displayName':"Max Mustermann"}],
+                                               'follows':110,
+                                               'unFollows':176,
+                                               'newFollows':19,
+                                               'origin':"Bla.4/blubb.7"}]})
 
 def load_text(request, path):
     prefix, path_type = parse_suffix(path)
