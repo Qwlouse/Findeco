@@ -52,7 +52,7 @@ class Node(models.Model):
         through='Derivation'
     )
 
-    type = models.CharField(max_length=1, choices=NODETYPE)
+    node_type = models.CharField(max_length=1, choices=NODETYPE)
 
     def get_short_title(self, parent): # This is deprecated
         """
@@ -82,7 +82,7 @@ class Argument(Node):
         Node,
         related_name='arguments'
     )
-    type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
+    arg_type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
 
 class Text(models.Model):
     node = models.ForeignKey(Node, related_name="text_object")

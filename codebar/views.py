@@ -136,6 +136,20 @@ def mark_node(request, path, mark_type):
     if request.user.is_authenticated:
         node = backend.get_node_for_path(path)
         if node:
+            if backend.get_similar_path(node, path) != path: #This means it is an argument which wasn't created here
+                a = backend.Argument()
+                a.concerns = backend.get_path_parent(node, path)
+                a.arg_type = node.arg_type
+                a.parents = node.parents
+                a.sources = node.sources
+                a.node_type = node.node_type
+                a.save()
+                t = backend.Text()
+                t.node = a
+                t.text = node.text_object.text
+                t.authors = node.text_object.authors
+                t.save()
+                node = a
             if mark_type in ("spam", "notspam"):
                 marks = backend.SpamFlag.objects.filter(node=node)
                 if len(marks) >= 1:
@@ -152,7 +166,7 @@ def mark_node(request, path, mark_type):
             mark.nodes.create(node)
             mark.save()
             return json_response({'success':True})
-    return json_response({'success':False}) # Should we specify the reason?
+    return json_response({'success':False})
 
 def store_settings(request):
     # Backend foo

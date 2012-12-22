@@ -58,3 +58,9 @@ def get_similar_path(node, path=None):
     Return a path to the node which corresponds to the given path if possible.
     """
     return "Not.1/Implemented.7"
+
+def get_path_parent(node, path):
+    """
+    Return the parent node which corresponds to the given path
+    """
+    return None
