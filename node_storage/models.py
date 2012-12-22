@@ -29,7 +29,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 #TODO type for node
-#Todo get a path to root
+#Todo get a path to root (see path_helpers)
 
 class Node(models.Model):
     parents = models.ManyToManyField(
