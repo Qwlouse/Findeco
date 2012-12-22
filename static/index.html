@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<!--Metadaten fehlen noch-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="stylesheet" href="index.css" type="text/css"/>
+<script type="text/javascript" src="language.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!--<script type="text/javascript" src="js/jquery.socialshareprivacy.js"></script>-->
+<script type="text/javascript" src="codebar.js"></script>
+<noscript>
+<p style="color:red;">Du hast Skripte in deinem Browser deaktiviert. CoDeBar benötigt für korrekte Funktionalität jedoch JavaScript und Cookies.
+<br/>Bitte aktiviere JavaScript und lade die Seite neu.</p>
+</noscript>
+<script type="text/javascript">
+function load(){
+    $(document).ajaxStart(function() {
+        $('#loading').show();
+    });
+    $(document).ajaxStop(function() {
+        $('#loading').hide();
+        Controller.forceLocation();
+    });
+    
+    var box1 = BoxRegister.newBox();
+    box1.show('center');
+    
+    $.get('/CoDeBar/tests.php?.json_loadText/topic.1/subtopic.1',function(json){
+        var data = new ClassData();
+        data.load(json);
+        box1.printData(data);
+    },'json');
+    
+    var box2 = BoxRegister.newBox();
+    box2.show('right');
+    var box3 = BoxRegister.newBox();
+    box3.show('left');
+    var box4 = BoxRegister.newBox();
+    box4.show('swap',box3);
+    var box5 = BoxRegister.newBox();
+    box5.show('swap',box3);
+}
+window.onload = load;
+    
+window.onhashchange = function() {
+    Controller.loadLocation(document.location.hash);
+};
+</script>
+
+<title>CoDeBar</title>
+</head>
+<body>
+    <div id="header">
+        <div id="logo"></div>
+        <ul id="navigation">
+            <li><a id="home" onclick="Main.load(this)">Home</a></li>
+            <li><a id="content" onclick="Main.load(this)">Content</a></li>
+        </ul>
+    </div>
+    <div id="container"></div>
+    <div id="loading"></div>
+</body>
+</html>

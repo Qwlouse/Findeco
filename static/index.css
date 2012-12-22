@@ -76,28 +76,51 @@ br,.clear {
     background-image: url('css/images/pbar-ani.gif');
     background-repeat: no-repeat;
     background-position: center center;
+    background-color: lightgrey;
+		
+	/* Theoretically for IE 8 & 9 (more valid) */	
+	/* ...but not required as filter works too */
+	/* should come BEFORE filter */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	
+	/* This works in IE 8 & 9 too */
+	/* ... but also 5, 6, 7 */
+    filter: alpha(opacity=80);
+	
+	/* Older than Firefox 0.9 */
+	-moz-opacity:0.8;
+	
+	/* Safari 1.x (pre WebKit!) */
+	-khtml-opacity: 0.8;
+    
+	/* Modern!
+	/* Firefox 0.9+, Safari 2?, Chrome any?
+	/* Opera 9+, IE 9+ */
+	opacity: 0.8;
 }
-.window {
+.box {
     position: absolute;
     top: 25px; 
     bottom: 25px; 
-    width: 25%;
-    border: 1px solid black;
+    width: 35%;
 }
 .center {
-    left: 37.5%;
+    left: 20%;
+    border: 1px solid black;
 }
 .right {
     right: 0;
+    border: 1px solid black;
 }
 .left {
     left: 0;
     width: auto;
 }
 .swap {
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-left: 5px;
-    width: 25%;
+    width: 35%;
     height: 100%;
     float: left;
     overflow: hidden;
@@ -110,4 +133,8 @@ br,.clear {
     height: 100%;
     background: grey;
     margin-left: 5px;
+    border: 1px solid white;
+}
+.innerContent {
+    padding: 15px;
 }
