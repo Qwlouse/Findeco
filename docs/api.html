@@ -450,6 +450,7 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 <table>
 	<tbody><tr><td>Content:</td><td><a href="#JSONindexNode">JSON::indexNode</a></td></tr>
 	<tr><td>Comment:</td><td>May contain multiple nodes.</td></tr>
+	<tr><td>Example:</td><td>{"loadIndexResponse":[{"shortTitle":"subsubtopic","index":1,"fullTitle":"This is a subsubtopic!","authorGroup":["author1","author2"]},{"shortTitle":"subsubtopic2","index":1,"fullTitle":"This is a second subsubtopic!","authorGroup":["author1","author3"]}]}</td></tr>
 </tbody></table>
 
 <br>
@@ -465,6 +466,7 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 	<tbody><tr><td>Content:</td><td><a href="#JSONparagraph">JSON::paragraphs</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueIndex">Value::index</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueIsFollowing">Value::isFollowing</a></td></tr>
+	<tr><td>Example:</td><td>{"loadTextResponse":{"paragraphs":[{"wikiText":"= This is a subsubtopic! =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic.1","isFollowing":1,"authorGroup":["author1","author2"]},{"wikiText":"= This is a second subsubtopic! =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":["author1","author3"]}],"isFollowing":1}}</td></tr>
 </tbody></table>
 
 <br>
