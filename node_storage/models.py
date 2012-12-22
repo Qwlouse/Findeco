@@ -47,7 +47,7 @@ class Node(models.Model):
         through='Derivation'
     )
 
-    def get_short_title(self, parent):
+    def get_short_title(self, parent): # This is deprecated
         """
         Return the short title used to identify this node in parent.
         """
@@ -77,12 +77,13 @@ class Argument(Node):
     )
     type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
 
-
 class Text(models.Model):
-    node = models.ForeignKey(Node)
+    node = models.ForeignKey(Node, related_name="text_object")
     text = models.TextField()
-    author = models.ForeignKey(User)
-
+    authors = models.ManyToManyField(
+        User,
+        related_name='author_in'
+    )
 
 class Derivation(models.Model):
     source=models.ForeignKey(Node)

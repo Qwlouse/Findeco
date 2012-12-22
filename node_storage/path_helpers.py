@@ -52,3 +52,9 @@ def get_ordered_children_for(node):
     Return a list of children for given node ordered by their position.
     """
     return []
+
+def get_similar_path(node, path=None):
+    """
+    Return a path to the node which corresponds to the given path if possible.
+    """
+    return "Not.1/Implemented.7"

@@ -69,9 +69,19 @@ def load_graph_data(request, graph_data_type, path):
     return json_response(data)
 
 def load_text(request, path):
-    # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
+    prefix, path_type = parse_suffix(path)
+    node = backend.get_favorite_if_slot(backend.get_node_for_path(prefix))
+    paragraphs = []
+    for slot in backend.get_ordered_children_for(node):
+        best_choice = backend.get_favorite_if_slot(slot)
+        paragraphs.append({'wikiText': best_choice.text_object.text,
+                           'path': backend.get_similar_path(best_choice, path),
+                           'isFollowing': len(
+                               backend.Vote.objects.filter(nodes__in=best_choice).filter(user=request.user)),
+                           'authorGroup': [{'displayName': a.username} for a in best_choice.text_object.authors]})
+    return json_response({'paragraphs': paragraphs,
+                          'index': node.get_index(),
+                          'isFollowing': len(backend.Vote.objects.filter(nodes__in=node).filter(user=request.user))})
 
 def load_user_info(request, name):
     # Backend foo
