@@ -107,9 +107,12 @@ def load_user_info(request, name):
                           'followees':[{'displayName':"Max Mustermann"},{'displayName':"Egon Mustermann"}]})
 
 def load_user_settings(request):
-    # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
+    # This is an example
+    return json_response({'success':True,
+                          'userData':{'displayName':"Maria Musterfrau",
+                                      'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
+                                      'followees':[{'displayName':"Max Mustermann"},{'displayName':"Egon Mustermann"}],
+                                      'blockedUsers':[]}})
 
 def get_user_data(user):
     return {
