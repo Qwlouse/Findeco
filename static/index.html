@@ -14,18 +14,37 @@
 </noscript>
 <script type="text/javascript">
 function load(){
-    var window = WindowRegister.newWindow();
-    window.show('center');
-    var window2 = WindowRegister.newWindow();
-    window2.show('right');
-    var window3 = WindowRegister.newWindow();
-    window3.show('left');
-    var window4 = WindowRegister.newWindow();
-    window4.show('swap',window3);
-    var window5 = WindowRegister.newWindow();
-    window5.show('swap',window3);
+    $(document).ajaxStart(function() {
+        $('#loading').show();
+    });
+    $(document).ajaxStop(function() {
+        $('#loading').hide();
+        Controller.forceLocation();
+    });
+    
+    var box1 = BoxRegister.newBox();
+    box1.show('center');
+    
+    $.get('/CoDeBar/tests.php?.json_loadText/topic.1/subtopic.1',function(json){
+        var data = new ClassData();
+        data.load(json);
+        box1.printData(data);
+    },'json');
+    
+    var box2 = BoxRegister.newBox();
+    box2.show('right');
+    var box3 = BoxRegister.newBox();
+    box3.show('left');
+    var box4 = BoxRegister.newBox();
+    box4.show('swap',box3);
+    var box5 = BoxRegister.newBox();
+    box5.show('swap',box3);
 }
 window.onload = load;
+    
+window.onhashchange = function() {
+    Controller.loadLocation(document.location.hash);
+};
 </script>
 
 <title>CoDeBar</title>
@@ -39,6 +58,6 @@ window.onload = load;
         </ul>
     </div>
     <div id="container"></div>
-    <div id="loading" class="ui-widget-overlay"></div>
+    <div id="loading"></div>
 </body>
 </html>
