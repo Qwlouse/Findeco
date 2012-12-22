@@ -28,9 +28,14 @@ from __future__ import division, print_function, unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
-#TODO type for node
 #Todo get a path to root (see path_helpers)
 
+NODETYPE = (
+    ('a', 'argument'),
+    ('l', 'structureNode'),
+    ('s', 'slot'),
+    ('t', 'textNode')
+    )
 class Node(models.Model):
     parents = models.ManyToManyField(
         'self',
@@ -46,6 +51,8 @@ class Node(models.Model):
         blank=True,
         through='Derivation'
     )
+
+    type = models.CharField(max_length=1, choices=NODETYPE)
 
     def get_short_title(self, parent): # This is deprecated
         """
