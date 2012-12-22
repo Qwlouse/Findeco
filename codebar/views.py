@@ -194,10 +194,8 @@ def mark_node(request, path, mark_type):
 
 def store_settings(request):
     # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
+    return json_response({'success':True})
 
 def store_text(request, path):
     # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
+    return json_response({'success':True})
