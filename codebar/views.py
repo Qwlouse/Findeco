@@ -133,9 +133,18 @@ def mark_node(request, path, mark_type):
     If an argument is marked but wasn't created at this location it must be copied and the marking is to apply to the
     copied one.
     """
-    # Backend foo
-    data = "Yes, we can!"
-    return json_response(data)
+    if request.user.is_authenticated:
+        node = backend.get_node_for_path(path)
+        if node:
+            if mark_type in ("spam", "notspam"):
+                mark = backend.SpamFlag()
+            else: # follow or unfollow
+                mark = backend.Vote()
+            mark.user = request.user
+            mark.nodes.create(node)
+            mark.save()
+            return json_response({'success':True})
+    return json_response({'success':False}) # Should we specify the reason?
 
 def store_settings(request):
     # Backend foo
