@@ -105,12 +105,15 @@ br,.clear {
     width: 25%;
 }
 .center {
-    left: 35%;
+    left: 15%;
     border: 1px solid black;
+    min-width: 200px;
 }
 .right {
     right: 0;
     border: 1px solid black;
+    min-width: 100px;
+    max-width: 300px;
 }
 .left {
     left: 0;
