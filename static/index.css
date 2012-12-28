@@ -102,10 +102,10 @@ br,.clear {
     position: absolute;
     top: 25px; 
     bottom: 25px; 
-    width: 35%;
+    width: 25%;
 }
 .center {
-    left: 20%;
+    left: 35%;
     border: 1px solid black;
 }
 .right {
@@ -120,7 +120,7 @@ br,.clear {
     padding-left: 10px;
     padding-right: 10px;
     margin-left: 5px;
-    width: 35%;
+    width: 25%;
     height: 100%;
     float: left;
     overflow: hidden;
