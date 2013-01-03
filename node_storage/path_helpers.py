@@ -26,7 +26,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from models import Node
+from models import Node, NodeOrder
 
 def get_node_for_path(path):
     """
@@ -51,7 +51,8 @@ def get_ordered_children_for(node):
     """
     Return a list of children for given node ordered by their position.
     """
-    return []
+    order = NodeOrder.objects.filter(parent=node).order_by('position')
+    return [oN.child for oN in order]
 
 def get_similar_path(node, path=None):
     """
