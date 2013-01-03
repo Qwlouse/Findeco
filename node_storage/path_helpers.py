@@ -26,6 +26,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
+from django.db.models import Count
 from models import Node, NodeOrder
 
 def get_node_for_path(path):
@@ -38,7 +39,10 @@ def get_favorite_if_slot(node):
     """
     Returns the favorite child if given a slot and returns node otherwise.
     """
-    return None
+    if node.node_type == 'slot':
+        return Node.objects.filter(parent__in=node).annotate(num_votes=Count('votes')).order_by('-num_votes')[0]
+    else:
+        return node
 
 def get_arguments_for(node, arg_type='all'):
     """
