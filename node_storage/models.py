@@ -27,6 +27,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Max
 
 #Todo get a path to root (see path_helpers)
 
@@ -53,6 +54,16 @@ class Node(models.Model):
     )
 
     node_type = models.CharField(max_length=1, choices=NODETYPE)
+
+    def append_child(self, child):
+        no = NodeOrder()
+        no.parent = self
+        no.child = child
+        no.position = self.children.aggregate(Max('position'))['position__max'] + 1
+        no.save()
+
+    def __unicode__(self):
+        return "id=%d, type=%s"%(self.id, self.node_type)
 
     def get_short_title(self, parent): # This is deprecated
         """
