@@ -112,8 +112,8 @@ class Derivation(models.Model):
         unique_together = (('source', 'derivate'), )
 
 class NodeOrder(models.Model):
-    parent = models.ForeignKey(Node, related_name='child_set')
     child = models.ForeignKey(Node, related_name='parent_set')
+    parent = models.ForeignKey(Node, related_name='child_set')
     position = models.IntegerField()
 
     class Meta:
