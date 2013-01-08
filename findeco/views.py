@@ -42,6 +42,7 @@ def json_response(data):
 
 def home(request, path):
     return render_to_response("main.html",
+        {"path": path},
         context_instance=RequestContext(request))
 
 def load_index(request, path):
