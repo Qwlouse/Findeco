@@ -30,9 +30,31 @@ from django.core.urlresolvers import reverse
 import unittest
 from ..views import home
 
+views = [('load_index', dict(path='')),
+         ('load_user_settings', dict(path='')),
+         ('load_graph_data', dict(path='')),
+         ('load_microblogging', dict(path='')),
+         ('load_text', dict(path='')),
+         ('load_user_info', dict(path='')),
+         ('login', dict(path='')),
+         ('logout', dict(path='')),
+         ('mark_node', dict(path='')),
+         ('store_microblog_post', dict(path='')),
+         ('store_settings', dict(path='')),
+         ('store_text', dict(path=''))
+]
+
+
 class ViewTest(unittest.TestCase):
-    def test_home_view_called(self):
+    def test_home_view_status_ok(self):
         client = Client()
         response = client.get(reverse(home, kwargs=dict(path='')))
         self.assertEqual(response.status_code, 200)
 
+    def test_all_api_views_return_json(self):
+        client = Client()
+        for v, kwargs in views:
+            client.get(reverse(v, kwargs=kwargs))
+
+    def test_load_index_view(self):
+        pass
