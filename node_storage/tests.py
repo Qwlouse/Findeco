@@ -33,19 +33,47 @@ Replace this with more appropriate tests for your application.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from path_helpers import get_favorite_if_slot
-from models import Node
+from models import Node, NodeOrder
 
 def setup():
     root = Node()
     root.node_type = 'structureNode'
     root.save()
-    return root
+    slot1 = Node()
+    slot1.node_type = 'slot'
+    slot1.save()
+    slot1_order = NodeOrder()
+    slot1_order.parent = root
+    slot1_order.child = slot1
+    slot1_order.position = 0
+    slot1_order.save()
+    text1 = Node()
+    text1.node_type = 'textNode'
+    text1.save()
+    text1_order = NodeOrder()
+    text1_order.parent = slot1
+    text1_order.child = text1
+    text1_order.position = 1
+    text1_order.save()
+    slot2 = Node()
+    slot2.node_type = 'slot'
+    slot2.save()
+    slot2_order = NodeOrder()
+    slot2_order.parent = root
+    slot2_order.child = slot2
+    slot2_order.position = 1
+    slot2_order.save()
+    return root, slot1, text1
 
 class Helpers_test(TestCase):
     def test_get_favorite_if_slot(self):
         """
         bla
         """
-        root = setup()
+        root, slot1, text1 = setup()
         n = get_favorite_if_slot(root)
         self.assertEqual(n, root)
+        n = get_favorite_if_slot(slot1)
+        self.assertEqual(n, text1)
+        n = get_favorite_if_slot(text1)
+        self.assertEqual(n, text1)
