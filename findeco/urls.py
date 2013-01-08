@@ -1,22 +1,22 @@
 #!/usr/bin/python
 # coding=utf-8
-# CoDebAr is dually licensed under GPLv3 or later and MPLv2.
+# Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
-# This file is part of CoDebAr.
+# This file is part of Findeco.
 #
-# CoDebAr is free software; you can redistribute it and/or modify it under
+# Findeco is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
 # Foundation; either version 3 of the License, or (at your option) any later
 # version.
 #
-# CoDebAr is distributed in the hope that it will be useful, but WITHOUT ANY
+# Findeco is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
 # A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# CoDebAr. If not, see <http://www.gnu.org/licenses/>.
+# Findeco. If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 #
 ################################################################################
@@ -27,7 +27,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
-from codebar.paths import PATH, ID
+from findeco.paths import PATH, ID
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
@@ -37,19 +37,19 @@ MARK_TYPE = r'(?P<mark_type>(spam)|(notspam)|(follow)|(unfollow))'
 
 
 urlpatterns = patterns('',
-    url(r'^' + PATH + '$', 'codebar.views.home', name='home'),
+    url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
 
 
     url(r'^\.json_loadUserSettings/?$',
-        'codebar.views.load_user_settings',
+        'findeco.views.load_user_settings',
         name='load_user_settings'),
 
     url(r'^\.json_loadGraphData/' + GRAPH_TYPE + '/' + PATH + '$',
-        'codebar.views.load_graph_data',
+        'findeco.views.load_graph_data',
         name='load_graph_data'),
 
     url(r'^\.json_loadIndex/' + PATH + '$',
-        'codebar.views.load_index',
+        'findeco.views.load_index',
         name='load_index'),
 
     url(r'^\.json_loadMicroBlogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + PATH + '$',
@@ -59,23 +59,23 @@ urlpatterns = patterns('',
     #TODO: load_timeline
 
     url(r'^\.json_loadText/' + PATH + '$',
-        'codebar.views.load_text',
+        'findeco.views.load_text',
         name='load_text'),
 
     url(r'^\.json_loadUserInfo/' + USERNAME + '/?$',
-        'codebar.views.load_user_info',
+        'findeco.views.load_user_info',
         name='load_user_info'),
 
     url(r'^\.json_login/?$',
-        'codebar.views.login',
+        'findeco.views.login',
         name='login'),
 
     url(r'^\.json_logout/?$',
-        'codebar.views.logout',
+        'findeco.views.logout',
         name='logout'),
 
     url(r'^\.json_markNode/' + MARK_TYPE + '/' + PATH + '$',
-        'codebar.views.mark_node',
+        'findeco.views.mark_node',
         name='mark_node'),
 
     url(r'^\.json_storeMicroBlogPost/' + PATH + '$',
@@ -83,11 +83,11 @@ urlpatterns = patterns('',
         name='store_microblog_post'),
 
     url(r'^\.json_storeSettings/?$',
-        'codebar.views.store_settings',
+        'findeco.views.store_settings',
         name='store_settings'),
 
     url(r'^\.json_storeText/' + PATH + '$',
-        'codebar.views.store_text',
+        'findeco.views.store_text',
         name='store_text'),
 
     # Uncomment the admin/doc line below to enable admin documentation:

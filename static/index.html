@@ -7,9 +7,9 @@
 <script type="text/javascript" src="language.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <!--<script type="text/javascript" src="js/jquery.socialshareprivacy.js"></script>-->
-<script type="text/javascript" src="codebar.js"></script>
+<script type="text/javascript" src="findeco.js"></script>
 <noscript>
-<p style="color:red;">Du hast Skripte in deinem Browser deaktiviert. CoDeBar benötigt für korrekte Funktionalität jedoch JavaScript und Cookies.
+<p style="color:red;">Du hast Skripte in deinem Browser deaktiviert. Findeco benötigt für korrekte Funktionalität jedoch JavaScript und Cookies.
 <br/>Bitte aktiviere JavaScript und lade die Seite neu.</p>
 </noscript>
 <script type="text/javascript">
@@ -24,7 +24,7 @@ function load(){
     var box1 = BoxRegister.newBox();
     box1.show('center');
     
-    // $.get('/CoDeBar/tests.php?.json_loadText/topic.1/subtopic.1',function(json){
+    // $.get('/Findeco/tests.php?.json_loadText/topic.1/subtopic.1',function(json){
         var json = {"loadTextResponse":{"paragraphs":[{"wikiText":"= Subsubtopic 1 =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic.1","isFollowing":1,"authorGroup":["author1","author2"]},{"wikiText":"= Subsubtopic 2 =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":["author1","author3"]}],"isFollowing":1}};
         var data = new ClassData();
         data.load(json);
@@ -47,7 +47,7 @@ window.onhashchange = function() {
 };
 </script>
 
-<title>CoDeBar</title>
+<title>Findeco</title>
 </head>
 <body>
     <div id="header">

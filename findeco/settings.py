@@ -1,22 +1,22 @@
 #!/usr/bin/python
 # coding=utf-8
-# CoDebAr is dually licensed under GPLv3 or later and MPLv2.
+# Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
-# This file is part of CoDebAr.
+# This file is part of Findeco.
 #
-# CoDebAr is free software; you can redistribute it and/or modify it under
+# Findeco is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
 # Foundation; either version 3 of the License, or (at your option) any later
 # version.
 #
-# CoDebAr is distributed in the hope that it will be useful, but WITHOUT ANY
+# Findeco is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
 # A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# CoDebAr. If not, see <http://www.gnu.org/licenses/>.
+# Findeco. If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 #
 ################################################################################
@@ -25,7 +25,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 
-# Django settings for codebar project.
+# Django settings for findeco project.
 from __future__ import division, print_function, unicode_literals
 
 import os
@@ -132,10 +132,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'codebar.urls'
+ROOT_URLCONF = 'findeco.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'codebar.wsgi.application'
+WSGI_APPLICATION = 'findeco.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -155,7 +155,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'codebar'
+    'findeco'
 )
 
 # A sample logging configuration. The only tangible logging
