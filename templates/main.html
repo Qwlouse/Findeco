@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<head>
+    <!--Metadaten fehlen noch-->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css"/>
+    <script type="text/javascript" src="{% static 'js/loader_functions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/language.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <!--<script type="text/javascript" src="{% static 'js/jquery.socialshareprivacy.js' %}"></script>-->
+    <script type="text/javascript" src="{% static 'js/findeco.js' %}"></script>
+    <noscript>
+        <p style="color:red;">Du hast Skripte in deinem Browser deaktiviert. Findeco benötigt für korrekte Funktionalität jedoch JavaScript und Cookies.
+            <br/>Bitte aktiviere JavaScript und lade die Seite neu.</p>
+    </noscript>
+    <script type="text/javascript">
+        window.onload = load;
+    </script>
+
+    <title>Findeco</title>
+</head>
+<body>
+<div id="header">
+    <div id="logo"></div>
+    <ul id="navigation">
+        <li><a id="home" onclick="Main.load(this)">Home</a></li>
+        <li><a id="content" onclick="Main.load(this)">Content</a></li>
+    </ul>
+</div>
+<div id="container"></div>
+<div id="loading"></div>
+</body>
+</html>
