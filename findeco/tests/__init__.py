@@ -30,3 +30,16 @@ from test_profile import UserProfileTest
 from test_path import PathRegExTest
 from test_url_resolution import UrlResolutionTest
 from test_views import ViewTest
+
+try:
+    from microblogging.tests import *
+except ImportError:
+    pass
+
+try:
+    from node_storage.tests import *
+except ImportError:
+    pass
+
+
+
