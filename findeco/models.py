@@ -36,6 +36,8 @@ from django.contrib.auth.management import create_superuser
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import signals
+from node_storage import Node
+
 try:
     from local_settings import ADMIN_PASS
 except ImportError :
@@ -99,7 +101,7 @@ signals.post_syncdb.disconnect(
     dispatch_uid='django.contrib.auth.management.create_superuser')
 
 # Create our own admin user automatically.
-def create_admin(app, created_models, verbosity, **kwargs):
+def create_admin():
     if not settings.DEBUG:
         return
     try:
@@ -112,5 +114,22 @@ def create_admin(app, created_models, verbosity, **kwargs):
     else:
         print('Admin user already exists.')
 
-signals.post_syncdb.connect(create_admin,
-    sender=auth_models, dispatch_uid='common.models.create_admin')
+def create_root():
+    print('Creating root node ...')
+    node = Node()
+    node.node_type='structureNode'
+    node.save()
+
+def initialize_database(sender, **kwargs):
+    create_admin()
+    if Node.objects.all().count() > 0:
+        print('Root node already present. Skipping initialization.')
+        return
+    print('*'*80)
+    print('Creating Initial Data')
+    create_root()
+    print('*'*80)
+    #create_initial_data()
+
+signals.post_syncdb.connect(initialize_database,
+    sender=auth_models, dispatch_uid='findeco.models.initialize_database')
