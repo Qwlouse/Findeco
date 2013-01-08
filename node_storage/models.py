@@ -52,7 +52,7 @@ class Node(models.Model):
         through='Derivation'
     )
 
-    #node_type = models.CharField(max_length=1, choices=NODETYPE)
+    node_type = models.CharField(max_length=1, choices=NODETYPE)
 
     def get_short_title(self, parent): # This is deprecated
         """

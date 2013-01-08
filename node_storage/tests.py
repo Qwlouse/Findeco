@@ -32,11 +32,20 @@ Replace this with more appropriate tests for your application.
 """
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
+from path_helpers import get_favorite_if_slot
+from models import Node
 
+def setup():
+    root = Node()
+    root.node_type = 'structureNode'
+    root.save()
+    return root
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
+class Helpers_test(TestCase):
+    def test_get_favorite_if_slot(self):
         """
-        Tests that 1 + 1 always equals 2.
+        bla
         """
-        self.assertEqual(1 + 1, 2)
+        root = setup()
+        n = get_favorite_if_slot(root)
+        self.assertEqual(n, root)
