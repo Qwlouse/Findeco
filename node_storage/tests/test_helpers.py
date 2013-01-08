@@ -32,8 +32,8 @@ Replace this with more appropriate tests for your application.
 """
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from path_helpers import get_favorite_if_slot
-from models import Node, NodeOrder
+from ..path_helpers import get_favorite_if_slot
+from ..models import Node, NodeOrder
 
 def setup():
     root = Node()
@@ -65,7 +65,7 @@ def setup():
     slot2_order.save()
     return root, slot1, text1
 
-class Helpers_test(TestCase):
+class HelpersTest(TestCase):
     def test_get_favorite_if_slot(self):
         """
         bla
