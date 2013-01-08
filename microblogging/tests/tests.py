@@ -34,6 +34,7 @@ import node_storage as backend
 class SimpleTest(TestCase):
     def test_post_creation(self):
         node1 = backend.models.Node()
+        node1.save()
         text1 = backend.models.Text()
         text1.node = node1
         text1.text = "Testtext"
@@ -42,12 +43,11 @@ class SimpleTest(TestCase):
         text1.author = max
         text2 = backend.models.Text()
         node2 = backend.models.Node()
+        node2.save()
         text2.node = node2
         text2.text = "Testtext Nummer 2"
         text2.author = max
         max.save()
-        node1.save()
-        node2.save()
         text1.save()
         text2.save()
         posts = []
