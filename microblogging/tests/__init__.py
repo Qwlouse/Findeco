@@ -26,6 +26,4 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 
-from test_profile import UserProfileTest
-from test_path import PathRegExTest
-from test_url_resolution import UrlResolutionTest
+from tests import SimpleTest
