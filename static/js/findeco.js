@@ -72,7 +72,7 @@ ClassBox.prototype.printData = function(data) {
     this.element.append(data.getJQueryObject());
 }
 
-ClassBox.prototype.show = function(position,container = null) {
+ClassBox.prototype.show = function(position,container) {
     if ( container != null ) {
         this.element.appendTo(container.element)
     } else {
