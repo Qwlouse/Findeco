@@ -40,7 +40,7 @@ class Node(models.Model):
     parents = models.ManyToManyField(
         'self',
         symmetrical=False,
-        related_name="children",
+        related_name='children',
         through='NodeOrder'
     )
 
@@ -52,7 +52,7 @@ class Node(models.Model):
         through='Derivation'
     )
 
-    node_type = models.CharField(max_length=1, choices=NODETYPE)
+    #node_type = models.CharField(max_length=1, choices=NODETYPE)
 
     def get_short_title(self, parent): # This is deprecated
         """
@@ -93,16 +93,16 @@ class Text(models.Model):
     )
 
 class Derivation(models.Model):
-    source=models.ForeignKey(Node)
-    derivate=models.ForeignKey(Node)
+    source=models.ForeignKey(Node, related_name='derivative_set')
+    derivate=models.ForeignKey(Node, related_name='source_set')
     argument=models.ForeignKey(Argument)
 
     class Meta:
         unique_together = (('source', 'derivate'), )
 
 class NodeOrder(models.Model):
-    parent = models.ForeignKey(Node)
-    child = models.ForeignKey(Node)
+    parent = models.ForeignKey(Node, related_name='child_set')
+    child = models.ForeignKey(Node, related_name='parent_set')
     position = models.IntegerField()
 
     class Meta:
