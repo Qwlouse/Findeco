@@ -35,45 +35,43 @@ from django.test import TestCase
 from ..path_helpers import get_favorite_if_slot
 from ..models import Node, NodeOrder
 
-def setup():
-    root = Node()
-    root.node_type = 'structureNode'
-    root.save()
-    slot1 = Node()
-    slot1.node_type = 'slot'
-    slot1.save()
-    slot1_order = NodeOrder()
-    slot1_order.parent = root
-    slot1_order.child = slot1
-    slot1_order.position = 0
-    slot1_order.save()
-    text1 = Node()
-    text1.node_type = 'textNode'
-    text1.save()
-    text1_order = NodeOrder()
-    text1_order.parent = slot1
-    text1_order.child = text1
-    text1_order.position = 1
-    text1_order.save()
-    slot2 = Node()
-    slot2.node_type = 'slot'
-    slot2.save()
-    slot2_order = NodeOrder()
-    slot2_order.parent = root
-    slot2_order.child = slot2
-    slot2_order.position = 1
-    slot2_order.save()
-    return root, slot1, text1
-
 class HelpersTest(TestCase):
+    def setUp(self):
+        self.root = Node()
+        self.root.node_type = 'structureNode'
+        self.root.save()
+        self.slot1 = Node()
+        self.slot1.node_type = 'slot'
+        self.slot1.save()
+        self.slot1_order = NodeOrder()
+        self.slot1_order.parent = self.root
+        self.slot1_order.child = self.slot1
+        self.slot1_order.position = 0
+        self.slot1_order.save()
+        self.text1 = Node()
+        self.text1.node_type = 'textNode'
+        self.text1.save()
+        text1_order = NodeOrder()
+        text1_order.parent = self.slot1
+        text1_order.child = self.text1
+        text1_order.position = 1
+        text1_order.save()
+        self.slot2 = Node()
+        self.slot2.node_type = 'slot'
+        self.slot2.save()
+        slot2_order = NodeOrder()
+        slot2_order.parent = self.root
+        slot2_order.child = self.slot2
+        slot2_order.position = 1
+        slot2_order.save()
+
     def test_get_favorite_if_slot(self):
         """
         bla
         """
-        root, slot1, text1 = setup()
-        n = get_favorite_if_slot(root)
-        self.assertEqual(n, root)
-        n = get_favorite_if_slot(slot1)
-        self.assertEqual(n, text1)
-        n = get_favorite_if_slot(text1)
-        self.assertEqual(n, text1)
+        n = get_favorite_if_slot(self.root)
+        self.assertEqual(n, self.root)
+        n = get_favorite_if_slot(self.slot1)
+        self.assertEqual(n, self.text1)
+        n = get_favorite_if_slot(self.text1)
+        self.assertEqual(n, self.text1)
