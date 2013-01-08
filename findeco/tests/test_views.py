@@ -25,8 +25,14 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
+from django.test import Client
+from django.core.urlresolvers import reverse
+import unittest
+from ..views import home
 
-from test_profile import UserProfileTest
-from test_path import PathRegExTest
-from test_url_resolution import UrlResolutionTest
-from test_views import ViewTest
+class ViewTest(unittest.TestCase):
+    def test_home_view_called(self):
+        client = Client()
+        response = client.get(reverse(home, kwargs=dict(path='')))
+        self.assertEqual(response.status_code, 200)
+
