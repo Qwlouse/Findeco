@@ -207,3 +207,7 @@ class HelpersTest(TestCase):
     def test_get_arguments_for(self):
         args = get_arguments_for(self.subsubtext1)
         self.assertSequenceEqual(args, [self.argument1])
+        args = get_arguments_for(self.subsubtext1, 'pro')
+        self.assertSequenceEqual(args, [self.argument1])
+        args = get_arguments_for(self.subsubtext1, 'con')
+        self.assertSequenceEqual(args, [])

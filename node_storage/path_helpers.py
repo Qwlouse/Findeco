@@ -77,8 +77,7 @@ def get_arguments_for(node, arg_type='all'):
     Return a list of arguments for node.
     arg_type can be one of: 'pro', 'con', 'neut', 'all'
     """
-    order = ArgumentOrder.objects.filter(node=node).prefetch_related('argument').all()
-    print(order)
+    order = ArgumentOrder.objects.filter(node=node).prefetch_related('argument')
     if arg_type != 'all':
         return [i.argument for i in order if i.argument.arg_type == arg_type]
     else:
