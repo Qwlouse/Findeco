@@ -183,6 +183,8 @@ class HelpersTest(TestCase):
         self.assertSequenceEqual(list, [self.text3, self.text4])
         list = get_ordered_children_for(self.root)
         self.assertSequenceEqual(list, [self.slot1, self.slot2, self.slot3, self.slot4])
+        list = get_ordered_children_for(self.subsubtext1)
+        self.assertSequenceEqual(list, [])
 
     def test_get_node_for_path(self):
         node = get_node_for_path("")
