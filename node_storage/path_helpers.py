@@ -29,11 +29,14 @@ from __future__ import division, print_function, unicode_literals
 from django.db.models import Count
 from models import Node, NodeOrder
 
+def get_root_node():
+    return Node.objects.filter(id=1)[0]
+
 def get_node_for_path(path):
     """
     Return the node corresponding to given path.
     """
-    return Node.objects.filter(id=0)[0]
+    return Node.objects.filter(id=1)[0]
 
 def get_favorite_if_slot(node):
     """

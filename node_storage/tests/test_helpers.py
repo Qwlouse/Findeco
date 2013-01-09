@@ -33,6 +33,7 @@ Replace this with more appropriate tests for your application.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from django.contrib.auth.models import User
+from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path
 from ..models import Node, NodeOrder, Vote, Text
 
@@ -41,9 +42,9 @@ class HelpersTest(TestCase):
         max = User()
         max.username = "Max"
         max.save()
-        self.root = Node()
-        self.root.node_type = 'structureNode'
-        self.root.save()
+
+        self.root = get_root_node()
+
         self.slot1 = Node()
         self.slot1.node_type = 'slot'
         self.slot1.save()
@@ -53,19 +54,13 @@ class HelpersTest(TestCase):
         slot1_title.save()
         slot1_title.authors.add(max)
         slot1_title.save()
-        self.slot1_order = NodeOrder()
-        self.slot1_order.parent = self.root
-        self.slot1_order.child = self.slot1
-        self.slot1_order.position = 0
-        self.slot1_order.save()
+        self.root.append_child(self.slot1)
+
         self.text1 = Node()
         self.text1.node_type = 'textNode'
         self.text1.save()
-        text1_order = NodeOrder()
-        text1_order.parent = self.slot1
-        text1_order.child = self.text1
-        text1_order.position = 1
-        text1_order.save()
+        self.slot1.append_child(self.text1)
+
         self.slot2 = Node()
         self.slot2.node_type = 'slot'
         self.slot2.save()
@@ -75,19 +70,18 @@ class HelpersTest(TestCase):
         slot2_title.save()
         slot2_title.authors.add(max)
         slot2_title.save()
-        slot2_order = NodeOrder()
-        slot2_order.parent = self.root
-        slot2_order.child = self.slot2
-        slot2_order.position = 1
-        slot2_order.save()
+        self.root.append_child(self.slot2)
+
         self.text3 = Node()
         self.text3.node_type = 'textNode'
         self.text3.save()
         self.slot2.append_child(self.text3)
+
         self.text4 = Node()
         self.text4.node_type = 'textNode'
         self.text4.save()
         self.slot2.append_child(self.text4)
+
         self.slot3 = Node()
         self.slot3.node_type = 'slot'
         self.slot3.save()
@@ -97,19 +91,18 @@ class HelpersTest(TestCase):
         slot3_title.save()
         slot3_title.authors.add(max)
         slot3_title.save()
-        slot3_order = NodeOrder()
-        slot3_order.parent = self.root
-        slot3_order.child = self.slot3
-        slot3_order.position = 2
-        slot3_order.save()
+        self.root.append_child(self.slot3)
+
         self.text5 = Node()
         self.text5.node_type = 'textNode'
         self.text5.save()
         self.slot3.append_child(self.text5)
+
         self.text6 = Node()
         self.text6.node_type = 'textNode'
         self.text6.save()
         self.slot3.append_child(self.text6)
+
         v1 = Vote()
         v1.user = max
         v1.save()
