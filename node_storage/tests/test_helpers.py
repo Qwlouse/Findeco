@@ -33,7 +33,7 @@ Replace this with more appropriate tests for your application.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from django.contrib.auth.models import User
-from ..path_helpers import get_favorite_if_slot, get_ordered_children_for
+from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path
 from ..models import Node, NodeOrder, Vote, Text
 
 class HelpersTest(TestCase):
@@ -135,3 +135,7 @@ class HelpersTest(TestCase):
         self.assertSequenceEqual(list, [self.text3, self.text4])
         list = get_ordered_children_for(self.root)
         self.assertSequenceEqual(list, [self.slot1, self.slot2, self.slot3])
+
+    def test_get_node_for_path(self):
+        node = get_node_for_path("")
+        self.assertEqual(node, self.root)
