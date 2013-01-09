@@ -41,6 +41,15 @@ function load(){
     loadPosition();
 }
 
+function loadImprint() {
+    right.empty();
+    center.empty();
+    left.empty();
+    navigation.empty();
+    
+    loadCenterData(jsonData.imprint);
+}
+
 function loadPosition() {
     right.empty();
     center.empty();
@@ -132,72 +141,11 @@ function appendLeftData(json) {
     box4.printData(data);
 }
 
-function loadCenterSubSubTopicList() {
-}
-function loadLeftSubTopicList() {};
-
 function loadNavigation(json) {
     for ( j in json ) {
         $('<li class="button">' + json[j] + '</li>')
             .appendTo(navigation);
     }
-}
-
-function loadLeftTopicList() {
-    var box4 = BoxRegister.newBox();
-    box4.show('swap',left);
-    
-    json = jsonData.topicList;
-    data = new ClassData();
-    data.load(json);
-    box4.printData(data);
-}
-
-function loadLeftHistory() {
-    left.empty();
-    var box4 = BoxRegister.newBox();
-    box4.show('swap',left);
-    var box5 = BoxRegister.newBox();
-    box5.show('swap',left);
-    
-    json = {"loadTextResponse":{"paragraphs":[{"wikiText":"= Subsubtopic 1 =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author2"}]},{"wikiText":"= Subsubtopic 2 =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}],"isFollowing":1}};
-    data = new ClassData();
-    data.load(json);
-    box4.printData(data);
-    
-    json = {"loadTextResponse":{"paragraphs":[{"wikiText":"= Subsubtopic 1 =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author2"}]},{"wikiText":"= Subsubtopic 2 =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}],"isFollowing":1}};
-    data = new ClassData();
-    data.load(json);
-    box5.printData(data);
-}
-
-function loadCenterTopicOverview() {
-    center.empty();
-    
-    json = {"loadTextResponse":{"paragraphs":[{"wikiText":"<h2>Abwasser</h2>Abwasser ist ein Wertstoff und wir streben einen ressourcenschonenden Umgang mit den wertvollen Inhaltsstoffen an. Wir treten für die Abschaffung des Anschlusszwanges für häusliche Abwässer an das Abwassernetz ein, wenn die Einhaltung der Ablaufparameter nach der EU-Rahmenrichtlinie eigenverantwortlich sichergestellt wird. Industrielle und die von Krankenhäusern stammende Abwässer sind geeignet vorzubehandeln. Vermischung mit häuslichen Abwässern ist zu vermeiden.","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}],"isFollowing":1}};
-    var data = new ClassData();
-    data.load(json);
-    center.printData(data);
-}
-
-function loadCenterSubTopicList() {
-    center.empty();
-    
-    var json = jsonData.subTopicList;
-    console.log(json);
-    var data = new ClassData();
-    data.load(json);
-    center.printData(data);
-}
-
-function loadCenterTopicList() {
-    center.empty();
-    
-    var json = jsonData.topicList;
-    console.log(json);
-    var data = new ClassData();
-    data.load(json);
-    center.printData(data);
 }
 
 function loadMicroBlogging() {
@@ -233,6 +181,7 @@ var jsonData = {
         ,{"wikiText":"<h2>Abwasser</h2>Abwasser ist ein Wertstoff und wir streben einen ressourcenschonenden Umgang mit den wertvollen Inhaltsstoffen an. Wir treten für die Abschaffung des Anschlusszwanges für häusliche Abwässer an das Abwassernetz ein, wenn die Einhaltung der Ablaufparameter nach der EU-Rahmenrichtlinie eigenverantwortlich sichergestellt wird. Industrielle und die von Krankenhäusern stammende Abwässer sind geeignet vorzubehandeln. Vermischung mit häuslichen Abwässern ist zu vermeiden.","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}
         ,{"wikiText":"<h2>Gewässerschutz</h2>Die Wasserressourcen sind von Beeinträchtigungen freizuhalten. In allen Bereichen müssen Eingriffe in den Boden auf ihre Verträglichkeit mit dem Gewässerschutz hin überprüft und gegebenenfalls angepasst werden. ","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}
     ],"isFollowing":1}}
+    ,"imprint" : {"loadTextResponse":{"paragraphs":[{"wikiText":"<h2>Impressum</h2>Angaben gemäß § 5 TMG:<br>\r\n<br>\r\nKrohlas & Wingert IT GbR<br>\r\n<br>\r\nHauptstraße 91<br>\r\n<br>\r\n76706 Dettenheim<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\nVertreten durch: Sven Krohlas, Justus Wingert<br>\r\n<br>\r\nIhr Ansprechpartner für Fragen jeder Art: Justus Wingert <a href=\"mailto:justus_wingert@web.de\">justus_wingert@web.de</a>","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}],"isFollowing":1}}
 };
 
 

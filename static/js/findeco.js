@@ -93,7 +93,9 @@ ClassHelper.prototype.timestampToDate = function(time) {
 }
 
 ClassMain.prototype.load = function(element) {
-    console.log(element.id);
+    if ( element.id == 'imprint' ) {
+        loadImprint();
+    }
 };
 
 ClassBox.prototype.printData = function(data,append = null) {
@@ -146,6 +148,7 @@ ClassBox.prototype.swap = function(element) {
         BoxRegister.get(id).blind.show();
         BoxRegister.get(id).element.hide();
     } else {
+        BoxRegister.hideAll();
         BoxRegister.get(id).blind.hide();
         BoxRegister.get(id).element.show();
         var newStyle = 'width: ' + ( $(window).width() / 4 ) + 'px;';
@@ -155,6 +158,17 @@ ClassBox.prototype.swap = function(element) {
 
 ClassBoxRegister.prototype.get = function(id) {
     return this.register[id];
+}
+
+ClassBoxRegister.prototype.hideAll = function() {
+    for ( r in this.register ) {
+        if ( this.register[r].blind == undefined 
+            || this.register[r].element == undefined ) {
+            continue;
+        }
+        this.register[r].blind.show();
+        this.register[r].element.hide();
+    }
 }
 
 ClassBoxRegister.prototype.newBox = function() {
