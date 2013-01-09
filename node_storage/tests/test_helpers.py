@@ -185,3 +185,5 @@ class HelpersTest(TestCase):
         self.assertEqual(node, self.text4)
         node = get_node_for_path("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
         self.assertEqual(node, self.subsubtext1)
+        node = get_node_for_path("Slot_4.1/SubSlot_1.1/SubSubSlot_1")
+        self.assertEqual(node, self.subsubslot1)
