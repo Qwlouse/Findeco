@@ -33,17 +33,26 @@ Replace this with more appropriate tests for your application.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from django.contrib.auth.models import User
-from ..path_helpers import get_favorite_if_slot
-from ..models import Node, NodeOrder, Vote
+from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path
+from ..models import Node, NodeOrder, Vote, Text
 
 class HelpersTest(TestCase):
     def setUp(self):
+        max = User()
+        max.username = "Max"
+        max.save()
         self.root = Node()
         self.root.node_type = 'structureNode'
         self.root.save()
         self.slot1 = Node()
         self.slot1.node_type = 'slot'
         self.slot1.save()
+        slot1_title = Text()
+        slot1_title.text = "Slot_1"
+        slot1_title.node = self.slot1
+        slot1_title.save()
+        slot1_title.authors.add(max)
+        slot1_title.save()
         self.slot1_order = NodeOrder()
         self.slot1_order.parent = self.root
         self.slot1_order.child = self.slot1
@@ -60,6 +69,12 @@ class HelpersTest(TestCase):
         self.slot2 = Node()
         self.slot2.node_type = 'slot'
         self.slot2.save()
+        slot2_title = Text()
+        slot2_title.text = "Slot_2"
+        slot2_title.node = self.slot2
+        slot2_title.save()
+        slot2_title.authors.add(max)
+        slot2_title.save()
         slot2_order = NodeOrder()
         slot2_order.parent = self.root
         slot2_order.child = self.slot2
@@ -76,6 +91,12 @@ class HelpersTest(TestCase):
         self.slot3 = Node()
         self.slot3.node_type = 'slot'
         self.slot3.save()
+        slot3_title = Text()
+        slot3_title.text = "Slot_3"
+        slot3_title.node = self.slot3
+        slot3_title.save()
+        slot3_title.authors.add(max)
+        slot3_title.save()
         slot3_order = NodeOrder()
         slot3_order.parent = self.root
         slot3_order.child = self.slot3
@@ -89,9 +110,6 @@ class HelpersTest(TestCase):
         self.text6.node_type = 'textNode'
         self.text6.save()
         self.slot3.append_child(self.text6)
-        max = User()
-        max.username = "Max"
-        max.save()
         v1 = Vote()
         v1.user = max
         v1.save()
@@ -99,9 +117,6 @@ class HelpersTest(TestCase):
         v1.save()
 
     def test_get_favorite_if_slot(self):
-        """
-        bla
-        """
         n = get_favorite_if_slot(self.root)
         self.assertEqual(n, self.root)
         n = get_favorite_if_slot(self.slot1)
@@ -112,3 +127,23 @@ class HelpersTest(TestCase):
         self.assertEqual(n, self.text4)
         n = get_favorite_if_slot(self.slot3)
         self.assertEqual(n, self.text5)
+
+    def test_get_ordered_children_for(self):
+        list = get_ordered_children_for(self.slot3)
+        self.assertSequenceEqual(list, [self.text5, self.text6])
+        list = get_ordered_children_for(self.slot2)
+        self.assertSequenceEqual(list, [self.text3, self.text4])
+        list = get_ordered_children_for(self.root)
+        self.assertSequenceEqual(list, [self.slot1, self.slot2, self.slot3])
+
+    def test_get_node_for_path(self):
+        node = get_node_for_path("")
+        self.assertEqual(node, self.root)
+        node = get_node_for_path("slot_1")
+        self.assertEqual(node, self.text1) # Is this correct? Or should it return the slot?
+        node = get_node_for_path("slot_1.1")
+        self.assertEqual(node, self.text1)
+        node = get_node_for_path("slot_2.1")
+        self.assertEqual(node, self.text3)
+        node = get_node_for_path("slot_2.2")
+        self.assertEqual(node, self.text4)
