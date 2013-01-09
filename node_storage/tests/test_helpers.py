@@ -109,6 +109,49 @@ class HelpersTest(TestCase):
         v1.nodes.add(self.text5)
         v1.save()
 
+        self.slot4 = Node()
+        self.slot4.node_type = 'slot'
+        self.slot4.save()
+        slot4_title = Text()
+        slot4_title.text = "Slot_4"
+        slot4_title.node = self.slot4
+        slot4_title.save()
+        slot4_title.authors.add(max)
+        slot4_title.save()
+        self.root.append_child(self.slot4)
+        self.structure1 = Node()
+        self.structure1.node_type = 'structureNode'
+        self.structure1.save()
+        self.slot4.append_child(self.structure1)
+        self.subslot1 = Node()
+        self.subslot1.node_type = 'slot'
+        self.subslot1.save()
+        subslot1_title = Text()
+        subslot1_title.text = "SubSlot_1"
+        subslot1_title.node = self.subslot1
+        subslot1_title.save()
+        subslot1_title.authors.add(max)
+        subslot1_title.save()
+        self.structure1.append_child(self.subslot1)
+        self.substructure1 = Node()
+        self.substructure1.node_type = 'structureNode'
+        self.substructure1.save()
+        self.subslot1.append_child(self.substructure1)
+        self.subsubslot1 = Node()
+        self.subsubslot1.node_type = 'slot'
+        self.subsubslot1.save()
+        subsubslot1_title = Text()
+        subsubslot1_title.text = "SubSubSlot_1"
+        subsubslot1_title.node = self.subsubslot1
+        subsubslot1_title.save()
+        subsubslot1_title.authors.add(max)
+        subsubslot1_title.save()
+        self.substructure1.append_child(self.subsubslot1)
+        self.subsubtext1 = Node()
+        self.subsubtext1.node_type = 'textNode'
+        self.subsubtext1.save()
+        self.subsubslot1.append_child(self.subsubtext1)
+
     def test_get_favorite_if_slot(self):
         n = get_favorite_if_slot(self.root)
         self.assertEqual(n, self.root)
@@ -127,7 +170,7 @@ class HelpersTest(TestCase):
         list = get_ordered_children_for(self.slot2)
         self.assertSequenceEqual(list, [self.text3, self.text4])
         list = get_ordered_children_for(self.root)
-        self.assertSequenceEqual(list, [self.slot1, self.slot2, self.slot3])
+        self.assertSequenceEqual(list, [self.slot1, self.slot2, self.slot3, self.slot4])
 
     def test_get_node_for_path(self):
         node = get_node_for_path("")
@@ -140,3 +183,5 @@ class HelpersTest(TestCase):
         self.assertEqual(node, self.text3)
         node = get_node_for_path("Slot_2.2")
         self.assertEqual(node, self.text4)
+        node = get_node_for_path("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
+        self.assertEqual(node, self.subsubtext1)

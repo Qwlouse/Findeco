@@ -40,7 +40,7 @@ def get_node_for_path(path):
     node = get_root_node()
     layers, last = parse_path(path)
     for title, pos_id in layers:
-        title_obj = Text.objects.filter(text=title)
+        title_obj = Text.objects.filter(text=title).all()
         if len(title_obj) != 1:
             return node
         else:
