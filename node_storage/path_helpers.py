@@ -27,7 +27,7 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.db.models import Count
-from models import Node, NodeOrder, Text, ArgumentOrder
+from models import Node, NodeOrder, Text, ArgumentOrder, Argument
 from findeco.paths import parse_path
 
 def get_root_node():
@@ -77,7 +77,11 @@ def get_arguments_for(node, arg_type='all'):
     Return a list of arguments for node.
     arg_type can be one of: 'pro', 'con', 'neut', 'all'
     """
-    return []
+    order = ArgumentOrder.objects.filter(node=node).prefetch_related('argument')
+    if arg_type != 'all':
+        return [a for a in order.argument if order.argument.arg_type == arg_type]
+    else:
+        return [a for a in order.argument]
 
 def get_ordered_children_for(node):
     """
