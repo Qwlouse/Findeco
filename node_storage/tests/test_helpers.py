@@ -113,3 +113,5 @@ class HelpersTest(TestCase):
     def test_get_ordered_children_for(self):
         list = get_ordered_children_for(self.slot3)
         self.assertSequenceEqual(list, [self.text5,self.text6])
+        list = get_ordered_children_for(self.slot2)
+        self.assertSequenceEqual(list, [self.text3,self.text4])
