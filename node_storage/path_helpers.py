@@ -40,7 +40,7 @@ def get_favorite_if_slot(node):
     Returns the favorite child if given a slot and returns node otherwise.
     """
     if node.node_type == 'slot':
-        return node.children.annotate(num_votes=Count('votes')).order_by('-num_votes')[0]
+        return node.children.annotate(num_votes=Count('votes')).order_by('-num_votes', '-pk')[0]
     else:
         return node
 

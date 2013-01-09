@@ -32,8 +32,9 @@ Replace this with more appropriate tests for your application.
 """
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
+from django.contrib.auth.models import User
 from ..path_helpers import get_favorite_if_slot
-from ..models import Node, NodeOrder
+from ..models import Node, NodeOrder, Vote
 
 class HelpersTest(TestCase):
     def setUp(self):
@@ -64,6 +65,38 @@ class HelpersTest(TestCase):
         slot2_order.child = self.slot2
         slot2_order.position = 1
         slot2_order.save()
+        self.text3 = Node()
+        self.text3.node_type = 'textNode'
+        self.text3.save()
+        self.slot2.append_child(self.text3)
+        self.text4 = Node()
+        self.text4.node_type = 'textNode'
+        self.text4.save()
+        self.slot2.append_child(self.text4)
+        self.slot3 = Node()
+        self.slot3.node_type = 'slot'
+        self.slot3.save()
+        slot3_order = NodeOrder()
+        slot3_order.parent = self.root
+        slot3_order.child = self.slot3
+        slot3_order.position = 2
+        slot3_order.save()
+        self.text5 = Node()
+        self.text5.node_type = 'textNode'
+        self.text5.save()
+        self.slot3.append_child(self.text5)
+        self.text6 = Node()
+        self.text6.node_type = 'textNode'
+        self.text6.save()
+        self.slot3.append_child(self.text6)
+        max = User()
+        max.username = "Max"
+        max.save()
+        v1 = Vote()
+        v1.user = max
+        v1.save()
+        v1.nodes.add(self.text5)
+        v1.save()
 
     def test_get_favorite_if_slot(self):
         """
@@ -75,3 +108,7 @@ class HelpersTest(TestCase):
         self.assertEqual(n, self.text1)
         n = get_favorite_if_slot(self.text1)
         self.assertEqual(n, self.text1)
+        n = get_favorite_if_slot(self.slot2)
+        self.assertEqual(n, self.text4)
+        n = get_favorite_if_slot(self.slot3)
+        self.assertEqual(n, self.text5)
