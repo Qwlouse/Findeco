@@ -27,16 +27,41 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.db.models import Count
-from models import Node, NodeOrder
+from models import Node, NodeOrder, Text, ArgumentOrder
+from findeco.paths import parse_path
 
 def get_root_node():
     return Node.objects.filter(id=1)[0]
 
 def get_node_for_path(path):
     """
-    Return the node corresponding to given path.
+    Return the node corresponding node to the given path.
     """
-    return Node.objects.filter(id=1)[0]
+    node = get_root_node()
+    layers, last = parse_path(path)
+    for title, pos_id in layers:
+        title_obj = Text.objects.filter(text=title)
+        if len(title_obj) != 1:
+            return node
+        else:
+            node_candidate = title_obj[0].node
+            if node_candidate in node.children.all():
+                node = NodeOrder.objects.filter(parent=node_candidate).filter(position=pos_id)[0].child
+            else:
+                return node
+    if 'slot' in last:
+        title_obj = Text.objects.filter(text=last['slot']).all()
+        if len(title_obj) != 1:
+            return node
+        else:
+            node_candidate = title_obj[0].node
+            if node_candidate in node.children.all():
+                node = node_candidate
+            else:
+                return node
+    elif 'arg_type' in last and 'arg_id' in last:
+        node = ArgumentOrder.objects.filter(node=node).filter(position=last['arg_id'])[0].argument
+    return node
 
 def get_favorite_if_slot(node):
     """
