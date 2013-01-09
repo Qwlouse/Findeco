@@ -31,16 +31,21 @@ import unittest
 from ..views import home
 
 views = [('load_index', dict(path='')),
-         ('load_user_settings', dict(path='')),
-         ('load_graph_data', dict(path='')),
-         ('load_microblogging', dict(path='')),
+         ('load_user_settings', dict()),
+         ('load_graph_data', dict(graph_data_type='default', path='')),
+         ('load_graph_data', dict(graph_data_type='full', path='')),
+         ('load_graph_data', dict(graph_data_type='withSpam', path='')),
+         ('load_microblogging', dict(path='', select_id=0, microblogging_load_type='newer')),
+         ('load_microblogging', dict(path='', select_id=0, microblogging_load_type='older')),
          ('load_text', dict(path='')),
-         ('load_user_info', dict(path='')),
-         ('login', dict(path='')),
-         ('logout', dict(path='')),
-         ('mark_node', dict(path='')),
+         ('load_user_info', dict(name='admin')),
+         ('logout', dict()),
+         ('mark_node', dict(path='', mark_type='spam')),
+         ('mark_node', dict(path='', mark_type='notspam')),
+         ('mark_node', dict(path='', mark_type='follow')),
+         ('mark_node', dict(path='', mark_type='unfollow')),
          ('store_microblog_post', dict(path='')),
-         ('store_settings', dict(path='')),
+         ('store_settings', dict()),
          ('store_text', dict(path=''))
 ]
 
@@ -51,7 +56,7 @@ class ViewTest(unittest.TestCase):
         response = client.get(reverse(home, kwargs=dict(path='')))
         self.assertEqual(response.status_code, 200)
 
-    @unittest.skip('skip for the moment')
+    #@unittest.skip('skip for the moment')
     def test_all_api_views_return_json(self):
         client = Client()
         for v, kwargs in views:
