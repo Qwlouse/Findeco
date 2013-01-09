@@ -132,11 +132,11 @@ class HelpersTest(TestCase):
     def test_get_node_for_path(self):
         node = get_node_for_path("")
         self.assertEqual(node, self.root)
-        node = get_node_for_path("slot_1")
-        self.assertEqual(node, self.text1) # Is this correct? Or should it return the slot?
-        node = get_node_for_path("slot_1.1")
+        node = get_node_for_path("Slot_1")
+        self.assertEqual(node, self.slot1)
+        node = get_node_for_path("Slot_1.1")
         self.assertEqual(node, self.text1)
-        node = get_node_for_path("slot_2.1")
+        node = get_node_for_path("Slot_2.1")
         self.assertEqual(node, self.text3)
-        node = get_node_for_path("slot_2.2")
+        node = get_node_for_path("Slot_2.2")
         self.assertEqual(node, self.text4)
