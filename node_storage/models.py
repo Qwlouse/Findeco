@@ -59,8 +59,8 @@ class Node(models.Model):
         no = NodeOrder()
         no.parent = self
         no.child = child
-        m = NodeOrder.objects.filter(parent=self).aggregate(Max('position'))
-        max_position = m['position__max'] or 1
+        agg = NodeOrder.objects.filter(parent=self).aggregate(Max('position'))
+        max_position = agg['position__max'] or 0
         no.position = max_position + 1
         no.save()
 
