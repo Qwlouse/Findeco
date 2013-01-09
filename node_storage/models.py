@@ -106,6 +106,9 @@ class Text(models.Model):
         related_name='author_in'
     )
 
+    def __unicode__(self):
+        return "text=%s"%self.text
+
 class Derivation(models.Model):
     source=models.ForeignKey(Node, related_name='derivative_set')
     derivate=models.ForeignKey(Node, related_name='source_set')
