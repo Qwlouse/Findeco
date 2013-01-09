@@ -22,10 +22,20 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-##############################################################################*/
+################################################################################
+
+################################################################################
+# Stay within the color scheme! blue (#0066CC), green (#336633),
+# orange (#FF9900) and shades of grey are acceptable!
+################################################################################
+*/
+
+@import url(http://fonts.googleapis.com/css?family=Exo:400,700);
+@import url(http://fonts.googleapis.com/css?family=Electrolize:400,700);
 
 html,body {
     font-size: 1.1em;
+    font-family: sans-serif;
     width: 100%;
     height: 100%;
     margin: 0px;
@@ -38,31 +48,68 @@ br,.clear {
     position: absolute;
     top: 0px;
     left: 0px;
-    background-color: white;
+    background-color: #DDD;
     width: 100%;
-    height: 256px;
+    font-family: 'Exo',sans-serif;
+    -moz-border-radius-bottomright: 15px;
+    border-bottom-right-radius: 15px;
+    -moz-border-radius-bottomleft: 15px;
+    border-bottom-left-radius: 15px;
 }
 #logo {
-    position: absolute;
+    position: relative;
     top: 0px;
     left: 0px;
-    background: url("../images/logo.png");
-    width: 256px;
-    height: 256px;
+    margin: 5px 0px 0px 5px;
+    background-image: url("../images/logo.png");
+    background-position: 1px 101px;
+    width: 400px;
+    height: 100px;
 }
+#logo:hover {
+    background-position: 0px 0px;
+}
+
 #navigation {
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 5px 25px;
+}
+
+#navigation li {
+    font-weight: bold;
+    float: left;
+    padding: 0 10px 0 10px;
+    margin: 0 2px 0 2px;
+    background: #FF9900;
+    color: #FFF;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+#navigation li:hover {
+    background: #999;
+    cursor: pointer;
+}
+#bottom {
     position: absolute;
-    top: 0px;
-    left: 256px;
+    bottom: 0px;
+    left: 0px;
     right: 0px;
-    height: 256px;
-    padding-top: 156px;
-    padding-left: 156px;
+    background-color: #999;
+    color: #fff;
+    padding: 15px 0 0 40px;
+    height: 35px;
+    -moz-border-radius-topright: 15px;
+    border-top-right-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    border-top-left-radius: 15px;
 }
 #container {
     position: absolute;
-    top: 256px;
-    bottom: 0px;
+    top: 160px;
+    bottom: 50px;
     left: 0px;
     background-color: white;
     width: 100%;
@@ -119,13 +166,17 @@ br,.clear {
 .center {
     right: 25%;
     margin-right: 90px;
-    border: 1px solid black;
+    background: #f7f7f7;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
     width: 35%;
 }
 .right {
     right: 0;
-    border: 1px solid black;
     max-width: 300px;
+    background: #f7f7f7;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
 }
 .left {
     left: 0;
@@ -133,24 +184,41 @@ br,.clear {
 }
 .swap {
     max-width: 300px;
-    padding-left: 10px;
-    padding-right: 10px;
     margin-left: 5px;
     width: 25%;
     height: 100%;
     float: left;
     overflow: hidden;
-    border: 1px solid black;
-    background: white;
+    border-top: 0px solid #FF9900;
+    border-left: 30px solid #FF9900;
+    border-right: 30px solid #FF9900;
+    border-bottom: 0px solid #FF9900;
+    background: #f7f7f7;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
 }
 .blind {
     float: left;
-    width: 20px;
+    width: 30px;
     height: 100%;
-    background: grey;
+    background: #FF9900;
     margin-left: 5px;
-    border: 1px solid white;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+.blind:hover {
+    background: #999;
+    cursor: pointer;
 }
 .innerContent {
     padding: 15px;
+}
+
+.microBlogPost {
+    font-size: 14px;
+    border-bottom: 1px solid #0066CC;
+}
+
+.time {
+    font-size: 12px;
 }

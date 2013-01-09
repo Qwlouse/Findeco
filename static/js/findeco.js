@@ -35,6 +35,9 @@ ClassData.prototype.load = function(data) {
         if ( d == 'loadTextResponse' ) {
             this.loadTextResponse(data[d]);
         }
+        if ( d == 'loadMicroBloggingResponse' ) {
+            this.loadMicroBloggingResponse(data[d]);
+        }
     }
 };
 
@@ -50,6 +53,26 @@ ClassData.prototype.loadTextResponse = function(data) {
     }
 };
 
+ClassData.prototype.loadMicroBloggingResponse = function(data) {
+    for ( p in data ) {
+        var author = '';
+        for ( a in data[p].authorGroup ) {
+            if ( author != '' ) {
+                author = author + ',';
+            }
+            author = author + data[p].authorGroup[a].displayName;
+        }
+        var div = $('<div>')
+            .addClass("microBlogPost")
+            .appendTo(this.html);
+        $('<p>' + author + ':&nbsp;' + data[p].microBlogText + '</p>')
+            .appendTo(div);
+        $('<p>' + Helper.timestampToDate(data[p].microBlogTime) + ' (' + data[p].microBlogID + ')</p>')
+            .addClass("time")
+            .appendTo(div);
+    }
+};
+
 ClassData.prototype.getJQueryObject = function() {
     return this.html;
 }
@@ -61,6 +84,12 @@ ClassHelper.prototype.getId = function(string) {
         return null;
     }
     return parseInt(result[1]);
+}
+
+ClassHelper.prototype.timestampToDate = function(time) {
+    var d = new Date();
+    d.setTime(time*1000);
+    return d.toLocaleTimeString() + ', ' + d.toLocaleDateString(); 
 }
 
 ClassMain.prototype.load = function(element) {
