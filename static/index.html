@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% load staticfiles %}
 <html>
 <head>
 <!--Metadaten fehlen noch-->
@@ -27,11 +28,9 @@
             <li id="imprint" class="button" onclick="Main.load(this)">Imprint</li>
         </ul>
     </div>
+    <div id="debug">{{ path }}</div>
     <div id="container">
         <ul id="location"></ul>
-        <!--<li id="topic.1" class="button">Topic 1</li>
-        <li id="topic.1/subtopic.1" class="button">Subtopic 1</li>
-        <li id="topic.1/subtopic.1/subsubtopic.1" class="button">Subsubtopic 1</li>!-->
     </div>
     <div id="bottom">Findeco means: Findeco, investigate, debate, consent. Findeco is free and opensource.</div>
     <div id="loading"></div>
