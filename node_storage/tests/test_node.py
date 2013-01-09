@@ -21,5 +21,34 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from test_helpers import HelpersTest
-from test_node import NodeTest
+from django.test import TestCase
+from node_storage import Node
+from node_storage.models import NodeOrder
+
+
+class NodeTest(TestCase):
+    def test_node_constructable(self):
+        n = Node()
+        n.node_type = "structureNode"
+        n.save()
+        self.assertEqual(n.node_type, "structureNode")
+
+    def test_node_append_child(self):
+        n = Node()
+        n.save()
+        c = Node()
+        c.save()
+        n.append_child(c)
+
+        self.assertIn(c, n.children.all())
+        self.assertIn(n, c.parents.all())
+
+        no = NodeOrder.objects.filter(parent=n, child=c)
+        self.assertTrue(no.count() == 1)
+        self.assertEqual(no[0].position, 1)
+
+        self.assertIn(no[0], n.child_order_set.all())
+        self.assertIn(no[0], c.parent_order_set.all())
+
+    def test_node(self):
+        pass

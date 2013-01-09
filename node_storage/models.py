@@ -110,24 +110,27 @@ class Text(models.Model):
         return "text=%s"%self.text
 
 class Derivation(models.Model):
-    source=models.ForeignKey(Node, related_name='derivative_set')
-    derivate=models.ForeignKey(Node, related_name='source_set')
+    source=models.ForeignKey(Node, related_name='derivative_order_set')
+    derivate=models.ForeignKey(Node, related_name='source_order_set')
     argument=models.ForeignKey(Argument)
 
     class Meta:
         unique_together = (('source', 'derivate'), )
 
 class NodeOrder(models.Model):
-    child = models.ForeignKey(Node, related_name='parent_set')
-    parent = models.ForeignKey(Node, related_name='child_set')
+    child = models.ForeignKey(Node, related_name='parent_order_set')
+    parent = models.ForeignKey(Node, related_name='child_order_set')
     position = models.IntegerField()
 
     class Meta:
         unique_together = (('parent', 'child'), )
 
+    def __unicode__(self):
+        return "pos=%d, child=%s, parent=%s"%(self.position, repr(self.child), repr(self.parent))
+
 class ArgumentOrder(models.Model):
-    argument = models.ForeignKey(Argument, related_name='node_set')
-    node = models.ForeignKey(Node, related_name='argument_set')
+    argument = models.ForeignKey(Argument, related_name='node_order_set')
+    node = models.ForeignKey(Node, related_name='argument_order_set')
     position = models.IntegerField()
 
     class Meta:
