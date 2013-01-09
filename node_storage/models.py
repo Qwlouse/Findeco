@@ -59,7 +59,9 @@ class Node(models.Model):
         no = NodeOrder()
         no.parent = self
         no.child = child
-        no.position = self.children.aggregate(Max('position'))['position__max'] + 1
+        m = NodeOrder.objects.filter(parent=self).aggregate(Max('position'))
+        max_position = m['position__max'] or 1
+        no.position = max_position + 1
         no.save()
 
     def __unicode__(self):
