@@ -119,10 +119,12 @@ class HelpersTest(TestCase):
         slot4_title.authors.add(max)
         slot4_title.save()
         self.root.append_child(self.slot4)
+
         self.structure1 = Node()
         self.structure1.node_type = 'structureNode'
         self.structure1.save()
         self.slot4.append_child(self.structure1)
+
         self.subslot1 = Node()
         self.subslot1.node_type = 'slot'
         self.subslot1.save()
@@ -133,10 +135,12 @@ class HelpersTest(TestCase):
         subslot1_title.authors.add(max)
         subslot1_title.save()
         self.structure1.append_child(self.subslot1)
+
         self.substructure1 = Node()
         self.substructure1.node_type = 'structureNode'
         self.substructure1.save()
         self.subslot1.append_child(self.substructure1)
+
         self.subsubslot1 = Node()
         self.subsubslot1.node_type = 'slot'
         self.subsubslot1.save()
@@ -147,6 +151,7 @@ class HelpersTest(TestCase):
         subsubslot1_title.authors.add(max)
         subsubslot1_title.save()
         self.substructure1.append_child(self.subsubslot1)
+
         self.subsubtext1 = Node()
         self.subsubtext1.node_type = 'textNode'
         self.subsubtext1.save()
