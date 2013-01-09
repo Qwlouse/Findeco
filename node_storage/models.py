@@ -93,7 +93,8 @@ ARGUMENTTYPE = (
 class Argument(Node):
     concerns = models.ManyToManyField(
         Node,
-        related_name='arguments'
+        related_name='arguments',
+        through='ArgumentOrder'
     )
     arg_type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
 
@@ -120,6 +121,15 @@ class NodeOrder(models.Model):
 
     class Meta:
         unique_together = (('parent', 'child'), )
+
+class ArgumentOrder(models.Model):
+    argument = models.ForeignKey(Argument, related_name='node_set')
+    node = models.ForeignKey(Node, related_name='argument_set')
+    position = models.IntegerField()
+
+    class Meta:
+        unique_together = (('argument', 'node'), )
+
 
 class Vote(models.Model):
     user = models.ForeignKey(User)
