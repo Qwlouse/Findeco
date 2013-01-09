@@ -131,10 +131,8 @@ h1:hover,h2:hover,h3:hover {
 #location {
     position: absolute;
     top: -30px;
-    right: 25%;
-    margin-right: 90px;
+    left: 0;
     list-style: none;
-    width: 35%;
     z-index: 300;
 }
 
@@ -255,6 +253,7 @@ h1:hover,h2:hover,h3:hover {
     z-index:500;
 }
 .blind {
+    position: relative;
     float: left;
     width: 30px;
     height: 100%;
@@ -262,6 +261,7 @@ h1:hover,h2:hover,h3:hover {
     margin-left: 5px;
     -moz-border-radius: 15px;
     border-radius: 15px;
+    z-index:500;
 }
 .blind:hover {
     background: #999;
