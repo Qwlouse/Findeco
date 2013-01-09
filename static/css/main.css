@@ -34,7 +34,7 @@
 @import url(http://fonts.googleapis.com/css?family=Electrolize:400,700);
 
 html,body {
-    font-size: 1.1em;
+    font-size: 16px;
     font-family: sans-serif;
     width: 100%;
     height: 100%;
@@ -43,6 +43,45 @@ html,body {
 }
 br,.clear {
     clear: both;
+}
+h1,h2,h3 {
+    font-family: 'Exo',sans-serif;
+    font-weight: bold;
+    color: #FF9900;
+    margin: 0;
+}
+
+h1:hover,h2:hover,h3:hover {
+    color: #999;
+    cursor: pointer;
+    text-shadow: #FF9900 0 0 5px; 
+}
+#back, #forward {
+    position: absolute;
+    top: 10px;
+    z-index: 500;
+}
+#back {
+    right: 100px;
+}
+#forward {
+    right: 70px;
+}
+.button,#back, #forward {
+    font-family: 'Exo',sans-serif;
+    font-weight: bold;
+    padding: 0 10px 0 10px;
+    margin: 0 2px 0 2px;
+    background: #FF9900;
+    color: #FFF;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.button:hover,#back:hover, #forward:hover {
+    background: #999;
+    cursor: pointer;
+    text-shadow: #FF9900 0 0 5px; 
 }
 #header {
     position: absolute;
@@ -57,41 +96,53 @@ br,.clear {
     border-bottom-left-radius: 15px;
 }
 #logo {
-    position: relative;
-    top: 0px;
-    left: 0px;
+    float: left;
     margin: 5px 0px 0px 5px;
     background-image: url("../images/logo.png");
-    background-position: 1px 101px;
-    width: 400px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    padding-left: 100px;
+    font-size: 80px;
+    color: #fff;
+    width: 100px;
     height: 100px;
 }
+
 #logo:hover {
-    background-position: 0px 0px;
+    text-shadow: #FF9900 0 0 10px;
+    cursor: default;
 }
 
 #navigation {
+    clear: both;
     float: left;
     list-style: none;
     margin: 0;
     padding: 0 0 5px 25px;
+    min-width: 200px;
 }
 
 #navigation li {
-    font-weight: bold;
+    position: relative;
     float: left;
-    padding: 0 10px 0 10px;
-    margin: 0 2px 0 2px;
-    background: #FF9900;
-    color: #FFF;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
+    z-index: 200;
 }
 
-#navigation li:hover {
-    background: #999;
-    cursor: pointer;
+#location {
+    position: absolute;
+    top: -30px;
+    right: 25%;
+    margin-right: 90px;
+    list-style: none;
+    width: 35%;
+    z-index: 300;
 }
+
+#location li {
+    margin-top: 5px;
+    float: left;
+}
+
 #bottom {
     position: absolute;
     bottom: 0px;
@@ -170,6 +221,8 @@ br,.clear {
     -moz-border-radius: 15px;
     border-radius: 15px;
     width: 35%;
+    z-index: 100;
+    overflow: auto;
 }
 .right {
     right: 0;
@@ -177,12 +230,15 @@ br,.clear {
     background: #f7f7f7;
     -moz-border-radius: 15px;
     border-radius: 15px;
+    z-index: 100;
+    overflow: auto;
 }
 .left {
     left: 0;
-    width: auto;
+    width: 100%;
 }
 .swap {
+    position: relative;
     max-width: 300px;
     margin-left: 5px;
     width: 25%;
@@ -196,6 +252,7 @@ br,.clear {
     background: #f7f7f7;
     -moz-border-radius: 15px;
     border-radius: 15px;
+    z-index:500;
 }
 .blind {
     float: left;
