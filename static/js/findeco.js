@@ -96,9 +96,15 @@ ClassMain.prototype.load = function(element) {
     console.log(element.id);
 };
 
-ClassBox.prototype.printData = function(data) {
-    this.element.empty();
+ClassBox.prototype.printData = function(data,append = null) {
+    if ( append == null ) {
+        this.element.empty();
+    }
     this.element.append(data.getJQueryObject());
+}
+
+ClassBox.prototype.empty = function() {
+    this.element.empty();
 }
 
 ClassBox.prototype.show = function(position,container) {
