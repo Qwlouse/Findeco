@@ -64,6 +64,15 @@ class Node(models.Model):
         no.position = max_position + 1
         no.save()
 
+    def append_argument(self, argument):
+        no = ArgumentOrder()
+        no.node = self
+        no.argument = argument
+        agg = ArgumentOrder.objects.filter(node=self).aggregate(Max('position'))
+        max_position = agg['position__max'] or 0
+        no.position = max_position + 1
+        no.save()
+
     def __unicode__(self):
         return "id=%d, type=%s"%(self.id, self.node_type)
 

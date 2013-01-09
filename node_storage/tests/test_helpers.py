@@ -3,7 +3,8 @@
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
+# Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -35,7 +36,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path
-from ..models import Node, NodeOrder, Vote, Text
+from ..models import Node, Vote, Text, Argument
 
 class HelpersTest(TestCase):
     def setUp(self):
@@ -157,6 +158,12 @@ class HelpersTest(TestCase):
         self.subsubtext1.save()
         self.subsubslot1.append_child(self.subsubtext1)
 
+        self.argument1 = Argument()
+        self.argument1.node_type = 'argument'
+        self.argument1.arg_type = 'pro'
+        self.argument1.save()
+        self.subsubtext1.append_argument(self.argument1)
+
     def test_get_favorite_if_slot(self):
         n = get_favorite_if_slot(self.root)
         self.assertEqual(n, self.root)
@@ -192,3 +199,5 @@ class HelpersTest(TestCase):
         self.assertEqual(node, self.subsubtext1)
         node = get_node_for_path("Slot_4.1/SubSlot_1.1/SubSubSlot_1")
         self.assertEqual(node, self.subsubslot1)
+        node = get_node_for_path("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
+        self.assertEqual(node, self.argument1)
