@@ -143,3 +143,7 @@ class HelpersTest(TestCase):
         self.assertEqual(node, self.text1) # Is this correct? Or should it return the slot?
         node = get_node_for_path("slot_1.1")
         self.assertEqual(node, self.text1)
+        node = get_node_for_path("slot_2.1")
+        self.assertEqual(node, self.text3)
+        node = get_node_for_path("slot_2.2")
+        self.assertEqual(node, self.text4)
