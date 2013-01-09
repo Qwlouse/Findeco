@@ -97,6 +97,8 @@ class Argument(Node):
         through='ArgumentOrder'
     )
     arg_type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
+    def __unicode__(self):
+        return "id=%d, type=%s"%(self.id, self.arg_type)
 
 class Text(models.Model):
     node = models.ForeignKey(Node, related_name="text_object")
@@ -107,7 +109,7 @@ class Text(models.Model):
     )
 
     def __unicode__(self):
-        return "text=%s"%self.text
+        return "id=%d, text=%s"%(self.id, self.text)
 
 class Derivation(models.Model):
     source=models.ForeignKey(Node, related_name='derivative_order_set')
@@ -116,6 +118,11 @@ class Derivation(models.Model):
 
     class Meta:
         unique_together = (('source', 'derivate'), )
+
+    def __unicode__(self):
+        return "source_id=%d, derivate_id=%d, argument_id=%d"%(self.source_id,
+                                                               self.derivate_id,
+                                                               self.argument_id)
 
 class NodeOrder(models.Model):
     child = models.ForeignKey(Node, related_name='parent_order_set')
@@ -126,7 +133,9 @@ class NodeOrder(models.Model):
         unique_together = (('parent', 'child'), )
 
     def __unicode__(self):
-        return "pos=%d, child=%s, parent=%s"%(self.position, repr(self.child), repr(self.parent))
+        return "pos=%d, child_id=%d, parent_id=%d"%(self.position,
+                                                    self.child_id,
+                                                    self.parent_id)
 
 class ArgumentOrder(models.Model):
     argument = models.ForeignKey(Argument, related_name='node_order_set')
@@ -136,6 +145,11 @@ class ArgumentOrder(models.Model):
     class Meta:
         unique_together = (('argument', 'node'), )
 
+    def __unicode__(self):
+        return "pos=%d, argument_id=%d, node_id=%d"%(self.position,
+                                                     self.argument_id,
+                                                     self.node_id)
+
 
 class Vote(models.Model):
     user = models.ForeignKey(User)
@@ -144,9 +158,14 @@ class Vote(models.Model):
         related_name='votes'
     )
 
+    def __unicode__(self):
+        return "id=%d, user=%s"%(self.id, self.user.username)
+
 class SpamFlag(models.Model):
     user = models.ForeignKey(User)
     nodes = models.ManyToManyField(
         Node,
         related_name='spam_flags'
     )
+    def __unicode__(self):
+        return "id=%d, user=%s"%(self.id, self.user.username)
