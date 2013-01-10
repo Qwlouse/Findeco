@@ -158,46 +158,54 @@ def logout(request):
 
 def mark_node(request, path, mark_type):
     """
-    If an argument is marked but wasn't created at this location it must be copied and the marking is to apply to the
-    copied one.
+    If an argument is marked but wasn't created at this location it must be
+    copied and the marking is to apply to the copied one.
     """
-    if request.user.is_authenticated:
-        node = backend.get_node_for_path(path)
-        if node:
-            if backend.get_similar_path(node, path) != path: #This means it is an argument which wasn't created here
-                a = backend.Argument()
-                a.concerns = backend.get_path_parent(node, path)
-                a.arg_type = node.arg_type
-                a.parents = node.parents
-                a.sources = node.sources
-                a.node_type = node.node_type
-                a.save()
-                t = backend.Text()
-                t.node = a
-                t.text = node.text_object.text
-                t.authors = node.text_object.authors
-                t.save()
-                node = a
-            if mark_type in ("spam", "notspam"):
-                marks = backend.SpamFlag.objects.filter(node=node)
-                if len(marks) >= 1:
-                    mark = marks[0]
-                else:
-                    mark = backend.SpamFlag()
-            else: # follow or unfollow
-                marks = backend.Vote.objects.filter(node=node)
-                if len(marks) >= 1:
-                    mark = marks[0]
-                else:
-                    mark = backend.Vote()
-            mark.user = request.user
-            mark.nodes.create(node)
-            mark.save()
-            return json_response({'success':True})
-        else:
-            return json_response({'success':False, 'error': "Invalid path."})
-    else:
+    if not request.user.is_authenticated:
         return json_response({'success':False, 'error': "You're not authenticated."})
+    user = request.user
+    node = backend.get_node_for_path(path)
+    if not node:
+        return json_response({'success':False, 'error': "Invalid path."})
+
+    if mark_type in ("spam", "notspam"):
+        MarkClass = backend.SpamFlag
+        marks = node.spam_flags.filter(user=user.id)
+    else:# follow or unfollow
+        MarkClass = backend.Vote
+        marks = node.votes.filter(user=user.id)
+
+    if marks.count() >= 1:
+        #TODO: if a mark changes for a node that mark has to be copied
+        mark = marks[0]
+    else:
+        mark = MarkClass()
+
+    mark.user = request.user.id or 1 # TODO FIXME: Why can this be none during testing?
+    mark.save()
+    mark.nodes.add(node)
+    mark.save()
+
+    ## @jonny: I don't understand what this is for. Seems wrong to me:
+#    if backend.get_similar_path(node, path) != path: #This means it is an argument which wasn't created here
+#        a = backend.Argument()
+#        a.concerns = backend.get_path_parent(node, path)
+#        a.arg_type = node.arg_type
+#        a.parents = node.parents
+#        a.sources = node.sources
+#        a.node_type = node.node_type
+#        a.save()
+#        t = backend.Text()
+#        t.node = a
+#        t.text = node.text_object.text
+#        t.authors = node.text_object.authors
+#        t.save()
+#        node = a
+
+
+    return json_response({'success':True})
+
+
 
 def store_settings(request):
     # Backend foo
