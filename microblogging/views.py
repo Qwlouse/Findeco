@@ -32,10 +32,10 @@ import node_storage as backend
 def load_microblogging(request, path, select_id, microblogging_load_type):
     node = backend.get_node_for_path(path)
     if microblogging_load_type == "newer":
-        startpoint = Q(pk__gt=select_id)
+        startpoint = Q(id__gt=select_id)
     else: # older
-        startpoint = Q(pk__st=select_id)
-    posts = Post.objects.filter(node_references__in=node).filter(startpoint)[:20]
+        startpoint = Q(id__lt=select_id)
+    posts = node.microbloging_references.filter(startpoint)[:20]
     response_list = []
     for post in posts:
         authors = [{'displayName': post.author.username}]
