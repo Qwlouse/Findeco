@@ -87,18 +87,24 @@ def load_graph_data(request, graph_data_type, path):
 
 def load_text(request, path):
     prefix, path_type = parse_suffix(path)
-    node = backend.get_favorite_if_slot(backend.get_node_for_path(prefix))
+    tmp_node = backend.get_node_for_path(prefix)
+    node = backend.get_favorite_if_slot(tmp_node)
+    if node == tmp_node: # not slot
+        # this means the index in parent is the last integer in the prefix
+        index = int(prefix.rsplit('.', 1)[-1] or '1')
+    else: # slot
+        index = node.get_index(tmp_node)
+
     paragraphs = []
     for slot in backend.get_ordered_children_for(node):
         best_choice = backend.get_favorite_if_slot(slot)
         paragraphs.append({'wikiText': best_choice.text_object.text,
                            'path': backend.get_similar_path(best_choice, path),
-                           'isFollowing': len(
-                               backend.Vote.objects.filter(nodes__in=best_choice).filter(user=request.user)),
+                           'isFollowing': best_choice.votes.filter(user=request.user.id).count()>0,
                            'authorGroup': [{'displayName': a.username} for a in best_choice.text_object.authors]})
     return json_response({'paragraphs': paragraphs,
-                          'index': node.get_index(),
-                          'isFollowing': len(backend.Vote.objects.filter(nodes__in=node).filter(user=request.user))})
+                          'index': index,
+                          'isFollowing': node.votes.filter(user=request.user.id).count()>0})
 
 def load_user_info(request, name):
     # This is an example
