@@ -17,24 +17,25 @@
         <p style="color:red;">Du hast Skripte in deinem Browser deaktiviert. Findeco benötigt für korrekte Funktionalität jedoch JavaScript und Cookies.
             <br/>Bitte aktiviere JavaScript und lade die Seite neu.</p>
     </noscript>
-    <script type="text/javascript">
-        window.onload = load;
-    </script>
 
     <title>Findeco</title>
 </head>
-<body>
-<div id="header">
-    <div id="logo"></div>
-    <ul id="navigation">
-        <li id="home" onclick="Main.load(this)">Home</li>
-        <li id="content" onclick="Main.load(this)">Content</li>
-        <li id="imprint" onclick="Main.load(this)">Imprint</li>
-    </ul>
-</div>
-<div id="debug">{{ path }}</div>
-<div id="container"></div>
-<div id="bottom">Findeco means: Findeco, investigate, debate, consent. Findeco is free and opensource.</div>
-<div id="loading"></div>
+<body onload="load()">
+    <div id="back" onclick="previous()">&lt;</div>
+    <div id="forward" onclick="next()">&gt;</div>
+    <div id="header">
+        <div id="logo">Findeco</div>
+        <ul id="navigation">
+            <li id="home" class="button" onclick="Main.load(this)">Home</li>
+            <li id="content" class="button" onclick="Main.load(this)">Content</li>
+            <li id="imprint" class="button" onclick="Main.load(this)">Imprint</li>
+        </ul>
+    </div>
+    <div id="debug">{{ path }}</div>
+    <div id="container">
+        <ul id="location"></ul>
+    </div>
+    <div id="bottom">Findeco means: Findeco, investigate, debate, consent. Findeco is free and opensource.</div>
+    <div id="loading"></div>
 </body>
 </html>
