@@ -29,6 +29,7 @@ from django.contrib.auth.models import User
 from django.test import Client
 from django.core.urlresolvers import reverse
 import unittest
+import json
 from ..views import home
 
 views = [('load_index', dict(path='')),
@@ -63,7 +64,9 @@ class ViewTest(unittest.TestCase):
         client = Client()
         client.login(username='fred', password='secret')
         for v, kwargs in views:
-            client.get(reverse(v, kwargs=kwargs))
+            response = client.get(reverse(v, kwargs=kwargs))
+            res = json.loads(response.content)
+            self.assertIsNotNone(res)
 
     def test_load_index_view(self):
         pass

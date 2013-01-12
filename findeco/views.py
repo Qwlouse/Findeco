@@ -181,7 +181,7 @@ def mark_node(request, path, mark_type):
     else:
         mark = MarkClass()
 
-    mark.user = request.user.id or 1 # TODO FIXME: Why can this be none during testing?
+    mark.user_id = request.user.id or 1 # TODO FIXME: Why can this be none during testing?
     mark.save()
     mark.nodes.add(node)
     mark.save()
