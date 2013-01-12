@@ -30,6 +30,7 @@ from django.test import Client
 from django.core.urlresolvers import reverse
 import unittest
 import json
+import itertools
 from ..views import home
 
 views = [('load_index', dict(path='')),
@@ -78,12 +79,35 @@ class ViewTest(unittest.TestCase):
             self.assertIn('error', response)
             return False
         self.validate_format(response, [('loadIndexResponse', list)])
-        entry_format = [('shortTitle', str),
+        entry_format = [('shortTitle', unicode),
                         ('index', int),
-                        ('fullTitle', str),
+                        ('fullTitle', unicode),
                         ('authorGroup', list)]
         for entry in response['loadIndexResponse']:
             self.validate_format(entry, entry_format)
+        return True
+
+    def validate_graph_data_node(self, node):
+        self.validate_format(node, [('index', int),
+                                    ('authorGroup', list),
+                                    ('follows', int),
+                                    ('unFollows', int),
+                                    ('newFollows', int),
+                                    ('origin', unicode)])
+
+    def validate_load_graph_data_response(self, response):
+        self.assertIn('success', response)
+        if not response['success']:
+            self.assertIn('error', response)
+            return False
+        self.validate_format(response, [('loadGraphDataResponse', dict)])
+        data = response['loadGraphDataResponse']
+        self.validate_format(data, [('graphDataChildren', list),
+                                    ('graphDataRelated', list)])
+        children = data['graphDataChildren']
+        related = data['graphDataRelated']
+        for node in children + related:
+            self.validate_graph_data_node(node)
         return True
 
 
@@ -93,3 +117,12 @@ class ViewTest(unittest.TestCase):
             result = self.client.get(reverse('load_index', kwargs=dict(path=p)))
             response = json.loads(result.content)
             self.validate_load_index_response(response)
+
+    def test_load_graph_data_response_is_valid(self):
+        paths = ['foo', 'foo.1.pro', 'foo.1/bar']
+        graph_types = ['default', 'full', 'with_spam']
+        for p, t in itertools.product(paths, graph_types):
+            result = self.client.get(reverse('load_graph_data',
+                kwargs=dict(path=p, graph_data_type='default')))
+            response = json.loads(result.content)
+            self.validate_load_graph_data_response(response)
