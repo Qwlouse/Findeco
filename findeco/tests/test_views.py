@@ -53,20 +53,43 @@ views = [('load_index', dict(path='')),
 
 
 class ViewTest(unittest.TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.client.login()
+
     def test_home_view_status_ok(self):
-        client = Client()
-        response = client.get(reverse(home, kwargs=dict(path='')))
+        response = self.client.get(reverse(home, kwargs=dict(path='')))
         self.assertEqual(response.status_code, 200)
 
-    #@unittest.skip('skip for the moment')
     def test_all_api_views_return_json(self):
-        User.objects.create_user('fred', 'fake@pukkared.com', 'secret')
-        client = Client()
-        client.login(username='fred', password='secret')
         for v, kwargs in views:
-            response = client.get(reverse(v, kwargs=kwargs))
+            response = self.client.get(reverse(v, kwargs=kwargs))
             res = json.loads(response.content)
             self.assertIsNotNone(res)
 
-    def test_load_index_view(self):
-        pass
+    def validate_format(self, entry, format):
+        for title, cls in format:
+                self.assertIn(title, entry)
+                self.assertIsInstance(entry[title], cls)
+
+    def validate_load_index_response(self, response):
+        self.assertIn('success', response)
+        if not response['success']:
+            self.assertIn('error', response)
+            return False
+        self.validate_format(response, [('loadIndexResponse', list)])
+        entry_format = [('shortTitle', str),
+                        ('index', int),
+                        ('fullTitle', str),
+                        ('authorGroup', list)]
+        for entry in response['loadIndexResponse']:
+            self.validate_format(entry, entry_format)
+        return True
+
+
+    def test_load_index_response_is_valid(self):
+        paths = ['', 'foo', 'foo.1', 'foo.1.pro', 'foo.1.pro.1', 'foo.1/bar']
+        for p in paths:
+            result = self.client.get(reverse('load_index', kwargs=dict(path=p)))
+            response = json.loads(result.content)
+            self.validate_load_index_response(response)

@@ -48,7 +48,8 @@ def home(request, path):
 def load_index(request, path):
     prefix, path_type = parse_suffix(path)
     if 'arg_id' in path_type:
-        return json_response({'error':'NotPossibleForSingleArgument'})
+        return json_response({'success':False,
+                              'error':'NotPossibleForSingleArgument'})
 
     node = backend.get_node_for_path(prefix)
 
@@ -62,7 +63,8 @@ def load_index(request, path):
              'fullTitle':n.get_full_title(),
              'index':n.get_index()
             } for n in nodelist]
-    return json_response(data)
+    return json_response({'success':True,
+                          'loadIndexResponse':data})
 
 def load_graph_data(request, graph_data_type, path):
     # This is an example
