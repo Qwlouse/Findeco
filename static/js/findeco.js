@@ -19,10 +19,9 @@ ClassController.prototype.load = function(target) {
     
 }
 
-/*
-    {"loadIndexResponse":[{"shortTitle":"subtopic","index":1,"fullTitle":"This is a subtopic!","authorGroup":[{"test1"},{"test2"}]}]}
-    
-*/
+ClassController.prototype.stateHandler = function(event) {
+    console.log(event,event.originalEvent.state);
+}
 
 ClassData.prototype.load = function(data) {
     this.html = $('<div>');
@@ -35,25 +34,36 @@ ClassData.prototype.load = function(data) {
         if ( d == 'loadTextResponse' ) {
             this.loadTextResponse(data[d]);
         }
-        if ( d == 'loadMicroBloggingResponse' ) {
-            this.loadMicroBloggingResponse(data[d]);
+        if ( d == 'loadMicrobloggingResponse' ) {
+            this.loadMicrobloggingResponse(data[d]);
         }
     }
 };
 
 ClassData.prototype.loadIndexResponse = function(data) {
+    if ( this.html.children('.indexResponse')[0] == undefined )  {
+        $('<div>')
+            .addClass('indexResponse')
+            .appendTo(this.html);
+    }
     for ( d in data ) {
-        $('<p>' + data[d].fullTitle + '</p>').appendTo(this.html);
+        $('<p>' + data[d].fullTitle + '</p>').appendTo(this.html.children('.indexResponse')[0]);
     }
 };
 
 ClassData.prototype.loadTextResponse = function(data) {
+    if ( this.html.children('.textResponse')[0] == undefined )  {
+        $('<div>')
+            .addClass('textResponse')
+            .appendTo(this.html);
+    }
+    
     for ( p in data['paragraphs'] ) {
-        $('<p>' + data['paragraphs'][p].wikiText + '</p>').appendTo(this.html);
+        $('<p>' + data['paragraphs'][p].wikiText + '</p>').appendTo(this.html.children('.textResponse')[0]);
     }
 };
 
-ClassData.prototype.loadMicroBloggingResponse = function(data) {
+ClassData.prototype.loadMicrobloggingResponse = function(data) {
     for ( p in data ) {
         var author = '';
         for ( a in data[p].authorGroup ) {
@@ -63,11 +73,11 @@ ClassData.prototype.loadMicroBloggingResponse = function(data) {
             author = author + data[p].authorGroup[a].displayName;
         }
         var div = $('<div>')
-            .addClass("microBlogPost")
+            .addClass("microblogPost")
             .appendTo(this.html);
-        $('<p>' + author + ':&nbsp;' + data[p].microBlogText + '</p>')
+        $('<p>' + author + ':&nbsp;' + data[p].microblogText + '</p>')
             .appendTo(div);
-        $('<p>' + Helper.timestampToDate(data[p].microBlogTime) + ' (' + data[p].microBlogID + ')</p>')
+        $('<p>' + Helper.timestampToDate(data[p].microblogTime) + ' (' + data[p].microblogID + ')</p>')
             .addClass("time")
             .appendTo(div);
     }
@@ -96,10 +106,13 @@ ClassMain.prototype.load = function(element) {
     if ( element.id == 'imprint' ) {
         loadImprint();
     }
+    if ( element.id == 'content' ) {
+        loadPosition();
+    }
 };
 
-ClassBox.prototype.printData = function(data,append = null) {
-    if ( append == null ) {
+ClassBox.prototype.printData = function(data,append) {
+    if ( append == null || append == undefined ) {
         this.element.empty();
     }
     this.element.append(data.getJQueryObject());

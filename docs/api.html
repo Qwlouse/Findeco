@@ -15,8 +15,8 @@ In return you get a JSON response from the server.
 	<tr><td>GET Parameters:</td><td><a href="#ValueGraphDataType">(String) graphDataType</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValuePath">(String) path</a></td></tr>
 	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-	<tr><td>Description:</td><td>Loads the requested graph data of the given path.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONloadGraphDataResponse">JSON::loadGraphDataResponse</a></td></tr>
+	<tr><td>Description:</td><td>Loads the requested graph data of the given path to a StructureNode (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadGraphDataResponse">JSON::loadGraphDataResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -25,20 +25,20 @@ In return you get a JSON response from the server.
 	<tbody><tr><td>Call Structure:</td><td>.json_loadIndex/path</td></tr>
 	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
 	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-	<tr><td>Description:</td><td>Loads the index of the given path.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONloadIndexResponse">JSON::loadIndexResponse</a></td></tr>
+	<tr><td>Description:</td><td>Loads the index of the given path to a StructureNode or an ArgumentCategory (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadIndexResponse">JSON::loadIndexResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
-<b><a name="FunctionLoadMicroBlogging">Function::loadMicroBlogging</a></b>
+<b><a name="FunctionLoadMicroblogging">Function::loadMicroblogging</a></b>
 <table>
-	<tbody><tr><td>Call Structure:</td><td>.json_loadMicroBlogging/selectID/microBloggingLoadType/path</td></tr>
+	<tbody><tr><td>Call Structure:</td><td>.json_loadMicroblogging/selectID/microbloggingLoadType/path</td></tr>
 	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueSelectID">(Integer) selectID</a></td></tr>
-	<tr><td>&nbsp;</td><td><a href="#ValueMicroBloggingLoadType">(String) microBloggingLoadType</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueMicrobloggingLoadType">(String) microbloggingLoadType</a></td></tr>
 	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-	<tr><td>Description:</td><td>Loads the microblogging entrys of the given path.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONloadMicroBloggingResponse">JSON::loadMicroBloggingResponse</a></td></tr>
+	<tr><td>Description:</td><td>Loads the microblogging entrys of the given path to a StructureNode or an Argument (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadMicrobloggingResponse">JSON::loadMicrobloggingResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -47,8 +47,8 @@ In return you get a JSON response from the server.
 	<tbody><tr><td>Call Structure:</td><td>.json_loadText/path</td></tr>
 	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
 	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-	<tr><td>Description:</td><td>Loads the textview of the given path.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONloadTextResponse">JSON::loadTextResponse</a></td></tr>
+	<tr><td>Description:</td><td>Loads the textview of the given path to a StructureNode (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadTextResponse">JSON::loadTextResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -58,7 +58,7 @@ In return you get a JSON response from the server.
 	<tr><td>GET Parameters:</td><td><a href="#ValueDisplayName">(String) displayName</a></td></tr>
 	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
 	<tr><td>Description:</td><td>Loads infos to the requested user. </td></tr>
-	<tr><td>Return:</td><td><a href="#JSONloadUserInfoResponse">JSON::loadUserInfoResponse</a></td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadUserInfoResponse">JSON::loadUserInfoResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -68,7 +68,7 @@ In return you get a JSON response from the server.
 	<tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
 	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
 	<tr><td>Description:</td><td>Loads the settings for the currently logged in user. </td></tr>
-	<tr><td>Return:</td><td><a href="#JSONloadUserSettingsResponse">JSON::loadUserSettingsResponse</a></td></tr>
+	<tr><td>Return:</td><td><a href="#JSONloadUserSettingsResponse">JSON::loadUserSettingsResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -99,18 +99,18 @@ In return you get a JSON response from the server.
 	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueMarkType">(String) markType</a></td></tr>
 	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-	<tr><td>Description:</td><td>Mark a node as spam or follow it.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONmarkNodeResponse">JSON::markNodeResponse</a></td></tr>
+	<tr><td>Description:</td><td>Mark a StructureNode or an Argument (see <a href="#ValuePath">Value::Path</a>) as spam or follow it.</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONmarkNodeResponse">JSON::markNodeResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
-<b><a name="FunctionStoreMicroBlogPost">Function::storeMicroBlogPost</a></b>
+<b><a name="FunctionStoreMicroblogPost">Function::storeMicroblogPost</a></b>
 <table>
-	<tbody><tr><td>Call Structure:</td><td>.json_storeMicroBlogPost/path</td></tr>
+	<tbody><tr><td>Call Structure:</td><td>.json_storeMicroblogPost/path</td></tr>
 	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
-	<tr><td>POST Parameters:</td><td><a href="#ValueMicroBlogText">(String) microBlogText</a></td></tr>
-	<tr><td>Description:</td><td>Store a Microblogpost.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONstoreMicroBlogPostResponse">JSON::storeMicroBlogPostResponse</a></td></tr>
+	<tr><td>POST Parameters:</td><td><a href="#ValueMicroblogText">(String) microblogText</a></td></tr>
+	<tr><td>Description:</td><td>Store a Microblogpost attached to a path to a StructureNode or an Argument (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONstoreMicroblogPostResponse">JSON::storeMicroblogPostResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -121,7 +121,7 @@ In return you get a JSON response from the server.
 	<tr><td>POST Parameters:</td><td><a href="#ValueDisplayName">(String) displayName</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueDescription">(String) description</a></td></tr>
 	<tr><td>Description:</td><td>Store settings for the current user.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONstoreSettingsResponse">JSON::storeSettingsResponse</a></td></tr>
+	<tr><td>Return:</td><td><a href="#JSONstoreSettingsResponse">JSON::storeSettingsResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -132,8 +132,8 @@ In return you get a JSON response from the server.
 	<tr><td>POST Parameters:</td><td><a href="#ValueWikiText">(String) wikiText</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueArgumentType">(String) argumentType</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueWikiTextAlternative">(String) wikiTextAlternative</a></td></tr>
-	<tr><td>Description:</td><td>Store a new Textnode in the hierarchy.</td></tr>
-	<tr><td>Return:</td><td><a href="#JSONstoreTextResponse">JSON::storeTextResponse</a></td></tr>
+	<tr><td>Description:</td><td>Store a new Textnode in the hierarchy attached to a StructureNode (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+	<tr><td>Return:</td><td><a href="#JSONstoreTextResponse">JSON::storeTextResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -174,6 +174,24 @@ In return you get a JSON response from the server.
 	<tr><td>Type:</td><td>String</td></tr>
 	<tr><td>Description:</td><td>The name the user has setup to be his displayed name. </td></tr>
 	<tr><td>Default:</td><td>Anonymous</td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueErrorMessage">Value::errorMessage</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>errorMessage</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The message of the error the last call has thrown. </td></tr>
+	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueErrorTitle">Value::errorTitle</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>errorTitle</td></tr>
+	<tr><td>Type:</td><td>String</td></tr>
+	<tr><td>Description:</td><td>The title of the error the last call has thrown. </td></tr>
 	<tr><td>Supported Values:</td><td>Output only.</td></tr>
 </tbody></table>
 
@@ -232,36 +250,36 @@ In return you get a JSON response from the server.
 </tbody></table>
 
 <br>
-<b><a name="ValueMicroBloggingLoadType">Value::microBloggingLoadType</a></b>
+<b><a name="ValueMicrobloggingLoadType">Value::microbloggingLoadType</a></b>
 <table>
-	<tbody><tr><td>Parametername:</td><td>microBloggingLoadType</td></tr>
+	<tbody><tr><td>Parametername:</td><td>microbloggingLoadType</td></tr>
 	<tr><td>Type:</td><td>String</td></tr>
-	<tr><td>Description:</td><td>The requested load type for loadMicroBlogging. </td></tr>
+	<tr><td>Description:</td><td>The requested load type for loadMicroblogging. </td></tr>
 	<tr><td>Supported Values:</td><td>[newer|older]</td></tr>
 </tbody></table>
 
 <br>
-<b><a name="ValueMicroBlogID">Value::microBlogID</a></b>
+<b><a name="ValueMicroblogID">Value::microblogID</a></b>
 <table>
-	<tbody><tr><td>Parametername:</td><td>microBlogID</td></tr>
+	<tbody><tr><td>Parametername:</td><td>microblogID</td></tr>
 	<tr><td>Type:</td><td>Integer</td></tr>
 	<tr><td>Description:</td><td>The ID of a microblog post.</td></tr>
 	<tr><td>Supported Values:</td><td>Any ID leading to an existing microblogpost in the db.</td></tr>
 </tbody></table>
 
 <br>
-<b><a name="ValueMicroBlogText">Value::microBlogText</a></b>
+<b><a name="ValueMicroblogText">Value::microblogText</a></b>
 <table>
-	<tbody><tr><td>Parametername:</td><td>microBlogText</td></tr>
+	<tbody><tr><td>Parametername:</td><td>microblogText</td></tr>
 	<tr><td>Type:</td><td>String</td></tr>
 	<tr><td>Description:</td><td>The text of a microblog post.</td></tr>
 	<tr><td>Supported Values:</td><td>Any unformatted String.</td></tr>
 </tbody></table>
 
 <br>
-<b><a name="ValueMicroBlogTime">Value::microBlogTime</a></b>
+<b><a name="ValueMicroblogTime">Value::microblogTime</a></b>
 <table>
-	<tbody><tr><td>Parametername:</td><td>microBlogTime</td></tr>
+	<tbody><tr><td>Parametername:</td><td>microblogTime</td></tr>
 	<tr><td>Type:</td><td>Integer</td></tr>
 	<tr><td>Description:</td><td>The unix timestamp of a microblog post.</td></tr>
 	<tr><td>Supported Values:</td><td>Any unix timestamp.</td></tr>
@@ -302,10 +320,10 @@ In return you get a JSON response from the server.
 	<tr><td>Description:</td><td>The path to any node in the hierarchy. Paths are built out of <a href="#ValueShortTitle">Value::shortTitle</a> and <a href="#ValueIndex">Value::index</a>
  by concatenating them with a ".", these individual parts of the path 
 are concatenated by "/" but any path may also be trailed by a set of <a href="#ValueArgumentDenominator">Value::argumentDenominator</a> with or without a <a href="#ValueIndex">Value::index</a> that is appended using a "." behind the <a href="#ValueIndex">Value::index</a> of the respective node.</td></tr>
-	<tr><td>Supported Values:</td><td>Any path leading to an existing node in the database. <br>Examples:
- "top.1/subtop.2", "top.1/subtop.2/subsubtop", 
-"top.1/subtop.2/subsubtop.3", "top.1/subtop.2/subsubtop.3.neut", 
-"top.1/subtop.2/subsubtop.3.neut.2"</td></tr>
+	<tr><td>Supported Values:</td><td>Any path leading to an existing node in the database. Depending on the function this may be a StructureNode, an ArgumentCategory or an Argument. <br>Examples:
+StructureNode: "top.1/subtop.2", "top.1/subtop.2/subsubtop", "top.1/subtop.2/subsubtop.3"<br>
+ArgumentCategory: "top.1/subtop.2/subsubtop.3.neut", "top.1/subtop.2/subsubtop.3.all"<br>
+Argument: "top.1/subtop.2/subsubtop.3.neut.1", "top.1/subtop.2/subsubtop.3.pro.3"</td></tr>
 </tbody></table>
 
 <br>
@@ -313,7 +331,7 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 <table>
 	<tbody><tr><td>Parametername:</td><td>selectID</td></tr>
 	<tr><td>Type:</td><td>Integer</td></tr>
-	<tr><td>Description:</td><td>The reference ID of an allready loaded microblogging entry. Usually the first loaded for <a href="#ValueMicroBloggingLoadType">Value::microBloggingLoadType</a> "older" and the last for "newer" </td></tr>
+	<tr><td>Description:</td><td>The reference ID of an allready loaded microblogging entry. Usually the first loaded for <a href="#ValueMicrobloggingLoadType">Value::microbloggingLoadType</a> "older" and the last for "newer" </td></tr>
 	<tr><td>Supported Values:</td><td>Output only.</td></tr>
 </tbody></table>
 
@@ -390,6 +408,14 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 </tbody></table>
 
 <br>
+<b><a name="JSONerrorResponse">JSON::errorResponse</a></b>
+<table>
+	<tbody><tr><td>Content:</td><td><a href="#ValueErrorTitle">Value::errorTitle</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueErrorMessage">Value::errorMessage</a></td></tr>
+	<tr><td>Comment:</td><td>The error to be displayed to the user.</td></tr>
+</tbody></table>
+
+<br>
 <b><a name="JSONfollowees">JSON::followees</a></b>
 <table>
 	<tbody><tr><td>Content:</td><td><a href="#JSONuser">JSON::user</a></td></tr>
@@ -443,20 +469,23 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 <table>
 	<tbody><tr><td>Content:</td><td><a href="#JSONgraphDataChildren">JSON::graphDataChildren</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#JSONgraphDataRelated">JSON::graphDataRelated</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
 </tbody></table>
 
 <br>
 <b><a name="JSONloadIndexResponse">JSON::loadIndexResponse</a></b>
 <table>
 	<tbody><tr><td>Content:</td><td><a href="#JSONindexNode">JSON::indexNode</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
 	<tr><td>Comment:</td><td>May contain multiple nodes.</td></tr>
 	<tr><td>Example:</td><td>{"loadIndexResponse":[{"shortTitle":"subsubtopic","index":1,"fullTitle":"This is a subsubtopic!","authorGroup":["author1","author2"]},{"shortTitle":"subsubtopic2","index":1,"fullTitle":"This is a second subsubtopic!","authorGroup":["author1","author3"]}]}</td></tr>
 </tbody></table>
 
 <br>
-<b><a name="JSONloadMicroBloggingResponse">JSON::loadMicroBloggingResponse</a></b>
+<b><a name="JSONloadMicrobloggingResponse">JSON::loadMicrobloggingResponse</a></b>
 <table>
-	<tbody><tr><td>Content:</td><td><a href="#JSONmicroBlogNode">JSON::microBlogNode</a></td></tr>
+	<tbody><tr><td>Content:</td><td><a href="#JSONmicroblogNode">JSON::microblogNode</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
 	<tr><td>Comment:</td><td>May contain multiple nodes.</td></tr>
 </tbody></table>
 
@@ -464,8 +493,8 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 <b><a name="JSONloadTextResponse">JSON::loadTextResponse</a></b>
 <table>
 	<tbody><tr><td>Content:</td><td><a href="#JSONparagraph">JSON::paragraphs</a></td></tr>
-	<tr><td>&nbsp;</td><td><a href="#ValueIndex">Value::index</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#ValueIsFollowing">Value::isFollowing</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
 	<tr><td>Example:</td><td>{"loadTextResponse":{"paragraphs":[{"wikiText":"= This is a subsubtopic! =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic.1","isFollowing":1,"authorGroup":["author1","author2"]},{"wikiText":"= This is a second subsubtopic! =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":["author1","author3"]}],"isFollowing":1}}</td></tr>
 </tbody></table>
 
@@ -476,6 +505,7 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 	<tr><td>&nbsp;</td><td><a href="#ValueDescription">Value::description</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#JSONfollowers">JSON::followers</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#JSONfollowees">JSON::followees</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
 </tbody></table>
 
 <br>
@@ -505,12 +535,12 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 </tbody></table>
 
 <br>
-<b><a name="JSONmicroBlogNode">JSON::microBlogNode</a></b>
+<b><a name="JSONmicroblogNode">JSON::microblogNode</a></b>
 <table>
-	<tbody><tr><td>Content:</td><td><a href="#ValueMicroBlogText">Value::microBlogText</a></td></tr>
+	<tbody><tr><td>Content:</td><td><a href="#ValueMicroblogText">Value::microblogText</a></td></tr>
 	<tr><td>&nbsp;</td><td><a href="#JSONauthorGroup">JSON::authorGroup</a></td></tr>
-	<tr><td>&nbsp;</td><td><a href="#ValueMicroBlogTime">Value::microBlogTime</a></td></tr>
-	<tr><td>&nbsp;</td><td><a href="#ValueMicroBlogID">Value::microBlogID</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueMicroblogTime">Value::microblogTime</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueMicroblogID">Value::microblogID</a></td></tr>
 </tbody></table>
 
 <br>
@@ -521,7 +551,7 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 </tbody></table>
 
 <br>
-<b><a name="JSONstoreMicroBlogPostResponse">JSON::storeMicroBlogPostResponse</a></b>
+<b><a name="JSONstoreMicroblogPostResponse">JSON::storeMicroblogPostResponse</a></b>
 <table>
 	<tbody><tr><td>Content:</td><td><a href="#ValueSuccess">Value::success</a></td></tr>
 </tbody></table>
@@ -563,7 +593,7 @@ are concatenated by "/" but any path may also be trailed by a set of <a href="#V
 </tbody></table>
 <br>
 <br>
-<b><a name="WorkingTitle">Findeco is a working title and it as well as this API are subject to immediate change without notice.</a></b>
+<b><a name="WorkingTitle">Findeco is a work in progress and this API is subject to immediate change without notice.</a></b>
 <div style="height:100%;margin-top:-10px;"></div>
 
 </body></html>

@@ -17,7 +17,8 @@
 
 <title>Findeco</title>
 </head>
-<body onload="load()">
+<body>
+    <div id="position">0/0</div>
     <div id="back" onclick="previous()">&lt;</div>
     <div id="forward" onclick="next()">&gt;</div>
     <div id="header">
@@ -28,7 +29,7 @@
             <li id="imprint" class="button" onclick="Main.load(this)">Imprint</li>
         </ul>
     </div>
-    <div id="debug">{{ path }}</div>
+    <!--<div id="debug">{{ path }}</div>!-->
     <div id="container">
         <ul id="location"></ul>
     </div>

@@ -56,7 +56,7 @@ h1:hover,h2:hover,h3:hover {
     cursor: pointer;
     text-shadow: #FF9900 0 0 5px; 
 }
-#back, #forward {
+#back, #forward, #position {
     position: absolute;
     top: 10px;
     z-index: 500;
@@ -66,6 +66,9 @@ h1:hover,h2:hover,h3:hover {
 }
 #forward {
     right: 70px;
+}
+#position {
+    right: 40px;
 }
 .button,#back, #forward {
     font-family: 'Exo',sans-serif;

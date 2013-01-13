@@ -6,6 +6,11 @@ var navigation = null;
 var position = 0;
 var endPosition = 0;
 
+$(window).bind('popstate',Controller.stateHandler);
+// window.onpopstate = Controller.stateHandler;
+
+$(document).ready(load);
+
 function previous() {
     if ( position == 0 ) {
         return;
@@ -15,6 +20,9 @@ function previous() {
 }
 
 function next() {
+    var stateobj = {"data":1};
+    window.history.pushState(stateobj,"blubb","test/index.html");
+    return;
     if ( position == endPosition ) {
         return;
     }
@@ -35,8 +43,9 @@ function load(){
     left.show('left');
     right.show('right');
 
-    // $.get('/Findeco/tests.php?.json_loadText/topic.1/subtopic.1',function(json){
-    // },'json');
+    $.get('/Codebar/tests.php?.json_loadText/topic.1/subtopic.1',function(json){
+        console.log(json,this);
+    },'json');
 
     loadPosition();
 }
@@ -112,17 +121,19 @@ function loadPosition() {
     
     endPosition = 6;
     
+    document.getElementById('position').innerHTML = position + '/' + endPosition;
+    
     // loadCenterTopicOverview();
     // loadLeftHistory();
 }
 
-function loadCenterData(json, append = null) {
+function loadCenterData(json) {
     center.empty();
     appendCenterData(json,true);
 }
 
-function appendCenterData(json, append = null) {
-    if ( append == null ) {
+function appendCenterData(json, append) {
+    if ( append == null || append == undefined ) {
         append = true;
     } else {
         append = null;
@@ -143,7 +154,7 @@ function appendLeftData(json) {
 
 function loadNavigation(json) {
     for ( j in json ) {
-        $('<li class="button">' + json[j] + '</li>')
+        $('<li class="button" style="z-index: 501; position: relative;">' + json[j] + '</li>')
             .appendTo(navigation);
     }
 }
@@ -156,10 +167,6 @@ function loadMicroBlogging() {
     data.load(json);
     right.printData(data);
 }
-
-window.onhashchange = function() {
-    Controller.loadLocation(document.location.hash);
-};
 
 var jsonData = {
     "topicList" : {"loadIndexResponse":[{"shortTitle":"topic","index":1,"fullTitle":"<h2>Wahlprogramm</h2>","authorGroup":[{"displayName":"author1"},{"displayName":"author2"}]},{"shortTitle":"topic","index":2,"fullTitle":"<h2>Grundsatzprogramm</h2>","authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]},{"shortTitle":"topic","index":3,"fullTitle":"<h2>Satzung</h2>","authorGroup":[{"displayName":"author1"}]}]}
