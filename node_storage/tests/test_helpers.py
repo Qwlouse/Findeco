@@ -163,6 +163,11 @@ class HelpersTest(TestCase):
         self.argument1.arg_type = 'pro'
         self.argument1.save()
         self.subsubtext1.append_argument(self.argument1)
+        self.argument2 = Argument()
+        self.argument2.node_type = 'argument'
+        self.argument2.arg_type = 'neut'
+        self.argument2.save()
+        self.subsubtext1.append_argument(self.argument2)
 
     def test_get_favorite_if_slot(self):
         n = get_favorite_if_slot(self.root)
@@ -206,8 +211,12 @@ class HelpersTest(TestCase):
 
     def test_get_arguments_for(self):
         args = get_arguments_for(self.subsubtext1)
-        self.assertSequenceEqual(args, [self.argument1])
+        self.assertSequenceEqual(args, [self.argument1, self.argument2])
         args = get_arguments_for(self.subsubtext1, 'pro')
         self.assertSequenceEqual(args, [self.argument1])
         args = get_arguments_for(self.subsubtext1, 'con')
         self.assertSequenceEqual(args, [])
+        args = get_arguments_for(self.subsubtext1, 'all')
+        self.assertSequenceEqual(args, [self.argument1, self.argument2])
+        args = get_arguments_for(self.subsubtext1, 'neut')
+        self.assertSequenceEqual(args, [self.argument2])
