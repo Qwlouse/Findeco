@@ -108,7 +108,7 @@ loadMicrobloggingResponseValidator = JSONValidator({
 loadTextResponseValidator = JSONValidator({
     'success':boolean,
     'loadTextResponse':{
-        'paragraphs':[textNode_schema],
+        'paragraphs':[textNode_schema, None],
         'index':integer,
         'isFollowing':boolean,
     }
@@ -207,3 +207,8 @@ class ViewTest(unittest.TestCase):
             result = self.client.get(reverse('load_microblogging',
                 kwargs=dict(path=p, microblogging_load_type=t, select_id=1)))
             self.validate_response(result.content, 'load_microblogging')
+
+    def test_load_text_response_is_valid(self):
+        for p in structure_node_paths + slot_paths + argument_paths:
+            response = self.client.get(reverse('load_text', kwargs=dict(path=p)))
+            self.validate_response(response.content, 'load_text')
