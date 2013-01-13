@@ -25,13 +25,13 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from django.contrib.auth.models import User
 from django.test import Client
 from django.core.urlresolvers import reverse
 import unittest
 import json
 import itertools
 from ..views import home
+from jsonvalidator import JSONValidator
 
 views = [('load_index', dict(path='')),
          ('load_user_settings', dict()),
@@ -52,7 +52,116 @@ views = [('load_index', dict(path='')),
          ('store_text', dict(path=''))
 ]
 
+################# JSON Schemas #################################################
+# The JSON responses are validated by example
+integer = 1
+string = "string"
+boolean = True
 
+graphDataNode_schema = {
+    'index':integer,
+    'authorGroup': ["user"],
+    'follows':integer,
+    'unFollows':integer,
+    'newFollows':integer,
+    'origin':"path?"
+}
+indexNode_schema = {
+    'shortTitle':string,
+    'fullTitle':string,
+    'index':integer,
+    'authorGroup': ["user"]
+}
+microblogNode_schema = {
+    'microblogText':string,
+    'authorGroup': ["user"],
+    'microblogTime':integer,
+    'microblogID':integer
+}
+textNode_schema = {
+    'wikiText':string,
+    'path':string,
+    'isFollowing':boolean,
+    'authorGroup': ["user"]
+}
+userData_schema={
+    'displayName':string,
+    'description':string,
+    'followers':["user", None],
+    'followees':["user", None]
+}
+loadGraphDataResponseValidator = JSONValidator({
+    'success':boolean,
+    'loadGraphDataResponse':{
+        'graphDataChildren':[graphDataNode_schema],
+        'graphDataRelated':[graphDataNode_schema, None]
+    }
+})
+loadIndexResponseValidator = JSONValidator({
+    'success':boolean,
+    'loadIndexResponse':[indexNode_schema, None]
+})
+loadMicrobloggingResponseValidator = JSONValidator({
+    'success':boolean,
+    'loadMicrobloggingResponse':[microblogNode_schema, None]
+})
+loadTextResponseValidator = JSONValidator({
+    'success':boolean,
+    'loadTextResponse':{
+        'paragraphs':[textNode_schema],
+        'index':integer,
+        'isFollowing':boolean,
+    }
+})
+loadUserInfoResponseValidator = JSONValidator({
+    'success':boolean,
+    'loadUserInfoResponse':userData_schema
+})
+loadUserSettingsResponseValidator = JSONValidator({
+    'success':boolean,
+    'loadUserSettingsResponse':userData_schema
+})
+loginResponseValidator = JSONValidator({
+    'success':boolean,
+    'loginResponse':userData_schema
+})
+logoutResponseValidator = JSONValidator({
+    'success':boolean
+})
+markNodeResponseValidator = JSONValidator({
+    'success':boolean
+})
+storeMicroblogPostResponseValidator = JSONValidator({
+    'success':boolean
+})
+storeSettingsResponseValidator = JSONValidator({
+    'success':boolean
+})
+storeTextResponseValidator = JSONValidator({
+    'success':boolean
+})
+view_validators = {
+    'load_graph_data':loadGraphDataResponseValidator,
+    'load_index':loadIndexResponseValidator,
+    'load_microblogging':loadMicrobloggingResponseValidator,
+    'load_text':loadTextResponseValidator,
+    'load_user_info':loadUserInfoResponseValidator,
+    'load_user_settings':loadUserSettingsResponseValidator,
+    'login':loginResponseValidator,
+    'logout':logoutResponseValidator,
+    'mark_node':markNodeResponseValidator,
+    'store_microblog_post':storeMicroblogPostResponseValidator,
+    'store_settings':storeSettingsResponseValidator,
+    'store_text':storeTextResponseValidator
+}
+
+################# example paths ################################################
+structure_node_paths = ['', 'foo.1', 'foo.1/bar.2']
+slot_paths = ['foo', 'foo.1/bar']
+argument_category_paths = ['foo.1.pro', 'foo.1/bar.2.con', 'foo.1/bar.2.neut']
+argument_paths = ['foo.1.pro.3', 'foo.1/bar.2.con.4', 'foo.1/bar.2.neut.5']
+
+################# Tests ########################################################
 class ViewTest(unittest.TestCase):
     def setUp(self):
         self.client = Client()
@@ -68,61 +177,25 @@ class ViewTest(unittest.TestCase):
             res = json.loads(response.content)
             self.assertIsNotNone(res)
 
-    def validate_format(self, entry, format):
-        for title, cls in format:
-                self.assertIn(title, entry)
-                self.assertIsInstance(entry[title], cls)
-
-    def validate_load_index_response(self, response):
+    def validate_response(self, response, view):
+        response = json.loads(response)
         self.assertIn('success', response)
         if not response['success']:
             self.assertIn('error', response)
             return False
-        self.validate_format(response, [('loadIndexResponse', list)])
-        entry_format = [('shortTitle', unicode),
-                        ('index', int),
-                        ('fullTitle', unicode),
-                        ('authorGroup', list)]
-        for entry in response['loadIndexResponse']:
-            self.validate_format(entry, entry_format)
+        validator = view_validators[view]
+        validator.validate(response)
         return True
-
-    def validate_graph_data_node(self, node):
-        self.validate_format(node, [('index', int),
-                                    ('authorGroup', list),
-                                    ('follows', int),
-                                    ('unFollows', int),
-                                    ('newFollows', int),
-                                    ('origin', unicode)])
-
-    def validate_load_graph_data_response(self, response):
-        self.assertIn('success', response)
-        if not response['success']:
-            self.assertIn('error', response)
-            return False
-        self.validate_format(response, [('loadGraphDataResponse', dict)])
-        data = response['loadGraphDataResponse']
-        self.validate_format(data, [('graphDataChildren', list),
-                                    ('graphDataRelated', list)])
-        children = data['graphDataChildren']
-        related = data['graphDataRelated']
-        for node in children + related:
-            self.validate_graph_data_node(node)
-        return True
-
 
     def test_load_index_response_is_valid(self):
-        paths = ['', 'foo', 'foo.1', 'foo.1.pro', 'foo.1.pro.1', 'foo.1/bar']
-        for p in paths:
-            result = self.client.get(reverse('load_index', kwargs=dict(path=p)))
-            response = json.loads(result.content)
-            self.validate_load_index_response(response)
+        for p in structure_node_paths:
+            response = self.client.get(reverse('load_index', kwargs=dict(path=p)))
+            self.validate_response(response.content, 'load_index')
 
     def test_load_graph_data_response_is_valid(self):
-        paths = ['foo', 'foo.1.pro', 'foo.1/bar']
-        graph_types = ['default', 'full', 'with_spam']
+        paths = slot_paths + argument_category_paths
+        graph_types = ['default', 'full', 'withSpam']
         for p, t in itertools.product(paths, graph_types):
-            result = self.client.get(reverse('load_graph_data',
-                kwargs=dict(path=p, graph_data_type='default')))
-            response = json.loads(result.content)
-            self.validate_load_graph_data_response(response)
+            response = self.client.get(reverse('load_graph_data',
+                kwargs=dict(path=p, graph_data_type=t)))
+            self.validate_response(response.content, 'load_graph_data')
