@@ -212,3 +212,11 @@ class ViewTest(unittest.TestCase):
         for p in structure_node_paths + slot_paths + argument_paths:
             response = self.client.get(reverse('load_text', kwargs=dict(path=p)))
             self.validate_response(response.content, 'load_text')
+
+    def test_mark_node_response_is_valid(self):
+        paths = structure_node_paths + argument_paths
+        mark_type = ['spam', 'notspam', 'follow', 'unfollow']
+        for p, t in itertools.product(paths, mark_type):
+            response = self.client.get(reverse('mark_node',
+                kwargs=dict(path=p, mark_type=t)))
+            self.validate_response(response.content, 'mark_node')
