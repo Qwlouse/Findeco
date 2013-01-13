@@ -220,3 +220,19 @@ class ViewTest(unittest.TestCase):
             response = self.client.get(reverse('mark_node',
                 kwargs=dict(path=p, mark_type=t)))
             self.validate_response(response.content, 'mark_node')
+
+    def test_load_user_info_response_is_valid(self):
+        usernames = ['admin', 'fred']
+        for u in usernames:
+            response = self.client.get(reverse('load_user_info', kwargs=dict(name=u)))
+            self.validate_response(response.content, 'load_user_info')
+
+    """
+    'load_user_settings':loadUserSettingsResponseValidator,
+    'login':loginResponseValidator,
+    'logout':logoutResponseValidator,
+    'mark_node':markNodeResponseValidator,
+    'store_microblog_post':storeMicroblogPostResponseValidator,
+    'store_settings':storeSettingsResponseValidator,
+    'store_text':storeTextResponseValidator
+"""
