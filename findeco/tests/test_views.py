@@ -199,3 +199,11 @@ class ViewTest(unittest.TestCase):
             response = self.client.get(reverse('load_graph_data',
                 kwargs=dict(path=p, graph_data_type=t)))
             self.validate_response(response.content, 'load_graph_data')
+
+    def test_load_microblogging_response_is_valid(self):
+        paths = structure_node_paths + argument_paths
+        load_type = ['newer', 'older']
+        for p, t in itertools.product(paths, load_type):
+            result = self.client.get(reverse('load_microblogging',
+                kwargs=dict(path=p, microblogging_load_type=t, select_id=1)))
+            self.validate_response(result.content, 'load_microblogging')

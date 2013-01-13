@@ -44,7 +44,9 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
                               'authorGroup': authors,
                               'microBlogTime': post.time,
                               'microBlogID': post.pk})
-    return json_response(response_list)
+    return json_response({
+        'success':True,
+        'loadMicrobloggingResponse':response_list})
 
 def load_timeline(request):
     feed = get_feed_for_user(request.user)
