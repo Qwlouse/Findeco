@@ -119,7 +119,12 @@ loadUserInfoResponseValidator = JSONValidator({
 })
 loadUserSettingsResponseValidator = JSONValidator({
     'success':boolean,
-    'loadUserSettingsResponse':userData_schema
+    'loadUserSettingsResponse':{
+        'displayName':string,
+        'description':string,
+        'followees':["user", None],
+        'blockedUsers':["user", None]
+    }
 })
 loginResponseValidator = JSONValidator({
     'success':boolean,
@@ -226,6 +231,12 @@ class ViewTest(unittest.TestCase):
         for u in usernames:
             response = self.client.get(reverse('load_user_info', kwargs=dict(name=u)))
             self.validate_response(response.content, 'load_user_info')
+
+    def test_load_user_settings_response_is_valid(self):
+        usernames = ['admin', 'fred']
+        for u in usernames:
+            response = self.client.get(reverse('load_user_settings'))
+            self.validate_response(response.content, 'load_user_settings')
 
     """
     'load_user_settings':loadUserSettingsResponseValidator,

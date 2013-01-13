@@ -126,10 +126,11 @@ def load_user_info(request, name):
 def load_user_settings(request):
     # This is an example
     return json_response({'success':True,
-                          'userData':{'displayName':"Maria Musterfrau",
-                                      'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
-                                      'followees':[{'displayName':"Max Mustermann"},{'displayName':"Egon Mustermann"}],
-                                      'blockedUsers':[]}})
+                          'loadUserSettingsResponse':{
+                              'displayName':"Maria Musterfrau",
+                              'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
+                              'followees':["Max Mustermann", "Egon Mustermann"],
+                              'blockedUsers':[]}})
 
 def get_user_data(user):
     return {
