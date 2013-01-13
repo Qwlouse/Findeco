@@ -109,7 +109,6 @@ loadTextResponseValidator = JSONValidator({
     'success':boolean,
     'loadTextResponse':{
         'paragraphs':[textNode_schema, None],
-        'index':integer,
         'isFollowing':boolean,
     }
 })
