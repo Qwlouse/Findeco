@@ -233,10 +233,8 @@ class ViewTest(unittest.TestCase):
             self.validate_response(response.content, 'load_user_info')
 
     def test_load_user_settings_response_is_valid(self):
-        usernames = ['admin', 'fred']
-        for u in usernames:
-            response = self.client.get(reverse('load_user_settings'))
-            self.validate_response(response.content, 'load_user_settings')
+        response = self.client.get(reverse('load_user_settings'))
+        self.validate_response(response.content, 'load_user_settings')
 
     def test_logout_response_is_valid(self):
         response = self.client.get(reverse('logout'))
