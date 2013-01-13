@@ -24,6 +24,7 @@ In return you get a JSON response from the server.
 <table>
 	<tbody><tr><td>Call Structure:</td><td>.json_loadIndex/path</td></tr>
 	<tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+	<tr><td>&nbsp;</td><td><a href="#ValueLoadArgument">(Boolean) loadArgument</a></td></tr>
 	<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
 	<tr><td>Description:</td><td>Loads the index of the given path to a StructureNode or an ArgumentCategory (see <a href="#ValuePath">Value::Path</a>).</td></tr>
 	<tr><td>Return:</td><td><a href="#JSONloadIndexResponse">JSON::loadIndexResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
@@ -238,6 +239,16 @@ In return you get a JSON response from the server.
 	<tr><td>Type:</td><td>Integer</td></tr>
 	<tr><td>Description:</td><td>Shows wether the currently logged in user is following a node. </td></tr>
 	<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueLoadArgument">Value::loadArgument</a></b>
+<table>
+	<tbody><tr><td>Parametername:</td><td>loadArgument</td></tr>
+	<tr><td>Type:</td><td>Boolean</td></tr>
+	<tr><td>Description:</td><td>Flag to decide wether to load Argument or StructureNode lists for <a href="#FunctionLoadIndex">Function::loadIndex</a>. </td></tr>
+	<tr><td>Supported Values:</td><td>True or False</td></tr>
+	<tr><td>Default:</td><td>False</td></tr>
 </tbody></table>
 
 <br>
