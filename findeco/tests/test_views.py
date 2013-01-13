@@ -238,8 +238,14 @@ class ViewTest(unittest.TestCase):
             response = self.client.get(reverse('load_user_settings'))
             self.validate_response(response.content, 'load_user_settings')
 
+    # TODO login
+
+    def test_logout_response_is_valid(self):
+        response = self.client.get(reverse('logout'))
+        self.validate_response(response.content, 'logout')
+
+
     """
-    'load_user_settings':loadUserSettingsResponseValidator,
     'login':loginResponseValidator,
     'logout':logoutResponseValidator,
     'mark_node':markNodeResponseValidator,
