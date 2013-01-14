@@ -104,7 +104,10 @@ def load_graph_data(request, graph_data_type, path):
 
 def load_text(request, path):
     prefix, path_type = parse_suffix(path)
-    tmp_node = backend.get_node_for_path(prefix)
+    try:
+        tmp_node = backend.get_node_for_path(prefix)
+    except backend.IllegalPath:
+        return json_error_response('Illegal Path','Illegal Path: '+path)
     node = backend.get_favorite_if_slot(tmp_node)
     if node == tmp_node: # not slot
         # this means the index in parent is the last integer in the prefix
