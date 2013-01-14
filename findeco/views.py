@@ -47,11 +47,8 @@ def json_error_response(title, message):
         }}
     return json_response(response)
 
-class ValidPaths(object):
-    def __init__(self, *allowed_path_types):
-        self.allowed_path_types = allowed_path_types
-
-    def __call__(self, f):
+def ValidPaths(*allowed_path_types):
+    def wrapper(f):
         def wrapped(request, path, *args, **kwargs):
             _, path_type = parse_suffix(path)
 
@@ -63,13 +60,14 @@ class ValidPaths(object):
                 path_type = 'Slot'
             else:
                 path_type = 'StructureNode'
-            if path_type in self.allowed_path_types:
-                return f(request, path, *args, **kwargs)
-            else:
+            if path_type not in allowed_path_types:
                 return json_error_response('Invalid path for %s'%f.__name__,
-                "%s can be called only for %s but was called with %s"%(f.__name__, self.allowed_path_types, path_type))
+                    "%s can be called only for %s but was called with %s"%(
+                        f.__name__, allowed_path_types, path_type))
+            #noinspection PyCallingNonCallable
+            return f(request, path, *args, **kwargs)
         return wrapped
-
+    return wrapper
 
 
 def path_is_of_valid_type(path, allowed_types):
