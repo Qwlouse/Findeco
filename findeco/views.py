@@ -47,11 +47,41 @@ def json_error_response(title, message):
         }}
     return json_response(response)
 
+class ValidPaths(object):
+    def __init__(self, *allowed_path_types):
+        self.allowed_path_types = allowed_path_types
+
+    def __call__(self, f):
+        def wrapped(request, path, *args, **kwargs):
+            _, path_type = parse_suffix(path)
+
+            if 'arg_id' in path_type:
+                path_type = 'Argument'
+            elif 'arg_type' in path_type:
+                path_type = 'ArgumentCategory'
+            elif 'slot' in path_type:
+                path_type = 'Slot'
+            else:
+                path_type = 'StructureNode'
+            if path_type in self.allowed_path_types:
+                return f(request, path, *args, **kwargs)
+            else:
+                return json_error_response('Invalid path for %s'%f.__name__,
+                "%s can be called only for %s but was called with %s"%(f.__name__, self.allowed_path_types, path_type))
+        return wrapped
+
+
+
+def path_is_of_valid_type(path, allowed_types):
+    pass
+
+
 def home(request, path):
     return render_to_response("main.html",
         {"path": path},
         context_instance=RequestContext(request))
 
+@ValidPaths("StructureNode", "Argument")
 def load_index(request, path):
     prefix, path_type = parse_suffix(path)
     if 'arg_id' in path_type:
@@ -74,7 +104,8 @@ def load_index(request, path):
             } for n in nodelist]
     return json_response({'loadIndexResponse':data})
 
-def load_graph_data(request, graph_data_type, path):
+@ValidPaths("StructureNode")
+def load_graph_data(request, path, graph_data_type):
     # This is an example
     user = {
         'displayName':"Max Mustermann",
@@ -102,6 +133,7 @@ def load_graph_data(request, graph_data_type, path):
                                  'originGroup':["Bla.4/blubb.7"]}]}
     return json_response({'loadGraphDataResponse':data})
 
+@ValidPaths("StructureNode", "Argument")
 def load_text(request, path):
     prefix, path_type = parse_suffix(path)
     tmp_node = backend.get_node_for_path(prefix)
@@ -186,6 +218,7 @@ def logout(request):
         'farewellMessage':"Didel dadel dana, ab geht's ins Nirvana."
     }})
 
+@ValidPaths("StructureNode", "Argument")
 def mark_node(request, path, mark_type):
     """
     If an argument is marked but wasn't created at this location it must be
