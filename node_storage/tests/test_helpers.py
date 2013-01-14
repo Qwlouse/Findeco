@@ -36,7 +36,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path, get_arguments_for
-from ..path_helpers import get_path_parent#, get_similar_path
+#from ..path_helpers import get_path_parent, get_similar_path
 from ..models import Node, Vote, Text, Argument
 
 class HelpersTest(TestCase):
@@ -49,13 +49,8 @@ class HelpersTest(TestCase):
 
         self.slot1 = Node()
         self.slot1.node_type = 'slot'
+        self.slot1.title = "Slot_1"
         self.slot1.save()
-        slot1_title = Text()
-        slot1_title.text = "Slot_1"
-        slot1_title.node = self.slot1
-        slot1_title.save()
-        slot1_title.authors.add(max)
-        slot1_title.save()
         self.root.append_child(self.slot1)
 
         self.text1 = Node()
@@ -65,13 +60,8 @@ class HelpersTest(TestCase):
 
         self.slot2 = Node()
         self.slot2.node_type = 'slot'
+        self.slot2.title = "Slot_2"
         self.slot2.save()
-        slot2_title = Text()
-        slot2_title.text = "Slot_2"
-        slot2_title.node = self.slot2
-        slot2_title.save()
-        slot2_title.authors.add(max)
-        slot2_title.save()
         self.root.append_child(self.slot2)
 
         self.text3 = Node()
@@ -86,13 +76,8 @@ class HelpersTest(TestCase):
 
         self.slot3 = Node()
         self.slot3.node_type = 'slot'
+        self.slot3.title = "Slot_3"
         self.slot3.save()
-        slot3_title = Text()
-        slot3_title.text = "Slot_3"
-        slot3_title.node = self.slot3
-        slot3_title.save()
-        slot3_title.authors.add(max)
-        slot3_title.save()
         self.root.append_child(self.slot3)
 
         self.text5 = Node()
@@ -113,13 +98,8 @@ class HelpersTest(TestCase):
 
         self.slot4 = Node()
         self.slot4.node_type = 'slot'
+        self.slot4.title = "Slot_4"
         self.slot4.save()
-        slot4_title = Text()
-        slot4_title.text = "Slot_4"
-        slot4_title.node = self.slot4
-        slot4_title.save()
-        slot4_title.authors.add(max)
-        slot4_title.save()
         self.root.append_child(self.slot4)
 
         self.structure1 = Node()
@@ -134,24 +114,14 @@ class HelpersTest(TestCase):
 
         self.subslot1 = Node()
         self.subslot1.node_type = 'slot'
+        self.subslot1.title = "SubSlot_1"
         self.subslot1.save()
-        subslot1_title = Text()
-        subslot1_title.text = "SubSlot_1"
-        subslot1_title.node = self.subslot1
-        subslot1_title.save()
-        subslot1_title.authors.add(max)
-        subslot1_title.save()
         self.structure1.append_child(self.subslot1)
 
         self.subslot2 = Node()
         self.subslot2.node_type = 'slot'
+        self.subslot2.title = "SubSlot_2"
         self.subslot2.save()
-        subslot2_title = Text()
-        subslot2_title.text = "SubSlot_2"
-        subslot2_title.node = self.subslot2
-        subslot2_title.save()
-        subslot2_title.authors.add(max)
-        subslot2_title.save()
         self.structure2.append_child(self.subslot2)
 
         self.substructure1 = Node()
@@ -162,13 +132,8 @@ class HelpersTest(TestCase):
 
         self.subsubslot1 = Node()
         self.subsubslot1.node_type = 'slot'
+        self.subsubslot1.title = "SubSubSlot_1"
         self.subsubslot1.save()
-        subsubslot1_title = Text()
-        subsubslot1_title.text = "SubSubSlot_1"
-        subsubslot1_title.node = self.subsubslot1
-        subsubslot1_title.save()
-        subsubslot1_title.authors.add(max)
-        subsubslot1_title.save()
         self.substructure1.append_child(self.subsubslot1)
 
         self.subsubtext1 = Node()
@@ -239,39 +204,39 @@ class HelpersTest(TestCase):
         args = get_arguments_for(self.subsubtext1, 'neut')
         self.assertSequenceEqual(args, [self.argument2])
 
-    def test_get_path_parent(self):
-        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
-        self.assertEqual(node, self.subsubtext1)
-        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.neut.2")
-        self.assertEqual(node, self.subsubtext1)
-        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_2.1/SubSubSlot_1.1.neut.2")
-        self.assertEqual(node, self.subsubtext1)
-        node = get_path_parent(self.subsubtext1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
-        self.assertEqual(node, self.subsubslot1)
-        node = get_path_parent(self.subsubtext1, "/Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
-        self.assertEqual(node, self.subsubslot1)
-        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
-        self.assertEqual(node, self.substructure1)
-        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/Blubb.1")
-        self.assertEqual(node, self.substructure1)
-        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1")
-        self.assertEqual(node, self.substructure1)
-        node = get_path_parent(self.substructure1, "Slot_4.1/SubSlot_1.1")
-        self.assertEqual(node, self.subslot1)
-        node = get_path_parent(self.substructure1, "Slot_4.1/SubSlot_2.1")
-        self.assertEqual(node, self.subslot2)
-        node = get_path_parent(self.subslot1, "Slot_4.1/SubSlot_1")
-        self.assertEqual(node, self.structure1)
-        node = get_path_parent(self.subslot2, "Slot_4.1/SubSlot_2")
-        self.assertEqual(node, self.structure2)
-        node = get_path_parent(self.structure1, "Slot_4.1")
-        self.assertEqual(node, self.slot4)
-        node = get_path_parent(self.slot4, "Slot_4")
-        self.assertEqual(node, self.root)
-        node = get_path_parent(self.slot4, "")
-        self.assertEqual(node, self.root)
-        node = get_path_parent(self.slot4, "/")
-        self.assertEqual(node, self.root)
+#    def test_get_path_parent(self):
+#        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
+#        self.assertEqual(node, self.subsubtext1)
+#        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.neut.2")
+#        self.assertEqual(node, self.subsubtext1)
+#        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_2.1/SubSubSlot_1.1.neut.2")
+#        self.assertEqual(node, self.subsubtext1)
+#        node = get_path_parent(self.subsubtext1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
+#        self.assertEqual(node, self.subsubslot1)
+#        node = get_path_parent(self.subsubtext1, "/Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
+#        self.assertEqual(node, self.subsubslot1)
+#        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
+#        self.assertEqual(node, self.substructure1)
+#        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/Blubb.1")
+#        self.assertEqual(node, self.substructure1)
+#        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1")
+#        self.assertEqual(node, self.substructure1)
+#        node = get_path_parent(self.substructure1, "Slot_4.1/SubSlot_1.1")
+#        self.assertEqual(node, self.subslot1)
+#        node = get_path_parent(self.substructure1, "Slot_4.1/SubSlot_2.1")
+#        self.assertEqual(node, self.subslot2)
+#        node = get_path_parent(self.subslot1, "Slot_4.1/SubSlot_1")
+#        self.assertEqual(node, self.structure1)
+#        node = get_path_parent(self.subslot2, "Slot_4.1/SubSlot_2")
+#        self.assertEqual(node, self.structure2)
+#        node = get_path_parent(self.structure1, "Slot_4.1")
+#        self.assertEqual(node, self.slot4)
+#        node = get_path_parent(self.slot4, "Slot_4")
+#        self.assertEqual(node, self.root)
+#        node = get_path_parent(self.slot4, "")
+#        self.assertEqual(node, self.root)
+#        node = get_path_parent(self.slot4, "/")
+#        self.assertEqual(node, self.root)
 
 #    def test_get_similar_path(self):
 #        path = get_similar_path(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
