@@ -36,6 +36,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path, get_arguments_for
+from ..path_helpers import get_path_parent
 from ..models import Node, Vote, Text, Argument
 
 class HelpersTest(TestCase):
@@ -220,3 +221,13 @@ class HelpersTest(TestCase):
         self.assertSequenceEqual(args, [self.argument1, self.argument2])
         args = get_arguments_for(self.subsubtext1, 'neut')
         self.assertSequenceEqual(args, [self.argument2])
+
+    def test_get_path_parent(self):
+        node = get_path_parent(self.argument1,"Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
+        self.assertEqual(node, self.subsubtext1)
+        node = get_path_parent(self.subsubtext1,"Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
+        self.assertEqual(node, self.subsubslot1)
+        node = get_path_parent(self.subsubslot1,"Slot_4.1/SubSlot_1.1/SubSubSlot_1")
+        self.assertEqual(node, self.substructure1)
+        node = get_path_parent(self.substructure1,"Slot_4.1/SubSlot_1.1")
+        self.assertEqual(node, self.subslot1)
