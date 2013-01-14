@@ -103,7 +103,7 @@ def get_path_parent(node, path):
     layers, _ = parse_path(path)
     if node.node_type == 'argument':
         slot_candidates = []
-        for non_slot in node.concerns.all():
+        for non_slot in node.concerns.all().prefetch_related('parents'):
             slot_candidates += non_slot.parents.all()
         slot_titles = Text.objects.filter(node__in=slot_candidates).filter(text=layers[-1][0]).all()
         if len(slot_titles) != 1:
@@ -121,7 +121,7 @@ def get_path_parent(node, path):
         if len(parents) != 1:
             return node.parents.all()[0]
         else:
-            parents[0].node
+            return NodeOrder.objects.filter(parent__in=parents[0].node.children.all()).filter(child=node).all()[0].parent
     else:
         parents = Text.objects.filter(node__in=node.parents.all()).filter(text=layers[-1][0]).all()
         if len(parents) != 1:
