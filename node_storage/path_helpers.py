@@ -105,11 +105,11 @@ def get_path_parent(node, path):
         slot_candidates = []
         for non_slot in node.concerns.all().prefetch_related('parents'):
             slot_candidates += non_slot.parents.all()
-        slot_titles = Text.objects.filter(node__in=slot_candidates).filter(text=layers[-1][0]).all()
+        slot_titles = Text.objects.filter(node__in=slot_candidates).filter(text=layers[-1][0]).prefetch_related('node').all()
         if len(slot_titles) != 1:
             return node.concerns.all()[0]
         else:
-            return ArgumentOrder.objects.filter(node__in=slot_titles[0].node.children.all()).filter(argument=node).all()[0].node
+            return ArgumentOrder.objects.filter(node__in=slot_titles[0].node.children.all()).filter(argument=node).prefetch_related('node').all()[0].node
     elif node.node_type == 'slot':
         slot_candidates = []
         for non_slot in node.parents.all().prefetch_related('parents'):
@@ -117,13 +117,13 @@ def get_path_parent(node, path):
         if len(layers) >= 2: slot_title = layers[-2][0]
         elif len(layers) >= 1: slot_title = layers[-1][0]
         else: return get_root_node()
-        parents = Text.objects.filter(node__in=slot_candidates).filter(text=slot_title).all()
+        parents = Text.objects.filter(node__in=slot_candidates).filter(text=slot_title).prefetch_related('node').all()
         if len(parents) != 1:
             return node.parents.all()[0]
         else:
-            return NodeOrder.objects.filter(parent__in=parents[0].node.children.all()).filter(child=node).all()[0].parent
+            return NodeOrder.objects.filter(parent__in=parents[0].node.children.all()).filter(child=node).prefetch_related('parent').all()[0].parent
     else:
-        parents = Text.objects.filter(node__in=node.parents.all()).filter(text=layers[-1][0]).all()
+        parents = Text.objects.filter(node__in=node.parents.all()).filter(text=layers[-1][0]).prefetch_related('node').all()
         if len(parents) != 1:
             return node.parents.all()[0]
         else:
