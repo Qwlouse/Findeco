@@ -129,11 +129,18 @@ def load_user_info(request, name):
 
 def load_user_settings(request):
     # This is an example
+    user1 = {'displayName':"Max Mustermann"}
+    user2 = {'displayName':"Egon Mustermann"}
     return json_response({'loadUserSettingsResponse':{
-                              'displayName':"Maria Musterfrau",
-                              'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
-                              'followees':["Max Mustermann", "Egon Mustermann"],
-                              'blockedUsers':[]}})
+        'userInfo':{
+            'displayName':"Maria Musterfrau",
+            'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
+            'followers':[user1, user2],
+            'followees':[user2]},
+        'userSettings':{
+            'blockedUsers':[]}
+        }})
+
 
 def get_user_data(user):
     return {
