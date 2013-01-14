@@ -30,37 +30,60 @@ from django.contrib.auth.models import User
 from ..models import create_post
 from ..views import load_microblogging
 import node_storage as backend
-import unittest
+
+class DummyRequest():
+    pass
 
 class SimpleTest(TestCase):
-    @unittest.skip("skipping")
     def test_post_creation(self):
-        node1 = backend.models.Node()
-        node1.save()
-        text1 = backend.models.Text()
-        text1.node = node1
-        text1.text = "Testtext"
         max = User()
         max.username = "max"
+        max.save()
+
+        root = backend.get_root_node()
+        slot1 = backend.models.Node()
+        slot1.node_type = 'slot'
+        slot1.title = "Bla"
+        slot1.save()
+        root.append_child(slot1)
+
+        text_node1 = backend.models.Node()
+        text_node1.node_type = 'textNode'
+        text_node1.title = "Whatever"
+        text_node1.save()
+        text1 = backend.models.Text()
+        text1.node = text_node1
+        text1.text = "Testtext"
         text1.author = max
+        text1.save()
+        slot1.append_child(text_node1)
+
+        slot2 = backend.models.Node()
+        slot2.node_type = 'slot'
+        slot2.title = "Blubb"
+        slot2.save()
+        root.append_child(slot2)
+
+        text_node2 = backend.models.Node()
+        text_node2.node_type = 'textNode'
+        text_node2.title = "Whatever"
+        text_node2.save()
         text2 = backend.models.Text()
-        node2 = backend.models.Node()
-        node2.save()
-        text2.node = node2
+        text2.node = text_node2
         text2.text = "Testtext Nummer 2"
         text2.author = max
-        max.save()
-        text1.save()
         text2.save()
+        slot2.append_child(text_node2)
+
         posts = []
         for i in range(25):
             posts.append(create_post("Ich finde /Bla gut.",max))
         posts.append(create_post("Ich finde /Blubb schlecht.", max))
-        request = False
+        request = DummyRequest
         request.user = max
         response = load_microblogging(request,"/Bla.1",0,"older")
         print(response)
-        self.assertEqual(response,"{Zeuch}")
+        self.assertEqual(response.status_code, 200)
 
     def test_basic_addition(self):
         """
