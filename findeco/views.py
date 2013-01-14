@@ -68,26 +68,31 @@ def load_index(request, path):
 
 def load_graph_data(request, graph_data_type, path):
     # This is an example
-    data = {'graphDataChildren':[{'index':1,
-                                  'authorGroup':["Max Mustermann"],
+    user = {
+        'displayName':"Max Mustermann",
+        'description':"string",
+        'followers':[],
+        'followees':[]
+    }
+    data = {'graphDataChildren':[{'path':"Bla.4/blubb.3",
+                                  'authorGroup':[user],
                                   'follows':210,
                                   'unFollows':136,
                                   'newFollows':13,
-                                  'origin':"Bla.4/blubb.3"},
-                                 {'index':2,
-                                  'authorGroup':["Max Mustermann"],
+                                  'originGroup':["Bla.4/blubb.3"]},
+                                 {'path':"Bla.4/blubb.7",
+                                  'authorGroup':[user],
                                   'follows':10,
                                   'unFollows':536,
                                   'newFollows':500,
-                                  'origin':"Bla.4/blubb.4"}],
-            'graphDataRelated':[{'index':14,
-                                 'authorGroup':["Max Mustermann"],
+                                  'originGroup':["Bla.4/blubb.4"]}],
+            'graphDataRelated':[{'path':"Bla.4/blubb.14",
+                                 'authorGroup':[user],
                                  'follows':110,
                                  'unFollows':176,
                                  'newFollows':19,
-                                 'origin':"Bla.4/blubb.7"}]}
-    return json_response({'success':True,
-                          'loadGraphDataResponse':data})
+                                 'originGroup':["Bla.4/blubb.7"]}]}
+    return json_response({'loadGraphDataResponse':data})
 
 def load_text(request, path):
     prefix, path_type = parse_suffix(path)
