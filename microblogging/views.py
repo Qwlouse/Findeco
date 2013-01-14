@@ -25,12 +25,15 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from django.db.models import Q
-from models import Post, get_feed_for_user, create_post
-from findeco.views import json_response
+from models import get_feed_for_user, create_post
+from findeco.views import json_response, json_error_response
 import node_storage as backend
 
 def load_microblogging(request, path, select_id, microblogging_load_type):
-    node = backend.get_node_for_path(path)
+    try:
+        node = backend.get_node_for_path(path)
+    except backend.IllegalPath:
+        return json_error_response('Illegal Path','Illegal Path: '+path)
     if microblogging_load_type == "newer":
         startpoint = Q(id__gt=select_id)
     else: # older
