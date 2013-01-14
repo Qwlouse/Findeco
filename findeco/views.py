@@ -223,7 +223,7 @@ def mark_node(request, path, mark_type):
 #        node = a
 
 
-    return json_response({})
+    return json_response({'markNodeResponse':{}})
 
 
 
