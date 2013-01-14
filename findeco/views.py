@@ -74,8 +74,31 @@ def home(request, path):
         {"path": path},
         context_instance=RequestContext(request))
 
-@ValidPaths("StructureNode", "Argument")
+@ValidPaths("StructureNode")
 def load_index(request, path):
+    prefix, path_type = parse_suffix(path)
+    if 'arg_id' in path_type:
+        return json_error_response('NotPossibleForSingleArgument','')
+
+    try:
+        node = backend.get_node_for_path(prefix)
+    except backend.IllegalPath:
+        return json_error_response('Illegal Path','Illegal Path: '+path)
+
+    if 'arg_type' in path_type:
+        nodelist = backend.get_arguments_for(node, path_type['arg_type'])
+    else:
+        nodelist = backend.get_ordered_children_for(node)
+
+    # Backend foo
+    data = [{'shortTitle':n.get_short_title(),
+             'fullTitle':n.get_full_title(),
+             'index':n.get_index()
+            } for n in nodelist]
+    return json_response({'loadIndexResponse':data})
+
+@ValidPaths("StructureNode")
+def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     if 'arg_id' in path_type:
         return json_error_response('NotPossibleForSingleArgument','')
