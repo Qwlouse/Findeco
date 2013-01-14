@@ -112,7 +112,7 @@ loadMicrobloggingResponseValidator = JSONValidator({
 })
 loadTextResponseValidator = JSONValidator({
     'loadTextResponse':{
-        'paragraphs':[textNode_schema],
+        'paragraphs':[textNode_schema, None], #TODO don't allow empty paragraphs
         'isFollowing':boolean,
         }
 })

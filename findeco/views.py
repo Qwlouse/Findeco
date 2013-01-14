@@ -112,7 +112,6 @@ def load_text(request, path):
     return json_response({
         'loadTextResponse':{
             'paragraphs': paragraphs,
-            'index': index,
             'isFollowing': node.votes.filter(user=request.user.id).count()>0}})
 
 def load_user_info(request, name):
