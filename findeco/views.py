@@ -48,8 +48,7 @@ def home(request, path):
 def load_index(request, path):
     prefix, path_type = parse_suffix(path)
     if 'arg_id' in path_type:
-        return json_response({'success':False,
-                              'error':'NotPossibleForSingleArgument'})
+        return json_response({'error':'NotPossibleForSingleArgument'})
 
     node = backend.get_node_for_path(prefix)
 
@@ -63,8 +62,7 @@ def load_index(request, path):
              'fullTitle':n.get_full_title(),
              'index':n.get_index()
             } for n in nodelist]
-    return json_response({'success':True,
-                          'loadIndexResponse':data})
+    return json_response({'loadIndexResponse':data})
 
 def load_graph_data(request, graph_data_type, path):
     # This is an example
@@ -112,7 +110,6 @@ def load_text(request, path):
                            'isFollowing': favorit.votes.filter(user=request.user.id).count()>0,
                            'authorGroup': [{'displayName': a.username} for a in favorit.text_object.authors]})
     return json_response({
-        'success':True,
         'loadTextResponse':{
             'paragraphs': paragraphs,
             'index': index,
@@ -121,7 +118,6 @@ def load_text(request, path):
 def load_user_info(request, name):
     # This is an example
     return json_response({
-        'success':True,
         'loadUserInfoResponse':{
             'displayName':"Maria Musterfrau",
             'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
@@ -130,8 +126,7 @@ def load_user_info(request, name):
 
 def load_user_settings(request):
     # This is an example
-    return json_response({'success':True,
-                          'loadUserSettingsResponse':{
+    return json_response({'loadUserSettingsResponse':{
                               'displayName':"Maria Musterfrau",
                               'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
                               'followees':["Max Mustermann", "Egon Mustermann"],
@@ -153,24 +148,21 @@ def login(request):
         if user.is_active:
             django_login(request, user)
             return json_response({
-                'success':True,
                 'userData':get_user_data(user)
             })
         else:
             return json_response({
-                'success':False,
                 'error':'DisabledAccount.',
                 'userData':get_user_data(user)
             })
     else:
         return json_response({
-            'success':False,
             'error':'InvalidLogin'
         })
 
 def logout(request):
     django_logout(request)
-    return json_response({'success':True})
+    return json_response({})
 
 def mark_node(request, path, mark_type):
     """
@@ -178,11 +170,11 @@ def mark_node(request, path, mark_type):
     copied and the marking is to apply to the copied one.
     """
     if not request.user.is_authenticated:
-        return json_response({'success':False, 'error': "You're not authenticated."})
+        return json_response({'error': "You're not authenticated."})
     user = request.user
     node = backend.get_node_for_path(path)
     if not node:
-        return json_response({'success':False, 'error': "Invalid path."})
+        return json_response({'error': "Invalid path."})
 
     if mark_type in ("spam", "notspam"):
         MarkClass = backend.SpamFlag
@@ -219,14 +211,14 @@ def mark_node(request, path, mark_type):
 #        node = a
 
 
-    return json_response({'success':True})
+    return json_response({})
 
 
 
 def store_settings(request):
     # Backend foo
-    return json_response({'success':True})
+    return json_response({})
 
 def store_text(request, path):
     # Backend foo
-    return json_response({'success':True})
+    return json_response({})
