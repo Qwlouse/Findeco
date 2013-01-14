@@ -172,7 +172,9 @@ def login(request):
 
 def logout(request):
     django_logout(request)
-    return json_response({})
+    return json_response({'logoutResponse':{
+        'farewellMessage':"Didel dadel dana, ab geht's ins Nirvana."
+    }})
 
 def mark_node(request, path, mark_type):
     """
