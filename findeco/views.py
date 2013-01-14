@@ -40,6 +40,13 @@ import node_storage as backend
 def json_response(data):
     return HttpResponse(json.dumps(data), mimetype='application/json')
 
+def json_error_response(title, message):
+    response = {'errorResponse':{
+        'errorTitle':title,
+        'errorMessage':message,
+        }}
+    return json_response(response)
+
 def home(request, path):
     return render_to_response("main.html",
         {"path": path},
@@ -48,12 +55,12 @@ def home(request, path):
 def load_index(request, path):
     prefix, path_type = parse_suffix(path)
     if 'arg_id' in path_type:
-        return json_response({'errorResponse':{'errorTitle':'NotPossibleForSingleArgument','errorMessage':''}})
+        return json_error_response('NotPossibleForSingleArgument','')
 
     try:
         node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
-        return json_response({'errorResponse':{'errorTitle':'Illegal Path','errorMessage':'Illegal Path: '+path}})
+        return json_response('Illegal Path','Illegal Path: '+path)
 
     if 'arg_type' in path_type:
         nodelist = backend.get_arguments_for(node, path_type['arg_type'])
