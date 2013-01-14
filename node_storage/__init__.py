@@ -29,3 +29,4 @@ from __future__ import division, print_function, unicode_literals
 from models import Node, Vote, SpamFlag, Argument, Text
 from path_helpers import get_node_for_path, get_favorite_if_slot
 from path_helpers import get_arguments_for, get_ordered_children_for
+from path_helpers import IllegalPath

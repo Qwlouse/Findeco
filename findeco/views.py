@@ -48,9 +48,12 @@ def home(request, path):
 def load_index(request, path):
     prefix, path_type = parse_suffix(path)
     if 'arg_id' in path_type:
-        return json_response({'error':'NotPossibleForSingleArgument'})
+        return json_response({'errorResponse':{'errorTitle':'NotPossibleForSingleArgument','errorMessage':''}})
 
-    node = backend.get_node_for_path(prefix)
+    try:
+        node = backend.get_node_for_path(prefix)
+    except backend.IllegalPath:
+        return json_response({'errorResponse':{'errorTitle':'Illegal Path','errorMessage':'Illegal Path: '+path}})
 
     if 'arg_type' in path_type:
         nodelist = backend.get_arguments_for(node, path_type['arg_type'])
