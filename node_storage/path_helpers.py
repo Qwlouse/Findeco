@@ -40,27 +40,25 @@ def get_node_for_path(path):
     node = get_root_node()
     layers, last = parse_path(path)
     for title, pos_id in layers:
-        title_obj = Text.objects.filter(text=title).all()
-        if len(title_obj) != 1:
-            return node
+        children = node.children.filter(title=title).all()
+        if len(children) != 1:
+            return node # Illegal Path
         else:
-            node_candidate = title_obj[0].node
-            if node_candidate in node.children.all():
-                node = NodeOrder.objects.filter(parent=node_candidate).filter(position=pos_id)[0].child
+            order = NodeOrder.objects.filter(parent__in=children).\
+                                      filter(position=pos_id).prefetch_related('child').all()
+            if len(order) != 1:
+                return node # Illegal Path
             else:
-                return node
+                node = order[0].child
     if 'slot' in last:
-        title_obj = Text.objects.filter(text=last['slot']).all()
-        if len(title_obj) != 1:
-            return node
+        children = node.children.filter(title=last['slot']).all()
+        if len(children) != 1:
+            return node # Illegal Path
         else:
-            node_candidate = title_obj[0].node
-            if node_candidate in node.children.all():
-                node = node_candidate
-            else:
-                return node
+            node = children[0]
     elif 'arg_type' in last and 'arg_id' in last:
-        node = ArgumentOrder.objects.filter(node=node).filter(position=last['arg_id'])[0].argument
+        node = ArgumentOrder.objects.filter(node=node).\
+                                     filter(position=last['arg_id']).prefetch_related('argument')[0].argument
     return node
 
 def get_favorite_if_slot(node):
@@ -134,35 +132,35 @@ def get_ordered_children_for(node):
 #                if argument == node: return part_path + "." + argument.arg_type + "." + str(order.position)
 #    return "Error: This node has no connection to the root."
 
-def get_path_parent(node, path):
-    """
-    Return the parent node which corresponds to the given path
-    """
-    layers, _ = parse_path(path)
-    if node.node_type == 'argument':
-        slot_candidates = []
-        for non_slot in node.concerns.all().prefetch_related('parents'):
-            slot_candidates += non_slot.parents.all()
-        slot_titles = Text.objects.filter(node__in=slot_candidates).filter(text=layers[-1][0]).prefetch_related('node').all()
-        if len(slot_titles) != 1:
-            return node.concerns.all()[0]
-        else:
-            return ArgumentOrder.objects.filter(node__in=slot_titles[0].node.children.all()).filter(argument=node).prefetch_related('node').all()[0].node
-    elif node.node_type == 'slot':
-        slot_candidates = []
-        for non_slot in node.parents.all().prefetch_related('parents'):
-            slot_candidates += non_slot.parents.all()
-        if len(layers) >= 2: slot_title = layers[-2][0]
-        elif len(layers) >= 1: slot_title = layers[-1][0]
-        else: return get_root_node()
-        parents = Text.objects.filter(node__in=slot_candidates).filter(text=slot_title).prefetch_related('node').all()
-        if len(parents) != 1:
-            return node.parents.all()[0]
-        else:
-            return NodeOrder.objects.filter(parent__in=parents[0].node.children.all()).filter(child=node).prefetch_related('parent').all()[0].parent
-    else:
-        parents = Text.objects.filter(node__in=node.parents.all()).filter(text=layers[-1][0]).prefetch_related('node').all()
-        if len(parents) != 1:
-            return node.parents.all()[0]
-        else:
-            return parents[0].node
+#def get_path_parent(node, path):
+#    """
+#    Return the parent node which corresponds to the given path
+#    """
+#    layers, _ = parse_path(path)
+#    if node.node_type == 'argument':
+#       slot_candidates = []
+#       for non_slot in node.concerns.all().prefetch_related('parents'):
+#            slot_candidates += non_slot.parents.all()
+#        slot_titles = Text.objects.filter(node__in=slot_candidates).filter(text=layers[-1][0]).prefetch_related('node').all()
+#        if len(slot_titles) != 1:
+#            return node.concerns.all()[0]
+#        else:
+#            return ArgumentOrder.objects.filter(node__in=slot_titles[0].node.children.all()).filter(argument=node).prefetch_related('node').all()[0].node
+#    elif node.node_type == 'slot':
+#        slot_candidates = []
+#        for non_slot in node.parents.all().prefetch_related('parents'):
+#            slot_candidates += non_slot.parents.all()
+#        if len(layers) >= 2: slot_title = layers[-2][0]
+#        elif len(layers) >= 1: slot_title = layers[-1][0]
+#        else: return get_root_node()
+#        parents = Text.objects.filter(node__in=slot_candidates).filter(text=slot_title).prefetch_related('node').all()
+#        if len(parents) != 1:
+#            return node.parents.all()[0]
+#        else:
+#            return NodeOrder.objects.filter(parent__in=parents[0].node.children.all()).filter(child=node).prefetch_related('parent').all()[0].parent
+#    else:
+#        parents = Text.objects.filter(node__in=node.parents.all()).filter(text=layers[-1][0]).prefetch_related('node').all()
+#        if len(parents) != 1:
+#            return node.parents.all()[0]
+#        else:
+#            return parents[0].node
