@@ -134,7 +134,10 @@ class ObjectHandler(BaseHandler):
         handlers = self.handlers
         for key, handler in handlers.items():
             keyData = data.get(key, None)
-            keydata = handler(keyData)
+            try:
+                keydata = handler(keyData)
+            except JSONValidationError as e:
+                raise JSONValidationError("(%s)"%key + e.message)
         if self.validKeys:
             for key in data:
                 if not key in self.validKeys:
