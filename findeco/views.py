@@ -197,7 +197,10 @@ def mark_node(request, path, mark_type):
     if not request.user.is_authenticated:
         return json_response({'error': "You're not authenticated."})
     user = request.user
-    node = backend.get_node_for_path(path)
+    try:
+        node = backend.get_node_for_path(path)
+    except backend.IllegalPath:
+        return json_error_response('Illegal Path','Illegal Path: '+path)
     if not node:
         return json_response({'error': "Invalid path."})
 
