@@ -100,4 +100,9 @@ def get_path_parent(node, path):
     """
     Return the parent node which corresponds to the given path
     """
-    return None
+    layers, _ = parse_path(path)
+    parents = Text.objects.filter(node__in=node.parents).filter(text=layers[-1][0]).all()
+    if len(parents) != 1:
+        return node.parents.all()[-1]
+    else:
+        return parents[0].node
