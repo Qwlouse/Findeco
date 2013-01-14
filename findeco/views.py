@@ -69,11 +69,6 @@ def ValidPaths(*allowed_path_types):
         return wrapped
     return wrapper
 
-
-def path_is_of_valid_type(path, allowed_types):
-    pass
-
-
 def home(request, path):
     return render_to_response("main.html",
         {"path": path},
