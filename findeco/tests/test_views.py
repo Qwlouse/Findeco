@@ -57,20 +57,34 @@ views = [('load_index', dict(path='')),
 integer = 1
 string = "string"
 boolean = True
-
+user_schema = {
+    'descriptionName':string
+}
+userInfo_schema = {
+    'displayName':string,
+    'description':string,
+    'followers':[user_schema, None],
+    'followees':[user_schema, None]
+}
+userSettings_schema={
+    'blockedUsers':[user_schema, None]
+}
+authorGroup_schema = [userInfo_schema]
+originGroup_schema = ["path"]
 graphDataNode_schema = {
-    'index':integer,
-    'authorGroup': ["user"],
+    'path':string,
+    'authorGroup': authorGroup_schema,
     'follows':integer,
     'unFollows':integer,
     'newFollows':integer,
-    'origin':"path?"
+    'originGroup':originGroup_schema
 }
 indexNode_schema = {
-    'shortTitle':string,
+    'shortTitle': string+'?',
+    'argumentDenominator':string+'?',
     'fullTitle':string,
     'index':integer,
-    'authorGroup': ["user"]
+    'authorGroup': authorGroup_schema
 }
 microblogNode_schema = {
     'microblogText':string,
@@ -82,67 +96,64 @@ textNode_schema = {
     'wikiText':string,
     'path':string,
     'isFollowing':boolean,
-    'authorGroup': ["user"]
-}
-userData_schema={
-    'displayName':string,
-    'description':string,
-    'followers':["user", None],
-    'followees':["user", None]
+    'authorGroup': authorGroup_schema
 }
 loadGraphDataResponseValidator = JSONValidator({
-    'success':boolean,
     'loadGraphDataResponse':{
         'graphDataChildren':[graphDataNode_schema],
         'graphDataRelated':[graphDataNode_schema, None]
     }
 })
 loadIndexResponseValidator = JSONValidator({
-    'success':boolean,
     'loadIndexResponse':[indexNode_schema, None]
 })
 loadMicrobloggingResponseValidator = JSONValidator({
-    'success':boolean,
     'loadMicrobloggingResponse':[microblogNode_schema, None]
 })
 loadTextResponseValidator = JSONValidator({
-    'success':boolean,
     'loadTextResponse':{
-        'paragraphs':[textNode_schema, None],
+        'paragraphs':[textNode_schema],
         'isFollowing':boolean,
-    }
+        }
 })
 loadUserInfoResponseValidator = JSONValidator({
-    'success':boolean,
-    'loadUserInfoResponse':userData_schema
+    'loadUserInfoResponse':{
+        'userInfo':userInfo_schema
+    }
 })
 loadUserSettingsResponseValidator = JSONValidator({
-    'success':boolean,
     'loadUserSettingsResponse':{
-        'displayName':string,
-        'description':string,
-        'followees':["user", None],
-        'blockedUsers':["user", None]
+        'userInfo':userInfo_schema,
+        'userSettings':userSettings_schema
     }
 })
 loginResponseValidator = JSONValidator({
-    'success':boolean,
-    'loginResponse':userData_schema
+    'loginResponse':{
+        'userInfo':userInfo_schema,
+        'userSettings':userSettings_schema
+    }
 })
 logoutResponseValidator = JSONValidator({
-    'success':boolean
+    'logoutResponse':{
+        'farewellMessage':string
+    }
 })
 markNodeResponseValidator = JSONValidator({
-    'success':boolean
+    'markNodeResponse':{
+    }
 })
 storeMicroblogPostResponseValidator = JSONValidator({
-    'success':boolean
+    'storeMicroblogPostResponse':{
+    }
 })
 storeSettingsResponseValidator = JSONValidator({
-    'success':boolean
+    'storeSettingsResponse':{
+    }
 })
 storeTextResponseValidator = JSONValidator({
-    'success':boolean
+    'storeTextResponse':{
+        'path':"path"
+    }
 })
 view_validators = {
     'load_graph_data':loadGraphDataResponseValidator,
