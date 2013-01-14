@@ -116,12 +116,16 @@ def load_text(request, path):
 
 def load_user_info(request, name):
     # This is an example
+    user1 = {'displayName':"Max Mustermann"}
+    user2 = {'displayName':"Egon Mustermann"}
     return json_response({
         'loadUserInfoResponse':{
-            'displayName':"Maria Musterfrau",
-            'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
-            'followers':["Max Mustermann", "Egon Mustermann"],
-            'followees':["Max Mustermann", "Egon Mustermann"]}})
+            'userInfo':{
+                'displayName':"Maria Musterfrau",
+                'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
+                'followers':[user1, user2],
+                'followees':[user2]}
+        }})
 
 def load_user_settings(request):
     # This is an example

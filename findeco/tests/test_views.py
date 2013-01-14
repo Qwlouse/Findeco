@@ -58,7 +58,7 @@ integer = 1
 string = "string"
 boolean = True
 user_schema = {
-    'descriptionName':string
+    'displayName':string
 }
 userInfo_schema = {
     'displayName':string,
