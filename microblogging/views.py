@@ -45,7 +45,6 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
                               'microBlogTime': post.time,
                               'microBlogID': post.pk})
     return json_response({
-        'success':True,
         'loadMicrobloggingResponse':response_list})
 
 def load_timeline(request):
@@ -56,5 +55,5 @@ def store_microblog_post(request, path):
     if request.method == 'POST':
         if request.user.is_authenticated:
             create_post(request.POST['microBlogText'], request.user)
-            return json_response({'success': True})
-    return json_response({'success': False})
+            return json_response({})
+    return json_response({})

@@ -58,7 +58,7 @@ integer = 1
 string = "string"
 boolean = True
 user_schema = {
-    'descriptionName':string
+    'displayName':string
 }
 userInfo_schema = {
     'displayName':string,
@@ -112,7 +112,7 @@ loadMicrobloggingResponseValidator = JSONValidator({
 })
 loadTextResponseValidator = JSONValidator({
     'loadTextResponse':{
-        'paragraphs':[textNode_schema],
+        'paragraphs':[textNode_schema, None], #TODO don't allow empty paragraphs
         'isFollowing':boolean,
         }
 })
@@ -155,6 +155,12 @@ storeTextResponseValidator = JSONValidator({
         'path':"path"
     }
 })
+errorResponseValidator = JSONValidator({
+    'errorResponse':{
+        'errorTitle':string,
+        'errorMessage':string
+    }
+})
 view_validators = {
     'load_graph_data':loadGraphDataResponseValidator,
     'load_index':loadIndexResponseValidator,
@@ -194,9 +200,8 @@ class ViewTest(unittest.TestCase):
 
     def validate_response(self, response, view):
         response = json.loads(response)
-        self.assertIn('success', response)
-        if not response['success']:
-            self.assertIn('error', response)
+        if 'errorResponse' in response:
+            errorResponseValidator.validate(response)
             return False
         validator = view_validators[view]
         validator.validate(response)

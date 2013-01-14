@@ -48,8 +48,7 @@ def home(request, path):
 def load_index(request, path):
     prefix, path_type = parse_suffix(path)
     if 'arg_id' in path_type:
-        return json_response({'success':False,
-                              'error':'NotPossibleForSingleArgument'})
+        return json_response({'error':'NotPossibleForSingleArgument'})
 
     node = backend.get_node_for_path(prefix)
 
@@ -63,31 +62,35 @@ def load_index(request, path):
              'fullTitle':n.get_full_title(),
              'index':n.get_index()
             } for n in nodelist]
-    return json_response({'success':True,
-                          'loadIndexResponse':data})
+    return json_response({'loadIndexResponse':data})
 
 def load_graph_data(request, graph_data_type, path):
     # This is an example
-    data = {'graphDataChildren':[{'index':1,
-                                  'authorGroup':["Max Mustermann"],
+    user = {
+        'displayName':"Max Mustermann",
+        'description':"string",
+        'followers':[],
+        'followees':[]
+    }
+    data = {'graphDataChildren':[{'path':"Bla.4/blubb.3",
+                                  'authorGroup':[user],
                                   'follows':210,
                                   'unFollows':136,
                                   'newFollows':13,
-                                  'origin':"Bla.4/blubb.3"},
-                                 {'index':2,
-                                  'authorGroup':["Max Mustermann"],
+                                  'originGroup':["Bla.4/blubb.3"]},
+                                 {'path':"Bla.4/blubb.7",
+                                  'authorGroup':[user],
                                   'follows':10,
                                   'unFollows':536,
                                   'newFollows':500,
-                                  'origin':"Bla.4/blubb.4"}],
-            'graphDataRelated':[{'index':14,
-                                 'authorGroup':["Max Mustermann"],
+                                  'originGroup':["Bla.4/blubb.4"]}],
+            'graphDataRelated':[{'path':"Bla.4/blubb.14",
+                                 'authorGroup':[user],
                                  'follows':110,
                                  'unFollows':176,
                                  'newFollows':19,
-                                 'origin':"Bla.4/blubb.7"}]}
-    return json_response({'success':True,
-                          'loadGraphDataResponse':data})
+                                 'originGroup':["Bla.4/blubb.7"]}]}
+    return json_response({'loadGraphDataResponse':data})
 
 def load_text(request, path):
     prefix, path_type = parse_suffix(path)
@@ -107,30 +110,37 @@ def load_text(request, path):
                            'isFollowing': favorit.votes.filter(user=request.user.id).count()>0,
                            'authorGroup': [{'displayName': a.username} for a in favorit.text_object.authors]})
     return json_response({
-        'success':True,
         'loadTextResponse':{
             'paragraphs': paragraphs,
-            'index': index,
             'isFollowing': node.votes.filter(user=request.user.id).count()>0}})
 
 def load_user_info(request, name):
     # This is an example
+    user1 = {'displayName':"Max Mustermann"}
+    user2 = {'displayName':"Egon Mustermann"}
     return json_response({
-        'success':True,
         'loadUserInfoResponse':{
-            'displayName':"Maria Musterfrau",
-            'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
-            'followers':["Max Mustermann", "Egon Mustermann"],
-            'followees':["Max Mustermann", "Egon Mustermann"]}})
+            'userInfo':{
+                'displayName':"Maria Musterfrau",
+                'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
+                'followers':[user1, user2],
+                'followees':[user2]}
+        }})
 
 def load_user_settings(request):
     # This is an example
-    return json_response({'success':True,
-                          'loadUserSettingsResponse':{
-                              'displayName':"Maria Musterfrau",
-                              'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
-                              'followees':["Max Mustermann", "Egon Mustermann"],
-                              'blockedUsers':[]}})
+    user1 = {'displayName':"Max Mustermann"}
+    user2 = {'displayName':"Egon Mustermann"}
+    return json_response({'loadUserSettingsResponse':{
+        'userInfo':{
+            'displayName':"Maria Musterfrau",
+            'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
+            'followers':[user1, user2],
+            'followees':[user2]},
+        'userSettings':{
+            'blockedUsers':[]}
+        }})
+
 
 def get_user_data(user):
     return {
@@ -148,24 +158,23 @@ def login(request):
         if user.is_active:
             django_login(request, user)
             return json_response({
-                'success':True,
                 'userData':get_user_data(user)
             })
         else:
             return json_response({
-                'success':False,
                 'error':'DisabledAccount.',
                 'userData':get_user_data(user)
             })
     else:
         return json_response({
-            'success':False,
             'error':'InvalidLogin'
         })
 
 def logout(request):
     django_logout(request)
-    return json_response({'success':True})
+    return json_response({'logoutResponse':{
+        'farewellMessage':"Didel dadel dana, ab geht's ins Nirvana."
+    }})
 
 def mark_node(request, path, mark_type):
     """
@@ -173,11 +182,11 @@ def mark_node(request, path, mark_type):
     copied and the marking is to apply to the copied one.
     """
     if not request.user.is_authenticated:
-        return json_response({'success':False, 'error': "You're not authenticated."})
+        return json_response({'error': "You're not authenticated."})
     user = request.user
     node = backend.get_node_for_path(path)
     if not node:
-        return json_response({'success':False, 'error': "Invalid path."})
+        return json_response({'error': "Invalid path."})
 
     if mark_type in ("spam", "notspam"):
         MarkClass = backend.SpamFlag
@@ -214,14 +223,14 @@ def mark_node(request, path, mark_type):
 #        node = a
 
 
-    return json_response({'success':True})
+    return json_response({'markNodeResponse':{}})
 
 
 
 def store_settings(request):
     # Backend foo
-    return json_response({'success':True})
+    return json_response({})
 
 def store_text(request, path):
     # Backend foo
-    return json_response({'success':True})
+    return json_response({})
