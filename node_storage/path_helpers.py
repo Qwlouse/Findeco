@@ -30,6 +30,9 @@ from django.db.models import Count
 from models import Node, NodeOrder, Text, ArgumentOrder#, Argument
 from findeco.paths import parse_path
 
+class IllegalPath(Exception):
+    pass
+
 def get_root_node():
     return Node.objects.filter(id=1)[0]
 
@@ -42,23 +45,27 @@ def get_node_for_path(path):
     for title, pos_id in layers:
         children = node.children.filter(title=title).all()
         if len(children) != 1:
-            return node # Illegal Path
+            raise IllegalPath(path)
         else:
             order = NodeOrder.objects.filter(parent__in=children).\
                                       filter(position=pos_id).prefetch_related('child').all()
             if len(order) != 1:
-                return node # Illegal Path
+                raise IllegalPath(path)
             else:
                 node = order[0].child
     if 'slot' in last:
         children = node.children.filter(title=last['slot']).all()
         if len(children) != 1:
-            return node # Illegal Path
+            raise IllegalPath(path)
         else:
             node = children[0]
     elif 'arg_type' in last and 'arg_id' in last:
-        node = ArgumentOrder.objects.filter(node=node).\
-                                     filter(position=last['arg_id']).prefetch_related('argument')[0].argument
+        argument_order = ArgumentOrder.objects.filter(node=node).\
+                                     filter(position=last['arg_id']).prefetch_related('argument').all()
+        if len(argument_order) != 1:
+            raise IllegalPath(path)
+        else:
+            node = argument_order[0].argument
     return node
 
 def get_favorite_if_slot(node):

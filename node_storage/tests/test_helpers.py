@@ -37,6 +37,7 @@ from django.contrib.auth.models import User
 from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path, get_arguments_for
 #from ..path_helpers import get_path_parent, get_similar_path
+from ..path_helpers import IllegalPath
 from ..models import Node, Vote, Text, Argument
 
 class HelpersTest(TestCase):
@@ -191,6 +192,9 @@ class HelpersTest(TestCase):
         self.assertEqual(node, self.subsubslot1)
         node = get_node_for_path("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
         self.assertEqual(node, self.argument1)
+        self.assertRaises(IllegalPath, get_node_for_path, ("Slot_4.1/SubSlot_1.1/BlubbBlubbSlot_1.1.pro.1"))
+        self.assertRaises(IllegalPath, get_node_for_path, ("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.77"))
+        self.assertRaises(IllegalPath, get_node_for_path, ("Slot_4.1/SubSlot_1.8437256/SubSubSlot_1.1.pro.1"))
 
     def test_get_arguments_for(self):
         args = get_arguments_for(self.subsubtext1)
