@@ -127,6 +127,11 @@ class HelpersTest(TestCase):
         self.structure1.save()
         self.slot4.append_child(self.structure1)
 
+        self.structure2 = Node()
+        self.structure2.node_type = 'structureNode'
+        self.structure2.save()
+        self.slot4.append_child(self.structure2)
+
         self.subslot1 = Node()
         self.subslot1.node_type = 'slot'
         self.subslot1.save()
@@ -138,10 +143,22 @@ class HelpersTest(TestCase):
         subslot1_title.save()
         self.structure1.append_child(self.subslot1)
 
+        self.subslot2 = Node()
+        self.subslot2.node_type = 'slot'
+        self.subslot2.save()
+        subslot2_title = Text()
+        subslot2_title.text = "SubSlot_2"
+        subslot2_title.node = self.subslot2
+        subslot2_title.save()
+        subslot2_title.authors.add(max)
+        subslot2_title.save()
+        self.structure2.append_child(self.subslot2)
+
         self.substructure1 = Node()
         self.substructure1.node_type = 'structureNode'
         self.substructure1.save()
         self.subslot1.append_child(self.substructure1)
+        self.subslot2.append_child(self.substructure1)
 
         self.subsubslot1 = Node()
         self.subsubslot1.node_type = 'slot'
@@ -225,18 +242,28 @@ class HelpersTest(TestCase):
     def test_get_path_parent(self):
         node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
         self.assertEqual(node, self.subsubtext1)
+        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.neut.2")
+        self.assertEqual(node, self.subsubtext1)
+        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_2.1/SubSubSlot_1.1.neut.2")
+        self.assertEqual(node, self.subsubtext1)
         node = get_path_parent(self.subsubtext1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
         self.assertEqual(node, self.subsubslot1)
         node = get_path_parent(self.subsubtext1, "/Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
         self.assertEqual(node, self.subsubslot1)
         node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
         self.assertEqual(node, self.substructure1)
+        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/Blubb.1")
+        self.assertEqual(node, self.substructure1)
         node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1")
         self.assertEqual(node, self.substructure1)
         node = get_path_parent(self.substructure1, "Slot_4.1/SubSlot_1.1")
         self.assertEqual(node, self.subslot1)
+        node = get_path_parent(self.substructure1, "Slot_4.1/SubSlot_2.1")
+        self.assertEqual(node, self.subslot2)
         node = get_path_parent(self.subslot1, "Slot_4.1/SubSlot_1")
         self.assertEqual(node, self.structure1)
+        node = get_path_parent(self.subslot2, "Slot_4.1/SubSlot_2")
+        self.assertEqual(node, self.structure2)
         node = get_path_parent(self.structure1, "Slot_4.1")
         self.assertEqual(node, self.slot4)
         node = get_path_parent(self.slot4, "Slot_4")
