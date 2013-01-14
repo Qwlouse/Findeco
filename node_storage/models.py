@@ -52,7 +52,7 @@ class Node(models.Model):
         blank=True,
         through='Derivation'
     )
-
+    title = models.CharField(max_length=150)
     node_type = models.CharField(max_length=1, choices=NODETYPE)
 
     def append_child(self, child):
@@ -110,7 +110,7 @@ class Argument(Node):
         return "id=%d, type=%s"%(self.id, self.arg_type)
 
 class Text(models.Model):
-    node = models.ForeignKey(Node, related_name="text_object")
+    node = models.OneToOneField(Node, related_name="text")
     text = models.TextField()
     authors = models.ManyToManyField(
         User,
