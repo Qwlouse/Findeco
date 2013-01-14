@@ -94,7 +94,33 @@ def get_similar_path(node, path=None):
     """
     Return a path to the node which corresponds to the given path if possible.
     """
-    return "Not.1/Implemented.7"
+    layers, last = parse_path(path)
+    candidates = [(get_root_node(), "")]
+    for title, pos_id in layers:
+        new_candidates = []
+        for candidate, part_path in candidates:
+            tmp_candidates = candidate.children.filter(text_object__text=title).all()
+            if len(tmp_candidates) < 1: tmp_candidates = candidate.children.all()
+            for c in tmp_candidates:
+                if c == node: return part_path + "/" + c.text_object.text
+                else: new_candidates.append((c, part_path + "/" + c.text_object.text))
+            candidates = new_candidates
+            new_candidates = []
+            for candidate, part_path in candidates:
+                tmp_candidates = candidate.children.filter(text_object__text=str(pos_id)).all()
+                if len(tmp_candidates) < 1: tmp_candidates = candidate.children.all()
+                new_candidates += [(c, part_path + "." + c.text_object.text) for c in tmp_candidates]
+                for c in tmp_candidates:
+                    if c == node: return part_path + "." + c.text_object.text
+                    else: new_candidates.append((c, part_path + "." + c.text_object.text))
+                candidates = new_candidates
+        # This is reached if node is an argument
+    if 'arg_type' in last and 'arg_id' in last:
+        for candidate, part_path in candidates:
+            for argument, order in [(ao.argument, ao) for ao in ArgumentOrder.objects.filter(node=candidate).filter(
+                argument__in=candidate.arguments.filter(arg_type=last['arg_type']).all()).all()]:
+                if argument == node: return part_path + "." + argument.arg_type + "." + str(order.position)
+    return "Error: This node has no connection to the root."
 
 def get_path_parent(node, path):
     """
