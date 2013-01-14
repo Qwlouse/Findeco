@@ -134,7 +134,10 @@ def load_graph_data(request, path, graph_data_type):
 @ValidPaths("StructureNode", "Argument")
 def load_text(request, path):
     prefix, path_type = parse_suffix(path)
-    tmp_node = backend.get_node_for_path(prefix)
+    try:
+        tmp_node = backend.get_node_for_path(prefix)
+    except backend.IllegalPath:
+        return json_error_response('Illegal Path','Illegal Path: '+path)
     node = backend.get_favorite_if_slot(tmp_node)
     if node == tmp_node: # not slot
         # this means the index in parent is the last integer in the prefix
@@ -225,7 +228,10 @@ def mark_node(request, path, mark_type):
     if not request.user.is_authenticated:
         return json_response({'error': "You're not authenticated."})
     user = request.user
-    node = backend.get_node_for_path(path)
+    try:
+        node = backend.get_node_for_path(path)
+    except backend.IllegalPath:
+        return json_error_response('Illegal Path','Illegal Path: '+path)
     if not node:
         return json_response({'error': "Invalid path."})
 
