@@ -36,7 +36,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path, get_arguments_for
-from ..path_helpers import get_path_parent
+from ..path_helpers import get_path_parent#, get_similar_path
 from ..models import Node, Vote, Text, Argument
 
 class HelpersTest(TestCase):
@@ -272,3 +272,8 @@ class HelpersTest(TestCase):
         self.assertEqual(node, self.root)
         node = get_path_parent(self.slot4, "/")
         self.assertEqual(node, self.root)
+
+#    def test_get_similar_path(self):
+#        path = get_similar_path(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
+#        print(path)
+#        self.assertEqual(path, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")

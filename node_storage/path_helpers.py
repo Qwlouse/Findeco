@@ -27,7 +27,7 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.db.models import Count
-from models import Node, NodeOrder, Text, ArgumentOrder, Argument
+from models import Node, NodeOrder, Text, ArgumentOrder#, Argument
 from findeco.paths import parse_path
 
 def get_root_node():
@@ -90,37 +90,49 @@ def get_ordered_children_for(node):
     order = NodeOrder.objects.filter(parent=node).order_by('position')
     return [oN.child for oN in order]
 
-def get_similar_path(node, path=None):
-    """
-    Return a path to the node which corresponds to the given path if possible.
-    """
-    layers, last = parse_path(path)
-    candidates = [(get_root_node(), "")]
-    for title, pos_id in layers:
-        new_candidates = []
-        for candidate, part_path in candidates:
-            tmp_candidates = candidate.children.filter(text_object__text=title).all()
-            if len(tmp_candidates) < 1: tmp_candidates = candidate.children.all()
-            for c in tmp_candidates:
-                if c == node: return part_path + "/" + c.text_object.text
-                else: new_candidates.append((c, part_path + "/" + c.text_object.text))
-            candidates = new_candidates
-            new_candidates = []
-            for candidate, part_path in candidates:
-                tmp_candidates = candidate.children.filter(text_object__text=str(pos_id)).all()
-                if len(tmp_candidates) < 1: tmp_candidates = candidate.children.all()
-                new_candidates += [(c, part_path + "." + c.text_object.text) for c in tmp_candidates]
-                for c in tmp_candidates:
-                    if c == node: return part_path + "." + c.text_object.text
-                    else: new_candidates.append((c, part_path + "." + c.text_object.text))
-                candidates = new_candidates
-        # This is reached if node is an argument
-    if 'arg_type' in last and 'arg_id' in last:
-        for candidate, part_path in candidates:
-            for argument, order in [(ao.argument, ao) for ao in ArgumentOrder.objects.filter(node=candidate).filter(
-                argument__in=candidate.arguments.filter(arg_type=last['arg_type']).all()).all()]:
-                if argument == node: return part_path + "." + argument.arg_type + "." + str(order.position)
-    return "Error: This node has no connection to the root."
+#def get_similar_path(node, path=None):
+#    """
+#    Return a path to the node which corresponds to the given path if possible.
+#    """
+#    layers, last = parse_path(path)
+#    candidates = [(get_root_node(), "")]
+#    for title, pos_id in layers:
+#        print("Beginn der Iteration. Es gibt "+str(len(candidates))+" Kandidaten.")
+#        new_candidates = []
+#        for candidate, part_path in candidates:
+#            tmp_candidates = candidate.children.filter(text_object__text=title).prefetch_related('text_object').all()
+#            if len(tmp_candidates) < 1: tmp_candidates = candidate.children.all()
+#            print("Processing: "+title)
+#            for c in tmp_candidates:
+#                print(c)
+#                print(c.node_type)
+#                print(c.text_object.all())
+#                if c == node: return part_path + "/" + c.text_object.all()[0].text
+#                else: new_candidates.append((c, part_path + "/" + c.text_object.all()[0].text))
+#            candidates = new_candidates
+#            print("Zwischenschritt der Iteration. Es gibt "+str(len(candidates))+" Kandidaten.")
+#            new_candidates = []
+#            for candidate, part_path in candidates:
+#                tmp_candidates = [o.child for o in NodeOrder.objects.filter(parent=candidate).\
+#                                                                     filter(position=pos_id).\
+#                                                                     prefetch_related('child').all()]
+#                if len(tmp_candidates) < 1: tmp_candidates = candidate.children.all()
+#                new_candidates += [(c, part_path + "." + str(
+#                    NodeOrder.objects.filter(parent=candidate).filter(child=c).all()[0].position)) for c in
+#                                   tmp_candidates]
+#                for c in tmp_candidates:
+#                    if c == node: return part_path + "." + str(
+#                        NodeOrder.objects.filter(parent=candidate).filter(child=c).all()[0].position)
+#                    else: new_candidates.append((c, part_path + "." + str(
+#                        NodeOrder.objects.filter(parent=candidate).filter(child=c).all()[0].position)))
+#                candidates = new_candidates
+#    # This is reached if node is an argument
+#    if 'arg_type' in last and 'arg_id' in last:
+#        for candidate, part_path in candidates:
+#            for argument, order in [(ao.argument, ao) for ao in ArgumentOrder.objects.filter(node=candidate).filter(
+#                argument__in=candidate.arguments.filter(arg_type=last['arg_type']).all()).all()]:
+#                if argument == node: return part_path + "." + argument.arg_type + "." + str(order.position)
+#    return "Error: This node has no connection to the root."
 
 def get_path_parent(node, path):
     """
