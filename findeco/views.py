@@ -101,11 +101,11 @@ def load_text(request, path):
 
     paragraphs = []
     for slot in backend.get_ordered_children_for(node):
-        best_choice = backend.get_favorite_if_slot(slot)
-        paragraphs.append({'wikiText': best_choice.text_object.text,
-                           'path': backend.get_similar_path(best_choice, path),
-                           'isFollowing': best_choice.votes.filter(user=request.user.id).count()>0,
-                           'authorGroup': [{'displayName': a.username} for a in best_choice.text_object.authors]})
+        favorit = backend.get_favorite_if_slot(slot)
+        paragraphs.append({'wikiText': favorit.text_object.text,
+                           'path': backend.get_similar_path(favorit, path),
+                           'isFollowing': favorit.votes.filter(user=request.user.id).count()>0,
+                           'authorGroup': [{'displayName': a.username} for a in favorit.text_object.authors]})
     return json_response({
         'success':True,
         'loadTextResponse':{
