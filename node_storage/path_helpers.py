@@ -44,7 +44,8 @@ def get_node_for_path(path):
         if len(children) != 1:
             return node # Illegal Path
         else:
-            order = NodeOrder.objects.filter(parent__in=children).filter(position=pos_id).prefetch_related('child').all()
+            order = NodeOrder.objects.filter(parent__in=children).\
+                                      filter(position=pos_id).prefetch_related('child').all()
             if len(order) != 1:
                 return node # Illegal Path
             else:
@@ -56,7 +57,8 @@ def get_node_for_path(path):
         else:
             node = children[0]
     elif 'arg_type' in last and 'arg_id' in last:
-        node = ArgumentOrder.objects.filter(node=node).filter(position=last['arg_id']).prefetch_related('argument')[0].argument
+        node = ArgumentOrder.objects.filter(node=node).\
+                                     filter(position=last['arg_id']).prefetch_related('argument')[0].argument
     return node
 
 def get_favorite_if_slot(node):
