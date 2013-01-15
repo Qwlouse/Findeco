@@ -36,28 +36,29 @@ class DummyRequest():
     pass
 
 class MicrobloggingTests(TestCase):
-    def test_post_creation(self):
-        max = create_user("max")
+    def setUp(self):
+        self.user_max = create_user("max")
 
         root = backend.get_root_node()
         slot1 = create_slot("Bla")
         root.append_child(slot1)
 
-        text_node1 = create_textNode("Whatever","Testtext",[max])
+        text_node1 = create_textNode("Whatever","Testtext",[self.user_max])
         slot1.append_child(text_node1)
 
         slot2 = create_slot("Blubb")
         root.append_child(slot2)
 
-        text_node2 = create_textNode("Whatever2","Testtext Nummer 2",[max])
+        text_node2 = create_textNode("Whatever2","Testtext Nummer 2",[self.user_max])
         slot2.append_child(text_node2)
 
+    def test_post_creation(self):
         posts = []
         for i in range(25):
-            posts.append(create_post("Ich finde /Bla gut.",max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", max))
+            posts.append(create_post("Ich finde /Bla gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
         request = DummyRequest
-        request.user = max
+        request.user = self.user_max
         response = load_microblogging(request,"/Bla.1",0,"older")
         print(response)
         self.assertEqual(response.status_code, 200)
