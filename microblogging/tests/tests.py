@@ -26,10 +26,10 @@
 ################################################################################
 
 from django.test import TestCase
-from node_storage.factory import create_slot, create_structureNode, create_textNode
-from node_storage.factory import create_vote, create_argument, create_user
+from node_storage.factory import create_slot, create_textNode
+from node_storage.factory import create_user
 from ..models import create_post
-from ..views import load_microblogging
+from ..views import load_microblogging, store_microblog_post
 import node_storage as backend
 from ..models import Post
 import json
@@ -69,7 +69,15 @@ class MicrobloggingTests(TestCase):
         self.assertSequenceEqual(all_posts[0].node_references.all(),[self.text_node1])
 
     def test_store_microblog_post(self):
-        pass
+        request = DummyRequest
+        request.user = self.user_max
+        request.method = 'POST'
+        request.POST = {'microBlogText': "Bla bla bla. I had to say it."}
+
+        response = store_microblog_post(request, "Bla.1")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(json.loads(response.content)),0)
+        self.assertEqual(len(Post.objects.filter(text="Bla bla bla. I had to say it.").all()),1)
 
     def test_load_microblogging(self):
         posts = []
