@@ -85,8 +85,10 @@ def create_argument(type='neut', text="", authors=[]):
     text_obj.save()
     return arg
 
-def create_user(username):
+def create_user(username, description=""):
     new_user = User()
     new_user.username = username
     new_user.save()
+    new_user.profile.description = description
+    new_user.profile.save()
     return new_user
