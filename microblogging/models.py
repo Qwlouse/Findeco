@@ -38,6 +38,36 @@ tag_pattern = re.compile(r"(?:(?<=\s)|\A)#(?P<tagname>\w+)\b")
 internal_link_pattern = re.compile(r"(?:(?<=\s)|\A)(?P<path>/(?:[a-zA-Z0-9-_]+\.\d+/)*[a-zA-Z0-9-_]+(?:\.\d+)?/?)\b")
 url_pattern = re.compile(r"(?:(?<=\s)|\A)((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)\b")
 
+class Post(models.Model):
+    node_references = models.ManyToManyField(
+        backend.Node,
+        symmetrical=False,
+        related_name='microblogging_references',
+        blank=True)
+    text = models.TextField()
+    author = models.ForeignKey(
+        User,
+        related_name='microblogging_posts')
+    mentions = models.ManyToManyField(
+        User,
+        related_name='mentioning_entries',
+        symmetrical=False,
+        blank=True)
+    time = models.DateTimeField('date posted', auto_now=True)
+    is_reference_to = models.ForeignKey(
+        'self',
+        related_name='referenced',
+        blank=True,
+        null=True)
+
+    def __unicode__(self):
+        if self.is_reference_to:
+            return u'%s references "%s" by %s on %s' % (
+                self.author.username, self.text, self.is_reference_to.author.username, self.time)
+        else:
+            return u'%s says "%s" on %s' % (self.author.username, self.text, self.time)
+
+
 def create_post(text, author):
     split_text = user_ref_pattern.split(text)
     mentions = []
@@ -62,10 +92,15 @@ def create_post(text, author):
     for i in range(1, len(split_text), 2):
         path = split_text[i]
         try:
-            n = backend.get_favorite_if_slot(backend.get_node_for_path(path))
+            n = backend.get_node_for_path(path)
+            if n.node_type == 'slot':
+                slot = n
+                n = backend.get_favorite_if_slot(n)
+                position = backend.NodeOrder.objects.filter(child=n).filter(parent=slot).all()[0].position
+                path += "."+str(position)
             split_text[i] = '<a href="{0}">{1}</a>'.format(path, path.rsplit('/',1)[1])
             nodes.append(n)
-        except ObjectDoesNotExist:
+        except backend.IllegalPath:
             pass
     text = "".join(split_text)
 
@@ -83,36 +118,6 @@ def create_post(text, author):
     post.node_references.add(*nodes)
     post.save()
     return post
-
-
-class Post(models.Model):
-    node_references = models.ManyToManyField(
-        backend.Node,
-        symmetrical=False,
-        related_name='microbloging_references',
-        blank=True)
-    text = models.TextField()
-    author = models.ForeignKey(
-        User,
-        related_name='microblogging_posts')
-    mentions = models.ManyToManyField(
-        User,
-        related_name='mentioning_entries',
-        symmetrical=False,
-        blank=True)
-    time = models.DateTimeField('date posted', auto_now=True)
-    is_reference_to = models.ForeignKey(
-        'self',
-        related_name='referenced',
-        blank=True,
-        null=True)
-
-    def __unicode__(self):
-        if self.is_reference_to:
-            return u'%s references "%s" by %s on %s' % (
-            self.author.username, self.text, self.is_reference_to.author.username, self.time)
-        else:
-            return u'%s says "%s" on %s' % (self.author.username, self.text, self.time)
 
 
 def get_feed_for_user(user):

@@ -26,67 +26,60 @@
 ################################################################################
 
 from django.test import TestCase
-from django.contrib.auth.models import User
+from node_storage.factory import create_slot, create_structureNode, create_textNode
+from node_storage.factory import create_vote, create_argument, create_user
 from ..models import create_post
 from ..views import load_microblogging
 import node_storage as backend
+from ..models import Post
 
 class DummyRequest():
     pass
 
-class SimpleTest(TestCase):
-    def test_post_creation(self):
-        max = User()
-        max.username = "max"
-        max.save()
+class MicrobloggingTests(TestCase):
+    def setUp(self):
+        self.user_max = create_user("max")
 
         root = backend.get_root_node()
-        slot1 = backend.models.Node()
-        slot1.node_type = 'slot'
-        slot1.title = "Bla"
-        slot1.save()
+        slot1 = create_slot("Bla")
         root.append_child(slot1)
 
-        text_node1 = backend.models.Node()
-        text_node1.node_type = 'textNode'
-        text_node1.title = "Whatever"
-        text_node1.save()
-        text1 = backend.models.Text()
-        text1.node = text_node1
-        text1.text = "Testtext"
-        text1.author = max
-        text1.save()
-        slot1.append_child(text_node1)
+        self.text_node1 = create_textNode("Whatever","Testtext",[self.user_max])
+        slot1.append_child(self.text_node1)
 
-        slot2 = backend.models.Node()
-        slot2.node_type = 'slot'
-        slot2.title = "Blubb"
-        slot2.save()
+        slot2 = create_slot("Blubb")
         root.append_child(slot2)
 
-        text_node2 = backend.models.Node()
-        text_node2.node_type = 'textNode'
-        text_node2.title = "Whatever"
-        text_node2.save()
-        text2 = backend.models.Text()
-        text2.node = text_node2
-        text2.text = "Testtext Nummer 2"
-        text2.author = max
-        text2.save()
+        text_node2 = create_textNode("Whatever2","Testtext Nummer 2",[self.user_max])
         slot2.append_child(text_node2)
 
+    def test_post_creation(self):
         posts = []
         for i in range(25):
-            posts.append(create_post("Ich finde /Bla gut.",max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", max))
-        request = DummyRequest
-        request.user = max
-        response = load_microblogging(request,"/Bla.1",0,"older")
-        print(response)
-        self.assertEqual(response.status_code, 200)
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+        posts.append(create_post("Ich finde /Follopp schlecht.", self.user_max))
 
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+        all_posts = Post.objects.all()
+        self.assertSequenceEqual(all_posts,posts)
+        self.assertEqual(all_posts[0].text,'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+        self.assertEqual(all_posts[0].author,self.user_max)
+        self.assertEqual(all_posts[0].id,1)
+        self.assertSequenceEqual(all_posts[0].node_references.all(),[self.text_node1])
+
+    def test_load_microblogging(self):
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+
+        request = DummyRequest
+        request.user = self.user_max
+
+        response = load_microblogging(request,"Slot_4.1/SubSlot_1.1",0,"older")
+        self.assertEqual(response.content,'{"errorResponse": {"errorTitle": "Illegal Path", "errorMessage": "Illegal Path: Slot_4.1/SubSlot_1.1"}}')
+
+        response = load_microblogging(request,"/Bla.1",0,"older")
+        self.assertEqual(response.status_code, 200)
+        print(response.content)
+        #self.assertEqual(response.content,"")
