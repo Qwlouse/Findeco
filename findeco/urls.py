@@ -48,9 +48,13 @@ urlpatterns = patterns('',
         'findeco.views.load_graph_data',
         name='load_graph_data'),
 
-    url(r'^\.json_loadIndex/' + PATH + '$',
+    url(r'^\.json_loadIndex/(False/)?' + PATH + '$',
         'findeco.views.load_index',
         name='load_index'),
+
+    url(r'^\.json_loadIndex/True/' + PATH + '$',
+        'findeco.views.load_argument_index',
+        name='load_argument_index'),
 
     url(r'^\.json_loadMicroBlogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + PATH + '$',
         'microblogging.views.load_microblogging',

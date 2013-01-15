@@ -30,7 +30,8 @@ from django.core.urlresolvers import resolve, Resolver404
 
 import unittest
 
-from ..views import load_user_settings, load_index, load_graph_data, load_text, load_user_info
+from ..views import load_user_settings, load_index, load_graph_data, load_text
+from ..views import load_user_info, load_argument_index
 from ..views import login, logout, mark_node, store_settings, store_text
 from microblogging.views import load_microblogging, store_microblog_post
 
@@ -58,25 +59,15 @@ valid_routes = [
         url_name='load_index',
         kwargs=dict(path='some.1/path.2')),
 
-    dict(url='/.json_loadIndex/some.1/path.2.pro',
+    dict(url='/.json_loadIndex/False/some.1/path.2',
         func=load_index,
         url_name='load_index',
-        kwargs=dict(path='some.1/path.2.pro')),
+        kwargs=dict(path='some.1/path.2')),
 
-    dict(url='/.json_loadIndex/some.1/path.2.neut',
-        func=load_index,
-        url_name='load_index',
-        kwargs=dict(path='some.1/path.2.neut')),
-
-    dict(url='/.json_loadIndex/some.1/path.2.con',
-        func=load_index,
-        url_name='load_index',
-        kwargs=dict(path='some.1/path.2.con')),
-
-    dict(url='/.json_loadIndex/some.1/path.2.all',
-        func=load_index,
-        url_name='load_index',
-        kwargs=dict(path='some.1/path.2.all')),
+    dict(url='/.json_loadIndex/True/some.1/path.2',
+        func=load_argument_index,
+        url_name='load_argument_index',
+        kwargs=dict(path='some.1/path.2')),
 
     #### loadMicroBlogging
     dict(url='/.json_loadMicroBlogging/0/newer/some.1/path.2',
