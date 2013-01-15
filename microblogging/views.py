@@ -38,7 +38,7 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
         startpoint = Q(id__gt=select_id)
     else: # older
         startpoint = Q(id__lt=select_id)
-    posts = node.microbloging_references.filter(startpoint)[:20]
+    posts = node.microblogging_references.filter(startpoint).prefetch_related('author', 'is_reference_to')[:20]
     response_list = []
     for post in posts:
         authors = [{'displayName': post.author.username}]
