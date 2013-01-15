@@ -57,7 +57,7 @@ class UserProfile(models.Model):
         blank=True,
         help_text="Self-description")
 
-    following = models.ManyToManyField(
+    followees = models.ManyToManyField(
         'self',
         related_name='followers',
         symmetrical=False,
