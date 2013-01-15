@@ -56,12 +56,15 @@ class MicrobloggingTests(TestCase):
     def test_post_creation(self):
         posts = []
         for i in range(25):
-            posts.append(create_post("Ich finde /Bla gut.",self.user_max))
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
         posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+        posts.append(create_post("Ich finde /Follopp schlecht.", self.user_max))
+
         all_posts = Post.objects.all()
         self.assertSequenceEqual(all_posts,posts)
-        self.assertEqual(all_posts[0].text,'Ich finde <a href="/Bla">Bla</a> gut.')
+        self.assertEqual(all_posts[0].text,'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
         self.assertEqual(all_posts[0].author,self.user_max)
+        print(all_posts[0].node_references)
 
     def test_load_microblogging(self):
         posts = []
