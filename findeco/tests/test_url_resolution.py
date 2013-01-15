@@ -28,7 +28,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.core.urlresolvers import resolve, Resolver404
 
-import unittest
+from django.test import TestCase
 
 from ..views import load_user_settings, load_index, load_graph_data, load_text
 from ..views import load_user_info, load_argument_index
@@ -325,7 +325,7 @@ invalid_routes = [
     dict(url='/.json_storeText/some.1/path.2.prow.1'),
     ]
 
-class UrlResolutionTest(unittest.TestCase):
+class UrlResolutionTest(TestCase):
     def test_routing(self):
         for route in valid_routes:
             try:

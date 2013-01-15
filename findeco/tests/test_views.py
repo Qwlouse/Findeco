@@ -27,10 +27,9 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import Client
 from django.core.urlresolvers import reverse
-import unittest
+from django.test import TestCase
 import json
 import itertools
-from ..views import home
 from jsonvalidator import JSONValidator
 
 views = [('load_index', dict(path='')),
@@ -161,9 +160,13 @@ errorResponseValidator = JSONValidator({
         'errorMessage':string
     }
 })
+
+userInfoValidator = JSONValidator(userInfo_schema)
+
 view_validators = {
     'load_graph_data':loadGraphDataResponseValidator,
     'load_index':loadIndexResponseValidator,
+    'load_argument_index':loadIndexResponseValidator,
     'load_microblogging':loadMicrobloggingResponseValidator,
     'load_text':loadTextResponseValidator,
     'load_user_info':loadUserInfoResponseValidator,
@@ -183,13 +186,22 @@ argument_category_paths = ['foo.1.pro', 'foo.1/bar.2.con', 'foo.1/bar.2.neut']
 argument_paths = ['foo.1.pro.3', 'foo.1/bar.2.con.4', 'foo.1/bar.2.neut.5']
 
 ################# Tests ########################################################
-class ViewTest(unittest.TestCase):
+def validate_response(response, view):
+    response = json.loads(response)
+    if 'errorResponse' in response:
+        errorResponseValidator.validate(response)
+        return False
+    validator = view_validators[view]
+    validator.validate(response)
+    return True
+
+class ViewTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.client.login()
 
     def test_home_view_status_ok(self):
-        response = self.client.get(reverse(home, kwargs=dict(path='')))
+        response = self.client.get(reverse('home', kwargs=dict(path='')))
         self.assertEqual(response.status_code, 200)
 
     def test_all_api_views_return_json(self):
@@ -198,19 +210,12 @@ class ViewTest(unittest.TestCase):
             res = json.loads(response.content)
             self.assertIsNotNone(res)
 
-    def validate_response(self, response, view):
-        response = json.loads(response)
-        if 'errorResponse' in response:
-            errorResponseValidator.validate(response)
-            return False
-        validator = view_validators[view]
-        validator.validate(response)
-        return True
+
 
     def test_load_index_response_is_valid(self):
         for p in structure_node_paths:
             response = self.client.get(reverse('load_index', kwargs=dict(path=p)))
-            self.validate_response(response.content, 'load_index')
+            validate_response(response.content, 'load_index')
 
     def test_load_graph_data_response_is_valid(self):
         paths = slot_paths + argument_category_paths
@@ -218,7 +223,7 @@ class ViewTest(unittest.TestCase):
         for p, t in itertools.product(paths, graph_types):
             response = self.client.get(reverse('load_graph_data',
                 kwargs=dict(path=p, graph_data_type=t)))
-            self.validate_response(response.content, 'load_graph_data')
+            validate_response(response.content, 'load_graph_data')
 
     def test_load_microblogging_response_is_valid(self):
         paths = structure_node_paths + argument_paths
@@ -226,12 +231,12 @@ class ViewTest(unittest.TestCase):
         for p, t in itertools.product(paths, load_type):
             result = self.client.get(reverse('load_microblogging',
                 kwargs=dict(path=p, microblogging_load_type=t, select_id=1)))
-            self.validate_response(result.content, 'load_microblogging')
+            validate_response(result.content, 'load_microblogging')
 
     def test_load_text_response_is_valid(self):
         for p in structure_node_paths + slot_paths + argument_paths:
             response = self.client.get(reverse('load_text', kwargs=dict(path=p)))
-            self.validate_response(response.content, 'load_text')
+            validate_response(response.content, 'load_text')
 
     def test_mark_node_response_is_valid(self):
         paths = structure_node_paths + argument_paths
@@ -239,21 +244,21 @@ class ViewTest(unittest.TestCase):
         for p, t in itertools.product(paths, mark_type):
             response = self.client.get(reverse('mark_node',
                 kwargs=dict(path=p, mark_type=t)))
-            self.validate_response(response.content, 'mark_node')
+            validate_response(response.content, 'mark_node')
 
     def test_load_user_info_response_is_valid(self):
         usernames = ['admin', 'fred']
         for u in usernames:
             response = self.client.get(reverse('load_user_info', kwargs=dict(name=u)))
-            self.validate_response(response.content, 'load_user_info')
+            validate_response(response.content, 'load_user_info')
 
     def test_load_user_settings_response_is_valid(self):
         response = self.client.get(reverse('load_user_settings'))
-        self.validate_response(response.content, 'load_user_settings')
+        validate_response(response.content, 'load_user_settings')
 
     def test_logout_response_is_valid(self):
         response = self.client.get(reverse('logout'))
-        self.validate_response(response.content, 'logout')
+        validate_response(response.content, 'logout')
 
     # TODO login
     # TODO store_microblog_post

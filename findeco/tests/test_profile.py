@@ -27,11 +27,10 @@
 from __future__ import division, print_function, unicode_literals
 
 from django.contrib.auth.models import User
-import unittest
-
+from django.test import TestCase
 from ..models import UserProfile
 
-class UserProfileTest(unittest.TestCase):
+class UserProfileTest(TestCase):
     def test_fresh_user_has_profile(self):
         u = User.objects.create_user('__test_user1', 'user@mail.de', 'password')
         self.assertTrue(UserProfile.objects.filter(user=u).count() == 1)
@@ -46,8 +45,8 @@ class UserProfileTest(unittest.TestCase):
 
     def test_user_profile_has_following_and_followers(self):
         u = User.objects.create_user('__test_user4', 'user@mail.de', 'password')
-        self.assertEqual(u.profile.following.count(), 0)
-        self.assertEqual(u.profile.followers.count(), 0)
+        self.assertEqual(u.profile.followees.count(), 0)
+        self.assertEqual(u.profile.followees.count(), 0)
 
     def test_user_profile_is_saved_with_user(self):
         u = User.objects.create_user('__test_user5', 'user@mail.de', 'password')

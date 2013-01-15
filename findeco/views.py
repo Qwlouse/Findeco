@@ -25,49 +25,16 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-from django.http import HttpResponse
-
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-import json
+from __future__ import division, print_function, unicode_literals
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 from findeco.paths import parse_suffix
+from findeco.view_helpers import ValidPaths, json_error_response, json_response
 import node_storage as backend
-
-def json_response(data):
-    return HttpResponse(json.dumps(data), mimetype='application/json')
-
-def json_error_response(title, message):
-    response = {'errorResponse':{
-        'errorTitle':title,
-        'errorMessage':message,
-        }}
-    return json_response(response)
-
-def ValidPaths(*allowed_path_types):
-    def wrapper(f):
-        def wrapped(request, path, *args, **kwargs):
-            _, path_type = parse_suffix(path)
-
-            if 'arg_id' in path_type:
-                path_type = 'Argument'
-            elif 'arg_type' in path_type:
-                path_type = 'ArgumentCategory'
-            elif 'slot' in path_type:
-                path_type = 'Slot'
-            else:
-                path_type = 'StructureNode'
-            if path_type not in allowed_path_types:
-                return json_error_response('Invalid path for %s'%f.__name__,
-                    "%s can be called only for %s but was called with %s"%(
-                        f.__name__, allowed_path_types, path_type))
-            #noinspection PyCallingNonCallable
-            return f(request, path, *args, **kwargs)
-        return wrapped
-    return wrapper
 
 def home(request, path):
     return render_to_response("main.html",
