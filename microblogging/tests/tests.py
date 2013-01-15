@@ -26,7 +26,8 @@
 ################################################################################
 
 from django.test import TestCase
-from django.contrib.auth.models import User
+from node_storage.factory import create_slot, create_structureNode, create_textNode
+from node_storage.factory import create_vote, create_argument, create_user
 from ..models import create_post
 from ..views import load_microblogging
 import node_storage as backend
@@ -34,45 +35,21 @@ import node_storage as backend
 class DummyRequest():
     pass
 
-class SimpleTest(TestCase):
+class MicrobloggingTests(TestCase):
     def test_post_creation(self):
-        max = User()
-        max.username = "max"
-        max.save()
+        max = create_user("max")
 
         root = backend.get_root_node()
-        slot1 = backend.models.Node()
-        slot1.node_type = 'slot'
-        slot1.title = "Bla"
-        slot1.save()
+        slot1 = create_slot("Bla")
         root.append_child(slot1)
 
-        text_node1 = backend.models.Node()
-        text_node1.node_type = 'textNode'
-        text_node1.title = "Whatever"
-        text_node1.save()
-        text1 = backend.models.Text()
-        text1.node = text_node1
-        text1.text = "Testtext"
-        text1.author = max
-        text1.save()
+        text_node1 = create_textNode("Whatever","Testtext",[max])
         slot1.append_child(text_node1)
 
-        slot2 = backend.models.Node()
-        slot2.node_type = 'slot'
-        slot2.title = "Blubb"
-        slot2.save()
+        slot2 = create_slot("Blubb")
         root.append_child(slot2)
 
-        text_node2 = backend.models.Node()
-        text_node2.node_type = 'textNode'
-        text_node2.title = "Whatever"
-        text_node2.save()
-        text2 = backend.models.Text()
-        text2.node = text_node2
-        text2.text = "Testtext Nummer 2"
-        text2.author = max
-        text2.save()
+        text_node2 = create_textNode("Whatever2","Testtext Nummer 2",[max])
         slot2.append_child(text_node2)
 
         posts = []
@@ -84,9 +61,3 @@ class SimpleTest(TestCase):
         response = load_microblogging(request,"/Bla.1",0,"older")
         print(response)
         self.assertEqual(response.status_code, 200)
-
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
