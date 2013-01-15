@@ -24,7 +24,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-from .models import Node, Text, Vote
+from django.contrib.auth.models import User
+from models import Node, Text, Vote, Argument
 
 def create_slot(short_title):
     slot = Node()
@@ -69,3 +70,23 @@ def create_vote(voter, nodes):
         v.nodes.add(node)
     v.save()
     return v
+
+def create_argument(type='neut', text="", authors=[]):
+    arg = Argument()
+    arg.node_type = 'argument'
+    arg.arg_type = type
+    arg.save()
+    text_obj = Text()
+    text_obj.node = arg
+    text_obj.text = text
+    text_obj.save()
+    for author in authors:
+        text_obj.authors.add(author)
+    text_obj.save()
+    return arg
+
+def create_user(username):
+    new_user = User()
+    new_user.username = username
+    new_user.save()
+    return new_user

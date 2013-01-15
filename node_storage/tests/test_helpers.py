@@ -33,19 +33,15 @@ Replace this with more appropriate tests for your application.
 """
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from django.contrib.auth.models import User
 from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path, get_arguments_for
 #from ..path_helpers import get_path_parent, get_similar_path
 from ..path_helpers import IllegalPath
-from ..models import Node, Vote, Argument
-from ..factory import create_slot, create_structureNode, create_textNode, create_vote
+from ..factory import create_slot, create_structureNode, create_textNode, create_vote, create_argument, create_user
 
 class HelpersTest(TestCase):
     def setUp(self):
-        max = User()
-        max.username = "Max"
-        max.save()
+        max = create_user("Max")
 
         self.root = get_root_node()
 
@@ -100,15 +96,9 @@ class HelpersTest(TestCase):
         self.subsubtext1 = create_textNode("SubSubText1 Title","Yet another text. Number 4.",[max])
         self.subsubslot1.append_child(self.subsubtext1)
 
-        self.argument1 = Argument()
-        self.argument1.node_type = 'argument'
-        self.argument1.arg_type = 'pro'
-        self.argument1.save()
+        self.argument1 = create_argument('pro',"It is good!",[max])
         self.subsubtext1.append_argument(self.argument1)
-        self.argument2 = Argument()
-        self.argument2.node_type = 'argument'
-        self.argument2.arg_type = 'neut'
-        self.argument2.save()
+        self.argument2 = create_argument('neut',"Maybe consider something",[max])
         self.subsubtext1.append_argument(self.argument2)
 
     def test_get_favorite_if_slot(self):
