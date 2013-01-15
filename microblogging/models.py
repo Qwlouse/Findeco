@@ -38,6 +38,36 @@ tag_pattern = re.compile(r"(?:(?<=\s)|\A)#(?P<tagname>\w+)\b")
 internal_link_pattern = re.compile(r"(?:(?<=\s)|\A)(?P<path>/(?:[a-zA-Z0-9-_]+\.\d+/)*[a-zA-Z0-9-_]+(?:\.\d+)?/?)\b")
 url_pattern = re.compile(r"(?:(?<=\s)|\A)((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)\b")
 
+class Post(models.Model):
+    node_references = models.ManyToManyField(
+        backend.Node,
+        symmetrical=False,
+        related_name='microbloging_references',
+        blank=True)
+    text = models.TextField()
+    author = models.ForeignKey(
+        User,
+        related_name='microblogging_posts')
+    mentions = models.ManyToManyField(
+        User,
+        related_name='mentioning_entries',
+        symmetrical=False,
+        blank=True)
+    time = models.DateTimeField('date posted', auto_now=True)
+    is_reference_to = models.ForeignKey(
+        'self',
+        related_name='referenced',
+        blank=True,
+        null=True)
+
+    def __unicode__(self):
+        if self.is_reference_to:
+            return u'%s references "%s" by %s on %s' % (
+                self.author.username, self.text, self.is_reference_to.author.username, self.time)
+        else:
+            return u'%s says "%s" on %s' % (self.author.username, self.text, self.time)
+
+
 def create_post(text, author):
     split_text = user_ref_pattern.split(text)
     mentions = []
@@ -83,36 +113,6 @@ def create_post(text, author):
     post.node_references.add(*nodes)
     post.save()
     return post
-
-
-class Post(models.Model):
-    node_references = models.ManyToManyField(
-        backend.Node,
-        symmetrical=False,
-        related_name='microbloging_references',
-        blank=True)
-    text = models.TextField()
-    author = models.ForeignKey(
-        User,
-        related_name='microblogging_posts')
-    mentions = models.ManyToManyField(
-        User,
-        related_name='mentioning_entries',
-        symmetrical=False,
-        blank=True)
-    time = models.DateTimeField('date posted', auto_now=True)
-    is_reference_to = models.ForeignKey(
-        'self',
-        related_name='referenced',
-        blank=True,
-        null=True)
-
-    def __unicode__(self):
-        if self.is_reference_to:
-            return u'%s references "%s" by %s on %s' % (
-            self.author.username, self.text, self.is_reference_to.author.username, self.time)
-        else:
-            return u'%s says "%s" on %s' % (self.author.username, self.text, self.time)
 
 
 def get_feed_for_user(user):

@@ -31,6 +31,7 @@ from node_storage.factory import create_vote, create_argument, create_user
 from ..models import create_post
 from ..views import load_microblogging
 import node_storage as backend
+from ..models import Post
 
 class DummyRequest():
     pass
@@ -57,8 +58,19 @@ class MicrobloggingTests(TestCase):
         for i in range(25):
             posts.append(create_post("Ich finde /Bla gut.",self.user_max))
         posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+        all_posts = Post.objects.all()
+        self.assertSequenceEqual(all_posts,posts)
+        self.assertEqual(all_posts[0].text,'Ich finde <a href="/Bla">Bla</a> gut.')
+        self.assertEqual(all_posts[0].author,self.user_max)
+
+    def test_load_microblogging(self):
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+
         request = DummyRequest
         request.user = self.user_max
         response = load_microblogging(request,"/Bla.1",0,"older")
-        print(response)
         self.assertEqual(response.status_code, 200)
+        print(response)
