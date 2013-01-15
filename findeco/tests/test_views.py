@@ -27,7 +27,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import Client
 from django.core.urlresolvers import reverse
-import unittest
+from django.test import TestCase
 import json
 import itertools
 from ..views import home
@@ -183,7 +183,7 @@ argument_category_paths = ['foo.1.pro', 'foo.1/bar.2.con', 'foo.1/bar.2.neut']
 argument_paths = ['foo.1.pro.3', 'foo.1/bar.2.con.4', 'foo.1/bar.2.neut.5']
 
 ################# Tests ########################################################
-class ViewTest(unittest.TestCase):
+class ViewTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.client.login()
