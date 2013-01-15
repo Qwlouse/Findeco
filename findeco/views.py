@@ -36,6 +36,7 @@ from django.contrib.auth import logout as django_logout
 
 from findeco.paths import parse_suffix
 import node_storage as backend
+from .tests.test_views import validate_response
 
 def json_response(data):
     return HttpResponse(json.dumps(data), mimetype='application/json')
@@ -65,7 +66,9 @@ def ValidPaths(*allowed_path_types):
                     "%s can be called only for %s but was called with %s"%(
                         f.__name__, allowed_path_types, path_type))
             #noinspection PyCallingNonCallable
-            return f(request, path, *args, **kwargs)
+            response = f(request, path, *args, **kwargs)
+            validate_response(response.content, f.__name__)
+            return response
         return wrapped
     return wrapper
 
