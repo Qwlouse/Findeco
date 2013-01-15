@@ -38,7 +38,8 @@ from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path, get_arguments_for
 #from ..path_helpers import get_path_parent, get_similar_path
 from ..path_helpers import IllegalPath
-from ..models import Node, Vote, Text, Argument
+from ..models import Node, Vote, Argument
+from ..factory import create_slot, create_structureNode, create_textNode, create_vote
 
 class HelpersTest(TestCase):
     def setUp(self):
@@ -48,98 +49,55 @@ class HelpersTest(TestCase):
 
         self.root = get_root_node()
 
-        self.slot1 = Node()
-        self.slot1.node_type = 'slot'
-        self.slot1.title = "Slot_1"
-        self.slot1.save()
+        self.slot1 = create_slot("Slot_1")
         self.root.append_child(self.slot1)
 
-        self.text1 = Node()
-        self.text1.node_type = 'textNode'
-        self.text1.save()
+        self.text1 = create_textNode("Irrelevant long title","My text.",[max])
         self.slot1.append_child(self.text1)
 
-        self.slot2 = Node()
-        self.slot2.node_type = 'slot'
-        self.slot2.title = "Slot_2"
-        self.slot2.save()
+        self.slot2 = create_slot("Slot_2")
         self.root.append_child(self.slot2)
 
-        self.text3 = Node()
-        self.text3.node_type = 'textNode'
-        self.text3.save()
+        self.text3 = create_textNode("Irrelevant long title 2","My other text.",[max])
         self.slot2.append_child(self.text3)
 
-        self.text4 = Node()
-        self.text4.node_type = 'textNode'
-        self.text4.save()
+        self.text4 = create_textNode("Irrelevant long title 3","Yet another text.",[max])
         self.slot2.append_child(self.text4)
 
-        self.slot3 = Node()
-        self.slot3.node_type = 'slot'
-        self.slot3.title = "Slot_3"
-        self.slot3.save()
+        self.slot3 = create_slot("Slot_3")
         self.root.append_child(self.slot3)
 
-        self.text5 = Node()
-        self.text5.node_type = 'textNode'
-        self.text5.save()
+        self.text5 = create_textNode("Irrelevant long title 4","Yet another text. Different in the second part.",[max])
         self.slot3.append_child(self.text5)
 
-        self.text6 = Node()
-        self.text6.node_type = 'textNode'
-        self.text6.save()
+        self.text6 = create_textNode("Irrelevant long title 5","Yet another text. Number 3.",[max])
         self.slot3.append_child(self.text6)
 
-        v1 = Vote()
-        v1.user = max
-        v1.save()
-        v1.nodes.add(self.text5)
-        v1.save()
+        create_vote(max, [self.text5])
 
-        self.slot4 = Node()
-        self.slot4.node_type = 'slot'
-        self.slot4.title = "Slot_4"
-        self.slot4.save()
+        self.slot4 = create_slot("Slot_4")
         self.root.append_child(self.slot4)
 
-        self.structure1 = Node()
-        self.structure1.node_type = 'structureNode'
-        self.structure1.save()
+        self.structure1 = create_structureNode("Structure1 Title","Introductory text",[max])
         self.slot4.append_child(self.structure1)
 
-        self.structure2 = Node()
-        self.structure2.node_type = 'structureNode'
-        self.structure2.save()
+        self.structure2 = create_structureNode("Structure2 Title","Introductory text 2",[max])
         self.slot4.append_child(self.structure2)
 
-        self.subslot1 = Node()
-        self.subslot1.node_type = 'slot'
-        self.subslot1.title = "SubSlot_1"
-        self.subslot1.save()
+        self.subslot1 = create_slot("SubSlot_1")
         self.structure1.append_child(self.subslot1)
 
-        self.subslot2 = Node()
-        self.subslot2.node_type = 'slot'
-        self.subslot2.title = "SubSlot_2"
-        self.subslot2.save()
+        self.subslot2 = create_slot("SubSlot_2")
         self.structure2.append_child(self.subslot2)
 
-        self.substructure1 = Node()
-        self.substructure1.node_type = 'structureNode'
-        self.substructure1.save()
+        self.substructure1 = create_structureNode("SubStructure2 Title","Introductory text 3",[max])
         self.subslot1.append_child(self.substructure1)
         self.subslot2.append_child(self.substructure1)
 
-        self.subsubslot1 = Node()
-        self.subsubslot1.node_type = 'slot'
-        self.subsubslot1.title = "SubSubSlot_1"
-        self.subsubslot1.save()
+        self.subsubslot1 = create_slot("SubSubSlot_1")
         self.substructure1.append_child(self.subsubslot1)
 
-        self.subsubtext1 = Node()
-        self.subsubtext1.node_type = 'textNode'
-        self.subsubtext1.save()
+        self.subsubtext1 = create_textNode("SubSubText1 Title","Yet another text. Number 4.",[max])
         self.subsubslot1.append_child(self.subsubtext1)
 
         self.argument1 = Argument()
