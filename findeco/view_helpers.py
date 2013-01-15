@@ -65,8 +65,8 @@ def create_user_info(user):
     user_info = dict(
         displayName = user.username,
         description = user.profile.description,
-        followers = [{'displayName':u.username} for u in user.profile.followers],
-        followees = [{'displayName':u.username} for u in user.profile.followees]
+        followers = [{'displayName':u.user.username} for u in user.profile.followers.all()],
+        followees = [{'displayName':u.user.username} for u in user.profile.followees.all()]
     )
     return user_info
 

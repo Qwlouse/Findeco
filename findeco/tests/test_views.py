@@ -160,6 +160,9 @@ errorResponseValidator = JSONValidator({
         'errorMessage':string
     }
 })
+
+userInfoValidator = JSONValidator(userInfo_schema)
+
 view_validators = {
     'load_graph_data':loadGraphDataResponseValidator,
     'load_index':loadIndexResponseValidator,
