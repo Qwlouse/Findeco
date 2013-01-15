@@ -32,6 +32,7 @@ from ..models import create_post
 from ..views import load_microblogging
 import node_storage as backend
 from ..models import Post
+import json
 
 class DummyRequest():
     pass
@@ -82,4 +83,13 @@ class MicrobloggingTests(TestCase):
         response = load_microblogging(request,"/Bla.1",0,"older")
         self.assertEqual(response.status_code, 200)
         print(response.content)
-        #self.assertEqual(response.content,"")
+        data = json.loads(response.content)
+        self.assertTrue('loadMicrobloggingResponse' in data)
+        print(data['loadMicrobloggingResponse'][0])
+        for i in range(20):
+            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],i+1)
+            self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
+            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])

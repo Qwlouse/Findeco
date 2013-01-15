@@ -28,6 +28,7 @@ from django.db.models import Q
 from models import get_feed_for_user, create_post
 from findeco.views import json_response, json_error_response
 import node_storage as backend
+from time import mktime
 
 def load_microblogging(request, path, select_id, microblogging_load_type):
     try:
@@ -45,7 +46,7 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
         if post.is_reference_to: authors.append({'displayName': post.is_reference_to.author.username})
         response_list.append({'microBlogText': post.text,
                               'authorGroup': authors,
-                              'microBlogTime': post.time,
+                              'microBlogTime': int(mktime(post.time.timetuple())),
                               'microBlogID': post.pk})
     return json_response({
         'loadMicrobloggingResponse':response_list})
