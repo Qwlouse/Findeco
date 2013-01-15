@@ -44,8 +44,8 @@ class MicrobloggingTests(TestCase):
         slot1 = create_slot("Bla")
         root.append_child(slot1)
 
-        text_node1 = create_textNode("Whatever","Testtext",[self.user_max])
-        slot1.append_child(text_node1)
+        self.text_node1 = create_textNode("Whatever","Testtext",[self.user_max])
+        slot1.append_child(self.text_node1)
 
         slot2 = create_slot("Blubb")
         root.append_child(slot2)
@@ -64,7 +64,8 @@ class MicrobloggingTests(TestCase):
         self.assertSequenceEqual(all_posts,posts)
         self.assertEqual(all_posts[0].text,'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
         self.assertEqual(all_posts[0].author,self.user_max)
-        print(all_posts[0].node_references)
+        self.assertEqual(all_posts[0].id,1)
+        self.assertSequenceEqual(all_posts[0].node_references.all(),[self.text_node1])
 
     def test_load_microblogging(self):
         posts = []
@@ -80,4 +81,5 @@ class MicrobloggingTests(TestCase):
 
         response = load_microblogging(request,"/Bla.1",0,"older")
         self.assertEqual(response.status_code, 200)
-        print(response)
+        print(response.content)
+        #self.assertEqual(response.content,"")
