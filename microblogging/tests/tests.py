@@ -71,6 +71,10 @@ class MicrobloggingTests(TestCase):
 
         request = DummyRequest
         request.user = self.user_max
+
+        response = load_microblogging(request,"Slot_4.1/SubSlot_1.1",0,"older")
+        self.assertEqual(response.content,'{"errorResponse": {"errorTitle": "Illegal Path", "errorMessage": "Illegal Path: Slot_4.1/SubSlot_1.1"}}')
+
         response = load_microblogging(request,"/Bla.1",0,"older")
         self.assertEqual(response.status_code, 200)
         print(response)
