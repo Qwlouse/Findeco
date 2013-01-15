@@ -23,7 +23,7 @@
 from __future__ import division, print_function, unicode_literals
 import json
 from django.test import TestCase
-from findeco.tests.test_views import userInfoValidator
+from ..api_validation import userInfoValidator
 from node_storage.factory import create_user
 from ..view_helpers import create_user_info
 

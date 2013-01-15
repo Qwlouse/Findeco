@@ -24,7 +24,7 @@ from __future__ import division, print_function, unicode_literals
 import json
 from django.http import HttpResponse
 from findeco.paths import parse_suffix
-from findeco.tests.test_views import validate_response
+from api_validation import validate_response
 import node_storage as backend
 
 def json_response(data):

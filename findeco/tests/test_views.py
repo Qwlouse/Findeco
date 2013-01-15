@@ -30,7 +30,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 import json
 import itertools
-from jsonvalidator import JSONValidator
+from ..api_validation import validate_response
 
 views = [('load_index', dict(path='')),
          ('load_user_settings', dict()),
@@ -51,134 +51,6 @@ views = [('load_index', dict(path='')),
          ('store_text', dict(path=''))
 ]
 
-################# JSON Schemas #################################################
-# The JSON responses are validated by example
-integer = 1
-string = "string"
-boolean = True
-user_schema = {
-    'displayName':string
-}
-userInfo_schema = {
-    'displayName':string,
-    'description':string,
-    'followers':[user_schema, None],
-    'followees':[user_schema, None]
-}
-userSettings_schema={
-    'blockedUsers':[user_schema, None]
-}
-authorGroup_schema = [userInfo_schema]
-originGroup_schema = ["path"]
-graphDataNode_schema = {
-    'path':string,
-    'authorGroup': authorGroup_schema,
-    'follows':integer,
-    'unFollows':integer,
-    'newFollows':integer,
-    'originGroup':originGroup_schema
-}
-indexNode_schema = {
-    'shortTitle': string+'?',
-    'argumentDenominator':string+'?',
-    'fullTitle':string,
-    'index':integer,
-    'authorGroup': authorGroup_schema
-}
-microblogNode_schema = {
-    'microblogText':string,
-    'authorGroup': ["user"],
-    'microblogTime':integer,
-    'microblogID':integer
-}
-textNode_schema = {
-    'wikiText':string,
-    'path':string,
-    'isFollowing':boolean,
-    'authorGroup': authorGroup_schema
-}
-loadGraphDataResponseValidator = JSONValidator({
-    'loadGraphDataResponse':{
-        'graphDataChildren':[graphDataNode_schema],
-        'graphDataRelated':[graphDataNode_schema, None]
-    }
-})
-loadIndexResponseValidator = JSONValidator({
-    'loadIndexResponse':[indexNode_schema, None]
-})
-loadMicrobloggingResponseValidator = JSONValidator({
-    'loadMicrobloggingResponse':[microblogNode_schema, None]
-})
-loadTextResponseValidator = JSONValidator({
-    'loadTextResponse':{
-        'paragraphs':[textNode_schema, None], #TODO don't allow empty paragraphs
-        'isFollowing':boolean,
-        }
-})
-loadUserInfoResponseValidator = JSONValidator({
-    'loadUserInfoResponse':{
-        'userInfo':userInfo_schema
-    }
-})
-loadUserSettingsResponseValidator = JSONValidator({
-    'loadUserSettingsResponse':{
-        'userInfo':userInfo_schema,
-        'userSettings':userSettings_schema
-    }
-})
-loginResponseValidator = JSONValidator({
-    'loginResponse':{
-        'userInfo':userInfo_schema,
-        'userSettings':userSettings_schema
-    }
-})
-logoutResponseValidator = JSONValidator({
-    'logoutResponse':{
-        'farewellMessage':string
-    }
-})
-markNodeResponseValidator = JSONValidator({
-    'markNodeResponse':{
-    }
-})
-storeMicroblogPostResponseValidator = JSONValidator({
-    'storeMicroblogPostResponse':{
-    }
-})
-storeSettingsResponseValidator = JSONValidator({
-    'storeSettingsResponse':{
-    }
-})
-storeTextResponseValidator = JSONValidator({
-    'storeTextResponse':{
-        'path':"path"
-    }
-})
-errorResponseValidator = JSONValidator({
-    'errorResponse':{
-        'errorTitle':string,
-        'errorMessage':string
-    }
-})
-
-userInfoValidator = JSONValidator(userInfo_schema)
-
-view_validators = {
-    'load_graph_data':loadGraphDataResponseValidator,
-    'load_index':loadIndexResponseValidator,
-    'load_argument_index':loadIndexResponseValidator,
-    'load_microblogging':loadMicrobloggingResponseValidator,
-    'load_text':loadTextResponseValidator,
-    'load_user_info':loadUserInfoResponseValidator,
-    'load_user_settings':loadUserSettingsResponseValidator,
-    'login':loginResponseValidator,
-    'logout':logoutResponseValidator,
-    'mark_node':markNodeResponseValidator,
-    'store_microblog_post':storeMicroblogPostResponseValidator,
-    'store_settings':storeSettingsResponseValidator,
-    'store_text':storeTextResponseValidator
-}
-
 ################# example paths ################################################
 structure_node_paths = ['', 'foo.1', 'foo.1/bar.2']
 slot_paths = ['foo', 'foo.1/bar']
@@ -186,15 +58,6 @@ argument_category_paths = ['foo.1.pro', 'foo.1/bar.2.con', 'foo.1/bar.2.neut']
 argument_paths = ['foo.1.pro.3', 'foo.1/bar.2.con.4', 'foo.1/bar.2.neut.5']
 
 ################# Tests ########################################################
-def validate_response(response, view):
-    response = json.loads(response)
-    if 'errorResponse' in response:
-        errorResponseValidator.validate(response)
-        return False
-    validator = view_validators[view]
-    validator.validate(response)
-    return True
-
 class ViewTest(TestCase):
     def setUp(self):
         self.client = Client()
