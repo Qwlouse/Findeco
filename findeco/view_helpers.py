@@ -73,9 +73,9 @@ def create_user_info(user):
 def create_index_node_for_slot(slot):
     favorit = backend.get_favorite_if_slot(slot) ##optimization: switch to get_favorit_for_slot that also returns the index
     index_node = dict(
-        short_title = slot.title,
-        full_title = favorit.title,
+        shortTitle = slot.title,
+        fullTitle = favorit.title,
         index = favorit.get_index(slot),
-        author_group = [create_user_info(a) for a in favorit.text.authors]
+        authorGroup = [create_user_info(a) for a in favorit.text.authors.all()]
     )
     return index_node

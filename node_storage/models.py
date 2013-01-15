@@ -92,7 +92,7 @@ class Node(models.Model):
         """
         Return the index of this node within parent.
         """
-        pass
+        return NodeOrder.objects.get(parent=parent, child=self).position
 
 ARGUMENTTYPE = (
     ('p', 'pro'),

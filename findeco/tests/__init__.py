@@ -30,7 +30,7 @@ from test_profile import UserProfileTest
 from test_path import PathRegExTest
 from test_url_resolution import UrlResolutionTest
 from test_views import ViewTest
-from test_view_helpers import ViewHelpersTest
+from test_view_helpers import CreateUsersInfoTest, CreateIndexNodeForSlotTest
 
 try:
     from microblogging.tests import *
