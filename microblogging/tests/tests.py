@@ -183,8 +183,6 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(data['loadMicrobloggingResponse'][0]['authorGroup']),1)
         self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][0])
         for i in range(1,20):
-            print(i)
-            print(data['loadMicrobloggingResponse'][i])
             self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
             self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
