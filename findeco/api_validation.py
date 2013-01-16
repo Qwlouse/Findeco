@@ -139,6 +139,7 @@ errorResponse_schema = {
 ################################################################################
 
 userInfoValidator = JSONValidator(userInfo_schema)
+userSettingsValidator = JSONValidator(userSettings_schema)
 indexNodeValidator = JSONValidator(indexNode_schema)
 
 loadGraphDataResponseValidator = JSONValidator(loadGraphDataResponse_schema)

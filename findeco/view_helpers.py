@@ -70,6 +70,12 @@ def create_user_info(user):
     )
     return user_info
 
+def create_user_settings(user):
+    user_settings = dict(
+        blockedUsers = [{'displayName':u.user.username} for u in user.profile.blocked.all()]
+    )
+    return user_settings
+
 def create_index_node_for_slot(slot):
     favorit = backend.get_favorite_if_slot(slot) ##optimization: switch to get_favorit_for_slot that also returns the index
     index_node = dict(

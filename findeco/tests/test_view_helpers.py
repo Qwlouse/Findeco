@@ -23,11 +23,11 @@
 from __future__ import division, print_function, unicode_literals
 import json
 from django.test import TestCase
-from ..api_validation import userInfoValidator, indexNodeValidator
+from ..api_validation import userInfoValidator, indexNodeValidator, userSettingsValidator
 from findeco.view_helpers import create_index_node_for_slot
 from node_storage import get_root_node
 from node_storage.factory import create_user, create_slot, create_textNode, create_vote
-from ..view_helpers import create_user_info
+from ..view_helpers import create_user_info, create_user_settings
 
 class CreateUsersInfoTest(TestCase):
     def setUp(self):
@@ -90,6 +90,41 @@ class CreateUsersInfoTest(TestCase):
         followees = user_info['followees']
         self.assertEqual(len(followees), 1)
         self.assertIn({'displayName':'hans'}, followees)
+
+class CreateUserSettingsTest(TestCase):
+    def setUp(self):
+        self.hans = create_user('hans', password="1234")
+        self.herbert = create_user('herbert', password="1234")
+        self.hein = create_user('hein', password="1234")
+        self.hans.profile.blocked.add(self.herbert.profile)
+        self.hein.profile.blocked.add(self.herbert.profile)
+        self.users = [self.hans, self.herbert, self.hein]
+
+    def test_return_value_validates(self):
+        for user in self.users:
+            user_settings = create_user_settings(user)
+            self.assertTrue(userSettingsValidator.validate(user_settings))
+
+    def test_contains_correct_blocked_users(self):
+        user_settings = create_user_settings(self.hans)
+        self.assertIn('blockedUsers', user_settings)
+        blocked = user_settings['blockedUsers']
+        self.assertEqual(len(blocked), 1)
+        self.assertIn({'displayName':'herbert'}, blocked)
+
+        user_settings = create_user_settings(self.herbert)
+        self.assertIn('blockedUsers', user_settings)
+        blocked = user_settings['blockedUsers']
+        self.assertEqual(len(blocked), 0)
+
+        user_settings = create_user_settings(self.hein)
+        self.assertIn('blockedUsers', user_settings)
+        blocked = user_settings['blockedUsers']
+        self.assertEqual(len(blocked), 1)
+        self.assertIn({'displayName':'herbert'}, blocked)
+
+
+
 
 class CreateIndexNodeForSlotTest(TestCase):
     def setUp(self):
