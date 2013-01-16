@@ -62,7 +62,7 @@ def load_timeline(request, select_id, microblogging_load_type):
     """
     followed = Q(author__profile__followers=request.user)
     own = Q(author = request.user)
-    if select_id < 0: # Get latest posts
+    if not type(select_id) == int: # Get latest posts
         feed =  Post.objects.filter(followed | own).order_by('-time').prefetch_related('author', 'is_reference_to')[:20]
         return json_response({'loadMicrobloggingResponse':convert_response_list(feed)})
     else:
