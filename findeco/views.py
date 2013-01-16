@@ -142,7 +142,6 @@ def load_user_info(request, name):
         }})
 
 def load_user_settings(request):
-    # This is an example
     if not request.user.is_authenticated():
         return json_error_response('NeedsAuthentication',
             "You need to be logged in to load user settings.")
@@ -160,21 +159,19 @@ def login(request):
         if user.is_active:
             django_login(request, user)
             return json_response({
-                'userData':create_user_info(user)
-            })
+                'loginResponse':{
+                    'userInfo':create_user_info(user),
+                    'userSettings':create_user_settings(user)
+                }})
         else:
-            return json_response({
-                'error':'DisabledAccount.',
-                'userData':create_user_info(user)
-            })
+            return json_error_response('DisabledAccount',"Account '%s' is deactivated"%username)
     else:
-        return json_response({
-            'error':'InvalidLogin'
-        })
+        return json_error_response('InvalidLogin', "Username or password wrong.")
 
 def logout(request):
     django_logout(request)
     return json_response({'logoutResponse':{
+        # TODO random farewell message
         'farewellMessage':"Didel dadel dana, ab geht's ins Nirvana."
     }})
 
