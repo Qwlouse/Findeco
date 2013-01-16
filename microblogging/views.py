@@ -51,7 +51,7 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
     else: # older
         startpoint = Q(id__lt=select_id)
     posts = node.microblogging_references.filter(startpoint).prefetch_related('author', 'is_reference_to')[:20]
-    return json_response({'loadMicrobloggingResponse':convert_response_list(posts)})
+    return json_response({'loadMicrobloggingResponse':convert_response_list(reversed(posts))})
 
 def load_timeline(request, select_id, microblogging_load_type):
     """
@@ -62,12 +62,16 @@ def load_timeline(request, select_id, microblogging_load_type):
     """
     followed = Q(author__profile__followers=request.user)
     own = Q(author = request.user)
-    if microblogging_load_type == "newer":
-        startpoint = Q(id__gt=select_id)
-    else: # older
-        startpoint = Q(id__lt=select_id)
-    feed =  Post.objects.filter(followed | own).filter(startpoint).order_by('time').prefetch_related('author', 'is_reference_to')[:20]
-    return json_response({'loadMicrobloggingResponse':convert_response_list(feed)})
+    if select_id < 0: # Get latest posts
+        feed =  Post.objects.filter(followed | own).order_by('-time').prefetch_related('author', 'is_reference_to')[:20]
+        return json_response({'loadMicrobloggingResponse':convert_response_list(feed)})
+    else:
+        if microblogging_load_type == "newer":
+            startpoint = Q(id__gt=select_id)
+        else: # older
+            startpoint = Q(id__lt=select_id)
+        feed =  Post.objects.filter(followed | own).filter(startpoint).order_by('time').prefetch_related('author', 'is_reference_to')[:20]
+        return json_response({'loadMicrobloggingResponse':convert_response_list(reversed(feed))})
 
 def store_microblog_post(request, path):
     if request.method == 'POST':
