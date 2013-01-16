@@ -24,8 +24,8 @@ from __future__ import division, print_function, unicode_literals
 import json
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
-from findeco.api_validation import errorResponseValidator, loadUserInfoResponseValidator
-from findeco.view_helpers import create_user_info
+from findeco.api_validation import errorResponseValidator, loadUserInfoResponseValidator, loadUserSettingsResponseValidator
+from findeco.view_helpers import create_user_info, create_user_settings
 from node_storage.factory import create_user
 
 class LoadUserInfoTest(TestCase):
@@ -50,3 +50,39 @@ class LoadUserInfoTest(TestCase):
             self.assertTrue(errorResponseValidator.validate(parsed))
             self.assertEqual(parsed['errorResponse']['errorTitle'], "UnknownUser")
 
+class LoadUserSettingsTest(TestCase):
+    def setUp(self):
+        self.hans = create_user('hans', password="1234")
+        self.herbert = create_user('herbert', password="1234")
+        self.hein = create_user('hein', password="1234")
+        self.hans.profile.blocked.add(self.herbert.profile)
+        self.hein.profile.blocked.add(self.herbert.profile)
+        self.users = [self.hans, self.herbert, self.hein]
+
+    def test_response_validates(self):
+        for u in self.users:
+            self.assertTrue(self.client.login(username=u.username, password='1234'))
+            response = self.client.get(reverse('load_user_settings'))
+            parsed = json.loads(response.content)
+            self.assertTrue(loadUserSettingsResponseValidator.validate(parsed))
+
+    def test_returns_correct_user_info_for_logged_in_user(self):
+        for u in self.users:
+            self.assertTrue(self.client.login(username=u.username, password='1234'))
+            response = self.client.get(reverse('load_user_settings'))
+            parsed = json.loads(response.content)
+            self.assertEqual(parsed['loadUserSettingsResponse']['userInfo'], create_user_info(u))
+
+    def test_returns_correct_user_settings_for_logged_in_user(self):
+        for u in self.users:
+            self.assertTrue(self.client.login(username=u.username, password='1234'))
+            response = self.client.get(reverse('load_user_settings'))
+            parsed = json.loads(response.content)
+            self.assertEqual(parsed['loadUserSettingsResponse']['userSettings'], create_user_settings(u))
+
+    def test_not_logged_in_returns_error_response(self):
+        for u in self.users:
+            response = self.client.get(reverse('load_user_settings'))
+            parsed = json.loads(response.content)
+            self.assertTrue(errorResponseValidator.validate(parsed))
+            self.assertEqual(parsed['errorResponse']['errorTitle'], "NeedsAuthentication")

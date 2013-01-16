@@ -34,7 +34,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from findeco.paths import parse_suffix
-from findeco.view_helpers import ValidPaths, json_error_response, json_response, create_index_node_for_slot, create_user_info
+from findeco.view_helpers import ValidPaths, json_error_response, json_response, create_index_node_for_slot, create_user_info, create_user_settings
 import node_storage as backend
 
 def home(request, path):
@@ -143,16 +143,13 @@ def load_user_info(request, name):
 
 def load_user_settings(request):
     # This is an example
-    user1 = {'displayName':"Max Mustermann"}
-    user2 = {'displayName':"Egon Mustermann"}
+    if not request.user.is_authenticated():
+        return json_error_response('NeedsAuthentication',
+            "You need to be logged in to load user settings.")
+    user = User.objects.get(id=request.user.id)
     return json_response({'loadUserSettingsResponse':{
-        'userInfo':{
-            'displayName':"Maria Musterfrau",
-            'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
-            'followers':[user1, user2],
-            'followees':[user2]},
-        'userSettings':{
-            'blockedUsers':[]}
+        'userInfo':create_user_info(user),
+        'userSettings':create_user_settings(user)
         }})
 
 def login(request):

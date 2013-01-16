@@ -30,9 +30,9 @@ from test_profile import UserProfileTest
 from test_path import PathRegExTest
 from test_url_resolution import UrlResolutionTest
 from test_views import ViewTest
-from test_view_helpers import CreateUsersInfoTest, CreateIndexNodeForSlotTest
+from test_view_helpers import CreateUsersInfoTest, CreateIndexNodeForSlotTest, CreateUserSettingsTest
 from test_load_index import LoadIndexTest
-from test_user_api import LoadUserInfoTest
+from test_user_api import LoadUserInfoTest, LoadUserSettingsTest
 
 try:
     from microblogging.tests import *
