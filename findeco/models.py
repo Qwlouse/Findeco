@@ -64,6 +64,14 @@ class UserProfile(models.Model):
         blank=True,
         help_text="Profiles of users this user follows.")
 
+    blocked = models.ManyToManyField(
+        'self',
+        related_name='blocked_by',
+        symmetrical=False,
+        blank=True,
+        help_text="Profiles of users this user blocked."
+    )
+
     # Override the save method to prevent integrity errors
     # These happen because both teh post_save signal and the inlined admin
     # interface try to create the UserProfile. See:
