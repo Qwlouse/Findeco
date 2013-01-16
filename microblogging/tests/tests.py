@@ -29,7 +29,7 @@ from django.test import TestCase
 from node_storage.factory import create_slot, create_textNode
 from node_storage.factory import create_user
 from ..models import create_post
-from ..views import load_microblogging, store_microblog_post
+from ..views import load_microblogging, store_microblog_post, load_timeline
 import node_storage as backend
 from ..models import Post
 import json
@@ -40,6 +40,7 @@ class DummyRequest():
 class MicrobloggingTests(TestCase):
     def setUp(self):
         self.user_max = create_user("max")
+        self.user_maria = create_user("Maria")
 
         root = backend.get_root_node()
         slot1 = create_slot("Bla")
@@ -82,16 +83,16 @@ class MicrobloggingTests(TestCase):
     def test_load_microblogging(self):
         posts = []
         for i in range(25):
-            posts.append(create_post("Ich finde /Bla gut.",self.user_max))
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
         posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
 
         request = DummyRequest
         request.user = self.user_max
 
-        response = load_microblogging(request,"Slot_4.1/SubSlot_1.1",0,"older")
+        response = load_microblogging(request,"Slot_4.1/SubSlot_1.1",0,"newer")
         self.assertEqual(response.content,'{"errorResponse": {"errorTitle": "Illegal path", "errorMessage": "Illegal path: Slot_4.1/SubSlot_1.1"}}')
 
-        response = load_microblogging(request,"/Bla.1",0,"older")
+        response = load_microblogging(request,"/Bla.1",0,"newer")
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
@@ -105,7 +106,7 @@ class MicrobloggingTests(TestCase):
             self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
 
-        response = load_microblogging(request,"/Bla.1",3,"older")
+        response = load_microblogging(request,"/Bla.1",3,"newer")
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
@@ -114,6 +115,59 @@ class MicrobloggingTests(TestCase):
             self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
             self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],i+4)
+            self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
+            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+        self.assertEqual(len(data['loadMicrobloggingResponse']),20)
+
+        response = load_microblogging(request,"/Bla.1",6,"newer")
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertTrue('loadMicrobloggingResponse' in data)
+        for i in range(18):
+            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],i+7)
+            self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
+            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+        self.assertEqual(len(data['loadMicrobloggingResponse']),19)
+
+        response = load_microblogging(request,"/Blubb.1",0,"newer")
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertTrue('loadMicrobloggingResponse' in data)
+        self.assertEqual(len(data['loadMicrobloggingResponse']),1)
+        self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][0])
+        self.assertEqual(data['loadMicrobloggingResponse'][0]['microBlogText'],'Ich finde <a href="/Blubb.1">Blubb.1</a> schlecht.')
+        self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][0])
+        self.assertEqual(data['loadMicrobloggingResponse'][0]['microBlogID'],26)
+        self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][0])
+        self.assertEqual(len(data['loadMicrobloggingResponse'][0]['authorGroup']),1)
+        self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][0])
+
+
+    def test_load_timeline(self):
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+
+        request = DummyRequest
+        request.user = self.user_max
+
+        response = load_timeline(request, 0, "newer")
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertTrue('loadMicrobloggingResponse' in data)
+        for i in range(20):
+            print(i)
+            print(data['loadMicrobloggingResponse'][i])
+            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
+            #self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
+            #self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],i+1)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
             self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])

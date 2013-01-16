@@ -27,8 +27,6 @@
 ################################################################################
 
 from django.db import models
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
 import re
 import node_storage as backend
 from django.contrib.auth.models import User
@@ -118,16 +116,3 @@ def create_post(text, author):
     post.node_references.add(*nodes)
     post.save()
     return post
-
-
-def get_feed_for_user(user):
-    """
-    Use this function to get the timeline for the given user.
-
-    Referenced posts will show up in the timeline as the originals do. Hiding of the original posts for a tidy
-    timeline should be done in the frontend due to performance resons.
-    """
-    followed = Q(user__followers=user)
-    own = Q(user = user)
-    posts = Post.objects.filter(followed | own).order_by('-time')
-    return posts
