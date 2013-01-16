@@ -46,7 +46,7 @@ def load_index(request, path):
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('Illegal Path','Illegal Path: '+path)
+        return json_error_response('NonExistingNode','Illegal Path: '+path)
     slot_list = backend.get_ordered_children_for(node)
     index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
     return json_response({'loadIndexResponse':index_nodes})

@@ -24,6 +24,7 @@ from __future__ import division, print_function, unicode_literals
 import json
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
+from findeco.api_validation import errorResponseValidator
 from findeco.view_helpers import create_index_node_for_slot
 from node_storage import get_root_node
 from node_storage.factory import create_slot, create_user, create_textNode, create_vote, create_structureNode
@@ -93,6 +94,21 @@ class LoadIndexTest(TestCase):
         for index_node, slot in zip(index_nodes, self.child_slots):
             n = create_index_node_for_slot(slot)
             self.assertEqual(index_node, n)
+
+    def test_on_non_existing_node_gives_error_response(self):
+        response = self.client.get(reverse('load_index', kwargs=dict(path='doesnotexist.1')))
+        parsed = json.loads(response.content)
+        self.assertTrue(errorResponseValidator.validate(parsed))
+        self.assertEqual(parsed['errorResponse']['errorTitle'], "NonExistingNode")
+
+    def test_on_illegal_path_gives_error_response(self):
+        illegal_paths = ['Wahlprogramm.1/foo', 'Wahlprogramm.1/foo.1.pro', 'Wahlprogramm.1/foo.1.pro.2']
+        for p in illegal_paths:
+            response = self.client.get(reverse('load_index', kwargs=dict(path=p)))
+            parsed = json.loads(response.content)
+            self.assertTrue(errorResponseValidator.validate(parsed))
+            self.assertEqual(parsed['errorResponse']['errorTitle'], "IllegalPath")
+
 
 class LoadArgumentIndexTest(TestCase):
     pass
