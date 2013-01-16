@@ -30,7 +30,6 @@ from node_storage.factory import create_user
 
 class LoadUserInfoTest(TestCase):
     def setUp(self):
-        self.client = Client()
         self.hans = create_user('hans')
         self.herbert = create_user('herbert')
         self.hein = create_user('hein')

@@ -34,8 +34,6 @@ class LoadIndexTest(TestCase):
         self.hans = create_user('hans')
         self.hugo = create_user('hugo')
 
-        self.client = Client()
-
         self.root = get_root_node()
         self.slot1 = create_slot('Wahlprogramm')
         self.root.append_child(self.slot1)

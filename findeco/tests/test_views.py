@@ -59,10 +59,6 @@ argument_paths = ['foo.1.pro.3', 'foo.1/bar.2.con.4', 'foo.1/bar.2.neut.5']
 
 ################# Tests ########################################################
 class ViewTest(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.client.login()
-
     def test_home_view_status_ok(self):
         response = self.client.get(reverse('home', kwargs=dict(path='')))
         self.assertEqual(response.status_code, 200)
