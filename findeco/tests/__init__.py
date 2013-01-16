@@ -32,6 +32,7 @@ from test_url_resolution import UrlResolutionTest
 from test_views import ViewTest
 from test_view_helpers import CreateUsersInfoTest, CreateIndexNodeForSlotTest
 from test_load_index import LoadIndexTest
+from test_user_api import LoadUserInfoTest
 
 try:
     from microblogging.tests import *

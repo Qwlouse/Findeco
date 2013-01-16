@@ -29,11 +29,12 @@ from __future__ import division, print_function, unicode_literals
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
+from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from findeco.paths import parse_suffix
-from findeco.view_helpers import ValidPaths, json_error_response, json_response, create_index_node_for_slot
+from findeco.view_helpers import ValidPaths, json_error_response, json_response, create_index_node_for_slot, create_user_info
 import node_storage as backend
 
 def home(request, path):
@@ -130,16 +131,14 @@ def load_text(request, path):
             'isFollowing': node.votes.filter(user=request.user.id).count()>0}})
 
 def load_user_info(request, name):
-    # This is an example
-    user1 = {'displayName':"Max Mustermann"}
-    user2 = {'displayName':"Egon Mustermann"}
+    try:
+        user = User.objects.get(username=name)
+    except User.DoesNotExist:
+        return json_error_response('UnknownUser', "User '%s' not found!"%name)
+    user_info = create_user_info(user)
     return json_response({
         'loadUserInfoResponse':{
-            'userInfo':{
-                'displayName':"Maria Musterfrau",
-                'description':"== Blubb ==\nDie Beschreibung ist **toll**.",
-                'followers':[user1, user2],
-                'followees':[user2]}
+            'userInfo':user_info
         }})
 
 def load_user_settings(request):
@@ -156,15 +155,6 @@ def load_user_settings(request):
             'blockedUsers':[]}
         }})
 
-
-def get_user_data(user):
-    return {
-        'displayName':user.username,
-        'description':user.profile.description,
-        'followees':user.profile.followees.all(),
-        'blockedUsers':[]
-    }
-
 def login(request):
     username = request.POST['username']
     password = request.POST['password']
@@ -173,12 +163,12 @@ def login(request):
         if user.is_active:
             django_login(request, user)
             return json_response({
-                'userData':get_user_data(user)
+                'userData':create_user_info(user)
             })
         else:
             return json_response({
                 'error':'DisabledAccount.',
-                'userData':get_user_data(user)
+                'userData':create_user_info(user)
             })
     else:
         return json_response({
