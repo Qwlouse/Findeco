@@ -110,7 +110,7 @@ def load_text(request, path):
     try:
         tmp_node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
-        return json_error_response('Illegal Path','Illegal Path: '+path)
+        return json_error_response('IllegalPath','Illegal Path: '+path)
     node = backend.get_favorite_if_slot(tmp_node)
     if node == tmp_node: # not slot
         # this means the index in parent is the last integer in the prefix
