@@ -127,10 +127,24 @@ class LoadArgumentIndexTest(TestCase):
         # summary variables
         self.foo_arguments = [self.foo_pro, self.foo_neut, self.foo_con]
 
-    def test_on_root_returns_root_arguments(self):
+    def test_on_foo_returns_foo_arguments(self):
         response = self.client.get(reverse('load_argument_index', kwargs=dict(path='foo.1.pro.1')))
         parsed = json.loads(response.content)
         self.assertIn('loadIndexResponse', parsed)
         indexNodes = parsed['loadIndexResponse']
         for indexNode, argument in zip(indexNodes, self.foo_arguments):
             self.assertEqual(indexNode, create_index_node_for_argument(argument, self.foo1))
+
+    def test_on_non_existing_node_gives_error_response(self):
+        response = self.client.get(reverse('load_argument_index', kwargs=dict(path='doesnotexist.1.pro.10')))
+        parsed = json.loads(response.content)
+        self.assertTrue(errorResponseValidator.validate(parsed))
+        self.assertEqual(parsed['errorResponse']['errorTitle'], "NonExistingNode")
+
+    def test_on_illegal_path_gives_error_response(self):
+        illegal_paths = ['Wahlprogramm.1/', 'Wahlprogramm.1/foo', 'Wahlprogramm.1/foo.1.pro']
+        for p in illegal_paths:
+            response = self.client.get(reverse('load_argument_index', kwargs=dict(path=p)))
+            parsed = json.loads(response.content)
+            self.assertTrue(errorResponseValidator.validate(parsed))
+            self.assertEqual(parsed['errorResponse']['errorTitle'], "IllegalPath")
