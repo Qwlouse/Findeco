@@ -115,7 +115,9 @@ def load_text(request, path):
     for slot in backend.get_ordered_children_for(node):
         favorite = backend.get_favorite_if_slot(slot)
         paragraphs.append({'wikiText': favorite.text.text,
-                           'path': backend.get_similar_path(favorite, path),
+                           'path': path + "/" + slot.title + "." +
+                                   str(backend.NodeOrder.objects.filter(child=favorite).\
+                                                                 filter(parent=slot).all()[0].position),
                            'isFollowing': favorite.votes.filter(user=request.user.id).count()>0,
                            'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
     return json_response({

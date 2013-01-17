@@ -37,7 +37,8 @@ class LoadTextTest(TestCase):
         self.root = get_root_node()
         self.slot1 = create_slot('Wahlprogramm')
         self.root.append_child(self.slot1)
-        self.structureNode1 = create_structureNode('LangerWahlprogrammTitel', authors=[self.hans])
+        self.structureNode1 = create_structureNode('LangerWahlprogrammTitel',
+            text="Einleitungstext", authors=[self.hans])
         self.slot11 = create_slot('Transparenz')
         self.textnode11 = create_textNode('Traaaansparenz', authors=[self.hans])
         self.slot11.append_child(self.textnode11)
@@ -78,6 +79,14 @@ class LoadTextTest(TestCase):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'], "Blubb.")
+
+        response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1")))
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'], "Einleitungstext")
+        self.assertEqual(data['loadTextResponse']['paragraphs'][1]['wikiText'], "")
+        self.assertEqual(data['loadTextResponse']['paragraphs'][2]['wikiText'], "")
+        self.assertEqual(data['loadTextResponse']['paragraphs'][3]['wikiText'], "Blubb.")
 
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo', 'Wahlprogramm.1/foo.1.pro', 'Wahlprogramm.1/foo.1.pro.2']
