@@ -60,6 +60,12 @@ urlpatterns = patterns('',
         'microblogging.views.load_microblogging',
         name='load_microblogging'),
 
+    url(r'^\.json_loadMicroBlogging/' + BLOG_LOAD_TYPE + '/' + PATH + '$',
+        'microblogging.views.load_microblogging',
+        name='load_microblogging',
+        kwargs={'select_id':None}
+    ),
+
     #TODO: load_timeline
 
     url(r'^\.json_loadText/' + PATH + '$',
