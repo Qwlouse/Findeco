@@ -74,10 +74,10 @@ class LoadTextTest(TestCase):
         self.authors = [[self.hans], [self.hugo], [self.hans, self.hugo]]
 
     def test_url_gives_correct_text(self):
-        response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1/Transparenz.1")))
+        response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1/Datenschutz.1")))
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertEqual(data['loadTextResponse']['paragraphs'][0], "Blubb.")
+        self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'], "Blubb.")
 
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo', 'Wahlprogramm.1/foo.1.pro', 'Wahlprogramm.1/foo.1.pro.2']
