@@ -110,8 +110,8 @@ signals.post_syncdb.disconnect(
 
 # Create our own admin user automatically.
 def create_admin():
-    if not settings.DEBUG:
-        return
+    #if not settings.DEBUG:
+    #    return
     try:
         auth_models.User.objects.get(username='admin')
     except auth_models.User.DoesNotExist:
@@ -132,7 +132,7 @@ def create_root():
     root_text.text = "This is the root node."
     root_text.node = node
     root_text.save()
-    root_text.authors = []
+    root_text.authors = [auth_models.User.objects.get(username='admin')]
     root_text.save()
 
 def initialize_database(sender, **kwargs):
