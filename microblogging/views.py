@@ -24,7 +24,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from django.contrib.auth.models import User
 from models import create_post, Post
 from findeco.views import json_response, json_error_response
 import node_storage as backend
@@ -60,17 +62,27 @@ def load_timeline(request, name, select_id, microblogging_load_type):
     Referenced posts will show up in the timeline as the originals do. Hiding of the original posts for a tidy
     timeline should be done in the frontend due to performance resons.
     """
-    followed = Q(author__profile__followers=request.user)
-    own = Q(author = request.user)
-    if not type(select_id) == int: # Get latest posts
-        feed =  Post.objects.filter(followed | own).order_by('-time').prefetch_related('author', 'is_reference_to')[:20]
+    try:
+        named_user = User.objects.filter(username=name).all()[0]
+    except ObjectDoesNotExist:
+        return json_error_response('Unknown user','The user "'+name+'" does not exist.')
+    if named_user == request.user:
+        print("named_user == request.user")
+        followed = Q(author__profile__followers=request.user)
+    else: followed = Q(author = named_user)
+    own = Q(author = named_user)
+    if not select_id: # Get latest posts
+        print("Select_ID: "+str(select_id))
+        feed =  Post.objects.filter(followed | own).\
+                order_by('-time').prefetch_related('author', 'is_reference_to')[:20]
         return json_response({'loadMicrobloggingResponse':convert_response_list(feed)})
     else:
         if microblogging_load_type == "newer":
             startpoint = Q(id__gt=select_id)
         else: # older
             startpoint = Q(id__lt=select_id)
-        feed =  Post.objects.filter(followed | own).filter(startpoint).order_by('time').prefetch_related('author', 'is_reference_to')[:20]
+        feed =  Post.objects.filter(followed | own).\
+                filter(startpoint).order_by('time').prefetch_related('author', 'is_reference_to')[:20]
         return json_response({'loadMicrobloggingResponse':convert_response_list(reversed(feed))})
 
 def store_microblog_post(request, path):
