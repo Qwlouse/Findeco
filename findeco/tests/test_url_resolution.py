@@ -90,7 +90,7 @@ valid_routes = [
         url_name='load_microblogging',
         kwargs=dict(path='some.1/path.2', select_id='74', microblogging_load_type='older')),
 
-    dict(url='/.json_loadMicroBlogging/74/older/some.1/path.2',
+    dict(url='/.json_loadMicroBlogging/older/some.1/path.2',
         func=load_microblogging,
         url_name='load_microblogging',
         kwargs=dict(path='some.1/path.2', select_id=None, microblogging_load_type='older')),
