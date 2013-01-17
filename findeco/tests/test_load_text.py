@@ -84,9 +84,13 @@ class LoadTextTest(TestCase):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'], "Einleitungstext")
+        self.assertEqual(data['loadTextResponse']['paragraphs'][0]['path'], "Wahlprogramm.1")
         self.assertEqual(data['loadTextResponse']['paragraphs'][1]['wikiText'], "")
+        self.assertEqual(data['loadTextResponse']['paragraphs'][1]['path'], "Wahlprogramm.1/Transparenz.1")
         self.assertEqual(data['loadTextResponse']['paragraphs'][2]['wikiText'], "")
+        self.assertEqual(data['loadTextResponse']['paragraphs'][2]['path'], "Wahlprogramm.1/Bildung.1")
         self.assertEqual(data['loadTextResponse']['paragraphs'][3]['wikiText'], "Blubb.")
+        self.assertEqual(data['loadTextResponse']['paragraphs'][3]['path'], "Wahlprogramm.1/Datenschutz.1")
 
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo', 'Wahlprogramm.1/foo.1.pro', 'Wahlprogramm.1/foo.1.pro.2']
