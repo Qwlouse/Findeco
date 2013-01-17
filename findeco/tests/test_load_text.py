@@ -45,7 +45,7 @@ class LoadTextTest(TestCase):
         self.textnode12 = create_textNode('Biiildung', authors=[self.hans])
         self.slot12.append_child(self.textnode12)
         self.slot13 = create_slot('Datenschutz')
-        self.textnode13 = create_textNode('Daaatenschutz', authors=[self.hans])
+        self.textnode13 = create_textNode('Daaatenschutz', text="Blubb.", authors=[self.hans])
         self.slot13.append_child(self.textnode13)
         self.structureNode1.append_child(self.slot11)
         self.structureNode1.append_child(self.slot12)
@@ -77,7 +77,7 @@ class LoadTextTest(TestCase):
         response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1/Transparenz.1")))
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        print(data)
+        self.assertEqual(data['loadTextResponse']['paragraphs'][0], "Blubb.")
 
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo', 'Wahlprogramm.1/foo.1.pro', 'Wahlprogramm.1/foo.1.pro.2']
