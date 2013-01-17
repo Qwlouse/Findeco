@@ -21,12 +21,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-import json
-from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
-from findeco.api_validation import errorResponseValidator, loadUserInfoResponseValidator, loadUserSettingsResponseValidator
-from findeco.view_helpers import create_user_info, create_user_settings
+from django.test import TestCase
+import json
+
 from node_storage.factory import create_user
+from ..api_validation import errorResponseValidator, loadUserInfoResponseValidator, loadUserSettingsResponseValidator
+from ..view_helpers import create_user_info, create_user_settings
+
 
 class LoadUserInfoTest(TestCase):
     def setUp(self):

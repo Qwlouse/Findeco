@@ -33,9 +33,12 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from findeco.paths import parse_suffix
-from findeco.view_helpers import ValidPaths, json_error_response, json_response, create_index_node_for_slot, create_user_info, create_user_settings, create_index_node_for_argument
 import node_storage as backend
+from .paths import parse_suffix
+from .view_helpers import ValidPaths, json_error_response, json_response
+from .view_helpers import create_index_node_for_slot, create_user_info
+from .view_helpers import create_user_settings, create_index_node_for_argument
+
 
 def home(request, path):
     return render_to_response("main.html",
@@ -59,9 +62,7 @@ def load_argument_index(request, path):
         node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
         return json_error_response('NonExistingNode','Illegal Path: ' + path)
-
     argument_list = backend.get_ordered_arguments_for(node)
-    # Backend foo
     data = [create_index_node_for_argument(a, node) for a in argument_list]
     return json_response({'loadIndexResponse':data})
 

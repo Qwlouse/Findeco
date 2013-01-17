@@ -21,13 +21,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-import json
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.core.urlresolvers import reverse
-from findeco.api_validation import errorResponseValidator
-from findeco.view_helpers import create_index_node_for_slot, create_index_node_for_argument
+import json
+
 from node_storage import get_root_node
 from node_storage.factory import create_slot, create_user, create_textNode, create_vote, create_structureNode, create_argument
+from ..api_validation import errorResponseValidator
+from ..view_helpers import create_index_node_for_slot, create_index_node_for_argument
 
 class LoadIndexTest(TestCase):
     def setUp(self):

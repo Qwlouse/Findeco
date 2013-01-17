@@ -27,13 +27,13 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.core.urlresolvers import resolve, Resolver404
-
 from django.test import TestCase
 
+from microblogging.views import load_microblogging, store_microblog_post
 from ..views import load_user_settings, load_index, load_graph_data, load_text
 from ..views import load_user_info, load_argument_index
 from ..views import login, logout, mark_node, store_settings, store_text
-from microblogging.views import load_microblogging, store_microblog_post
+
 
 ########################### Test the API calls #################################
 valid_routes = [

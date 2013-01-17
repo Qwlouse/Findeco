@@ -28,7 +28,7 @@ from __future__ import division, print_function, unicode_literals
 
 from django.test import TestCase
 
-from findeco.paths import pathMatcher, parse_path, parse_suffix
+from ..paths import pathMatcher, parse_path, parse_suffix
 
 class PathRegExTest(TestCase):
     def test_matches_valid_paths(self):

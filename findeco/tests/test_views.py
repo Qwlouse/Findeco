@@ -25,11 +25,11 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from django.test import Client
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-import json
 import itertools
+import json
+
 from ..api_validation import validate_response
 
 views = [('load_index', dict(path='')),

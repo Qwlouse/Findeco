@@ -21,12 +21,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-import json
 from django.http import HttpResponse
-from findeco.paths import parse_suffix
-from api_validation import validate_response
+import json
+
 import node_storage as backend
 from node_storage.models import ArgumentOrder
+from .paths import parse_suffix
+from .api_validation import validate_response
 
 def json_response(data):
     return HttpResponse(json.dumps(data), mimetype='application/json')

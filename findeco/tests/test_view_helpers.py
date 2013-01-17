@@ -21,13 +21,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-import json
 from django.test import TestCase
-from ..api_validation import userInfoValidator, indexNodeValidator, userSettingsValidator
-from findeco.view_helpers import create_index_node_for_slot
+
 from node_storage import get_root_node
 from node_storage.factory import create_user, create_slot, create_textNode, create_vote, create_structureNode, create_argument
-from ..view_helpers import create_user_info, create_user_settings, create_index_node_for_argument
+from ..api_validation import userInfoValidator, indexNodeValidator, userSettingsValidator
+from ..view_helpers import create_index_node_for_slot, create_index_node_for_argument
+from ..view_helpers import create_user_info, create_user_settings
 
 class CreateUsersInfoTest(TestCase):
     def setUp(self):

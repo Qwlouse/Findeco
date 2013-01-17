@@ -26,8 +26,10 @@
 ################################################################################
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-admin.autodiscover()
+
 from findeco.paths import PATH, RESTRICTED_PATH, ID
+
+admin.autodiscover()
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
