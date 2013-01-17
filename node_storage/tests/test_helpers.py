@@ -96,9 +96,9 @@ class HelpersTest(TestCase):
         self.subsubtext1 = create_textNode("SubSubText1 Title","Yet another text. Number 4.",[max])
         self.subsubslot1.append_child(self.subsubtext1)
 
-        self.argument1 = create_argument('pro',"It is good!",[max])
+        self.argument1 = create_argument(type='pro',text="It is good!",authors=[max])
         self.subsubtext1.append_argument(self.argument1)
-        self.argument2 = create_argument('neut',"Maybe consider something",[max])
+        self.argument2 = create_argument(type='neut',text="Maybe consider something",authors=[max])
         self.subsubtext1.append_argument(self.argument2)
 
     def test_get_favorite_if_slot(self):

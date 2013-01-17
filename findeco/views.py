@@ -34,7 +34,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from findeco.paths import parse_suffix
-from findeco.view_helpers import ValidPaths, json_error_response, json_response, create_index_node_for_slot, create_user_info, create_user_settings
+from findeco.view_helpers import ValidPaths, json_error_response, json_response, create_index_node_for_slot, create_user_info, create_user_settings, create_index_node_for_argument
 import node_storage as backend
 
 def home(request, path):
@@ -52,27 +52,17 @@ def load_index(request, path):
     index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
     return json_response({'loadIndexResponse':index_nodes})
 
-@ValidPaths("StructureNode")
+@ValidPaths("Argument")
 def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
-    if 'arg_id' in path_type:
-        return json_error_response('NotPossibleForSingleArgument','')
-
     try:
         node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
-        return json_error_response('Illegal Path','Illegal Path: '+path)
+        return json_error_response('IllegalPath','Illegal Path: '+path)
 
-    if 'arg_type' in path_type:
-        nodelist = backend.get_arguments_for(node, path_type['arg_type'])
-    else:
-        nodelist = backend.get_ordered_children_for(node)
-
+    argument_list = backend.get_ordered_arguments_for(node)
     # Backend foo
-    data = [{'shortTitle':n.get_short_title(),
-             'fullTitle':n.get_full_title(),
-             'index':n.get_index()
-            } for n in nodelist]
+    data = [create_index_node_for_argument(a, node) for a in argument_list]
     return json_response({'loadIndexResponse':data})
 
 @ValidPaths("StructureNode")

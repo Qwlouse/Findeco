@@ -95,6 +95,13 @@ def get_ordered_children_for(node):
     order = NodeOrder.objects.filter(parent=node).order_by('position')
     return [oN.child for oN in order]
 
+def get_ordered_arguments_for(node):
+    """
+    Return a list of arguments for given node ordered by their position.
+    """
+    order = ArgumentOrder.objects.filter(node=node).order_by('position')
+    return [ao.argument for ao in order]
+
 #def get_similar_path(node, path=None):
 #    """
 #    Return a path to the node which corresponds to the given path if possible.
