@@ -99,15 +99,9 @@ def load_graph_data(request, path, graph_data_type):
 def load_text(request, path):
     prefix, path_type = parse_suffix(path)
     try:
-        tmp_node = backend.get_node_for_path(prefix)
+        node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
         return json_error_response('IllegalPath','Illegal Path: '+path)
-    node = backend.get_favorite_if_slot(tmp_node)
-    if node == tmp_node: # not slot
-        # this means the index in parent is the last integer in the prefix
-        index = int(prefix.rsplit('.', 1)[-1] or '1')
-    else: # slot
-        index = node.get_index(tmp_node)
 
     paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
                    'path': path,
