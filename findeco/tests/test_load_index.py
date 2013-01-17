@@ -25,9 +25,9 @@ import json
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from findeco.api_validation import errorResponseValidator
-from findeco.view_helpers import create_index_node_for_slot
+from findeco.view_helpers import create_index_node_for_slot, create_index_node_for_argument
 from node_storage import get_root_node
-from node_storage.factory import create_slot, create_user, create_textNode, create_vote, create_structureNode
+from node_storage.factory import create_slot, create_user, create_textNode, create_vote, create_structureNode, create_argument
 
 class LoadIndexTest(TestCase):
     def setUp(self):
@@ -109,4 +109,28 @@ class LoadIndexTest(TestCase):
 
 
 class LoadArgumentIndexTest(TestCase):
-    pass
+    def setUp(self):
+        self.hugo = create_user('hugo')
+        # create nodes
+        self.root = get_root_node()
+        self.foo = create_slot('foo')
+        self.root.append_child(self.foo)
+        self.foo1 = create_structureNode('FooooBar')
+        self.foo.append_child(self.foo1)
+        # add arguments
+        self.foo_pro = create_argument(type='pro', text="weils geil ist", authors=[self.hugo])
+        self.foo1.append_argument(self.foo_pro)
+        self.foo_neut = create_argument(type='neut', text="kann noch geiler werden", authors=[self.hugo])
+        self.foo1.append_argument(self.foo_neut)
+        self.foo_con = create_argument(type='con', text="is aber leider root", authors=[self.hugo])
+        self.foo1.append_argument(self.foo_con)
+        # summary variables
+        self.foo_arguments = [self.foo_pro, self.foo_neut, self.foo_con]
+
+    def test_on_root_returns_root_arguments(self):
+        response = self.client.get(reverse('load_argument_index', kwargs=dict(path='foo.1.pro.1')))
+        parsed = json.loads(response.content)
+        self.assertIn('loadIndexResponse', parsed)
+        indexNodes = parsed['loadIndexResponse']
+        for indexNode, argument in zip(indexNodes, self.foo_arguments):
+            self.assertEqual(indexNode, create_index_node_for_argument(argument, self.foo1))
