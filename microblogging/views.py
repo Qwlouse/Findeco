@@ -67,12 +67,10 @@ def load_timeline(request, name, select_id, microblogging_load_type):
     except ObjectDoesNotExist:
         return json_error_response('Unknown user','The user "'+name+'" does not exist.')
     if named_user == request.user:
-        print("named_user == request.user")
         followed = Q(author__profile__followers=request.user)
     else: followed = Q(author = named_user)
     own = Q(author = named_user)
     if not select_id: # Get latest posts
-        print("Select_ID: "+str(select_id))
         feed =  Post.objects.filter(followed | own).\
                 order_by('-time').prefetch_related('author', 'is_reference_to')[:20]
         return json_response({'loadMicrobloggingResponse':convert_response_list(feed)})
