@@ -85,8 +85,13 @@ def create_argument(type='neut', text="", authors=[]):
     text_obj.save()
     return arg
 
-def create_user(username, description="", mail="a@bc.de", password="1234"):
-    new_user = User.objects.create_user(username, mail, password)
+def create_user(username, description="", mail="a@bc.de", password=None):
+    if password:
+        new_user = User.objects.create_user(username, mail, password)
+    else:
+        new_user = User(username=username)
+        new_user.save()
+
     new_user.profile.description = description
     new_user.profile.save()
     return new_user

@@ -93,9 +93,9 @@ class CreateUsersInfoTest(TestCase):
 
 class CreateUserSettingsTest(TestCase):
     def setUp(self):
-        self.hans = create_user('hans', password="1234")
-        self.herbert = create_user('herbert', password="1234")
-        self.hein = create_user('hein', password="1234")
+        self.hans = create_user('hans')
+        self.herbert = create_user('herbert')
+        self.hein = create_user('hein')
         self.hans.profile.blocked.add(self.herbert.profile)
         self.hein.profile.blocked.add(self.herbert.profile)
         self.users = [self.hans, self.herbert, self.hein]
