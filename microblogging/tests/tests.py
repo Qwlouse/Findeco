@@ -171,7 +171,7 @@ class MicrobloggingTests(TestCase):
             self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
 
-        response = load_timeline(request, "", "newer")
+        response = load_timeline(request, None, "newer")
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
