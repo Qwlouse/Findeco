@@ -34,7 +34,7 @@ def create_slot(short_title):
     slot.save()
     return slot
 
-def create_structureNode(long_title, text="", authors=[]):
+def create_structureNode(long_title, text="", authors=()):
     structure = Node()
     structure.node_type = 'structureNode'
     structure.title = long_title
@@ -48,7 +48,7 @@ def create_structureNode(long_title, text="", authors=[]):
     text_obj.save()
     return structure
 
-def create_textNode(long_title, text="", authors=[]):
+def create_textNode(long_title, text="", authors=()):
     text_node = Node()
     text_node.node_type = 'textNode'
     text_node.title = long_title
@@ -71,14 +71,11 @@ def create_vote(voter, nodes):
     v.save()
     return v
 
-def create_argument(type='neut', text="", authors=[]):
-    arg = Argument()
+def create_argument(type='neut', title="", text="", authors=()):
+    arg = Argument(arg_type=type, title=title)
     arg.node_type = 'argument'
-    arg.arg_type = type
     arg.save()
-    text_obj = Text()
-    text_obj.node = arg
-    text_obj.text = text
+    text_obj = Text(node=arg, text=text)
     text_obj.save()
     for author in authors:
         text_obj.authors.add(author)

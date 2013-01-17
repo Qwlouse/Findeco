@@ -26,6 +26,7 @@ from django.http import HttpResponse
 from findeco.paths import parse_suffix
 from api_validation import validate_response
 import node_storage as backend
+from node_storage.models import ArgumentOrder
 
 def json_response(data):
     return HttpResponse(json.dumps(data), mimetype='application/json')
@@ -83,5 +84,21 @@ def create_index_node_for_slot(slot):
         fullTitle = favorit.title,
         index = favorit.get_index(slot),
         authorGroup = [create_user_info(a) for a in favorit.text.authors.all()]
+    )
+    return index_node
+
+LONG_ARG_TYPES = {
+    'pro':'pro', 'neut':'neut', 'con':'con',
+    'p':'pro',
+    'n':'neut',
+    'c':'con'
+}
+
+def create_index_node_for_argument(argument, node):
+    index_node = dict(
+        shortTitle = LONG_ARG_TYPES[argument.arg_type],
+        fullTitle = argument.title,
+        index = ArgumentOrder.objects.get(argument=argument, node=node).position,
+        authorGroup = [create_user_info(a) for a in argument.text.authors.all()]
     )
     return index_node

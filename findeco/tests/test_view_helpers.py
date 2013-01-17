@@ -26,8 +26,8 @@ from django.test import TestCase
 from ..api_validation import userInfoValidator, indexNodeValidator, userSettingsValidator
 from findeco.view_helpers import create_index_node_for_slot
 from node_storage import get_root_node
-from node_storage.factory import create_user, create_slot, create_textNode, create_vote
-from ..view_helpers import create_user_info, create_user_settings
+from node_storage.factory import create_user, create_slot, create_textNode, create_vote, create_structureNode, create_argument
+from ..view_helpers import create_user_info, create_user_settings, create_index_node_for_argument
 
 class CreateUsersInfoTest(TestCase):
     def setUp(self):
@@ -180,6 +180,58 @@ class CreateIndexNodeForSlotTest(TestCase):
     def test_index_node_contains_correct_author_group(self):
         for slot, authors in zip(self.top_slots, self.authors):
             index_node = create_index_node_for_slot(slot)
+            self.assertIn('authorGroup', index_node)
+            author_group = index_node['authorGroup']
+            for user in authors:
+                self.assertIn(create_user_info(user), author_group)
+
+
+class CreateIndexNodeForArgumentTest(TestCase):
+    def setUp(self):
+        self.hugo = create_user('hugo')
+        self.hans = create_user('hans')
+        # create nodes
+        self.root = get_root_node()
+        self.foo = create_slot('foo')
+        self.foo1 = create_structureNode('FooooBar')
+        # add arguments
+        self.foo_pro = create_argument(type='pro', title="geil", authors=[self.hugo])
+        self.foo1.append_argument(self.foo_pro)
+        self.foo_neut = create_argument(type='neut', title="ist", authors=[self.hans])
+        self.foo1.append_argument(self.foo_neut)
+        self.foo_con = create_argument(type='con', title="geiz", authors=[self.hugo, self.hans])
+        self.foo1.append_argument(self.foo_con)
+        # summary variables
+        self.foo_arguments = [self.foo_pro, self.foo_neut, self.foo_con]
+        self.arg_titles = ['geil', 'ist', 'geiz']
+        self.arg_authors = [[self.hugo], [self.hans], [self.hugo, self.hans]]
+
+    def test_index_node_validates(self):
+        for arg in self.foo_arguments:
+            index_node = create_index_node_for_argument(arg, self.foo1)
+            self.assertTrue(indexNodeValidator.validate(index_node))
+
+    def test_index_node_contains_arg_type_as_short_title(self):
+        for arg, arg_type in zip(self.foo_arguments, ['pro', 'neut', 'con']):
+            index_node = create_index_node_for_argument(arg, self.foo1)
+            self.assertIn('shortTitle', index_node)
+            self.assertEqual(index_node['shortTitle'], arg_type)
+
+    def test_index_node_contains_correct_full_title(self):
+        for arg, full_title in zip(self.foo_arguments, self.arg_titles):
+            index_node = create_index_node_for_argument(arg, self.foo1)
+            self.assertIn('fullTitle', index_node)
+            self.assertEqual(index_node['fullTitle'], full_title)
+
+    def test_index_node_contains_correct_index(self):
+        for arg, index in zip(self.foo_arguments, [1, 2, 3]):
+            index_node = create_index_node_for_argument(arg, self.foo1)
+            self.assertIn('index', index_node)
+            self.assertEqual(index_node['index'], index)
+
+    def test_index_node_contains_correct_author_group(self):
+        for arg, authors in zip(self.foo_arguments, self.arg_authors):
+            index_node = create_index_node_for_argument(arg, self.foo1)
             self.assertIn('authorGroup', index_node)
             author_group = index_node['authorGroup']
             for user in authors:
