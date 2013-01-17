@@ -76,8 +76,6 @@ urlpatterns = patterns('',
         kwargs={'select_id':None}
     ),
 
-    #TODO: load_timeline
-
     url(r'^\.json_loadText/' + PATH + '$',
         'findeco.views.load_text',
         name='load_text'),
