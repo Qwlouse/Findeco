@@ -27,7 +27,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
-from findeco.paths import PATH, ID
+from findeco.paths import PATH, RESTRICTED_PATH, ID
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
@@ -56,13 +56,23 @@ urlpatterns = patterns('',
         'findeco.views.load_argument_index',
         name='load_argument_index'),
 
-    url(r'^\.json_loadMicroBlogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + PATH + '$',
+    url(r'^\.json_loadMicroBlogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + RESTRICTED_PATH + '$',
         'microblogging.views.load_microblogging',
         name='load_microblogging'),
 
-    url(r'^\.json_loadMicroBlogging/' + BLOG_LOAD_TYPE + '/' + PATH + '$',
+    url(r'^\.json_loadMicroBlogging/' + BLOG_LOAD_TYPE + '/' + RESTRICTED_PATH + '$',
         'microblogging.views.load_microblogging',
         name='load_microblogging',
+        kwargs={'select_id':None}
+    ),
+
+    url(r'^\.json_loadMicroBlogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
+        'microblogging.views.load_timeline',
+        name='load_timeline'),
+
+    url(r'^\.json_loadMicroBlogging/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
+        'microblogging.views.load_timeline',
+        name='load_timeline',
         kwargs={'select_id':None}
     ),
 

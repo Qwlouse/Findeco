@@ -53,7 +53,7 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
     posts = node.microblogging_references.filter(startpoint).prefetch_related('author', 'is_reference_to')[:20]
     return json_response({'loadMicrobloggingResponse':convert_response_list(reversed(posts))})
 
-def load_timeline(request, select_id, microblogging_load_type):
+def load_timeline(request, name, select_id, microblogging_load_type):
     """
     Use this function to get the timeline for the given user.
 
