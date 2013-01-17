@@ -103,3 +103,11 @@ def create_index_node_for_argument(argument, node):
         authorGroup = [create_user_info(a) for a in argument.text.authors.all()]
     )
     return index_node
+
+def build_text(node, depth=2):
+    depth = min(depth, 6)
+    text = "=" * depth + node.title + "=" * depth + "\n" + node.text.text
+    for slot in node.children.all():
+        favorite = backend.get_favorite_if_slot(slot)
+        text += "\n\n" + build_text(favorite, depth + 1)
+    return text

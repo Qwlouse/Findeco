@@ -36,7 +36,7 @@ from django.template import RequestContext
 import node_storage as backend
 from .paths import parse_suffix
 from .view_helpers import ValidPaths, json_error_response, json_response
-from .view_helpers import create_index_node_for_slot, create_user_info
+from .view_helpers import create_index_node_for_slot, create_user_info, build_text
 from .view_helpers import create_user_settings, create_index_node_for_argument
 
 
@@ -109,13 +109,13 @@ def load_text(request, path):
     else: # slot
         index = node.get_index(tmp_node)
 
-    paragraphs = [{'wikiText': node.text.text,
+    paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
                    'path': path,
                    'isFollowing': node.votes.filter(user=request.user.id).count()>0,
                    'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}]
     for slot in backend.get_ordered_children_for(node):
         favorite = backend.get_favorite_if_slot(slot)
-        paragraphs.append({'wikiText': favorite.text.text,
+        paragraphs.append({'wikiText': build_text(favorite, depth=2),
                            'path': path + "/" + slot.title + "." +
                                    str(backend.NodeOrder.objects.filter(child=favorite).\
                                                                  filter(parent=slot).all()[0].position),
