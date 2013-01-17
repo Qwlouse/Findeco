@@ -36,7 +36,7 @@ from django.contrib.auth.management import create_superuser
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import signals
-from node_storage import Node
+from node_storage import Node, Text
 
 try:
     from local_settings import ADMIN_PASS
@@ -126,7 +126,14 @@ def create_root():
     print('Creating root node ...')
     node = Node()
     node.node_type='structureNode'
+    node.title = "ROOT"
     node.save()
+    root_text = Text()
+    root_text.text = "This is the root node."
+    root_text.node = node
+    root_text.save()
+    root_text.authors = []
+    root_text.save()
 
 def initialize_database(sender, **kwargs):
     create_admin()
