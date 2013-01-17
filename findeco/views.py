@@ -108,16 +108,16 @@ def load_text(request, path):
     else: # slot
         index = node.get_index(tmp_node)
 
-    paragraphs = [{'wikiText': node.text_object.text,
+    paragraphs = [{'wikiText': node.text.text,
                    'path': path,
                    'isFollowing': node.votes.filter(user=request.user.id).count()>0,
-                   'authorGroup': [{'displayName': a.username} for a in node.text.authors]}]
+                   'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}]
     for slot in backend.get_ordered_children_for(node):
         favorite = backend.get_favorite_if_slot(slot)
-        paragraphs.append({'wikiText': favorite.text_object.text,
+        paragraphs.append({'wikiText': favorite.text.text,
                            'path': backend.get_similar_path(favorite, path),
                            'isFollowing': favorite.votes.filter(user=request.user.id).count()>0,
-                           'authorGroup': [{'displayName': a.username} for a in favorite.text.authors]})
+                           'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
     return json_response({
         'loadTextResponse':{
             'paragraphs': paragraphs,
