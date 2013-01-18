@@ -109,16 +109,15 @@ def get_good_path_for_structure_node(node, slot=None, slot_path=None):
     """
     if slot:
         index = node.get_index(slot)
+        return slot.get_a_path() + '.' + str(index)
+    elif slot_path:
+        slot = get_node_for_path(slot_path)
+        return slot_path + '.' + str(node.get_index(slot))
     else:
         no = NodeOrder.objects.filter(child=node)[0]
         slot = no.parent
         index = no.position
-
-    if slot_path:
-        path = slot_path + '.' + str(index)
-    else:
-        path = slot.get_a_path() + '.' + str(index)
-    return path
+        return slot.get_a_path() + '.' + str(index)
 
 #def get_similar_path(node, path=None):
 #    """
