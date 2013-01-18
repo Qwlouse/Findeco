@@ -25,7 +25,8 @@ from django.http import HttpResponse
 import json
 
 import node_storage as backend
-from node_storage.models import ArgumentOrder
+from node_storage import Vote
+from node_storage.models import ArgumentOrder, NodeOrder
 from .paths import parse_suffix
 from .api_validation import validate_response
 
@@ -103,3 +104,42 @@ def create_index_node_for_argument(argument, node):
         authorGroup = [create_user_info(a) for a in argument.text.authors.all()]
     )
     return index_node
+
+def get_good_path_for_structure_node(node, slot=None, slot_path=None):
+    """
+    Get a path for a structure node. If a parent slot or it's path is given
+    get the path that is relative to that path.
+    """
+    if slot:
+        index = node.get_index(slot)
+    else:
+        no = NodeOrder.objects.filter(child=node)[0]
+        slot = no.parent
+        index = no.position
+
+    if slot_path:
+        path = slot_path + '.' + str(index)
+    else:
+        path = slot.get_a_path() + '.' + str(index)
+    return path
+
+def get_unfollows_count(node):
+    return Vote.objects.filter(nodes__in=node.sources).exclude(nodes__in=[node]).distinct().count()
+
+def get_newfollows_count(node):
+    node.votes.exclude(nodes__in=node.sources).count()
+
+
+def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_path=None):
+    if not path:
+        path = get_good_path_for_structure_node(node, slot, slot_path)
+
+    graph_data_node = dict(
+        path=path,
+        authorGroup=[create_user_info(a) for a in node.text.authors.all()],
+        follows=node.votes.count(),
+        unFollows=get_unfollows_count(node),
+        newFollows=get_newfollows_count(node),
+        originGroup=[]
+    )
+    return graph_data_node
