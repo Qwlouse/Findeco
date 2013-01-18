@@ -94,6 +94,15 @@ class Node(models.Model):
         """
         return NodeOrder.objects.get(parent=parent, child=self).position
 
+    def get_a_path(self):
+        """
+        Returns a path which needn't be the only valid path to the node.
+        """
+        if self.pk == 1: return ""
+        parent = self.parents.all()[0]
+        return parent.get_a_path() +\
+               (self.title if self.node_type == 'slot' else "." + str(self.get_index(parent)) + "/")
+
 ARGUMENTTYPE = (
     ('p', 'pro'),
     ('c', 'con'),
