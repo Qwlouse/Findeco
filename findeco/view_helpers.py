@@ -27,6 +27,7 @@ import json
 import node_storage as backend
 from node_storage import Vote
 from node_storage.models import ArgumentOrder, NodeOrder
+from node_storage.path_helpers import get_good_path_for_structure_node
 from .paths import parse_suffix
 from .api_validation import validate_response
 
@@ -113,29 +114,11 @@ def build_text(node, depth=2):
         text += "\n\n" + build_text(favorite, depth + 1)
     return text
 
-def get_good_path_for_structure_node(node, slot=None, slot_path=None):
-    """
-    Get a path for a structure node. If a parent slot or it's path is given
-    get the path that is relative to that path.
-    """
-    if slot:
-        index = node.get_index(slot)
-    else:
-        no = NodeOrder.objects.filter(child=node)[0]
-        slot = no.parent
-        index = no.position
-
-    if slot_path:
-        path = slot_path + '.' + str(index)
-    else:
-        path = slot.get_a_path() + '.' + str(index)
-    return path
-
 def get_unfollows_count(node):
     return Vote.objects.filter(nodes__in=node.sources).exclude(nodes__in=[node]).distinct().count()
 
 def get_newfollows_count(node):
-    node.votes.exclude(nodes__in=node.sources).count()
+    return node.votes.exclude(nodes__in=node.sources).count()
 
 
 def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_path=None):

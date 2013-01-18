@@ -102,6 +102,24 @@ def get_ordered_arguments_for(node):
     order = ArgumentOrder.objects.filter(node=node).order_by('position')
     return [ao.argument for ao in order]
 
+def get_good_path_for_structure_node(node, slot=None, slot_path=None):
+    """
+    Get a path for a structure node. If a parent slot or it's path is given
+    get the path that is relative to that path.
+    """
+    if slot:
+        index = node.get_index(slot)
+    else:
+        no = NodeOrder.objects.filter(child=node)[0]
+        slot = no.parent
+        index = no.position
+
+    if slot_path:
+        path = slot_path + '.' + str(index)
+    else:
+        path = slot.get_a_path() + '.' + str(index)
+    return path
+
 #def get_similar_path(node, path=None):
 #    """
 #    Return a path to the node which corresponds to the given path if possible.
