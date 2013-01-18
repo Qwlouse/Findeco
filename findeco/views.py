@@ -110,9 +110,7 @@ def load_text(request, path):
     for slot in backend.get_ordered_children_for(node):
         favorite = backend.get_favorite_if_slot(slot)
         paragraphs.append({'wikiText': build_text(favorite, depth=2),
-                           'path': path + "/" + slot.title + "." +
-                                   str(backend.NodeOrder.objects.filter(child=favorite).\
-                                                                 filter(parent=slot).all()[0].position),
+                           'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
                            'isFollowing': favorite.votes.filter(user=request.user.id).count()>0,
                            'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
     return json_response({
