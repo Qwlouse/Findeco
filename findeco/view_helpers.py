@@ -105,6 +105,14 @@ def create_index_node_for_argument(argument, node):
     )
     return index_node
 
+def build_text(node, depth=2):
+    depth = min(depth, 6)
+    text = "=" * depth + node.title + "=" * depth + "\n" + node.text.text
+    for slot in node.children.prefetch_related('children').all():
+        favorite = backend.get_favorite_if_slot(slot)
+        text += "\n\n" + build_text(favorite, depth + 1)
+    return text
+
 def get_good_path_for_structure_node(node, slot=None, slot_path=None):
     """
     Get a path for a structure node. If a parent slot or it's path is given

@@ -92,7 +92,7 @@ def get_ordered_children_for(node):
     """
     Return a list of children for given node ordered by their position.
     """
-    order = NodeOrder.objects.filter(parent=node).order_by('position')
+    order = NodeOrder.objects.filter(parent=node).order_by('position').prefetch_related('child')
     return [oN.child for oN in order]
 
 def get_ordered_arguments_for(node):
