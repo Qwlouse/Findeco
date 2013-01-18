@@ -94,6 +94,13 @@ class Node(models.Model):
         """
         return NodeOrder.objects.get(parent=parent, child=self).position
 
+    def get_unfollows(self):
+        return Vote.objects.filter(nodes__in=self.sources).exclude(nodes__in=[self]).distinct().count()
+
+    def get_newfollows(self):
+        return self.votes.exclude(nodes__in=self.sources).count()
+
+
 ARGUMENTTYPE = (
     ('p', 'pro'),
     ('c', 'con'),

@@ -114,12 +114,6 @@ def build_text(node, depth=2):
         text += "\n\n" + build_text(favorite, depth + 1)
     return text
 
-def get_unfollows_count(node):
-    return Vote.objects.filter(nodes__in=node.sources).exclude(nodes__in=[node]).distinct().count()
-
-def get_newfollows_count(node):
-    return node.votes.exclude(nodes__in=node.sources).count()
-
 
 def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_path=None):
     if slot_path:
@@ -140,8 +134,8 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_p
         path=path,
         authorGroup=[create_user_info(a) for a in node.text.authors.all()],
         follows=node.votes.count(),
-        unFollows=get_unfollows_count(node),
-        newFollows=get_newfollows_count(node),
+        unFollows=node.get_unfollows(),
+        newFollows=node.get_newfollows(),
         originGroup=origin_group
     )
     return graph_data_node
