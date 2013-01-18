@@ -25,7 +25,7 @@ from django.http import HttpResponse
 import json
 
 import node_storage as backend
-from node_storage import Vote
+from node_storage import Vote, get_node_for_path
 from node_storage.models import ArgumentOrder, NodeOrder
 from node_storage.path_helpers import get_good_path_for_structure_node
 from .paths import parse_suffix
@@ -122,8 +122,19 @@ def get_newfollows_count(node):
 
 
 def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_path=None):
+    if slot_path:
+        slot = get_node_for_path(slot_path)
+
     if not path:
         path = get_good_path_for_structure_node(node, slot, slot_path)
+
+    if slot:
+        if not slot_path:
+            slot_path = slot.get_a_path()
+        origin_group = [slot_path + '.' + str(n.get_index(slot)) for n in node.sources.filter(parent__in=[slot]).all()]
+        origin_group += [n.get_a_path() for n in node.sources.exclude(parent__in=[slot]).all()]
+    else:
+        origin_group = [n.get_a_path() for n in node.sources.all()]
 
     graph_data_node = dict(
         path=path,
@@ -131,6 +142,6 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_p
         follows=node.votes.count(),
         unFollows=get_unfollows_count(node),
         newFollows=get_newfollows_count(node),
-        originGroup=[]
+        originGroup=origin_group
     )
     return graph_data_node
