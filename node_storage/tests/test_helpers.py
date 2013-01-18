@@ -25,12 +25,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from node_storage.path_helpers import get_root_node
