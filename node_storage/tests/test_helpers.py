@@ -25,17 +25,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path, get_arguments_for
-#from ..path_helpers import get_path_parent, get_similar_path
+from ..path_helpers import get_good_path_for_structure_node
 from ..path_helpers import IllegalPath
 from ..factory import create_slot, create_structureNode, create_textNode, create_vote, create_argument, create_user
 
@@ -156,41 +150,18 @@ class HelpersTest(TestCase):
         args = get_arguments_for(self.subsubtext1, 'neut')
         self.assertSequenceEqual(args, [self.argument2])
 
-#    def test_get_path_parent(self):
-#        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
-#        self.assertEqual(node, self.subsubtext1)
-#        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.neut.2")
-#        self.assertEqual(node, self.subsubtext1)
-#        node = get_path_parent(self.argument1, "Slot_4.1/SubSlot_2.1/SubSubSlot_1.1.neut.2")
-#        self.assertEqual(node, self.subsubtext1)
-#        node = get_path_parent(self.subsubtext1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
-#        self.assertEqual(node, self.subsubslot1)
-#        node = get_path_parent(self.subsubtext1, "/Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
-#        self.assertEqual(node, self.subsubslot1)
-#        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1")
-#        self.assertEqual(node, self.substructure1)
-#        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/Blubb.1")
-#        self.assertEqual(node, self.substructure1)
-#        node = get_path_parent(self.subsubslot1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1")
-#        self.assertEqual(node, self.substructure1)
-#        node = get_path_parent(self.substructure1, "Slot_4.1/SubSlot_1.1")
-#        self.assertEqual(node, self.subslot1)
-#        node = get_path_parent(self.substructure1, "Slot_4.1/SubSlot_2.1")
-#        self.assertEqual(node, self.subslot2)
-#        node = get_path_parent(self.subslot1, "Slot_4.1/SubSlot_1")
-#        self.assertEqual(node, self.structure1)
-#        node = get_path_parent(self.subslot2, "Slot_4.1/SubSlot_2")
-#        self.assertEqual(node, self.structure2)
-#        node = get_path_parent(self.structure1, "Slot_4.1")
-#        self.assertEqual(node, self.slot4)
-#        node = get_path_parent(self.slot4, "Slot_4")
-#        self.assertEqual(node, self.root)
-#        node = get_path_parent(self.slot4, "")
-#        self.assertEqual(node, self.root)
-#        node = get_path_parent(self.slot4, "/")
-#        self.assertEqual(node, self.root)
-
-#    def test_get_similar_path(self):
-#        path = get_similar_path(self.argument1, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
-#        print(path)
-#        self.assertEqual(path, "Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
+    def test_get_good_path_for_structure_node(self):
+        path = get_good_path_for_structure_node(self.subsubtext1)
+        self.assertEqual("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1", path)
+        path = get_good_path_for_structure_node(self.text3)
+        self.assertEqual("Slot_2.1", path)
+        path = get_good_path_for_structure_node(self.substructure1)
+        self.assertEqual("Slot_4.1/SubSlot_1.1", path)
+        path = get_good_path_for_structure_node(self.substructure1, slot_path="Slot_4.2/SubSlot_2")
+        self.assertEqual("Slot_4.2/SubSlot_2.1", path)
+        path = get_good_path_for_structure_node(self.substructure1, slot=self.subslot2)
+        self.assertEqual("Slot_4.2/SubSlot_2.1", path)
+        path = get_good_path_for_structure_node(self.substructure1, slot_path="Slot_4.1/SubSlot_1")
+        self.assertEqual("Slot_4.1/SubSlot_1.1", path)
+        path = get_good_path_for_structure_node(self.substructure1, slot=self.subslot1)
+        self.assertEqual("Slot_4.1/SubSlot_1.1", path)
