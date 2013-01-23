@@ -77,7 +77,7 @@ def load_graph_data(request, path, graph_data_type):
 
     nodes = backend.get_ordered_children_for(slot)
     graph_data_children = [create_graph_data_node_for_structure_node(n) for n in nodes]
-    related_nodes = backend.Node.objects.filter(derivates__in=nodes).exclude(nodes).all()
+    related_nodes = backend.Node.objects.filter(derivates__in=nodes).exclude(id__in=[n.id for n in nodes]).all()
     graph_data_related = [create_graph_data_node_for_structure_node(n) for n in related_nodes]
 
     data = {'graphDataChildren':graph_data_children,
