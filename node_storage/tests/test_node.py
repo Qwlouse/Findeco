@@ -83,7 +83,7 @@ class NodeTest(TestCase):
         create_vote(self.hugo, [n, n2])
         self.assertEqual(n2.get_unfollows(), 0)
 
-    def test_get_unfollows_with_an_unfollows_returns_1(self):
+    def test_get_unfollows_with_an_unfollow_returns_1(self):
         n = create_structureNode('Foo')
         n2 = create_structureNode('Foo2')
         n.add_derivate(create_argument(), n2)
@@ -116,5 +116,43 @@ class NodeTest(TestCase):
         create_vote(self.hans, [n2])
         self.assertEqual(n2.get_unfollows(), 0)
 
+    def test_get_newfollows_on_node_without_votes_or_sources_returns_0(self):
+        self.assertEqual(self.root.get_newfollows(), 0)
 
+    def test_get_newfollows_on_node_without_sources_returns_number_of_follows(self):
+        n = create_structureNode('Foo')
+        create_vote(self.hans, [n])
+        create_vote(self.hugo, [n])
+        self.assertEqual(n.get_newfollows(), 2)
 
+    def test_get_newfollows_on_node_with_same_votes_than_source_returns_0(self):
+        n = create_structureNode('Foo')
+        n2 = create_structureNode('Foo2')
+        n.add_derivate(create_argument(), n2)
+        create_vote(self.hans, [n, n2])
+        create_vote(self.hugo, [n, n2])
+        self.assertEqual(n2.get_newfollows(), 0)
+
+    def test_get_newfollows_with_a_newfollow_returns_1(self):
+        n = create_structureNode('Foo')
+        n2 = create_structureNode('Foo2')
+        n.add_derivate(create_argument(), n2)
+        create_vote(self.hans, [n2])
+        create_vote(self.hugo, [n, n2])
+        self.assertEqual(n2.get_newfollows(), 1)
+
+    def test_get_newfollows_with_2_newfollows_returns_2(self):
+        n = create_structureNode('Foo')
+        n2 = create_structureNode('Foo2')
+        n.add_derivate(create_argument(), n2)
+        create_vote(self.hans, [n2])
+        create_vote(self.hugo, [n2])
+        self.assertEqual(n2.get_newfollows(), 2)
+
+    def test_get_newfollows_does_count_votes_and_not_users(self):
+        n = create_structureNode('Foo')
+        n2 = create_structureNode('Foo2')
+        n.add_derivate(create_argument(), n2)
+        create_vote(self.hans, [n])
+        create_vote(self.hans, [n2])
+        self.assertEqual(n2.get_newfollows(), 1)
