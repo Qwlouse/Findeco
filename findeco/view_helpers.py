@@ -125,8 +125,8 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_p
     if slot:
         if not slot_path:
             slot_path = slot.get_a_path()
-        origin_group = [slot_path + '.' + str(n.get_index(slot)) for n in node.sources.filter(parent__in=[slot]).all()]
-        origin_group += [n.get_a_path() for n in node.sources.exclude(parent__in=[slot]).all()]
+        origin_group = [slot_path + '.' + str(n.get_index(slot)) for n in node.sources.filter(parents__in=[slot]).all()]
+        origin_group += [n.get_a_path() for n in node.sources.exclude(parents__in=[slot]).all()]
     else:
         origin_group = [n.get_a_path() for n in node.sources.all()]
 
