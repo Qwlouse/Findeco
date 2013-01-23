@@ -109,7 +109,7 @@ class Node(models.Model):
                (self.title if self.node_type == 'slot' else "." + str(self.get_index(parent)) + "/")
 
     def get_unfollows(self):
-        return Vote.objects.filter(nodes__in=self.sources.all()).exclude(nodes__in=[self]).distinct().count()
+        return User.objects.filter(vote__nodes__in=self.sources.all()).exclude(vote__nodes__in=[self]).distinct().count()
 
     def get_newfollows(self):
         return self.votes.exclude(nodes__in=self.sources.all()).count()
