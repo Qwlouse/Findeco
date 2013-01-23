@@ -30,10 +30,34 @@ from django.core.urlresolvers import reverse
 import json
 from findeco.view_helpers import create_graph_data_node_for_structure_node
 from node_storage import get_root_node
+from node_storage.factory import create_user, create_slot, create_structureNode, create_textNode, create_argument
 
 class LoadGraphDataTest(TestCase):
     def setUp(self):
+        self.max = create_user('max')
         self.root = get_root_node()
+        self.bla = create_slot("Bla")
+        self.root.append_child(self.bla)
+        self.bla1 = create_structureNode('Bla ist Bla',"Das musste gesagt werden.",[self.max])
+        self.bla.append_child(self.bla1)
+        self.blubb = create_slot("Blubb")
+        self.bla1.append_child(self.blubb)
+        self.blubb1 = create_textNode("Blubb ist eins", "Gesagt ist gedacht.", [self.max])
+        self.blubb.append_child(self.blubb1)
+        self.blubb2 = create_textNode("Blubb die Zweite", "Geschrieben ist notiert.", [self.max])
+        self.blubb.append_child(self.blubb2)
+        self.blubb2d = create_textNode("Blubb die Zweite", "Geschrieben ist anders notiert.", [self.max])
+        self.blubb.append_child(self.blubb2d)
+        self.blubb2.add_derivate(create_argument(), self.blubb2d)
+        self.bla2 = create_textNode("Follopp", "Globbern!", [self.max])
+        self.bla.append_child(self.bla2)
+        self.bla2.add_derivate(create_argument(), self.blubb2)
+        self.bla3 = create_textNode("Folloppiii", "Globbern! Den ganzen Tag.", [self.max])
+        self.bla.append_child(self.bla3)
+        self.blubb2.add_derivate(create_argument(), self.bla3)
+        self.bla4 = create_textNode("Flop", "Glob!", [self.max])
+        self.bla.append_child(self.bla4)
+        self.bla3.add_derivate(create_argument(), self.bla4)
 
     def test_root_node(self):
         response = self.client.get(reverse('load_graph_data', kwargs=dict(path='', graph_data_type='withSpam')))
@@ -44,3 +68,14 @@ class LoadGraphDataTest(TestCase):
         self.assertEqual(parsed['loadGraphDataResponse']['graphDataRelated'],[])
         self.assertEqual(parsed['loadGraphDataResponse']['graphDataChildren'],
             [create_graph_data_node_for_structure_node(self.root)])
+
+    def test_paths(self):
+        response = self.client.get(reverse('load_graph_data', kwargs=dict(path='Bla.1/Blubb.2', graph_data_type='withSpam')))
+        parsed = json.loads(response.content)
+        self.assertEqual(parsed['loadGraphDataResponse']['graphDataRelated'],
+            [create_graph_data_node_for_structure_node(self.bla2),
+             create_graph_data_node_for_structure_node(self.bla3)])
+        self.assertEqual(parsed['loadGraphDataResponse']['graphDataChildren'],
+            [create_graph_data_node_for_structure_node(self.blubb1),
+             create_graph_data_node_for_structure_node(self.blubb2),
+             create_graph_data_node_for_structure_node(self.blubb2d)])

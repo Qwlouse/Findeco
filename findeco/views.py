@@ -30,6 +30,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from findeco.view_helpers import create_graph_data_node_for_structure_node
@@ -79,7 +80,9 @@ def load_graph_data(request, path, graph_data_type):
         except backend.IllegalPath:
             return json_error_response('NonExistingNode','Could not find slot: ' + slot_path + ' for node ' + path)
         nodes = backend.get_ordered_children_for(slot)
-        related_nodes = backend.Node.objects.filter(derivates__in=nodes).exclude(id__in=[n.id for n in nodes]).all()
+        sources = Q(derivates__in=nodes)
+        derivates =Q(sources__in=nodes)
+        related_nodes = backend.Node.objects.filter(sources | derivates).exclude(id__in=[n.id for n in nodes]).all()
 
     graph_data_children = [create_graph_data_node_for_structure_node(n) for n in nodes]
     graph_data_related = [create_graph_data_node_for_structure_node(n) for n in related_nodes]
