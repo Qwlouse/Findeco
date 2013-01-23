@@ -136,6 +136,6 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_p
         follows=node.votes.count(),
         unFollows=node.get_unfollows(),
         newFollows=node.get_newfollows(),
-        originGroup=origin_group
+        originGroup=[o.strip('/') for o in origin_group]
     )
     return graph_data_node
