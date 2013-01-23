@@ -79,3 +79,13 @@ class LoadGraphDataTest(TestCase):
             [create_graph_data_node_for_structure_node(self.blubb1),
              create_graph_data_node_for_structure_node(self.blubb2),
              create_graph_data_node_for_structure_node(self.blubb2d)])
+
+        response = self.client.get(reverse('load_graph_data', kwargs=dict(path='Bla.4', graph_data_type='withSpam')))
+        parsed = json.loads(response.content)
+        self.assertEqual(parsed['loadGraphDataResponse']['graphDataRelated'],
+            [create_graph_data_node_for_structure_node(self.blubb2)])
+        self.assertEqual(parsed['loadGraphDataResponse']['graphDataChildren'],
+            [create_graph_data_node_for_structure_node(self.bla1),
+             create_graph_data_node_for_structure_node(self.bla2),
+             create_graph_data_node_for_structure_node(self.bla3),
+             create_graph_data_node_for_structure_node(self.bla4)])
