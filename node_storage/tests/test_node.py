@@ -98,3 +98,23 @@ class NodeTest(TestCase):
         create_vote(self.hans, [n])
         create_vote(self.hugo, [n])
         self.assertEqual(n2.get_unfollows(), 2)
+
+    def test_get_unfollows_counts_votes_from_multiple_sources_only_once(self):
+        n1 = create_structureNode('Foo1')
+        n2 = create_structureNode('Foo2')
+        d = create_structureNode('Foo12')
+        n1.add_derivate(create_argument(), d)
+        n2.add_derivate(create_argument(), d)
+        create_vote(self.hans, [n1, n2])
+        self.assertEqual(d.get_unfollows(), 1)
+
+    def test_get_unfollows_does_count_users_and_not_votes(self):
+        n = create_structureNode('Foo')
+        n2 = create_structureNode('Foo2')
+        n.add_derivate(create_argument(), n2)
+        create_vote(self.hans, [n])
+        create_vote(self.hans, [n2])
+        self.assertEqual(n2.get_unfollows(), 0)
+
+
+
