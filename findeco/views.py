@@ -32,6 +32,7 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from findeco.view_helpers import create_graph_data_node_for_structure_node
 
 import node_storage as backend
 from .paths import parse_suffix
@@ -68,31 +69,19 @@ def load_argument_index(request, path):
 
 @ValidPaths("StructureNode")
 def load_graph_data(request, path, graph_data_type):
-    # This is an example
-    user = {
-        'displayName':"Max Mustermann",
-        'description':"string",
-        'followers':[],
-        'followees':[]
-    }
-    data = {'graphDataChildren':[{'path':"Bla.4/blubb.3",
-                                  'authorGroup':[user],
-                                  'follows':210,
-                                  'unFollows':136,
-                                  'newFollows':13,
-                                  'originGroup':["Bla.4/blubb.3"]},
-                                 {'path':"Bla.4/blubb.7",
-                                  'authorGroup':[user],
-                                  'follows':10,
-                                  'unFollows':536,
-                                  'newFollows':500,
-                                  'originGroup':["Bla.4/blubb.4"]}],
-            'graphDataRelated':[{'path':"Bla.4/blubb.14",
-                                 'authorGroup':[user],
-                                 'follows':110,
-                                 'unFollows':176,
-                                 'newFollows':19,
-                                 'originGroup':["Bla.4/blubb.7"]}]}
+    slot_path = path.rsplit('.',1)[0]
+    try:
+        slot = backend.get_node_for_path(slot_path)
+    except backend.IllegalPath:
+        return json_error_response('NonExistingNode','Could not find slot: ' + slot_path + ' for node ' + path)
+
+    nodes = backend.get_ordered_children_for(slot)
+    graph_data_children = [create_graph_data_node_for_structure_node(n) for n in nodes]
+    related_nodes = backend.Node.objects.filter(derivates__in=nodes).exclude(nodes).all()
+    graph_data_related = [create_graph_data_node_for_structure_node(n) for n in related_nodes]
+
+    data = {'graphDataChildren':graph_data_children,
+            'graphDataRelated':graph_data_related}
     return json_response({'loadGraphDataResponse':data})
 
 @ValidPaths("StructureNode", "Argument")
