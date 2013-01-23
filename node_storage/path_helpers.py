@@ -114,6 +114,7 @@ def get_good_path_for_structure_node(node, slot=None, slot_path=None):
         slot = get_node_for_path(slot_path)
         return slot_path + '.' + str(node.get_index(slot))
     else:
+        if node.id == 1: return ""
         no = NodeOrder.objects.filter(child=node)[0]
         slot = no.parent
         index = no.position
