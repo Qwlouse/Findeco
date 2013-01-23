@@ -48,7 +48,8 @@ class StructureParserTest(TestCase):
             ("schöner Titel was?", "schoener_Titel_was"),
             ("viiiiiieeeeeel zuuuuuuu laaaaaaaang", "viiiiiieeeeeel_zuuuu"),
             ("viel )()()(()()( zu {}{}{}{ lang", "viel_zu_lang"),
-            ("","1")
+            ("","1"),
+            ("N0body is as L€€+.a$.m3", "N0body_is_as_Lam3")
         ]
         for t, st in titles:
             self.assertEqual(turn_into_valid_short_title(t), st)
