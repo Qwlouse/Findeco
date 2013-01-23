@@ -29,8 +29,60 @@ from __future__ import division, print_function, unicode_literals
 import re, unicodedata
 from models import Node, Text
 
+h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*\s*$", flags=re.MULTILINE)
+general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*$", flags=re.MULTILINE)
+invalid_symbols = re.compile(r"[^\w\-_\s]+")
+
 def strip_accents(s):
     return ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
+
+REPLACEMENTS = {
+          ord('ä'): 'ae',
+          ord('ö'): 'oe',
+          ord('ü'): 'ue',
+          ord('ß'): 'ss',
+          ord('Ä'): 'Ae',
+          ord('Ö'): 'Oe',
+          ord('Ü'): 'Ue',
+          ord('ẞ'): 'SS',
+        }
+
+def substitute_umlauts(s):
+    return s.translate(REPLACEMENTS)
+
+def remove_unallowed_chars(s):
+    s = invalid_symbols.sub('',s)
+    return s
+
+def remove_and_compress_whitespaces(s):
+    return '_'.join(s.split())
+
+def turn_into_valid_short_title(title, short_title_set=(), max_length=20):
+    st = substitute_umlauts(title)
+    st = strip_accents(st)
+    st = remove_unallowed_chars(st)
+    st = remove_and_compress_whitespaces(st)
+    st = st[:min(len(st), max_length)]
+    if not st:
+        i = 0
+        while True:
+            i += 1
+            new_st = str(i)
+            if new_st not in short_title_set:
+                return new_st
+    if st not in short_title_set :
+        return st
+    else:
+        i = 0
+        while True:
+            i += 1
+            suffix = str(i)
+            new_st = st[:min(max_length-len(suffix), len(st))] + suffix
+            if new_st not in short_title_set:
+                return new_st
+
+
+
 
 def getHeadingMatcher(level=0):
     if 0 < level < 7:
@@ -41,9 +93,7 @@ def getHeadingMatcher(level=0):
         raise ValueError("level must be between 1 and 6 or 0, but was %d."%level)
     return re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s]+)\s*)?=*\s*$"%s, flags=re.MULTILINE)
 
-h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*\s*$", flags=re.MULTILINE)
-general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*$", flags=re.MULTILINE)
-invalid_symbols = re.compile(r"[^\w\-_\s]+")
+
 
 def parse(s, author, parent_slot):
     #make sure we start with a heading 1
