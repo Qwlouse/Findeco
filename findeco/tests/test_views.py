@@ -3,7 +3,8 @@
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
+# Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -68,8 +69,6 @@ class ViewTest(TestCase):
             response = self.client.get(reverse(v, kwargs=kwargs))
             res = json.loads(response.content)
             self.assertIsNotNone(res)
-
-
 
     def test_load_index_response_is_valid(self):
         for p in structure_node_paths:
