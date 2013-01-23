@@ -293,7 +293,7 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
         self.assertEqual(data2['follows'],1)
         self.assertEqual(data2['unFollows'],0)
         self.assertEqual(data2['newFollows'],0)
-        self.assertEqual(data2['originGroup'],['Organisatorisches.2/'])
+        self.assertEqual(data2['originGroup'],['Organisatorisches.2'])
         data3 = create_graph_data_node_for_structure_node(self.textnode33)
         self.assertEqual(data3['path'],'Organisatorisches.4')
         self.assertSequenceEqual(data3['authorGroup'],[create_user_info(self.hans), create_user_info(self.hugo)])
@@ -307,7 +307,7 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
         self.assertEqual(data3['follows'],0)
         self.assertEqual(data3['unFollows'],1)
         self.assertEqual(data3['newFollows'],0)
-        self.assertEqual(data3['originGroup'],['Organisatorisches.4/'])
+        self.assertEqual(data3['originGroup'],['Organisatorisches.4'])
 
     def test_text_nodes_slot_node(self):
         data = create_graph_data_node_for_structure_node(self.textnode31, self.slot3)
