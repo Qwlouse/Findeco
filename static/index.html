@@ -1,39 +1,42 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-{% load staticfiles %}
-<html>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 <head>
-<!--Metadaten fehlen noch-->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<link rel="stylesheet" href="css/main.css" type="text/css"/>
-<script type="text/javascript" src="js/language.js"></script>
-<script type="text/javascript" src="js/lib/jquery.min.js"></script>
-<!--<script type="text/javascript" src="js/jquery.socialshareprivacy.js"></script>-->
-<script type="text/javascript" src="js/findeco.js"></script>
-<script type="text/javascript" src="js/loader_functions.js"></script>
-<noscript>
-<p style="color:red;">Du hast Skripte in deinem Browser deaktiviert. Findeco benötigt für korrekte Funktionalität jedoch JavaScript und Cookies.
-<br/>Bitte aktiviere JavaScript und lade die Seite neu.</p>
-</noscript>
+    <!--Metadaten fehlen noch-->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Content-Style-Type" content="text/css"/>
+    <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+    <link rel="stylesheet" href="static/css/main.css" type="text/css"/>
+    <script type="text/javascript" src="static/js/language.js"></script>
+    <script type="text/javascript" src="static/js/lib/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="static/js/jquery.socialshareprivacy.js"></script>-->
+    <script type="text/javascript" src="static/js/findeco.js"></script>
+    <script type="text/javascript" src="static/js/loader_functions.js"></script>
+    <noscript>
+        <p style="color:red;">Du hast Skripte in deinem Browser deaktiviert. Findeco benötigt für korrekte
+            Funktionalität jedoch JavaScript und Cookies.
+            <br/>Bitte aktiviere JavaScript und lade die Seite neu.</p>
+    </noscript>
 
-<title>Findeco</title>
+    <title>Findeco</title>
 </head>
-<body>
-    <div id="position">0/0</div>
-    <div id="back" onclick="previous()">&lt;</div>
-    <div id="forward" onclick="next()">&gt;</div>
-    <div id="header">
-        <div id="logo">Findeco</div>
-        <ul id="navigation">
-            <li id="home" class="button" onclick="Main.load(this)">Home</li>
-            <li id="content" class="button" onclick="Main.load(this)">Content</li>
-            <li id="imprint" class="button" onclick="Main.load(this)">Imprint</li>
-        </ul>
-    </div>
-    <!--<div id="debug">{{ path }}</div>!-->
-    <div id="container">
-        <ul id="location"></ul>
-    </div>
-    <div id="bottom">Findeco means: Findeco, investigate, debate, consent. Findeco is free and opensource.</div>
-    <div id="loading"></div>
+<body onload="load()">
+<div id="position">0/0</div>
+<div id="back" onclick="previous()">&lt;</div>
+<div id="forward" onclick="next()">&gt;</div>
+<div id="header">
+    <div id="logo">Findeco</div>
+    <ul id="navigation">
+        <li id="home" class="button" onclick="Main.load(this)">Home</li>
+        <li id="content" class="button" onclick="Main.load(this)">Content</li>
+        <li id="imprint" class="button" onclick="Main.load(this)">Imprint</li>
+    </ul>
+</div>
+<!--<div id="debug">{{ path }}</div>!-->
+<div id="container">
+    <ul id="location"></ul>
+</div>
+<div id="bottom">Findeco means: Findeco, investigate, debate, consent. Findeco is free and opensource.</div>
+<div id="loading"></div>
 </body>
 </html>

@@ -31,8 +31,7 @@ from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.http import HttpResponse
 from findeco.view_helpers import create_graph_data_node_for_structure_node
 
 import node_storage as backend
@@ -43,9 +42,8 @@ from .view_helpers import create_user_settings, create_index_node_for_argument
 
 
 def home(request, path):
-    return render_to_response("main.html",
-        {"path": path},
-        context_instance=RequestContext(request))
+    with open("static/index.html", 'r') as index_html_file:
+        return HttpResponse(index_html_file.read(), mimetype='text/html')
 
 @ValidPaths("StructureNode")
 def load_index(request, path):
