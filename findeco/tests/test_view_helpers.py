@@ -27,7 +27,7 @@ from node_storage import get_root_node
 from node_storage.factory import create_user, create_slot, create_textNode, create_vote, create_structureNode, create_argument
 from ..api_validation import userInfoValidator, indexNodeValidator, userSettingsValidator
 from ..view_helpers import create_index_node_for_slot, create_index_node_for_argument
-from ..view_helpers import create_user_info, create_user_settings
+from ..view_helpers import create_user_info, create_user_settings, create_graph_data_node_for_structure_node
 
 class CreateUsersInfoTest(TestCase):
     def setUp(self):
@@ -236,3 +236,36 @@ class CreateIndexNodeForArgumentTest(TestCase):
             author_group = index_node['authorGroup']
             for user in authors:
                 self.assertIn(create_user_info(user), author_group)
+
+class CreateGraphDataNodeForStructureNodeTest(TestCase):
+    def setUp(self):
+        self.hans = create_user('hans')
+        self.hugo = create_user('hugo')
+
+        self.root = get_root_node()
+        self.slot1 = create_slot('Wahlprogramm')
+        self.root.append_child(self.slot1)
+        self.textnode1 = create_textNode('LangerWahlprogrammTitel', authors=[self.hans])
+        self.slot1.append_child(self.textnode1)
+        self.slot2 = create_slot('Grundsatzprogramm')
+        self.root.append_child(self.slot2)
+        self.textnode2 = create_textNode('LangerGrundsatzTitel', authors=[self.hugo])
+        self.slot2.append_child(self.textnode2)
+        self.slot3 = create_slot('Organisatorisches')
+        self.root.append_child(self.slot3)
+        self.textnode31 = create_textNode('Langweilig1', authors=[self.hans])
+        self.textnode32 = create_textNode('Langweilig2', authors=[self.hugo])
+        self.textnode33 = create_textNode('Langweilig3', authors=[self.hans, self.hugo])
+        self.slot3.append_child(self.textnode31)
+        self.slot3.append_child(self.textnode32)
+        self.slot3.append_child(self.textnode33)
+        create_vote(self.hans, [self.textnode33])
+        self.top_slots = [self.slot1, self.slot2, self.slot3]
+        self.short_titles = ['Wahlprogramm', 'Grundsatzprogramm', 'Organisatorisches']
+        self.full_titles = ['LangerWahlprogrammTitel', 'LangerGrundsatzTitel','Langweilig3']
+        self.authors = [[self.hans], [self.hugo], [self.hans, self.hugo]]
+
+    def test_text_nodes_no_path(self):
+        data = create_graph_data_node_for_structure_node(self.textnode31)
+        self.assertEqual(data['path'],'Organisatorisches.1')
+        self.assertSequenceEqual(data['authorGroup'],[self.hans])
