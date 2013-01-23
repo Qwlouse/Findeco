@@ -24,7 +24,7 @@ from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from node_storage import Node, get_root_node
 from node_storage.factory import create_structureNode, create_user, create_vote, create_argument
-from node_storage.models import NodeOrder
+from node_storage.models import NodeOrder, Derivation
 
 class NodeTest(TestCase):
     def setUp(self):
@@ -54,6 +54,23 @@ class NodeTest(TestCase):
 
         self.assertIn(no[0], n.child_order_set.all())
         self.assertIn(no[0], c.parent_order_set.all())
+
+    def test_add_derivate(self):
+        n = create_structureNode("Source", authors=[self.hans])
+        d = create_structureNode("Derivate", authors=[self.hans])
+        a = create_argument()
+        n.add_derivate(a, d)
+
+
+        self.assertIn(d, n.derivates.all())
+        self.assertIn(n, d.sources.all())
+
+        no = Derivation.objects.filter(source=n, derivate=d)
+        self.assertTrue(no.count() == 1)
+        self.assertEqual(no[0].argument, a)
+
+        self.assertIn(no[0], n.derivative_order_set.all())
+        self.assertIn(no[0], d.source_order_set.all())
 
     def test_get_unfollows_on_node_without_sources_returns_0(self):
         self.assertEqual(self.root.get_unfollows(), 0)
