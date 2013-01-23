@@ -69,17 +69,20 @@ def load_argument_index(request, path):
 
 @ValidPaths("StructureNode")
 def load_graph_data(request, path, graph_data_type):
-    slot_path = path.rsplit('.',1)[0]
-    try:
-        slot = backend.get_node_for_path(slot_path)
-    except backend.IllegalPath:
-        return json_error_response('NonExistingNode','Could not find slot: ' + slot_path + ' for node ' + path)
+    if not path.strip('/'):# root node!
+        nodes = [backend.get_root_node()]
+        related_nodes = []
+    else:
+        slot_path = path.rsplit('.',1)[0]
+        try:
+            slot = backend.get_node_for_path(slot_path)
+        except backend.IllegalPath:
+            return json_error_response('NonExistingNode','Could not find slot: ' + slot_path + ' for node ' + path)
+        nodes = backend.get_ordered_children_for(slot)
+        related_nodes = backend.Node.objects.filter(derivates__in=nodes).exclude(id__in=[n.id for n in nodes]).all()
 
-    nodes = backend.get_ordered_children_for(slot)
     graph_data_children = [create_graph_data_node_for_structure_node(n) for n in nodes]
-    related_nodes = backend.Node.objects.filter(derivates__in=nodes).exclude(id__in=[n.id for n in nodes]).all()
     graph_data_related = [create_graph_data_node_for_structure_node(n) for n in related_nodes]
-
     data = {'graphDataChildren':graph_data_children,
             'graphDataRelated':graph_data_related}
     return json_response({'loadGraphDataResponse':data})
