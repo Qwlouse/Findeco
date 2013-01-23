@@ -44,7 +44,7 @@ userSettings_schema={
     'blockedUsers':[user_schema, None]
 }
 authorGroup_schema = [userInfo_schema]
-originGroup_schema = ["path"]
+originGroup_schema = ["path", None]
 graphDataNode_schema = {
     'path':string,
     'authorGroup': authorGroup_schema,
