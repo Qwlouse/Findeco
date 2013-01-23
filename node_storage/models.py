@@ -73,6 +73,11 @@ class Node(models.Model):
         no.position = max_position + 1
         no.save()
 
+    def add_derivate(self, argument, derivate):
+        d = Derivation(argument=argument, source=self, derivate=derivate)
+        d.save()
+
+
     def __unicode__(self):
         return "id=%d, type=%s"%(self.id, self.node_type)
 
@@ -104,10 +109,10 @@ class Node(models.Model):
                (self.title if self.node_type == 'slot' else "." + str(self.get_index(parent)) + "/")
 
     def get_unfollows(self):
-        return Vote.objects.filter(nodes__in=self.sources).exclude(nodes__in=[self]).distinct().count()
+        return Vote.objects.filter(nodes__in=self.sources.all()).exclude(nodes__in=[self]).distinct().count()
 
     def get_newfollows(self):
-        return self.votes.exclude(nodes__in=self.sources).count()
+        return self.votes.exclude(nodes__in=self.sources.all()).count()
 
 
 ARGUMENTTYPE = (
@@ -137,8 +142,8 @@ class Text(models.Model):
         return "id=%d, text=%s"%(self.id, self.text)
 
 class Derivation(models.Model):
-    source=models.ForeignKey(Node, related_name='derivative_order_set')
     derivate=models.ForeignKey(Node, related_name='source_order_set')
+    source=models.ForeignKey(Node, related_name='derivative_order_set')
     argument=models.ForeignKey(Argument)
 
     class Meta:

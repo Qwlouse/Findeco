@@ -22,11 +22,16 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from node_storage import Node
+from node_storage import Node, get_root_node
+from node_storage.factory import create_structureNode, create_user, create_vote, create_argument
 from node_storage.models import NodeOrder
 
-
 class NodeTest(TestCase):
+    def setUp(self):
+        self.root = get_root_node()
+        self.hans = create_user('hans')
+        self.hugo = create_user('hugo')
+
     def test_node_constructable(self):
         n = Node()
         n.node_type = "structureNode"
@@ -50,5 +55,29 @@ class NodeTest(TestCase):
         self.assertIn(no[0], n.child_order_set.all())
         self.assertIn(no[0], c.parent_order_set.all())
 
-    def test_node(self):
-        pass
+    def test_get_unfollows_on_node_without_sources_returns_0(self):
+        self.assertEqual(self.root.get_unfollows(), 0)
+
+    def test_get_unfollows_on_node_with_same_votes_than_source_returns_0(self):
+        n = create_structureNode('Foo')
+        n2 = create_structureNode('Foo2')
+        n.add_derivate(create_argument(), n2)
+        create_vote(self.hans, [n, n2])
+        create_vote(self.hugo, [n, n2])
+        self.assertEqual(n2.get_unfollows(), 0)
+
+    def test_get_unfollows_with_an_unfollows_returns_1(self):
+        n = create_structureNode('Foo')
+        n2 = create_structureNode('Foo2')
+        n.add_derivate(create_argument(), n2)
+        create_vote(self.hans, [n])
+        create_vote(self.hugo, [n, n2])
+        self.assertEqual(n2.get_unfollows(), 1)
+
+    def test_get_unfollows_with_2_unfollows_returns_2(self):
+        n = create_structureNode('Foo')
+        n2 = create_structureNode('Foo2')
+        n.add_derivate(create_argument(), n2)
+        create_vote(self.hans, [n])
+        create_vote(self.hugo, [n])
+        self.assertEqual(n2.get_unfollows(), 2)
