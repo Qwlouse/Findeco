@@ -23,7 +23,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from node_storage.structure_parser import validate_structure_schema
-from ..structure_parser import strip_accents, substitute_umlauts
+from ..structure_parser import strip_accents, substitute_umlauts, parse
 from ..structure_parser import remove_unallowed_chars, turn_into_valid_short_title
 
 class StructureParserTest(TestCase):
@@ -62,5 +62,19 @@ class StructureParserTest(TestCase):
     def test_validate_structure_schema_on_simple_example(self):
         invalid = dict(title="foo", text="und bar und so", children=[])
         self.assertRaises(AssertionError, validate_structure_schema, invalid)
+
+    def test_structure_parser(self):
+        wiki = """
+        = Titel =
+        einleitungstext
+        == slot1 ==
+        text
+        == Toller Slot § slot2 ==
+        mehr text
+        """
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+
+
 
 

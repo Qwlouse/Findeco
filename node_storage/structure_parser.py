@@ -118,31 +118,31 @@ def validate_structure_schema(structure):
         validate_structure_schema(c)
     return True
 
-def parse(s, author, parent_slot):
+class InvalidWikiStructure(Exception):
+    pass
+
+def parse(s, short_title):
     #make sure we start with a heading 1
-    m = h1_start.match(s) # TODO: match short titles and warn about
+    m = h1_start.match(s)
     if m :
         title = m.groups("title")[0]
         title = title.partition("§")[0] # silently remove attempt to set short_title in H1
         s = h1_start.sub("", s)
     else :
-        # TODO: warn about missing title
-        title = parent_slot.short_title
+        raise InvalidWikiStructure('Must start with H1 heading to set title')
 
-    node = Node()
-    node.parents.create(parent_slot)
-    node.save()
+    node = {
+        'title':title.strip(),
+        'short_title':short_title,
+        'children':[]
+    }
 
     # do we need a StructureNode or will a TextNode do?
     if not general_h.search(s) :
         # TextNode
-        t = Text()
-        t.text = "= %s =\n"%title.strip() + s.strip()
-        t.author = author
-        t.node = node
-        t.save()
-        return t
-        # else : StructureNode
+        node['text'] = s.strip()
+        return node
+    # else : StructureNode
 
     # determine used header depth:
     level = 0
@@ -157,60 +157,22 @@ def parse(s, author, parent_slot):
     # now the text before, between and after headings is split_doc[0::3]
     # the text of the headings are split_doc[1::3]
     # and the short titles (or None if omitted) are split_doc[2::3]
-    # what do we do now?
 
-    # leading text is used to construct an "Einleitung" Slot and TextNode
-    introduction = Node()
-    introduction.parents.create(node)
-    introduction.save()
-
-    introduction_slot = Node()
-    introduction_slot.parents.create(introduction)
-    introduction_slot.save()
-    introduction_slot_short_title = Text()
-    introduction_slot_short_title.text = "Einleitung"
-    introduction_slot_short_title.node = introduction_slot
-    introduction_text_node = Node()
-    introduction_text_node.parents.create(introduction_slot)
-    introduction_text_node.save()
-    introduction_text = Text()
-    intro_text = split_doc[0]
-    # assert that no headings are in intro-text
-    if general_h.search(intro_text):
-        # TODO: Warn!
-        intro_text = general_h.sub(r"~\1", intro_text)
-        #general_h.
-    introduction_text.text = "= %s =\n"%title + intro_text
-
-    introduction_text.node = introduction_text_node
-    introduction_text.save()
-
-
+    # leading text is used to set text of structure node
+    node['text'] = split_doc[0].strip()
+    # assert that no headings are in that text
+    if general_h.search(node['text']):
+        raise InvalidWikiStructure("Cannot have headers in Node text")
 
     # iterate the headings, short_titles, and corresponding texts:
     short_title_set = set()
     for title, short_title, text in zip(split_doc[1::3], split_doc[2::3], split_doc[3::3]):
         # check if short_title is valid/unique/exists
         if not short_title or len(short_title.strip()) == 0:
-            short_title=title[:min(15, len(title))]
-
-        # make short titles valid
-        short_title = short_title[:min(20, len(short_title))]
-        short_title = strip_accents(short_title)
-        short_title = invalid_symbols.sub('',short_title)
-        if short_title in short_title_set:
-            i = 1
-            while short_title + str(i) in short_title_set:
-                i += 1
-            short_title += str(i)
-
+            short_title=title
+        short_title=turn_into_valid_short_title(short_title, short_title_set)
         short_title_set.add(short_title)
-        slot = Node()
-        slot.parents.create(node)
-        slot.save()
-        slot_text = Text()
-        slot_text.text = short_title.strip().replace(" ", "_")
-        slot_text.node = slot
-        slot_text.save()
-        parse("= %s =\n"%title.strip() + text.strip(), slot)
+
+        node['children'].append(parse("= %s =\n"%title.strip() + text.strip(), short_title))
+
     return node
