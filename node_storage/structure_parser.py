@@ -95,6 +95,29 @@ def getHeadingMatcher(level=0):
 
 
 
+def validate_structure_schema(structure):
+    """
+    structure_node_schema = {
+        'short_title':"string",
+        'title':"string",
+        'text':"wikiText",
+        'children':[structure_node_schema,None]
+    }
+    """
+    entries = [('short_title', unicode),
+               ('title', unicode),
+               ('text', unicode),
+               ('children', list)]
+    for n, t in entries:
+        assert n in structure, "Required field '%s' is missing."%n
+        assert type(structure[n]) is t, "Type of field '%s' should be %s but was %s"%(n, t, type(structure[n]))
+    # validate short title
+    assert 1 <= len(structure['short_title']) <= 20, "Length of short title must be between 1 and 20 (but was %d)."%len(structure['short_title'])
+    # validate children
+    for c in structure['children']:
+        validate_structure_schema(c)
+    return True
+
 def parse(s, author, parent_slot):
     #make sure we start with a heading 1
     m = h1_start.match(s) # TODO: match short titles and warn about

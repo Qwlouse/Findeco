@@ -22,6 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
+from node_storage.structure_parser import validate_structure_schema
 from ..structure_parser import strip_accents, substitute_umlauts
 from ..structure_parser import remove_unallowed_chars, turn_into_valid_short_title
 
@@ -53,5 +54,13 @@ class StructureParserTest(TestCase):
         ]
         for t, st in titles:
             self.assertEqual(turn_into_valid_short_title(t), st)
+
+    def test_validate_structure_schema_on_simple_example(self):
+        simple = dict(title="foo", short_title="foo", text="und bar und so", children=[])
+        self.assertTrue(validate_structure_schema(simple))
+
+    def test_validate_structure_schema_on_simple_example(self):
+        invalid = dict(title="foo", text="und bar und so", children=[])
+        self.assertRaises(AssertionError, validate_structure_schema, invalid)
 
 
