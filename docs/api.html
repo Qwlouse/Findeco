@@ -33,12 +33,13 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadMicroblogging">Function::loadMicroblogging</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadMicroblogging/selectID/microbloggingLoadType/path</td></tr>
+    <tr><td>Call Structure:</td><td>.json_loadMicroblogging/selectID/microbloggingLoadType/[path|displayName]</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueDisplayName">(String) displayName</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueSelectID">(Integer) selectID</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueMicrobloggingLoadType">(String) microbloggingLoadType</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-    <tr><td>Description:</td><td>Loads the microblogging entrys of the given path to a StructureNode or an Argument (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+    <tr><td>Description:</td><td>Loads the microblogging entrys of the given path to a StructureNode or an Argument (see <a href="#ValuePath">Value::Path</a>). If the path does not match a StructureNode or an Argument it is interpreted as <a href="#ValueDisplayName">Value::displayName</a>. </td></tr>
     <tr><td>Return:</td><td><a href="#JSONloadMicrobloggingResponse">JSON::loadMicrobloggingResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
@@ -112,6 +113,16 @@ In return you get a JSON response from the server.
     <tr><td>POST Parameters:</td><td><a href="#ValueMicroblogText">(String) microblogText</a></td></tr>
     <tr><td>Description:</td><td>Store a Microblogpost attached to a path to a StructureNode or an Argument (see <a href="#ValuePath">Value::Path</a>).</td></tr>
     <tr><td>Return:</td><td><a href="#JSONstoreMicroblogPostResponse">JSON::storeMicroblogPostResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionStoreMicroblogReference">Function::storeMicroblogReference</a></b>
+<table><tbody>
+    <tr><td>Call Structure:</td><td>.json_storeMicroblogReference/microblogID</td></tr>
+    <tr><td>GET Parameters:</td><td><a href="#ValueMicroblogID">(int) microblogID</a></td></tr>
+    <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+    <tr><td>Description:</td><td>Show the Microblogpost referenced by <a href="#ValueMicroblogID">Value::microblogID</a> as a post within the timeline of the loggedin user. The post does not get duplicated, if it is removed the reference will also vanish. </td></tr>
+    <tr><td>Return:</td><td><a href="#JSONstoreMicroblogReferenceResponse">JSON::storeMicroblogReferenceResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -322,9 +333,9 @@ In return you get a JSON response from the server.
     <tr><td>Description:</td><td>The path to any node in the hierarchy. Paths are built out of <a href="#ValueShortTitle">Value::shortTitle</a> and <a href="#ValueIndex">Value::index</a>
  by concatenating them with a ".", these individual parts of the path 
 are concatenated by "/" but any path may also be trailed by a set of <a href="#ValueArgumentDenominator">Value::argumentDenominator</a> with or without a <a href="#ValueIndex">Value::index</a> that is appended using a "." behind the <a href="#ValueIndex">Value::index</a> of the respective node.</td></tr>
-    <tr><td>Supported Values:</td><td>Any path leading to an existing node in the database. Depending on the function this may be a StructureNode, an ArgumentCategory or an Argument. <br>Examples:
+    <tr><td>Supported Values:</td><td>Any path leading to an existing node in the database. Depending on the function this may be a StructureNode<!--, an ArgumentCategory !--> or an Argument. <br>Examples:
 StructureNode: "top.1/subtop.2", "top.1/subtop.2/subsubtop", "top.1/subtop.2/subsubtop.3"<br>
-ArgumentCategory: "top.1/subtop.2/subsubtop.3.neut", "top.1/subtop.2/subsubtop.3.all"<br>
+<!--ArgumentCategory: "top.1/subtop.2/subsubtop.3.neut", "top.1/subtop.2/subsubtop.3.all"<br>!-->
 Argument: "top.1/subtop.2/subsubtop.3.neut.1", "top.1/subtop.2/subsubtop.3.pro.3"</td></tr>
 </tbody></table>
 
@@ -333,7 +344,8 @@ Argument: "top.1/subtop.2/subsubtop.3.neut.1", "top.1/subtop.2/subsubtop.3.pro.3
 <table><tbody>
     <tr><td>Parametername:</td><td>selectID</td></tr>
     <tr><td>Type:</td><td>Integer</td></tr>
-    <tr><td>Description:</td><td>The reference ID of an allready loaded microblogging entry. Usually the first loaded for <a href="#ValueMicrobloggingLoadType">Value::microbloggingLoadType</a> "older" and the last for "newer" </td></tr>
+    <tr><td>Description:</td><td>The reference ID of an allready loaded microblogging entry. Usually the first loaded for <a href="#ValueMicrobloggingLoadType">Value::microbloggingLoadType</a> "older" and the last for "newer". This value can be left empty to load the newest microblogentries
+available. </td></tr>
     <tr><td>Supported Values:</td><td>Output only.</td></tr>
 </tbody></table>
 
@@ -557,6 +569,12 @@ Argument: "top.1/subtop.2/subsubtop.3.neut.1", "top.1/subtop.2/subsubtop.3.pro.3
 <b><a name="JSONstoreMicroblogPostResponse">JSON::storeMicroblogPostResponse</a></b>
 <table><tbody>
     <tr><td>Comment:</td><td>The storeMicroblogPostResponse is always empty. </td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONstoreMicroblogReferenceResponse">JSON::storeMicroblogReferenceResponse</a></b>
+<table><tbody>
+    <tr><td>Comment:</td><td>The storeMicroblogReferenceResponse is always empty. </td></tr>
 </tbody></table>
 
 <br>
