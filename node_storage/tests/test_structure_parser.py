@@ -117,7 +117,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                   'text': "text",
                   'children': [
                       {'short_title': "SubSlot1",
-                       'title': "Layer 1",
+                       'title': "Layer 2",
                        'text': "Layer 2 text.",
                        'children': []},
                       {'short_title': "SubSlot2",
@@ -140,7 +140,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
         self.assertEqual(len(slots[0].children.all()),1)
         sub_structure1 = slots[0].children.all()[0]
         self.assertEqual(sub_structure1,self.text1)
-        self.assertEqual(sub_structure1.title, "Layer 1")
+        self.assertEqual(sub_structure1.title, "Layer 2")
         self.assertEqual(sub_structure1.text.text, "Layer 2 text.")
         self.assertEqual(len(sub_structure1.children.all()),0)
         self.assertEqual(len(slots[1].children.all()),1)
@@ -149,6 +149,46 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
         self.assertEqual(sub_structure2.title, "Layer 2 second heading")
         self.assertEqual(sub_structure2.text.text, "Layer 2 text 2.")
         self.assertEqual(len(sub_structure2.children.all()),0)
+
+    def test_create_structure_from_structure_node_schema_with_origin_group_difference_in_second_layer(self):
+        schema = {'short_title': "Ignored",
+                  'title': "Layer 1",
+                  'text': "text",
+                  'children': [
+                      {'short_title': "SubSlot1",
+                       'title': "Layer 2",
+                       'text': "Layer 2 text.",
+                       'children': []},
+                      {'short_title': "SubSlot2",
+                       'title': "Layer 2 second heading",
+                       'text': "Layer 2 text 2 but changed.",
+                       'children': []},
+                      ]}
+        create_structure_from_structure_node_schema(schema,self.slot1,[self.hugo],origin_group=[self.structure1],argument=create_argument())
+        node_list = Node.objects.filter(title="Layer 1").all()
+        self.assertEqual(len(node_list),1)
+        n = node_list[0]
+        self.assertEqual(n,self.structure1)
+        self.assertEqual(n.text.text,"text")
+        slots = n.children.all()
+        self.assertEqual(len(slots),2)
+        self.assertEqual(slots[0],self.slot11)
+        self.assertEqual(slots[0].title, "SubSlot1")
+        self.assertEqual(slots[1],self.slot12)
+        self.assertEqual(slots[1].title, "SubSlot2")
+        self.assertEqual(len(slots[0].children.all()),1)
+        sub_structure1 = slots[0].children.all()[0]
+        self.assertEqual(sub_structure1,self.text1)
+        self.assertEqual(sub_structure1.title, "Layer 2")
+        self.assertEqual(sub_structure1.text.text, "Layer 2 text.")
+        self.assertEqual(len(sub_structure1.children.all()),0)
+        self.assertEqual(len(slots[1].children.all()),2)
+        sub_structure2 = slots[1].children.all()[0]
+        self.assertNotEqual(sub_structure2,self.text2)
+        self.assertEqual(sub_structure2.title, "Layer 2 second heading")
+        self.assertEqual(sub_structure2.text.text, "Layer 2 text 2 but changed.")
+        self.assertEqual(len(sub_structure2.children.all()),0)
+        self.assertEqual(sub_structure2.sources.all()[0],self.text2)
 
     def test_create_structure_from_structure_node_schema_without_origin_group(self):
         schema = {'short_title': "Ignored",
