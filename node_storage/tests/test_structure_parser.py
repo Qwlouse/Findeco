@@ -2,7 +2,8 @@
 # coding=utf-8
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
+# Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
