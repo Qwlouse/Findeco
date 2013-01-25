@@ -23,4 +23,4 @@
 from __future__ import division, print_function, unicode_literals
 from test_helpers import HelpersTest
 from test_node import NodeTest
-from test_structure_parser import StructureParserTest
+from test_structure_parser import StructureParserTest, CreateStructureFromStructureNodeSchemaTest
