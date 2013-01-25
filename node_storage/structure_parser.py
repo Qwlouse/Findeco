@@ -164,6 +164,7 @@ def parse(s, short_title):
     # assert that no headings are in that text
     if general_h.search(node['text']):
         raise InvalidWikiStructure("Cannot have headers in Node text")
+    #Exception Textvorschlag: Du hast eine kleine Überschrift in den Einleitungsabsatz geschrieben. Findeco kann nur Überschriften in absteigender Reihenfolge darstellen. Eine kleine Überschrift vor der ersten nächstgrößeren Überschrift ergibt keinen Sinn und kann nicht verarbeitet werden. Bitte ändere deinen Text so, dass die Überschriften in absteigender Größe vorkommen.\n\nBeispiel:\n= einzigartige Gesamtüberschrift =\nEinleitungstext\n== Überschrift 2 ==\n=== Überschrift 3 ===\nEtwas Text.\n==== Überschrift 4 ====\nWeiterer Text.\n== Überschrift 2 nochmal ==\nText auf Ebene zwei.
 
     # iterate the headings, short_titles, and corresponding texts:
     short_title_set = set()
@@ -178,6 +179,7 @@ def parse(s, short_title):
 
     return node
 
+
 def create_structure_from_structure_node_schema(schema, parent_slot, authors, origin_group=None, argument=None):
     if not origin_group: origin_group = []
     origin_found = False
@@ -188,14 +190,11 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors, or
                                                                           origin.children.all()]:
                 structure = origin
                 origin_found = True
-        if not origin_found:
-            structure = create_structureNode(long_title=schema['title'], text=schema['text'], authors=authors)
-            parent_slot.append_child(structure)
-            for origin in origin_group:
-                origin.add_derivate(argument, structure)
-    else:
+    if not origin_found:
         structure = create_structureNode(long_title=schema['title'], text=schema['text'], authors=authors)
         parent_slot.append_child(structure)
+        for origin in origin_group:
+            origin.add_derivate(argument, structure)
     for i, child in enumerate(schema['children']):
         if origin_found:
             child_slot = structure.children.all()[i]
