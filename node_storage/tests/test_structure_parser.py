@@ -183,7 +183,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
         self.assertEqual(sub_structure1.text.text, "Layer 2 text.")
         self.assertEqual(len(sub_structure1.children.all()),0)
         self.assertEqual(len(slots[1].children.all()),2)
-        sub_structure2 = slots[1].children.all()[0]
+        sub_structure2 = slots[1].children.all()[1]
         self.assertNotEqual(sub_structure2,self.text2)
         self.assertEqual(sub_structure2.title, "Layer 2 second heading")
         self.assertEqual(sub_structure2.text.text, "Layer 2 text 2 but changed.")

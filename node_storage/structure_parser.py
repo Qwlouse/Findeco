@@ -195,15 +195,14 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors, or
         parent_slot.append_child(structure)
         for origin in origin_group:
             origin.add_derivate(argument, structure)
-    for i, child in enumerate(schema['children']):
+    for child in schema['children']:
         if origin_found:
-            child_slot = structure.children.all()[i]
+            child_slot = structure.children.filter(title=child['short_title']).all()[0]
         else:
             child_slot = create_slot(child['short_title'])
             structure.append_child(child_slot)
         sub_origin_group = []
         for origin in origin_group:
-            for origin_slot in origin.children.filter(
-                title__in=[child['short_title'] for child in schema['children']]).all():
+            for origin_slot in origin.children.filter(title=child['short_title']).all():
                 sub_origin_group += origin_slot.children.all()
         create_structure_from_structure_node_schema(child, child_slot, authors, sub_origin_group, argument)
