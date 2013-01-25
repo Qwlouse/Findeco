@@ -51,14 +51,16 @@ class StructureParserTest(TestCase):
 
     def test_turn_into_valid_short_title(self):
         titles = [
-            ("schöner Titel was?", "schoener_Titel_was"),
-            ("viiiiiieeeeeel zuuuuuuu laaaaaaaang", "viiiiiieeeeeel_zuuuu"),
-            ("viel )()()(()()( zu {}{}{}{ lang", "viel_zu_lang"),
-            ("","1"),
-            ("N0body is as L€€+.a$.m3", "N0body_is_as_Lam3")
+            ("schöner Titel was?", "schoener_Titel_was", ["schoener_Titel_was","schoener_Titel_was1"], "schoener_Titel_was2"),
+            ("viiiiiieeeeeel zuuuuuuu laaaaaaaang", "viiiiiieeeeeel_zuuuu", ["viiiiiieeeeeel_zuuuu","viiiiiieeeeeel_zuuu1","viiiiiieeeeeel_zuuu2","viiiiiieeeeeel_zuuu3","viiiiiieeeeeel_zuuu4","viiiiiieeeeeel_zuuu5","viiiiiieeeeeel_zuuu6","viiiiiieeeeeel_zuuu7","viiiiiieeeeeel_zuuu8","viiiiiieeeeeel_zuuu9"], "viiiiiieeeeeel_zuu10"),
+            ("viel )()()(()()( zu {}{}{}{ lang", "viel_zu_lang", ["viel_zu_lang"], "viel_zu_lang1"),
+            ("","1",["1","2","3"],"4"),
+            ("N0body is as L€€+.a$.m3", "N0body_is_as_Lam3", ["N0body_is_as_Lam3"], "N0body_is_as_Lam31")
         ]
-        for t, st in titles:
+        for t, st, _, _ in titles:
             self.assertEqual(turn_into_valid_short_title(t), st)
+        for t, _, st_set, st in titles:
+            self.assertEqual(turn_into_valid_short_title(t, set(st_set)), st)
 
     def test_validate_structure_schema_on_simple_example(self):
         simple = dict(title="foo", short_title="foo", text="und bar und so", children=[])
