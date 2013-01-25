@@ -28,6 +28,7 @@
 from __future__ import division, print_function, unicode_literals
 import re, unicodedata
 from models import Node, Text
+from factory import create_structureNode, create_slot
 
 h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*\s*$", flags=re.MULTILINE)
 general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*$", flags=re.MULTILINE)
@@ -176,3 +177,27 @@ def parse(s, short_title):
         node['children'].append(parse("= %s =\n"%title.strip() + text.strip(), short_title))
 
     return node
+
+def create_structure_from_structure_node_schema(schema, parent_slot, authors, origin_group=[], argument=None):
+    if len(origin_group) > 0 and argument:
+        for origin in origin_group:
+            if origin.title == schema['title'] and origin.text.text == schema['text']:
+                structure = origin
+            else:
+                structure = create_structureNode(long_title=schema['title'], text=schema['text'], authors=authors)
+                parent_slot.append_child(structure)
+                origin.add_derivate(argument, structure)
+    else:
+        structure = create_structureNode(long_title=schema['title'], text=schema['text'], authors=authors)
+        parent_slot.append_child(structure)
+    for child in schema['children']:
+        if child['short_title'] in [i.title for i in structure.children.all()]:
+            child_slot = structure.children.filter(title=child['short_title']).all()[0]
+        else:
+            child_slot = create_slot(child['short_title'])
+            structure.append_child(child_slot)
+        sub_origin_group = []
+        for origin in origin_group:
+            for origin_slot in origin.children.all():
+                sub_origin_group += origin_slot.children.all()
+        create_structure_from_structure_node_schema(child,child_slot,authors,sub_origin_group,argument)
