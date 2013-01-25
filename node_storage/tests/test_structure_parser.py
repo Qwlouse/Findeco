@@ -79,6 +79,20 @@ class StructureParserTest(TestCase):
         """
         s = parse(wiki, "foo")
         self.assertTrue(validate_structure_schema(s))
+        schema = {'short_title': "foo",
+                  'title': "Titel",
+                  'text': "einleitungstext",
+                  'children': [
+                      {'short_title': "slot1",
+                       'title': "slot1",
+                       'text': "text",
+                       'children': []},
+                      {'short_title': "slot2",
+                       'title': "Toller Slot",
+                       'text': "mehr text",
+                       'children': []},
+                      ]}
+        self.assertEqual(s,schema)
 
 class CreateStructureFromStructureNodeSchemaTest(TestCase):
     def setUp(self):
