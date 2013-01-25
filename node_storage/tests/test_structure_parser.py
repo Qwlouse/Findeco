@@ -25,6 +25,10 @@ from django.test import TestCase
 from node_storage.structure_parser import validate_structure_schema
 from ..structure_parser import strip_accents, substitute_umlauts, parse
 from ..structure_parser import remove_unallowed_chars, turn_into_valid_short_title
+from ..structure_parser import create_structure_from_structure_node_schema
+from ..factory import create_user, create_slot
+from ..path_helpers import get_root_node
+from ..models import Node
 
 class StructureParserTest(TestCase):
     def test_strip_accents(self):
@@ -36,6 +40,7 @@ class StructureParserTest(TestCase):
         self.assertEqual(substitute_umlauts("HAẞLOCH"), "HASSLOCH")
         self.assertEqual(substitute_umlauts("Köln"), "Koeln")
         self.assertEqual(substitute_umlauts("Ülm"), "Uelm")
+        self.assertEqual(substitute_umlauts("Ärger"), "Aerger")
 
     def test_remove_unallowed_chars(self):
         self.assertEqual(remove_unallowed_chars("abc()[]{}<>?!.,:;+^`~|$#%def"), "abcdef")
@@ -75,6 +80,45 @@ class StructureParserTest(TestCase):
         s = parse(wiki, "foo")
         self.assertTrue(validate_structure_schema(s))
 
+class CreateStructureFromStructureNodeSchemaTest(TestCase):
+    def setUp(self):
+        self.hugo = create_user("Hugo")
+        self.root = get_root_node()
+        self.slot1 = create_slot("Slot_1")
+        self.root.append_child(self.slot1)
 
+    def test_create_structure_from_structure_node_schema_without_origin_group(self):
+        schema = {'short_title': "Ignored",
+                  'title': "My first structure Node",
+                  'text': "This is the text.",
+                  'children': [
+                      {'short_title': "Layer_1a",
+                       'title': "Layer 1 Heading 1",
+                       'text': "Layer 1, first text.",
+                       'children': []},
+                      {'short_title': "Layer_1b",
+                       'title': "Layer 1 Heading 2",
+                       'text': "Layer 1, second text.",
+                       'children': []},
+                  ]}
+        create_structure_from_structure_node_schema(schema,self.slot1,[self.hugo])
+        node_list = Node.objects.filter(title="My first structure Node").all()
+        self.assertEqual(len(node_list),1)
+        n = node_list[0]
+        self.assertEqual(n.text.text,"This is the text.")
+        slots = n.children.all()
+        self.assertEqual(len(slots),2)
+        self.assertEqual(slots[0].title, "Layer_1a")
+        self.assertEqual(slots[1].title, "Layer_1b")
+        self.assertEqual(len(slots[0].children.all()),1)
+        sub_structure1 = slots[0].children.all()[0]
+        self.assertEqual(sub_structure1.title, "Layer 1 Heading 1")
+        self.assertEqual(sub_structure1.text.text, "Layer 1, first text.")
+        self.assertEqual(len(sub_structure1.children.all()),0)
+        self.assertEqual(len(slots[1].children.all()),1)
+        sub_structure1 = slots[1].children.all()[0]
+        self.assertEqual(sub_structure1.title, "Layer 1 Heading 2")
+        self.assertEqual(sub_structure1.text.text, "Layer 1, second text.")
+        self.assertEqual(len(sub_structure1.children.all()),0)
 
 
