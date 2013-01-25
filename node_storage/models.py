@@ -74,6 +74,7 @@ class Node(models.Model):
         no.save()
 
     def add_derivate(self, argument, derivate):
+        # TODO: Votes übernehmen
         d = Derivation(argument=argument, source=self, derivate=derivate)
         d.save()
 

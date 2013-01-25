@@ -179,25 +179,31 @@ def parse(s, short_title):
     return node
 
 def create_structure_from_structure_node_schema(schema, parent_slot, authors, origin_group=[], argument=None):
+    origin_found = False
     if len(origin_group) > 0 and argument:
         for origin in origin_group:
-            if origin.title == schema['title'] and origin.text.text == schema['text']:
+            if origin.title == schema['title'] and origin.text.text == schema['text'] and\
+               [child['short_title'] for child in schema['children']] == [child.title for child in
+                                                                          origin.children.all()]:
                 structure = origin
-            else:
-                structure = create_structureNode(long_title=schema['title'], text=schema['text'], authors=authors)
-                parent_slot.append_child(structure)
+                origin_found = True
+        if not origin_found:
+            structure = create_structureNode(long_title=schema['title'], text=schema['text'], authors=authors)
+            parent_slot.append_child(structure)
+            for origin in origin_group:
                 origin.add_derivate(argument, structure)
     else:
         structure = create_structureNode(long_title=schema['title'], text=schema['text'], authors=authors)
         parent_slot.append_child(structure)
-    for child in schema['children']:
-        if child['short_title'] in [i.title for i in structure.children.all()]:
-            child_slot = structure.children.filter(title=child['short_title']).all()[0]
+    for i, child in enumerate(schema['children']):
+        if origin_found:
+            child_slot = structure.children.all()[i]
         else:
             child_slot = create_slot(child['short_title'])
             structure.append_child(child_slot)
         sub_origin_group = []
         for origin in origin_group:
-            for origin_slot in origin.children.all():
+            for origin_slot in origin.children.filter(
+                title__in=[child['short_title'] for child in schema['children']]).all():
                 sub_origin_group += origin_slot.children.all()
-        create_structure_from_structure_node_schema(child,child_slot,authors,sub_origin_group,argument)
+        create_structure_from_structure_node_schema(child, child_slot, authors, sub_origin_group, argument)
