@@ -178,7 +178,8 @@ def parse(s, short_title):
 
     return node
 
-def create_structure_from_structure_node_schema(schema, parent_slot, authors, origin_group=[], argument=None):
+def create_structure_from_structure_node_schema(schema, parent_slot, authors, origin_group=None, argument=None):
+    if not origin_group: origin_group = []
     origin_found = False
     if len(origin_group) > 0 and argument:
         for origin in origin_group:
