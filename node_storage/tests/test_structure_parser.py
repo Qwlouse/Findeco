@@ -22,7 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from node_storage.structure_parser import validate_structure_schema
+from node_storage.structure_parser import validate_structure_schema, InvalidWikiStructure
 from ..structure_parser import strip_accents, substitute_umlauts, parse
 from ..structure_parser import remove_unallowed_chars, turn_into_valid_short_title
 from ..structure_parser import create_structure_from_structure_node_schema
@@ -93,6 +93,17 @@ class StructureParserTest(TestCase):
                        'children': []},
                       ]}
         self.assertEqual(s,schema)
+        wiki = """
+        = Titel =
+        einleitungstext
+        === slot1 ===
+        text
+        == Toller Slot § slot2 ==
+        mehr text
+        """
+        self.assertRaises(InvalidWikiStructure,parse,wiki,"foo")
+        wiki = "== Titel =="
+        self.assertRaises(InvalidWikiStructure,parse,wiki,"foo")
 
 class CreateStructureFromStructureNodeSchemaTest(TestCase):
     def setUp(self):
