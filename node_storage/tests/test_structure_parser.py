@@ -23,12 +23,17 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from node_storage.structure_parser import validate_structure_schema
-from ..structure_parser import strip_accents, substitute_umlauts, parse, InvalidWikiStructure
-from ..structure_parser import remove_unallowed_chars, turn_into_valid_short_title
-from ..structure_parser import create_structure_from_structure_node_schema
-from ..factory import create_user, create_slot, create_structureNode, create_textNode, create_argument
+
+from ..factory import create_user, create_slot, create_structureNode
+from ..factory import create_textNode, create_argument
 from ..path_helpers import get_root_node
 from ..models import Node
+from ..structure_parser import strip_accents, substitute_umlauts
+from ..structure_parser import parse, InvalidWikiStructure
+from ..structure_parser import remove_unallowed_chars
+from ..structure_parser import turn_into_valid_short_title
+from ..structure_parser import create_structure_from_structure_node_schema
+
 
 class StructureParserTest(TestCase):
     def test_strip_accents(self):
