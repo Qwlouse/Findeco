@@ -190,24 +190,6 @@ def mark_node(request, path, mark_type):
     mark.save()
     mark.nodes.add(node)
     mark.save()
-
-    ## @jonny: I don't understand what this is for. Seems wrong to me:
-#    if backend.get_similar_path(node, path) != path: #This means it is an argument which wasn't created here
-#        a = backend.Argument()
-#        a.concerns = backend.get_path_parent(node, path)
-#        a.arg_type = node.arg_type
-#        a.parents = node.parents
-#        a.sources = node.sources
-#        a.node_type = node.node_type
-#        a.save()
-#        t = backend.Text()
-#        t.node = a
-#        t.text = node.text_object.text
-#        t.authors = node.text_object.authors
-#        t.save()
-#        node = a
-
-
     return json_response({'markNodeResponse':{}})
 
 
@@ -216,6 +198,28 @@ def store_settings(request):
     # Backend foo
     return json_response({})
 
+@ValidPaths("StructureNode")
 def store_text(request, path):
-    # Backend foo
-    return json_response({})
+    if not 'wikiText' in request.POST:
+        return json_error_response('MissingPostParameter',
+            'storeText is missing the wikiText POST parameter!')
+
+    if not 'argumentType' in request.POST:
+        if 'wikiTextAlternative' in request.POST:
+            return json_error_response('MissingPostParameter',
+            'You cannot use storeText to save a wikiTextAlternative without an argumentType!')
+        # store new structure node
+        new_path = backend.store_structure_node(path, request.POST['wikiText'])
+
+    elif 'wikiTextAlternative' not in request.POST:
+        # store Argument
+        new_path = backend.store_argument(path, request.POST['wikiText'], request.POST['argumentType'])
+
+    else:
+        # store Argument and Derivate of structure Node
+        arg_text = request.POST['wikiText']
+        arg_type = request.POST['argumentType']
+        derivate_wiki_text = request.POST['wikiTextAlternative']
+        new_path = backend.store_derivate(path, arg_text, arg_type, derivate_wiki_text)
+
+    return json_response({'storeTextResponse':{'path':new_path}})
