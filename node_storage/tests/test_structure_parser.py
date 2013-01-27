@@ -2,7 +2,8 @@
 # coding=utf-8
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
+# Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -23,6 +24,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from node_storage.structure_parser import validate_structure_schema
+import re
 
 from ..factory import create_user, create_slot, create_structureNode
 from ..factory import create_textNode, create_argument
@@ -30,10 +32,9 @@ from ..path_helpers import get_root_node
 from ..models import Node
 from ..structure_parser import strip_accents, substitute_umlauts
 from ..structure_parser import parse, InvalidWikiStructure
-from ..structure_parser import remove_unallowed_chars
+from ..structure_parser import remove_unallowed_chars, getHeadingMatcher
 from ..structure_parser import turn_into_valid_short_title
 from ..structure_parser import create_structure_from_structure_node_schema
-
 
 class StructureParserTest(TestCase):
     def test_strip_accents(self):
@@ -56,16 +57,30 @@ class StructureParserTest(TestCase):
 
     def test_turn_into_valid_short_title(self):
         titles = [
-            ("schöner Titel was?", "schoener_Titel_was"),
-            ("viiiiiieeeeeel zuuuuuuu laaaaaaaang", "viiiiiieeeeeel_zuuuu"),
-            ("viel )()()(()()( zu {}{}{}{ lang", "viel_zu_lang"),
-            ("","1"),
-            ("N0body is as L€€+.a$.m3", "N0body_is_as_Lam3")
+            ("schöner Titel was?", "schoener_Titel_was", ["schoener_Titel_was", "schoener_Titel_was1"],
+             "schoener_Titel_was2"),
+            ("viiiiiieeeeeel zuuuuuuu laaaaaaaang", "viiiiiieeeeeel_zuuuu",
+             ["viiiiiieeeeeel_zuuuu", "viiiiiieeeeeel_zuuu1", "viiiiiieeeeeel_zuuu2", "viiiiiieeeeeel_zuuu3",
+              "viiiiiieeeeeel_zuuu4", "viiiiiieeeeeel_zuuu5", "viiiiiieeeeeel_zuuu6", "viiiiiieeeeeel_zuuu7",
+              "viiiiiieeeeeel_zuuu8", "viiiiiieeeeeel_zuuu9"], "viiiiiieeeeeel_zuu10"),
+            ("viel )()()(()()( zu {}{}{}{ lang", "viel_zu_lang", ["viel_zu_lang"], "viel_zu_lang1"),
+            ("", "1", ["1", "2", "3"], "4"),
+            ("N0body is as L€€+.a$.m3", "N0body_is_as_Lam3", ["N0body_is_as_Lam3"], "N0body_is_as_Lam31")
         ]
-        for t, st in titles:
+        for t, st, _, _ in titles:
             self.assertEqual(turn_into_valid_short_title(t), st)
+        for t, _, st_set, st in titles:
+            self.assertEqual(turn_into_valid_short_title(t, set(st_set)), st)
 
-    def test_validate_structure_schema_on_simple_example(self):
+    def test_getHeadingMatcher(self):
+        s = "1, 6"
+        self.assertEqual(getHeadingMatcher(level=0),re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s]+)\s*)?=*\s*$"%s, flags=re.MULTILINE))
+        for level in range(1,7):
+            s = "%d"%level
+            self.assertEqual(getHeadingMatcher(level=level),re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s]+)\s*)?=*\s*$"%s, flags=re.MULTILINE))
+        self.assertRaises(ValueError,getHeadingMatcher,level=7)
+
+    def test_validate_structure_schema_on_simple_example_with_slot(self):
         simple = dict(title="foo", short_title="foo", text="und bar und so", children=[])
         self.assertTrue(validate_structure_schema(simple))
 
@@ -355,7 +370,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
         self.assertEqual(sub_structure1.text.text, "Layer 2 text.")
         self.assertEqual(len(sub_structure1.children.all()),0)
         self.assertEqual(len(slots[1].children.all()),2)
-        sub_structure2 = slots[1].children.all()[0]
+        sub_structure2 = slots[1].children.all()[1]
         self.assertNotEqual(sub_structure2,self.text2)
         self.assertEqual(sub_structure2.title, "Layer 2 second heading")
         self.assertEqual(sub_structure2.text.text, "Layer 2 text 2 but changed.")
