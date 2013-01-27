@@ -72,14 +72,6 @@ class StructureParserTest(TestCase):
         for t, _, st_set, st in titles:
             self.assertEqual(turn_into_valid_short_title(t, set(st_set)), st)
 
-    def test_getHeadingMatcher(self):
-        s = "1, 6"
-        self.assertEqual(getHeadingMatcher(level=0),re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s]+)\s*)?=*\s*$"%s, flags=re.MULTILINE))
-        for level in range(1,7):
-            s = "%d"%level
-            self.assertEqual(getHeadingMatcher(level=level),re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s]+)\s*)?=*\s*$"%s, flags=re.MULTILINE))
-        self.assertRaises(ValueError,getHeadingMatcher,level=7)
-
     def test_validate_structure_schema_on_simple_example_with_slot(self):
         simple = dict(title="foo", short_title="foo", text="und bar und so", children=[])
         self.assertTrue(validate_structure_schema(simple))
