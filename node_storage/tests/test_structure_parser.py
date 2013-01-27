@@ -81,6 +81,40 @@ class StructureParserTest(TestCase):
         self.assertTrue(validate_structure_schema(s))
         self.assertEqual(s,schema)
 
+    def test_structure_parser_processes_short_title(self):
+        wiki = """=Titel=
+        == Slot § shört, title!#$|~ ==
+        """
+        schema = {
+            'short_title':"foo", 'title':"Titel", 'text':"",
+            'children': [
+                {   'short_title':"shoert_title", 'title':"Slot", 'text':"",
+                    'children': []
+                }
+            ]
+        }
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s,schema)
+
+    def test_structure_parser_turns_title_into_short_title(self):
+        wiki = """=Titel=
+        == ..::Very(!) long, slot title with special characters::..  ==
+        """
+        schema = {
+            'short_title':"foo", 'title':"Titel", 'text':"",
+            'children': [
+                {   'short_title':"Very_long_slot_title",
+                    'title':"..::Very(!) long, slot title with special characters::..",
+                    'text':"",
+                    'children': []
+                }
+            ]
+        }
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s,schema)
+
     def test_structure_parser_with_single_node_example_strips_whitespace(self):
         wiki = """
 

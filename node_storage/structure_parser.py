@@ -92,7 +92,7 @@ def getHeadingMatcher(level=0):
         s = "1, 6"
     else:
         raise ValueError("level must be between 1 and 6 or 0, but was %d."%level)
-    return re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s]+)\s*)?=*\s*$"%s, flags=re.MULTILINE)
+    return re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s][^=§]*))?=*\s*$"%s, flags=re.MULTILINE)
 
 
 
