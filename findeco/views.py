@@ -37,6 +37,7 @@ from findeco.view_helpers import create_graph_data_node_for_structure_node
 import node_storage as backend
 from .paths import parse_suffix
 from .view_helpers import ValidPaths, json_error_response, json_response
+from .view_helpers import store_structure_node, store_argument, store_derivate
 from .view_helpers import create_index_node_for_slot, create_user_info, build_text
 from .view_helpers import create_user_settings, create_index_node_for_argument
 
@@ -209,17 +210,17 @@ def store_text(request, path):
             return json_error_response('MissingPostParameter',
             'You cannot use storeText to save a wikiTextAlternative without an argumentType!')
         # store new structure node
-        new_path = backend.store_structure_node(path, request.POST['wikiText'])
+        new_path = store_structure_node(path, request.POST['wikiText'])
 
     elif 'wikiTextAlternative' not in request.POST:
         # store Argument
-        new_path = backend.store_argument(path, request.POST['wikiText'], request.POST['argumentType'])
+        new_path = store_argument(path, request.POST['wikiText'], request.POST['argumentType'])
 
     else:
         # store Argument and Derivate of structure Node
         arg_text = request.POST['wikiText']
         arg_type = request.POST['argumentType']
         derivate_wiki_text = request.POST['wikiTextAlternative']
-        new_path = backend.store_derivate(path, arg_text, arg_type, derivate_wiki_text)
+        new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text)
 
     return json_response({'storeTextResponse':{'path':new_path}})

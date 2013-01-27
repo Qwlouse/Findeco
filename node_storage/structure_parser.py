@@ -206,12 +206,3 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors, or
             for origin_slot in origin.children.filter(title=child['short_title']).all():
                 sub_origin_group += origin_slot.children.all()
         create_structure_from_structure_node_schema(child, child_slot, authors, sub_origin_group, argument)
-
-def store_structure_node(path, wiki_text):
-    return None
-
-def store_argument(path, arg_text, arg_type):
-    return None
-
-def store_derivate(path, arg_text, arg_type, derivate_wiki_text):
-    return None

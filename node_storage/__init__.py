@@ -30,4 +30,4 @@ from models import Node, Vote, SpamFlag, Argument, Text, NodeOrder
 from path_helpers import get_node_for_path, get_favorite_if_slot
 from path_helpers import get_arguments_for, get_ordered_children_for
 from path_helpers import IllegalPath, get_root_node, get_ordered_arguments_for
-from structure_parser import store_structure_node, store_argument, store_derivate
+from structure_parser import parse, create_structure_from_structure_node_schema

@@ -139,3 +139,12 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_p
         originGroup=[o.rstrip('/') for o in origin_group]
     )
     return graph_data_node
+
+def store_structure_node(path, wiki_text):
+    return None
+
+def store_argument(path, arg_text, arg_type):
+    return None
+
+def store_derivate(path, arg_text, arg_type, derivate_wiki_text):
+    return None
