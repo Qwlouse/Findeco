@@ -201,6 +201,10 @@ def store_settings(request):
 
 @ValidPaths("StructureNode")
 def store_text(request, path):
+    if not request.user.is_authenticated:
+        return json_error_response('NotAuthenticated', "You need to be authenticated to store text.")
+    user = request.user
+
     if not 'wikiText' in request.POST:
         return json_error_response('MissingPostParameter',
             'storeText is missing the wikiText POST parameter!')
@@ -210,7 +214,7 @@ def store_text(request, path):
             return json_error_response('MissingPostParameter',
             'You cannot use storeText to save a wikiTextAlternative without an argumentType!')
         # store new structure node
-        new_path = store_structure_node(path, request.POST['wikiText'])
+        new_path = store_structure_node(path, request.POST['wikiText'], user)
 
     elif 'wikiTextAlternative' not in request.POST:
         # store Argument

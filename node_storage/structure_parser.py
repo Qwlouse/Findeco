@@ -206,3 +206,5 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors, or
             for origin_slot in origin.children.filter(title=child['short_title']).all():
                 sub_origin_group += origin_slot.children.all()
         create_structure_from_structure_node_schema(child, child_slot, authors, sub_origin_group, argument)
+    return structure
+
