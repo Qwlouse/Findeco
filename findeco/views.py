@@ -108,10 +108,18 @@ def load_text(request, path):
                            'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
                            'isFollowing': favorite.votes.filter(user=request.user.id).count()>0,
                            'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
+    isFollowing = 0
+    v = node.votes.filter(user=request.user.id)
+    if v.count() > 0:
+        v = v[0]
+        isFollowing = 1 # at least transitive follow
+        if v.nodes.order_by('id')[0] == node:
+            isFollowing = 2 # explicit follow
+
     return json_response({
         'loadTextResponse':{
             'paragraphs': paragraphs,
-            'isFollowing': node.votes.filter(user=request.user.id).count()>0}})
+            'isFollowing': isFollowing}})
 
 def load_user_info(request, name):
     try:

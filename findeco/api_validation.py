@@ -69,7 +69,7 @@ microblogNode_schema = {
 textNode_schema = {
     'wikiText':string,
     'path':string,
-    'isFollowing':boolean,
+    'isFollowing':integer,
     'authorGroup': authorGroup_schema
 }
 loadGraphDataResponse_schema = {
