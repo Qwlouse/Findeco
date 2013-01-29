@@ -208,6 +208,36 @@ h1:hover,h2:hover,h3:hover {
     /* Opera 9+, IE 9+ */
     opacity: 0.8;
 }
+
+.argprocontra {
+    width: 100%;
+}
+
+.argpro {
+    width: 50%;
+    overflow: auto;
+    float: left;
+    list-style-image: url('../images/button.plus.png');
+    list-style-position: inside;
+    padding: 0;
+}
+
+.argneutral {
+    width: 100%;
+    list-style-image: url('../images/button.circle.png');
+    list-style-position: inside;
+    padding: 0;
+}
+
+.argcontra {
+    width: 50%;
+    overflow: auto;
+    float: left;
+    list-style-image: url('../images/button.minus.png');
+    list-style-position: inside;
+    padding: 0;
+}
+
 .box {
     position: absolute;
     top: 25px;

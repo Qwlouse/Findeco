@@ -247,8 +247,8 @@ In return you get a JSON response from the server.
 <b><a name="ValueIsFollowing">Value::isFollowing</a></b>
 <table><tbody>
     <tr><td>Parametername:</td><td>isFollowing</td></tr>
-    <tr><td>Type:</td><td>Boolean</td></tr>
-    <tr><td>Description:</td><td>Shows wether the currently logged in user is following a node. </td></tr>
+    <tr><td>Type:</td><td>Integer</td></tr>
+    <tr><td>Description:</td><td>Shows wether the currently logged in user is following a node. 0 for not following, 1 for transitive following (user is following a node above this node), 2 for following.</td></tr>
     <tr><td>Supported Values:</td><td>Output only.</td></tr>
 </tbody></table>
 
@@ -374,6 +374,15 @@ available. </td></tr>
     <tr><td>Type:</td><td>String</td></tr>
     <tr><td>Description:</td><td>The username to login for use of the API.</td></tr>
     <tr><td>Supported Values:</td><td>Any user that is registered in the database.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueUserRights">Value::userRights</a></b>
+<table><tbody>
+    <tr><td>Parametername:</td><td>userRights</td></tr>
+    <tr><td>Type:</td><td>Integer</td></tr>
+    <tr><td>Description:</td><td>The userRights number. Following unix-filepermissions: 1 = allowed to write new posts, 2 = allowed to vote, 4 = moderator, and any summary combination thereof.</td></tr>
+    <tr><td>Supported Values:</td><td>Any sum of valid permissions.</td></tr>
 </tbody></table>
 
 <br>
@@ -617,6 +626,7 @@ available. </td></tr>
 <b><a name="JSONuserSettings">JSON::userSettings</a></b>
 <table><tbody>
     <tr><td>Content:</td><td><a href="#JSONblockedUsers">JSON::blockedUsers</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueUserRights">Value::userRights</a></td></tr>
 </tbody></table>
 <br>
 <br>

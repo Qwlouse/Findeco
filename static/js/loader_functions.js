@@ -16,17 +16,19 @@ function previous() {
         return;
     }
     position--;
+    location.hash = '#' + position;
     loadPosition();
 }
 
 function next() {
-    var stateobj = {"data":1};
-    window.history.pushState(stateobj,"blubb","test/index.html");
-    return;
+    // var stateobj = {"data":1};
+    // window.history.pushState(stateobj,"blubb","test/index.html");
+    // return;
     if ( position == endPosition ) {
         return;
     }
     position++;
+    location.hash = '#' + position;
     loadPosition();
 }
 
@@ -39,13 +41,17 @@ function load(){
         $('#loading').hide();
     });
     
-    center.show('center');
+    if ( location.hash.length == 2 ) {
+        position = parseInt(location.hash.replace(/#/,''));
+    }
+    
     left.show('left');
+    center.show('center');
     right.show('right');
 
-    $.get('/Codebar/tests.php?.json_loadText/topic.1/subtopic.1',function(json){
-        console.log(json,this);
-    },'json');
+    /*$.get('/Codebar/tests.php?.json_loadText/topic.1/subtopic.1',function(json){
+        //console.log(json,this);
+    //},'json');*/
 
     loadPosition();
 }
@@ -102,13 +108,23 @@ function loadPosition() {
         break;
         case 5:
             loadMicroBlogging();
+            loadCenterData(jsonData.subSubSubSubTopicOverview);
+            appendCenterData(jsonData.subSubSubTopicArguments);
+            appendLeftData(jsonData.topicList);
+            appendLeftData(jsonData.subTopicList);
+            appendLeftData(jsonData.subSubTopicList);
+            appendLeftData(jsonData.subSubSubTopicList);
+            loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft","Abwasser"]);
+        break;
+        case 6:
+            loadMicroBlogging();
             loadCenterData(jsonData.subSubSubTopicList);
             appendLeftData(jsonData.topicList);
             appendLeftData(jsonData.subTopicList);
             appendLeftData(jsonData.subSubTopicList);
             loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
         break;
-        case 6:
+        case 7:
             loadMicroBlogging();
             loadCenterData(jsonData.subSubSubTopicList);
             appendCenterData(jsonData.subSubSubTopicOverview);
@@ -117,9 +133,19 @@ function loadPosition() {
             appendLeftData(jsonData.subSubTopicList);
             loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
         break;
+        case 8:
+            loadMicroBlogging();
+            loadCenterData(jsonData.subSubSubTopicList);
+            appendCenterData(jsonData.subSubSubTopicArguments);
+            appendCenterData(jsonData.subSubSubTopicOverview);
+            appendLeftData(jsonData.topicList);
+            appendLeftData(jsonData.subTopicList);
+            appendLeftData(jsonData.subSubTopicList);
+            loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
+        break;
     }
     
-    endPosition = 6;
+    endPosition = 8;
     
     document.getElementById('position').innerHTML = position + '/' + endPosition;
     
@@ -129,27 +155,22 @@ function loadPosition() {
 
 function loadCenterData(json) {
     center.empty();
-    appendCenterData(json,true);
+    appendCenterData(json);
 }
 
-function appendCenterData(json, append) {
-    if ( append == null || append == undefined ) {
-        append = true;
-    } else {
-        append = null;
-    }
+function appendCenterData(json) {
     var data = new ClassData();
     data.load(json);
-    center.printData(data, append);
+    center.printData(data);
 }
 
 function appendLeftData(json) {
-    var box4 = BoxRegister.newBox();
-    box4.show('swap',left);
+    var box = BoxRegister.newBox();
+    box.show('swap',left);
     
     data = new ClassData();
     data.load(json);
-    box4.printData(data);
+    box.printData(data);
 }
 
 function loadNavigation(json) {
@@ -162,7 +183,7 @@ function loadNavigation(json) {
 function loadMicroBlogging() {
     right.empty();
     
-    json = {"loadMicroBloggingResponse":[{"microBlogText":"Testblog 1.","microBlogID":1,"microBlogTime":1357746204,"authorGroup":[{"displayName":"author1"}]},{"microBlogText":"Testblog 2.","microBlogID":2,"microBlogTime":1357746304,"authorGroup":[{"displayName":"author2"}]}]};
+    json = {"loadMicrobloggingResponse":[{"microblogText":"Testblog 1.","microblogID":1,"microblogTime":1357746204,"authorGroup":[{"displayName":"author1"}]},{"microblogText":"Testblog 2.","microblogID":2,"microblogTime":1357746304,"authorGroup":[{"displayName":"author2"}]}]};
     data = new ClassData();
     data.load(json);
     right.printData(data);
@@ -188,6 +209,12 @@ var jsonData = {
         ,{"wikiText":"<h2>Abwasser</h2>Abwasser ist ein Wertstoff und wir streben einen ressourcenschonenden Umgang mit den wertvollen Inhaltsstoffen an. Wir treten für die Abschaffung des Anschlusszwanges für häusliche Abwässer an das Abwassernetz ein, wenn die Einhaltung der Ablaufparameter nach der EU-Rahmenrichtlinie eigenverantwortlich sichergestellt wird. Industrielle und die von Krankenhäusern stammende Abwässer sind geeignet vorzubehandeln. Vermischung mit häuslichen Abwässern ist zu vermeiden.","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}
         ,{"wikiText":"<h2>Gewässerschutz</h2>Die Wasserressourcen sind von Beeinträchtigungen freizuhalten. In allen Bereichen müssen Eingriffe in den Boden auf ihre Verträglichkeit mit dem Gewässerschutz hin überprüft und gegebenenfalls angepasst werden. ","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}
     ],"isFollowing":1}}
+    ,"subSubSubTopicArguments" : {"loadIndexResponse":[
+        {"shortTitle":"pro","index":1,"fullTitle":"Absolut geil!","authorGroup":[{"displayName":"author1"},{"displayName":"author2"}]}
+        ,{"shortTitle":"pro","index":2,"fullTitle":"Voll toll!","authorGroup":[{"displayName":"author1"},{"displayName":"author2"}]}
+        ,{"shortTitle":"contra","index":1,"fullTitle":"Alle doof außer Mama!","authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}
+        ,{"shortTitle":"neutral","index":1,"fullTitle":"Irgendwie fällt mir dazu nichts ein...","authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}
+    ]}
     ,"imprint" : {"loadTextResponse":{"paragraphs":[{"wikiText":"<h2>Impressum</h2>Angaben gemäß § 5 TMG:<br>\r\n<br>\r\nKrohlas & Wingert IT GbR<br>\r\n<br>\r\nHauptstraße 91<br>\r\n<br>\r\n76706 Dettenheim<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\nVertreten durch: Sven Krohlas, Justus Wingert<br>\r\n<br>\r\nIhr Ansprechpartner für Fragen jeder Art: Justus Wingert <a href=\"mailto:justus_wingert@web.de\">justus_wingert@web.de</a>","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}],"isFollowing":1}}
 };
 
