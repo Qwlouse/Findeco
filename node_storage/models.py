@@ -80,7 +80,7 @@ class Node(models.Model):
 
 
     def __unicode__(self):
-        return "id=%d, type=%s"%(self.id, self.node_type)
+        return "id=%d, title=%s"%(self.id, self.title)
 
     def get_index(self, parent):
         """
@@ -96,6 +96,9 @@ class Node(models.Model):
         parent = self.parents.all()[0]
         return parent.get_a_path() +\
                (self.title if self.node_type == 'slot' else "." + str(self.get_index(parent)) + "/")
+
+    def get_follows(self):
+        return self.votes.count()
 
     def get_unfollows(self):
         return User.objects.filter(vote__nodes__in=self.sources.all()).exclude(vote__nodes__in=[self]).distinct().count()
@@ -128,7 +131,7 @@ class Text(models.Model):
     )
 
     def __unicode__(self):
-        return "id=%d, text=%s"%(self.id, self.text)
+        return "id=%d, text=%s"%(self.id, self.text[:min(len(self.text), 30)])
 
 class Derivation(models.Model):
     derivate=models.ForeignKey(Node, related_name='source_order_set')
@@ -176,6 +179,9 @@ class Vote(models.Model):
         Node,
         related_name='votes'
     )
+
+    def head(self):
+        return self.nodes.order_by('id').all()[0]
 
     def __unicode__(self):
         return "id=%d, user=%s"%(self.id, self.user.username)
