@@ -222,7 +222,7 @@ def store_text(request, path):
             return json_error_response('MissingPostParameter',
             'You cannot use storeText to save a wikiTextAlternative without an argumentType!')
         # store new structure node
-        new_path = store_structure_node(path, request.POST['wikiText'], user)
+        _, new_path = store_structure_node(path, request.POST['wikiText'], user)
 
     elif 'wikiTextAlternative' not in request.POST:
         # store Argument
@@ -233,6 +233,6 @@ def store_text(request, path):
         arg_text = request.POST['wikiText']
         arg_type = request.POST['argumentType']
         derivate_wiki_text = request.POST['wikiTextAlternative']
-        new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text)
+        new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text, user)
 
     return json_response({'storeTextResponse':{'path':new_path}})

@@ -339,7 +339,9 @@ class StoreStructureNodeTest(TestCase):
         self.slot.append_child(self.text1)
 
     def test_store_valid_path(self):
-        self.assertEqual(store_structure_node("Flopp.1","= Bla =\nText\n== Blubb ==\nText 2",self.mustermann),"Flopp.2")
+        node, path = store_structure_node("Flopp.1","= Bla =\nText\n== Blubb ==\nText 2",self.mustermann)
+        self.assertEqual(node.title,"Bla")
+        self.assertEqual(path,"Flopp.2")
         self.assertEqual(len(self.slot.children.all()),2)
         self.assertEqual(self.slot.children.all()[1].title,"Bla")
         self.assertEqual(self.slot.children.all()[1].text.text,"Text")
@@ -349,8 +351,9 @@ class StoreStructureNodeTest(TestCase):
         self.assertIn(self.mustermann, self.slot.children.all()[1].text.authors.all())
 
     def test_store_non_existent_path(self):
-        self.assertEqual(store_structure_node("Flopp.3456", "= Bla =\nText\n== Blubb ==\nText 2", self.mustermann),
-            "Flopp.2")
+        node, path = store_structure_node("Flopp.4576","= Bla =\nText\n== Blubb ==\nText 2",self.mustermann)
+        self.assertEqual(node.title,"Bla")
+        self.assertEqual(path,"Flopp.2")
         self.assertEqual(len(self.slot.children.all()),2)
         self.assertEqual(self.slot.children.all()[1].title,"Bla")
         self.assertEqual(self.slot.children.all()[1].text.text,"Text")
