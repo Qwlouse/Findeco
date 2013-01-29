@@ -72,6 +72,27 @@ class NodeTest(TestCase):
         self.assertIn(no[0], n.derivative_order_set.all())
         self.assertIn(no[0], d.source_order_set.all())
 
+    def test_add_derivate_with_votes(self):
+        n = create_structureNode("Source", authors=[self.hans])
+        m = create_vote(self.hans, [n])
+        d = create_structureNode("Derivate", authors=[self.hans])
+        a = create_argument()
+        n.add_derivate(a, d)
+
+        self.assertIn(d, n.derivates.all())
+        self.assertIn(n, d.sources.all())
+
+        no = Derivation.objects.filter(source=n, derivate=d)
+        self.assertTrue(no.count() == 1)
+        self.assertEqual(no[0].argument, a)
+
+        self.assertIn(no[0], n.derivative_order_set.all())
+        self.assertIn(no[0], d.source_order_set.all())
+
+        self.assertIn(n, m.nodes.all())
+        self.assertIn(d, m.nodes.all())
+        self.assertEqual(m.nodes.count(),2)
+
     def test_get_unfollows_on_node_without_sources_returns_0(self):
         self.assertEqual(self.root.get_unfollows(), 0)
 

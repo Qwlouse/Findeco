@@ -264,10 +264,10 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
         self.textnode32.add_derivate(create_argument(),self.textnode32d)
         create_vote(self.hans, [self.textnode32, self.textnode32d])
         self.slot3.append_child(self.textnode33)
-        create_vote(self.hans, [self.textnode33])
         self.textnode33d = create_textNode('Langweilig3 anders', authors=[self.hans, self.hugo])
         self.slot3.append_child(self.textnode33d)
         self.textnode33.add_derivate(create_argument(),self.textnode33d)
+        create_vote(self.hans, [self.textnode33])
         self.nodes = [self.textnode31, self.textnode32, self.textnode32d, self.textnode33, self.textnode33d]
         self.authorGroups = [[create_user_info(self.hans)], [create_user_info(self.hugo)],
                              [create_user_info(self.hans), create_user_info(self.hugo)],

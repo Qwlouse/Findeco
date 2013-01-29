@@ -74,10 +74,10 @@ class Node(models.Model):
         no.save()
 
     def add_derivate(self, argument, derivate):
-        # TODO: Votes übernehmen
         d = Derivation(argument=argument, source=self, derivate=derivate)
         d.save()
-
+        for vote in Vote.objects.filter(nodes=self).all():
+            vote.nodes.add(d.derivate)
 
     def __unicode__(self):
         return "id=%d, title=%s"%(self.id, self.title)
