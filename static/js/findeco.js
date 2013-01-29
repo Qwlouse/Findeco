@@ -1,5 +1,6 @@
 var boxCount = 0;
 var globalData;
+var blablub;
 
 function ClassController() {}
 function ClassData() {}
@@ -20,12 +21,14 @@ ClassController.prototype.load = function(target) {
 }
 
 ClassController.prototype.stateHandler = function(event) {
-    console.log(event,event.originalEvent.state);
+    // console.log(event,event.originalEvent.state);
 }
 
 ClassData.prototype.load = function(data) {
     this.html = $('<div>');
     this.html.addClass('innerContent');
+    
+    // console.log(data);
     
     for ( d in data ) {
         if ( d == 'loadIndexResponse' ) {
@@ -40,26 +43,47 @@ ClassData.prototype.load = function(data) {
     }
 };
 
-ClassData.prototype.loadIndexResponse = function(data) {
-    if ( this.html.children('.indexResponse')[0] == undefined )  {
-        $('<div>')
-            .addClass('indexResponse')
-            .appendTo(this.html);
-    }
+ClassData.prototype.loadArgumentResponse = function(data) {
+    this.type = 'argument';
+    
+    var procontra = $('<div>')
+        .addClass('argprocontra')
+        .appendTo(this.html);
+    var arguments = {};
+    arguments['pro'] = $('<ul>')
+        .addClass('argpro')
+        .appendTo(procontra);
+    arguments['neutral']= $('<ul>')
+        .addClass('argneutral')
+        .appendTo(this.html);
+    arguments['contra'] = $('<ul>')
+        .addClass('argcontra')
+        .appendTo(procontra);
+    
+    $('<br>').appendTo(procontra);
+    
     for ( d in data ) {
-        $('<p>' + data[d].fullTitle + '</p>').appendTo(this.html.children('.indexResponse')[0]);
+        $('<li>' + data[d].fullTitle + '</li>').appendTo(arguments[data[d].shortTitle]);
+    }
+}
+
+ClassData.prototype.loadIndexResponse = function(data) {
+    this.type = 'index';
+    
+    for ( d in data ) {
+        switch ( data[d].shortTitle ) {
+            case 'pro': case 'neutral': case 'contra': this.loadArgumentResponse(data); return;
+            default:
+                $('<p>' + data[d].fullTitle + '</p>').appendTo(this.html);
+        }
     }
 };
 
 ClassData.prototype.loadTextResponse = function(data) {
-    if ( this.html.children('.textResponse')[0] == undefined )  {
-        $('<div>')
-            .addClass('textResponse')
-            .appendTo(this.html);
-    }
+    this.type = 'text';
     
     for ( p in data['paragraphs'] ) {
-        $('<p>' + data['paragraphs'][p].wikiText + '</p>').appendTo(this.html.children('.textResponse')[0]);
+        $('<p>' + data['paragraphs'][p].wikiText + '</p>').appendTo(this.html);
     }
 };
 
@@ -87,6 +111,10 @@ ClassData.prototype.getJQueryObject = function() {
     return this.html;
 }
 
+ClassData.prototype.getType = function() {
+    return this.type;
+}
+
 ClassHelper.prototype.getId = function(string) {
     var search = /(\d+)/;
     var result = search.exec(string);
@@ -111,18 +139,51 @@ ClassMain.prototype.load = function(element) {
     }
 };
 
-ClassBox.prototype.printData = function(data,append) {
-    if ( append == null || append == undefined ) {
-        this.element.empty();
+ClassBox.prototype.addButtons = function() {
+    var arguments = this.element.children('div.arguments');
+    var text = this.element.children('div.text');
+    
+    $('<div style="margin-bottom: 10px;">Zeige Argumente</div>')
+        .addClass('button')
+        .appendTo(arguments);
+    $('<div style="margin-bottom: 10px;">Zeige Text</div>')
+        .addClass('button')
+        .appendTo(text);
+}
+
+ClassBox.prototype.printData = function(data) {
+    var target = this.element;
+    switch ( data.getType() ) {
+        case 'index':
+            target = this.element.children('div.indizes');
+        break;
+        case 'text':
+            target = this.element.children('div.text');
+        break;
+        case 'argument':
+            target = this.element.children('div.arguments');
+        break;
     }
-    this.element.append(data.getJQueryObject());
+    
+    if ( this.element.parent().hasClass('left') ) {
+        var target = this.element;
+    }
+    target.empty();
+    
+    data.getJQueryObject().appendTo(target);
 }
 
 ClassBox.prototype.empty = function() {
-    this.element.empty();
+    if ( this.type == 'center' ) {
+        this.element.children().empty();
+        this.addButtons();
+    } else {
+        this.element.empty();
+    }
 }
 
 ClassBox.prototype.show = function(position,container) {
+    this.type = position;
     if ( container != null ) {
         this.element.appendTo(container.element)
     } else {
@@ -130,11 +191,25 @@ ClassBox.prototype.show = function(position,container) {
         this.element.addClass('box');
     }
     
-    
     if ( position != null ) {
         this.element.addClass(position);
     }
-    if ( position == 'swap' ) {
+    
+    if ( position == 'center' ) {
+        $('<div>')
+            .addClass('indizes')
+            .appendTo(this.element);
+        $('<div>')
+            .addClass('arguments')
+            .appendTo(this.element);
+        $('<div>')
+            .addClass('text')
+            .appendTo(this.element);
+        
+        this.addButtons();
+        
+        // console.log(this.element,this.element.children());
+    } else if ( position == 'swap' ) {
         $('<p>' + this.id + '</p>').appendTo(this.element);
         this.blind = $('<div id="boxswap' + this.id + '" class="blind">');
         this.blind.appendTo(container.element);
