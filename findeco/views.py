@@ -226,7 +226,7 @@ def store_text(request, path):
 
     elif 'wikiTextAlternative' not in request.POST:
         # store Argument
-        new_path = store_argument(path, request.POST['wikiText'], request.POST['argumentType'])
+        new_path = store_argument(path, request.POST['wikiText'], request.POST['argumentType'], user)
 
     else:
         # store Argument and Derivate of structure Node

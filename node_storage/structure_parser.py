@@ -180,6 +180,17 @@ def parse(s, short_title):
     return node
 
 
+def get_title_from_text(text):
+    #make sure we start with a heading 1
+    m = h1_start.match(text)
+    if m :
+        title = m.groups("title")[0]
+        title = title.partition("§")[0] # silently remove attempt to set short_title in H1
+        return title.strip()
+    else :
+        raise InvalidWikiStructure('Must start with H1 heading to set title')
+
+
 def create_structure_from_structure_node_schema(schema, parent_slot, authors, origin_group=None, argument=None):
     if not origin_group: origin_group = []
     origin_found = False

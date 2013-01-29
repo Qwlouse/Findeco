@@ -28,7 +28,7 @@ from node_storage.factory import create_user, create_slot, create_textNode, crea
 from ..api_validation import userInfoValidator, indexNodeValidator, userSettingsValidator
 from ..view_helpers import create_index_node_for_slot, create_index_node_for_argument
 from ..view_helpers import create_user_info, create_user_settings, create_graph_data_node_for_structure_node
-from ..view_helpers import store_structure_node
+from ..view_helpers import store_structure_node, store_argument
 
 class CreateUsersInfoTest(TestCase):
     def setUp(self):
@@ -346,12 +346,32 @@ class StoreStructureNodeTest(TestCase):
         self.assertEqual(self.slot.children.all()[1].children.all()[0].title,"Blubb")
         self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].title,"Blubb")
         self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].text.text,"Text 2")
+        self.assertTrue(self.mustermann in self.slot.children.all()[1].text.authors.all())
 
     def test_store_non_existent_path(self):
-        self.assertEqual(store_structure_node("Flopp.3456","= Bla =\nText\n== Blubb ==\nText 2",self.mustermann),"Flopp.2")
+        self.assertEqual(store_structure_node("Flopp.3456", "= Bla =\nText\n== Blubb ==\nText 2", self.mustermann),
+            "Flopp.2")
         self.assertEqual(len(self.slot.children.all()),2)
         self.assertEqual(self.slot.children.all()[1].title,"Bla")
         self.assertEqual(self.slot.children.all()[1].text.text,"Text")
         self.assertEqual(self.slot.children.all()[1].children.all()[0].title,"Blubb")
         self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].title,"Blubb")
         self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].text.text,"Text 2")
+        self.assertTrue(self.mustermann in self.slot.children.all()[1].text.authors.all())
+
+class StoreArgumentTest(TestCase):
+    def setUp(self):
+        self.root = get_root_node()
+        self.mustermann = create_user("Mustermann")
+        self.slot = create_slot("Flopp")
+        self.root.append_child(self.slot)
+        self.text1 = create_textNode("Initial Text","Dumdidum",[self.mustermann])
+        self.slot.append_child(self.text1)
+
+    def test_store_valid_path(self):
+        self.assertEqual(store_argument("Flopp.1","= Avast =\nAgainst it!","con",self.mustermann),"Flopp.1.con.1")
+        self.assertEqual(len(self.text1.arguments.all()),1)
+        self.assertEqual(self.text1.arguments.all()[0].title,"Avast")
+        self.assertEqual(self.text1.arguments.all()[0].text.text,"= Avast =\nAgainst it!")
+        self.assertEqual(self.text1.arguments.all()[0].arg_type,"con")
+        self.assertTrue(self.mustermann in self.text1.arguments.all()[0].text.authors.all())

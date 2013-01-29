@@ -26,6 +26,7 @@ import json
 
 import node_storage as backend
 from node_storage import Vote, get_node_for_path
+from node_storage.factory import create_argument
 from node_storage.models import ArgumentOrder, NodeOrder
 from node_storage.path_helpers import get_good_path_for_structure_node
 from .paths import parse_suffix
@@ -149,8 +150,10 @@ def store_structure_node(path, wiki_text, author):
     return get_good_path_for_structure_node(structure_node, slot, slot_path)
 
 
-def store_argument(path, arg_text, arg_type):
-    return None
+def store_argument(path, arg_text, arg_type, author):
+    node = get_node_for_path(path)
+    node.append_argument(create_argument(arg_type,backend.get_title_from_text(arg_text),arg_text,[author]))
+    return path+"."+arg_type+"."+str(node.arguments.count())
 
 def store_derivate(path, arg_text, arg_type, derivate_wiki_text):
     return None
