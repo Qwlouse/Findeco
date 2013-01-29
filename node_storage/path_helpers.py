@@ -72,10 +72,19 @@ def get_favorite_if_slot(node):
     """
     Returns the favorite child if given a slot and returns node otherwise.
     """
-    if node.node_type == 'slot':
+    if node.node_type == 's':
         return node.children.annotate(num_votes=Count('votes')).order_by('-num_votes', '-pk')[0]
     else:
         return node
+
+SHORT_ARG_TYPES = {
+    'pro':'p',
+    'neut':'n',
+    'con':'c',
+    'p':'p',
+    'n':'n',
+    'c':'c'
+}
 
 def get_arguments_for(node, arg_type='all'):
     """
@@ -84,7 +93,7 @@ def get_arguments_for(node, arg_type='all'):
     """
     order = ArgumentOrder.objects.filter(node=node).prefetch_related('argument')
     if arg_type != 'all':
-        return [i.argument for i in order if i.argument.arg_type == arg_type]
+        return [i.argument for i in order if i.argument.arg_type == SHORT_ARG_TYPES[arg_type]]
     else:
         return [i.argument for i in order]
 

@@ -376,7 +376,7 @@ class StoreArgumentTest(TestCase):
         self.assertEqual(len(self.text1.arguments.all()),1)
         self.assertEqual(self.text1.arguments.all()[0].title,"Avast")
         self.assertEqual(self.text1.arguments.all()[0].text.text,"= Avast =\nAgainst it!")
-        self.assertEqual(self.text1.arguments.all()[0].arg_type,"con")
+        self.assertEqual(self.text1.arguments.all()[0].arg_type,"c")
         self.assertIn(self.mustermann, self.text1.arguments.all()[0].text.authors.all())
 
 class StoreDerivateTest(TestCase):
