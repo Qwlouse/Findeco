@@ -16,11 +16,32 @@ var Helper = new ClassHelper();
 var Main = new ClassMain();
 var BoxRegister = new ClassBoxRegister();
 
-ClassController.prototype.load = function(target) {
-    
+ClassController.prototype.loadIndex = function(target) {
+    Controller.position = target;
+    document.location.hash = Controller.position;
 }
 
+ClassController.prototype.loadIndexRelative = function(target) {
+    if ( Controller.position != '' ) {
+        Controller.position += '/';
+    }
+    Controller.position = Controller.position + target;
+    document.location.hash = Controller.position;
+}
+
+ClassController.prototype.position = '';
+
 ClassController.prototype.stateHandler = function(event) {
+    // TODO: Mockup legacy, remove or comment out after testing is done.
+    if ( parseInt(document.location.hash.substring(1)) >= 0 || parseInt(document.location.hash.substring(1)) <= 100 ) {
+        return;
+    }
+    if ( Controller.position != document.location.hash.substring(1) ) {
+         Controller.position = document.location.hash.substring(1);
+    }
+    $.get('.json_loadIndex/' + Controller.position,function(json){
+        loadCenterData(json);
+    },'json');
     // console.log(event,event.originalEvent.state);
 }
 
@@ -74,7 +95,11 @@ ClassData.prototype.loadIndexResponse = function(data) {
         switch ( data[d].shortTitle ) {
             case 'pro': case 'neutral': case 'contra': this.loadArgumentResponse(data); return;
             default:
-                $('<p>' + data[d].fullTitle + '</p>').appendTo(this.html);
+                $('<h2 data-shortTitle="' + data[d].shortTitle + '" data-index="' + data[d].index + '">' + data[d].fullTitle + '</h2>')
+                    .appendTo(this.html)
+                    .click(function () {
+                        Controller.loadIndexRelative($(this).attr('data-shortTitle') + '.' + $(this).attr('data-index'));
+                    });
         }
     }
 };

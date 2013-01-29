@@ -3,32 +3,28 @@ var center = BoxRegister.newBox();
 var right = BoxRegister.newBox();
 var navigation = null;
 
-var position = 0;
+var currentPosition = 0;
 var endPosition = 0;
 
-$(window).bind('popstate',Controller.stateHandler);
 // window.onpopstate = Controller.stateHandler;
 
 $(document).ready(load);
 
 function previous() {
-    if ( position == 0 ) {
+    if ( currentPosition == 0 ) {
         return;
     }
-    position--;
-    location.hash = '#' + position;
+    currentPosition--;
+    location.hash = '#' + currentPosition;
     loadPosition();
 }
 
 function next() {
-    // var stateobj = {"data":1};
-    // window.history.pushState(stateobj,"blubb","test/index.html");
-    // return;
-    if ( position == endPosition ) {
+    if ( currentPosition == endPosition ) {
         return;
     }
-    position++;
-    location.hash = '#' + position;
+    currentPosition++;
+    location.hash = '#' + currentPosition;
     loadPosition();
 }
 
@@ -42,18 +38,16 @@ function load(){
     });
     
     if ( location.hash.length == 2 ) {
-        position = parseInt(location.hash.replace(/#/,''));
+        currentPosition = parseInt(location.hash.replace(/#/,''));
     }
     
     left.show('left');
     center.show('center');
     right.show('right');
 
-    /*$.get('/Codebar/tests.php?.json_loadText/topic.1/subtopic.1',function(json){
-        //console.log(json,this);
-    //},'json');*/
-
     loadPosition();
+    
+    $(window).bind('hashchange',Controller.stateHandler);
 }
 
 function loadImprint() {
@@ -71,7 +65,7 @@ function loadPosition() {
     left.empty();
     navigation.empty();
     
-    switch ( position ) {
+    switch ( currentPosition ) {
         case 0:
             loadMicroBlogging();
             loadCenterData(jsonData.topicList);
@@ -150,7 +144,7 @@ function loadPosition() {
     
     endPosition = 9;
     
-    document.getElementById('position').innerHTML = position + '/' + endPosition;
+    document.getElementById('position').innerHTML = currentPosition + '/' + endPosition;
     
     // loadCenterTopicOverview();
     // loadLeftHistory();
@@ -160,6 +154,9 @@ function loadRootNode() {
     $.get('.json_loadIndex/',function(json){
         loadCenterData(json);
     },'json');
+    // $.get('.json_loadText/',function(json){
+        // appendCenterData(json);
+    // },'json');
 }
 
 function loadCenterData(json) {
