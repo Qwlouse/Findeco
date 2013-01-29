@@ -22,22 +22,48 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.contrib import admin
-from models import Node, Argument, Text, Vote
+from models import Node, Argument, Text, Vote, NodeOrder, ArgumentOrder, Derivation
 
 class TextInline(admin.StackedInline):
     model = Text
     max_num = 1
     can_delete = True
 
+class ChildInline(admin.TabularInline):
+    model = NodeOrder
+    extra = 1
+    fk_name = "parent"
+
+class ParentInline(admin.TabularInline):
+    model = NodeOrder
+    extra = 1
+    fk_name = "child"
+
+class ArgumentInline(admin.TabularInline):
+    model = ArgumentOrder
+    extra = 1
+    fk_name = "node"
+
+class ArgNodeInline(admin.TabularInline):
+    model = ArgumentOrder
+    extra = 1
+    fk_name = "argument"
+
+
+class DerivationInline(admin.TabularInline):
+    model = Derivation
+    extra = 1
+    fk_name = "source"
+
 class ArgumentAdmin(admin.ModelAdmin):
     model = Argument
     list_display = ('title', 'id', 'arg_type', 'node_type')
-    inlines = [TextInline]
+    inlines = [TextInline, ArgNodeInline, DerivationInline]
 
 class NodeAdmin(admin.ModelAdmin):
     model = Node
-    list_display = ('get_a_path', 'title', 'id', 'node_type')
-    inlines = [TextInline]
+    list_display = ('get_a_path', 'title', 'get_follows', 'id', 'node_type')
+    inlines = [ParentInline, ChildInline, TextInline, ArgumentInline, DerivationInline]
 
 class VoteAdmin(admin.ModelAdmin):
     model = Vote
