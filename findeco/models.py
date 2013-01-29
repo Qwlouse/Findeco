@@ -37,6 +37,7 @@ from django.db import models
 from django.db.models import signals
 
 from node_storage import Node, Text
+from node_storage.initial_data import create_initial_data
 
 try:
     from local_settings import ADMIN_PASS
@@ -144,7 +145,7 @@ def initialize_database(sender, **kwargs):
     print('Creating Initial Data')
     create_root()
     print('*'*80)
-    #create_initial_data()
+    create_initial_data()
 
 signals.post_syncdb.connect(initialize_database,
     sender=auth_models, dispatch_uid='findeco.models.initialize_database')

@@ -26,12 +26,12 @@
 ################################################################################
 
 from django.db import transaction
-from node_storage.factory import create_slot, create_user
-from node_storage.path_helpers import get_root_node
-from node_storage.structure_parser import parse, create_structure_from_structure_node_schema
+from factory import create_slot, create_user
+from path_helpers import get_root_node
+from structure_parser import parse, create_structure_from_structure_node_schema
 
 @transaction.commit_on_success
-def createInitialData():
+def create_initial_data():
     root = get_root_node()
     decided = create_user("Beschlossenes Programm")
 
