@@ -26,10 +26,63 @@
 ################################################################################
 from django.core.management import BaseCommand
 from django.db import transaction
-from node_storage.factory import create_user, create_slot
+from node_storage import get_node_for_path
+from node_storage.factory import create_user, create_slot, create_structureNode, create_argument, create_vote, create_spam_flag
 from node_storage.path_helpers import get_root_node
 from node_storage.structure_parser import parse, create_structure_from_structure_node_schema
-from node_storage.models import Node
+
+def create_alternatives_for_urheberrecht(path):
+    ulf = create_user('ulf')
+    timo = create_user('timo')
+    slot_path = path.rsplit('.',1)[0]
+    slot = get_node_for_path(slot_path)
+
+    w1 = "Reform des Urheberrechts sollte von der Basis kommen."
+
+    a1 = create_structureNode("Urheberrecht", w1, authors=[ulf])
+    slot.append_child(a1)
+
+
+    w2a = "Abschaffung des Urheberrechts!"
+    a2a = create_structureNode("Kein Urheberrecht", w2a, authors=[ulf])
+    slot.append_child(a2a)
+
+    w2b = "Völlige Abschaffung des Urheber- und Patentrechts!"
+    a2b = create_structureNode("Kein Urheberrecht", w2b, authors=[ulf])
+    slot.append_child(a2b)
+    arga = create_argument('con',
+        "Patentrecht ist genauso böse",
+        "Das patentrecht ist mindestens genauso schlimm und muss auch weg!",
+        [ulf])
+    a2a.add_derivate(arga, a2b)
+
+    w2c = "Völlige Abschaffung des Urheber- und Patentrechts! Außerdem Todesstrafe für alle Patentanwälte."
+    a2c = create_structureNode("Kein Urheberrecht", w2c, authors=[timo])
+    slot.append_child(a2c)
+    argb = create_argument('con',
+        "Patentanwälte stinken!",
+        "Dieses Pack gehört ausgerottet!",
+        [timo]
+    )
+    a2b.add_derivate(argb, a2c)
+
+    # create votes
+    original = get_node_for_path(path)
+    hugo = create_user("hugo")
+    hans = create_user("hans")
+    hein = create_user("hein")
+    create_vote(ulf, [a1])
+    create_vote(ulf, [a2a, a2b])
+    create_vote(timo, [a2c])
+    create_vote(hugo, [original])
+    create_vote(hein, [original])
+    create_vote(hans, [a1])
+    create_vote(hans, [a2b])
+    create_vote(hans, [arga])
+    create_vote(ulf, [arga])
+    create_spam_flag(hein, [argb])
+    create_spam_flag(hein, [a2c])
+
 
 @transaction.commit_on_success
 def create_initial_data():
@@ -51,6 +104,7 @@ def create_initial_data():
         wpbtw_text = f.read()
     schema = parse(unicode(wpbtw_text, encoding='utf-8'),wahlprogramm_btw.title)
     create_structure_from_structure_node_schema(schema, wahlprogramm_btw, [decided])
+    create_alternatives_for_urheberrecht("Wahlprogramm_BTW.1/Urheberrecht.1")
 
     # Positionspapiere Bund
     posp_bund = create_slot("Positionspapiere")
