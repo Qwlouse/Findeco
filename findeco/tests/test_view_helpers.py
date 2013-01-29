@@ -346,7 +346,7 @@ class StoreStructureNodeTest(TestCase):
         self.assertEqual(self.slot.children.all()[1].children.all()[0].title,"Blubb")
         self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].title,"Blubb")
         self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].text.text,"Text 2")
-        self.assertTrue(self.mustermann in self.slot.children.all()[1].text.authors.all())
+        self.assertIn(self.mustermann, self.slot.children.all()[1].text.authors.all())
 
     def test_store_non_existent_path(self):
         self.assertEqual(store_structure_node("Flopp.3456", "= Bla =\nText\n== Blubb ==\nText 2", self.mustermann),
@@ -357,7 +357,7 @@ class StoreStructureNodeTest(TestCase):
         self.assertEqual(self.slot.children.all()[1].children.all()[0].title,"Blubb")
         self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].title,"Blubb")
         self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].text.text,"Text 2")
-        self.assertTrue(self.mustermann in self.slot.children.all()[1].text.authors.all())
+        self.assertIn(self.mustermann, self.slot.children.all()[1].text.authors.all())
 
 class StoreArgumentTest(TestCase):
     def setUp(self):
@@ -374,4 +374,4 @@ class StoreArgumentTest(TestCase):
         self.assertEqual(self.text1.arguments.all()[0].title,"Avast")
         self.assertEqual(self.text1.arguments.all()[0].text.text,"= Avast =\nAgainst it!")
         self.assertEqual(self.text1.arguments.all()[0].arg_type,"con")
-        self.assertTrue(self.mustermann in self.text1.arguments.all()[0].text.authors.all())
+        self.assertIn(self.mustermann, self.text1.arguments.all()[0].text.authors.all())
