@@ -143,7 +143,7 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_p
 def store_structure_node(path, wiki_text, author):
     slot_path = path.rsplit('.',1)[0]
     slot = get_node_for_path(slot_path)
-    short_title = parse_suffix(path)['slot'] # do we need that?
+    short_title = parse_suffix(slot_path)[1]['slot'] # do we need that?
     structure = backend.parse(wiki_text, short_title)
     structure_node = backend.create_structure_from_structure_node_schema(structure, slot, [author])
     return get_good_path_for_structure_node(structure_node, slot, slot_path)

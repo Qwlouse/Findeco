@@ -28,6 +28,7 @@ from node_storage.factory import create_user, create_slot, create_textNode, crea
 from ..api_validation import userInfoValidator, indexNodeValidator, userSettingsValidator
 from ..view_helpers import create_index_node_for_slot, create_index_node_for_argument
 from ..view_helpers import create_user_info, create_user_settings, create_graph_data_node_for_structure_node
+from ..view_helpers import store_structure_node
 
 class CreateUsersInfoTest(TestCase):
     def setUp(self):
@@ -327,3 +328,21 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
             self.assertEqual(data['unFollows'], self.unFollows[i])
             self.assertEqual(data['newFollows'], self.newFollows[i])
             self.assertEqual(data['originGroup'], self.originGroups[i])
+
+class StoreStructureNodeTest(TestCase):
+    def setUp(self):
+        self.root = get_root_node()
+        self.mustermann = create_user("Mustermann")
+        self.slot = create_slot("Flopp")
+        self.root.append_child(self.slot)
+        self.text1 = create_textNode("Initial Text","Dumdidum",[self.mustermann])
+        self.slot.append_child(self.text1)
+
+    def test_store_valid_path(self):
+        self.assertEqual(store_structure_node("Flopp.1","= Bla =\nText\n== Blubb ==\nText 2",self.mustermann),"Flopp.2")
+        self.assertEqual(len(self.slot.children.all()),2)
+        self.assertEqual(self.slot.children.all()[1].title,"Bla")
+        self.assertEqual(self.slot.children.all()[1].text.text,"Text")
+        self.assertEqual(self.slot.children.all()[1].children.all()[0].title,"Blubb")
+        self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].title,"Blubb")
+        self.assertEqual(self.slot.children.all()[1].children.all()[0].children.all()[0].text.text,"Text 2")
