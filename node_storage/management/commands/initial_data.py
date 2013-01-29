@@ -24,11 +24,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-
+from django.core.management import BaseCommand
 from django.db import transaction
-from factory import create_slot, create_user
-from path_helpers import get_root_node
-from structure_parser import parse, create_structure_from_structure_node_schema
+from node_storage.factory import create_user, create_slot
+from node_storage.path_helpers import get_root_node
+from node_storage.structure_parser import parse, create_structure_from_structure_node_schema
+from node_storage.models import Node
 
 @transaction.commit_on_success
 def create_initial_data():
@@ -58,3 +59,11 @@ def create_initial_data():
         pospbund_text = f.read()
     schema = parse(unicode(pospbund_text, encoding='utf-8'),posp_bund.title)
     create_structure_from_structure_node_schema(schema, posp_bund, [decided])
+
+class Command(BaseCommand):
+    args = ''
+    help = 'Creates initial data to populate the database'
+
+    def handle(self, *args, **options):
+        self.stdout.write("Creating initial data ...\n")
+        create_initial_data()
