@@ -1,0 +1,342 @@
+== Kultur ==
+=== Freie Verwendung von urheberrechtlich geschützten Werken nach 10 Jahren ===
+Die Piratenpartei Deutschland spricht sich für eine gesetzliche Regelung aus, nach der es jedem möglich ist, 10 Jahre nach Erstveröffentlichung, Werke lizenzkostenfrei und ohne Genehmigung zu verwenden, zu kopieren, zu ändern, zu fusionieren, zu verlegen, zu verbreiten oder zu verkaufen. Nichtkommerzielle Nutzung soll bereits zum Zeitpunkt der Veröffentlichung erlaubt sein.
+
+== Netzpolitik ==
+=== Rechtssicherheit im Internet ===
+Das Internet wird für immer mehr Menschen zu einem täglich genutzten Instrument im privaten wie im geschäftlichen Leben. Dadurch ergeben sich zahlreiche Veränderungen in unterschiedlichen Lebensbereichen, denen die Rechtslage nicht oder nicht ausreichend angepasst wird. Für die Teilnehmer der Internetkommunikation müssen gesetzliche Rahmenbedingungen geschaffen werden, die es jedem ermöglichen, ohne spezielle juristische Vorkenntnisse dieses Medium für gängige Zwecke nutzen zu können, ohne sich dem Risiko unwissentlicher Verletzung von Gesetzen auszusetzen. Nur so kann gewährleistet werden, dass die Möglichkeiten des Internets für die Zukunft voll ausgeschöpft werden.
+
+====Grenzübergreifende Geschäftsabwicklung im Internet===
+
+Vor der Verbreitung des Internets waren Handelsbeziehungen mit ausländischen Partnern einer begrenzten Gruppe von (vorwiegend großen) Unternehmen vorbehalten. Dies veranlasste den Gesetzgeber, eine umfassende Regulierung durchzusetzen, die mittlerweile nicht den Realitäten angemessen ist. Immer mehr Menschen beteiligen sich am sogenannten „Außenhandel“. Sowohl Verbraucher als auch kleine Unternehmen nutzen die Möglichkeit, über das Internet Waren und Dienstleistungen zu erwerben und anzubieten. Diese Entwicklung erhöht die wirtschaftliche Wechselwirkung mit dem Ausland insbesondere bei Kleinst- und Kleinunternehmen enorm und sollte durch eine signifikante Vereinfachung der gesetzlichen Regelungen für diese Unternehmen gefördert werden.
+
+====Rechtssichere Nutzung internetbasierter Zahlungssysteme===
+
+Internetbasierte Zahlungssysteme erfreuen sich bei unterschiedlichen Transaktionen immer größerer Beliebtheit und sind bei reinen Internetgeschäften im Zahlungsverkehr oftmals bereits gängiger im Vergleich zu "klassischen" Zahlungsarten. Die rechtlichen Aspekte solcher Zahlungen sind allerdings weitgehend obskur, sodass z.B. die Meldung von Ausgaben oder Einnahmen, die über solche Zahlungssysteme abgewickelt werden, aus steuer- wie handelsrechtlicher Sicht nicht problemlos abzuwickeln ist. Es müssen sichere Rahmenbedingungen geschaffen werden, die den Zahlungsverkehr mithilfe internetbasierter Zahlungssysteme regulieren und zugleich deren rechtlich bedenkenfreie Nutzung ermöglichen. Auch die Pflicht zur Rechnungsstellung muss aufgrund der Entwicklung von immer neuen Kommunikationsformen und -medien reformiert und angepasst werden.
+
+====Abschaffung der Kennzeichnungspflicht für Privatpersonen===
+
+Die Anbieterkennzeichnungspflicht ("Impressumspflicht") erstreckt sich in Deutschland nicht nur auf kommerzielle Webseiten, sondern auch auf private Seiten und Blogs. Damit wird ein freier Meinungsaustausch im Internet massiv behindert, da Menschen, die daran mittels eines Blogs oder einer Webseite teilnehmen wollen, dazu gezwungen werden, ihre privaten Kontaktinformationen zu veröffentlichen. Die Möglichkeit anonymer Beteiligung, welche einen großen Beitrag zur freiheitsfödernden Rolle des Internets leistet, wird dadurch komplett untergraben. Eine Reglementierung von Internettauftritten in einer solchen Art und Weise zeigt zudem ein völliges Missverständnis des Gesetzgebers für den Stellenwert und die Kommunikationsstruktur dieses Mediums in der heutigen Welt. Wie in vielen anderen Situationen führt diese Regelung zur Entstehung eines Abmahngeschäfts, das vorallem unwissende bzw. unschuldige Verbraucher betrifft. Damit die Bürger auch im Internet die Rechtssicherheit wieder finden, ist eine Beschränkung der Anbieterkennzeichnungspflicht auf juristische Personen sowie natürliche Personen, deren Onlineauftritt gewerbliche Ziele verfolgt, notwendig, was zudem den ursprünglichen, im Verbraucherschutz begründeten Zielen dieser Pflicht entspricht.
+
+====Beschränkung von Abmahnungen===
+
+Abmahnungen, die Handlungen im Internet als Grund haben und sich gegen Privatpersonen richten, haben mit zunehmender Verbreitung des Internets rapide in Anzahl zugenommen und bilden in manchen Bereichen bereits die Grundlage von Geschäftsmodellen. Insbesondere in Anbetracht der Tatsache, dass viele Gesetze Grauzonen aufweisen oder sich schnell verändern, wenn es sich um Internetfragen handelt, dient eine solche Situation der Verunsicherung der Bürger und behindert die Ausschöpfung der Möglichkeiten des Internets. Aus diesem Grund müssen Abmahnungen gegen Privatpersonen, die sich auf Vergehen in der Internetkommunikation beziehen und keinen Grund zur Annahme eines absichtlichen Gesetzesverstoßes erkennen lassen, grundsätzlich beschränkt werden.
+
+== Privatspäre und Datenschutz § Datenschutz ==
+=== Datenschutzfreundliche Regelungen für Empfänger von Sozialleistungen ===
+Zur Zeit muss ein Empfänger von Sozialleistungen wie z.B. ALGII (Hartz IV) oder Grundsicherung im Alter regelmäßig seine persönlichen Verhältnisse über Vermögen und Lebensweise detailliert offenlegen, um Leistungen nach den SGB zu erhalten. Die Piraten fordern, dass beim Umgang mit Sozialleistungsempfängern zukünftig Datensparsamkeit Einzug hält und die generelle Unterstellung eines Generalverdachtes an Bezieher von Sozialleistungen unterbleibt.
+
+====Position====
+Die Piratenpartei fordert, dass Sozialbehörden den gleichen Standards unterworfen werden, denen andere Exekutivbehörden Deutschlands unterliegen. Insbesondere dürfen keine Datenabgleiche und -anforderungen ohne richterlichen Beschluss und einen begründeten Verdacht durchgeführt werden. Ähnlich wie es einem Steuerprüfer gestattet ist, einen Datenzugriff lediglich für steuerlich relevante Daten vorzunehmen, sollten die für die Bearbeitung der sozialrechtlichen Ansprüche zuständigen Behörden nur Zugriff auf die sozialrechtlich relevanten Daten erhalten. Vergleichbar zum Finanzamt sollen hierbei nicht jeder Sachbearbeiter, sondern nur eigens dafür qualifizierte Prüfer, ähnlich dem Steuerprüfer, stichprobenartig die Anträge überprüfen und bei Verdacht eines Betruges entsprechende staatsanwaltschaftliche oder richterliche Überprüfungen veranlassen können. Sicherlich ist es notwendig, auch im Sozialrecht dem Staat eine Kontrollmöglichkeit zu eröffnen. Diese darf aber nicht so weit gehen, dass jeder Empfänger von vorneherein quasi unter "Betrugsverdacht" steht und in der Folge jeder Sachbearbeiter mit weitgehenden Befugnissen ausgestattet ist, die sonst nur Ermittlungsbehörden und die Staatsanwaltschaft innehaben. Ein genereller Zugriff auf alle relevanten Daten, die der Bürger beim Staat hinterlegt hat, ist im Sinne der Datensparsamkeit weder notwendig noch ratsam. Als Gegenbeispiel sei hier das Vorgehen der Finanzämter genannt: Hier werden im Abstand von bis zu 10 Jahren nur die steuerlich relevanten Daten überprüft und dies auch zumeist nur bei buchhaltungspflichtigen Betrieben, nicht bei jedem Bürger. Die automatische und routinemäßige Kontrolle aller zugänglichen Daten der Leistungsempfänger in Abständen von 6 Monaten halten wir für völlig überzogen. Kein anderer Beamter hat einen ebenso umfassenden Datenzugriff wie die Mitarbeiter in den Sozialbehörden. Von Zentralregister für KFZ-Anmeldungen bis zur Kapitalertragssteuer können alle Sachbearbeiter jederzeit Zugriff auf die Daten nehmen.
+
+====Zusammenfassung====
+Die Piratenpartei setzt sich dafür ein, dass auch die Leistungsempfänger nach dem SGB das Grundrecht der Unschuldsvermutung zurückerhalten und keine Daten willkürlich erhoben werden. Wir wollen, dass das SGB diesbezüglich angepasst wird und auch die entsprechenden Verordnungen nach datenschutzrechtlichen Standards gestaltet werden.
+
+====Appell====
+Jeder Bürger hat das Recht auf Privatsphäre und Unschuldsvermutung. Nur weil jemand Sozialleistungen empfängt, darf ihm dieses Grundrecht vom Staat nicht leichtfertig genommen werden.
+
+== Transparenz und Korruptionsbekämpfung § Transparenz ==
+=== Anwendung eines Integritätspaktes ===
+Die Piratenpartei Deutschland fordert:
+
+* Dass deutsche Verwaltungsbehörden (auf Bundes-, Länder- und Kommunalebene) sich bei der Vergabe öffentlicher Aufträge ausdrücklich und systematisch um Korruptionsprävention bemühen und dabei neben anderen bewährten Präventionsinstrumenten auch die Anwendung eines Integritätspaktes in Erwägung ziehen.
+
+Der Integritätspakt ist ein von Transparency International entwickeltes und global angewandtes Instrument, dem sich vor allem bei größeren Bauvorhaben der Auftraggeber und alle Anbieter unterwerfen, mit klaren Verhaltensvorgaben und ebenso klaren Sanktionsandrohungen.
+
+Der Integritätspakt hat sich international bewährt und existiert in Deutschland beim Bau des Internationalen Flughafens Berlin-Schönefeld.
+
+=== Ratifizierung der UN-Konvention gegen Korruption ===
+Die Piratenpartei unterztützt die UN-Konvention gegen Korruption (2003 unterzeichnet aber immer noch nicht vollständig in deutsches Recht umgesetzt) und fordert dessen Ratifizierung.
+
+Weiterhin regt die Piratenpartei an, folgende Maßnahmen zu beschließen:
+* Gleiche Veröffentlichungspflichten für das Sponsoring von Parteien wie für Parteispenden
+* Parteispenden und Sponsoring auf maximal 50.000EUR pro Jahr begrenzen pro (juristische) Person
+* Spenden ab ab 2.000EUR in dem detaillierten Rechenschaftsbericht der Parteien auflisten
+* Die Spendendaten müssen für alle Bürger leichter zugänglich online präsentiert werden
+* Umfassende Transparenz aller Formen von Parteisponsoring und der Unternehmensbeteiligungen der Parteien.
+* Verbot von "Ministerium Spon­soring" (viele Ministerien kriegen regelmäßig Veranstaltungen finanziert, sind finanziell abhängig von der Industrie)
+* Karenzzeit für Wechsel von Ministern in Lobbytätigkeiten für die Dauer des gezahlten "Übergangsgeldes"
+* Kontrolle über die Einhaltung des Parteigesetzes von einem unabhängigen Gremium
+* Genauere Auflistung der Nebeneinkünfte von Politikern
+
+=== Transparenz und Korruptionsbekämpfung im Gesundheitswesen ===
+Die Piratenpartei Deutschland fordert:
+
+* Bereitstellung transparenter Information über Qualitäts- und Leistungsunterschiede, z.B. durch eine Positivliste für Medikamente und durch das unabhängige Institut für Qualitätssicherung und Wirtschaftlichkeit im Gesundheitswesen (IQWIG)
+* Pflicht zur Offenbarung von Behandlungsfehlern und Einführung einer Medizinschadensforschung
+* Stärkung der Patientenrechte, z.B. Einsichtsrecht der Patienten in ihn betreffende Arzt-Unterlagen
+* Unabhängige Arzneimittelforschung und Fortbildung von Ärzten, d.h. Zurückdrängen der Manipulationsmöglichkeiten durch die pharmazeutische Industrie
+
+=== Transparenz und Korruptionsbekämpfung in der Politik ===
+Nachlassende Beteiligung an Wahlen und sinkende Mitgliederzahlen in den Parteien sind ein Alarmzeichen für unsere Demokratie. Meinungsumfragen zeigen, dass die Mehrheit der Deutschen die Bekämpfung der Korruption gerade in der Politik am wichtigsten findet.
+
+Der Piratenpartei Deutschland geht es nicht darum, Politiker anzuprangern und der verbreiteten Politikerverdrossenheit Vorschub zu leisten. In aller Welt sind aber die katastrophalen Folgen für ein Gemeinwesen bekannt, wenn die Politiker das Vertrauen der Bürger verloren haben.
+
+Die Interessenabhängigkeiten zwischen Politikern und Wirtschaft sind in Deutschland nicht hinreichend transparent und daher anfällig für Korruption. Deshalb geht es der Piratenpartei Deutschland um eine spürbare Verbesserung der Transparenz.
+
+====Unsere Ziele:====
+
+*das Vertrauen der Bevölkerung in die Politiker und in die Politik stärken,
+*die große Mehrzahl der Politiker, die sich ehrenhaft verhalten, schützen und
+*die Motivation von Menschen stärken, sich in der Politik zu engagieren.
+
+====Die Piratenpartei Deutschland fordert daher vom Gesetzgeber:====
+
+* die Reform der Regelungen der Abgeordnetenbestechung (§108 e Strafgesetzbuch) und die Ratifizierung der UN-Konvention gegen Korruption durch Deutschland
+* die Fortentwicklung der Regelungen der Parteienfinanzierung
+* Veröffentlichung der Nebeneinkünfte der Abgeordneten und Ausweitung der Anzeige- und Veröffentlichungspflichten sowie die Einführung wirksamer Sanktionen bei Verstößen gegen die Regeln
+* Einführung einer Karenzzeit für Minister auf Bundes- oder Landesebene und Staatssekretäre, auch wenn diese und politische Beamte auf ihre Versorgungsbezüge verzichten wollen
+* Transparente Strukturen und Prozesse im Lobbyismus durch die Transparenz und Unabhängigkeit der öffentlichen Verwaltung bei Mitarbeit von Externen
+
+=== Transparenz und Korruptionsbekämpfung in der Strafverfolgung ===
+Die Piratenpartei Deutschland fordert:
+* eine weitestgehende Weisungsunabhängigkeit der Staatsanwaltschaften bei ihren Ermittlungen
+* die flächendeckende Bildung von Schwerpunktstaatsanwaltschaften für Korruptionskriminalität
+* eine Erhöhung der Versetzungsfristen für Korruptionsspezialisten der Kriminalpolizei auf 5 Jahre oder mehr
+
+=== Transparenz und Unabhängigkeit der öffentlichen Verwaltung ===
+Die Mitarbeit von Angestellten von Unternehmen, Verbänden, Vereinen und Gewerkschaften in der öffentlichen Verwaltung und in Ministerien hat in der letzten Zeit die öffentliche Aufmerksamkeit erregt. Laut Presseberichten arbeiten etwa. 120 Angestellte von Firmen und Verbänden in Ministerien und der öffentlichen Verwaltung mit und haben so Zugang zu internen Informationen und Akten; teilweise arbeiten sie sogar an Gesetzgebungsvorhaben und Verwaltungsentscheidungen mit, die die Interessen ihres Arbeitsgebers betreffen.
+
+Der ständige Informationsaustausch zwischen Verbänden, Unternehmen und Interessengruppen auf der einen Seite und der Verwaltung auf der anderen Seite ist Bestandteil des politischen Systems und daher im Prinzip nützlich und vertretbar. Auch die Piratenpartei Deutschland  hält grundsätzlich einen Austausch zwischen Wirtschaft und Verwaltung vor dem Hintergrund der neuen und komplexen Fragestellungen der Gesellschaft für notwendig.
+
+Dieser Austausch kann in Einzelfällen auch die Mitarbeit von Unternehmens- und Verbands- sowie Gewerkschaftsangehörigen in der öffentlichen Verwaltung und in Ministerien umfassen. Dies gilt jedoch nur dann, wenn die  Mitarbeit von Angestellten von Unternehmen und Verbänden in der öffentlichen Verwaltung und in Ministerien offen und transparent gestaltet ist und sofern keine unzulässige Einflussnahme auf den Kernbereich der Verwaltungstätigkeit erfolgt.
+
+Interessenkonflikte müssen also vermieden werden. Nur unter solchen Bedingungen kann das Vertrauen der Bürger in die Integrität und die Neutralität der Verwaltung aufrechterhalten werden.
+
+====Daher fordert die Piratenpartei Deutschland als Mindeststandard,====
+
+* dass die Verwaltungen und die Ministerien jährlich in einem Bericht, der im Internet zu veröffentlichen ist, darlegen, welche Mitarbeiter von Unternehmen, Verbänden und Vereinen sowie Gewerkschaften wie lange in den Organisationen mitgearbeitet haben und mit welchen Aufgaben sie befasst waren. Die Veröffentlichungspflicht bezieht sich auch auf Personen, die nicht in einem Angestelltenverhältnis zu den Unternehmen, Verbänden beziehungsweise Vereinen stehen, sondern als freie Mitarbeiter/innen oder Berater/innen für diese tätig sind.
+* Die Mitwirkung der "abgeordneten" Person an der Erstellung von Gesetzes- und Verordnungsentwürfen, die die Tätigkeit des Unternehmens oder eines mit diesem verbundenen Unternehmens oder Branchen-, Verbands- beziehungsweise Vereinsinteressen berühren, bei denen die Person beschäftigt ist, muss ausgeschlossen sein.
+* Im Übrigen darf die „abgeordnete“ Person nicht direkt oder indirekt an der Vorbereitung oder Durchführung von Grundsatzentscheidungen und Verwaltungsentscheidungen mitwirken, die die Tätigkeit des Unternehmens oder eines mit diesem verbundenen Unternehmens berühren, beziehungsweise die Branchen-, Verbands- beziehungsweise Vereinsinteressen betreffen. Seitens der öffentlichen Verwaltung werden ferner zur Bewältigung neuer komplexer Fragestellungen immer mehr externe Beratungsleistungen eingekauft. Nur wenn die öffentliche Verwaltung und die Ministerien festgestellt haben, dass diese Aufgaben allein durch eigene Kräfte nicht zu erledigen sind, kommt nach Auffassung der Piratenpartei Deutschland der Einkauf von externen Beraterleistungen in Betracht (Grundsatz der Subsidiarität des Einsatzes von externen Beratern). Kommt es ausnahmsweise zum Einsatz von externen Beratern, müssen sich die Kosten für den Einsatz in einem marktüblichen Rahmen halten, und ein unzulässiger Einfluss Externer auf die Kernaufgaben der öffentlichen Verwaltung und Ministerien muss verhindert werden. Nur so kann das Vertrauen der Bürger in die Integrität und die Neutralität der Verwaltung aufrecht erhalten werden.
+
+====Daher fordert die Piratenpartei Deutschland, beim Einsatz externer Berater in der öffentlichen Verwaltung und in Ministerien folgende Gründsätze zu beachten:====
+
+* Die Entscheidung  über den Einsatz externer Berater muss nachvollziehbar und transparent erfolgen. Dies setzt voraus, dass die zu lösende Aufgabe nachvollziehbar beschrieben und abgegrenzt wird, dass die Notwendigkeit geprüft und die Wirtschaftlichkeit des Einsatzes von externen Beratern ermittelt wird.
+* Die Beraterleistung muss öffentlich, gegebenenfalls europaweit ausgeschrieben werden. Sofern  Eilbedürftigkeit geltend gemacht wird, ist diese zu begründen. Auch bei ausnahmsweise freihändiger Vergabe, muss die Vergabeentscheidung transparent sein und gleichwohl der Wettbewerb sichergestellt werden.
+* Die Verträge müssen so abgefasst sein, dass die Leistung, die durch Externe erbracht werden soll, sowohl inhaltlich als auch zeitlich eindeutig beschrieben und kontrollierbar ist.
+* Damit  eventuell auch Ansprüche aus vertragswidrigem Verhalten oder Schlechtleistungen geltend gemacht werden können, müssen die Ergebnisse der Beraterleistungen auch zeitnah abgenommen werden.
+* Die nach dem Haushaltsrecht erforderliche Erfolgskontrolle ist durchzuführen  (Nr. 2.2 der VV zu § 7 BHO).
+* Das gesamte Verfahren einschließlich der Entscheidung über das ob des Einkauf von externen Beratungsleistungen sowie die Umsetzung von Beraterleistungsergebnisse ist zu dokumentieren.
+* Alle direkt vom Staat oder indirekt in über vom Staat mehrheitlich kontrollierte Unternehmen oder Organisatinen für eine Volltagstätigkeit bezahlten Beamte und Angestellte müssen alle Nebeneinkünfte , die nicht aus Kapitalvermögen oder Vermietung/Verpachtung stammen, öffentlich machen.
+
+Die Umsetzung dieser Grundsätze würde auch die Beachtung der Forderungen des Bundesrechnungshofes – Eckpunkte für den Einsatz externer Berater durch die Bundesverwaltung im Papier vom 29. Januar 2007 – sicherstellen.
+
+=== Paragraph 108e ===
+Die Piratenpartei Deutschland fordert die Neufassung des § 108 e StGB zur Abgeordnetenbestechung:
+* **Voraussetzung zur Ratifizierung der UN Konvention gegen Korruption:** Die UN Konvention gegen Korruption ist seit Dezember 2005 in Kraft und wurde von 140 Nationen, darunter auch Deutschland, unterzeichnet. Über 100 Nationen haben die Konvention mittlerweile ratifiziert, darunter Staaten wie Frankreich, Großbritannien, Kanada, Polen, Spanien, Schweden und USA. Deutschland hat dagegen die Konvention noch immer nicht ratifiziert. Dieses Versäumnis ist der fehlenden Neufassung des § 108 e StGB geschuldet.
+* **Einhaltung internationaler Verpflichtungen**: Im Schlussdokument des G-8 Gipfels von Heiligendamm (7. Juni 2007), das unter deutschem Vorsitz verabschiedet wurde, hat sich Deutschland nicht nur verpflichtet die Konvention umzusetzen, sondern auch zusammen mit den anderen G8 – Staaten „beispielgebend“ bei der „Bekämpfung der Korruption“ zu sein.
+* **Antwort auf ein Urteil des BGH**: Laut Urteil des Bundesgerichtshofes vom 9. Mai 2006 (Az.: 5 StR 453/05, Ziff. 21 ff) sind Mitglieder von Kommunalparlamenten - sofern sie nicht Aufgaben der öffentlichen Verwaltung wahrnehmen - wie Abgeordnete zu behandeln. Für sie gilt demnach § 108 e StGB. Die Regelungen über die Straftaten im Amt, der §§ 331-335 StGB, sind nicht anwendbar. Vor diesem Hintergrund hat bereits der Bundesgerichtshof einen „gesetzgeberischen Handlungsbedarf“ angemahnt.
+* **Anpassung an die Bestimmungen zur Bestechung ausländischer Abgeordneter**: Durch das Internationale Bestechungsgesetz (IntBestG) unterliegt die Bestechung ausländischer Abgeordneter schärferen Maßstäben, als das bei inländischen Abgeordneten der Fall ist. Es ist dringend geboten, diese grobe Unsystematik zu beseitigen und die Bestechung ausländischer und inländischer Abgeordnete gleichen Maßstäben zu unterwerfen.
+
+==== Anforderung an die neue gesetzliche Regelung ====
+Um den dargelegten Anforderungen genüge zu tun, müssen bei der Novellierung der
+Strafnorm der Abgeordnetenbestechung nach § 108e StGB folgende Gesichtspunkte
+beachtet werden:
+* Ausweitung der Strafbarkeit auf **alle Handlungen und Unterlassungen** im Rahmen der Mandatspflichten, die als Gegenleistung für einen ungerechtfertigten Vorteil vorgenommen oder unterlassen werden (bisher ist nur der Kauf und Verkauf der Stimme bei Abstimmungen im Parlament erfasst).
+* Ausweitung der Strafbarkeit auf Vorteile, die **nach der Handlung** bzw. dem Unterlassen gewährt oder angenommen werden (zu erfassen sind auch sog. „Dankeschön-Spenden“).
+* Es müssen materielle **und immaterielle Versprechen** erfasst werden (bislang nur materielle Versprechen).
+* Es müssen Vorteile für sich **oder einen Dritten** erfasst werden (bislang nur Vorteile für sich).
+
+==== Ergänzende Vorschläge ====
+Damit eine so veränderte Strafnorm zur Abgeordnetenbestechung den einzelnen Abgeordneten in seinem täglichen Handeln nicht vor unlösbare Probleme stellt und letztlich dazu führt, dass immer weniger Menschen bereit sind, öffentliche Mandate zu übernehmen, halten wir die Regelung und Berücksichtigung folgender ergänzender Punkte für notwendig:
+* **Begriff der Mandatspflichten**: Die UN-Konvention stellt die Abgeordneten den Amtsträgern mit Amtspflichten gleich. Das Grundgesetz bestimmt für die Abgeordneten des Deutschen Bundestages,dass sie Vertreter des ganzen Volkes sind, die an Aufträge und Weisungen nicht gebunden sind, und nur ihrem Gewissen unterworfen sind (Art. 38 GG). Gleichwohl gibt es innerhalb dieses Bereiches Aufgaben, die von Abgeordneten üblicherweise ständig wahrgenommen werden, die das Bild des Abgeordneten prägen und deren Erfüllung geeignet ist, Rechtsfolgen oder andere Folgen zu bewirken, die vom Bestechenden gewünscht werden. Dazu gehören beispielsweise Abstimmungen im Plenum der Volksvertretung, in den Ausschüssen und in Arbeitsgruppen sowie in den Fraktionen. Der Kernbereich, hier Mandatspflichten genannt, sollte gesetzlich näher definiert werden.
+* **Begriff des ungerechtfertigten Vorteils**: Um der Vielgestaltigkeit der Abgeordnetentätigkeit gerecht zu werden, sollte insbesondere für die Frage, was als ungerechtfertigter Vorteil anzusehen ist, die Regel der Sozialadäquanz angewendet und gegebenenfalls. in den Gesetzestext an geeigneter Stelle eingeführt werden.
+* **Untersagung der Annahme von Spenden durch Abgeordnete** (Änderung des Abgeordnetengesetzes § 44 a, Abs. 2). In der Praxis wäre bei Änderung der Strafnorm der Abgeordnetenbestechung im obigen Sinne eine klare Trennung von Spenden für Abgeordnete und eine unrechtmäßige Annahme oder Gewährung von geldwerten Vorteilen nur schwer möglich. Spenden sollten deshalb nur von Parteien bzw. Wählergemeinschaften angenommen werden dürfen. Für parteilose und fraktionslose Abgeordnete könnte gegebenenfalls eine Sonderregelung geschaffen werden.
+
+== Bildung ==
+=== Gerechte und zeitgemäße Ausbildungsförderung ===
+Die staatliche Förderung der Ausbildung und des Studiums für sozial Schwächere stellt eine wichtige Maßnahme für die Unterstützung von Chancengleichheit und der allgemeinen Zugänglichkeit von Bildung in der Gesellschaft dar und sollte grundsätzlich ausgeweitet werden. In einer sich rapide verändernden Informationsgesellschaft erfordert jedoch allein schon die Dauer der Ausbildung eine Abkehrung von der Idee, dass Ausbildungsförderung durch den eigenen Dazuverdienst des Förderbeziehenden gemindert werden sollte. Zudem wird so der ursprüngliche Sinn der Ausbildungsförderung verfälscht, da die Schaffung finanzieller Anreize für Förderbeziehende, sich bis zum Ende der Ausbildung vom Arbeitsmarkt fernzuhalten, deren Chancen schmälert, anstatt diese zu verbessern.
+Im Hinblick darauf müssen alternative Förderungsmöglichkeiten stärker in den Vordergrund gebracht werden, darunter einkommensunabhängige, langlaufende, unverzinsliche staatlich bereitgestellte Kredite für Studierende sowie Stipendiumsprogramme, welche nicht von den Einkommensverhältnissen, sondern von den im Studium erbrachten Leistungen abhängen.
+
+== Freier Zugang zu öffentlichen Inhalten § OpenAccess ==
+=== Freier Zugang zu öffentlichen Inhalten ===
+==== Transparenz und aktive Mitbestimmung  ==
+"Die Piratenpartei setzt sich dafür ein, dass möglichst alle durch öffentlichen Stellen erzeugten oder mit Hilfe öffentlicher Förderung entstanden Inhalte der breiten Öffentlichkeit frei zugänglich gemacht werden. Die Verfügbarkeit darf nicht durch Antragsverfahren, Lizenzen, Gebühren oder technische Mittel erschwert werden. Die Inhalte werden in offenen Formaten online zur Verfügung gestellt und archiviert. Weiterverbreitung sowie kommerzielle Nutzung sind ausdrücklich gestattet. Ausnahmen von der Veröffentlichungspflicht sind nur bei schwerwiegenden Gründen möglich; diese müssen in jedem Einzelfall schriftlich dargelegt werden.
+
+Die Piratenpartei steht für konsequente Demokratie, Offenheit und Transparenz. Wir wollen, dass jeder Mensch prinzipiell in die Lage versetzt wird, die Arbeitsweise aller öffentlichen und öffentlich finanzierten Stellen im Detail zu verstehen und zu bewerten (Informationsfreiheit). Dies setzt voraus, dass die dort anfallenden Informationen sofort, ungefragt, standardisiert, dauerhaft und frei verfügbar gemacht werden (Open Data). Den Bürgern als mittelbare Auftraggeber ist das Recht einzuräumen, öffentlich finanzierte Inhalte nach Belieben abzurufen, zu verwenden und weiterzugeben (Open Commons). Wir stellen uns klar gegen Geheimniskrämerei, Abschottung und falsch verstandenes Konkurrenzdenken innerhalb des öffentlichen Sektors, den wir durch frei kommunizierbares Wissen deutlich effizienter, durchschaubarer und kontrollierbarer machen wollen. Besonders im wissenschaftlichen Bereich muss die Vergabe von Fördermitteln an die freie Veröffentlichung der erlangten Erkenntnisse geknüpft werden (Open Access)." (Grundsatzprogramm)
+
+==== Freier Zugang zu öffentlichen Inhalten  ==
+"Jahr für Jahr investiert die Allgemeinheit viele Milliarden Euro in die Erzeugung und Aufbereitung von Texten, Daten und Medien. Beispiele dafür sind die Ergebnisse der staatlich geförderten Forschung, die Produktionen der öffentlich rechtlichen Rundfunkanstalten und die Erzeugnisse von Kulturbetrieben und Bildungseinrichtungen sowie der öffentlichen Verwaltung. Die Bürger haben zu einem Großteil dieser Inhalte keinen oder nur sehr eingeschränkten Zugang, obwohl sie bereits für deren Herstellung bezahlt haben.
+
+Die Piratenpartei setzt sich dafür ein, dass möglichst alle durch öffentlichen Stellen erzeugten oder mit Hilfe öffentlicher Förderung entstanden Inhalte der breiten Öffentlichkeit frei zugänglich gemacht werden. Die Verfügbarkeit darf nicht durch Antragsverfahren, Lizenzen, Gebühren oder technische Mittel erschwert werden. Die Inhalte werden in offenen Formaten online zur Verfügung gestellt und archiviert. Weiterverbreitung sowie kommerzielle Nutzung sind ausdrücklich erwünscht.
+
+Wir sehen die universelle Verfügbarkeit und Verknüpfbarkeit von Informationen als wichtigen Teil der öffentlichen Infrastruktur auf deren Basis neues Wissen entsteht und mit dessen Hilfe der öffentliche Sektor kontrollierbar und optimierbar wird.
+
+In Ausnahmefällen können bestimmte Informationen vorübergehend oder dauerhaft von der Veröffentlichungspflicht befreit werden. Dafür müssen jedoch konkrete, schwerwiegende Gründe (z.B. der Schutz persönlicher Daten oder die Bewahrung sehr wichtiger Geheimnisse) vorliegen. Die Begründung muss in jedem Einzelfall explizit dargelegt und veröffentlicht werden und ist generell anfechtbar.
+
+Im Bereich Wissenschaft wird die Publikation nach dem Open Access Prinzip so schnell wie möglich ein zentrales Kriterium bei der Vergabe öffentlicher Fördermittel. Die öffentlich rechtlichen Sendeanstalten werden nicht mehr daran gehindert, sondern verpflichtet, ihre Produktionen dauerhaft online abrufbar zu machen. Das Informationsfreiheitsgesetz wird überarbeitet und die Spielräume zur systematischen Umgehung der Informationspflichten beseitigt.
+
+Langfristig wird ein öffentlich zugängliches Bürgerinformations-Portal geschaffen. Behörden und andere Institutionen werden angewiesen, ihre öffentlichen Daten dort einzustellen bzw. die eigenen Datenbanken an das Portal anzubinden. Das System muss umfangreiche Kategorisierungs-, Such- und Exportfunktionen sowie geeignete Programmierschnittstellen für automatisierte Anfragen bieten." (Wahlprogramm)
+
+==== Erläuterungen ==
+===== Öffentliche Inhalte ===
+Öffentliche Inhalte sind alle Informationen, Daten, Texte und Medien, die die Allgemeinheit unweigerlich betreffen oder deren Erzeugung direkt oder indirekt durch öffentliche Gelder finanziert wurden. Beispiele können sein: Forschungsergebnisse, Lehrmaterialien, Rundfunksendungen, Quellcode von Software, Planungsunterlagen, Aufzeichnungen und Protokolle von politischen Gremien, Finanzplanungen und Haushalte, Vertragswerke und Gesetzestexte.
+
+===== Freier Zugang ===
+Jeder Bürger muss mit einfachen technischen Mitteln in der Lage sein, die entsprechenden Inhalte zu finden und abzurufen. Die Daten müssen in strukturierten und offenen Formaten vorliegen, so dass sie problemlos aufbereitet oder wiederverwendet werden können. Dies darf nicht durch Lizenzverträge oder technische Verfahren erschwert werden. Um den Nutzen der Inhalte für die Allgemeinheit zu erhöhen, ist es ausdrücklich erwünscht, dass Dritte die Daten indizieren, aufbereiten, mischen oder weiterverbreiten. Alle Daten werden vollkommen kostenfrei zur Verfügung gestellt, weil nur so eine vollautomatische Weiterverarbeitung und Aggregation möglich ist.
+
+===== Ausnahmeregelung ===
+Es muss möglich sein, bestimme Informationen zeitweise oder dauerhaft von der Veröffentlichungspflicht zu befreien. Ausnahmeregelungen sind jedoch möglichst eng und eindeutig zu formulieren und dürfen nicht pauschal für ganze Behörden oder Fachbereiche gelten. Um einen Missbrauch der Ausnahmeregelungen zu verhindern, ist in jedem Einzelfall eine explizite Begründung an Stelle des eigentlichen Inhalts zu veröffentlichen. Pauschal oder unzureichend begründete Ausnahmen sind generell durch jeden Bürger anfechtbar. Daten zu Privatpersonen sind von der Veröffentlichungspflicht generell ausgeschlossen, da der Schutz persönlicher Daten schwerer wiegt als das öffentliche Interesse nach Information.
+
+Im Falle von Wirtschaftsförderungsmaßnahmen können Details über zu fördernde Produkte vorübergehend von der Veröffentlichungspflicht befreit werden. Bei Mischfinanzierungen durch öffentliche und private Geldgeber ist ein entsprechender Schlüssel für die anteilige Veröffentlichung zu erstellen. Wird die Erzeugung von Inhalten durch öffentliche Kredite finanziert, resultiert (vorbehaltlich der vollständigen Rückzahlung) keine Pflicht zur Veröffentlichung.
+
+===== Finanzielle Auswirkungen ===
+Die durch die Bereitstellung entstehenden Kosten sehen wir als sinnvolle Investition die mittelfristig zur Produktivitätssteigerung im öffentlichen Sektor führen wird. Durch ausschließliche Verwendung von offenen Formaten und freier Software sowie eine enge Orientierung an erfolgreichen Projekten mit ähnlicher Zielsetzung (z.B. data.gov.uk) werden die Investitionskosten gering gehalten.
+
+Als Folge der Veröffentlichungspflicht können (zusätzlich zu den reinen Bereitstellungskosten) sekundäre Mehrkosten entstehen, weil zum Beispiel bestimmte kommerzielle Anbieter gar nicht oder nur durch Zahlung erhöhter Lizenzgebühren beauftragt werden können. Langfristig ist jedoch von einem erheblichen Einsparpotenzial auszugehen, weil einmal produzierte Inhalte von verschiedenen Stellen beliebig wiederverwendet werden können. Bei Bedarf kann die Erzeugung von frei lizenzierten Medien öffentlich ausgeschrieben und gefördert werden.
+
+===== Informationsfreiheitsgesetz ===
+Das seit 2005 gültige Informationsfreiheitsgesetz soll auf Bundesebene einen Rechtsanspruch auf amtliche Informationen garantieren. In der Praxis wird der Zugang jedoch durch komplizierte Antragsverfahren, hohe Gebühren und eine große Zahl von Ausnahmeregelungen eingeschränkt. Der Schutz geistigen Eigentums wird beispielsweise über die Informationsfreiheit gestellt, so dass von kommerziellen Anbietern erzeugte Dokumente, Medien oder Quelltexte in der Regel nicht veröffentlicht werden. Die oben genannten Maßnahmen haben zum Ziel, das Umgehen des Informationsfreiheitsgesetzes so weit wie möglich zu unterbinden.
+
+Die Piratenpartei fordert eine umfangreiche Überarbeitung des zur Zeit recht löchrigen Informationsfreiheitsgetzes:
+
+**Anmerkung:** Die folgende Auflistung entstammt dem Abschnitt 'Informationsfreiheitsgesetz' des Wahlprogramms 2009.
+
+* Jeder Bürger hat unabhängig von der Betroffenheit und ohne den Zwang zur Begründung das Recht, auf allen Ebenen der staatlichen Ordnung Einsicht in die Aktenvorgänge und die den jeweiligen Stellen zur Verfügung stehenden Informationen zu nehmen. Dies gilt ebenso für schriftliches Aktenmaterial wie digitale oder andere Medien.
+* Seine Schranken findet dieses Recht in den Bestimmungen zum Schutz der Persönlichkeitsrechte, der nationalen Sicherheit, zur Verhinderung von Straftaten und ähnlichen hohen gesellschaftlichen Gütern. Diese Ausnahmeregelungen sind möglichst eng und eindeutig zu formulieren und dürfen nicht pauschal ganze Behörden oder Verwaltungsgebiete ausgrenzen.
+* Die Auskunftsstelle ist verpflichtet, zeitnah und in einer klaren Kostenregelung, Zugang in Form einer Akteneinsicht oder einer Materialkopie zu gewähren, um eine breite, effiziente Nutzung der Daten zu ermöglichen.
+* Die Verweigerung des Zugangs muss schriftlich begründet werden und kann vom Antragsteller, sowie von betroffenen Dritten gerichtlich überprüft werden, wobei dem Gericht zu diesem Zweck voller Zugang durch die öffentliche Stelle gewährt werden muss.
+* Alle öffentlichen Stellen sind verpflichtet, einen jährlichen Bericht über die Handhabung des Auskunftsrechts, aktuelle Organisations- und Aufgabenbeschreibungen sowie die Arten der verfügbaren Unterlagen zu veröffentlichen.
+
+Unter besonderer Berücksichtigung der immensen Möglichkeiten, die sich mit der rasanten Entwicklung und Verbreitung der neuen Medien ergeben, gibt es verschiedene Ansatzpunkte, um diesen grundsätzlichen Forderungen Rechnung zu tragen. So sollten staatliche Stellen die Nutzung freier Software forcieren, eine automatische Veröffentlichung dazu geeigneter Dokumente einrichten und allgemein den kostengünstigen und aufwandsarmen digitalen Zugriff ausbauen.
+
+Die Abkehr vom "Prinzip der Geheimhaltung", der Verwaltungs- und Politikvorstellung eines überkommenen Staatsbegriffs, und die Betonung des "Prinzips der Öffentlichkeit", das einen mündigen Bürger in den Mittelpunkt staatlichen Handelns und Gestaltens stellt, schafft nach der festen Überzeugung der Piratenpartei die unabdingbaren Voraussetzungen für eine moderne Wissensgesellschaft in einer freiheitlichen und demokratischen Ordnung.
+
+===== Open Access ===
+Der Begriff Open Access bezieht sich in erste Linie auf die Bereiche Forschung und Wissenschaft. Das primäre Ziel öffentlich geförderter Forschung ist die Generierung und Veröffentlichung neuer Erkenntnisse. Wissenschaftler sind immer darauf angewiesen, die Ergebnisse von Kollegen und Konkurrenten zu verwenden bzw. zu zitieren, um darauf aufbauend weiteres Wissen zu schaffen. Eine Beschränkung der Verfügbarkeit von Forschungsergebnissen widerspricht grundsätzlich der Wissenschaftlichen Methode und der Forderung nach universeller Überprüfbarkeit von Forschungsergebnissen.
+
+===== Internationaler Vergleich ===
+In den USA sind Werke (Texte, Bilder, Filme, Software usw.), die von Regierungsangestellten im Rahmen ihrer Tätigkeit erzeugt wurden, vom Copyright ausgeschlossen und gehören stattdessen der Allgemeinheit (Public Domain). Das National Institute of Health, die größte Forschungsgesellschaft der USA mit einem Jahreshaushalt von rund 30 Milliarden USD verlangt, dass die Ergebnisse aller geförderten Projekt frei verfügbar publiziert werden (publicaccess.nih.gov). In Großbritannien wurde im Jahr 2009 das OpenData-Portal data.gov.uk gestartet. Öffentliche Information aus Regierung und Verwaltung werden dort unter einer Creative Commons Attribution 3.0 compatiblen Lizens in maschinenlesbarer Form zu Verfügung gestellt. Im Hintergrund wird die Open Source Software ckan.org (Comprehensive Knowledge Archive Network) der Open Knowledge Foundation (okfn.org) verwendet. Ähnliche Ansätze existieren unter anderem in den USA (data.gov), Australien (data.gov.au), Kanada (data.gc.ca), Norwegen (data.norge.no) und den Niederlanden (data.overheid.nl).
+
+===== Wettbewerb ===
+Es wird oft angemerkt, dass die freie Verfügbarkeit von Wissen einen Wettbewerbsnachteil für öffentlich finanzierte Institutionen darstellen könnte, weil dadurch Betriebsgeheimnisse unmöglich gemacht werden. Öffentliche Institutionen haben jedoch kein natürliches Interesse daran, in einen unmittelbaren Konkurrenzkampf mit privaten Anbietern zu treten. Das Ziel der öffentlichen Hand ist nicht Gewinnmaximierung, sondern eine gerechte und effiziente Bereitstellung von bestimmten Leitungen. Dementsprechend gibt es keinen Grund, den Zugang zu öffentlichen Inhalten künstlich zu verknappen.
+
+Am Beispiel des öffentlich rechtlichen Rundfunks bedeutet dies, dass jeder Bürger (und jede private Sendeanstalt) alle öffentlichen Produktionen verwenden und auch weiterverbreiten kann. Man könnte einwenden, dass dies zu einer Wettbewerbsverzerrung zu Lasten der öffentlichen Sender führt, weil zum Beispiel deren Einschaltquoten sinken, wenn ihre Produktionen auf anderen Kanälen übernommen werden. Die Existenzberechtigung des öffentlich rechtlichen Rundfunks ist jedoch nicht das Erreichen von Quoten sondern ein klarer Bildungsauftrag und die Pflicht zur ausgewogene Berichtserstattung. Eine möglichst weite Verbreitung von Angeboten die diesen Qualitätskriterien gerecht werden ist positiv zu bewerten, unabhängig davon, auf welchem Kanal diese Verbreitung stattfindet. Die kostenintensive Produktion von Inhalten die ausschließlich der kurzfristigen Quotensteigerung dienen, wird unattraktiver und kann zurückgefahren werden. Private und öffentlich rechtliche Sendeanstalten müssen sich nicht zwingend in einem Konkurrenzverhältnis befinden. Während die einen nach den Kriterien der Wirtschaftlichkeit arbeiten müssen, können die anderen ihren Schwerpunkt auf die Produktion gesellschaftlich wertvoller Inhalte legen.
+
+== Soziales ==
+=== Sofortmaßnahmen zur Humanisierung des SGB II und XII ===
+Nach Artikel 1 des Grundgesetzes ist die Würde des Menschen unantastbar. Sie zu achten und zu schützen ist Verpflichtung aller staatlichen Gewalt. Die derzeitige SGB-II-Gesetzgebung („Hartz IV“) sowie das Sozialhilferecht (SGB XII) verstoßen unserer Auffassung nach in mehreren Punkten in nicht hinnehmbarer Weise gegen den in den Grundrechten niedergelegten Verfassungsauftrag. Die Piratenpartei Deutschland fordert daher folgende Sofortmaßnahmen zur Humanisierung des SGB II:
+
+==== Höhe des Regelsatzes ==
+Die sozialen Sicherungssysteme sollen Armut verhindern und gesellschaftliche Teilhabe ermöglichen. Daher müssen sie stets sicherstellen, dass allen Bezugsberechtigten mindestens ein Einkommen in Höhe der Armutsrisikogrenze zur Verfügung steht. Diese Schwelle lag nach Definition der EU (60% des Netto-Äquivalenzeinkommens) im Jahr 2010 für Alleinstehende bei 826 Euro.
+
+Der Regelsatz liegt derzeit (2010) bei 364 Euro. Im Jahr 2008 betrug der durchschnittlich hinzukommenden Bedarf für Unterkunft und Heizung für Alleinstehende im unteren Einkommensbereich nach der Einkommens- und Verbrauchsstichprobe 345 Euro. Dies ergibt zusammen lediglich 709 Euro. Ein Bezieher von Sozialleistungen befindet sich daher im Normalfall mit seinem Einkommen unterhalb der Armutsrisikogrenze. Dies ist nicht hinnehmbar.
+
+Der Regelsatz ist daher für alle bezugsberechtigten Personengruppen so festzulegen, dass er zusammen mit den durchschnittlich erstattungsfähigen Kosten für Unterkunft und Heizung mindestens die Höhe der Armutsrisikogrenze erreicht.
+
+Statt einer Bemessung anhand der relativen Armutsgrenze wird derzeit für die Berechnung des Regelbedarfs jedoch auf die Daten der Einkommens- und Verbrauchsstichprobe (EVS) zurückgegriffen. Dabei werden seit 2010 lediglich die unteren 15% (Alleinstehende) bzw. 20% (Familien) der nach ihrem Einkommen geschichteten Haushalte als Referenz herangezogen, wobei Bezieher von Sozialleistungen in der Stichprobe unberücksichtigt bleiben. Der so ermittelte Regelbedarf wird dann durch politisch bestimmte Abzüge (z. B. für Alkohol, Tabak, Blumen, Telekommunikations- und Mobilitätsausgaben) um etwa 150 Euro vermindert.
+
+Wenn der Regelsatzes schon auf Grundlage der Einkommens- und Verbrauchsstichprobe errechnet werden soll, so müssen für die Berechnung bei allen Personengruppen zumindest die unteren 20% der Referenzhaushalte herangezogen werden, so wie das vor 2010 der Fall war. Dabei müssen aus der Vergleichsgruppe nicht nur wie bisher Bezieher von Sozialleistungen vorab herausgenommen werden, sondern auch die sogenannten „verdeckt Armen“, also Haushalte mit einem Einkommen unterhalb des Sozialleistungs-Niveaus.
+
+Die Piratenpartei lehnt weiterhin Abschläge bei der Regelsatzberechnung strikt ab. Politisch bestimmte Abzüge vom Regelbedarf ersetzen die Freiheit des Einzelnen, über die Verwendung seiner Geldmittel selbst zu entscheiden, durch staatliche Bevormundung. Es ist nicht hinnehmbar, dass der Staat für seine Bürger bestimmen will, welche Ausgaben sie sich leisten dürfen und welche nicht - bloß weil sie unterhalb der Armutsgrenze leben und auf gesellschaftliche Solidarität angewiesen sind. Auch Alkohol, Tabak, Blumen, Telekommunikation und Mobilität gehören in freier Entscheidung des Individuums zu einem menschenwürdigen Leben.
+
+Die Paragraphen § 20 SGB II („Regelbedarf zur Sicherung des Lebensunterhalts”), § 28 SGB XII („Ermittlung der Regelbedarfe“) sowie das „Gesetz zur Ermittlung der Regelbedarfe nach § 28 des Zwölften Buches Sozialgesetzbuch (Regelbedarfs-Ermittlungsgesetz)“ sind dementsprechend zu ändern.
+
+==== Sanktionen ==
+Das Bundesverfassungsgericht hat am 9. Februar 2010 entschieden, dass der Anspruch auf Sozialleistungen so ausgestaltet sein muss, „dass er stets den gesamten existenznotwendigen Bedarf jedes individuellen Grundrechtsträgers deckt“. Dazu gehört nicht nur das physische Existenzminimum, sondern „auch die Sicherung der Möglichkeit zur Pflege zwischenmenschlicher Beziehungen und zu einem Mindestmaß an Teilhabe am gesellschaftlichen, kulturellen und politischen Leben.“ (BVerfG, 1 BvL 1/09 vom 9.2.2010, Absatz-Nr. 135 und 137)
+
+Dieser Bedarf wird nach Ansicht des Gesetzgebers mit der Regelleistung gedeckt. Dennoch sind in Kapitel 3 des SGB II und des SGB XII jeweils „Sanktionen“, also Kürzungen von Sozialleistungen zum Zweck der Maßregelung von Leistungsempfängern vorgesehen. Dies ist aus unserer Sicht mit dem grundgesetzlichen Recht zur Achtung der Menschenwürde in Artikel 1 und dem Verbot von Zwangsarbeit in Artikel 12 des Grundgesetzes unvereinbar.
+
+Daher sind Sanktionen nach SGB II Kapitel 3 Abschnitt 2 Unterabschnitt 5 (§31 - 32) sowie nach SGB XII Kapitel 3 Abschnitt 6 (§39a) abzuschaffen.
+
+Analog müssen auch §42a Absatz 2 SGB II und §37 Absatz 4 SGB XII überarbeitet werden, die eine Kürzung des Regelbedarfes aufgrund eines zuvor gewährten Darlehens vorsehen.
+
+==== Zuverdienstmöglichkeiten ==
+Wer heute Leistungen nach dem SGB II bezieht und dazuverdient, behält von seinem Zuverdient kaum etwas in seinem Geldbeutel. Nach dem Ausschöpfen der Grundfreibeträge findet statt dessen ein Transferentzug zwischen 80 und 90% statt. Das bedeutet besipielsweise, dass Menschen, die für 9 Euro Stundenlohn arbeiten, effektive Stundenlöhne zwischen 90 Cent und 1,80 Euro verdienen. Im Extremfall führt dies in manchen Branchen dazu, dass Menschen, die einer regulären Erwerbsarbeit nachgehen, einen geringeren effektiven Stundenlohn erzielen als in einer sogenannten „Arbeitsgelegenheit mit Mehraufwandsentschädigung“ („Ein-Euro-Job“).
+
+Das beschädigt die Motivation der Menschen, die sich durch Arbeitsaufnahme aus dem ALG-II-Bezug herausarbeiten wollen, in großem Maße.
+
+Die in den Paragraphen 11, 11a und 11b SGB II geregelten Vorschriften zum zu berücksichtigenden Einkommen und zu den Absetzbeträgen sind zudem kompliziert und schwer verständlich. Auch aus diesem Grund ist eine Reform dieser Bestimmungen nötig.
+
+Wer einer Erwerbsarbeit nachgeht, soll dafür in jedem Fall auch finanziell klar belohnt werden. Daher ist sicherzustellen, dass von jedem hinzuverdienten Euro mindestens 30% beim Sozialleistungsbezieher bleiben.
+
+==== Bedarfsgemeinschaften / Fürsorgepflicht ==
+Bei der Berechnung von Ansprüchen nach dem SGB II werden Menschen, die zusammenleben und füreinander einstehen, zu sogenannten „Bedarfsgemeinschaften“ zusammengefasst. Benötigt nur ein Partner einer solchen Bedarfsgemeinschaft staatliche Unterstützung, so haben zuerst die anderen Mitglieder der Bedarfsgemeinschaft für ihn zu sorgen, bevor ein gesetzlicher Anspruch auf Hilfe entsteht.
+
+Hierbei unterstellt der Gesetzgeber im ALG-II-Recht regelmäßig dann eine Bedarfsgemeinschaft, sobald zwei oder mehr Menschen länger als ein Jahr eine gemeinsame Wohnung bewohnen. Im Sozialhilferecht gilt diese Vermutung sogar ohne die Ein-Jahres-Frist des SGB II sofort. Sehen die Betroffenen dies anders, so überprüfen die Behörden diese Angaben regelmäßig durch häusliche Kontrollen in der Wohnung des Antragsstellers. Dabei versuchen sie, anhand von Indizien innerhalb der Wohnung auf die persönliche Lebensführung der Bewohner zu schließen und hierdurch aus amtlicher Sicht festzustellen, ob eine Einstehensgemeinschaft vorliegt oder nicht. Im Rahmen von solchen sinnlosen häuslichen Kontrollen wird das Grundrecht auf Unverletzlichkeit regelmäßig in grober Weise unangemessen eingeschränkt.
+
+Menschen, die im selben Bett schlafen, haben nicht automatisch den Wunsch, einander finanziell beizustehen. Andersherum können Menschen, die in getrennten Wohnungen wohnen, sehr wohl dazu bereit sein, sich in Notlagen gegenseitig zu unterstützen.
+
+Die Piratenpartei achtet in besonderer Weise das Prinzip der freien Selbstbestimmung über Angelegenheiten des persönlichen Lebens. In diesem Sinne bekennen wir uns konsequent zum Pluralismus des Zusammenlebens. Politik muss der Vielfalt der Lebensstile gerecht werden und eine wirklich freie Entscheidung für die individuell gewünschte Form des Zusammenlebens ermöglichen.
+
+Füreinander einzustehen ist eine persönliche Entscheidung, die in vielfältiger Weise gestaltet sein kann und sich jederzeit ändern kann. Wir vertrauen darauf, dass Menschen, die keinen Bedarf an Sozialleistungen haben, diese auch nicht beanspruchen. Es ist daher davon auszugehen, dass ein Antragsteller, der Sozialleitungen beantragt, diese auch benötigt, und dass eine Bedarfsgemeinschaft nur dann vorliegt, wenn Antragssteller sich demgemäß erklären.
+
+Insofern ist ausgehend von §7 SGB II und §39 SGB XII das gesamte Sozialgesetzbuch entsprechend zu überarbeiten. Auf Kontrollen zur Überprüfung von Bedarfsgemeinschaften ist vollständig zu verzichten.
+
+==== Feststellung der Erwerbsfähigkeit ==
+Die Entscheidung, ob ein ALG-II-Antragsteller als erwerbsfähig eingestuft wird, trifft derzeit die Agentur für Arbeit. In § 44a SGB II wird den von dieser Entscheidung betroffenen Sozialleistungsträgern und Krankenkassen ein Widerspruchsrecht eingeräumt, das den grundsätzlichen Anspruch auf ALG II vorläufig bestehen lässt und gleichzeitig zu einem Gutachterverfahren beim zuständigen Rentenversicherungsträger führt. Dem Betroffenen selbst wird dieses erweiterte Widerspruchsrecht allerdings nicht gewährt.
+
+In der Praxis führt dies dazu, dass Antragssteller, die von der Agentur für Arbeit als erwerbsunfähig eingestuft werden, erst einen weiteren Antrag auf Sozialhilfe oder Krankenversicherungsleistungen stellen müssen, woraufhin der Sozialleistungsträger oder die Krankenkasse den Widerspruch einlegen und den Antragssteller so an die Agentur für Arbeit zurückverweisen können.
+
+Dieses umständliche Verfahren ließe sich auf Wunsch des Betroffenen abkürzen, wenn ihm das Widerspruchsrecht nach § 44a Satz 2 auch selbst zusteht. Weiterhin könnten im gegenteiligen Fall Betroffene auch dann selbst ein Gutachten einleiten, wenn sich die zuständigen Sozialleistungsträger über eine bestehende Erwerbsunfähigkeit einig sind, der Betroffene aber als erwerbsfähig eingestuft werden möchte. Ohne dieses Recht stünde dem Betroffenen sonst in diesem Fall nur das reguläre Widerspruchsrecht und ggf. der langwierige Gang über die Gerichte offen.
+
+Wir fordern daher, in § 44a SGB II gegen die Entscheidung der Agentur für Arbeit auch dem Arbeitssuchenden selbst ein Widerspruchsrecht nach Satz 2 des Paragraphen einzuräumen.
+
+==== Verbot von Zeitverträgen für Angestellte der ARGEn ==
+Oft werden Mitarbeiter in den Jobcentern nur zeitlich befristet eingestellt. Angeblich sollen hierüber saisonale Schwankungen ausgeglichen werden. Allerdings gibt es in weitaus größerem Maße zeitlich befristete Arbeitsverträge, als es die hierfür gegebene Begründung rechtfertigt. Zudem könnte ein saisonal verringerter Bedarf an Mitarbeitern, der durch eine Abnahme der Arbeitslosigkeit erzeugt wird, falls nötig auch durch betriebsbedingte Kündigungen von fest angestellten Mitarbeitern beantwortet werden.
+
+Das Übermaß an befristeten Anstellungen in den Jobcentern führt zum einen dazu, dass in der Belegschaft eine stärkere Fluktuation herrscht als nötig, und hierunter die Qualität der Beratung und Vermittlung leidet. Zum anderen sind Mitarbeiter, die um die Verlängerung ihres Vertrags bangen müssen, leichter dazu zu bringen, auch unangemessene Vorgaben ihrer Vorgesetzten im Umgang mit den ihnen anvertrauten Leistungsbeziehern umzusetzen.
+
+Wir lehnen es ab, dass Mitarbeiter in Jobcenter durch befristete Arbeitsverträge unter Druck gesetzt werden. Die Piratenpartei setzt sich daher für ein Verbot von zeitlich befristeten Arbeitsverträgen für Mitarbeiter der Jobcenter ein.
+
+== Umwelt ==
+=== Sicherheit kerntechnischer Anlagen ===
+Die Piratenpartei Deutschland lehnt die Stromerzeugung durch Kernspaltung ab.
+
+Die Piratenpartei  Deutschland will als Minimalforderung an dem beschlossenen
+Atomausstieg festhalten.
+
+Die Piratenpartei  Deutschland setzt sich des weiteren dafür ein, dass nur
+ausreichend sichere kerntechnische Anlagen eine Betriebserlaubnis erhalten,
+beziehungsweise solche die Betriebserlaubnis verlieren, sobald deren
+Unsicherheit bekannt wird.
+
+Unsicheren Anlagen ist die Betriebserlaubnis unmittelbar nach Bekanntwerden
+der Mängel zu entziehen.
+
+Eine erneute Erteilung einer Betriebsgenehmigung soll nur nach den aktuellen
+Standards möglich sein.
+
+Kerntechnische Anlagen (Kraftwerke, Zwischenlager, etc.) mit mangelhafter
+Sicherheit müssen nachgerüstet oder aufgelöst werden.
+
+=== Umgang mit Nuklear-Müll ===
+Die Piratenpartei Deutschland setzt sich für die Lösung der Endlagerproblematik und den nachhaltigen Umgang mit Ressourcen ein.
+
+Die Piratenpartei Deutschland lehnt eine weitere Erkundung des Salzstockes in Gorleben ab. Die Piratenpartei Deutschland hält die Erkenntnisse die in den letzten 30 Jahren über den Salzstock gewonnen wurden und die politischen Vorgänge zu dessen Auswahl für ausreichend, um den Salzstock als nicht geeignet und nicht genehmigungsfähig einzustufen.
+
+Die Piratenpartei Deutschland setzt sich für eine bundesweite Suche nach tatsächlich geeigneten Lagerstätten ein.
+
+Die Piratenpartei Deutschland setzt sich dafür ein, dass nuklearer Müll grundsätzlich so gelagert wird, dass bei Bedarf eine Rückholung erfolgen kann.
+
+== Bauen und Verkehr ==
+=== Einführung eines Nulltarifes im ÖPNV ===
+Die Piratenpartei ist davon überzeugt, dass ein fahrscheinfreier ÖPNV nicht nur für die Gesellschaft, sondern auch für die Wirtschaft langfristig einen Gewinn darstellt. Diese Maßnahme ermöglicht mehrere Ziele zugleich zu erreichen: Die Städte als zusammenhängender Lebensraum werden aufgewertet, da in Ballungsräumen eine stärkere Nachfrage zu einem attraktiveren Angebot führen wird. Ebenfalls steigert der Öffentliche Personennahverkehr zum Nulltarif die Anziehungskraft unserer Städte auf auswärtige Besucher. Davon profitieren Staat und Wirtschaft gleichermaßen. In ländlichen Gebieten wird eine verstärkte Nutzung des ÖPNV dazu führen, dass vormals schwach frequentierte Strecken wieder sinnvoll bedient werden können. Auch die einkommensschwachen Verkehrsteilnehmer werden durch diese Maßnahme finanziell deutlich entlastet. Außerdem entfallen Kosten für Fahrkartenverkauf und -kontrolle. Freiwerdende Mitarbeiter der Fahrkartenkontrolle werden überwiegend zur Verbesserung des Services eingesetzt. Wie das Vorbild der belgischen Stadt Hasselt zeigt, sind solche Projekte in der Praxis realisierbar.
+
+Die Piratenpartei fordert eine Analyse der Machbarkeit eines fahrscheinfreien ÖPNVs. Wir setzen uns dafür ein, zunächst ein oder mehrere Pilotprojekte umzusetzen, die wissenschaftlich begleitet werden sollen. Gut geeignet sind hierzu kleinere oder mittelgroße Städte, deren ÖPNV-Systeme aufgrund ihrer Insellage nicht mit anderen Großstädten vernetzt sind. Im Erfolgsfall soll der Modellversuch schrittweise bundesweit ausgedehnt werden. Der Öffentliche Nahverkehr zum Nulltarif mit hohen qualitativen und quantitativen Standards wird auf Dauer die Mobilität eines jeden Bürgers erhöhen und in Zukunft einen hohen Stellenwert in der Schaffung eines umweltfreundlichen sowie ressourcenschonenden Verkehrsangebotes einnehmen.
+
+== Grundrechte ==
+=== Versammlungsfreiheit ===
+Die Piratenpartei setzt sich dafür ein, dass die Einschränkungen der Versammlungsfreiheit zurückgenommen werden und auf alle in Deutschland lebenden Personen ausgedehnt wird.
+
+== Europa- und Außenpolitik ==
+=== ESM-Vertrag ===
+Die Piratenpartei kritisiert die demokratischen Defizite bei der Entstehung des ESM-Vertrags.
+
+=== Piratenappell pro Europa ===
+Wir, die Mitglieder der Piratenpartei Deutschland, sind uns der Bedeutung der europäischen Einigung für Frieden, Freiheit, Wohlstand und Rechtsstaatlichkeit auf diesem Kontinent bewusst und erkennen, dass diese Errungenschaften weder selbstverständlich noch garantiert sind, sondern einer ständigen aktiven Verteidigung und Ausgestaltung durch die Bürger Europas bedürfen. Vor diesem Hintergrund sehen wir die Krise des Euro, die Überschuldung der öffentlichen Haushalte und die Probleme der europäischen Institutionen, politische und wirtschaftliche Stabilität und soziale Sicherheit zu gewährleisten, mit großer Sorge, denn sie erschüttern das Fundament der europäischen Idee.
+
+Zugleich werden der Europäischen Union, die in ihrer gegenwärtigen Form eine demokratische Kontrolle durch ihre Bürger nur unzureichend gewährleisten kann und daher auf wenig Rückhalt in der Bevölkerung stößt, immer bedeutendere Teile nationaler Souveränität übertragen. Damit drohen die Demokratie und mit ihr die europäische Einigung als zentrale kulturelle Errungenschaften schleichend abhanden zu kommen.
+
+Als Teilmenge einer transnationalen politischen Bewegung, deren Kommunikationsraum keine staatlichen Grenzen kennt, sehen wir uns in einer besonderen Verantwortung, den Bestand der europäischen Idee sicherzustellen und sie unter Rücksichtnahme auf die historisch gewachsenen kulturellen Unterschiede innerhalb Europas fortzuentwickeln. Jedoch wollen und können wir dies nicht alleine bewirken.
+
+Daher appellieren wir an alle europäischen Piratenparteien und Piraten, an alle europäischen Parteien und mit besonderem Nachdruck an alle Europäer, sich intensiv mit der institutionellen Zukunft Europas auseinanderzusetzen und insbesondere die Möglichkeit eines durch eine gemeinsame Verfassung konstituierten, demokratischen europäischen Rechtsstaates zu erwägen, der den Bürger in den Mittelpunkt seines Handelns stellt - ein Europa der Bürger und Regionen.
+
+Angesichts der politischen Herausforderungen in Fragen der nachhaltigen Nutzung der Ressourcen dieses Planeten, der sozialen Sicherheit und Gerechtigkeit, der Ökologie, der Steuer- und Finanzpolitik und der Digital- und Netzpolitik, die im nationalstaatlichen Rahmen alleine nicht mehr adäquat gestaltet werden können, rufen wir weiterhin alle Piratenparteien weltweit dazu auf, zügig die notwendigen Strukturen zu schaffen und auszubauen, um unter möglichst breiter Beteiligung aller Mitglieder länderübergreifend gemeinsame politische Positionen erarbeiten und abstimmen zu können.
+
+== Sonstiges ==
+=== Abschaffung des Paragraphen 173 Beischlaf zwischen Verwandten ===
+Die Piraten setzen sich für eine Abschaffung des §173 STGB ein.
+
+=== Erklärung gegen die Leugnung und Relativierung des Holocaust ===
+Die Piratenpartei Deutschland erklärt, dass der Holocaust unbestreitbar Teil der Geschichte ist. Ihn unter dem Deckmantel der Meinungsfreiheit zu leugnen oder zu relativieren widerspricht den Grundsätzen unserer Partei.
