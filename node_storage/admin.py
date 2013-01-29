@@ -58,7 +58,7 @@ class DerivationInline(admin.TabularInline):
 class ArgumentAdmin(admin.ModelAdmin):
     model = Argument
     list_display = ('title', 'id', 'arg_type', 'node_type')
-    inlines = [TextInline, ArgNodeInline, DerivationInline]
+    inlines = [TextInline, ArgNodeInline]
 
 class NodeAdmin(admin.ModelAdmin):
     model = Node
