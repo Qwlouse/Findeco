@@ -23,14 +23,19 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from node_storage.structure_parser import validate_structure_schema, InvalidWikiStructure
-from ..structure_parser import strip_accents, substitute_umlauts, parse
-from ..structure_parser import remove_unallowed_chars, turn_into_valid_short_title, getHeadingMatcher
-from ..structure_parser import create_structure_from_structure_node_schema
-from ..factory import create_user, create_slot, create_structureNode, create_textNode, create_argument
+from node_storage.structure_parser import validate_structure_schema
+
+from ..factory import create_argument, create_slot, create_structureNode
+from ..factory import create_textNode, create_user
 from ..path_helpers import get_root_node
 from ..models import Node
-import re
+from ..structure_parser import create_structure_from_structure_node_schema
+from ..structure_parser import InvalidWikiStructure
+from ..structure_parser import parse
+from ..structure_parser import remove_unallowed_chars
+from ..structure_parser import strip_accents
+from ..structure_parser import substitute_umlauts
+from ..structure_parser import turn_into_valid_short_title
 
 class StructureParserTest(TestCase):
     def test_strip_accents(self):
@@ -68,14 +73,6 @@ class StructureParserTest(TestCase):
         for t, _, st_set, st in titles:
             self.assertEqual(turn_into_valid_short_title(t, set(st_set)), st)
 
-    def test_getHeadingMatcher(self):
-        s = "1, 6"
-        self.assertEqual(getHeadingMatcher(level=0),re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s]+)\s*)?=*\s*$"%s, flags=re.MULTILINE))
-        for level in range(1,7):
-            s = "%d"%level
-            self.assertEqual(getHeadingMatcher(level=level),re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s]+)\s*)?=*\s*$"%s, flags=re.MULTILINE))
-        self.assertRaises(ValueError,getHeadingMatcher,level=7)
-
     def test_validate_structure_schema_on_simple_example_with_slot(self):
         simple = dict(title="foo", short_title="foo", text="und bar und so", children=[])
         self.assertTrue(validate_structure_schema(simple))
@@ -84,7 +81,100 @@ class StructureParserTest(TestCase):
         invalid = dict(title="foo", text="und bar und so", children=[])
         self.assertRaises(AssertionError, validate_structure_schema, invalid)
 
-    def test_structure_parser(self):
+    def test_structure_parser_with_single_node_example(self):
+        wiki = """=Titel=
+        Der text."""
+        schema = {
+            'short_title':"foo",
+            'title':"Titel",
+            'text':"Der text.",
+            'children': []
+        }
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s,schema)
+
+    def test_structure_parser_processes_short_title(self):
+        wiki = """=Titel=
+        == Slot § shört, title!#$|~ ==
+        """
+        schema = {
+            'short_title':"foo", 'title':"Titel", 'text':"",
+            'children': [
+                {   'short_title':"shoert_title", 'title':"Slot", 'text':"",
+                    'children': []
+                }
+            ]
+        }
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s,schema)
+
+    def test_structure_parser_turns_title_into_short_title(self):
+        wiki = """=Titel=
+        == ..::Very(!) long, slot title with special characters::..  ==
+        """
+        schema = {
+            'short_title':"foo", 'title':"Titel", 'text':"",
+            'children': [
+                {   'short_title':"Very_long_slot_title",
+                    'title':"..::Very(!) long, slot title with special characters::..",
+                    'text':"",
+                    'children': []
+                }
+            ]
+        }
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s,schema)
+
+    def test_structure_parser_with_single_node_example_strips_whitespace(self):
+        wiki = """
+
+        =  Titel   =
+
+
+        Der text.
+
+
+        """
+        schema = {
+            'short_title':"foo",
+            'title':"Titel",
+            'text':"Der text.",
+            'children': []
+        }
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s,schema)
+
+    def test_structure_parser_without_title_raises_exception(self):
+        wiki = "nur text"
+        self.assertRaises(InvalidWikiStructure, parse, wiki, "foo")
+
+    def test_structure_parser_with_wrong_title_raises_exception(self):
+        wiki = """
+        == H2 titel ==
+        dann text
+        """
+        self.assertRaises(InvalidWikiStructure, parse, wiki, "foo")
+
+    def test_structure_parser_short_title_in_h1_is_silently_removed(self):
+        wiki = """
+        = Titel § removed =
+        Der text.
+        """
+        schema = {
+            'short_title':"foo",
+            'title':"Titel",
+            'text':"Der text.",
+            'children': []
+        }
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s,schema)
+
+    def test_structure_parser_with_nested_h2(self):
         wiki = """
         = Titel =
         einleitungstext
@@ -109,17 +199,80 @@ class StructureParserTest(TestCase):
                        'children': []},
                       ]}
         self.assertEqual(s,schema)
+
+    def test_structure_parser_with_nested_h4(self):
         wiki = """
         = Titel =
         einleitungstext
-        === slot1 ===
+        ==== slot1 ====
         text
-        == Toller Slot § slot2 ==
+        ==== Toller Slot § slot2 ====
         mehr text
         """
-        self.assertRaises(InvalidWikiStructure,parse,wiki,"foo")
-        wiki = "== Titel =="
-        self.assertRaises(InvalidWikiStructure,parse,wiki,"foo")
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        schema = {'short_title': "foo",
+                  'title': "Titel",
+                  'text': "einleitungstext",
+                  'children': [
+                      {'short_title': "slot1",
+                       'title': "slot1",
+                       'text': "text",
+                       'children': []},
+                      {'short_title': "slot2",
+                       'title': "Toller Slot",
+                       'text': "mehr text",
+                       'children': []},
+                      ]}
+        self.assertEqual(s,schema)
+
+    def test_structure_parser_with_deep_example(self):
+        wiki = """
+        = Titel =
+        text
+        == Titel1 § slot1 ==
+        text1
+        === Titel11 § slot11 ===
+        text11
+        ==== Titel111 § slot111 ===
+        text111
+        === Titel12 § slot12 ===
+        text12
+        == Titel2 § slot2 ==
+        text2
+        === Titel21 § slot21 ===
+        text21
+        === Titel22 § slot22 ===
+        text22
+        ==== Titel221 § slot221 ===
+        text221
+        """
+        s = parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        schema = {'title': "Titel",'short_title': "foo", 'text': "text",
+                  'children': [
+                      {'title': "Titel1",'short_title': "slot1", 'text': "text1",
+                       'children': [
+                           {'title': "Titel11",'short_title': "slot11", 'text': "text11",
+                            'children': [
+                                {'title': "Titel111",'short_title': "slot111", 'text': "text111",
+                                 'children': []}
+                            ]},
+                           {'title': "Titel12",'short_title': "slot12", 'text': "text12",
+                            'children': []},
+                       ]},
+                      {'title': "Titel2",'short_title': "slot2", 'text': "text2",
+                       'children': [
+                           {'title': "Titel21",'short_title': "slot21", 'text': "text21",
+                            'children': []},
+                           {'title': "Titel22",'short_title': "slot22", 'text': "text22",
+                            'children': [
+                                {'title': "Titel221",'short_title': "slot221", 'text': "text221",
+                                 'children': []}
+                            ]},
+                       ]},
+                      ]}
+        self.assertEqual(s,schema)
 
 class CreateStructureFromStructureNodeSchemaTest(TestCase):
     def setUp(self):

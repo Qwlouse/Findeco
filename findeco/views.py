@@ -37,6 +37,7 @@ from findeco.view_helpers import create_graph_data_node_for_structure_node
 import node_storage as backend
 from .paths import parse_suffix
 from .view_helpers import ValidPaths, json_error_response, json_response
+from .view_helpers import store_structure_node, store_argument, store_derivate
 from .view_helpers import create_index_node_for_slot, create_user_info, build_text
 from .view_helpers import create_user_settings, create_index_node_for_argument
 
@@ -107,10 +108,18 @@ def load_text(request, path):
                            'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
                            'isFollowing': favorite.votes.filter(user=request.user.id).count()>0,
                            'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
+    isFollowing = 0
+    v = node.votes.filter(user=request.user.id)
+    if v.count() > 0:
+        v = v[0]
+        isFollowing = 1 # at least transitive follow
+        if v.nodes.order_by('id')[0] == node:
+            isFollowing = 2 # explicit follow
+
     return json_response({
         'loadTextResponse':{
             'paragraphs': paragraphs,
-            'isFollowing': node.votes.filter(user=request.user.id).count()>0}})
+            'isFollowing': isFollowing}})
 
 def load_user_info(request, name):
     try:
@@ -190,24 +199,6 @@ def mark_node(request, path, mark_type):
     mark.save()
     mark.nodes.add(node)
     mark.save()
-
-    ## @jonny: I don't understand what this is for. Seems wrong to me:
-#    if backend.get_similar_path(node, path) != path: #This means it is an argument which wasn't created here
-#        a = backend.Argument()
-#        a.concerns = backend.get_path_parent(node, path)
-#        a.arg_type = node.arg_type
-#        a.parents = node.parents
-#        a.sources = node.sources
-#        a.node_type = node.node_type
-#        a.save()
-#        t = backend.Text()
-#        t.node = a
-#        t.text = node.text_object.text
-#        t.authors = node.text_object.authors
-#        t.save()
-#        node = a
-
-
     return json_response({'markNodeResponse':{}})
 
 
@@ -216,6 +207,32 @@ def store_settings(request):
     # Backend foo
     return json_response({})
 
+@ValidPaths("StructureNode")
 def store_text(request, path):
-    # Backend foo
-    return json_response({})
+    if not request.user.is_authenticated:
+        return json_error_response('NotAuthenticated', "You need to be authenticated to store text.")
+    user = request.user
+
+    if not 'wikiText' in request.POST:
+        return json_error_response('MissingPostParameter',
+            'storeText is missing the wikiText POST parameter!')
+
+    if not 'argumentType' in request.POST:
+        if 'wikiTextAlternative' in request.POST:
+            return json_error_response('MissingPostParameter',
+            'You cannot use storeText to save a wikiTextAlternative without an argumentType!')
+        # store new structure node
+        new_path = store_structure_node(path, request.POST['wikiText'], user)
+
+    elif 'wikiTextAlternative' not in request.POST:
+        # store Argument
+        new_path = store_argument(path, request.POST['wikiText'], request.POST['argumentType'])
+
+    else:
+        # store Argument and Derivate of structure Node
+        arg_text = request.POST['wikiText']
+        arg_type = request.POST['argumentType']
+        derivate_wiki_text = request.POST['wikiTextAlternative']
+        new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text)
+
+    return json_response({'storeTextResponse':{'path':new_path}})

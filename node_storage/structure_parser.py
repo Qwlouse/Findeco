@@ -92,7 +92,7 @@ def getHeadingMatcher(level=0):
         s = "1, 6"
     else:
         raise ValueError("level must be between 1 and 6 or 0, but was %d."%level)
-    return re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s]+)\s*)?=*\s*$"%s, flags=re.MULTILINE)
+    return re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s][^=§]*))?=*\s*$"%s, flags=re.MULTILINE)
 
 
 
@@ -206,3 +206,5 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors, or
             for origin_slot in origin.children.filter(title=child['short_title']).all():
                 sub_origin_group += origin_slot.children.all()
         create_structure_from_structure_node_schema(child, child_slot, authors, sub_origin_group, argument)
+    return structure
+
