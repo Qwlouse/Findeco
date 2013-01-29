@@ -94,6 +94,9 @@ class Node(models.Model):
         Returns a path which needn't be the only valid path to the node.
         """
         if self.pk == 1: return ""
+        if self.node_type == "argument":
+            self_as_arg = ArgumentOrder.objects.filter(argument_id=self.id).all()[0]
+            return self_as_arg.node.get_a_path().strip('/') + '.' + self_as_arg.argument.arg_type + '.' + str(self_as_arg.position)
         parent = self.parents.all()[0]
         return parent.get_a_path() +\
                (self.title if self.node_type == 'slot' else "." + str(self.get_index(parent)) + "/")
