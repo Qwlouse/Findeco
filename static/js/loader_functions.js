@@ -143,14 +143,23 @@ function loadPosition() {
             appendLeftData(jsonData.subSubTopicList);
             loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
         break;
+        case 9:
+            loadRootNode();
+        break;
     }
     
-    endPosition = 8;
+    endPosition = 9;
     
     document.getElementById('position').innerHTML = position + '/' + endPosition;
     
     // loadCenterTopicOverview();
     // loadLeftHistory();
+}
+
+function loadRootNode() {
+    $.get('.json_loadIndex/',function(json){
+        loadCenterData(json);
+    },'json');
 }
 
 function loadCenterData(json) {
