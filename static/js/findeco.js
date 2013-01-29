@@ -16,33 +16,58 @@ var Helper = new ClassHelper();
 var Main = new ClassMain();
 var BoxRegister = new ClassBoxRegister();
 
+ClassController.prototype.handleAjax = function(json) {
+    var originalTarget = Helper.getTargetPathFromUrl(this.url);
+    if ( originalTarget == Controller.position ) {
+        loadCenterData(json);
+    } else {
+        appendLeftData(json);
+    }
+}
+
 ClassController.prototype.loadIndex = function(target) {
     Controller.position = target;
     document.location.hash = Controller.position;
 }
 
 ClassController.prototype.loadIndexRelative = function(target) {
-    if ( Controller.position != '' ) {
+    if ( Controller.position.substring(Controller.position.length-1) != '/' ) {
         Controller.position += '/';
     }
-    Controller.position = Controller.position + target;
+    Controller.position += target;
     document.location.hash = Controller.position;
 }
 
-ClassController.prototype.position = '';
+ClassController.prototype.parentPosition = function() {
+    var pos = Controller.position.lastIndexOf('/');
+    if ( pos == -1 ) {
+        return Controller.position;
+    }
+    return Controller.position.substring(0,pos + 1);
+};
+
+ClassController.prototype.position = '/';
 
 ClassController.prototype.stateHandler = function(event) {
     // TODO: Mockup legacy, remove or comment out after testing is done.
     if ( parseInt(document.location.hash.substring(1)) >= 0 || parseInt(document.location.hash.substring(1)) <= 100 ) {
         return;
     }
+    
+    right.empty();
+    center.empty();
+    left.empty();
+    navigation.empty();
+    
     if ( Controller.position != document.location.hash.substring(1) ) {
          Controller.position = document.location.hash.substring(1);
     }
-    $.get('.json_loadIndex/' + Controller.position,function(json){
-        loadCenterData(json);
-    },'json');
-    // console.log(event,event.originalEvent.state);
+    
+    $.get('.json_loadIndex' + Controller.position,Controller.handleAjax,'json');
+    if ( Controller.parentPosition() != Controller.position ) {
+        console.log(Controller.parentPosition(),Controller.position);
+        $.get('.json_loadIndex' + Controller.parentPosition(),Controller.handleAjax,'json');
+    }
 }
 
 ClassData.prototype.load = function(data) {
@@ -147,6 +172,10 @@ ClassHelper.prototype.getId = function(string) {
         return null;
     }
     return parseInt(result[1]);
+}
+
+ClassHelper.prototype.getTargetPathFromUrl = function(url) {
+    return url.substring(url.indexOf('/'));
 }
 
 ClassHelper.prototype.timestampToDate = function(time) {

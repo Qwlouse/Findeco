@@ -39,6 +39,9 @@ function load(){
     
     if ( location.hash.length == 2 ) {
         currentPosition = parseInt(location.hash.replace(/#/,''));
+        if ( isNaN(currentPosition) ) {
+            currentPosition = 8;
+        }
     }
     
     left.show('left');
@@ -138,7 +141,7 @@ function loadPosition() {
             loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
         break;
         case 9:
-            loadRootNode();
+            document.location.hash = '#/';
         break;
     }
     
