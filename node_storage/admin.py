@@ -57,7 +57,8 @@ class DerivationInline(admin.TabularInline):
 
 class ArgumentAdmin(admin.ModelAdmin):
     model = Argument
-    list_display = ('title', 'id', 'arg_type', 'node_type')
+    radio_fields = {"arg_type": admin.HORIZONTAL}
+    list_display = ('title', 'id', 'node_type')
     inlines = [TextInline, ArgNodeInline]
 
 class NodeAdmin(admin.ModelAdmin):

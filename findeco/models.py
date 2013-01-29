@@ -125,7 +125,7 @@ def create_admin():
 def create_root():
     print('Creating root node ...')
     node = Node()
-    node.node_type='structureNode'
+    node.node_type='s'
     node.title = "ROOT"
     node.save()
     root_text = Text()
