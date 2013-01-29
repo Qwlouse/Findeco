@@ -91,7 +91,7 @@ def create_post(text, author):
         path = split_text[i]
         try:
             n = backend.get_node_for_path(path)
-            if n.node_type == 'slot':
+            if n.node_type == 's':
                 slot = n
                 n = backend.get_favorite_if_slot(n)
                 position = backend.NodeOrder.objects.filter(child=n).filter(parent=slot).all()[0].position
