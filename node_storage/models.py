@@ -75,6 +75,7 @@ class Node(models.Model):
 
     def add_derivate(self, argument, derivate):
         d = Derivation(argument=argument, source=self, derivate=derivate)
+        self.append_argument(argument)
         d.save()
         for vote in Vote.objects.filter(nodes=self).all():
             vote.nodes.add(d.derivate)

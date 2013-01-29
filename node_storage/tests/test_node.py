@@ -69,6 +69,8 @@ class NodeTest(TestCase):
         self.assertTrue(no.count() == 1)
         self.assertEqual(no[0].argument, a)
 
+        self.assertIn(n, a.concerns.all())
+
         self.assertIn(no[0], n.derivative_order_set.all())
         self.assertIn(no[0], d.source_order_set.all())
 
