@@ -25,7 +25,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from django.contrib.auth.models import User
-from models import Node, Text, Vote, Argument
+from models import Node, Text, Vote, Argument, SpamFlag
 
 def create_slot(short_title):
     slot = Node()
@@ -64,6 +64,15 @@ def create_textNode(long_title, text="", authors=()):
 
 def create_vote(voter, nodes):
     v = Vote()
+    v.user = voter
+    v.save()
+    for node in nodes:
+        v.nodes.add(node)
+    v.save()
+    return v
+
+def create_spam_flag(voter, nodes):
+    v = SpamFlag()
     v.user = voter
     v.save()
     for node in nodes:
