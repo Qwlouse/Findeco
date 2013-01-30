@@ -48,11 +48,15 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
         return json_error_response('Illegal path','Illegal path: '+path)
-    if microblogging_load_type == "newer":
-        startpoint = Q(id__gt=select_id)
-    else: # older
-        startpoint = Q(id__lt=select_id)
-    posts = node.microblogging_references.filter(startpoint).prefetch_related('author', 'is_reference_to')[:20]
+    if not select_id: # Get latest posts
+        #TODO: What about "newer" and "older"?
+        posts = node.microblogging_references.prefetch_related('author', 'is_reference_to')[:20]
+    else:
+        if microblogging_load_type == "newer":
+            startpoint = Q(id__gt=select_id)
+        else: # older
+            startpoint = Q(id__lt=select_id)
+        posts = node.microblogging_references.filter(startpoint).prefetch_related('author', 'is_reference_to')[:20]
     return json_response({'loadMicrobloggingResponse':convert_response_list(reversed(posts))})
 
 def load_timeline(request, name, select_id, microblogging_load_type):
