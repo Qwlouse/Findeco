@@ -27,7 +27,8 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.db.models import Count
-from models import Node, NodeOrder, Text, ArgumentOrder#, Argument
+from models import Node, NodeOrder, ArgumentOrder, Argument
+
 from findeco.paths import parse_path
 
 class IllegalPath(Exception):
@@ -72,19 +73,10 @@ def get_favorite_if_slot(node):
     """
     Returns the favorite child if given a slot and returns node otherwise.
     """
-    if node.node_type == 's':
+    if node.node_type == Node.SLOT:
         return node.children.annotate(num_votes=Count('votes')).order_by('-num_votes', '-pk')[0]
     else:
         return node
-
-SHORT_ARG_TYPES = {
-    'pro':'p',
-    'neut':'n',
-    'con':'c',
-    'p':'p',
-    'n':'n',
-    'c':'c'
-}
 
 def get_arguments_for(node, arg_type='all'):
     """
@@ -93,7 +85,7 @@ def get_arguments_for(node, arg_type='all'):
     """
     order = ArgumentOrder.objects.filter(node=node).prefetch_related('argument')
     if arg_type != 'all':
-        return [i.argument for i in order if i.argument.arg_type == SHORT_ARG_TYPES[arg_type]]
+        return [i.argument for i in order if i.argument.arg_type == Argument.short_arg_type(arg_type)]
     else:
         return [i.argument for i in order]
 

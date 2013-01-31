@@ -27,7 +27,7 @@ import json
 import node_storage as backend
 from node_storage import Vote, get_node_for_path
 from node_storage.factory import create_argument
-from node_storage.models import ArgumentOrder, NodeOrder
+from node_storage.models import ArgumentOrder, NodeOrder, Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
 from .paths import parse_suffix
 from .api_validation import validate_response
@@ -91,16 +91,10 @@ def create_index_node_for_slot(slot):
     )
     return index_node
 
-LONG_ARG_TYPES = {
-    'pro':'pro', 'neut':'neut', 'con':'con',
-    'p':'pro',
-    'n':'neut',
-    'c':'con'
-}
 
 def create_index_node_for_argument(argument, node):
     index_node = dict(
-        shortTitle = LONG_ARG_TYPES[argument.arg_type],
+        shortTitle = Argument.long_arg_type(argument.arg_type),
         fullTitle = argument.title,
         index = ArgumentOrder.objects.get(argument=argument, node=node).position,
         authorGroup = [create_user_info(a) for a in argument.text.authors.all()]

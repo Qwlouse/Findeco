@@ -31,13 +31,19 @@ from django.db.models import Max
 
 #Todo get a path to root (see path_helpers)
 
-NODETYPE = (
-    ('a', 'argument'),
-    ('l', 'structureNode'),
-    ('s', 'slot'),
-    ('t', 'textNode')
-    )
+
 class Node(models.Model):
+    ARGUMENT = 'a'
+    STRUCTURE_NODE = 'l'
+    SLOT = 's'
+    TEXTNODE = 't'
+    NODETYPE = (
+        (ARGUMENT, 'Argument'),
+        (STRUCTURE_NODE, 'StructureNode'),
+        (SLOT, 'Slot'),
+        (TEXTNODE, 'TextNode')
+        )
+
     parents = models.ManyToManyField(
         'self',
         symmetrical=False,
@@ -94,12 +100,12 @@ class Node(models.Model):
         Returns a path which needn't be the only valid path to the node.
         """
         if self.pk == 1: return ""
-        if self.node_type == "a":
+        if self.node_type == Node.ARGUMENT:
             self_as_arg = ArgumentOrder.objects.filter(argument_id=self.id).all()[0]
             return self_as_arg.node.get_a_path().strip('/') + '.' + self_as_arg.argument.arg_type + '.' + str(self_as_arg.position)
         parent = self.parents.all()[0]
         return parent.get_a_path() +\
-               (self.title if self.node_type == 's' else "." + str(self.get_index(parent)) + "/")
+               (self.title if self.node_type == Node.SLOT else "." + str(self.get_index(parent)) + "/")
 
     def get_follows(self):
         return self.votes.count()
@@ -111,18 +117,45 @@ class Node(models.Model):
         return self.votes.exclude(nodes__in=self.sources.all()).count()
 
 
-ARGUMENTTYPE = (
-    ('p', 'pro'),
-    ('c', 'con'),
-    ('n', 'neut'),
-)
+
 class Argument(Node):
+    PRO = 'p'
+    CON = 'c'
+    NEUT = 'n'
+    ARGUMENTTYPE = (
+        (PRO, 'pro'),
+        (CON, 'con'),
+        (NEUT, 'neut'),
+    )
+
+    arg_type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
+
     concerns = models.ManyToManyField(
         Node,
         related_name='arguments',
         through='ArgumentOrder'
     )
-    arg_type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
+
+    @classmethod
+    def long_arg_type(cls, arg_type):
+        return {'pro':'pro',
+                'neut':'neut',
+                'con':'con',
+                cls.PRO :'pro',
+                cls.NEUT :'neut',
+                cls.CON :'con'
+           }[arg_type]
+
+    @classmethod
+    def short_arg_type(cls, arg_type):
+        return {'pro' :cls.PRO,
+                'neut':cls.NEUT,
+                'con' :cls.CON,
+                cls.PRO :cls.PRO,
+                cls.NEUT:cls.NEUT,
+                cls.CON :cls.CON
+           }[arg_type]
+
     def __unicode__(self):
         return "id=%d, type=%s"%(self.id, self.arg_type)
 

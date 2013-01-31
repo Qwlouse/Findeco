@@ -31,6 +31,7 @@ import re
 import node_storage as backend
 from django.contrib.auth.models import User
 
+
 user_ref_pattern = re.compile(r"(?:(?<=\s)|\A)@(?P<username>\w+)\b")
 tag_pattern = re.compile(r"(?:(?<=\s)|\A)#(?P<tagname>\w+)\b")
 internal_link_pattern = re.compile(r"(?:(?<=\s)|\A)(?P<path>/(?:[a-zA-Z0-9-_]+\.\d+/)*[a-zA-Z0-9-_]+(?:\.\d+)?/?)\b")
@@ -91,7 +92,7 @@ def create_post(text, author):
         path = split_text[i]
         try:
             n = backend.get_node_for_path(path)
-            if n.node_type == 's':
+            if n.node_type == backend.Node.SLOT:
                 slot = n
                 n = backend.get_favorite_if_slot(n)
                 position = backend.NodeOrder.objects.filter(child=n).filter(parent=slot).all()[0].position

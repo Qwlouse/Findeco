@@ -34,9 +34,9 @@ class NodeTest(TestCase):
 
     def test_node_constructable(self):
         n = Node()
-        n.node_type = "structureNode"
+        n.node_type = Node.STRUCTURE_NODE
         n.save()
-        self.assertEqual(n.node_type, "structureNode")
+        self.assertEqual(n.node_type, Node.STRUCTURE_NODE)
 
     def test_node_append_child(self):
         n = Node()
