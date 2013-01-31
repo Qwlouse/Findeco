@@ -35,6 +35,17 @@ def setup(view, kwargs):
     return f
 
 
+def time_view(view, kwargs):
+    setup = """
+from __main__ import setup
+view = setup('%s', kwargs=%s)
+"""
+    return timeit("view()",number=100,  setup=setup%(view, kwargs.__repr__()))
+
 if __name__ == "__main__":
-    test = setup('load_index', kwargs=dict(path='foo.1'))
-    print(timeit("test()",number=100,  setup="from __main__ import setup; test = setup('load_index', kwargs=dict(path='Grundsatzprogramm.1'))"))
+    views = [
+        ('load_index', dict(path='Grundsatzprogramm.1'))
+    ]
+    for v, kwargs in views:
+        time = time_view(v, kwargs)
+        print(v + " took %0.2fms per call"%(time*10))
