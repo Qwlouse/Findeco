@@ -37,12 +37,12 @@ def setup(view, kwargs):
     return f
 
 
-def time_view(view, kwargs):
+def time_view(view, kwargs, reps=100):
     setup = """
 from __main__ import setup
 view = setup('%s', kwargs=%s)
 """
-    return timeit("view()",number=100,  setup=setup%(view, kwargs.__repr__()))
+    return timeit("view()",number=reps,  setup=setup%(view, kwargs.__repr__()))
 
 if __name__ == "__main__":
     views = [
@@ -51,6 +51,8 @@ if __name__ == "__main__":
         ('load_microblogging', dict(path='Grundsatzprogramm.1', select_id=None, microblogging_load_type='newer')),
         ('load_text', dict(path='Grundsatzprogramm.1'))
     ]
-    for v, kwargs in views:
-        time = time_view(v, kwargs)
-        print(v + " took %0.2fms per call"%(time*10))
+    repetitions = 10
+    for i, (v, kwargs) in enumerate(views):
+        time = time_view(v, kwargs, repetitions)
+        url = reverse(v, kwargs=kwargs)
+        print("%d: %0.2fms per call of %s on %s"%(i+1, time/repetitions*1000, v, url))
