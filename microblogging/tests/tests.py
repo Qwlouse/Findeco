@@ -103,6 +103,21 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
 
         response = self.client.get(reverse('load_microblogging',
+            kwargs=dict(path="Bla.1",select_id=None,microblogging_load_type="newer")))
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertTrue('loadMicrobloggingResponse' in data)
+        for i in range(20):
+            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],19-i+1)
+            self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
+            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+        self.assertEqual(len(data['loadMicrobloggingResponse']),20)
+
+        response = self.client.get(reverse('load_microblogging',
             kwargs=dict(path="Bla.1",select_id=3,microblogging_load_type="newer")))
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)

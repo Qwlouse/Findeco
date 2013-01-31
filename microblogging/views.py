@@ -49,7 +49,6 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
     except backend.IllegalPath:
         return json_error_response('Illegal path','Illegal path: '+path)
     if not select_id: # Get latest posts
-        #TODO: What about "newer" and "older"?
         posts = node.microblogging_references.prefetch_related('author', 'is_reference_to')[:20]
     else:
         if microblogging_load_type == "newer":
