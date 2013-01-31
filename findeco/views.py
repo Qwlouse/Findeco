@@ -179,26 +179,25 @@ def mark_node(request, path, mark_type):
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
         return json_error_response('Illegal Path','Illegal Path: '+path)
-    if not node:
-        return json_response({'error': "Invalid path."})
 
     if mark_type in ("spam", "notspam"):
         MarkClass = backend.SpamFlag
-        marks = node.spam_flags.filter(user=user.id)
+        marks = node.spam_flags.filter(user=user.id).all()
     else:# follow or unfollow
         MarkClass = backend.Vote
-        marks = node.votes.filter(user=user.id)
+        marks = node.votes.filter(user=user.id).all()
 
-    if marks.count() >= 1:
-        #TODO: if a mark changes for a node that mark has to be copied
-        mark = marks[0]
-    else:
-        mark = MarkClass()
+    if mark_type in ("spam", "follow"):
+        if marks.count() >= 1:
+            mark = marks[0]
+            # Todo: check if mark is transitive and turn it into direct if so
+        else:
+            mark = MarkClass()
+            mark.user_id = request.user.id
+            mark.save()
+            mark.nodes.add(node)
+            mark.save()
 
-    mark.user_id = request.user.id or 1 # TODO FIXME: Why can this be none during testing?
-    mark.save()
-    mark.nodes.add(node)
-    mark.save()
     return json_response({'markNodeResponse':{}})
 
 
