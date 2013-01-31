@@ -190,13 +190,26 @@ def mark_node(request, path, mark_type):
     if mark_type in ("spam", "follow"):
         if marks.count() >= 1:
             mark = marks[0]
-            # Todo: check if mark is transitive and turn it into direct if so
+            if mark.head() != node:
+                mark.nodes.remove(node)
+                mark = MarkClass()
+                mark.user_id = request.user.id
+                mark.save()
+                mark.nodes.add(node)
+                mark.save()
         else:
             mark = MarkClass()
             mark.user_id = request.user.id
             mark.save()
             mark.nodes.add(node)
             mark.save()
+    else: # notspam, unfollow
+        if marks.count() > 0:
+            mark = marks[0]
+            if mark.nodes.count() == 1:
+                mark.delete()
+            else:
+                mark.nodes.remove(node)
 
     return json_response({'markNodeResponse':{}})
 
