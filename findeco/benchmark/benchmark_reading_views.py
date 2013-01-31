@@ -32,7 +32,7 @@ def setup(view, kwargs):
     res = resolve(url)
     factory = RequestFactory()
     request = factory.get(url)
-    request.user = User.objects.filter(username="admin").all()[0]
+    request.user = User.objects.get(username="admin")
     f = lambda : res.func(request, **res.kwargs)
     return f
 
@@ -59,4 +59,4 @@ if __name__ == "__main__":
     for i, (v, kwargs) in enumerate(views):
         time = time_view(v, kwargs, repetitions)
         url = reverse(v, kwargs=kwargs)
-        print("%d: %0.2fms per call of %s on %s"%(i+1, time/repetitions*1000, v, url))
+        print("%d: %0.2fms\tper call of %s on %s"%(i+1, time/repetitions*1000, v, url))
