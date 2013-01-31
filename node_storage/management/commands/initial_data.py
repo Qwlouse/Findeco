@@ -24,8 +24,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
+from django.contrib.auth.models import User
 from django.core.management import BaseCommand
 from django.db import transaction
+from microblogging.models import create_post
 from node_storage import get_node_for_path
 from node_storage.factory import create_user, create_slot, create_structureNode, create_argument, create_vote, create_spam_flag
 from node_storage.path_helpers import get_root_node
@@ -84,10 +86,25 @@ def create_alternatives_for_urheberrecht(path):
     create_spam_flag(hein, [a2c])
 
 
+def create_some_microblogging(path=None):
+    if User.objects.filter(username="Blogger 1").count() > 0:
+        blogger1 = User.objects.filter(username="Blogger 1").all()[0]
+    else:
+        blogger1 = create_user("Blogger 1")
+    create_post("Meine Oma fährt im Hühnerstall Motorrad!" if not path else "Meine Oma erwähnt /"+path+" im Hühnerstall.", blogger1)
+    if User.objects.filter(username="Troll").count() > 0:
+        troll = User.objects.filter(username="Troll").all()[0]
+    else:
+        troll = create_user("Troll")
+    if path:
+        create_post("Ich erwähne /"+path+" um zu trollen. Lies das was ich schreibe und ärgere dich!",troll)
+
+
 @transaction.commit_on_success
 def create_initial_data():
     root = get_root_node()
     decided = create_user("Beschlossenes Programm")
+    create_some_microblogging()
 
     # Grundsatzprogramm Bundesweit
     grundsatzprogramm = create_slot("Grundsatzprogramm")
@@ -96,6 +113,7 @@ def create_initial_data():
         gsp_text = f.read()
     schema = parse(unicode(gsp_text, encoding='utf-8'),grundsatzprogramm.title)
     create_structure_from_structure_node_schema(schema, grundsatzprogramm, [decided])
+    create_some_microblogging("Grundsatzprogramm.1")
 
     # Wahlprogramm BTW
     wahlprogramm_btw = create_slot("Wahlprogramm_BTW")
@@ -105,6 +123,7 @@ def create_initial_data():
     schema = parse(unicode(wpbtw_text, encoding='utf-8'),wahlprogramm_btw.title)
     create_structure_from_structure_node_schema(schema, wahlprogramm_btw, [decided])
     create_alternatives_for_urheberrecht("Wahlprogramm_BTW.1/Urheberrecht.1")
+    create_some_microblogging("Wahlprogramm_BTW.1/Urheberrecht.1")
 
     # Positionspapiere Bund
     posp_bund = create_slot("Positionspapiere")
