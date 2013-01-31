@@ -75,7 +75,7 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(json.loads(response.content)),0)
         self.assertEqual(len(Post.objects.filter(text="Bla bla bla. I had to say it.").all()),1)
 
-    def test_load_microblogging(self):
+    def test_load_microblogging_illegal_path(self):
         posts = []
         for i in range(25):
             posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
@@ -86,6 +86,14 @@ class MicrobloggingTests(TestCase):
         response = self.client.get(reverse('load_microblogging',
             kwargs=dict(path="Slot_4.1/SubSlot_1.1",select_id=0,microblogging_load_type="newer")))
         self.assertEqual(response.content,'{"errorResponse": {"errorTitle": "Illegal path", "errorMessage": "Illegal path: Slot_4.1/SubSlot_1.1"}}')
+
+    def test_load_microblogging_0_newer(self):
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+
+        self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(reverse('load_microblogging',
             kwargs=dict(path="Bla.1",select_id=0,microblogging_load_type="newer")))
@@ -102,6 +110,37 @@ class MicrobloggingTests(TestCase):
             self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
 
+    def test_load_microblogging_no_select_id(self):
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+
+        self.assertTrue(self.client.login(username="max", password="1234"))
+
+        response = self.client.get(reverse('load_microblogging',
+            kwargs=dict(path="Bla.1",select_id=None,microblogging_load_type="newer")))
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertTrue('loadMicrobloggingResponse' in data)
+        for i in range(20):
+            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],19-i+1)
+            self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
+            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+        self.assertEqual(len(data['loadMicrobloggingResponse']),20)
+
+    def test_load_microblogging_3_newer(self):
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+
+        self.assertTrue(self.client.login(username="max", password="1234"))
+
         response = self.client.get(reverse('load_microblogging',
             kwargs=dict(path="Bla.1",select_id=3,microblogging_load_type="newer")))
         self.assertEqual(response.status_code, 200)
@@ -116,6 +155,14 @@ class MicrobloggingTests(TestCase):
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
             self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
+
+    def test_load_microblogging_6_newer(self):
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+
+        self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(reverse('load_microblogging',
             kwargs=dict(path="Bla.1",select_id=6,microblogging_load_type="newer")))
@@ -132,6 +179,14 @@ class MicrobloggingTests(TestCase):
             self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),19)
 
+    def test_load_microblogging_only_one_post(self):
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+
+        self.assertTrue(self.client.login(username="max", password="1234"))
+
         response = self.client.get(reverse('load_microblogging',
             kwargs=dict(path="Blubb.1",select_id=0,microblogging_load_type="newer")))
         self.assertEqual(response.status_code, 200)
@@ -146,14 +201,14 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(data['loadMicrobloggingResponse'][0]['authorGroup']),1)
         self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][0])
 
-
-    def test_load_timeline(self):
+    def test_load_timeline_with_select_id(self):
         posts = []
         for i in range(25):
             posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
         posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
 
         self.assertTrue(self.client.login(username="max", password="1234"))
+
         response = self.client.get(reverse('load_timeline',
             kwargs=dict(name="max", select_id=0, microblogging_load_type="newer")))
         self.assertEqual(response.status_code, 200)
@@ -169,6 +224,14 @@ class MicrobloggingTests(TestCase):
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
             self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
+
+    def test_load_timeline_without_select_id(self):
+        posts = []
+        for i in range(25):
+            posts.append(create_post("Ich finde /Bla.1 gut.",self.user_max))
+        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
+
+        self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(reverse('load_timeline',
             kwargs=dict(name="max", select_id=None, microblogging_load_type="newer")))
