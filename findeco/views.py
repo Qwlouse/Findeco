@@ -192,17 +192,19 @@ def mark_node(request, path, mark_type):
             mark = marks[0]
             if mark.head() != node:
                 mark.nodes.remove(node)
-                mark = MarkClass()
-                mark.user_id = request.user.id
-                mark.save()
-                mark.nodes.add(node)
-                mark.save()
+                # TODO: remove all derivates of node from mark.nodes and add them to new_mark
+                new_mark = MarkClass()
+                new_mark.user_id = request.user.id
+                new_mark.save()
+                new_mark.nodes.add(node)
+                new_mark.save()
         else:
             mark = MarkClass()
             mark.user_id = request.user.id
             mark.save()
             mark.nodes.add(node)
             mark.save()
+            # TODO: traverse derivates of node and add them to mark.nodes
     else: # notspam, unfollow
         if marks.count() > 0:
             mark = marks[0]
@@ -210,6 +212,7 @@ def mark_node(request, path, mark_type):
                 mark.delete()
             else:
                 mark.nodes.remove(node)
+                # TODO: traverse derivates of node and remove them from mark.nodes
 
     return json_response({'markNodeResponse':{}})
 
