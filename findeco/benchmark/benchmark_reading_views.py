@@ -49,7 +49,11 @@ if __name__ == "__main__":
         ('load_index', dict(path='Grundsatzprogramm.1')),
         ('load_graph_data', dict(path='Grundsatzprogramm.1', graph_data_type='withSpam')),
         ('load_microblogging', dict(path='Grundsatzprogramm.1', select_id=None, microblogging_load_type='newer')),
-        ('load_text', dict(path='Grundsatzprogramm.1'))
+        ('load_text', dict(path='Grundsatzprogramm.1')),
+        ('load_index', dict(path='Wahlprogramm_BTW.1/Urheberrecht.3')),
+        ('load_graph_data', dict(path='Wahlprogramm_BTW.1/Urheberrecht.3', graph_data_type='withSpam')),
+        ('load_microblogging', dict(path='Wahlprogramm_BTW.1/Urheberrecht.3', select_id=None, microblogging_load_type='newer')),
+        ('load_text', dict(path='Wahlprogramm_BTW.1/Urheberrecht.3'))
     ]
     repetitions = 10
     for i, (v, kwargs) in enumerate(views):
