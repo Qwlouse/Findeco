@@ -36,6 +36,7 @@ from test_view_helpers import StoreStructureNodeTest, StoreArgumentTest, StoreDe
 from test_load_index import LoadIndexTest, LoadArgumentIndexTest
 from test_load_text import LoadTextTest
 from test_user_api import LoadUserInfoTest, LoadUserSettingsTest
+from test_store_text import StoreTextTest
 
 try:
     from microblogging.tests import *
