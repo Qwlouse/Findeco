@@ -29,14 +29,14 @@ from models import Node, Text, Vote, Argument, SpamFlag
 
 def create_slot(short_title):
     slot = Node()
-    slot.node_type = 's'
+    slot.node_type = Node.SLOT
     slot.title = short_title
     slot.save()
     return slot
 
 def create_structureNode(long_title, text="", authors=()):
     structure = Node()
-    structure.node_type = 'l'
+    structure.node_type = Node.STRUCTURE_NODE
     structure.title = long_title
     structure.save()
     text_obj = Text()
@@ -50,7 +50,7 @@ def create_structureNode(long_title, text="", authors=()):
 
 def create_textNode(long_title, text="", authors=()):
     text_node = Node()
-    text_node.node_type = 't'
+    text_node.node_type = Node.TEXTNODE
     text_node.title = long_title
     text_node.save()
     text_obj = Text()
@@ -92,7 +92,7 @@ SHORT_ARG_TYPES = {
 def create_argument(type='n', title="", text="", authors=()):
     arg_type = SHORT_ARG_TYPES[type]
     arg = Argument(arg_type=arg_type, title=title)
-    arg.node_type = 'a'
+    arg.node_type = Node.ARGUMENT
     arg.save()
     text_obj = Text(node=arg, text=text)
     text_obj.save()
