@@ -43,6 +43,7 @@ class Node(models.Model):
         (SLOT, 'Slot'),
         (TEXTNODE, 'TextNode')
         )
+
     parents = models.ManyToManyField(
         'self',
         symmetrical=False,
@@ -116,18 +117,45 @@ class Node(models.Model):
         return self.votes.exclude(nodes__in=self.sources.all()).count()
 
 
-ARGUMENTTYPE = (
-    ('p', 'pro'),
-    ('c', 'con'),
-    ('n', 'neut'),
-)
+
 class Argument(Node):
+    PRO = 'p'
+    CON = 'c'
+    NEUT = 'n'
+    ARGUMENTTYPE = (
+        (PRO, 'pro'),
+        (CON, 'con'),
+        (NEUT, 'neut'),
+    )
+
+    arg_type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
+
     concerns = models.ManyToManyField(
         Node,
         related_name='arguments',
         through='ArgumentOrder'
     )
-    arg_type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
+
+    @classmethod
+    def long_arg_type(cls, arg_type):
+        return {'pro':'pro',
+                'neut':'neut',
+                'con':'con',
+                cls.PRO :'pro',
+                cls.NEUT :'neut',
+                cls.CON :'con'
+           }[arg_type]
+
+    @classmethod
+    def short_arg_type(cls, arg_type):
+        return {'pro' :cls.PRO,
+                'neut':cls.NEUT,
+                'con' :cls.CON,
+                cls.PRO :cls.PRO,
+                cls.NEUT:cls.NEUT,
+                cls.CON :cls.CON
+           }[arg_type]
+
     def __unicode__(self):
         return "id=%d, type=%s"%(self.id, self.arg_type)
 
