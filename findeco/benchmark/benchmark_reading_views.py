@@ -22,6 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from timeit import timeit
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse, resolve
 from django.test.client import RequestFactory
 
@@ -31,6 +32,7 @@ def setup(view, kwargs):
     res = resolve(url)
     factory = RequestFactory()
     request = factory.get(url)
+    request.user = User.objects.filter(username="admin").all()[0]
     f = lambda : res.func(request, **res.kwargs)
     return f
 
@@ -44,7 +46,10 @@ view = setup('%s', kwargs=%s)
 
 if __name__ == "__main__":
     views = [
-        ('load_index', dict(path='Grundsatzprogramm.1'))
+        ('load_index', dict(path='Grundsatzprogramm.1')),
+        ('load_graph_data', dict(path='Grundsatzprogramm.1', graph_data_type='withSpam')),
+        ('load_microblogging', dict(path='Grundsatzprogramm.1', select_id=None, microblogging_load_type='newer')),
+        ('load_text', dict(path='Grundsatzprogramm.1'))
     ]
     for v, kwargs in views:
         time = time_view(v, kwargs)
