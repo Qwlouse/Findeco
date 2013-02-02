@@ -159,6 +159,9 @@ class Argument(Node):
     def __unicode__(self):
         return "id=%d, type=%s"%(self.id, self.arg_type)
 
+    def head(self):
+        return self.concerns.order_by('id').all()[0]
+
 class Text(models.Model):
     node = models.OneToOneField(Node, related_name="text")
     text = models.TextField()
