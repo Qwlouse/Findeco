@@ -35,6 +35,8 @@ from django.http import HttpResponse
 from findeco.view_helpers import create_graph_data_node_for_structure_node
 
 import node_storage as backend
+from node_storage.factory import create_argument
+from node_storage.models import ArgumentOrder
 from .paths import parse_suffix
 from .view_helpers import ValidPaths, json_error_response, json_response
 from .view_helpers import store_structure_node, store_argument, store_derivate
@@ -210,6 +212,14 @@ def follow_node(request, path):
     except backend.IllegalPath:
         return json_error_response('Illegal Path','Illegal Path: '+path)
 
+    for argument in node.arguments.all():
+        if not argument.head() == node:
+            ArgumentOrder.objects.filter(argument=argument).filter(node=node).all()[0].delete()
+            new_arg = create_argument(argument.arg_type,argument.title,argument.text,argument.text.authors.all())
+            node.append_argument(new_arg)
+            for n in traverse_derivates_subset(node, argument.concerns.all()):
+                ArgumentOrder.objects.filter(argument=argument).filter(node=n).all()[0].delete()
+            argument.save()
     marks = node.votes.filter(user=user.id).all()
     if marks.count() >= 1:
         mark = marks[0]
@@ -222,6 +232,7 @@ def follow_node(request, path):
             for n in traverse_derivates_subset(node, mark.nodes.all()):
                 mark.nodes.remove(n)
                 new_mark.nodes.add(n)
+            mark.save()
             new_mark.save()
     else:
         mark = backend.Vote()
