@@ -56,21 +56,21 @@ urlpatterns = patterns('',
         'findeco.views.load_argument_index',
         name='load_argument_index'),
 
-    url(r'^\.json_loadMicroBlogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + RESTRICTED_PATH + '$',
+    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + RESTRICTED_PATH + '$',
         'microblogging.views.load_microblogging',
         name='load_microblogging'),
 
-    url(r'^\.json_loadMicroBlogging/' + BLOG_LOAD_TYPE + '/' + RESTRICTED_PATH + '$',
+    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/' + RESTRICTED_PATH + '$',
         'microblogging.views.load_microblogging',
         name='load_microblogging',
         kwargs={'select_id':None}
     ),
 
-    url(r'^\.json_loadMicroBlogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
+    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
         'microblogging.views.load_timeline',
         name='load_timeline'),
 
-    url(r'^\.json_loadMicroBlogging/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
+    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
         'microblogging.views.load_timeline',
         name='load_timeline',
         kwargs={'select_id':None}
@@ -109,7 +109,7 @@ urlpatterns = patterns('',
         name='unflag_node'),
 
 
-    url(r'^\.json_storeMicroBlogPost/' + PATH + '$',
+    url(r'^\.json_storeMicroblogPost/' + PATH + '$',
         'microblogging.views.store_microblog_post',
         name='store_microblog_post'),
 
