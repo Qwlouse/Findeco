@@ -26,9 +26,15 @@ ClassBox.prototype.addButtons = function() {
     
     $('<div style="margin-bottom: 10px;">Zeige Argumente</div>')
         .addClass('button')
+        .click(function () {
+            Controller.loadArguments();
+        })
         .appendTo(arguments);
     $('<div style="margin-bottom: 10px;">Zeige Text</div>')
         .addClass('button')
+        .click(function () {
+            Controller.loadText();
+        })
         .appendTo(text);
 }
 
@@ -158,6 +164,13 @@ ClassController.prototype.load = function(element) {
     }
 };
 
+ClassController.prototype.loadArguments = function() {
+    Main.loadArguments(Controller.position);
+}
+ClassController.prototype.loadText = function() {
+    Main.loadText(Controller.position);
+}
+
 ClassController.prototype.loadIndex = function(target) {
     Controller.position = target;
     document.location.hash = Controller.position;
@@ -227,16 +240,17 @@ ClassData.prototype.loadArgumentResponse = function(data) {
     arguments['pro'] = $('<ul>')
         .addClass('argpro')
         .appendTo(procontra);
-    arguments['neutral']= $('<ul>')
+    arguments['neut']= $('<ul>')
         .addClass('argneutral')
         .appendTo(this.html);
-    arguments['contra'] = $('<ul>')
+    arguments['con'] = $('<ul>')
         .addClass('argcontra')
         .appendTo(procontra);
     
     $('<br>').appendTo(procontra);
     
     for ( d in data ) {
+        // console.log(data[d]);
         $('<li>' + data[d].fullTitle + '</li>').appendTo(arguments[data[d].shortTitle]);
     }
 }
@@ -251,7 +265,7 @@ ClassData.prototype.loadIndexResponse = function(data) {
     
     for ( d in data ) {
         switch ( data[d].shortTitle ) {
-            case 'pro': case 'neutral': case 'contra': this.loadArgumentResponse(data); return;
+            case 'pro': case 'neut': case 'con': this.loadArgumentResponse(data); return;
             default:
                 if ( parent != '' ) {
                     var parentpath = this.info.path;
@@ -321,7 +335,7 @@ ClassData.prototype.getInfo = function() {
     return this.info;
 }
 
-ClassDataRegister.prototype.data = {'index':{},'text':{}};
+ClassDataRegister.prototype.data = {'index':{},'text':{},'microblogging':{},'argument':{}};
 
 ClassDataRegister.prototype.get = function(callback,type,position,force) {
     // console.log('ClassDataRegister','get',force);
@@ -340,7 +354,6 @@ ClassDataRegister.prototype.getTitle = function(path) {
     return this.title[path];
 }
 
-// TODO: Mockup legacy
 ClassDataRegister.prototype.handleAjax = function(json) {
     var action = Helper.getActionFromUrl(this.url);
     var position = Helper.getTargetPathFromUrl(this.url);
@@ -348,10 +361,21 @@ ClassDataRegister.prototype.handleAjax = function(json) {
     var type = '';
     
     switch ( action ) {
-        case '.json_loadIndex': type = 'index'; break;
+        case '.json_loadIndex': 
+            type = 'index';
+            if ( position.substring(0,5) == '/True' ) {
+                type = 'argument';
+                position = position.substring(5);
+            }
+        break;
+        case '.json_loadMicroblogging':
+            type = 'microblogging'; 
+            position = position.replace(/\/(newer|older)/g,'');
+            position = position.replace(/\/\d+/g,'');
+        break;
         case '.json_loadText': type = 'text'; break;
     }
-    // console.log(type,position);
+    // console.log(type,position,DataRegister.data[type]);
     var callbacks = DataRegister.data[type][position];
     
     DataRegister.data[type][position] = json;
@@ -359,6 +383,9 @@ ClassDataRegister.prototype.handleAjax = function(json) {
     var data = new ClassData();
     data.setInfo(type,position);
     data.load(DataRegister.data[type][position]);
+    
+    // console.log(data,callbacks);
+    
     for ( c in callbacks ) {
         if ( c == 'next' ) {
             continue;
@@ -386,6 +413,8 @@ ClassDataRegister.prototype.load = function(callback,type,position) {
     
     switch ( type ) {
         case 'index': loadType = '.json_loadIndex'; break;
+        case 'microblogging': $.get('.json_loadMicroblogging/newer' + position,DataRegister.handleAjax,'json'); return;
+        case 'argument': $.get('.json_loadIndex/True' + position,DataRegister.handleAjax,'json'); return;
         case 'text': loadType = '.json_loadText'; break;
     }
     
@@ -415,6 +444,14 @@ ClassHelper.prototype.getTargetPathFromUrl = function(url) {
     return url.substring(url.indexOf('/'));
 }
 
+ClassHelper.prototype.objectLength = function(object) {
+    var i = 0;
+    for ( o in object ) {
+        i++;
+    }
+    return i;
+}
+
 ClassHelper.prototype.timestampToDate = function(time) {
     var d = new Date();
     d.setTime(time*1000);
@@ -426,14 +463,41 @@ ClassMain.prototype.load = function (position) {
     DataRegister.get(this.show,'index',position,true);
 };
 
+ClassMain.prototype.loadArguments = function (position) {
+    // console.log('ClassMain','loadArguments');
+    DataRegister.get(Main.append,'argument',position,true);
+};
+
+ClassMain.prototype.loadText = function (position) {
+    // console.log('ClassMain','loadText');
+    DataRegister.get(Main.append,'text',position,true);
+};
+
 ClassMain.prototype.show = function (data) {
     // console.log('ClassMain','show');
     center.empty();
-    center.printData(data);
+    Main.append(data);
+}
+
+ClassMain.prototype.append = function (data) {
+    // console.log('ClassMain','append');
+    if ( data.json.loadIndexResponse != undefined 
+        && Helper.objectLength(data.json.loadIndexResponse) == 0 ) {
+        Controller.loadText();
+    } else {
+        center.printData(data);
+    }
 };
 
 ClassMicroblogging.prototype.load = function (position) {
+    // console.log('ClassMicroblogging','load');
+    DataRegister.get(this.show,'microblogging',position,true);
+};
+
+ClassMicroblogging.prototype.show = function (data) {
+    // console.log('ClassMicroblogging','show');
     right.empty();
+    right.printData(data);
 };
 
 ClassNavigation.prototype.load = function (position) {
