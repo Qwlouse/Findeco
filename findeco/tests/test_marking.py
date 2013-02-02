@@ -76,4 +76,10 @@ class UnFollowTest(TestCase):
 
     def test_unfollow_middle_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        pass
+        response = self.client.get(reverse('unfollow_node', kwargs=dict(path="Slot.2")))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['markNodeResponse'],{})
+        self.assertEqual(Vote.objects.count(),1)
+        self.assertIn(self.text, self.follow.nodes.all())
+        for n in [self.leaf1, self.mid, self.mid2, self.leaf2]:
+            self.assertNotIn(n, self.follow.nodes.all())
