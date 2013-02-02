@@ -167,52 +167,87 @@ def logout(request):
     }})
 
 @ValidPaths("StructureNode", "Argument")
-def mark_node(request, path, mark_type):
-    if not request.user.is_authenticated:
+def flag_node(request, path):
+    if not request.user.is_authenticated():
         return json_response({'error': "You're not authenticated."})
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
         return json_error_response('Illegal Path','Illegal Path: '+path)
-    if mark_type in ("spam", "notspam"):
-        marks = node.spam_flags.filter(user=user.id).all()
-        if marks.count() == 1 and mark_type == "notspam":
-            marks[0].delete()
-        elif marks.count() == 0 and mark_type == "spam":
-            new_mark = backend.SpamFlag()
-            new_mark.node=node
-            new_mark.user_id=request.user.id
-            new_mark.save()
-    else: # follow or unfollow
-        marks = node.votes.filter(user=user.id).all()
-        if mark_type == "follow":
-            if marks.count() >= 1:
-                mark = marks[0]
-                if mark.head() != node:
-                    mark.nodes.remove(node)
-                    # TODO: remove all derivates of node from mark.nodes and add them to new_mark
-                    new_mark = backend.Vote()
-                    new_mark.user_id = request.user.id
-                    new_mark.save()
-                    new_mark.nodes.add(node)
-                    new_mark.save()
-            else:
-                mark = backend.Vote()
-                mark.user_id = request.user.id
-                mark.save()
-                mark.nodes.add(node)
-                mark.save()
-                # TODO: traverse derivates of node and add them to mark.nodes
-        else: # unfollow
-            if marks.count() > 0:
-                mark = marks[0]
-                if mark.nodes.count() == 1:
-                    mark.delete()
-                else:
-                    mark.nodes.remove(node)
-                    # TODO: traverse derivates of node and remove them from mark.nodes
 
+    marks = node.spam_flags.filter(user=user.id).all()
+    if marks.count() == 0:
+        new_mark = backend.SpamFlag()
+        new_mark.node=node
+        new_mark.user_id=request.user.id
+        new_mark.save()
+    return json_response({'markNodeResponse':{}})
+
+@ValidPaths("StructureNode", "Argument")
+def unflag_node(request, path):
+    if not request.user.is_authenticated():
+        return json_response({'error': "You're not authenticated."})
+    user = request.user
+    try:
+        node = backend.get_node_for_path(path)
+    except backend.IllegalPath:
+        return json_error_response('Illegal Path','Illegal Path: '+path)
+
+    marks = node.spam_flags.filter(user=user.id).all()
+    if marks.count() == 1 :
+        marks[0].delete()
+    return json_response({'markNodeResponse':{}})
+
+@ValidPaths("StructureNode", "Argument")
+def follow_node(request, path):
+    if not request.user.is_authenticated():
+        return json_response({'error': "You're not authenticated."})
+    user = request.user
+    try:
+        node = backend.get_node_for_path(path)
+    except backend.IllegalPath:
+        return json_error_response('Illegal Path','Illegal Path: '+path)
+
+    marks = node.votes.filter(user=user.id).all()
+    if marks.count() >= 1:
+        mark = marks[0]
+        if mark.head() != node:
+            mark.nodes.remove(node)
+            # TODO: remove all derivates of node from mark.nodes and add them to new_mark
+            new_mark = backend.Vote()
+            new_mark.user_id = request.user.id
+            new_mark.save()
+            new_mark.nodes.add(node)
+            new_mark.save()
+    else:
+        mark = backend.Vote()
+        mark.user_id = request.user.id
+        mark.save()
+        mark.nodes.add(node)
+        mark.save()
+        # TODO: traverse derivates of node and add them to mark.nodes
+
+    return json_response({'markNodeResponse':{}})
+
+@ValidPaths("StructureNode", "Argument")
+def unfollow_node(request, path):
+    if not request.user.is_authenticated():
+        return json_response({'error': "You're not authenticated."})
+    user = request.user
+    try:
+        node = backend.get_node_for_path(path)
+    except backend.IllegalPath:
+        return json_error_response('Illegal Path','Illegal Path: '+path)
+
+    marks = node.votes.filter(user=user.id).all()
+    if marks.count() > 0:
+        mark = marks[0]
+        if mark.nodes.count() == 1:
+            mark.delete()
+        else:
+            mark.nodes.remove(node)
+            # TODO: traverse derivates of node and remove them from mark.nodes
     return json_response({'markNodeResponse':{}})
 
 

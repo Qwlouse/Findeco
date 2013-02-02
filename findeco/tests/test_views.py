@@ -44,10 +44,10 @@ views = [('load_index', dict(path='')),
          ('load_text', dict(path='')),
          ('load_user_info', dict(name='admin')),
          ('logout', dict()),
-         ('mark_node', dict(path='', mark_type='spam')),
-         ('mark_node', dict(path='', mark_type='notspam')),
-         ('mark_node', dict(path='', mark_type='follow')),
-         ('mark_node', dict(path='', mark_type='unfollow')),
+         ('flag_node', dict(path='')),
+         ('unflag_node', dict(path='')),
+         ('follow', dict(path='')),
+         ('unfollow', dict(path='')),
          ('store_microblog_post', dict(path='')),
          ('store_settings', dict()),
          ('store_text', dict(path=''))
@@ -104,10 +104,9 @@ class ViewTest(TestCase):
 
     def test_mark_node_response_is_valid(self):
         paths = structure_node_paths + argument_paths
-        mark_type = ['spam', 'notspam', 'follow', 'unfollow']
-        for p, t in itertools.product(paths, mark_type):
-            response = self.client.get(reverse('mark_node',
-                kwargs=dict(path=p, mark_type=t)))
+        view = ['flag_node', 'flag_node', 'follow_node', 'unfollow_node']
+        for p, v in itertools.product(paths, view):
+            response = self.client.get(reverse(v, kwargs=dict(path=p)))
             validate_response(response.content, 'mark_node')
 
     def test_load_user_info_response_is_valid(self):

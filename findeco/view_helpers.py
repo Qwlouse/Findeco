@@ -22,6 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.http import HttpResponse
+import functools
 import json
 
 import node_storage as backend
@@ -44,6 +45,7 @@ def json_error_response(title, message):
 
 def ValidPaths(*allowed_path_types):
     def wrapper(f):
+        @functools.wraps(f)
         def wrapped(request, path, *args, **kwargs):
             _, path_type = parse_suffix(path)
 
