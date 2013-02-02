@@ -35,6 +35,7 @@ from ..api_validation import validate_response
 from node_storage.factory import create_user
 
 views = [('load_index', dict(path='')),
+         ('load_argument_index', dict(path='')),
          ('load_user_settings', dict()),
          ('load_graph_data', dict(graph_data_type='default', path='')),
          ('load_graph_data', dict(graph_data_type='full', path='')),
