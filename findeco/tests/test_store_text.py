@@ -22,9 +22,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
+import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from node_storage import get_root_node, Node
+from node_storage import get_root_node, Node, Argument
 from node_storage.factory import create_user, create_slot
 
 class StoreTextTest(TestCase):
@@ -41,3 +42,36 @@ class StoreTextTest(TestCase):
         self.assertEqual(Node.objects.filter(parents=self.slot).count(),1)
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].title,"Bla")
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].text.text,"Blubb.")
+
+    def test_store_missing_text(self):
+        self.assertTrue(self.client.login(username="Hugo", password="1234"))
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),)
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"MissingPostParameter")
+
+    def test_store_missing_argument_type(self):
+        self.assertTrue(self.client.login(username="Hugo", password="1234"))
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiTextAlternative="= Bla =\nBlubb."))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"MissingPostParameter")
+
+    def test_store_with_argument(self):
+        self.assertTrue(self.client.login(username="Hugo", password="1234"))
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),
+            dict(argumentType="con",
+                wikiText="= Argumenttitel =\nDas ist jetzt besser",
+                wikiTextAlternative="= Bla 2 =\nFollopp."))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Node.objects.filter(parents=self.slot).count(), 2)
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].title, "Bla")
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].text.text, "Blubb.")
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[1].title, "Bla 2")
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[1].text.text, "Follopp.")
+        self.assertEqual(Argument.objects.filter(concerns=Node.objects.filter(parents=self.slot).all()[0]).count(), 1)
+        self.assertEqual(
+            Argument.objects.filter(concerns=Node.objects.filter(parents=self.slot).all()[0]).all()[0].title,
+            "Argumenttitel")
+        self.assertEqual(
+            Argument.objects.filter(concerns=Node.objects.filter(parents=self.slot).all()[0]).all()[0].text.text,
+            "= Argumenttitel =\nDas ist jetzt besser")
