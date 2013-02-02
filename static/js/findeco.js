@@ -250,7 +250,7 @@ ClassData.prototype.loadArgumentResponse = function(data) {
     $('<br>').appendTo(procontra);
     
     for ( d in data ) {
-        console.log(data[d]);
+        // console.log(data[d]);
         $('<li>' + data[d].fullTitle + '</li>').appendTo(arguments[data[d].shortTitle]);
     }
 }
