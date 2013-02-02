@@ -88,10 +88,10 @@ def load_timeline(request, name, select_id, microblogging_load_type):
 
 def store_microblog_post(request, path):
     if request.method == 'POST':
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             create_post(request.POST['microBlogText'], request.user)
             return json_response({})
         else:
-            return json_error_response('Authentification reqired',"You need to be authenticated to store microblogging.")
+            return json_error_response('NotAuthenticated',"You need to be authenticated to store microblogging.")
     else:
         return json_error_response('Wrong method',"You must send a POST request to store microblogging.")
