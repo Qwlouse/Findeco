@@ -252,6 +252,8 @@ def unfollow_node(request, path):
             mark.nodes.remove(node)
             for n in traverse_derivates_subset(node, mark.nodes.all()):
                 mark.nodes.remove(n)
+            if mark.nodes.count() == 0:
+                mark.delete()
     return json_response({'markNodeResponse':{}})
 
 

@@ -71,8 +71,6 @@ class UnFollowTest(TestCase):
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['markNodeResponse'],{})
         self.assertEqual(Vote.objects.count(),0)
-        for n in [self.text, self.mid, self.leaf1, self.mid2, self.leaf2]:
-            self.assertNotIn(n, self.follow.nodes.all())
 
     def test_unfollow_middle_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
