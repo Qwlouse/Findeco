@@ -25,7 +25,7 @@ from __future__ import division, print_function, unicode_literals
 import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from node_storage import get_root_node, Vote, SpamFlag
+from node_storage import get_root_node, Vote, SpamFlag, Argument
 from node_storage.factory import create_textNode, create_slot, create_user, create_vote, create_argument, create_spam_flag
 
 class UnFollowTest(TestCase):
@@ -104,6 +104,8 @@ class FollowTest(TestCase):
         self.slot.append_child(self.leaf2)
         self.mid2.add_derivate(create_argument(), self.leaf2)
         self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
+        self.arg1 = create_argument("con","Wrong!","Bad!",[self.hugo])
+        self.text.append_argument(self.arg1)
 
     def test_not_authenticated(self):
         response = self.client.post(reverse('follow_node', kwargs=dict(path="Slot.1")))
@@ -138,6 +140,18 @@ class FollowTest(TestCase):
         self.assertNotIn(self.text, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
         for n in [self.leaf1, self.mid, self.mid2, self.leaf2]:
             self.assertIn(n, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
+
+    def test_argument_copying(self):
+        self.assertTrue(self.client.login(username="Ulf", password="abcde"))
+        response = self.client.get(reverse('follow_node', kwargs=dict(path="Slot.2")))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['markNodeResponse'],{})
+        self.assertEqual(Argument.objects.count(),7)
+        self.assertNotEqual(self.text.arguments.filter(title="Wrong!").all()[0].pk,
+            self.leaf2.arguments.filter(title="Wrong!").all()[0].pk)
+        self.assertEqual(self.leaf1.arguments.filter(title="Wrong!").count(), 1)
+        self.assertEqual(self.leaf1.arguments.filter(title="Wrong!").all()[0].pk,
+            self.leaf2.arguments.filter(title="Wrong!").all()[0].pk)
 
 class MarkSpamTest(TestCase):
     def setUp(self):
