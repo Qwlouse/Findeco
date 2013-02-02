@@ -25,7 +25,7 @@ from __future__ import division, print_function, unicode_literals
 import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from node_storage import get_root_node, Vote
+from node_storage import get_root_node, Vote, SpamFlag
 from node_storage.factory import create_textNode, create_slot, create_user, create_vote, create_argument
 
 class UnFollowTest(TestCase):
@@ -51,7 +51,7 @@ class UnFollowTest(TestCase):
         self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
 
     def test_not_authenticated(self):
-        response = self.client.post(reverse('unfollow_node', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(reverse('unfollow_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
 
@@ -106,7 +106,7 @@ class FollowTest(TestCase):
         self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
 
     def test_not_authenticated(self):
-        response = self.client.post(reverse('follow_node', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(reverse('follow_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
 
@@ -138,3 +138,43 @@ class FollowTest(TestCase):
         self.assertNotIn(self.text, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
         for n in [self.leaf1, self.mid, self.mid2, self.leaf2]:
             self.assertIn(n, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
+
+class MarkSpamTest(TestCase):
+    def setUp(self):
+        self.root = get_root_node()
+        self.hugo = create_user("Hugo", password="1234")
+        self.slot = create_slot("Slot")
+        self.root.append_child(self.slot)
+        self.text = create_textNode("Bla", "Blubb", [self.hugo])
+        self.slot.append_child(self.text)
+        self.mid = create_textNode("Bla derivate", "Blubb2", [self.hugo])
+        self.slot.append_child(self.mid)
+        self.text.add_derivate(create_argument(), self.mid)
+        self.leaf = create_textNode("Bla leaf 1", "Blubb3", [self.hugo])
+        self.slot.append_child(self.leaf)
+        self.mid.add_derivate(create_argument(), self.leaf)
+
+    def test_not_authenticated(self):
+        response = self.client.post(reverse('flag_node', kwargs=dict(path="Slot.1")))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'], "NotAuthenticated")
+
+    def test_mark_spam_root(self):
+        self.assertTrue(self.client.login(username="Hugo", password="1234"))
+        response = self.client.post(reverse('flag_node', kwargs=dict(path="Slot.1")))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(SpamFlag.objects.count(), 1)
+        self.assertIn(SpamFlag.objects.all()[0], self.text.spam_flags.all())
+        for n in [self.mid, self.leaf]:
+            self.assertNotIn(SpamFlag.objects.all()[0], n.spam_flags.all())
+
+    def test_mark_spam_leaf(self):
+        self.assertTrue(self.client.login(username="Hugo", password="1234"))
+        response = self.client.post(reverse('flag_node', kwargs=dict(path="Slot.3")))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(SpamFlag.objects.count(), 1)
+        self.assertIn(SpamFlag.objects.all()[0], self.leaf.spam_flags.all())
+        for n in [self.mid, self.text]:
+            self.assertNotIn(SpamFlag.objects.all()[0], n.spam_flags.all())
