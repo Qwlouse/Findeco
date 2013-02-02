@@ -51,7 +51,7 @@ class UnFollowTest(TestCase):
         self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
 
     def test_not_authenticated(self):
-        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(reverse('unfollow_node', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
 
@@ -105,6 +105,6 @@ class FollowTest(TestCase):
         self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
 
     def test_not_authenticated(self):
-        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(reverse('unfollow_node', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
