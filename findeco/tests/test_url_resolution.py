@@ -70,7 +70,7 @@ valid_routes = [
         url_name='load_argument_index',
         kwargs=dict(path='some.1/path.2')),
 
-    #### loadMicroBlogging
+    #### loadMicroblogging
     dict(url='/.json_loadMicroblogging/0/newer/some.1/path.2',
         func=load_microblogging,
         url_name='load_microblogging',
@@ -282,7 +282,7 @@ invalid_routes = [
     dict(url='/.json_loadIndex/some.1/path.2.newt'),
     dict(url='/.json_loadIndex/some.1/path.2.bon'),
     dict(url='/.json_loadIndex/some.1/path.2.ill'),
-    #### loadMicroBlogging
+    #### loadMicroblogging
     dict(url='/.json_loadMicroblogging/-1/newer/some.1/path.2'),
     dict(url='/.json_loadMicroblogging/74/newwer/some.1/path.2'),
     dict(url='/.json_loadMicroblogging/older/12/some.1/path.2'),
