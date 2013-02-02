@@ -38,7 +38,7 @@ from test_load_text import LoadTextTest
 from test_user_api import LoadUserInfoTest, LoadUserSettingsTest
 from test_store_text import StoreTextTest
 from test_load_graph_data import LoadGraphDataTest
-from test_marking import UnFollowTest, FollowTest, MarkSpamTest
+from test_marking import UnFollowTest, FollowTest, MarkSpamTest, UnMarkSpamTest
 
 try:
     from microblogging.tests import *
