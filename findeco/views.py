@@ -168,10 +168,6 @@ def logout(request):
 
 @ValidPaths("StructureNode", "Argument")
 def mark_node(request, path, mark_type):
-    """
-    If an argument is marked but wasn't created at this location it must be
-    copied and the marking is to apply to the copied one.
-    """
     if not request.user.is_authenticated:
         return json_response({'error': "You're not authenticated."})
     user = request.user
@@ -179,40 +175,43 @@ def mark_node(request, path, mark_type):
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
         return json_error_response('Illegal Path','Illegal Path: '+path)
-
     if mark_type in ("spam", "notspam"):
-        MarkClass = backend.SpamFlag
         marks = node.spam_flags.filter(user=user.id).all()
-    else:# follow or unfollow
-        MarkClass = backend.Vote
+        if marks.count() == 1 and mark_type == "notspam":
+            marks[0].delete()
+        elif marks.count() == 0 and mark_type == "spam":
+            new_mark = backend.SpamFlag()
+            new_mark.node=node
+            new_mark.user_id=request.user.id
+            new_mark.save()
+    else: # follow or unfollow
         marks = node.votes.filter(user=user.id).all()
-
-    if mark_type in ("spam", "follow"):
-        if marks.count() >= 1:
-            mark = marks[0]
-            if mark.head() != node:
-                mark.nodes.remove(node)
-                # TODO: remove all derivates of node from mark.nodes and add them to new_mark
-                new_mark = MarkClass()
-                new_mark.user_id = request.user.id
-                new_mark.save()
-                new_mark.nodes.add(node)
-                new_mark.save()
-        else:
-            mark = MarkClass()
-            mark.user_id = request.user.id
-            mark.save()
-            mark.nodes.add(node)
-            mark.save()
-            # TODO: traverse derivates of node and add them to mark.nodes
-    else: # notspam, unfollow
-        if marks.count() > 0:
-            mark = marks[0]
-            if mark.nodes.count() == 1:
-                mark.delete()
+        if mark_type == "follow":
+            if marks.count() >= 1:
+                mark = marks[0]
+                if mark.head() != node:
+                    mark.nodes.remove(node)
+                    # TODO: remove all derivates of node from mark.nodes and add them to new_mark
+                    new_mark = backend.Vote()
+                    new_mark.user_id = request.user.id
+                    new_mark.save()
+                    new_mark.nodes.add(node)
+                    new_mark.save()
             else:
-                mark.nodes.remove(node)
-                # TODO: traverse derivates of node and remove them from mark.nodes
+                mark = backend.Vote()
+                mark.user_id = request.user.id
+                mark.save()
+                mark.nodes.add(node)
+                mark.save()
+                # TODO: traverse derivates of node and add them to mark.nodes
+        else: # unfollow
+            if marks.count() > 0:
+                mark = marks[0]
+                if mark.nodes.count() == 1:
+                    mark.delete()
+                else:
+                    mark.nodes.remove(node)
+                    # TODO: traverse derivates of node and remove them from mark.nodes
 
     return json_response({'markNodeResponse':{}})
 

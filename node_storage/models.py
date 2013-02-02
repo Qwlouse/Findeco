@@ -224,9 +224,6 @@ class Vote(models.Model):
 
 class SpamFlag(models.Model):
     user = models.ForeignKey(User)
-    nodes = models.ManyToManyField(
-        Node,
-        related_name='spam_flags'
-    )
+    node = models.ForeignKey(Node, related_name='spam_flags')
     def __unicode__(self):
         return "id=%d, user=%s"%(self.id, self.user.username)
