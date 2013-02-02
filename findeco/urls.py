@@ -48,11 +48,11 @@ urlpatterns = patterns('',
         'findeco.views.load_graph_data',
         name='load_graph_data'),
 
-    url(r'^\.json_loadIndex/(False/)?' + PATH + '$',
+    url(r'^\.json_loadIndex/([Ff]alse/)?' + RESTRICTED_PATH + '$',
         'findeco.views.load_index',
         name='load_index'),
 
-    url(r'^\.json_loadIndex/True/' + PATH + '$',
+    url(r'^\.json_loadIndex/[Tt]rue/' + RESTRICTED_PATH + '$',
         'findeco.views.load_argument_index',
         name='load_argument_index'),
 

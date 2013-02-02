@@ -57,7 +57,7 @@ def load_index(request, path):
     index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
     return json_response({'loadIndexResponse':index_nodes})
 
-@ValidPaths("Argument")
+@ValidPaths("StructureNode")
 def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     try:
