@@ -35,6 +35,11 @@ class StoreTextTest(TestCase):
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
 
+    def test_not_authenticated(self):
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
+
     def test_store_textNode(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
@@ -52,7 +57,8 @@ class StoreTextTest(TestCase):
 
     def test_store_missing_argument_type(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiTextAlternative="= Bla =\nBlubb."))
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),
+            dict(wikiText="= Hopp =\nGrumpf.", wikiTextAlternative="= Bla =\nBlubb."))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"MissingPostParameter")
 
