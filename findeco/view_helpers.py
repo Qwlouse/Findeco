@@ -156,3 +156,17 @@ def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     node = get_node_for_path(path)
     node.add_derivate(argument,new_node)
     return new_path
+
+def traverse_derivates_subset(node, subset):
+    der_list = node.derivates.all() & subset
+    while len(der_list) > 0:
+        derivate = der_list.pop()
+        der_list += derivate.derivates.all() & subset
+        yield derivate
+
+def traverse_derivates(node):
+    der_list = node.derivates.all()
+    while len(der_list) > 0:
+        derivate = der_list.pop()
+        der_list += derivate.derivates.all()
+        yield derivate

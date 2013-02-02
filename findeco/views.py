@@ -38,8 +38,9 @@ import node_storage as backend
 from .paths import parse_suffix
 from .view_helpers import ValidPaths, json_error_response, json_response
 from .view_helpers import store_structure_node, store_argument, store_derivate
-from .view_helpers import create_index_node_for_slot, create_user_info, build_text
+from .view_helpers import create_index_node_for_slot, create_user_info
 from .view_helpers import create_user_settings, create_index_node_for_argument
+from .view_helpers import traverse_derivates_subset, build_text
 
 
 def home(request, path):
@@ -250,13 +251,6 @@ def unfollow_node(request, path):
             for n in traverse_derivates_subset(node, mark.nodes.all()):
                 mark.nodes.remove(n)
     return json_response({'markNodeResponse':{}})
-
-def traverse_derivates_subset(node, subset):
-    der_list = node.derivates.all() & subset
-    while len(der_list) > 0:
-        derivate = der_list.pop()
-        der_list += derivate.derivates.all() & subset
-        yield derivate
 
 
 def store_settings(request):
