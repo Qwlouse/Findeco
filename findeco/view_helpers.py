@@ -104,7 +104,7 @@ def create_index_node_for_argument(argument, node):
 def build_text(node, depth=2):
     depth = min(depth, 6)
     text = "=" * depth + node.title + "=" * depth + "\n" + node.text.text
-    for slot in node.children.prefetch_related('children').all():
+    for slot in node.children.all():
         favorite = backend.get_favorite_if_slot(slot)
         text += "\n\n" + build_text(favorite, depth + 1)
     return text
