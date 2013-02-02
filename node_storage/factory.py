@@ -72,12 +72,11 @@ def create_vote(voter, nodes):
     return v
 
 def create_spam_flag(voter, nodes):
-    v = SpamFlag()
-    v.user = voter
-    v.save()
     for node in nodes:
-        v.nodes.add(node)
-    v.save()
+        v = SpamFlag()
+        v.user = voter
+        v.node = node
+        v.save()
     return v
 
 def create_argument(type='n', title="", text="", authors=()):

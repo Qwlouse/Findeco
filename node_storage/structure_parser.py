@@ -132,6 +132,8 @@ def parse(s, short_title):
     else :
         raise InvalidWikiStructure('Must start with H1 heading to set title')
 
+    title = title.strip()
+    title = title[:min(150, len(title))]
     node = {
         'title':title.strip(),
         'short_title':short_title,

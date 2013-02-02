@@ -32,7 +32,8 @@ from django.test import TestCase
 from microblogging.views import load_microblogging, store_microblog_post
 from ..views import load_user_settings, load_index, load_graph_data, load_text
 from ..views import load_user_info, load_argument_index
-from ..views import login, logout, mark_node, store_settings, store_text
+from ..views import login, logout, flag_node, unflag_node, store_text
+from ..views import follow_node, unfollow_node, store_settings
 
 
 ########################### Test the API calls #################################
@@ -157,84 +158,84 @@ valid_routes = [
 
     #### markNode
     dict(url='/.json_markNode/spam/some.1/path.2',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2', mark_type='spam')),
+        func=flag_node,
+        url_name='flag_node',
+        kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/notspam/some.1/path.2',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2', mark_type='notspam')),
+        func=unflag_node,
+        url_name='unflag_node',
+        kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/follow/some.1/path.2',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2', mark_type='follow')),
+        func=follow_node,
+        url_name='follow_node',
+        kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2', mark_type='unfollow')),
+        func=unfollow_node,
+        url_name='unfollow_node',
+        kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/spam/some.1/path.2.pro.1',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.pro.1', mark_type='spam')),
+        func=flag_node,
+        url_name='flag_node',
+        kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/notspam/some.1/path.2.pro.1',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.pro.1', mark_type='notspam')),
+        func=unflag_node,
+        url_name='unflag_node',
+        kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/follow/some.1/path.2.pro.1',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.pro.1', mark_type='follow')),
+        func=follow_node,
+        url_name='follow_node',
+        kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2.pro.1',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.pro.1', mark_type='unfollow')),
+        func=unfollow_node,
+        url_name='unfollow_node',
+        kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/spam/some.1/path.2.con.003',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.con.003', mark_type='spam')),
+        func=flag_node,
+        url_name='flag_node',
+        kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/notspam/some.1/path.2.con.003',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.con.003', mark_type='notspam')),
+        func=unflag_node,
+        url_name='unflag_node',
+        kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/follow/some.1/path.2.con.003',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.con.003', mark_type='follow')),
+        func=follow_node,
+        url_name='follow_node',
+        kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2.con.003',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.con.003', mark_type='unfollow')),
+        func=unfollow_node,
+        url_name='unfollow_node',
+        kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/spam/some.1/path.2.neut.8437569384',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.neut.8437569384', mark_type='spam')),
+        func=flag_node,
+        url_name='flag_node',
+        kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     dict(url='/.json_markNode/notspam/some.1/path.2.neut.8437569384',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.neut.8437569384', mark_type='notspam')),
+        func=unflag_node,
+        url_name='unflag_node',
+        kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     dict(url='/.json_markNode/follow/some.1/path.2.neut.8437569384',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.neut.8437569384', mark_type='follow')),
+        func=follow_node,
+        url_name='follow_node',
+        kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2.neut.8437569384',
-        func=mark_node,
-        url_name='mark_node',
-        kwargs=dict(path='some.1/path.2.neut.8437569384', mark_type='unfollow')),
+        func=unfollow_node,
+        url_name='unfollow_node',
+        kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     #### storeMicroBlogPost
     dict(url='/.json_storeMicroBlogPost/some.1/path.2',

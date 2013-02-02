@@ -35,10 +35,16 @@ class StoreTextTest(TestCase):
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
 
+    def test_not_authenticated(self):
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
+
     def test_store_textNode(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
         self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['storeTextResponse']['path'],"Slot.1")
         self.assertEqual(Node.objects.filter(parents=self.slot).count(),1)
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].title,"Bla")
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].text.text,"Blubb.")
@@ -51,11 +57,12 @@ class StoreTextTest(TestCase):
 
     def test_store_missing_argument_type(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiTextAlternative="= Bla =\nBlubb."))
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),
+            dict(wikiText="= Hopp =\nGrumpf.", wikiTextAlternative="= Bla =\nBlubb."))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"MissingPostParameter")
 
-    def test_store_with_argument(self):
+    def test_store_with_argument_and_alternative(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
         response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),
@@ -63,11 +70,31 @@ class StoreTextTest(TestCase):
                 wikiText="= Argumenttitel =\nDas ist jetzt besser",
                 wikiTextAlternative="= Bla 2 =\nFollopp."))
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['storeTextResponse']['path'],"Slot.2")
         self.assertEqual(Node.objects.filter(parents=self.slot).count(), 2)
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].title, "Bla")
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].text.text, "Blubb.")
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[1].title, "Bla 2")
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[1].text.text, "Follopp.")
+        self.assertEqual(Argument.objects.filter(concerns=Node.objects.filter(parents=self.slot).all()[0]).count(), 1)
+        self.assertEqual(
+            Argument.objects.filter(concerns=Node.objects.filter(parents=self.slot).all()[0]).all()[0].title,
+            "Argumenttitel")
+        self.assertEqual(
+            Argument.objects.filter(concerns=Node.objects.filter(parents=self.slot).all()[0]).all()[0].text.text,
+            "= Argumenttitel =\nDas ist jetzt besser")
+
+    def test_store_with_argumente(self):
+        self.assertTrue(self.client.login(username="Hugo", password="1234"))
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),
+            dict(argumentType="con",
+                wikiText="= Argumenttitel =\nDas ist jetzt besser"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['storeTextResponse']['path'],"Slot.1.con.1")
+        self.assertEqual(Node.objects.filter(parents=self.slot).count(), 1)
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].title, "Bla")
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].text.text, "Blubb.")
         self.assertEqual(Argument.objects.filter(concerns=Node.objects.filter(parents=self.slot).all()[0]).count(), 1)
         self.assertEqual(
             Argument.objects.filter(concerns=Node.objects.filter(parents=self.slot).all()[0]).all()[0].title,

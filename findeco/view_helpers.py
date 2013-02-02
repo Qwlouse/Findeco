@@ -22,6 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.http import HttpResponse
+import functools
 import json
 
 import node_storage as backend
@@ -44,6 +45,7 @@ def json_error_response(title, message):
 
 def ValidPaths(*allowed_path_types):
     def wrapper(f):
+        @functools.wraps(f)
         def wrapped(request, path, *args, **kwargs):
             _, path_type = parse_suffix(path)
 
@@ -104,7 +106,7 @@ def create_index_node_for_argument(argument, node):
 def build_text(node, depth=2):
     depth = min(depth, 6)
     text = "=" * depth + node.title + "=" * depth + "\n" + node.text.text
-    for slot in node.children.prefetch_related('children').all():
+    for slot in node.children.all():
         favorite = backend.get_favorite_if_slot(slot)
         text += "\n\n" + build_text(favorite, depth + 1)
     return text
@@ -154,3 +156,17 @@ def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     node = get_node_for_path(path)
     node.add_derivate(argument,new_node)
     return new_path
+
+def traverse_derivates_subset(node, subset):
+    der_list = list((node.derivates.all() & subset).all())
+    while len(der_list) > 0:
+        derivate = der_list.pop()
+        der_list += list((derivate.derivates.all() & subset).all())
+        yield derivate
+
+def traverse_derivates(node):
+    der_list = list(node.derivates.all())
+    while len(der_list) > 0:
+        derivate = der_list.pop()
+        der_list += list(derivate.derivates.all())
+        yield derivate

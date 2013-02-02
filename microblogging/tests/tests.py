@@ -75,6 +75,12 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(json.loads(response.content)),0)
         self.assertEqual(len(Post.objects.filter(text="Bla bla bla. I had to say it.").all()),1)
 
+    def test_store_microblog_post_not_authenticated(self):
+        response = self.client.post(reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
+            dict(microBlogText="Bla bla bla. I had to say it."))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
+
     def test_load_microblogging_illegal_path(self):
         posts = []
         for i in range(25):

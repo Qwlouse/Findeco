@@ -168,7 +168,10 @@ view_validators = {
     'load_user_settings':loadUserSettingsResponseValidator,
     'login':loginResponseValidator,
     'logout':logoutResponseValidator,
-    'mark_node':markNodeResponseValidator,
+    'flag_node':markNodeResponseValidator,
+    'unflag_node':markNodeResponseValidator,
+    'follow_node':markNodeResponseValidator,
+    'unfollow_node':markNodeResponseValidator,
     'store_microblog_post':storeMicroblogPostResponseValidator,
     'store_settings':storeSettingsResponseValidator,
     'store_text':storeTextResponseValidator

@@ -29,9 +29,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Max
 
-#Todo get a path to root (see path_helpers)
-
-
+###################### Nodes, Arguments and Texts ##############################
 class Node(models.Model):
     ARGUMENT = 'a'
     STRUCTURE_NODE = 'l'
@@ -170,6 +168,7 @@ class Text(models.Model):
     def __unicode__(self):
         return "id=%d, text=%s"%(self.id, self.text[:min(len(self.text), 30)])
 
+############################# Relations ########################################
 class Derivation(models.Model):
     derivate=models.ForeignKey(Node, related_name='source_order_set')
     source=models.ForeignKey(Node, related_name='derivative_order_set')
@@ -209,7 +208,7 @@ class ArgumentOrder(models.Model):
                                                      self.argument_id,
                                                      self.node_id)
 
-
+################################# Votes ########################################
 class Vote(models.Model):
     user = models.ForeignKey(User)
     nodes = models.ManyToManyField(
@@ -225,9 +224,6 @@ class Vote(models.Model):
 
 class SpamFlag(models.Model):
     user = models.ForeignKey(User)
-    nodes = models.ManyToManyField(
-        Node,
-        related_name='spam_flags'
-    )
+    node = models.ForeignKey(Node, related_name='spam_flags')
     def __unicode__(self):
         return "id=%d, user=%s"%(self.id, self.user.username)

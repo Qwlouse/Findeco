@@ -35,8 +35,6 @@ GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
 BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
 USERNAME = r'(?P<name>[a-zA-Z][a-zA-Z0-9-_]{0,19})'
-MARK_TYPE = r'(?P<mark_type>(spam)|(notspam)|(follow)|(unfollow))'
-
 
 urlpatterns = patterns('',
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
@@ -94,9 +92,22 @@ urlpatterns = patterns('',
         'findeco.views.logout',
         name='logout'),
 
-    url(r'^\.json_markNode/' + MARK_TYPE + '/' + PATH + '$',
-        'findeco.views.mark_node',
-        name='mark_node'),
+    url(r'^\.json_markNode/follow/' + PATH + '$',
+        'findeco.views.follow_node',
+        name='follow_node'),
+
+    url(r'^\.json_markNode/unfollow/' + PATH + '$',
+        'findeco.views.unfollow_node',
+        name='unfollow_node'),
+
+    url(r'^\.json_markNode/spam/' + PATH + '$',
+        'findeco.views.flag_node',
+        name='flag_node'),
+
+    url(r'^\.json_markNode/notspam/' + PATH + '$',
+        'findeco.views.unflag_node',
+        name='unflag_node'),
+
 
     url(r'^\.json_storeMicroBlogPost/' + PATH + '$',
         'microblogging.views.store_microblog_post',

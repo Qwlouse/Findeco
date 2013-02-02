@@ -32,6 +32,7 @@ import itertools
 import json
 
 from ..api_validation import validate_response
+from node_storage.factory import create_user
 
 views = [('load_index', dict(path='')),
          ('load_user_settings', dict()),
@@ -43,10 +44,10 @@ views = [('load_index', dict(path='')),
          ('load_text', dict(path='')),
          ('load_user_info', dict(name='admin')),
          ('logout', dict()),
-         ('mark_node', dict(path='', mark_type='spam')),
-         ('mark_node', dict(path='', mark_type='notspam')),
-         ('mark_node', dict(path='', mark_type='follow')),
-         ('mark_node', dict(path='', mark_type='unfollow')),
+         ('flag_node', dict(path='')),
+         ('unflag_node', dict(path='')),
+         ('follow_node', dict(path='')),
+         ('unfollow_node', dict(path='')),
          ('store_microblog_post', dict(path='')),
          ('store_settings', dict()),
          ('store_text', dict(path=''))
@@ -60,12 +61,17 @@ argument_paths = ['foo.1.pro.3', 'foo.1/bar.2.con.4', 'foo.1/bar.2.neut.5']
 
 ################# Tests ########################################################
 class ViewTest(TestCase):
+    def setUp(self):
+        self.ulf = create_user("ulf", password="flu")
+        self.assertTrue(self.client.login(username="ulf", password="flu"))
+
     def test_home_view_status_ok(self):
         response = self.client.get(reverse('home', kwargs=dict(path='')))
         self.assertEqual(response.status_code, 200)
 
     def test_all_api_views_return_json(self):
         for v, kwargs in views:
+            self.assertTrue(self.client.login(username="ulf", password="flu"))
             response = self.client.get(reverse(v, kwargs=kwargs))
             res = json.loads(response.content)
             self.assertIsNotNone(res)
@@ -98,11 +104,10 @@ class ViewTest(TestCase):
 
     def test_mark_node_response_is_valid(self):
         paths = structure_node_paths + argument_paths
-        mark_type = ['spam', 'notspam', 'follow', 'unfollow']
-        for p, t in itertools.product(paths, mark_type):
-            response = self.client.get(reverse('mark_node',
-                kwargs=dict(path=p, mark_type=t)))
-            validate_response(response.content, 'mark_node')
+        view = ['flag_node', 'unflag_node', 'follow_node', 'unfollow_node']
+        for p, v in itertools.product(paths, view):
+            response = self.client.get(reverse(v, kwargs=dict(path=p)))
+            validate_response(response.content, v)
 
     def test_load_user_info_response_is_valid(self):
         usernames = ['admin', 'fred']
