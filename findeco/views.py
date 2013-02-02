@@ -212,7 +212,8 @@ def follow_node(request, path):
     except backend.IllegalPath:
         return json_error_response('Illegal Path','Illegal Path: '+path)
 
-    for argument in node.arguments.all():
+    #TODO: This must be done for Arguments but not for Nodes!
+    for argument in node.arguments.all(): #TODO: Don't copy if this needn't be done.
         if not argument.head() == node:
             ArgumentOrder.objects.filter(argument=argument).filter(node=node).all()[0].delete()
             new_arg = create_argument(argument.arg_type,argument.title,argument.text,argument.text.authors.all())
