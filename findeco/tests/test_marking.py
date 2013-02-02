@@ -81,3 +81,30 @@ class UnFollowTest(TestCase):
         self.assertIn(self.text, self.follow.nodes.all())
         for n in [self.leaf1, self.mid, self.mid2, self.leaf2]:
             self.assertNotIn(n, self.follow.nodes.all())
+
+class FollowTest(TestCase):
+    def setUp(self):
+        self.root = get_root_node()
+        self.hugo = create_user("Hugo", password="1234")
+        self.slot = create_slot("Slot")
+        self.root.append_child(self.slot)
+        self.text = create_textNode("Bla", "Blubb", [self.hugo])
+        self.slot.append_child(self.text)
+        self.mid = create_textNode("Bla derivate", "Blubb2", [self.hugo])
+        self.slot.append_child(self.mid)
+        self.text.add_derivate(create_argument(), self.mid)
+        self.leaf1 = create_textNode("Bla leaf 1", "Blubb3", [self.hugo])
+        self.slot.append_child(self.leaf1)
+        self.mid.add_derivate(create_argument(), self.leaf1)
+        self.mid2 = create_textNode("Bla derivate 2", "Blubb4", [self.hugo])
+        self.slot.append_child(self.mid2)
+        self.mid.add_derivate(create_argument(), self.mid2)
+        self.leaf2 = create_textNode("Bla leaf 2", "Blubb5", [self.hugo])
+        self.slot.append_child(self.leaf2)
+        self.mid2.add_derivate(create_argument(), self.leaf2)
+        self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
+
+    def test_not_authenticated(self):
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
