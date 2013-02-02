@@ -37,10 +37,10 @@ def convert_response_list(list):
     for post in list:
         authors = [{'displayName': post.author.username}]
         if post.is_reference_to: authors.append({'displayName': post.is_reference_to.author.username})
-        response_list.append({'microBlogText': post.text,
+        response_list.append({'microblogText': post.text,
                               'authorGroup': authors,
-                              'microBlogTime': int(mktime(post.time.timetuple())),
-                              'microBlogID': post.pk})
+                              'microblogTime': int(mktime(post.time.timetuple())),
+                              'microblogID': post.pk})
     return response_list
 
 def load_microblogging(request, path, select_id, microblogging_load_type):

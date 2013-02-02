@@ -71,27 +71,27 @@ valid_routes = [
         kwargs=dict(path='some.1/path.2')),
 
     #### loadMicroBlogging
-    dict(url='/.json_loadMicroBlogging/0/newer/some.1/path.2',
+    dict(url='/.json_loadMicroblogging/0/newer/some.1/path.2',
         func=load_microblogging,
         url_name='load_microblogging',
         kwargs=dict(path='some.1/path.2', select_id='0', microblogging_load_type='newer')),
 
-    dict(url='/.json_loadMicroBlogging/74/newer/some.1/path.2',
+    dict(url='/.json_loadMicroblogging/74/newer/some.1/path.2',
         func=load_microblogging,
         url_name='load_microblogging',
         kwargs=dict(path='some.1/path.2', select_id='74', microblogging_load_type='newer')),
 
-    dict(url='/.json_loadMicroBlogging/0/older/some.1/path.2',
+    dict(url='/.json_loadMicroblogging/0/older/some.1/path.2',
         func=load_microblogging,
         url_name='load_microblogging',
         kwargs=dict(path='some.1/path.2', select_id='0', microblogging_load_type='older')),
 
-    dict(url='/.json_loadMicroBlogging/74/older/some.1/path.2',
+    dict(url='/.json_loadMicroblogging/74/older/some.1/path.2',
         func=load_microblogging,
         url_name='load_microblogging',
         kwargs=dict(path='some.1/path.2', select_id='74', microblogging_load_type='older')),
 
-    dict(url='/.json_loadMicroBlogging/older/some.1/path.2',
+    dict(url='/.json_loadMicroblogging/older/some.1/path.2',
         func=load_microblogging,
         url_name='load_microblogging',
         kwargs=dict(path='some.1/path.2', select_id=None, microblogging_load_type='older')),
@@ -238,7 +238,7 @@ valid_routes = [
         kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     #### storeMicroBlogPost
-    dict(url='/.json_storeMicroBlogPost/some.1/path.2',
+    dict(url='/.json_storeMicroblogPost/some.1/path.2',
         func=store_microblog_post,
         url_name='store_microblog_post',
         kwargs=dict(path='some.1/path.2')),
@@ -283,10 +283,10 @@ invalid_routes = [
     dict(url='/.json_loadIndex/some.1/path.2.bon'),
     dict(url='/.json_loadIndex/some.1/path.2.ill'),
     #### loadMicroBlogging
-    dict(url='/.json_loadMicroBlogging/-1/newer/some.1/path.2'),
-    dict(url='/.json_loadMicroBlogging/74/newwer/some.1/path.2'),
-    dict(url='/.json_loadMicroBlogging/older/12/some.1/path.2'),
-    dict(url='/.json_loadMicroBlogging/74/older/newer/some.1/path.2'),
+    dict(url='/.json_loadMicroblogging/-1/newer/some.1/path.2'),
+    dict(url='/.json_loadMicroblogging/74/newwer/some.1/path.2'),
+    dict(url='/.json_loadMicroblogging/older/12/some.1/path.2'),
+    dict(url='/.json_loadMicroblogging/74/older/newer/some.1/path.2'),
     #### loadText
     dict(url='/.json_loadText/1.some/path.2'),
     dict(url='/.json_loadText/some.1/2.path'),

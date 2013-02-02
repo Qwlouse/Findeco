@@ -107,13 +107,13 @@ class MicrobloggingTests(TestCase):
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
         for i in range(20):
-            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
-            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],19-i+1)
+            self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'],19-i+1)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
-            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+            self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
 
     def test_load_microblogging_no_select_id(self):
@@ -130,13 +130,13 @@ class MicrobloggingTests(TestCase):
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
         for i in range(20):
-            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
-            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],19-i+1)
+            self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'],19-i+1)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
-            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+            self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
 
     def test_load_microblogging_3_newer(self):
@@ -153,13 +153,13 @@ class MicrobloggingTests(TestCase):
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
         for i in range(20):
-            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
-            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],19-i+4)
+            self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'],19-i+4)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
-            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+            self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
 
     def test_load_microblogging_6_newer(self):
@@ -176,13 +176,13 @@ class MicrobloggingTests(TestCase):
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
         for i in range(19):
-            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
-            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],18-i+7)
+            self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogText'],'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'],18-i+7)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
-            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+            self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),19)
 
     def test_load_microblogging_only_one_post(self):
@@ -199,13 +199,13 @@ class MicrobloggingTests(TestCase):
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
         self.assertEqual(len(data['loadMicrobloggingResponse']),1)
-        self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][0])
-        self.assertEqual(data['loadMicrobloggingResponse'][0]['microBlogText'],'Ich finde <a href="/Blubb.1">Blubb.1</a> schlecht.')
-        self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][0])
-        self.assertEqual(data['loadMicrobloggingResponse'][0]['microBlogID'],26)
+        self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][0])
+        self.assertEqual(data['loadMicrobloggingResponse'][0]['microblogText'],'Ich finde <a href="/Blubb.1">Blubb.1</a> schlecht.')
+        self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][0])
+        self.assertEqual(data['loadMicrobloggingResponse'][0]['microblogID'],26)
         self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][0])
         self.assertEqual(len(data['loadMicrobloggingResponse'][0]['authorGroup']),1)
-        self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][0])
+        self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][0])
 
     def test_load_timeline_with_select_id(self):
         posts = []
@@ -221,14 +221,14 @@ class MicrobloggingTests(TestCase):
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
         for i in range(20):
-            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],
+            self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogText'],
                 'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
-            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],19-i+1)
+            self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'],19-i+1)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
-            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+            self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
 
     def test_load_timeline_without_select_id(self):
@@ -244,21 +244,21 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertTrue('loadMicrobloggingResponse' in data)
-        self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][0])
-        self.assertEqual(data['loadMicrobloggingResponse'][0]['microBlogText'],
+        self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][0])
+        self.assertEqual(data['loadMicrobloggingResponse'][0]['microblogText'],
             'Ich finde <a href="/Blubb.1">Blubb.1</a> schlecht.')
-        self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][0])
-        self.assertEqual(data['loadMicrobloggingResponse'][0]['microBlogID'],26)
+        self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][0])
+        self.assertEqual(data['loadMicrobloggingResponse'][0]['microblogID'],26)
         self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][0])
         self.assertEqual(len(data['loadMicrobloggingResponse'][0]['authorGroup']),1)
-        self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][0])
+        self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][0])
         for i in range(1,20):
-            self.assertTrue('microBlogText' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogText'],
+            self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogText'],
                 'Ich finde <a href="/Bla.1">Bla.1</a> gut.')
-            self.assertTrue('microBlogID' in data['loadMicrobloggingResponse'][i])
-            self.assertEqual(data['loadMicrobloggingResponse'][i]['microBlogID'],26-i)
+            self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'],26-i)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']),1)
-            self.assertTrue('microBlogTime' in data['loadMicrobloggingResponse'][i])
+            self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']),20)
