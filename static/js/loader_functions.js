@@ -38,10 +38,14 @@ function load(){
     });
     
     if ( location.hash.length == 2 ) {
-        currentPosition = parseInt(location.hash.replace(/#/,''));
+        var hash = location.hash.replace(/#/,'');
+        currentPosition = parseInt(hash);
+        console.log(hash);
         if ( isNaN(currentPosition) ) {
-            currentPosition = 8;
+            currentPosition = 9;
         }
+    } else {
+        currentPosition = 9;
     }
     
     left.show('left');
@@ -141,7 +145,8 @@ function loadPosition() {
             loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
         break;
         case 9:
-            document.location.hash = '#/';
+            if ( document.location.hash == '#9' ) document.location.hash = '#/';
+            Controller.stateHandler();
         break;
     }
     
