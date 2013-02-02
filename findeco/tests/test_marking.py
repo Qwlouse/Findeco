@@ -86,6 +86,7 @@ class FollowTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
         self.hugo = create_user("Hugo", password="1234")
+        self.ulf = create_user("Ulf", password="abcde")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
         self.text = create_textNode("Bla", "Blubb", [self.hugo])
@@ -105,6 +106,35 @@ class FollowTest(TestCase):
         self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
 
     def test_not_authenticated(self):
-        response = self.client.post(reverse('unfollow_node', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(reverse('follow_node', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
+
+    def test_follow_leaf_of_derivate_tree(self):
+        self.assertTrue(self.client.login(username="Ulf", password="abcde"))
+        response = self.client.get(reverse('follow_node', kwargs=dict(path="Slot.3")))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['markNodeResponse'],{})
+        self.assertEqual(Vote.objects.count(),2)
+        self.assertIn(self.leaf1, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
+        for n in [self.text, self.mid, self.mid2, self.leaf2]:
+            self.assertNotIn(n, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
+
+    def test_follow_root_of_derivate_tree(self):
+        self.assertTrue(self.client.login(username="Ulf", password="abcde"))
+        response = self.client.get(reverse('follow_node', kwargs=dict(path="Slot.1")))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['markNodeResponse'],{})
+        self.assertEqual(Vote.objects.count(),2)
+        for n in [self.text, self.leaf1, self.mid, self.mid2, self.leaf2]:
+            self.assertIn(n, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
+
+    def test_follow_middle_of_derivate_tree(self):
+        self.assertTrue(self.client.login(username="Ulf", password="abcde"))
+        response = self.client.get(reverse('follow_node', kwargs=dict(path="Slot.2")))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['markNodeResponse'],{})
+        self.assertEqual(Vote.objects.count(),2)
+        self.assertNotIn(self.text, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
+        for n in [self.leaf1, self.mid, self.mid2, self.leaf2]:
+            self.assertIn(n, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
