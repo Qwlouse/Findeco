@@ -40,8 +40,8 @@ from .view_helpers import ValidPaths, json_error_response, json_response
 from .view_helpers import store_structure_node, store_argument, store_derivate
 from .view_helpers import create_index_node_for_slot, create_user_info
 from .view_helpers import create_user_settings, create_index_node_for_argument
-from .view_helpers import traverse_derivates_subset, build_text
-
+from .view_helpers import traverse_derivates_subset, traverse_derivates
+from .view_helpers import build_text
 
 def home(request, path):
     with open("static/index.html", 'r') as index_html_file:
@@ -215,20 +215,22 @@ def follow_node(request, path):
         mark = marks[0]
         if mark.head() != node:
             mark.nodes.remove(node)
-            # TODO: remove all derivates of node from mark.nodes and add them to new_mark
             new_mark = backend.Vote()
             new_mark.user_id = request.user.id
             new_mark.save()
             new_mark.nodes.add(node)
+            for n in traverse_derivates_subset(node, mark.nodes.all()):
+                mark.nodes.remove(n)
+                new_mark.nodes.add(n)
             new_mark.save()
     else:
         mark = backend.Vote()
         mark.user_id = request.user.id
         mark.save()
         mark.nodes.add(node)
+        for n in traverse_derivates(node):
+            mark.nodes.add(n)
         mark.save()
-        # TODO: traverse derivates of node and add them to mark.nodes
-
     return json_response({'markNodeResponse':{}})
 
 @ValidPaths("StructureNode", "Argument")
