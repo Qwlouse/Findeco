@@ -32,6 +32,7 @@ import itertools
 import json
 
 from ..api_validation import validate_response
+from node_storage.factory import create_user
 
 views = [('load_index', dict(path='')),
          ('load_user_settings', dict()),
@@ -60,12 +61,17 @@ argument_paths = ['foo.1.pro.3', 'foo.1/bar.2.con.4', 'foo.1/bar.2.neut.5']
 
 ################# Tests ########################################################
 class ViewTest(TestCase):
+    def setUp(self):
+        self.ulf = create_user("ulf", password="flu")
+        self.assertTrue(self.client.login(username="ulf", password="flu"))
+
     def test_home_view_status_ok(self):
         response = self.client.get(reverse('home', kwargs=dict(path='')))
         self.assertEqual(response.status_code, 200)
 
     def test_all_api_views_return_json(self):
         for v, kwargs in views:
+            self.assertTrue(self.client.login(username="ulf", password="flu"))
             response = self.client.get(reverse(v, kwargs=kwargs))
             res = json.loads(response.content)
             self.assertIsNotNone(res)
