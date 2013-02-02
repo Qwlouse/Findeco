@@ -37,6 +37,10 @@ function load(){
         $('#loading').hide();
     });
     
+    if ( document.location.hash == '' ) {
+        document.location.hash = '#/';
+    }
+    
     if ( location.hash.length == 2 ) {
         var hash = location.hash.replace(/#/,'');
         currentPosition = parseInt(hash);
