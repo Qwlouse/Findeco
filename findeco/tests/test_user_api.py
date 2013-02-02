@@ -21,9 +21,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 import json
+from findeco.api_validation import storeSettingsResponseValidator
 
 from node_storage.factory import create_user
 from ..api_validation import errorResponseValidator, loadUserInfoResponseValidator, loadUserSettingsResponseValidator
@@ -86,3 +88,50 @@ class LoadUserSettingsTest(TestCase):
             parsed = json.loads(response.content)
             self.assertTrue(errorResponseValidator.validate(parsed))
             self.assertEqual(parsed['errorResponse']['errorTitle'], "NeedsAuthentication")
+
+
+class StoreSettingsTest(TestCase):
+    def setUp(self):
+        self.hans = create_user('hans', description='noneSoFar', password="1234")
+
+    def test_response_validates(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        response = self.client.post(reverse('store_settings'), dict(description="", displayName='hans'))
+        parsed = json.loads(response.content)
+        self.assertTrue(storeSettingsResponseValidator.validate(parsed))
+
+    def test_missing_description_parameter_returns_error(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        response = self.client.post(reverse('store_settings'), dict(displayName='hans'))
+        parsed = json.loads(response.content)
+        self.assertTrue(errorResponseValidator.validate(parsed))
+        self.assertEqual(parsed['errorResponse']['errorTitle'], "MissingPOSTParameter")
+
+    def test_missing_displayname_parameter_returns_error(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        response = self.client.post(reverse('store_settings'), dict(description=''))
+        parsed = json.loads(response.content)
+        self.assertTrue(errorResponseValidator.validate(parsed))
+        self.assertEqual(parsed['errorResponse']['errorTitle'], "MissingPOSTParameter")
+
+    def test_unavailable_displayname_returns_error(self):
+        self.hugo = create_user('hugo', description='notHulk', password="1234")
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        response = self.client.post(reverse('store_settings'), dict(displayName='hugo', description=''))
+        parsed = json.loads(response.content)
+        self.assertTrue(errorResponseValidator.validate(parsed))
+        self.assertEqual(parsed['errorResponse']['errorTitle'], "NameNotAvailable")
+
+    def test_change_description_works(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        response = self.client.post(reverse('store_settings'), dict(description="foo", displayName='hans'))
+        hans = User.objects.get(id =self.hans.id)
+        self.assertEqual(hans.profile.description, "foo")
+
+    def test_change_username_works(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        response = self.client.post(reverse('store_settings'), dict(description="foo", displayName='hans2'))
+        hans = User.objects.get(id =self.hans.id)
+        self.assertEqual(hans.username, "hans2")
+
+
