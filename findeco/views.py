@@ -249,10 +249,10 @@ def unfollow_node(request, path):
             mark.nodes.remove(node)
             der_list = node.derivates.all()
             while len(der_list) > 0:
-                if der_list[0] in mark.nodes:
-                    der_list += der_list[0].derivates.all()
-                    mark.nodes.remove(der_list[0])
-                del der_list[0]
+                derivate = der_list.pop()
+                if derivate in mark.nodes:
+                    der_list += derivate.derivates.all()
+                    mark.nodes.remove(derivate)
     return json_response({'markNodeResponse':{}})
 
 
