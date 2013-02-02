@@ -35,9 +35,6 @@ GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
 BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
 USERNAME = r'(?P<name>[a-zA-Z][a-zA-Z0-9-_]{0,19})'
-VOTE_TYPE = r'(?P<mark_type>(follow)|(unfollow))'
-FLAG_TYPE = r'(?P<mark_type>(spam)|(notspam))'
-
 
 urlpatterns = patterns('',
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
