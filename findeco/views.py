@@ -247,14 +247,16 @@ def unfollow_node(request, path):
             mark.delete()
         else:
             mark.nodes.remove(node)
-            der_list = node.derivates.all()
-            while len(der_list) > 0:
-                derivate = der_list.pop()
-                if derivate in mark.nodes:
-                    der_list += derivate.derivates.all()
-                    mark.nodes.remove(derivate)
+            for n in traverse_derivates_subset(node, mark.nodes.all()):
+                mark.nodes.remove(n)
     return json_response({'markNodeResponse':{}})
 
+def traverse_derivates_subset(node, subset):
+    der_list = node.derivates.all() & subset
+    while len(der_list) > 0:
+        derivate = der_list.pop()
+        der_list += derivate.derivates.all() & subset
+        yield derivate
 
 
 def store_settings(request):
