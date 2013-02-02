@@ -38,9 +38,10 @@ import node_storage as backend
 from .paths import parse_suffix
 from .view_helpers import ValidPaths, json_error_response, json_response
 from .view_helpers import store_structure_node, store_argument, store_derivate
-from .view_helpers import create_index_node_for_slot, create_user_info, build_text
+from .view_helpers import create_index_node_for_slot, create_user_info
 from .view_helpers import create_user_settings, create_index_node_for_argument
-
+from .view_helpers import traverse_derivates_subset, traverse_derivates
+from .view_helpers import build_text
 
 def home(request, path):
     with open("static/index.html", 'r') as index_html_file:
@@ -169,7 +170,7 @@ def logout(request):
 @ValidPaths("StructureNode", "Argument")
 def flag_node(request, path):
     if not request.user.is_authenticated():
-        return json_response({'error': "You're not authenticated."})
+        return json_error_response('NotAuthenticated', "You need to be authenticated to unflag node.")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -187,7 +188,7 @@ def flag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def unflag_node(request, path):
     if not request.user.is_authenticated():
-        return json_response({'error': "You're not authenticated."})
+        return json_error_response('NotAuthenticated', "You need to be authenticated to unflag node.")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -202,7 +203,7 @@ def unflag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def follow_node(request, path):
     if not request.user.is_authenticated():
-        return json_response({'error': "You're not authenticated."})
+        return json_error_response('NotAuthenticated', "You need to be authenticated to follow node.")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -214,26 +215,28 @@ def follow_node(request, path):
         mark = marks[0]
         if mark.head() != node:
             mark.nodes.remove(node)
-            # TODO: remove all derivates of node from mark.nodes and add them to new_mark
             new_mark = backend.Vote()
             new_mark.user_id = request.user.id
             new_mark.save()
             new_mark.nodes.add(node)
+            for n in traverse_derivates_subset(node, mark.nodes.all()):
+                mark.nodes.remove(n)
+                new_mark.nodes.add(n)
             new_mark.save()
     else:
         mark = backend.Vote()
         mark.user_id = request.user.id
         mark.save()
         mark.nodes.add(node)
+        for n in traverse_derivates(node):
+            mark.nodes.add(n)
         mark.save()
-        # TODO: traverse derivates of node and add them to mark.nodes
-
     return json_response({'markNodeResponse':{}})
 
 @ValidPaths("StructureNode", "Argument")
 def unfollow_node(request, path):
     if not request.user.is_authenticated():
-        return json_response({'error': "You're not authenticated."})
+        return json_error_response('NotAuthenticated', "You need to be authenticated to unfollow node.")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -250,13 +253,6 @@ def unfollow_node(request, path):
             for n in traverse_derivates_subset(node, mark.nodes.all()):
                 mark.nodes.remove(n)
     return json_response({'markNodeResponse':{}})
-
-def traverse_derivates_subset(node, subset):
-    der_list = node.derivates.all() & subset
-    while len(der_list) > 0:
-        derivate = der_list.pop()
-        der_list += derivate.derivates.all() & subset
-        yield derivate
 
 
 def store_settings(request):
