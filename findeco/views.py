@@ -169,7 +169,7 @@ def logout(request):
 @ValidPaths("StructureNode", "Argument")
 def flag_node(request, path):
     if not request.user.is_authenticated():
-        return json_response({'error': "You're not authenticated."})
+        return json_error_response('NotAuthenticated', "You need to be authenticated to unflag node.")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -187,7 +187,7 @@ def flag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def unflag_node(request, path):
     if not request.user.is_authenticated():
-        return json_response({'error': "You're not authenticated."})
+        return json_error_response('NotAuthenticated', "You need to be authenticated to unflag node.")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -202,7 +202,7 @@ def unflag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def follow_node(request, path):
     if not request.user.is_authenticated():
-        return json_response({'error': "You're not authenticated."})
+        return json_error_response('NotAuthenticated', "You need to be authenticated to follow node.")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -233,7 +233,7 @@ def follow_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def unfollow_node(request, path):
     if not request.user.is_authenticated():
-        return json_response({'error': "You're not authenticated."})
+        return json_error_response('NotAuthenticated', "You need to be authenticated to unfollow node.")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
