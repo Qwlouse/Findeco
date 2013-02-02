@@ -258,8 +258,26 @@ def unfollow_node(request, path):
 
 
 def store_settings(request):
-    # Backend foo
-    return json_response({})
+    if not request.user.is_authenticated():
+        return json_error_response('NotAuthenticated', "You need to be authenticated to unfollow node.")
+    user = User.objects.get(id=request.user.id)
+
+    if not 'description' in request.POST:
+        return json_error_response('MissingPOSTParameter', "The 'description' POST parameter is missing.")
+    user.profile.description = request.POST['description']
+    user.profile.save()
+    if not 'displayName' in request.POST:
+        return json_error_response('MissingPOSTParameter', "The 'displayName' POST parameter is missing.")
+    display_name = request.POST['displayName']
+    if display_name != user.username:
+        is_available = User.objects.filter(username=display_name).count() == 0
+        if not is_available:
+            return json_error_response('NameNotAvailable', "The name '%s' is already taken."%display_name)
+        else:
+            user.username=display_name
+    user.save()
+
+    return json_response({'storeSettingsResponse':{}})
 
 @ValidPaths("StructureNode")
 def store_text(request, path):
