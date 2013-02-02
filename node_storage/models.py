@@ -76,11 +76,13 @@ class Node(models.Model):
         max_position = agg['position__max'] or 0
         no.position = max_position + 1
         no.save()
+        for d in self.derivates.all():
+            d.append_argument(argument) # assumes no merges
 
     def add_derivate(self, argument, derivate):
         d = Derivation(argument=argument, source=self, derivate=derivate)
-        self.append_argument(argument)
         d.save()
+        self.append_argument(argument)
         for vote in Vote.objects.filter(nodes=self).all():
             vote.nodes.add(d.derivate)
 
