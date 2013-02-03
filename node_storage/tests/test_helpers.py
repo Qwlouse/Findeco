@@ -28,7 +28,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from node_storage.path_helpers import get_root_node
-from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path, get_arguments_for
+from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path
 from ..path_helpers import get_good_path_for_structure_node
 from ..path_helpers import IllegalPath
 from ..factory import create_slot, create_structureNode, create_textNode, create_vote, create_argument, create_user
@@ -90,10 +90,8 @@ class HelpersTest(TestCase):
         self.subsubtext1 = create_textNode("SubSubText1 Title","Yet another text. Number 4.",[max])
         self.subsubslot1.append_child(self.subsubtext1)
 
-        self.argument1 = create_argument(type='pro',text="It is good!",authors=[max])
-        self.subsubtext1.append_argument(self.argument1)
-        self.argument2 = create_argument(type='neut',text="Maybe consider something",authors=[max])
-        self.subsubtext1.append_argument(self.argument2)
+        self.argument1 = create_argument(self.subsubtext1, type='pro',text="It is good!",authors=[max])
+        self.argument2 = create_argument(self.subsubtext1, type='neut',text="Maybe consider something",authors=[max])
 
     def test_get_favorite_if_slot(self):
         n = get_favorite_if_slot(self.root)
@@ -137,18 +135,6 @@ class HelpersTest(TestCase):
         self.assertRaises(IllegalPath, get_node_for_path, ("Slot_4.1/SubSlot_1.1/BlubbBlubbSlot_1.1.pro.1"))
         self.assertRaises(IllegalPath, get_node_for_path, ("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.77"))
         self.assertRaises(IllegalPath, get_node_for_path, ("Slot_4.1/SubSlot_1.8437256/SubSubSlot_1.1.pro.1"))
-
-    def test_get_arguments_for(self):
-        args = get_arguments_for(self.subsubtext1)
-        self.assertSequenceEqual(args, [self.argument1, self.argument2])
-        args = get_arguments_for(self.subsubtext1, 'pro')
-        self.assertSequenceEqual(args, [self.argument1])
-        args = get_arguments_for(self.subsubtext1, 'con')
-        self.assertSequenceEqual(args, [])
-        args = get_arguments_for(self.subsubtext1, 'all')
-        self.assertSequenceEqual(args, [self.argument1, self.argument2])
-        args = get_arguments_for(self.subsubtext1, 'neut')
-        self.assertSequenceEqual(args, [self.argument2])
 
     def test_get_good_path_for_structure_node(self):
         path = get_good_path_for_structure_node(self.subsubtext1)
