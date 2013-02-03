@@ -80,12 +80,46 @@ class Node(models.Model):
 #        for d in self.derivates.all():
 #            d.append_argument(argument) # assumes no merges
 
-    def add_derivate(self, argument, derivate):
-        d = Derivation(argument=argument, source=self, derivate=derivate)
+    def add_derivate(self, derivate, type='n', title="", text="", authors=()):
+        if type or title or text or authors:
+            arg_type = Argument.short_arg_type(type)
+            source_argument = Argument(arg_type=arg_type, title=title)
+            source_argument.node_type = Node.ARGUMENT
+            source_argument.concerns = self
+            source_argument.save()
+            text_obj = Text(node=source_argument, text=text)
+            text_obj.save()
+            for author in authors:
+                text_obj.authors.add(author)
+            text_obj.save()
+        else:
+            source_argument = None
+        d = Derivation(argument=source_argument, source=self, derivate=derivate)
         d.save()
-        self.append_argument(argument)
+        if type or title or text or authors:
+            arg_type = Argument.short_arg_type(type)
+            derivation_argument = Argument(arg_type=arg_type, title=title)
+            derivation_argument.node_type = Node.ARGUMENT
+            derivation_argument.concerns = d
+            derivation_argument.save()
+            text_obj = Text(node=derivation_argument, text=text)
+            text_obj.save()
+            for author in authors:
+                text_obj.authors.add(author)
+            text_obj.save()
         for vote in Vote.objects.filter(nodes=self).all():
             vote.nodes.add(d.derivate)
+        for argument in self.arguments.all():
+            copy_argument = Argument(arg_type=argument.arg_type, title=argument.title)
+            copy_argument.node_type = Node.ARGUMENT
+            copy_argument.concerns = d
+            copy_argument.save()
+            text_obj = Text(node=copy_argument, text=argument.text)
+            text_obj.save()
+            for author in argument.text.authors.all():
+                text_obj.authors.add(author)
+            text_obj.save()
+        d.save()
 
     def __unicode__(self):
         return "id=%d, title=%s"%(self.id, self.title)
