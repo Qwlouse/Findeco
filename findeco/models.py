@@ -30,7 +30,6 @@ This file contains models for the basic Project structure:
   * automatize admin creation for every syncdb
 """
 from __future__ import division, print_function, unicode_literals
-from mercurial.revset import node
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.management import create_superuser
 from django.contrib.auth.models import User, Group
