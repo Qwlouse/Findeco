@@ -170,7 +170,9 @@ def logout(request):
 @ValidPaths("StructureNode", "Argument")
 def flag_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated', "You need to be authenticated to unflag node.")
+        return json_error_response('NotAuthenticated', "You need to be authenticated to flag node.")
+    if not request.user.has_perm('node_storage.add_spamflag'):
+        return json_error_response('PermissionDenied', "You do not have the permission to flag " + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -189,8 +191,8 @@ def flag_node(request, path):
 def unflag_node(request, path):
     if not request.user.is_authenticated():
         return json_error_response('NotAuthenticated', "You need to be authenticated to unflag node.")
-    if not request.user.has_perm('node_storage.delete_spamFlag'):
-        return json_error_response('PermissionDenied', "You need to have the permission to unflag " + path + ".")
+    if not request.user.has_perm('node_storage.delete_spamflag'):
+        return json_error_response('PermissionDenied', "You do not have the permission to unflag " + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -206,6 +208,8 @@ def unflag_node(request, path):
 def follow_node(request, path):
     if not request.user.is_authenticated():
         return json_error_response('NotAuthenticated', "You need to be authenticated to follow node.")
+    if not request.user.has_perm('node_storage.add_vote') or not request.user.has_perm('node_storage.change_vote'):
+        return json_error_response('PermissionDenied', "You do not have the permission to follow " + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
@@ -240,6 +244,8 @@ def follow_node(request, path):
 def unfollow_node(request, path):
     if not request.user.is_authenticated():
         return json_error_response('NotAuthenticated', "You need to be authenticated to unfollow node.")
+    if not request.user.has_perm('node_storage.delete_vote'):
+        return json_error_response('PermissionDenied', "You do not have the permission to unfollow " + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)

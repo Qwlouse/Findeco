@@ -25,6 +25,7 @@ from __future__ import division, print_function, unicode_literals
 import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from findeco.view_helpers import get_permission
 from node_storage import get_root_node, Vote, SpamFlag, Argument
 from node_storage.factory import create_textNode, create_slot, create_user, create_vote, create_argument, create_spam_flag
 
@@ -32,6 +33,8 @@ class UnFollowTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
         self.hugo = create_user("Hugo", password="1234")
+        self.hugo.user_permissions.add(get_permission('node_storage.delete_vote'))
+        self.permela = create_user("Permela", password="xxx")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
         self.text = create_textNode("Bla", "Blubb", [self.hugo])
@@ -54,6 +57,12 @@ class UnFollowTest(TestCase):
         response = self.client.post(reverse('unfollow_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
+
+    def test_not_permitted(self):
+        self.assertTrue(self.client.login(username="Permela", password="xxx"))
+        response = self.client.post(reverse('unfollow_node', kwargs=dict(path="Slot.1")))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'], "PermissionDenied")
 
     def test_unfollow_leaf_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
@@ -86,7 +95,12 @@ class FollowTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
         self.hugo = create_user("Hugo", password="1234")
+        self.hugo.user_permissions.add(get_permission('node_storage.add_vote'))
+        self.hugo.user_permissions.add(get_permission('node_storage.change_vote'))
         self.ulf = create_user("Ulf", password="abcde")
+        self.ulf.user_permissions.add(get_permission('node_storage.add_vote'))
+        self.ulf.user_permissions.add(get_permission('node_storage.change_vote'))
+        self.permela = create_user("Permela", password="xxx")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
         self.text = create_textNode("Bla", "Blubb", [self.hugo])
@@ -110,6 +124,12 @@ class FollowTest(TestCase):
         response = self.client.post(reverse('follow_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
+
+    def test_not_permitted(self):
+        self.assertTrue(self.client.login(username="Permela", password="xxx"))
+        response = self.client.post(reverse('follow_node', kwargs=dict(path="Slot.1")))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'], "PermissionDenied")
 
     def test_follow_leaf_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Ulf", password="abcde"))
@@ -144,6 +164,8 @@ class MarkSpamTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
         self.hugo = create_user("Hugo", password="1234")
+        self.hugo.user_permissions.add(get_permission('node_storage.add_spamflag'))
+        self.permela = create_user("Permela", password="xxx")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
         self.text = create_textNode("Bla", "Blubb", [self.hugo])
@@ -159,6 +181,12 @@ class MarkSpamTest(TestCase):
         response = self.client.post(reverse('flag_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'], "NotAuthenticated")
+
+    def test_not_permitted(self):
+        self.assertTrue(self.client.login(username="Permela", password="xxx"))
+        response = self.client.post(reverse('flag_node', kwargs=dict(path="Slot.1")))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'], "PermissionDenied")
 
     def test_mark_spam_root(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
@@ -184,6 +212,8 @@ class UnMarkSpamTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
         self.hugo = create_user("Hugo", password="1234")
+        self.hugo.user_permissions.add(get_permission('node_storage.delete_spamflag'))
+        self.permela = create_user("Permela", password="xxx")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
         self.text = create_textNode("Bla", "Blubb", [self.hugo])
@@ -202,6 +232,12 @@ class UnMarkSpamTest(TestCase):
         response = self.client.post(reverse('unflag_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'], "NotAuthenticated")
+
+    def test_not_permitted(self):
+        self.assertTrue(self.client.login(username="Permela", password="xxx"))
+        response = self.client.post(reverse('unflag_node', kwargs=dict(path="Slot.1")))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'], "PermissionDenied")
 
     def test_unmark_spam_root(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
