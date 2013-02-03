@@ -27,7 +27,7 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.db.models import Count
-from models import Node, NodeOrder, ArgumentOrder, Argument
+from models import Node, NodeOrder, Argument
 
 from findeco.paths import parse_path
 
@@ -61,8 +61,7 @@ def get_node_for_path(path):
         else:
             node = children[0]
     elif 'arg_type' in last and 'arg_id' in last:
-        argument_order = ArgumentOrder.objects.filter(node=node).\
-                                     filter(position=last['arg_id']).prefetch_related('argument').all()
+        argument_order = node.arguments.filter(index=last['arg_id']).prefetch_related('argument').all()
         if len(argument_order) != 1:
             raise IllegalPath(path)
         else:
@@ -83,11 +82,11 @@ def get_arguments_for(node, arg_type='all'):
     Return a list of arguments for node.
     arg_type can be one of: 'pro', 'con', 'neut', 'all'
     """
-    order = ArgumentOrder.objects.filter(node=node).prefetch_related('argument')
-    if arg_type != 'all':
-        return [i.argument for i in order if i.argument.arg_type == Argument.short_arg_type(arg_type)]
-    else:
-        return [i.argument for i in order]
+#    order = ArgumentOrder.objects.filter(node=node).prefetch_related('argument')
+#    if arg_type != 'all':
+#        return [i.argument for i in order if i.argument.arg_type == Argument.short_arg_type(arg_type)]
+#    else:
+#        return [i.argument for i in order]
 
 def get_ordered_children_for(node):
     """
@@ -100,8 +99,8 @@ def get_ordered_arguments_for(node):
     """
     Return a list of arguments for given node ordered by their position.
     """
-    order = ArgumentOrder.objects.filter(node=node).order_by('position')
-    return [ao.argument for ao in order]
+#    order = ArgumentOrder.objects.filter(node=node).order_by('position')
+#    return [ao.argument for ao in order]
 
 def get_good_path_for_structure_node(node, slot=None, slot_path=None):
     """

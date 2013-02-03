@@ -36,7 +36,6 @@ from findeco.view_helpers import create_graph_data_node_for_structure_node
 
 import node_storage as backend
 from node_storage.factory import create_argument
-from node_storage.models import ArgumentOrder
 from .paths import parse_suffix
 from .view_helpers import ValidPaths, json_error_response, json_response
 from .view_helpers import store_structure_node, store_argument, store_derivate
@@ -213,14 +212,14 @@ def follow_node(request, path):
         return json_error_response('Illegal Path','Illegal Path: '+path)
 
     #TODO: This must be done for Arguments but not for Nodes!
-    for argument in node.arguments.all(): #TODO: Don't copy if this needn't be done.
-        if not argument.head() == node:
-            ArgumentOrder.objects.filter(argument=argument).filter(node=node).all()[0].delete()
-            new_arg = create_argument(argument.arg_type,argument.title,argument.text,argument.text.authors.all())
-            node.append_argument(new_arg)
-            for n in traverse_derivates_subset(node, argument.concerns.all()):
-                ArgumentOrder.objects.filter(argument=argument).filter(node=n).all()[0].delete()
-            argument.save()
+#    for argument in node.arguments.all(): #TODO: Don't copy if this needn't be done.
+#        if not argument.head() == node:
+#            ArgumentOrder.objects.filter(argument=argument).filter(node=node).all()[0].delete()
+#            new_arg = create_argument(argument.arg_type,argument.title,argument.text,argument.text.authors.all())
+#            node.append_argument(new_arg)
+#            for n in traverse_derivates_subset(node, argument.concerns.all()):
+#                ArgumentOrder.objects.filter(argument=argument).filter(node=n).all()[0].delete()
+#            argument.save()
     marks = node.votes.filter(user=user.id).all()
     if marks.count() >= 1:
         mark = marks[0]

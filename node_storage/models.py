@@ -69,15 +69,16 @@ class Node(models.Model):
         no.save()
 
     def append_argument(self, argument):
-        no = ArgumentOrder()
-        no.node = self
-        no.argument = argument
-        agg = ArgumentOrder.objects.filter(node=self).aggregate(Max('position'))
-        max_position = agg['position__max'] or 0
-        no.position = max_position + 1
-        no.save()
-        for d in self.derivates.all():
-            d.append_argument(argument) # assumes no merges
+        pass
+#        no = ArgumentOrder()
+#        no.node = self
+#        no.argument = argument
+#        agg = ArgumentOrder.objects.filter(node=self).aggregate(Max('position'))
+#        max_position = agg['position__max'] or 0
+#        no.position = max_position + 1
+#        no.save()
+#        for d in self.derivates.all():
+#            d.append_argument(argument) # assumes no merges
 
     def add_derivate(self, argument, derivate):
         d = Derivation(argument=argument, source=self, derivate=derivate)
@@ -101,8 +102,8 @@ class Node(models.Model):
         """
         if self.pk == 1: return ""
         if self.node_type == Node.ARGUMENT:
-            self_as_arg = ArgumentOrder.objects.filter(argument_id=self.id).all()[0]
-            return self_as_arg.node.get_a_path().strip('/') + '.' + self_as_arg.argument.arg_type + '.' + str(self_as_arg.position)
+            self_as_arg = Argument.objects.filter(argument_id=self.id).all()[0]
+            return self_as_arg.concerns.get_a_path().strip('/') + '.' + self_as_arg.arg_type + '.' + str(self_as_arg.index)
         parent = self.parents.all()[0]
         return parent.get_a_path() +\
                (self.title if self.node_type == Node.SLOT else "." + str(self.get_index(parent)) + "/")
@@ -130,11 +131,11 @@ class Argument(Node):
 
     arg_type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
 
-    concerns = models.ManyToManyField(
+    concerns = models.ForeignKey(
         Node,
-        related_name='arguments',
-        through='ArgumentOrder'
+        related_name='arguments'
     )
+    index = models.IntegerField()
 
     @classmethod
     def long_arg_type(cls, arg_type):
@@ -159,8 +160,6 @@ class Argument(Node):
     def __unicode__(self):
         return "id=%d, type=%s"%(self.id, self.arg_type)
 
-    def head(self):
-        return self.concerns.order_by('id').all()[0]
 
 class Text(models.Model):
     node = models.OneToOneField(Node, related_name="text")
@@ -199,19 +198,6 @@ class NodeOrder(models.Model):
         return "pos=%d, child_id=%d, parent_id=%d"%(self.position,
                                                     self.child_id,
                                                     self.parent_id)
-
-class ArgumentOrder(models.Model):
-    argument = models.ForeignKey(Argument, related_name='node_order_set')
-    node = models.ForeignKey(Node, related_name='argument_order_set')
-    position = models.IntegerField()
-
-    class Meta:
-        unique_together = (('argument', 'node'), )
-
-    def __unicode__(self):
-        return "pos=%d, argument_id=%d, node_id=%d"%(self.position,
-                                                     self.argument_id,
-                                                     self.node_id)
 
 ################################# Votes ########################################
 class Vote(models.Model):
