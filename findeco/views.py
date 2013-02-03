@@ -189,6 +189,8 @@ def flag_node(request, path):
 def unflag_node(request, path):
     if not request.user.is_authenticated():
         return json_error_response('NotAuthenticated', "You need to be authenticated to unflag node.")
+    if not request.user.has_perm('node_storage.delete_spamFlag'):
+        return json_error_response('PermissionDenied', "You need to have the permission to unflag " + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
