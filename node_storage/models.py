@@ -72,7 +72,8 @@ class Node(models.Model):
         if type or title or text or len(authors) > 0:
             if not type: type = 'n'
             arg_type = Argument.short_arg_type(type)
-            source_argument = Argument(arg_type=arg_type, title=title, node_type=Node.ARGUMENT, concerns=self)
+            source_argument = Argument(arg_type=arg_type, title=title,
+                node_type=Node.ARGUMENT, concerns=self)
             source_argument.save()
             source_argument_text_obj = Text(node=source_argument, text=text)
             source_argument_text_obj.save()
@@ -86,10 +87,11 @@ class Node(models.Model):
         for vote in Vote.objects.filter(nodes=self).all():
             vote.nodes.add(d.derivate)
         for argument in self.arguments.all():
-            copy_argument = Argument(arg_type=argument.arg_type, title=argument.title, node_type=Node.ARGUMENT,
-                concerns=derivate)
+            copy_argument = Argument(title=argument.title, concerns=derivate,
+                arg_type=argument.arg_type,  node_type=Node.ARGUMENT)
             copy_argument.save()
-            copy_argument_text_obj = Text(node=copy_argument, text=argument.text.text)
+            copy_argument_text_obj = Text(node=copy_argument,
+                                          text=argument.text.text)
             copy_argument_text_obj.save()
             for author in argument.text.authors.all():
                 copy_argument_text_obj.authors.add(author)
@@ -112,16 +114,21 @@ class Node(models.Model):
         if self.pk == 1: return ""
         if self.node_type == Node.ARGUMENT:
             self_as_arg = Argument.objects.filter(argument_id=self.id).all()[0]
-            return self_as_arg.concerns.get_a_path().strip('/') + '.' + self_as_arg.arg_type + '.' + str(self_as_arg.index)
+            npath = self_as_arg.concerns.get_a_path().strip('/')
+            return '%s.%s.%d'%(npath, self_as_arg.arg_type, self_as_arg.index)
         parent = self.parents.all()[0]
-        return parent.get_a_path() +\
-               (self.title if self.node_type == Node.SLOT else "." + str(self.get_index(parent)) + "/")
+        if self.node_type == Node.SLOT:
+            suffix = self.title
+        else:
+            suffix = "." + str(self.get_index(parent)) + "/"
+        return parent.get_a_path() + suffix
 
     def get_follows(self):
         return self.votes.count()
 
     def get_unfollows(self):
-        return User.objects.filter(vote__nodes__in=self.sources.all()).exclude(vote__nodes__in=[self]).distinct().count()
+        return User.objects.filter(vote__nodes__in=self.sources.all()).\
+                            exclude(vote__nodes__in=[self]).distinct().count()
 
     def get_newfollows(self):
         return self.votes.exclude(nodes__in=self.sources.all()).count()
