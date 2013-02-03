@@ -21,6 +21,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
+from django.contrib.auth.models import Permission
 from django.http import HttpResponse
 import functools
 import json
@@ -173,3 +174,7 @@ def traverse_derivates(node):
         derivate = der_list.pop()
         der_list += list(derivate.derivates.all())
         yield derivate
+
+def get_permission(name):
+    a, _, n = name.partition('.')
+    return Permission.objects.get(content_type__app_label=a, codename=n)
