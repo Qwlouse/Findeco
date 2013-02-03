@@ -87,11 +87,11 @@ class Node(models.Model):
             source_argument.node_type = Node.ARGUMENT
             source_argument.concerns = self
             source_argument.save()
-            text_obj = Text(node=source_argument, text=text)
-            text_obj.save()
+            source_argument_text_obj = Text(node=source_argument, text=text)
+            source_argument_text_obj.save()
             for author in authors:
-                text_obj.authors.add(author)
-            text_obj.save()
+                source_argument_text_obj.authors.add(author)
+            source_argument_text_obj.save()
         else:
             source_argument = None
         d = Derivation(argument=source_argument, source=self, derivate=derivate)
@@ -100,25 +100,25 @@ class Node(models.Model):
             arg_type = Argument.short_arg_type(type)
             derivation_argument = Argument(arg_type=arg_type, title=title)
             derivation_argument.node_type = Node.ARGUMENT
-            derivation_argument.concerns = d
+            derivation_argument.concerns = derivate
             derivation_argument.save()
-            text_obj = Text(node=derivation_argument, text=text)
-            text_obj.save()
+            derivation_argument_text_obj = Text(node=derivation_argument, text=text)
+            derivation_argument_text_obj.save()
             for author in authors:
-                text_obj.authors.add(author)
-            text_obj.save()
+                derivation_argument_text_obj.authors.add(author)
+            derivation_argument_text_obj.save()
         for vote in Vote.objects.filter(nodes=self).all():
             vote.nodes.add(d.derivate)
         for argument in self.arguments.all():
             copy_argument = Argument(arg_type=argument.arg_type, title=argument.title)
             copy_argument.node_type = Node.ARGUMENT
-            copy_argument.concerns = d
+            copy_argument.concerns = derivate
             copy_argument.save()
-            text_obj = Text(node=copy_argument, text=argument.text)
-            text_obj.save()
+            copy_argument_text_obj = Text(node=copy_argument, text=argument.text)
+            copy_argument_text_obj.save()
             for author in argument.text.authors.all():
-                text_obj.authors.add(author)
-            text_obj.save()
+                copy_argument_text_obj.authors.add(author)
+            copy_argument_text_obj.save()
         d.save()
 
     def __unicode__(self):
