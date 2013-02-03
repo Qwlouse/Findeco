@@ -208,6 +208,8 @@ def unflag_node(request, path):
 def follow_node(request, path):
     if not request.user.is_authenticated():
         return json_error_response('NotAuthenticated', "You need to be authenticated to follow node.")
+    if not request.user.has_perm('node_storage.add_vote') or not request.user.has_perm('node_storage.change_vote'):
+        return json_error_response('PermissionDenied', "You do not have the permission to follow " + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)

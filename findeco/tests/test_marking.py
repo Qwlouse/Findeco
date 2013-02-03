@@ -87,7 +87,12 @@ class FollowTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
         self.hugo = create_user("Hugo", password="1234")
+        self.hugo.user_permissions.add(get_permission('node_storage.add_vote'))
+        self.hugo.user_permissions.add(get_permission('node_storage.change_vote'))
         self.ulf = create_user("Ulf", password="abcde")
+        self.ulf.user_permissions.add(get_permission('node_storage.add_vote'))
+        self.ulf.user_permissions.add(get_permission('node_storage.change_vote'))
+        self.permela = create_user("Permela", password="xxx")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
         self.text = create_textNode("Bla", "Blubb", [self.hugo])
@@ -111,6 +116,12 @@ class FollowTest(TestCase):
         response = self.client.post(reverse('follow_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
+
+    def test_not_permitted(self):
+        self.assertTrue(self.client.login(username="Permela", password="xxx"))
+        response = self.client.post(reverse('follow_node', kwargs=dict(path="Slot.1")))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'], "PermissionDenied")
 
     def test_follow_leaf_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Ulf", password="abcde"))
@@ -165,7 +176,7 @@ class MarkSpamTest(TestCase):
 
     def test_not_permitted(self):
         self.assertTrue(self.client.login(username="Permela", password="xxx"))
-        response = self.client.post(reverse('unflag_node', kwargs=dict(path="Slot.1")))
+        response = self.client.post(reverse('flag_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'], "PermissionDenied")
 
