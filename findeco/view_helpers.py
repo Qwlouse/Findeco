@@ -152,9 +152,8 @@ def store_argument(path, arg_text, arg_type, author):
 
 def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     new_node, new_path = store_structure_node(path, derivate_wiki_text, author)
-    argument = create_argument(arg_type,backend.get_title_from_text(arg_text),arg_text,[author])
     node = get_node_for_path(path)
-    node.add_derivate(argument,new_node)
+    node.add_derivate(new_node, type=arg_type, text=backend.get_title_from_text(arg_text), authors=[author])
     return new_path
 
 def traverse_derivates_subset(node, subset):
