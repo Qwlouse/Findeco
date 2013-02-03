@@ -52,21 +52,18 @@ def create_alternatives_for_urheberrecht(path):
     w2b = "Völlige Abschaffung des Urheber- und Patentrechts!"
     a2b = create_structureNode("Kein Urheberrecht", w2b, authors=[ulf])
     slot.append_child(a2b)
-    arga = create_argument('con',
+    arga = a2a.add_derivate(a2b, 'con',
         "Patentrecht ist genauso böse",
         "Das patentrecht ist mindestens genauso schlimm und muss auch weg!",
         [ulf])
-    a2a.add_derivate(arga, a2b)
 
     w2c = "Völlige Abschaffung des Urheber- und Patentrechts! Außerdem Todesstrafe für alle Patentanwälte."
     a2c = create_structureNode("Kein Urheberrecht", w2c, authors=[timo])
     slot.append_child(a2c)
-    argb = create_argument('con',
+    argb = a2b.add_derivate(a2c, 'con',
         "Patentanwälte stinken!",
         "Dieses Pack gehört ausgerottet!",
-        [timo]
-    )
-    a2b.add_derivate(argb, a2c)
+        [timo])
 
     # create votes
     original = get_node_for_path(path)
