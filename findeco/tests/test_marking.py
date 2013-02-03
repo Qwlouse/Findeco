@@ -140,18 +140,6 @@ class FollowTest(TestCase):
         for n in [self.leaf1, self.mid, self.mid2, self.leaf2]:
             self.assertIn(n, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
 
-    def test_argument_copying(self):
-        self.assertTrue(self.client.login(username="Ulf", password="abcde"))
-        response = self.client.get(reverse('follow_node', kwargs=dict(path="Slot.2")))
-        self.assertEqual(response.status_code,200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'],{})
-        self.assertEqual(Argument.objects.count(),7)
-        self.assertNotEqual(self.text.arguments.filter(title="Wrong!").all()[0].pk,
-            self.leaf2.arguments.filter(title="Wrong!").all()[0].pk)
-        self.assertEqual(self.leaf1.arguments.filter(title="Wrong!").count(), 1)
-        self.assertEqual(self.leaf1.arguments.filter(title="Wrong!").all()[0].pk,
-            self.leaf2.arguments.filter(title="Wrong!").all()[0].pk)
-
 class MarkSpamTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
