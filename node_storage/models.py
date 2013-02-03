@@ -80,8 +80,9 @@ class Node(models.Model):
 #        for d in self.derivates.all():
 #            d.append_argument(argument) # assumes no merges
 
-    def add_derivate(self, derivate, type='n', title="", text="", authors=()):
-        if type or title or text or authors:
+    def add_derivate(self, derivate, type=None, title="", text="", authors=()):
+        if type or title or text or len(authors) > 0:
+            if not type: type = 'n'
             arg_type = Argument.short_arg_type(type)
             source_argument = Argument(arg_type=arg_type, title=title)
             source_argument.node_type = Node.ARGUMENT
@@ -96,7 +97,8 @@ class Node(models.Model):
             source_argument = None
         d = Derivation(argument=source_argument, source=self, derivate=derivate)
         d.save()
-        if type or title or text or authors:
+        if type or title or text or len(authors) > 0:
+            if not type: type = 'n'
             arg_type = Argument.short_arg_type(type)
             derivation_argument = Argument(arg_type=arg_type, title=title)
             derivation_argument.node_type = Node.ARGUMENT
