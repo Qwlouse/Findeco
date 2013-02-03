@@ -68,18 +68,6 @@ class Node(models.Model):
         no.position = max_position + 1
         no.save()
 
-    def append_argument(self, argument):
-        pass
-#        no = ArgumentOrder()
-#        no.node = self
-#        no.argument = argument
-#        agg = ArgumentOrder.objects.filter(node=self).aggregate(Max('position'))
-#        max_position = agg['position__max'] or 0
-#        no.position = max_position + 1
-#        no.save()
-#        for d in self.derivates.all():
-#            d.append_argument(argument) # assumes no merges
-
     def add_derivate(self, derivate, type=None, title="", text="", authors=()):
         if type or title or text or len(authors) > 0:
             if not type: type = 'n'
