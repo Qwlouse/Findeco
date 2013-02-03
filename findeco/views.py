@@ -244,6 +244,8 @@ def follow_node(request, path):
 def unfollow_node(request, path):
     if not request.user.is_authenticated():
         return json_error_response('NotAuthenticated', "You need to be authenticated to unfollow node.")
+    if not request.user.has_perm('node_storage.delete_vote'):
+        return json_error_response('PermissionDenied', "You do not have the permission to unfollow " + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
