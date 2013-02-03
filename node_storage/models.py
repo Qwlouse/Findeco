@@ -191,6 +191,11 @@ class Argument(Node):
                 cls.CON :cls.CON
            }[arg_type]
 
+    def save(self, *args, **kwargs):
+        if self.index is None:
+            self.index = self.concerns.arguments.count() + 1
+        models.Model.save(self, *args, **kwargs)
+
     def __unicode__(self):
         return "id=%d, type=%s"%(self.id, self.arg_type)
 
