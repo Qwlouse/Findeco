@@ -367,14 +367,24 @@ class StoreArgumentTest(TestCase):
         self.root.append_child(self.slot)
         self.text1 = create_textNode("Initial Text","Dumdidum",[self.mustermann])
         self.slot.append_child(self.text1)
+        self.text2 = create_textNode("Secondary Text","Dudelda",[self.mustermann])
+        self.text1.add_derivate(self.text2)
 
     def test_store_con(self):
         self.assertEqual(store_argument("Flopp.1","= Avast =\nAgainst it!","con",self.mustermann),"Flopp.1.con.1")
-        self.assertEqual(len(self.text1.arguments.all()),1)
+        self.assertEqual(self.text1.arguments.count(),1)
         self.assertEqual(self.text1.arguments.all()[0].title,"Avast")
         self.assertEqual(self.text1.arguments.all()[0].text.text,"= Avast =\nAgainst it!")
         self.assertEqual(self.text1.arguments.all()[0].arg_type,"c")
         self.assertIn(self.mustermann, self.text1.arguments.all()[0].text.authors.all())
+
+    def test_derivation(self):
+        self.assertEqual(store_argument("Flopp.1","= Avast =\nAgainst it!","con",self.mustermann),"Flopp.1.con.1")
+        self.assertEqual(self.text1.arguments.count(),1)
+        self.assertEqual(self.text2.arguments.count(),1)
+        self.assertEqual(self.text2.arguments.all()[0].title,"Avast")
+        self.assertEqual(self.text2.arguments.all()[0].sources.count(),1)
+        self.assertEqual(self.text2.arguments.all()[0].sources.all()[0].pk,self.text1.arguments.all()[0].pk)
 
 class StoreDerivateTest(TestCase):
     def setUp(self):
