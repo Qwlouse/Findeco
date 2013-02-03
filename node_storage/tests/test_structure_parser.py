@@ -305,7 +305,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'text': "Layer 2 text 2.",
                        'children': []},
                   ]}
-        create_structure_from_structure_node_schema(schema,self.slot1,[self.hugo],origin_group=[self.structure1])
+        create_structure_from_structure_node_schema(schema,self.slot1,[self.hugo],origin_group=[self.structure1],arg_type='n')
         node_list = Node.objects.filter(title="Layer 1").all()
         self.assertEqual(len(node_list),1)
         n = node_list[0]
@@ -344,7 +344,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'text': "Layer 2 text 2 but changed.",
                        'children': []},
                       ]}
-        create_structure_from_structure_node_schema(schema,self.slot1,[self.hugo],origin_group=[self.structure1])
+        create_structure_from_structure_node_schema(schema,self.slot1,[self.hugo],origin_group=[self.structure1],arg_type='n')
         node_list = Node.objects.filter(title="Layer 1").all()
         self.assertEqual(len(node_list),1)
         n = node_list[0]
