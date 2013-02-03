@@ -193,10 +193,10 @@ def get_title_from_text(text):
         raise InvalidWikiStructure('Must start with H1 heading to set title')
 
 
-def create_structure_from_structure_node_schema(schema, parent_slot, authors, origin_group=None, argument=None):
+def create_structure_from_structure_node_schema(schema, parent_slot, authors, origin_group=None, arg_type=None, arg_title="", arg_text=""):
     if not origin_group: origin_group = []
     origin_found = False
-    if len(origin_group) > 0 and argument:
+    if len(origin_group) > 0 and (arg_type or arg_title or arg_text):
         for origin in origin_group:
             if origin.title == schema['title'] and origin.text.text == schema['text'] and\
                [child['short_title'] for child in schema['children']] == [child.title for child in
@@ -207,7 +207,7 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors, or
         structure = create_structureNode(long_title=schema['title'], text=schema['text'], authors=authors)
         parent_slot.append_child(structure)
         for origin in origin_group:
-            origin.add_derivate(argument, structure)
+            origin.add_derivate(structure, type=arg_type, title=arg_title, text=arg_text, authors=authors)
     for child in schema['children']:
         if origin_found:
             child_slot = structure.children.filter(title=child['short_title']).all()[0]
@@ -218,6 +218,6 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors, or
         for origin in origin_group:
             for origin_slot in origin.children.filter(title=child['short_title']).all():
                 sub_origin_group += origin_slot.children.all()
-        create_structure_from_structure_node_schema(child, child_slot, authors, sub_origin_group, argument)
+        create_structure_from_structure_node_schema(child, child_slot, authors, sub_origin_group, arg_type, arg_title, arg_text)
     return structure
 

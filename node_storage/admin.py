@@ -22,7 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.contrib import admin
-from models import Node, Argument, Text, Vote, NodeOrder, ArgumentOrder, Derivation
+from models import Node, Argument, Text, Vote, NodeOrder, Derivation
 
 class TextInline(admin.StackedInline):
     model = Text
@@ -39,16 +39,6 @@ class ParentInline(admin.TabularInline):
     extra = 1
     fk_name = "child"
 
-class ArgumentInline(admin.TabularInline):
-    model = ArgumentOrder
-    extra = 1
-    fk_name = "node"
-
-class ArgNodeInline(admin.TabularInline):
-    model = ArgumentOrder
-    extra = 1
-    fk_name = "argument"
-
 
 class DerivationInline(admin.TabularInline):
     model = Derivation
@@ -59,12 +49,12 @@ class ArgumentAdmin(admin.ModelAdmin):
     model = Argument
     radio_fields = {"arg_type": admin.HORIZONTAL}
     list_display = ('title', 'id', 'node_type')
-    inlines = [TextInline, ArgNodeInline]
+    inlines = [TextInline]
 
 class NodeAdmin(admin.ModelAdmin):
     model = Node
     list_display = ('get_a_path', 'title', 'get_follows', 'id', 'node_type')
-    inlines = [ParentInline, ChildInline, TextInline, ArgumentInline, DerivationInline]
+    inlines = [ParentInline, ChildInline, TextInline, DerivationInline]
 
 class VoteAdmin(admin.ModelAdmin):
     model = Vote

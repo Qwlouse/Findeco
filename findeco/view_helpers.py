@@ -28,7 +28,7 @@ import json
 import node_storage as backend
 from node_storage import Vote, get_node_for_path
 from node_storage.factory import create_argument
-from node_storage.models import ArgumentOrder, NodeOrder, Argument
+from node_storage.models import NodeOrder, Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
 from .paths import parse_suffix
 from .api_validation import validate_response
@@ -98,7 +98,7 @@ def create_index_node_for_argument(argument, node):
     index_node = dict(
         shortTitle = Argument.long_arg_type(argument.arg_type),
         fullTitle = argument.title,
-        index = ArgumentOrder.objects.get(argument=argument, node=node).position,
+        index = argument.index,
         authorGroup = [create_user_info(a) for a in argument.text.authors.all()]
     )
     return index_node
@@ -147,14 +147,17 @@ def store_structure_node(path, wiki_text, author):
 
 def store_argument(path, arg_text, arg_type, author):
     node = get_node_for_path(path)
-    node.append_argument(create_argument(arg_type,backend.get_title_from_text(arg_text),arg_text,[author]))
-    return path+"."+arg_type+"."+str(node.arguments.count())
+    title = backend.get_title_from_text(arg_text)
+    original_argument = create_argument(node, arg_type, title, arg_text, [author])
+    for d in traverse_derivates(node):
+        new_argument=create_argument(d, arg_type, title, arg_text, [author])
+        original_argument.add_derivate(new_argument)
+    return path + "." + arg_type + "." + str(node.arguments.count())
 
 def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     new_node, new_path = store_structure_node(path, derivate_wiki_text, author)
-    argument = create_argument(arg_type,backend.get_title_from_text(arg_text),arg_text,[author])
     node = get_node_for_path(path)
-    node.add_derivate(argument,new_node)
+    node.add_derivate(new_node, type=arg_type, title=backend.get_title_from_text(arg_text), text=arg_text, authors=[author])
     return new_path
 
 def traverse_derivates_subset(node, subset):

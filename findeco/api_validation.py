@@ -86,7 +86,7 @@ loadMicrobloggingResponse_schema = {
 }
 loadTextResponse_schema = {
     'loadTextResponse':{
-        'paragraphs':[textNode_schema, None], #TODO don't allow empty paragraphs
+        'paragraphs':[textNode_schema],
         'isFollowing':integer,
         }
 }

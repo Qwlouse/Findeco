@@ -123,8 +123,3 @@ class ViewTest(TestCase):
     def test_logout_response_is_valid(self):
         response = self.client.get(reverse('logout'))
         validate_response(response.content, 'logout')
-
-    # TODO login
-    # TODO store_microblog_post
-    # TODO store_settings
-    # TODO store_text

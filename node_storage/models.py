@@ -68,23 +68,36 @@ class Node(models.Model):
         no.position = max_position + 1
         no.save()
 
-    def append_argument(self, argument):
-        no = ArgumentOrder()
-        no.node = self
-        no.argument = argument
-        agg = ArgumentOrder.objects.filter(node=self).aggregate(Max('position'))
-        max_position = agg['position__max'] or 0
-        no.position = max_position + 1
-        no.save()
-        for d in self.derivates.all():
-            d.append_argument(argument) # assumes no merges
-
-    def add_derivate(self, argument, derivate):
-        d = Derivation(argument=argument, source=self, derivate=derivate)
+    def add_derivate(self, derivate, type=None, title="", text="", authors=()):
+        if type or title or text or len(authors) > 0:
+            if not type: type = 'n'
+            arg_type = Argument.short_arg_type(type)
+            source_argument = Argument(arg_type=arg_type, title=title,
+                node_type=Node.ARGUMENT, concerns=self)
+            source_argument.save()
+            source_argument_text_obj = Text(node=source_argument, text=text)
+            source_argument_text_obj.save()
+            for author in authors:
+                source_argument_text_obj.authors.add(author)
+            source_argument_text_obj.save()
+        else:
+            source_argument = None
+        d = Derivation(argument=source_argument, source=self, derivate=derivate)
         d.save()
-        self.append_argument(argument)
         for vote in Vote.objects.filter(nodes=self).all():
             vote.nodes.add(d.derivate)
+        for argument in self.arguments.all():
+            copy_argument = Argument(title=argument.title, concerns=derivate,
+                arg_type=argument.arg_type,  node_type=Node.ARGUMENT)
+            copy_argument.save()
+            copy_argument_text_obj = Text(node=copy_argument,
+                                          text=argument.text.text)
+            copy_argument_text_obj.save()
+            for author in argument.text.authors.all():
+                copy_argument_text_obj.authors.add(author)
+            copy_argument_text_obj.save()
+        d.save()
+        return source_argument
 
     def __unicode__(self):
         return "id=%d, title=%s"%(self.id, self.title)
@@ -101,17 +114,22 @@ class Node(models.Model):
         """
         if self.pk == 1: return ""
         if self.node_type == Node.ARGUMENT:
-            self_as_arg = ArgumentOrder.objects.filter(argument_id=self.id).all()[0]
-            return self_as_arg.node.get_a_path().strip('/') + '.' + self_as_arg.argument.arg_type + '.' + str(self_as_arg.position)
+            self_as_arg = Argument.objects.filter(argument_id=self.id).all()[0]
+            npath = self_as_arg.concerns.get_a_path().strip('/')
+            return '%s.%s.%d'%(npath, self_as_arg.arg_type, self_as_arg.index)
         parent = self.parents.all()[0]
-        return parent.get_a_path() +\
-               (self.title if self.node_type == Node.SLOT else "." + str(self.get_index(parent)) + "/")
+        if self.node_type == Node.SLOT:
+            suffix = self.title
+        else:
+            suffix = "." + str(self.get_index(parent)) + "/"
+        return parent.get_a_path() + suffix
 
     def get_follows(self):
         return self.votes.count()
 
     def get_unfollows(self):
-        return User.objects.filter(vote__nodes__in=self.sources.all()).exclude(vote__nodes__in=[self]).distinct().count()
+        return User.objects.filter(vote__nodes__in=self.sources.all()).\
+                            exclude(vote__nodes__in=[self]).distinct().count()
 
     def get_newfollows(self):
         return self.votes.exclude(nodes__in=self.sources.all()).count()
@@ -130,11 +148,11 @@ class Argument(Node):
 
     arg_type = models.CharField(max_length=1, choices=ARGUMENTTYPE)
 
-    concerns = models.ManyToManyField(
+    concerns = models.ForeignKey(
         Node,
-        related_name='arguments',
-        through='ArgumentOrder'
+        related_name='arguments'
     )
+    index = models.IntegerField()
 
     @classmethod
     def long_arg_type(cls, arg_type):
@@ -156,11 +174,14 @@ class Argument(Node):
                 cls.CON :cls.CON
            }[arg_type]
 
+    def save(self, *args, **kwargs):
+        if self.index is None:
+            self.index = self.concerns.arguments.count() + 1
+        models.Model.save(self, *args, **kwargs)
+
     def __unicode__(self):
         return "id=%d, type=%s"%(self.id, self.arg_type)
 
-    def head(self):
-        return self.concerns.order_by('id').all()[0]
 
 class Text(models.Model):
     node = models.OneToOneField(Node, related_name="text")
@@ -177,7 +198,7 @@ class Text(models.Model):
 class Derivation(models.Model):
     derivate=models.ForeignKey(Node, related_name='source_order_set')
     source=models.ForeignKey(Node, related_name='derivative_order_set')
-    argument=models.ForeignKey(Argument)
+    argument=models.ForeignKey(Argument, null=True, blank=True)
 
     class Meta:
         unique_together = (('source', 'derivate'), )
@@ -199,19 +220,6 @@ class NodeOrder(models.Model):
         return "pos=%d, child_id=%d, parent_id=%d"%(self.position,
                                                     self.child_id,
                                                     self.parent_id)
-
-class ArgumentOrder(models.Model):
-    argument = models.ForeignKey(Argument, related_name='node_order_set')
-    node = models.ForeignKey(Node, related_name='argument_order_set')
-    position = models.IntegerField()
-
-    class Meta:
-        unique_together = (('argument', 'node'), )
-
-    def __unicode__(self):
-        return "pos=%d, argument_id=%d, node_id=%d"%(self.position,
-                                                     self.argument_id,
-                                                     self.node_id)
 
 ################################# Votes ########################################
 class Vote(models.Model):

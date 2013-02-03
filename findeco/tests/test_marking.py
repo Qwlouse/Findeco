@@ -38,16 +38,16 @@ class UnFollowTest(TestCase):
         self.slot.append_child(self.text)
         self.mid = create_textNode("Bla derivate", "Blubb2", [self.hugo])
         self.slot.append_child(self.mid)
-        self.text.add_derivate(create_argument(), self.mid)
+        self.text.add_derivate(self.mid, type='n')
         self.leaf1 = create_textNode("Bla leaf 1", "Blubb3", [self.hugo])
         self.slot.append_child(self.leaf1)
-        self.mid.add_derivate(create_argument(), self.leaf1)
+        self.mid.add_derivate(self.leaf1, type='n')
         self.mid2 = create_textNode("Bla derivate 2", "Blubb4", [self.hugo])
         self.slot.append_child(self.mid2)
-        self.mid.add_derivate(create_argument(), self.mid2)
+        self.mid.add_derivate(self.mid2, type='n')
         self.leaf2 = create_textNode("Bla leaf 2", "Blubb5", [self.hugo])
         self.slot.append_child(self.leaf2)
-        self.mid2.add_derivate(create_argument(), self.leaf2)
+        self.mid2.add_derivate(self.leaf2, type='n')
         self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
 
     def test_not_authenticated(self):
@@ -93,19 +93,18 @@ class FollowTest(TestCase):
         self.slot.append_child(self.text)
         self.mid = create_textNode("Bla derivate", "Blubb2", [self.hugo])
         self.slot.append_child(self.mid)
-        self.text.add_derivate(create_argument(), self.mid)
+        self.text.add_derivate(self.mid, type='c', title="dagegen")
         self.leaf1 = create_textNode("Bla leaf 1", "Blubb3", [self.hugo])
         self.slot.append_child(self.leaf1)
-        self.mid.add_derivate(create_argument(), self.leaf1)
+        self.mid.add_derivate(self.leaf1, type='c', title="dagegen2")
         self.mid2 = create_textNode("Bla derivate 2", "Blubb4", [self.hugo])
         self.slot.append_child(self.mid2)
-        self.mid.add_derivate(create_argument(), self.mid2)
+        self.mid.add_derivate(self.mid2, type='c', title="dagegen")
         self.leaf2 = create_textNode("Bla leaf 2", "Blubb5", [self.hugo])
         self.slot.append_child(self.leaf2)
-        self.mid2.add_derivate(create_argument(), self.leaf2)
+        self.mid2.add_derivate(self.leaf2, type='c', title="dagegen")
         self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
-        self.arg1 = create_argument("con","Wrong!","Bad!",[self.hugo])
-        self.text.append_argument(self.arg1)
+        self.arg1 = create_argument(self.text, "con","Wrong!","Bad!",[self.hugo])
 
     def test_not_authenticated(self):
         response = self.client.post(reverse('follow_node', kwargs=dict(path="Slot.1")))
@@ -141,18 +140,6 @@ class FollowTest(TestCase):
         for n in [self.leaf1, self.mid, self.mid2, self.leaf2]:
             self.assertIn(n, Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
 
-    def test_argument_copying(self):
-        self.assertTrue(self.client.login(username="Ulf", password="abcde"))
-        response = self.client.get(reverse('follow_node', kwargs=dict(path="Slot.2")))
-        self.assertEqual(response.status_code,200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'],{})
-        self.assertEqual(Argument.objects.count(),7)
-        self.assertNotEqual(self.text.arguments.filter(title="Wrong!").all()[0].pk,
-            self.leaf2.arguments.filter(title="Wrong!").all()[0].pk)
-        self.assertEqual(self.leaf1.arguments.filter(title="Wrong!").count(), 1)
-        self.assertEqual(self.leaf1.arguments.filter(title="Wrong!").all()[0].pk,
-            self.leaf2.arguments.filter(title="Wrong!").all()[0].pk)
-
 class MarkSpamTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
@@ -163,10 +150,10 @@ class MarkSpamTest(TestCase):
         self.slot.append_child(self.text)
         self.mid = create_textNode("Bla derivate", "Blubb2", [self.hugo])
         self.slot.append_child(self.mid)
-        self.text.add_derivate(create_argument(), self.mid)
+        self.text.add_derivate(self.mid, type='n')
         self.leaf = create_textNode("Bla leaf 1", "Blubb3", [self.hugo])
         self.slot.append_child(self.leaf)
-        self.mid.add_derivate(create_argument(), self.leaf)
+        self.mid.add_derivate(self.leaf, type='n')
 
     def test_not_authenticated(self):
         response = self.client.post(reverse('flag_node', kwargs=dict(path="Slot.1")))
@@ -203,10 +190,10 @@ class UnMarkSpamTest(TestCase):
         self.slot.append_child(self.text)
         self.mid = create_textNode("Bla derivate", "Blubb2", [self.hugo])
         self.slot.append_child(self.mid)
-        self.text.add_derivate(create_argument(), self.mid)
+        self.text.add_derivate(self.mid, type='n')
         self.leaf = create_textNode("Bla leaf 1", "Blubb3", [self.hugo])
         self.slot.append_child(self.leaf)
-        self.mid.add_derivate(create_argument(), self.leaf)
+        self.mid.add_derivate(self.leaf, type='n')
         self.text_mark = create_spam_flag(self.hugo,[self.text])
         self.mid_mark = create_spam_flag(self.hugo,[self.mid])
         self.leaf_mark = create_spam_flag(self.hugo,[self.leaf])

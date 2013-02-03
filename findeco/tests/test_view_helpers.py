@@ -196,12 +196,9 @@ class CreateIndexNodeForArgumentTest(TestCase):
         self.foo = create_slot('foo')
         self.foo1 = create_structureNode('FooooBar')
         # add arguments
-        self.foo_pro = create_argument(type='pro', title="geil", authors=[self.hugo])
-        self.foo1.append_argument(self.foo_pro)
-        self.foo_neut = create_argument(type='neut', title="ist", authors=[self.hans])
-        self.foo1.append_argument(self.foo_neut)
-        self.foo_con = create_argument(type='con', title="geiz", authors=[self.hugo, self.hans])
-        self.foo1.append_argument(self.foo_con)
+        self.foo_pro = create_argument(self.foo1, type='pro', title="geil", authors=[self.hugo])
+        self.foo_neut = create_argument(self.foo1, type='neut', title="ist", authors=[self.hans])
+        self.foo_con = create_argument(self.foo1, type='con', title="geiz", authors=[self.hugo, self.hans])
         # summary variables
         self.foo_arguments = [self.foo_pro, self.foo_neut, self.foo_con]
         self.arg_titles = ['geil', 'ist', 'geiz']
@@ -261,12 +258,12 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
         self.slot3.append_child(self.textnode32)
         self.textnode32d = create_textNode('Langweilig2 anders', authors=[self.hans, self.hugo])
         self.slot3.append_child(self.textnode32d)
-        self.textnode32.add_derivate(create_argument(),self.textnode32d)
+        self.textnode32.add_derivate(self.textnode32d)
         create_vote(self.hans, [self.textnode32, self.textnode32d])
         self.slot3.append_child(self.textnode33)
         self.textnode33d = create_textNode('Langweilig3 anders', authors=[self.hans, self.hugo])
         self.slot3.append_child(self.textnode33d)
-        self.textnode33.add_derivate(create_argument(),self.textnode33d)
+        self.textnode33.add_derivate(self.textnode33d)
         create_vote(self.hans, [self.textnode33])
         self.nodes = [self.textnode31, self.textnode32, self.textnode32d, self.textnode33, self.textnode33d]
         self.authorGroups = [[create_user_info(self.hans)], [create_user_info(self.hugo)],
@@ -370,14 +367,24 @@ class StoreArgumentTest(TestCase):
         self.root.append_child(self.slot)
         self.text1 = create_textNode("Initial Text","Dumdidum",[self.mustermann])
         self.slot.append_child(self.text1)
+        self.text2 = create_textNode("Secondary Text","Dudelda",[self.mustermann])
+        self.text1.add_derivate(self.text2)
 
     def test_store_con(self):
         self.assertEqual(store_argument("Flopp.1","= Avast =\nAgainst it!","con",self.mustermann),"Flopp.1.con.1")
-        self.assertEqual(len(self.text1.arguments.all()),1)
+        self.assertEqual(self.text1.arguments.count(),1)
         self.assertEqual(self.text1.arguments.all()[0].title,"Avast")
         self.assertEqual(self.text1.arguments.all()[0].text.text,"= Avast =\nAgainst it!")
         self.assertEqual(self.text1.arguments.all()[0].arg_type,"c")
         self.assertIn(self.mustermann, self.text1.arguments.all()[0].text.authors.all())
+
+    def test_derivation(self):
+        self.assertEqual(store_argument("Flopp.1","= Avast =\nAgainst it!","con",self.mustermann),"Flopp.1.con.1")
+        self.assertEqual(self.text1.arguments.count(),1)
+        self.assertEqual(self.text2.arguments.count(),1)
+        self.assertEqual(self.text2.arguments.all()[0].title,"Avast")
+        self.assertEqual(self.text2.arguments.all()[0].sources.count(),1)
+        self.assertEqual(self.text2.arguments.all()[0].sources.all()[0].pk,self.text1.arguments.all()[0].pk)
 
 class StoreDerivateTest(TestCase):
     def setUp(self):
