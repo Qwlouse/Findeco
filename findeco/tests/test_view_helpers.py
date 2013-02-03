@@ -23,7 +23,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 
-from node_storage import get_root_node
+from node_storage import get_root_node, Node
 from node_storage.factory import create_user, create_slot, create_textNode, create_vote, create_structureNode, create_argument
 from ..api_validation import userInfoValidator, indexNodeValidator, userSettingsValidator
 from ..view_helpers import create_index_node_for_slot, create_index_node_for_argument
@@ -411,3 +411,12 @@ class StoreDerivateTest(TestCase):
         self.assertEqual(self.text1.derivates.all()[0].title, "Bla")
         self.assertEqual(self.text1.arguments.all()[0].title, "Avast")
         self.assertEqual(self.text1.derivates.all()[0].votes.count(),1)
+
+    def test_auto_follows(self):
+        self.assertEqual(store_derivate("Flopp.1","= Avast =\nAgainst it!","con","= Bla =\nText\n== Blubb ==\nText 2",self.mustermann),"Flopp.2")
+        self.assertEqual(Node.objects.filter(title="Bla").count(),1)
+        self.assertEqual(Node.objects.filter(title="Bla").all()[0].votes.count(),1)
+        self.assertEqual(self.text1.arguments.count(),1)
+        self.assertEqual(self.text1.arguments.all()[0].votes.count(),1)
+        self.assertEqual(Node.objects.filter(title="Bla").all()[0].arguments.count(),1)
+        self.assertEqual(Node.objects.filter(title="Bla").all()[0].arguments.all()[0].votes.count(),0)
