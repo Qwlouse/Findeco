@@ -30,11 +30,14 @@ This file contains models for the basic Project structure:
   * automatize admin creation for every syncdb
 """
 from __future__ import division, print_function, unicode_literals
+from mercurial.revset import node
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.management import create_superuser
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models import signals
+from findeco.view_helpers import get_permission
+import node_storage.models as node_storage
 
 from node_storage import Node, Text
 
@@ -135,8 +138,37 @@ def create_root():
     root_text.authors = [auth_models.User.objects.get(username='admin')]
     root_text.save()
 
+def create_groups():
+    if Group.objects.filter(name__in=["texters", "voters", "bloggers"]).count() > 0:
+        print("groups already present... skipping")
+        return
+    print('*' * 80)
+    print('Creating groups -- texters, voters, bloggers ')
+    print('*' * 80)
+    #### Create a group of Texters
+    g = Group.objects.create(name="texters")
+    perms = ['node_storage.add_node', 'node_storage.add_argument',
+             'node_storage.add_derivation', 'node_storage.add_nodeorder',
+             'node_storage.add_text']
+    for p in perms :
+        g.permissions.add(get_permission(p))
+    g.save()
+    #### Create a group of Voters
+    g = Group.objects.create(name="voters")
+    perms = ['node_storage.add_vote', 'node_storage.add_spamflag']
+    for p in perms :
+        g.permissions.add(get_permission(p))
+    g.save()
+    #### Create a group of Bloggers
+    g = Group.objects.create(name="bloggers")
+    perms = ['microblogging.add_post']
+    for p in perms :
+        g.permissions.add(get_permission(p))
+    g.save()
+
 def initialize_database(sender, **kwargs):
     create_admin()
+    create_groups()
     if Node.objects.all().count() > 0:
         print('Root node already present. Skipping initialization.')
         return
@@ -145,4 +177,4 @@ def initialize_database(sender, **kwargs):
     print('*'*80)
 
 signals.post_syncdb.connect(initialize_database,
-    sender=auth_models, dispatch_uid='findeco.models.initialize_database')
+    sender=node_storage, dispatch_uid='findeco.models.initialize_database')
