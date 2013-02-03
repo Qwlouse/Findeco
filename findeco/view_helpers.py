@@ -161,6 +161,11 @@ def store_argument(path, arg_text, arg_type, author):
     node = get_node_for_path(path)
     title = backend.get_title_from_text(arg_text)
     original_argument = create_argument(node, arg_type, title, arg_text, [author])
+    # add auto follow
+    v = Vote(user=author)
+    v.save()
+    v.nodes.add(original_argument)
+    # copy argument for all derivates
     for d in traverse_derivates(node):
         new_argument=create_argument(d, arg_type, title, arg_text, [author])
         original_argument.add_derivate(new_argument)
