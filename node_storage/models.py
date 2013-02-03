@@ -72,9 +72,7 @@ class Node(models.Model):
         if type or title or text or len(authors) > 0:
             if not type: type = 'n'
             arg_type = Argument.short_arg_type(type)
-            source_argument = Argument(arg_type=arg_type, title=title)
-            source_argument.node_type = Node.ARGUMENT
-            source_argument.concerns = self
+            source_argument = Argument(arg_type=arg_type, title=title, node_type=Node.ARGUMENT, concerns=self)
             source_argument.save()
             source_argument_text_obj = Text(node=source_argument, text=text)
             source_argument_text_obj.save()
@@ -88,9 +86,8 @@ class Node(models.Model):
         for vote in Vote.objects.filter(nodes=self).all():
             vote.nodes.add(d.derivate)
         for argument in self.arguments.all():
-            copy_argument = Argument(arg_type=argument.arg_type, title=argument.title)
-            copy_argument.node_type = Node.ARGUMENT
-            copy_argument.concerns = derivate
+            copy_argument = Argument(arg_type=argument.arg_type, title=argument.title, node_type=Node.ARGUMENT,
+                concerns=derivate)
             copy_argument.save()
             copy_argument_text_obj = Text(node=copy_argument, text=argument.text.text)
             copy_argument_text_obj.save()
