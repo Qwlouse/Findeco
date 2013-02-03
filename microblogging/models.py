@@ -97,7 +97,7 @@ def create_post(text, author):
                 n = backend.get_favorite_if_slot(n)
                 position = backend.NodeOrder.objects.filter(child=n).filter(parent=slot).all()[0].position
                 path += "."+str(position)
-            split_text[i] = '<a href="{0}">{1}</a>'.format(path, path.rsplit('/',1)[1])
+            split_text[i] = '<a href="{0}">{1}</a>'.format('/#' + path, path.rsplit('/',1)[1])
             nodes.append(n)
         except backend.IllegalPath:
             pass
