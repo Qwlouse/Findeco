@@ -32,10 +32,10 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse
-from findeco.view_helpers import create_graph_data_node_for_structure_node
+import random
 
+from findeco.view_helpers import create_graph_data_node_for_structure_node
 import node_storage as backend
-from node_storage.factory import create_argument
 from .paths import parse_suffix
 from .view_helpers import ValidPaths, json_error_response, json_response
 from .view_helpers import store_structure_node, store_argument, store_derivate
@@ -162,9 +162,14 @@ def login(request):
 
 def logout(request):
     django_logout(request)
+    messages = [
+        "Didel dadel dana, ab geht's ins Nirvana.",
+        "Mach's gut und danke für den Fisch.",
+        "I'll be back!!"
+    ]
+    m = random.choice(messages)
     return json_response({'logoutResponse':{
-        # TODO random farewell message
-        'farewellMessage':"Didel dadel dana, ab geht's ins Nirvana."
+        'farewellMessage': m
     }})
 
 @ValidPaths("StructureNode", "Argument")
