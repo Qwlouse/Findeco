@@ -66,9 +66,8 @@ class NodeTest(TestCase):
 
         no = Derivation.objects.filter(source=n, derivate=d)
         self.assertTrue(no.count() == 1)
-        self.assertEqual(no[0].argument, a)
 
-        self.assertIn(n, a.concerns.all())
+        self.assertEqual(n, no.all()[0].argument.concerns)
 
         self.assertIn(no[0], n.derivative_order_set.all())
         self.assertIn(no[0], d.source_order_set.all())
@@ -84,7 +83,6 @@ class NodeTest(TestCase):
 
         no = Derivation.objects.filter(source=n, derivate=d)
         self.assertTrue(no.count() == 1)
-        self.assertEqual(no[0].argument, a)
 
         self.assertIn(no[0], n.derivative_order_set.all())
         self.assertIn(no[0], d.source_order_set.all())
