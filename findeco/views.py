@@ -65,8 +65,7 @@ def load_argument_index(request, path):
         node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
         return json_error_response('NonExistingNode','Illegal Path: ' + path)
-    argument_list = backend.get_ordered_arguments_for(node)
-    data = [create_index_node_for_argument(a, node) for a in argument_list]
+    data = [create_index_node_for_argument(a, node) for a in node.arguments.order_by('index')]
     return json_response({'loadIndexResponse':data})
 
 @ValidPaths("StructureNode")
