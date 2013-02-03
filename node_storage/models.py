@@ -95,6 +95,7 @@ class Node(models.Model):
                 copy_argument_text_obj.authors.add(author)
             copy_argument_text_obj.save()
         d.save()
+        return source_argument
 
     def __unicode__(self):
         return "id=%d, title=%s"%(self.id, self.title)
