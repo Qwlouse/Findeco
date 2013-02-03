@@ -79,10 +79,11 @@ def create_spam_flag(voter, nodes):
         v.save()
     return v
 
-def create_argument(type='n', title="", text="", authors=()):
+def create_argument(node, type='n', title="", text="", authors=()):
     arg_type = Argument.short_arg_type(type)
     arg = Argument(arg_type=arg_type, title=title)
     arg.node_type = Node.ARGUMENT
+    arg.concerns = node
     arg.save()
     text_obj = Text(node=arg, text=text)
     text_obj.save()
