@@ -28,8 +28,8 @@ import json
 
 import node_storage as backend
 from node_storage import Vote, get_node_for_path
-from node_storage.factory import create_argument
-from node_storage.models import NodeOrder, Argument
+from node_storage.factory import create_argument, create_vote
+from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
 from .paths import parse_suffix
 from .api_validation import validate_response
@@ -152,9 +152,7 @@ def store_structure_node(path, wiki_text, author):
     structure = backend.parse(wiki_text, None)
     structure_node = backend.create_structure_from_structure_node_schema(structure, slot, [author])
     # add auto follow
-    v = Vote(user=author)
-    v.save()
-    v.nodes.add(structure_node)
+    create_vote(author, [structure_node])
     return structure_node, get_good_path_for_structure_node(structure_node, slot, slot_path)
 
 def store_argument(path, arg_text, arg_type, author):
@@ -162,9 +160,7 @@ def store_argument(path, arg_text, arg_type, author):
     title = backend.get_title_from_text(arg_text)
     original_argument = create_argument(node, arg_type, title, arg_text, [author])
     # add auto follow
-    v = Vote(user=author)
-    v.save()
-    v.nodes.add(original_argument)
+    create_vote(author, [original_argument])
     # copy argument for all derivates
     for d in traverse_derivates(node):
         new_argument=create_argument(d, arg_type, title, arg_text, [author])
@@ -176,9 +172,7 @@ def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     node = get_node_for_path(path)
     arg = node.add_derivate(new_node, type=arg_type, title=backend.get_title_from_text(arg_text), text=arg_text, authors=[author])
     # add auto follow
-    v = Vote(user=author)
-    v.save()
-    v.nodes.add(arg)
+    create_vote(author, [arg])
     return new_path
 
 def traverse_derivates_subset(node, subset):
