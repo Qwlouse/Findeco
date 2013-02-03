@@ -217,7 +217,7 @@ class Text(models.Model):
 class Derivation(models.Model):
     derivate=models.ForeignKey(Node, related_name='source_order_set')
     source=models.ForeignKey(Node, related_name='derivative_order_set')
-    argument=models.ForeignKey(Argument)
+    argument=models.ForeignKey(Argument, null=True, blank=True)
 
     class Meta:
         unique_together = (('source', 'derivate'), )
