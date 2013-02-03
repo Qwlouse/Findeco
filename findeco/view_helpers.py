@@ -147,7 +147,7 @@ def store_structure_node(path, wiki_text, author):
 
 def store_argument(path, arg_text, arg_type, author):
     node = get_node_for_path(path)
-    node.append_argument(create_argument(arg_type,backend.get_title_from_text(arg_text),arg_text,[author]))
+    create_argument(node, arg_type,backend.get_title_from_text(arg_text),arg_text,[author])
     return path+"."+arg_type+"."+str(node.arguments.count())
 
 def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
