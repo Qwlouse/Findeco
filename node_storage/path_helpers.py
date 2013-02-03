@@ -77,17 +77,6 @@ def get_favorite_if_slot(node):
     else:
         return node
 
-def get_arguments_for(node, arg_type='all'):
-    """
-    Return a list of arguments for node.
-    arg_type can be one of: 'pro', 'con', 'neut', 'all'
-    """
-#    order = ArgumentOrder.objects.filter(node=node).prefetch_related('argument')
-#    if arg_type != 'all':
-#        return [i.argument for i in order if i.argument.arg_type == Argument.short_arg_type(arg_type)]
-#    else:
-#        return [i.argument for i in order]
-
 def get_ordered_children_for(node):
     """
     Return a list of children for given node ordered by their position.
@@ -95,12 +84,6 @@ def get_ordered_children_for(node):
     order = NodeOrder.objects.filter(parent=node).order_by('position').prefetch_related('child')
     return [oN.child for oN in order]
 
-def get_ordered_arguments_for(node):
-    """
-    Return a list of arguments for given node ordered by their position.
-    """
-#    order = ArgumentOrder.objects.filter(node=node).order_by('position')
-#    return [ao.argument for ao in order]
 
 def get_good_path_for_structure_node(node, slot=None, slot_path=None):
     """
