@@ -134,4 +134,3 @@ class StoreSettingsTest(TestCase):
         hans = User.objects.get(id =self.hans.id)
         self.assertEqual(hans.username, "hans2")
 
-    # TODO test login
