@@ -297,6 +297,14 @@ def store_settings(request):
 def store_text(request, path):
     if not request.user.is_authenticated():
         return json_error_response('NotAuthenticated', "You need to be authenticated to store text.")
+    if not request.user.has_perm('node_storage.add_node') or \
+       not request.user.has_perm('node_storage.add_argument') or\
+       not request.user.has_perm('node_storage.add_vote') or\
+       not request.user.has_perm('node_storage.add_nodeorder') or\
+       not request.user.has_perm('node_storage.add_derivation') or\
+       not request.user.has_perm('node_storage.change_vote') or\
+       not request.user.has_perm('node_storage.add_text'):
+        return json_error_response('PermissionDenied', "You do not have the permission to store text.")
     user = request.user
 
     if not 'wikiText' in request.POST:

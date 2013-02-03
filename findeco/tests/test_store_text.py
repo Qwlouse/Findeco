@@ -25,6 +25,7 @@ from __future__ import division, print_function, unicode_literals
 import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from findeco.view_helpers import get_permission
 from node_storage import get_root_node, Node, Argument
 from node_storage.factory import create_user, create_slot
 
@@ -32,6 +33,14 @@ class StoreTextTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
         self.hugo = create_user("Hugo", password="1234")
+        self.hugo.user_permissions.add(get_permission('node_storage.add_node'))
+        self.hugo.user_permissions.add(get_permission('node_storage.add_argument'))
+        self.hugo.user_permissions.add(get_permission('node_storage.add_vote'))
+        self.hugo.user_permissions.add(get_permission('node_storage.add_nodeorder'))
+        self.hugo.user_permissions.add(get_permission('node_storage.add_derivation'))
+        self.hugo.user_permissions.add(get_permission('node_storage.change_vote'))
+        self.hugo.user_permissions.add(get_permission('node_storage.add_text'))
+        create_user("Notpermitted", password="fghjfgh")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
 
@@ -39,6 +48,12 @@ class StoreTextTest(TestCase):
         response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
         self.assertEqual(response.status_code,200)
         self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"NotAuthenticated")
+
+    def test_not_permitted(self):
+        self.assertTrue(self.client.login(username="Notpermitted", password="fghjfgh"))
+        response = self.client.post(reverse('store_text', kwargs=dict(path="Slot.1")),dict(wikiText="= Bla =\nBlubb."))
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(json.loads(response.content)['errorResponse']['errorTitle'],"PermissionDenied")
 
     def test_store_textNode(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
