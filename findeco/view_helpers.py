@@ -79,8 +79,16 @@ def create_user_info(user):
     return user_info
 
 def create_user_settings(user):
+    rights = 0
+    if user.groups.filter(name='texters').count() > 0:
+        rights += 1
+    if user.groups.filter(name='voters').count() > 0:
+        rights += 2
+    if user.is_superuser:
+        rights += 4
     user_settings = dict(
-        blockedUsers = [{'displayName':u.user.username} for u in user.profile.blocked.all()]
+        blockedUsers = [{'displayName':u.user.username} for u in user.profile.blocked.all()],
+        userRights = rights
     )
     return user_settings
 
