@@ -365,26 +365,35 @@ class StoreArgumentTest(TestCase):
         self.mustermann = create_user("Mustermann")
         self.slot = create_slot("Flopp")
         self.root.append_child(self.slot)
-        self.text1 = create_textNode("Initial Text","Dumdidum",[self.mustermann])
+        self.text1 = create_textNode("Initial Text", "Dumdidum", [self.mustermann])
         self.slot.append_child(self.text1)
-        self.text2 = create_textNode("Secondary Text","Dudelda",[self.mustermann])
+        self.text2 = create_textNode("Secondary Text", "Dudelda", [self.mustermann])
         self.text1.add_derivate(self.text2)
 
     def test_store_con(self):
-        self.assertEqual(store_argument("Flopp.1","= Avast =\nAgainst it!","con",self.mustermann),"Flopp.1.con.1")
-        self.assertEqual(self.text1.arguments.count(),1)
-        self.assertEqual(self.text1.arguments.all()[0].title,"Avast")
-        self.assertEqual(self.text1.arguments.all()[0].text.text,"= Avast =\nAgainst it!")
-        self.assertEqual(self.text1.arguments.all()[0].arg_type,"c")
+        self.assertEqual(store_argument("Flopp.1", "= Avast =\nAgainst it!", "con", self.mustermann), "Flopp.1.con.1")
+        self.assertEqual(self.text1.arguments.count(), 1)
+        self.assertEqual(self.text1.arguments.all()[0].title, "Avast")
+        self.assertEqual(self.text1.arguments.all()[0].text.text, "= Avast =\nAgainst it!")
+        self.assertEqual(self.text1.arguments.all()[0].arg_type, "c")
         self.assertIn(self.mustermann, self.text1.arguments.all()[0].text.authors.all())
 
     def test_derivation(self):
-        self.assertEqual(store_argument("Flopp.1","= Avast =\nAgainst it!","con",self.mustermann),"Flopp.1.con.1")
-        self.assertEqual(self.text1.arguments.count(),1)
-        self.assertEqual(self.text2.arguments.count(),1)
-        self.assertEqual(self.text2.arguments.all()[0].title,"Avast")
-        self.assertEqual(self.text2.arguments.all()[0].sources.count(),1)
-        self.assertEqual(self.text2.arguments.all()[0].sources.all()[0].pk,self.text1.arguments.all()[0].pk)
+        self.assertEqual(store_argument("Flopp.1", "= Avast =\nAgainst it!", "con", self.mustermann), "Flopp.1.con.1")
+        self.assertEqual(self.text1.arguments.count(), 1)
+        self.assertEqual(self.text2.arguments.count(), 1)
+        self.assertEqual(self.text2.arguments.all()[0].title, "Avast")
+        self.assertEqual(self.text2.arguments.all()[0].sources.count(), 1)
+        self.assertEqual(self.text2.arguments.all()[0].sources.all()[0].pk, self.text1.arguments.all()[0].pk)
+
+    def test_auto_follow(self):
+        self.assertEqual(store_argument("Flopp.1", "= Avast =\nAgainst it!", "con", self.mustermann), "Flopp.1.con.1")
+        self.assertEqual(self.text1.arguments.count(), 1)
+        self.assertEqual(self.text1.arguments.all()[0].votes.count(), 1)
+        self.assertEqual(self.text2.arguments.count(), 1)
+        self.assertEqual(self.text2.arguments.all()[0].votes.count(), 1)
+        self.assertEqual(self.text1.arguments.all()[0].votes.all()[0].pk,
+            self.text2.arguments.all()[0].votes.all()[0].pk)
 
 class StoreDerivateTest(TestCase):
     def setUp(self):
