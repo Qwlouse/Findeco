@@ -84,8 +84,9 @@ class Node(models.Model):
             source_argument = None
         d = Derivation(argument=source_argument, source=self, derivate=derivate)
         d.save()
-        for vote in Vote.objects.filter(nodes=self).all():
-            vote.nodes.add(d.derivate)
+        for vote in self.votes.all():
+            if d.derivate.votes.filter(user=vote.user).count==0:
+                vote.nodes.add(d.derivate)
         for argument in self.arguments.all():
             copy_argument = Argument(title=argument.title, concerns=derivate,
                 arg_type=argument.arg_type,  node_type=Node.ARGUMENT)

@@ -76,11 +76,11 @@ class NodeTest(TestCase):
         n.add_derivate(d, type='n')
 
         self.assertIn(n, v1.nodes.all())
-        self.assertIn(d, v1.nodes.all())
-        self.assertEqual(v1.nodes.count(),2)
+        self.assertEqual(v1.nodes.count(),1)
         self.assertIn(n, v2.nodes.all())
         self.assertIn(d, v2.nodes.all())
         self.assertEqual(v2.nodes.count(),2)
+        self.assertEqual(d.votes.count(), 2)
 
     def test_add_derivate_creates_commit_argument(self):
         s = create_structureNode("Source", authors=[self.hans])

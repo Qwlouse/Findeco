@@ -151,6 +151,10 @@ def store_structure_node(path, wiki_text, author):
     slot = get_node_for_path(slot_path)
     structure = backend.parse(wiki_text, None)
     structure_node = backend.create_structure_from_structure_node_schema(structure, slot, [author])
+    # add auto follow
+    v = Vote(user=author)
+    v.save()
+    v.nodes.add(structure_node)
     return structure_node, get_good_path_for_structure_node(structure_node, slot, slot_path)
 
 def store_argument(path, arg_text, arg_type, author):
