@@ -155,7 +155,10 @@ def create_groups():
     g.save()
     #### Create a group of Voters
     g = Group.objects.create(name="voters")
-    perms = ['node_storage.add_vote', 'node_storage.add_spamflag']
+    perms = ['node_storage.add_vote', 'node_storage.add_spamflag',
+             'node_storage.change_vote', 'node_storage.change_spamflag',
+             'node_storage.delete_vote', 'node_storage.delete_spamflag'
+             ]
     for p in perms :
         g.permissions.add(get_permission(p))
     g.save()
