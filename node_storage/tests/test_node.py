@@ -55,41 +55,80 @@ class NodeTest(TestCase):
         self.assertIn(no[0], n.child_order_set.all())
         self.assertIn(no[0], c.parent_order_set.all())
 
-    def test_add_derivate(self):
+    def test_add_derivate_adds_only_correct_derivation(self):
         n = create_structureNode("Source", authors=[self.hans])
         d = create_structureNode("Derivate", authors=[self.hans])
         n.add_derivate(d, type='n')
-
-
         self.assertIn(d, n.derivates.all())
         self.assertIn(n, d.sources.all())
 
         no = Derivation.objects.filter(source=n, derivate=d)
         self.assertTrue(no.count() == 1)
-
         self.assertEqual(n, no.all()[0].argument.concerns)
-
         self.assertIn(no[0], n.derivative_order_set.all())
         self.assertIn(no[0], d.source_order_set.all())
 
-    def test_add_derivate_with_votes(self):
+    def test_add_derivate_creates_transitive_votes(self):
         n = create_structureNode("Source", authors=[self.hans])
-        m = create_vote(self.hans, [n])
+        v1 = create_vote(self.hans, [n])
+        v2 = create_vote(self.hugo, [n])
         d = create_structureNode("Derivate", authors=[self.hans])
         n.add_derivate(d, type='n')
 
-        self.assertIn(d, n.derivates.all())
-        self.assertIn(n, d.sources.all())
+        self.assertIn(n, v1.nodes.all())
+        self.assertIn(d, v1.nodes.all())
+        self.assertEqual(v1.nodes.count(),2)
+        self.assertIn(n, v2.nodes.all())
+        self.assertIn(d, v2.nodes.all())
+        self.assertEqual(v2.nodes.count(),2)
 
-        no = Derivation.objects.filter(source=n, derivate=d)
+    def test_add_derivate_creates_commit_argument(self):
+        s = create_structureNode("Source", authors=[self.hans])
+        d = create_structureNode("Derivate", authors=[self.hans])
+        s.add_derivate(d, type='c', title="arg", text="ument", authors=[self.hugo])
+        no = Derivation.objects.filter(source=s, derivate=d)
         self.assertTrue(no.count() == 1)
+        no = no[0]
+        self.assertEqual(no.argument.arg_type, 'c')
+        self.assertEqual(no.argument.title, 'arg')
+        self.assertEqual(no.argument.text.text, 'ument')
+        self.assertEqual(no.argument.text.authors.count(), 1)
+        self.assertIn(self.hugo, no.argument.text.authors.all())
 
-        self.assertIn(no[0], n.derivative_order_set.all())
-        self.assertIn(no[0], d.source_order_set.all())
+    def test_add_derivate_copies_arguments(self):
+        s = create_structureNode("Source", authors=[self.hans])
+        d = create_structureNode("Derivate", authors=[self.hans])
+        a = create_argument(s, type='p', title="myArg", text="cool", authors=[self.hugo])
+        self.assertEqual(s.arguments.count(), 1)
+        self.assertEqual(s.arguments.all()[0], a)
+        s.add_derivate(d, type='c', title="yourArg", text="ument", authors=[self.hans])
+        self.assertEqual(s.arguments.count(), 2)
+        sa1, sa2 = s.arguments.order_by('index')
+        self.assertEqual(sa1, a)
+        self.assertEqual(sa2.arg_type, 'c')
+        self.assertEqual(sa2.title, 'yourArg')
+        self.assertEqual(sa2.text.text, 'ument')
+        self.assertEqual(sa2.text.authors.count(), 1)
+        self.assertIn(self.hans, sa2.text.authors.all())
 
-        self.assertIn(n, m.nodes.all())
-        self.assertIn(d, m.nodes.all())
-        self.assertEqual(m.nodes.count(),2)
+        self.assertEqual(d.arguments.count(), 2)
+        da1, da2 = d.arguments.order_by('index')
+        self.assertEqual(da1.arg_type, 'p')
+        self.assertEqual(da1.title, 'myArg')
+        self.assertEqual(da1.text.text, 'cool')
+        self.assertEqual(da2.text.authors.count(), 1)
+        self.assertIn(self.hugo, da1.text.authors.all())
+        self.assertEqual(da2.arg_type, 'c')
+        self.assertEqual(da2.title, 'yourArg')
+        self.assertEqual(da2.text.text, 'ument')
+        self.assertEqual(da2.text.authors.count(), 1)
+        self.assertIn(self.hans, da2.text.authors.all())
+
+
+
+
+
+
 
     def test_get_unfollows_on_node_without_sources_returns_0(self):
         self.assertEqual(self.root.get_unfollows(), 0)
