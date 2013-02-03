@@ -76,7 +76,8 @@ class NodeTest(TestCase):
         n.add_derivate(d, type='n')
 
         self.assertIn(n, v1.nodes.all())
-        self.assertEqual(v1.nodes.count(),1)
+        self.assertIn(d, v1.nodes.all())
+        self.assertEqual(v1.nodes.count(),2)
         self.assertIn(n, v2.nodes.all())
         self.assertIn(d, v2.nodes.all())
         self.assertEqual(v2.nodes.count(),2)
