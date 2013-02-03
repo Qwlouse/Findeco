@@ -58,8 +58,7 @@ class NodeTest(TestCase):
     def test_add_derivate(self):
         n = create_structureNode("Source", authors=[self.hans])
         d = create_structureNode("Derivate", authors=[self.hans])
-        a = create_argument()
-        n.add_derivate(a, d)
+        n.add_derivate(d, type='n')
 
 
         self.assertIn(d, n.derivates.all())
@@ -78,8 +77,7 @@ class NodeTest(TestCase):
         n = create_structureNode("Source", authors=[self.hans])
         m = create_vote(self.hans, [n])
         d = create_structureNode("Derivate", authors=[self.hans])
-        a = create_argument()
-        n.add_derivate(a, d)
+        n.add_derivate(d, type='n')
 
         self.assertIn(d, n.derivates.all())
         self.assertIn(n, d.sources.all())
@@ -101,7 +99,7 @@ class NodeTest(TestCase):
     def test_get_unfollows_on_node_with_same_votes_than_source_returns_0(self):
         n = create_structureNode('Foo')
         n2 = create_structureNode('Foo2')
-        n.add_derivate(create_argument(), n2)
+        n.add_derivate(n2)
         create_vote(self.hans, [n, n2])
         create_vote(self.hugo, [n, n2])
         self.assertEqual(n2.get_unfollows(), 0)
@@ -109,7 +107,7 @@ class NodeTest(TestCase):
     def test_get_unfollows_with_an_unfollow_returns_1(self):
         n = create_structureNode('Foo')
         n2 = create_structureNode('Foo2')
-        n.add_derivate(create_argument(), n2)
+        n.add_derivate(n2)
         create_vote(self.hans, [n])
         create_vote(self.hugo, [n, n2])
         self.assertEqual(n2.get_unfollows(), 1)
@@ -117,7 +115,7 @@ class NodeTest(TestCase):
     def test_get_unfollows_with_2_unfollows_returns_2(self):
         n = create_structureNode('Foo')
         n2 = create_structureNode('Foo2')
-        n.add_derivate(create_argument(), n2)
+        n.add_derivate(n2)
         create_vote(self.hans, [n])
         create_vote(self.hugo, [n])
         self.assertEqual(n2.get_unfollows(), 2)
@@ -126,15 +124,15 @@ class NodeTest(TestCase):
         n1 = create_structureNode('Foo1')
         n2 = create_structureNode('Foo2')
         d = create_structureNode('Foo12')
-        n1.add_derivate(create_argument(), d)
-        n2.add_derivate(create_argument(), d)
+        n1.add_derivate(d)
+        n2.add_derivate(d)
         create_vote(self.hans, [n1, n2])
         self.assertEqual(d.get_unfollows(), 1)
 
     def test_get_unfollows_does_count_users_and_not_votes(self):
         n = create_structureNode('Foo')
         n2 = create_structureNode('Foo2')
-        n.add_derivate(create_argument(), n2)
+        n.add_derivate(n2)
         create_vote(self.hans, [n])
         create_vote(self.hans, [n2])
         self.assertEqual(n2.get_unfollows(), 0)
@@ -151,7 +149,7 @@ class NodeTest(TestCase):
     def test_get_newfollows_on_node_with_same_votes_than_source_returns_0(self):
         n = create_structureNode('Foo')
         n2 = create_structureNode('Foo2')
-        n.add_derivate(create_argument(), n2)
+        n.add_derivate(n2)
         create_vote(self.hans, [n, n2])
         create_vote(self.hugo, [n, n2])
         self.assertEqual(n2.get_newfollows(), 0)
@@ -159,7 +157,7 @@ class NodeTest(TestCase):
     def test_get_newfollows_with_a_newfollow_returns_1(self):
         n = create_structureNode('Foo')
         n2 = create_structureNode('Foo2')
-        n.add_derivate(create_argument(), n2)
+        n.add_derivate(n2)
         create_vote(self.hans, [n2])
         create_vote(self.hugo, [n, n2])
         self.assertEqual(n2.get_newfollows(), 1)
@@ -167,7 +165,7 @@ class NodeTest(TestCase):
     def test_get_newfollows_with_2_newfollows_returns_2(self):
         n = create_structureNode('Foo')
         n2 = create_structureNode('Foo2')
-        n.add_derivate(create_argument(), n2)
+        n.add_derivate(n2)
         create_vote(self.hans, [n2])
         create_vote(self.hugo, [n2])
         self.assertEqual(n2.get_newfollows(), 2)
@@ -175,7 +173,7 @@ class NodeTest(TestCase):
     def test_get_newfollows_does_count_votes_and_not_users(self):
         n = create_structureNode('Foo')
         n2 = create_structureNode('Foo2')
-        n.add_derivate(create_argument(), n2)
+        n.add_derivate(n2)
         create_vote(self.hans, [n])
         create_vote(self.hans, [n2])
         self.assertEqual(n2.get_newfollows(), 1)
