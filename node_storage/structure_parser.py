@@ -27,7 +27,6 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 import re, unicodedata
-from models import Node, Text
 from factory import create_structureNode, create_slot
 
 h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*\s*$", flags=re.MULTILINE)
