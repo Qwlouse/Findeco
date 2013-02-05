@@ -135,7 +135,7 @@ def load_user_info(request, name):
 
 def load_user_settings(request):
     if not request.user.is_authenticated():
-        return json_error_response('NeedsAuthentication',
+        return json_error_response('NotAuthenticated',
             "You need to be logged in to load user settings.")
     user = User.objects.get(id=request.user.id)
     return json_response({'loadUserSettingsResponse':{
@@ -273,7 +273,7 @@ def unfollow_node(request, path):
 
 def store_settings(request):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated', "You need to be authenticated to unfollow node.")
+        return json_error_response('NotAuthenticated', "You need to be authenticated to store settings.")
     user = User.objects.get(id=request.user.id)
 
     if not 'description' in request.POST:
@@ -309,7 +309,7 @@ def store_text(request, path):
 
     if not 'wikiText' in request.POST:
         return json_error_response('MissingPostParameter',
-            'storeText is missing the wikiText POST parameter!')
+            "storeText is missing the 'wikiText' POST parameter!")
 
     if not 'argumentType' in request.POST:
         if 'wikiTextAlternative' in request.POST:
