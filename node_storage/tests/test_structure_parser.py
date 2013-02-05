@@ -23,7 +23,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
+from findeco.settings import STATICFILES_DIRS
 from node_storage.structure_parser import validate_structure_schema
+import os.path as path
+import PyV8
 
 from ..factory import create_argument, create_slot, create_structureNode
 from ..factory import create_textNode, create_user
@@ -31,13 +34,34 @@ from ..path_helpers import get_root_node
 from ..models import Node
 from ..structure_parser import create_structure_from_structure_node_schema
 from ..structure_parser import InvalidWikiStructure
-from ..structure_parser import parse
+from ..structure_parser import parse as pyparser
 from ..structure_parser import remove_unallowed_chars
 from ..structure_parser import strip_accents
 from ..structure_parser import substitute_umlauts
 from ..structure_parser import turn_into_valid_short_title
 
 class StructureParserTest(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.jsparser_source = None
+        for static_dir in STATICFILES_DIRS:
+            parser_path = path.join(static_dir, "js", "structure_parser.js")
+            if path.exists(parser_path):
+                with open(parser_path, 'r') as f:
+                    cls.jsparser_source = f.read()
+                break
+
+
+    def setUp(self):
+        self.assertIsNotNone(self.jsparser_source)
+        self.ctxt = PyV8.JSContext()
+        self.ctxt.enter()
+        self.ctxt.eval(self.jsparser_source)
+        self.jsparser = lambda x, y : self.ctxt.eval("var s='%s'; var t='%s';parse(s, t);"%(x.replace('\n', "' + \n '"), y))
+        #self.jsparser = lambda x, y : self.ctxt.eval('var s="foobar";')
+
+        self.parser = {"pyparser" : pyparser, "jsparser":self.jsparser}
+
     def test_strip_accents(self):
         self.assertEqual(strip_accents("aäàáâeèéêiìíîoöòóôuüùúû"),
                                        "aaaaaeeeeiiiiooooouuuuu")
@@ -90,9 +114,10 @@ class StructureParserTest(TestCase):
             'text':"Der text.",
             'children': []
         }
-        s = parse(wiki, "foo")
-        self.assertTrue(validate_structure_schema(s))
-        self.assertEqual(s,schema)
+        for pname, parse in self.parser.items():
+            s = parse(wiki, "foo")
+            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
+            self.assertEqual(s,schema, "fail in " + pname)
 
     def test_structure_parser_processes_short_title(self):
         wiki = """=Titel=
@@ -106,9 +131,10 @@ class StructureParserTest(TestCase):
                 }
             ]
         }
-        s = parse(wiki, "foo")
-        self.assertTrue(validate_structure_schema(s))
-        self.assertEqual(s,schema)
+        for pname, parse in self.parser.items():
+            s = parse(wiki, "foo")
+            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
+            self.assertEqual(s,schema, "fail in " + pname)
 
     def test_structure_parser_turns_title_into_short_title(self):
         wiki = """=Titel=
@@ -124,9 +150,10 @@ class StructureParserTest(TestCase):
                 }
             ]
         }
-        s = parse(wiki, "foo")
-        self.assertTrue(validate_structure_schema(s))
-        self.assertEqual(s,schema)
+        for pname, parse in self.parser.items():
+            s = parse(wiki, "foo")
+            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
+            self.assertEqual(s,schema, "fail in " + pname)
 
     def test_structure_parser_with_single_node_example_strips_whitespace(self):
         wiki = """
@@ -144,20 +171,21 @@ class StructureParserTest(TestCase):
             'text':"Der text.",
             'children': []
         }
-        s = parse(wiki, "foo")
-        self.assertTrue(validate_structure_schema(s))
-        self.assertEqual(s,schema)
+        for pname, parse in self.parser.items():
+            s = parse(wiki, "foo")
+            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
+            self.assertEqual(s,schema, "fail in " + pname)
 
     def test_structure_parser_without_title_raises_exception(self):
         wiki = "nur text"
-        self.assertRaises(InvalidWikiStructure, parse, wiki, "foo")
+        self.assertRaises(InvalidWikiStructure, self.pyparser, wiki, "foo")
 
     def test_structure_parser_with_wrong_title_raises_exception(self):
         wiki = """
         == H2 titel ==
         dann text
         """
-        self.assertRaises(InvalidWikiStructure, parse, wiki, "foo")
+        self.assertRaises(InvalidWikiStructure, self.pyparser, wiki, "foo")
 
     def test_structure_parser_short_title_in_h1_is_silently_removed(self):
         wiki = """
@@ -170,9 +198,10 @@ class StructureParserTest(TestCase):
             'text':"Der text.",
             'children': []
         }
-        s = parse(wiki, "foo")
-        self.assertTrue(validate_structure_schema(s))
-        self.assertEqual(s,schema)
+        for pname, parse in self.parser.items():
+            s = parse(wiki, "foo")
+            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
+            self.assertEqual(s,schema, "fail in " + pname)
 
     def test_structure_parser_with_nested_h2(self):
         wiki = """
@@ -183,8 +212,6 @@ class StructureParserTest(TestCase):
         == Toller Slot § slot2 ==
         mehr text
         """
-        s = parse(wiki, "foo")
-        self.assertTrue(validate_structure_schema(s))
         schema = {'short_title': "foo",
                   'title': "Titel",
                   'text': "einleitungstext",
@@ -198,7 +225,11 @@ class StructureParserTest(TestCase):
                        'text': "mehr text",
                        'children': []},
                       ]}
-        self.assertEqual(s,schema)
+
+        for pname, parse in self.parser.items():
+            s = parse(wiki, "foo")
+            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
+            self.assertEqual(s,schema, "fail in " + pname)
 
     def test_structure_parser_with_nested_h4(self):
         wiki = """
@@ -209,8 +240,6 @@ class StructureParserTest(TestCase):
         ==== Toller Slot § slot2 ====
         mehr text
         """
-        s = parse(wiki, "foo")
-        self.assertTrue(validate_structure_schema(s))
         schema = {'short_title': "foo",
                   'title': "Titel",
                   'text': "einleitungstext",
@@ -224,7 +253,10 @@ class StructureParserTest(TestCase):
                        'text': "mehr text",
                        'children': []},
                       ]}
-        self.assertEqual(s,schema)
+        for pname, parse in self.parser.items():
+            s = parse(wiki, "foo")
+            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
+            self.assertEqual(s,schema, "fail in " + pname)
 
     def test_structure_parser_with_deep_example(self):
         wiki = """
@@ -247,8 +279,6 @@ class StructureParserTest(TestCase):
         ==== Titel221 § slot221 ===
         text221
         """
-        s = parse(wiki, "foo")
-        self.assertTrue(validate_structure_schema(s))
         schema = {'title': "Titel",'short_title': "foo", 'text': "text",
                   'children': [
                       {'title': "Titel1",'short_title': "slot1", 'text': "text1",
@@ -272,7 +302,10 @@ class StructureParserTest(TestCase):
                             ]},
                        ]},
                       ]}
-        self.assertEqual(s,schema)
+        for pname, parse in self.parser.items():
+            s = parse(wiki, "foo")
+            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
+            self.assertEqual(s,schema, "fail in " + pname)
 
 class CreateStructureFromStructureNodeSchemaTest(TestCase):
     def setUp(self):
