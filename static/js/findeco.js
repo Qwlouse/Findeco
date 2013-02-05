@@ -50,6 +50,9 @@ ClassBox.prototype.printData = function(data) {
         case 'argument':
             target = this.element.children('div.arguments');
         break;
+        case 'graphdata':
+            target = this.element.children('div.graphdata');
+        break;
     }
     
     if ( this.element.parent().hasClass('left') ) {
@@ -83,6 +86,9 @@ ClassBox.prototype.show = function(position,container) {
     }
     
     if ( position == 'center' ) {
+        $('<div>')
+            .addClass('graphdata')
+            .appendTo(this.element);
         $('<div>')
             .addClass('indizes')
             .appendTo(this.element);
@@ -227,6 +233,9 @@ ClassData.prototype.load = function(data) {
         if ( d == 'loadMicrobloggingResponse' ) {
             this.loadMicrobloggingResponse(data[d]);
         }
+        if ( d == 'loadGraphDataResponse' ) {
+            this.loadGraphDataResponse(data[d]);
+        }
     }
 };
 
@@ -253,6 +262,10 @@ ClassData.prototype.loadArgumentResponse = function(data) {
         // console.log(data[d]);
         $('<li>' + data[d].fullTitle + '</li>').appendTo(arguments[data[d].shortTitle]);
     }
+}
+
+ClassData.prototype.loadGraphDataResponse = function(data) {
+    this.type = 'graphdata';
 }
 
 ClassData.prototype.loadIndexResponse = function(data) {
