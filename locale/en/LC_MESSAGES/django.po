@@ -20,32 +20,32 @@ msgstr ""
 #: findeco/views.py:57 findeco/views.py:68 findeco/views.py:82
 #: findeco/tests/test_load_index.py:102 findeco/tests/test_load_index.py:141
 msgid "NonExistingNode"
-msgstr ""
+msgstr "NonExistingNode"
 
 #: findeco/views.py:57 findeco/views.py:68 findeco/views.py:101
 #: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
 #: findeco/views.py:259
 msgid "Illegal Path: "
-msgstr ""
+msgstr "Illegal Path: "
 
 #: findeco/views.py:82
 #, python-format
 msgid "Could not find slot: %(slot_path)s for node %(path)s."
-msgstr ""
+msgstr "Could not find slot: %(slot_path)s for node %(path)s."
 
 #: findeco/views.py:101 findeco/tests/test_load_index.py:110
 #: findeco/tests/test_load_text.py:124
 msgid "IllegalPath"
-msgstr ""
+msgstr "IllegalPath"
 
 #: findeco/views.py:130 findeco/tests/test_user_api.py:56
 msgid "UnknownUser"
-msgstr ""
+msgstr "UnknownUser"
 
 #: findeco/views.py:130
 #, python-format
 msgid "User '%s' not found!"
-msgstr ""
+msgstr "User '%s' not found!"
 
 #: findeco/views.py:139 findeco/views.py:179 findeco/views.py:199
 #: findeco/views.py:216 findeco/views.py:252 findeco/views.py:277
@@ -54,118 +54,118 @@ msgstr ""
 #: findeco/tests/test_marking.py:235 findeco/tests/test_store_text.py:51
 #: findeco/tests/test_user_api.py:91
 msgid "NotAuthenticated"
-msgstr ""
+msgstr "NotAuthenticated"
 
 #: findeco/views.py:140
 msgid "You need to be logged in to load user settings."
-msgstr ""
+msgstr "You need to be logged in to load user settings."
 
 #: findeco/views.py:160
 msgid "DisabledAccount"
-msgstr ""
+msgstr "DisabledAccount"
 
 #: findeco/views.py:160
 #, python-format
 msgid "Account '%s' is deactivated"
-msgstr ""
+msgstr "Account '%s' is deactivated"
 
 #: findeco/views.py:162
 msgid "InvalidLogin"
-msgstr ""
+msgstr "InvalidLogin"
 
 #: findeco/views.py:162
 msgid "Username or password wrong."
-msgstr ""
+msgstr "Username or password wrong."
 
 #: findeco/views.py:179
 msgid "You need to be authenticated to flag node."
-msgstr ""
+msgstr "You need to be authenticated to flag node."
 
 #: findeco/views.py:181 findeco/views.py:201 findeco/views.py:218
 #: findeco/views.py:254 findeco/views.py:308 findeco/tests/test_marking.py:66
 #: findeco/tests/test_marking.py:133 findeco/tests/test_marking.py:190
 #: findeco/tests/test_marking.py:241 findeco/tests/test_store_text.py:57
 msgid "PermissionDenied"
-msgstr ""
+msgstr "PermissionDenied"
 
 #: findeco/views.py:181
 msgid "You do not have the permission to flag "
-msgstr ""
+msgstr "You do not have the permission to flag "
 
 #: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
 #: findeco/views.py:259
 msgid "Illegal Path"
-msgstr ""
+msgstr "Illegal Path"
 
 #: findeco/views.py:199
 msgid "You need to be authenticated to unflag node."
-msgstr ""
+msgstr "You need to be authenticated to unflag node."
 
 #: findeco/views.py:201
 msgid "You do not have the permission to unflag "
-msgstr ""
+msgstr "You do not have the permission to unflag "
 
 #: findeco/views.py:216
 msgid "You need to be authenticated to follow node."
-msgstr ""
+msgstr "You need to be authenticated to follow node."
 
 #: findeco/views.py:218
 msgid "You do not have the permission to follow "
-msgstr ""
+msgstr "You do not have the permission to follow "
 
 #: findeco/views.py:252
 msgid "You need to be authenticated to unfollow node."
-msgstr ""
+msgstr "You need to be authenticated to unfollow node."
 
 #: findeco/views.py:254
 msgid "You do not have the permission to unfollow "
-msgstr ""
+msgstr "You do not have the permission to unfollow "
 
 #: findeco/views.py:277
 msgid "You need to be authenticated to store settings."
-msgstr ""
+msgstr "You need to be authenticated to store settings."
 
 #: findeco/views.py:281 findeco/views.py:285
 #: findeco/tests/test_user_api.py:109 findeco/tests/test_user_api.py:116
 msgid "MissingPOSTParameter"
-msgstr ""
+msgstr "MissingPOSTParameter"
 
 #: findeco/views.py:281
 msgid "The 'description' POST parameter is missing."
-msgstr ""
+msgstr "The 'description' POST parameter is missing."
 
 #: findeco/views.py:285
 msgid "The 'displayName' POST parameter is missing."
-msgstr ""
+msgstr "The 'displayName' POST parameter is missing."
 
 #: findeco/views.py:290 findeco/tests/test_user_api.py:124
 msgid "NameNotAvailable"
-msgstr ""
+msgstr "NameNotAvailable"
 
 #: findeco/views.py:290
 #, python-format
 msgid "The name '%s' is already taken."
-msgstr ""
+msgstr "The name '%s' is already taken."
 
 #: findeco/views.py:300
 msgid "You need to be authenticated to store text."
-msgstr ""
+msgstr "You need to be authenticated to store text."
 
 #: findeco/views.py:308
 msgid "You do not have the permission to store text."
-msgstr ""
+msgstr "You do not have the permission to store text."
 
 #: findeco/views.py:312 findeco/views.py:317
 #: findeco/tests/test_store_text.py:72 findeco/tests/test_store_text.py:79
 msgid "MissingPostParameter"
-msgstr ""
+msgstr "MissingPostParameter"
 
 #: findeco/views.py:313
 msgid "storeText is missing the 'wikiText' POST parameter!"
-msgstr ""
+msgstr "storeText is missing the 'wikiText' POST parameter!"
 
 #: findeco/views.py:318
 msgid ""
 "You cannot use storeText to save a wikiTextAlternative without an "
 "argumentType!"
-msgstr ""
+msgstr "You cannot use storeText to save a wikiTextAlternative without an argumentType!"
