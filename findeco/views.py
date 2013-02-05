@@ -32,6 +32,7 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse
+from django.utils.translation import ugettext
 import random
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
@@ -53,7 +54,7 @@ def load_index(request, path):
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('NonExistingNode','Illegal Path: ' + path)
+        return json_error_response(ugettext('NonExistingNode'),ugettext('Illegal Path: ') + path)
     slot_list = backend.get_ordered_children_for(node)
     index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
     return json_response({'loadIndexResponse':index_nodes})
@@ -64,7 +65,7 @@ def load_argument_index(request, path):
     try:
         node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
-        return json_error_response('NonExistingNode','Illegal Path: ' + path)
+        return json_error_response(ugettext('NonExistingNode'),ugettext('Illegal Path: ') + path)
     data = [create_index_node_for_argument(a, node) for a in node.arguments.order_by('index')]
     return json_response({'loadIndexResponse':data})
 
@@ -78,7 +79,7 @@ def load_graph_data(request, path, graph_data_type):
         try:
             slot = backend.get_node_for_path(slot_path)
         except backend.IllegalPath:
-            return json_error_response('NonExistingNode','Could not find slot: ' + slot_path + ' for node ' + path)
+            return json_error_response(ugettext('NonExistingNode'),ugettext('Could not find slot: %(slot_path)s for node %(path)s.')%{'slot_path':slot_path, 'path':path})
         nodes = backend.get_ordered_children_for(slot)
         sources = Q(derivates__in=nodes)
         derivates =Q(sources__in=nodes)
@@ -97,7 +98,7 @@ def load_text(request, path):
     try:
         node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
-        return json_error_response('IllegalPath','Illegal Path: '+path)
+        return json_error_response(ugettext('IllegalPath'),ugettext('Illegal Path: ')+path)
 
     paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
                    'path': path,
@@ -126,7 +127,7 @@ def load_user_info(request, name):
     try:
         user = User.objects.get(username=name)
     except User.DoesNotExist:
-        return json_error_response('UnknownUser', "User '%s' not found!"%name)
+        return json_error_response(ugettext('UnknownUser'), ugettext("User '%s' not found!")%name)
     user_info = create_user_info(user)
     return json_response({
         'loadUserInfoResponse':{
@@ -135,8 +136,8 @@ def load_user_info(request, name):
 
 def load_user_settings(request):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated',
-            "You need to be logged in to load user settings.")
+        return json_error_response(ugettext('NotAuthenticated'),
+            ugettext("You need to be logged in to load user settings."))
     user = User.objects.get(id=request.user.id)
     return json_response({'loadUserSettingsResponse':{
         'userInfo':create_user_info(user),
@@ -151,14 +152,14 @@ def login(request):
         if user.is_active:
             django_login(request, user)
             return json_response({
-                'loginResponse':{
-                    'userInfo':create_user_info(user),
-                    'userSettings':create_user_settings(user)
+                'loginResponse': {
+                    'userInfo': create_user_info(user),
+                    'userSettings': create_user_settings(user)
                 }})
         else:
-            return json_error_response('DisabledAccount',"Account '%s' is deactivated"%username)
+            return json_error_response(ugettext('DisabledAccount'), ugettext("Account '%s' is deactivated") % username)
     else:
-        return json_error_response('InvalidLogin', "Username or password wrong.")
+        return json_error_response(ugettext('InvalidLogin'), ugettext("Username or password wrong."))
 
 def logout(request):
     django_logout(request)
@@ -175,14 +176,14 @@ def logout(request):
 @ValidPaths("StructureNode", "Argument")
 def flag_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated', "You need to be authenticated to flag node.")
+        return json_error_response(ugettext('NotAuthenticated'), ugettext("You need to be authenticated to flag node."))
     if not request.user.has_perm('node_storage.add_spamflag'):
-        return json_error_response('PermissionDenied', "You do not have the permission to flag " + path + ".")
+        return json_error_response(ugettext('PermissionDenied'), ugettext("You do not have the permission to flag ") + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('Illegal Path','Illegal Path: '+path)
+        return json_error_response(ugettext('Illegal Path'),ugettext('Illegal Path: ')+path)
 
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 0:
@@ -195,14 +196,14 @@ def flag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def unflag_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated', "You need to be authenticated to unflag node.")
+        return json_error_response(ugettext('NotAuthenticated'), ugettext("You need to be authenticated to unflag node."))
     if not request.user.has_perm('node_storage.delete_spamflag'):
-        return json_error_response('PermissionDenied', "You do not have the permission to unflag " + path + ".")
+        return json_error_response(ugettext('PermissionDenied'), ugettext("You do not have the permission to unflag ") + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('Illegal Path','Illegal Path: '+path)
+        return json_error_response(ugettext('Illegal Path'),ugettext('Illegal Path: ')+path)
 
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 1 :
@@ -212,14 +213,14 @@ def unflag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def follow_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated', "You need to be authenticated to follow node.")
+        return json_error_response(ugettext('NotAuthenticated'), ugettext("You need to be authenticated to follow node."))
     if not request.user.has_perm('node_storage.add_vote') or not request.user.has_perm('node_storage.change_vote'):
-        return json_error_response('PermissionDenied', "You do not have the permission to follow " + path + ".")
+        return json_error_response(ugettext('PermissionDenied'), ugettext("You do not have the permission to follow ") + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('Illegal Path','Illegal Path: '+path)
+        return json_error_response(ugettext('Illegal Path'),ugettext('Illegal Path: ')+path)
 
     marks = node.votes.filter(user=user.id).all()
     if marks.count() >= 1:
@@ -248,14 +249,14 @@ def follow_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def unfollow_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated', "You need to be authenticated to unfollow node.")
+        return json_error_response(ugettext('NotAuthenticated'), ugettext("You need to be authenticated to unfollow node."))
     if not request.user.has_perm('node_storage.delete_vote'):
-        return json_error_response('PermissionDenied', "You do not have the permission to unfollow " + path + ".")
+        return json_error_response(ugettext('PermissionDenied'), ugettext("You do not have the permission to unfollow ") + path + ".")
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('Illegal Path','Illegal Path: '+path)
+        return json_error_response(ugettext('Illegal Path'),ugettext('Illegal Path: ')+path)
 
     marks = node.votes.filter(user=user.id).all()
     if marks.count() > 0:
@@ -273,20 +274,20 @@ def unfollow_node(request, path):
 
 def store_settings(request):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated', "You need to be authenticated to store settings.")
+        return json_error_response(ugettext('NotAuthenticated'), ugettext("You need to be authenticated to store settings."))
     user = User.objects.get(id=request.user.id)
 
     if not 'description' in request.POST:
-        return json_error_response('MissingPOSTParameter', "The 'description' POST parameter is missing.")
+        return json_error_response(ugettext('MissingPOSTParameter'), ugettext("The 'description' POST parameter is missing."))
     user.profile.description = request.POST['description']
     user.profile.save()
     if not 'displayName' in request.POST:
-        return json_error_response('MissingPOSTParameter', "The 'displayName' POST parameter is missing.")
+        return json_error_response(ugettext('MissingPOSTParameter'), ugettext("The 'displayName' POST parameter is missing."))
     display_name = request.POST['displayName']
     if display_name != user.username:
         is_available = User.objects.filter(username=display_name).count() == 0
         if not is_available:
-            return json_error_response('NameNotAvailable', "The name '%s' is already taken."%display_name)
+            return json_error_response(ugettext('NameNotAvailable'), ugettext("The name '%s' is already taken.")%display_name)
         else:
             user.username=display_name
     user.save()
@@ -296,7 +297,7 @@ def store_settings(request):
 @ValidPaths("StructureNode")
 def store_text(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated', "You need to be authenticated to store text.")
+        return json_error_response(ugettext('NotAuthenticated'), ugettext("You need to be authenticated to store text."))
     if not request.user.has_perm('node_storage.add_node') or \
        not request.user.has_perm('node_storage.add_argument') or\
        not request.user.has_perm('node_storage.add_vote') or\
@@ -304,17 +305,17 @@ def store_text(request, path):
        not request.user.has_perm('node_storage.add_derivation') or\
        not request.user.has_perm('node_storage.change_vote') or\
        not request.user.has_perm('node_storage.add_text'):
-        return json_error_response('PermissionDenied', "You do not have the permission to store text.")
+        return json_error_response(ugettext('PermissionDenied'), ugettext("You do not have the permission to store text."))
     user = request.user
 
     if not 'wikiText' in request.POST:
-        return json_error_response('MissingPostParameter',
-            "storeText is missing the 'wikiText' POST parameter!")
+        return json_error_response(ugettext('MissingPostParameter'),
+            ugettext("storeText is missing the 'wikiText' POST parameter!"))
 
     if not 'argumentType' in request.POST:
         if 'wikiTextAlternative' in request.POST:
-            return json_error_response('MissingPostParameter',
-            'You cannot use storeText to save a wikiTextAlternative without an argumentType!')
+            return json_error_response(ugettext('MissingPostParameter'),
+            ugettext('You cannot use storeText to save a wikiTextAlternative without an argumentType!'))
         # store new structure node
         _, new_path = store_structure_node(path, request.POST['wikiText'], user)
 

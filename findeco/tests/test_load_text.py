@@ -23,6 +23,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext
 from django.test import TestCase
 import json
 
@@ -120,4 +121,4 @@ class LoadTextTest(TestCase):
             response = self.client.get(reverse('load_text', kwargs=dict(path=p)))
             parsed = json.loads(response.content)
             self.assertTrue(errorResponseValidator.validate(parsed))
-            self.assertEqual(parsed['errorResponse']['errorTitle'], "IllegalPath")
+            self.assertEqual(parsed['errorResponse']['errorTitle'], ugettext("IllegalPath"))
