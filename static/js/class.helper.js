@@ -56,3 +56,16 @@ ClassHelper.prototype.timestampToDate = function(time) {
     d.setTime(time*1000);
     return d.toLocaleTimeString() + ', ' + d.toLocaleDateString(); 
 }
+
+ClassHelper.prototype.titleClickHandler = function() {
+	if ( $(this).attr('data-parent') == undefined ) {
+		Controller.loadIndexRelative($(this).attr('data-shortTitle') + '.' + $(this).attr('data-index'));
+	} else {
+		var parent = $(this).attr('data-parent');
+		if ( parent.substring(parent.length-1) != '/' ) {
+			parent += '/';
+		}
+		Controller.loadIndex(parent + $(this).attr('data-shortTitle') + '.' + $(this).attr('data-index'));
+	}
+}
+
