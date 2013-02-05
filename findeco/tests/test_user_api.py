@@ -87,7 +87,7 @@ class LoadUserSettingsTest(TestCase):
             response = self.client.get(reverse('load_user_settings'))
             parsed = json.loads(response.content)
             self.assertTrue(errorResponseValidator.validate(parsed))
-            self.assertEqual(parsed['errorResponse']['errorTitle'], "NeedsAuthentication")
+            self.assertEqual(parsed['errorResponse']['errorTitle'], "NotAuthenticated")
 
 
 class StoreSettingsTest(TestCase):
