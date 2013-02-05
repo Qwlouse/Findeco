@@ -58,8 +58,6 @@ class StructureParserTest(TestCase):
         self.ctxt.enter()
         self.ctxt.eval(self.jsparser_source)
         self.jsparser = lambda x, y : self.ctxt.eval("var s='%s'; var t='%s';parse(s, t);"%(x.replace('\n', "' + \n '"), y))
-        #self.jsparser = lambda x, y : self.ctxt.eval('var s="foobar";')
-
         self.parser = {"pyparser" : pyparser, "jsparser":self.jsparser}
 
     def test_strip_accents(self):
@@ -178,14 +176,14 @@ class StructureParserTest(TestCase):
 
     def test_structure_parser_without_title_raises_exception(self):
         wiki = "nur text"
-        self.assertRaises(InvalidWikiStructure, self.pyparser, wiki, "foo")
+        self.assertRaises(InvalidWikiStructure, pyparser, wiki, "foo")
 
     def test_structure_parser_with_wrong_title_raises_exception(self):
         wiki = """
         == H2 titel ==
         dann text
         """
-        self.assertRaises(InvalidWikiStructure, self.pyparser, wiki, "foo")
+        self.assertRaises(InvalidWikiStructure, pyparser, wiki, "foo")
 
     def test_structure_parser_short_title_in_h1_is_silently_removed(self):
         wiki = """
