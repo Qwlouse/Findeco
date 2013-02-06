@@ -39,6 +39,34 @@ from ..structure_parser import remove_unallowed_chars
 from ..structure_parser import strip_accents
 from ..structure_parser import substitute_umlauts
 from ..structure_parser import turn_into_valid_short_title
+import re
+
+ESCAPABLE = re.compile(r'([^\x00-\x7f])')
+HAS_UTF8 = re.compile(r'[\x80-\xff]')
+
+
+def _js_escape_unicode_re_callack(match):
+    s = match.group(0)
+    n = ord(s)
+    if n < 0x10000:
+        return '\\u%04x' % (n,)
+    else:
+        # surrogate pair
+        n -= 0x10000
+        s1 = 0xd800 | ((n >> 10) & 0x3ff)
+        s2 = 0xdc00 | (n & 0x3ff)
+        return '\\u%04x\\u%04x' % (s1, s2)
+
+def js_escape_unicode(s):
+    """Return an ASCII-only representation of a JavaScript string"""
+    if isinstance(s, str):
+        if HAS_UTF8.search(s) is None:
+            return s
+        s = s.decode('utf-8')
+    return str(ESCAPABLE.sub(_js_escape_unicode_re_callack, s))
+
+
+
 
 class StructureParserTest(TestCase):
     @classmethod
@@ -51,13 +79,16 @@ class StructureParserTest(TestCase):
                     cls.jsparser_source = f.read()
                 break
 
+        cls.jsparser = js_escape_unicode(cls.jsparser_source)
+
 
     def setUp(self):
         self.assertIsNotNone(self.jsparser_source)
         self.ctxt = PyV8.JSContext()
         self.ctxt.enter()
-        self.ctxt.eval(self.jsparser_source)
-        self.jsparser = lambda x, y : self.ctxt.eval("var s='%s'; var t='%s';parse(s, t);"%(x.replace('\n', "' + \n '"), y))
+        self.ctxt.eval(self.jsparser)
+        testcode = "var s='foo'; var t='bar';parseStructure(s, t);"#%(x.replace('\n', "' + \n '"), y)
+        self.jsparser = lambda x, y : self.ctxt.eval(testcode)
         self.parser = {"pyparser" : pyparser, "jsparser":self.jsparser}
 
     def test_strip_accents(self):
