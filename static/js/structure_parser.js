@@ -24,6 +24,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ##############################################################################*/
 
+function ClassParser() {}
+
+var Parser = new ClassParser();
+
 var h1Start = "^\s*=(?P<title>[^=]+)=*\s*$";
 var generalH = "^\s*(={2,6}(?P<title>[^=]+)=*)\s*$";
 var invalidSymbols = "[^\w\-_\s]+";
@@ -43,24 +47,33 @@ function getHeadingMatcher(level) {
     return "^\s*={" + s + "}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s][^=§]*))?=*\s*$"
 }
 
-function remove_unallowed_chars(s){
-    return s.replace(invalidSymbols,'');
+function removeUnallowedChars(s) {
+    return s.replace(invalidSymbols, '');
 }
 
-function remove_and_compress_whitespaces(s) {
+function removeAndCompressWhitespaces(s) {
     var words = s.split(" ")
     var compressed = ""
     for (var i = 0; i < words.length; i++) {
-        compressed += "_"+words[i];
+        compressed += "_" + words[i];
     }
     return compressed.substring(1)
 }
 
+function substituteUmlauts(s) {
+    var umlauts = ['ä','ö','ü','ß','Ä','Ö','Ü','ẞ'];
+    var substuitutes = ['ae','oe','ue','ss','Ae','Oe','Ue','SS'];
+    for (var i = 0; i < umlauts.length; i++) {
+        s = s.replace(umlauts[i],substuitutes[i]);
+    }
+    return s;
+}
+
 function turnIntoValidShortTitle(title, shortTitleSet, maxLength) {
-    var st = substitute_umlauts(title);
+    var st = substituteUmlauts(title);
     st = strip_accents(st);
-    st = remove_unallowed_chars(st);
-    st = remove_and_compress_whitespaces(st);
+    st = removeUnallowedChars(st);
+    st = removeAndCompressWhitespaces(st);
     st = st.substring(0, maxLength);
     if (st.length <= 0) {
         var i = 0;
@@ -169,10 +182,6 @@ function parseStructure(s, shortTitle) {
     }
     return node;
 }
-
-function ClassParser() {}
-
-var Parser = new ClassParser();
 
 ClassParser.prototype.parse = function(text){
     return "<p>Not Implemented!</p>";
