@@ -110,7 +110,11 @@ class Node(models.Model):
         if new_favorite != self.favorite:
             self.favorite = new_favorite
             self.save()
-            # TODO: invalidate cache
+            invalid_paths = []
+            for a in self.traverse_all_ancestors():
+                invalid_paths.append(a.get_a_path()) # TODO: this only collects __a__ path
+            TextCache.objects.filter(path__in=invalid_paths).delete()
+
 
     def update_favorite_for_all_parents(self):
         for p in self.parents.all():
@@ -125,11 +129,18 @@ class Node(models.Model):
         """
         return NodeOrder.objects.get(parent=parent, child=self).position
 
+    def traverse_all_ancestors(self):
+        ancestors = list(self.parents.all())
+        while len(ancestors) > 0:
+            a = ancestors.pop()
+            ancestors += list(a.parents.all())
+            yield a
+
     def get_a_path(self):
         """
         Returns a path which needn't be the only valid path to the node.
         """
-        if self.pk == 1: return ""
+        if self.parents.count() == 0: return ""
         if self.node_type == Node.ARGUMENT:
             self_as_arg = Argument.objects.filter(argument_id=self.id).all()[0]
             npath = self_as_arg.concerns.get_a_path().strip('/')
