@@ -331,3 +331,7 @@ def store_text(request, path):
         new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text, user)
 
     return json_response({'storeTextResponse':{'path':new_path}})
+
+def error_404(request):
+    return json_error_response(ugettext('Invalid URL'),
+        ugettext('The URL you requested is not specified in the Findeco-API.'))
