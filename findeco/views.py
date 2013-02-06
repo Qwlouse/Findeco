@@ -109,7 +109,7 @@ def load_text(request, path):
                        '_node_id': node.id,
                        'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}]
         for slot in backend.get_ordered_children_for(node):
-            favorite = backend.get_favorite_if_slot(slot)
+            favorite = slot.favorite
             paragraphs.append({'wikiText': build_text(favorite, depth=2),
                                'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
                                '_node_id': favorite.id,
@@ -195,6 +195,7 @@ def flag_node(request, path):
         new_mark.node=node
         new_mark.user_id=request.user.id
         new_mark.save()
+        node.update_favorite_for_all_parents()
     return json_response({'markNodeResponse':{}})
 
 @ValidPaths("StructureNode", "Argument")
@@ -212,6 +213,7 @@ def unflag_node(request, path):
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 1 :
         marks[0].delete()
+        node.update_favorite_for_all_parents()
     return json_response({'markNodeResponse':{}})
 
 @ValidPaths("StructureNode", "Argument")
@@ -240,6 +242,9 @@ def follow_node(request, path):
                 new_mark.nodes.add(n)
             mark.save()
             new_mark.save()
+            node.update_favorite_for_all_parents()
+            for n in traverse_derivates_subset(node, mark.nodes.all()):
+                n.update_favorite_for_all_parents()
     else:
         mark = backend.Vote()
         mark.user_id = request.user.id
@@ -248,6 +253,9 @@ def follow_node(request, path):
         for n in traverse_derivates(node):
             mark.nodes.add(n)
         mark.save()
+        node.update_favorite_for_all_parents()
+        for n in traverse_derivates(node):
+            n.update_favorite_for_all_parents()
     return json_response({'markNodeResponse':{}})
 
 @ValidPaths("StructureNode", "Argument")
@@ -267,10 +275,12 @@ def unfollow_node(request, path):
         mark = marks[0]
         if mark.nodes.count() == 1:
             mark.delete()
+            node.update_favorite_for_all_parents()
         else:
             mark.nodes.remove(node)
             for n in traverse_derivates_subset(node, mark.nodes.all()):
                 mark.nodes.remove(n)
+                n.update_favorite_for_all_parents()
             if mark.nodes.count() == 0:
                 mark.delete()
     return json_response({'markNodeResponse':{}})

@@ -63,6 +63,8 @@ def create_vote(voter, nodes):
     for node in nodes:
         v.nodes.add(node)
     v.save()
+    for node in nodes:
+        node.update_favorite_for_all_parents()
     return v
 
 def create_spam_flag(voter, nodes):

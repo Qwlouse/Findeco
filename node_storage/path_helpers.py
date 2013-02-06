@@ -26,8 +26,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from django.db.models import Count
-from models import Node, NodeOrder, Argument
+from models import Node, NodeOrder
 
 from findeco.paths import parse_path
 
@@ -73,7 +72,7 @@ def get_favorite_if_slot(node):
     Returns the favorite child if given a slot and returns node otherwise.
     """
     if node.node_type == Node.SLOT:
-        return node.children.annotate(num_votes=Count('votes')).order_by('-num_votes', '-pk')[0]
+        return node.favorite
     else:
         return node
 

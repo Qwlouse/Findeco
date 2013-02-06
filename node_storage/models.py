@@ -27,7 +27,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Max
+from django.db.models import Max, Count
 
 ###################### Nodes, Arguments and Texts ##############################
 class Node(models.Model):
@@ -56,6 +56,7 @@ class Node(models.Model):
         blank=True,
         through='Derivation'
     )
+    favorite = models.ForeignKey('self', related_name='favorite_of', null=True, blank=True)
     title = models.CharField(max_length=150)
     node_type = models.CharField(max_length=1, choices=NODETYPE)
 
@@ -67,6 +68,7 @@ class Node(models.Model):
         max_position = agg['position__max'] or 0
         no.position = max_position + 1
         no.save()
+        self.update_favorite_and_invalidate_cache()
 
     def add_derivate(self, derivate, type=None, title="", text="", authors=()):
         if type or title or text or len(authors) > 0:
@@ -98,7 +100,21 @@ class Node(models.Model):
                 copy_argument_text_obj.authors.add(author)
             copy_argument_text_obj.save()
         d.save()
+        d.derivate.update_favorite_for_all_parents()
         return source_argument
+
+    def update_favorite_and_invalidate_cache(self):
+        if self.children.count() == 0:
+            return
+        new_favorite = self.children.annotate(num_votes=Count('votes')).order_by('-num_votes', '-pk')[0]
+        if new_favorite != self.favorite:
+            self.favorite = new_favorite
+            self.save()
+            # TODO: invalidate cache
+
+    def update_favorite_for_all_parents(self):
+        for p in self.parents.all():
+            p.update_favorite_and_invalidate_cache()
 
     def __unicode__(self):
         return "id=%d, title=%s"%(self.id, self.title)
