@@ -33,6 +33,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse
 from django.utils.translation import ugettext
+import json
 import random
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
@@ -95,20 +96,27 @@ def load_graph_data(request, path, graph_data_type):
 @ValidPaths("StructureNode", "Argument")
 def load_text(request, path):
     try:
-        node = backend.get_node_for_path(path)
-    except backend.IllegalPath:
-        return json_error_response(ugettext('IllegalPath'),ugettext('Illegal Path: ')+path)
-    is_following = get_is_following(request.user.id, node)
-    paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
-                   'path': path,
-                   '_node_id': node.id,
-                   'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}]
-    for slot in backend.get_ordered_children_for(node):
-        favorite = backend.get_favorite_if_slot(slot)
-        paragraphs.append({'wikiText': build_text(favorite, depth=2),
-                           'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
-                           '_node_id': favorite.id,
-                           'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
+        # try to load from cache
+        t = backend.TextCache.objects.get(path=path.strip().strip('/'))
+        paragraphs = json.loads(t.paragraphs)
+    except backend.TextCache.DoesNotExist:
+        try:
+            node = backend.get_node_for_path(path)
+        except backend.IllegalPath:
+            return json_error_response(ugettext('IllegalPath'),ugettext('Illegal Path: ')+path)
+        paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
+                       'path': path,
+                       '_node_id': node.id,
+                       'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}]
+        for slot in backend.get_ordered_children_for(node):
+            favorite = backend.get_favorite_if_slot(slot)
+            paragraphs.append({'wikiText': build_text(favorite, depth=2),
+                               'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
+                               '_node_id': favorite.id,
+                               'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
+        # write to cache
+        t = json.dumps(paragraphs)
+        backend.TextCache.objects.create(path=path, paragraphs=t)
 
     for p in paragraphs:
         p['isFollowing'] = get_is_following(request.user.id, backend.Node.objects.get(id=p['_node_id']))
@@ -117,7 +125,7 @@ def load_text(request, path):
     return json_response({
         'loadTextResponse':{
             'paragraphs': paragraphs,
-            'isFollowing': is_following}})
+            'isFollowing': paragraphs[0]['isFollowing']}})
 
 def load_user_info(request, name):
     try:

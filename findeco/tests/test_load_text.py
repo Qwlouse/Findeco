@@ -140,6 +140,14 @@ class LoadTextTest(TestCase):
         }
         self.assertEqual(data, expected_response)
 
+    def test_multiple_loads_give_same_text(self):
+        response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1/Datenschutz.1")))
+        data_first = json.loads(response.content)
+        for i in range(3):
+            response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1/Datenschutz.1")))
+            data = json.loads(response.content)
+            self.assertEqual(data, data_first)
+
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo', 'Wahlprogramm.1/foo.1.pro', 'Wahlprogramm.1/foo.1.pro.2']
         for p in illegal_paths:

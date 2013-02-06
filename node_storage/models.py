@@ -241,3 +241,8 @@ class SpamFlag(models.Model):
     node = models.ForeignKey(Node, related_name='spam_flags')
     def __unicode__(self):
         return "id=%d, user=%s"%(self.id, self.user.username)
+
+################################# Caches #######################################
+class TextCache(models.Model):
+    path = models.CharField(max_length=250, primary_key=True)
+    paragraphs = models.TextField()
