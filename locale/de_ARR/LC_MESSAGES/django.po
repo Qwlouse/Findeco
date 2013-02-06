@@ -21,32 +21,32 @@ msgstr ""
 #: findeco/views.py:57 findeco/views.py:68 findeco/views.py:82
 #: findeco/tests/test_load_index.py:102 findeco/tests/test_load_index.py:141
 msgid "NonExistingNode"
-msgstr "Nicht-existierender Knoten"
+msgstr "Dieser Schatz existiert nicht"
 
 #: findeco/views.py:57 findeco/views.py:68 findeco/views.py:101
 #: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
 #: findeco/views.py:259
 msgid "Illegal Path: "
-msgstr "Ungültiger Pfad: "
+msgstr "Dieser Pfad ist für Schiffsjungen wie dich verboten, Qlaus!!"
 
 #: findeco/views.py:82
 #, python-format
 msgid "Could not find slot: %(slot_path)s for node %(path)s."
-msgstr "Der Slot: %(slot_path)s für den Knoten %(path)s konnte nicht gefunden werden."
+msgstr "Der Schatz %(slot_path)s ist nicht im Schiff %(path)s."
 
 #: findeco/views.py:101 findeco/tests/test_load_index.py:110
 #: findeco/tests/test_load_text.py:124
 msgid "IllegalPath"
-msgstr "Ungültiger Pfad"
+msgstr "ARR!!!! Kein Durchgang auf diesem Pfad!!!!"
 
 #: findeco/views.py:130 findeco/tests/test_user_api.py:56
 msgid "UnknownUser"
-msgstr "Unbekannter Nutzer"
+msgstr "Ich kenn dich nicht, ein Schritt weiter und es geht über die Planke!!"
 
 #: findeco/views.py:130
 #, python-format
 msgid "User '%s' not found!"
-msgstr "Der Nutzer '%s' konnte nicht gefunden werden!"
+msgstr "Kapitän!!!! '%s' is verschwunden!"
 
 #: findeco/views.py:139 findeco/views.py:179 findeco/views.py:199
 #: findeco/views.py:216 findeco/views.py:252 findeco/views.py:277
@@ -55,118 +55,120 @@ msgstr "Der Nutzer '%s' konnte nicht gefunden werden!"
 #: findeco/tests/test_marking.py:235 findeco/tests/test_store_text.py:51
 #: findeco/tests/test_user_api.py:91
 msgid "NotAuthenticated"
-msgstr ""
+msgstr "Über die Planke, Landratte!"
 
 #: findeco/views.py:140
 msgid "You need to be logged in to load user settings."
-msgstr "Um die Nutzereinstellungen zu laden musst du eingeloggt sein."
+msgstr "Hau ab!!! An diesen Schatz dürfen nur erfahrene Crewmitglieder"
 
 #: findeco/views.py:160
 msgid "DisabledAccount"
-msgstr "Gesperrter Account"
+msgstr "Der Käpt'n ruht bei Neptun, Lisa!"
 
 #: findeco/views.py:160
 #, python-format
 msgid "Account '%s' is deactivated"
-msgstr "Der Account '%s' ist deaktiviert."
+msgstr "Bei Neptun! Käpt'n %s hat's hinter sich!"
 
 #: findeco/views.py:162
 msgid "InvalidLogin"
-msgstr "Ungültiger Login"
+msgstr "Arr! Der Schlüssel passt nicht in die Schatztruhe!"
 
 #: findeco/views.py:162
 msgid "Username or password wrong."
-msgstr "Der Nutzername oder das Passwort ist inkorrekt."
+msgstr "Bei Neptun, hör auf mit dem Seemannsgarn, Kevin!"
 
 #: findeco/views.py:179
 msgid "You need to be authenticated to flag node."
-msgstr "Um den Knoten zu markieren musst du eingeloggt sein."
+msgstr "Hey!!! Markieren nur für Crewmitglieder!"
 
 #: findeco/views.py:181 findeco/views.py:201 findeco/views.py:218
 #: findeco/views.py:254 findeco/views.py:308 findeco/tests/test_marking.py:66
 #: findeco/tests/test_marking.py:133 findeco/tests/test_marking.py:190
 #: findeco/tests/test_marking.py:241 findeco/tests/test_store_text.py:57
 msgid "PermissionDenied"
-msgstr "Zugang verweigert"
+msgstr "Hinfort, Sven!"
 
 #: findeco/views.py:181
 msgid "You do not have the permission to flag "
-msgstr "Du hast keine Erlaubnis etwas als Spam zu markieren."
+msgstr "Seit wann hat der Schiffsjunge das Recht die Flagge zu hissen?"
 
 #: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
 #: findeco/views.py:259
 msgid "Illegal Path"
-msgstr "Ungültiger Pfad"
+msgstr "Ey, du kommst hier nicht durch, Klaus!"
 
 #: findeco/views.py:199
 msgid "You need to be authenticated to unflag node."
-msgstr "Du musst authentifiziert sein um die Markierung des Knotens zu entfernen."
+msgstr "Du willst nen Jolly Roger? Wer bistn' du?"
 
 #: findeco/views.py:201
 msgid "You do not have the permission to unflag "
-msgstr "Du hast keine Erlaubnis die Markierung zu entfernen."
+msgstr "Nimm deine stinkenden Finger von der Flagge, du Hund!"
 
 #: findeco/views.py:216
 msgid "You need to be authenticated to follow node."
-msgstr "Du musst authentifiziert sein um dem Knoten zu folgen."
+msgstr "Jonny, du schon wieder? Geh Fische füttern oder Deck schrubben!"
 
 #: findeco/views.py:218
 msgid "You do not have the permission to follow "
-msgstr "Du hast keine Erlaubnis zu folgen."
+msgstr "Schiffsjunge, versuch nicht schon wieder mir zu folgen"
 
 #: findeco/views.py:252
 msgid "You need to be authenticated to unfollow node."
-msgstr "Du musst authentifiziert sein um den Knoten zu entfolgen."
+msgstr "Ich kenn dich nicht!! ARRR!!! Also musst du mir weiterfolgen, ich lass dich nicht allein."
 
 #: findeco/views.py:254
 msgid "You do not have the permission to unfollow "
-msgstr "Du hast keine Erlaubnis zu entfolgen."
+msgstr "Du bleibst gefälligst her, du Klabautermann!"
 
 #: findeco/views.py:277
 msgid "You need to be authenticated to store settings."
-msgstr "Du musst authentifziert die Einstellungen zu speichern."
+msgstr "Justus!! An die Schwarzpulverkammer dürfen nur ausgewiesene Piraten"
 
 #: findeco/views.py:281 findeco/views.py:285
 #: findeco/tests/test_user_api.py:109 findeco/tests/test_user_api.py:116
 msgid "MissingPOSTParameter"
-msgstr "Fehlendes POST-Parameter"
+msgstr "Deine Schatzkarte ist weg."
 
 #: findeco/views.py:281
 msgid "The 'description' POST parameter is missing."
-msgstr "Das 'description' POST-Paramter fehlt."
+msgstr "ARRRGH!!! Die Wegbeschreibung in der Schatzkarte fehlt."
 
 #: findeco/views.py:285
 msgid "The 'displayName' POST parameter is missing."
-msgstr "Das 'displayName' POST-Parameter fehlt."
+msgstr "ARRR!!! Kein Etikett auf der Flaschenpost"
 
 #: findeco/views.py:290 findeco/tests/test_user_api.py:124
 msgid "NameNotAvailable"
-msgstr "Name nicht verfügbar"
+msgstr "Hochstapler! Der Papagei will sich mit fremden Federn schmücken! Über die Planke mit ihm."
 
 #: findeco/views.py:290
 #, python-format
 msgid "The name '%s' is already taken."
-msgstr "Der Name '%s' ist schon in vergeben."
+msgstr "AARGGHHHH Noch ein  '%s' ? Haben wir so viele Planken?"
 
 #: findeco/views.py:300
 msgid "You need to be authenticated to store text."
-msgstr "Du musst authenfiziert sein um Text zu speichern."
+msgstr "Von Landratten wird keine Ladung verstaut!"
 
 #: findeco/views.py:308
 msgid "You do not have the permission to store text."
-msgstr "Du hast keine Erlaubnis um Text zu speichern."
+msgstr "Geh das Deck schrubben, Schiffsjunge!"
 
 #: findeco/views.py:312 findeco/views.py:317
 #: findeco/tests/test_store_text.py:72 findeco/tests/test_store_text.py:79
 msgid "MissingPostParameter"
-msgstr "Fehlendes POST-Parameter"
+msgstr "ARR!!! Flaschenpost geht nicht mit leeren Flaschen!!"
 
 #: findeco/views.py:313
 msgid "storeText is missing the 'wikiText' POST parameter!"
-msgstr "storeText fehlt das 'wikiText' POST-Parameter!"
+msgstr "Elex will nen Keks!"
 
 #: findeco/views.py:318
 msgid ""
 "You cannot use storeText to save a wikiTextAlternative without an "
 "argumentType!"
-msgstr "Ohne ein argumentType kannst du keinen storeText nutzen um ein wikiTextAlternative zu speichern!"
+msgstr ""
+"Verdammt! ein Stück der Schatzkarte fehlt."
+""
