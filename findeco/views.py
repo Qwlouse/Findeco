@@ -94,9 +94,8 @@ def load_graph_data(request, path, graph_data_type):
 
 @ValidPaths("StructureNode", "Argument")
 def load_text(request, path):
-    prefix, path_type = parse_suffix(path)
     try:
-        node = backend.get_node_for_path(prefix)
+        node = backend.get_node_for_path(path)
     except backend.IllegalPath:
         return json_error_response(ugettext('IllegalPath'),ugettext('Illegal Path: ')+path)
     is_following = get_is_following(request.user.id, node)

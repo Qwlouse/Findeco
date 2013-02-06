@@ -125,7 +125,7 @@ class LoadTextTest(TestCase):
         expected_response = {
             'loadTextResponse':{
                 'paragraphs':[{
-                    'wikiText':"...denn ihr seid dafür",
+                    'wikiText':"=Dagegen=\n...denn ihr seid dafür",
                     'path':"Wahlprogramm.1/Datenschutz.1.con.1",
                     'isFollowing':0,
                     'authorGroup': [{
