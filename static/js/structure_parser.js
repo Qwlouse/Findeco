@@ -52,8 +52,8 @@ function removeUnallowedChars(s) {
 }
 
 function removeAndCompressWhitespaces(s) {
-    var words = s.split(" ")
-    var compressed = ""
+    var words = s.split(" ");
+    var compressed = "";
     for (var i = 0; i < words.length; i++) {
         compressed += "_" + words[i];
     }
@@ -71,7 +71,7 @@ function substituteUmlauts(s) {
 
 function turnIntoValidShortTitle(title, shortTitleSet, maxLength) {
     var st = substituteUmlauts(title);
-    st = strip_accents(st);
+    //st = strip_accents(st);
     st = removeUnallowedChars(st);
     st = removeAndCompressWhitespaces(st);
     st = st.substring(0, maxLength);
@@ -79,7 +79,7 @@ function turnIntoValidShortTitle(title, shortTitleSet, maxLength) {
         var i = 0;
         while (true) {
             i += 1;
-            var new_st = String(i)
+            var new_st = String(i);
             var not_found = true;
             for (var j = 0; j < shortTitleSet.length; j++) {
                 if (new_st == shortTitleSet[j]) {
@@ -178,7 +178,7 @@ function parseStructure(s, shortTitle) {
         shortTitle = turnIntoValidShortTitle(shortTitle, shortTitleSet, 20);
         shortTitleSet.push(shortTitle);
 
-        node['children'].push(parseStructure("= "+title.replace(/^\s+|\s+$/g, '')+" =\n" + text.replace(/^\s+|\s+$/g, ''), shortTitle))
+        node['children'].push(parseStructure("= "+title.replace(/^\s+|\s+$/g, '')+" =\n" + text.replace(/^\s+|\s+$/g, ''), shortTitle));
     }
     return node;
 }
