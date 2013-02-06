@@ -86,30 +86,23 @@ ClassData.prototype.loadIndexResponse = function(data) {
     }
     
     for ( d in data ) {
-        switch ( data[d].shortTitle ) {
-            case 'pro': case 'neut': case 'con': this.loadArgumentResponse(data); return;
-            default:
-                if ( parent != '' ) {
-                    var parentpath = this.info.path;
-                    if ( parentpath.substring(parentpath.length-1) != '/' ) {
-                        parentpath += '/';
-                    }
-                    DataRegister.setTitle(parentpath + data[d].shortTitle + '.' + data[d].index,data[d].fullTitle);
-                }
-                $('<h2 data-shortTitle="' + data[d].shortTitle + '" data-index="' + data[d].index + '"' + parent + '>' + data[d].fullTitle + '</h2>')
-                    .appendTo(this.html)
-                    .click(function () {
-                        if ( $(this).attr('data-parent') == undefined ) {
-                            Controller.loadIndexRelative($(this).attr('data-shortTitle') + '.' + $(this).attr('data-index'));
-                        } else {
-                            var parent = $(this).attr('data-parent');
-                            if ( parent.substring(parent.length-1) != '/' ) {
-                                parent += '/';
-                            }
-                            Controller.loadIndex(parent + $(this).attr('data-shortTitle') + '.' + $(this).attr('data-index'));
-                        }
-                    });
-        }
+        if ( data[d].shortTitle == 'pro'
+			|| data[d].shortTitle == 'neut'
+			|| data[d].shortTitle == 'con' ) {
+			this.loadArgumentResponse(data); 
+			return;
+		}
+		
+		if ( parent != '' ) {
+			var parentpath = this.info.path;
+			if ( parentpath.substring(parentpath.length-1) != '/' ) {
+				parentpath += '/';
+			}
+			DataRegister.setTitle(parentpath + data[d].shortTitle + '.' + data[d].index,data[d].fullTitle);
+		}
+		$('<h2 data-shortTitle="' + data[d].shortTitle + '" data-index="' + data[d].index + '"' + parent + '>' + data[d].fullTitle + '</h2>')
+			.appendTo(this.html)
+			.click(Helper.titleClickHandler);
     }
 };
 
