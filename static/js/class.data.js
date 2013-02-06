@@ -24,6 +24,18 @@
 
 function ClassData(json) {this.load(json);}
 
+ClassData.prototype.getInfo = function() {
+    return this.info;
+}
+
+ClassData.prototype.getJQueryObject = function() {
+    return this.html;
+}
+
+ClassData.prototype.getType = function() {
+    return this.info['type'];
+}
+
 ClassData.prototype.load = function(data) {
     this.json = data;
     
@@ -68,8 +80,10 @@ ClassData.prototype.loadArgumentResponse = function(data) {
     $('<br>').appendTo(procontra);
     
     for ( d in data ) {
-        // console.log(data[d]);
-        $('<li>' + data[d].fullTitle + '</li>').appendTo(arguments[data[d].shortTitle]);
+        var path = Controller.getPosition() + '.' + data[d].shortTitle + '.' + data[d].index;
+        $('<li data-path="' + path + '">' + data[d].fullTitle + '</li>')
+            .click(Helper.argumentClickHandler)
+            .appendTo(arguments[data[d].shortTitle]);
     }
 }
 
@@ -80,29 +94,27 @@ ClassData.prototype.loadGraphDataResponse = function(data) {
 ClassData.prototype.loadIndexResponse = function(data) {
     this.type = 'index';
     
-    parent = '';
-    if ( typeof this.info == 'object' && this.info.path != undefined ) {
-        parent = 'data-parent="' + this.info.path + '"';
-    }
-    
     for ( d in data ) {
         if ( data[d].shortTitle == 'pro'
-			|| data[d].shortTitle == 'neut'
-			|| data[d].shortTitle == 'con' ) {
-			this.loadArgumentResponse(data); 
-			return;
-		}
-		
-		if ( parent != '' ) {
-			var parentpath = this.info.path;
-			if ( parentpath.substring(parentpath.length-1) != '/' ) {
-				parentpath += '/';
-			}
-			DataRegister.setTitle(parentpath + data[d].shortTitle + '.' + data[d].index,data[d].fullTitle);
-		}
-		$('<h2 data-shortTitle="' + data[d].shortTitle + '" data-index="' + data[d].index + '"' + parent + '>' + data[d].fullTitle + '</h2>')
-			.appendTo(this.html)
-			.click(Helper.titleClickHandler);
+            || data[d].shortTitle == 'neut'
+            || data[d].shortTitle == 'con' ) {
+            this.loadArgumentResponse(data); 
+            return;
+        }
+        
+        var absolutepath = '';
+        if ( this.info != undefined && this.info.path != undefined ) {
+            var parentpath = this.info.path;
+            if ( parentpath.substring(parentpath.length-1) != '/' ) {
+                parentpath += '/';
+            }
+            absolutepath = parentpath + data[d].shortTitle + '.' + data[d].index;
+            DataRegister.setTitle(absolutepath,data[d].fullTitle);
+            absolutepath = ' data-path="' + absolutepath + '"';
+        }
+        $('<h2 data-shortTitle="' + data[d].shortTitle + '" data-index="' + data[d].index + '"' + absolutepath + '>' + data[d].fullTitle + '</h2>')
+            .appendTo(this.html)
+            .click(Helper.titleClickHandler);
     }
 };
 
@@ -134,18 +146,12 @@ ClassData.prototype.loadMicrobloggingResponse = function(data) {
     }
 };
 
-ClassData.prototype.getJQueryObject = function() {
-    return this.html;
-}
-
-ClassData.prototype.getType = function() {
-    return this.type;
-}
-
 ClassData.prototype.setInfo = function(type,path) {
     this.info = {'type':type,'path':path};
 }
 
-ClassData.prototype.getInfo = function() {
-    return this.info;
+ClassData.prototype.setType = function(type) {
+    if ( typeof this.info != 'object' || this.info == undefined || this.info['type'] == undefined ) {
+        this.info['type'] = type;
+    }
 }

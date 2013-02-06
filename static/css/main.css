@@ -44,14 +44,14 @@ html,body {
 br,.clear {
     clear: both;
 }
-h1,h2,h3 {
+h1,h2,h3,.arguments  li {
     font-family: 'Exo',sans-serif;
     font-weight: bold;
     color: #FF9900;
     margin: 0;
 }
 
-h1:hover,h2:hover,h3:hover {
+h1:hover,h2:hover,h3:hover,.arguments  li:hover {
     color: #999;
     cursor: pointer;
     text-shadow: #FF9900 0 0 5px; 
@@ -85,6 +85,9 @@ h1:hover,h2:hover,h3:hover {
     background: #999;
     cursor: pointer;
     text-shadow: #FF9900 0 0 5px; 
+}
+.smallbutton {
+    float: left;
 }
 #header {
     position: absolute;

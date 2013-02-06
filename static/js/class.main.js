@@ -49,10 +49,17 @@ ClassMain.prototype.show = function (data) {
 
 ClassMain.prototype.append = function (data) {
     // console.log('ClassMain','append');
-    if ( data.json.loadIndexResponse != undefined 
+    if ( data.getType() == 'index'
+        && data.json.loadIndexResponse != undefined 
         && Helper.objectLength(data.json.loadIndexResponse) == 0 ) {
         Controller.loadText();
     } else {
-        center.printData(data);
+        var l = 0;
+        for ( j in data.json ) {
+            l += Helper.objectLength(data.json[j]);
+        }
+        if ( l > 0 ) {
+            center.printData(data);
+        }
     }
 };
