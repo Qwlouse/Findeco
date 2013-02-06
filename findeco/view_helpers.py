@@ -192,3 +192,13 @@ def traverse_derivates(node):
 def get_permission(name):
     a, _, n = name.partition('.')
     return Permission.objects.get(content_type__app_label=a, codename=n)
+
+def get_is_following(user_id, node):
+    isFollowing = 0
+    v = node.votes.filter(user=user_id)
+    if v.count() > 0:
+        v = v[0]
+        isFollowing = 1 # at least transitive follow
+        if v.nodes.order_by('id')[0] == node:
+            isFollowing = 2 # explicit follow
+    return isFollowing

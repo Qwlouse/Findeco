@@ -43,7 +43,7 @@ from .view_helpers import store_structure_node, store_argument, store_derivate
 from .view_helpers import create_index_node_for_slot, create_user_info
 from .view_helpers import create_user_settings, create_index_node_for_argument
 from .view_helpers import traverse_derivates_subset, traverse_derivates
-from .view_helpers import build_text
+from .view_helpers import build_text, get_is_following
 
 def home(request, path):
     with open("static/index.html", 'r') as index_html_file:
@@ -99,29 +99,22 @@ def load_text(request, path):
         node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
         return json_error_response(ugettext('IllegalPath'),ugettext('Illegal Path: ')+path)
-
+    is_following = get_is_following(request.user.id, node)
     paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
                    'path': path,
-                   'isFollowing': node.votes.filter(user=request.user.id).count()>0,
+                   'isFollowing': is_following,
                    'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}]
     for slot in backend.get_ordered_children_for(node):
         favorite = backend.get_favorite_if_slot(slot)
         paragraphs.append({'wikiText': build_text(favorite, depth=2),
                            'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
-                           'isFollowing': favorite.votes.filter(user=request.user.id).count()>0,
+                           'isFollowing': get_is_following(request.user.id, favorite),
                            'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
-    isFollowing = 0
-    v = node.votes.filter(user=request.user.id)
-    if v.count() > 0:
-        v = v[0]
-        isFollowing = 1 # at least transitive follow
-        if v.nodes.order_by('id')[0] == node:
-            isFollowing = 2 # explicit follow
 
     return json_response({
         'loadTextResponse':{
             'paragraphs': paragraphs,
-            'isFollowing': isFollowing}})
+            'isFollowing': is_following}})
 
 def load_user_info(request, name):
     try:
