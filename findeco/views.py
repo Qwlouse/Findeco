@@ -101,14 +101,18 @@ def load_text(request, path):
     is_following = get_is_following(request.user.id, node)
     paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
                    'path': path,
-                   'isFollowing': is_following,
+                   '_node_id': node.id,
                    'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}]
     for slot in backend.get_ordered_children_for(node):
         favorite = backend.get_favorite_if_slot(slot)
         paragraphs.append({'wikiText': build_text(favorite, depth=2),
                            'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
-                           'isFollowing': get_is_following(request.user.id, favorite),
+                           '_node_id': favorite.id,
                            'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
+
+    for p in paragraphs:
+        p['isFollowing'] = get_is_following(request.user.id, backend.Node.objects.get(id=p['_node_id']))
+        del p['_node_id']
 
     return json_response({
         'loadTextResponse':{
