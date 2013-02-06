@@ -29,6 +29,7 @@ function ClassBox() { this.id = ++boxCount; this.element = $('<div id="box' + th
 ClassBox.prototype.addButtons = function() {
     var arguments = this.element.children('div.arguments');
     var text = this.element.children('div.text');
+    var buttons = this.element.children('div.buttons');
     
     $('<div style="margin-bottom: 10px;">Zeige Argumente</div>')
         .addClass('button')
@@ -42,6 +43,24 @@ ClassBox.prototype.addButtons = function() {
             Controller.loadText();
         })
         .appendTo(text);
+    
+    $('<div style="margin-bottom: 10px;">Abschnitt hinzuf&uuml;gen</div>')
+        .addClass('button')
+        .addClass('smallbutton')
+        .click(function () {
+            
+        })
+        .appendTo(buttons);
+    
+    $('<div style="margin-bottom: 10px;">Argument hinzuf&uuml;gen</div>')
+        .addClass('button')
+        .addClass('smallbutton')
+        .click(function () {
+            
+        })
+        .appendTo(buttons);
+    
+    
 }
 
 ClassBox.prototype.printData = function(data) {
@@ -103,6 +122,9 @@ ClassBox.prototype.show = function(position,container) {
             .appendTo(this.element);
         $('<div>')
             .addClass('text')
+            .appendTo(this.element);
+        $('<div>')
+            .addClass('buttons')
             .appendTo(this.element);
         
         this.addButtons();

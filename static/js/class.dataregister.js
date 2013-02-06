@@ -29,7 +29,7 @@ var DataRegister = new ClassDataRegister();
 ClassDataRegister.prototype.data = {'index':{},'text':{},'microblogging':{},'argument':{}};
 
 ClassDataRegister.prototype.get = function(callback,type,position,force) {
-    // console.log('ClassDataRegister','get',force);
+    // console.log('ClassDataRegister','get',type,force);
     if ( DataRegister.data[type][position] == undefined
         || force != undefined ) {
         DataRegister.load(callback,type,position);

@@ -25,6 +25,10 @@
 function ClassController() {}
 var Controller = new ClassController();
 
+ClassController.prototype.getPosition = function() {
+    return Controller.position.replace(/\/$/g,'');
+};
+
 ClassController.prototype.load = function(element) {
     if ( element.id == 'imprint' ) {
         loadImprint();

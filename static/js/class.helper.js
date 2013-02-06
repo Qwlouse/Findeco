@@ -26,6 +26,10 @@ function ClassHelper() {}
 
 var Helper = new ClassHelper();
 
+ClassHelper.prototype.argumentClickHandler = function() {
+    Main.loadText($(this).attr('data-path'));
+}
+
 ClassHelper.prototype.getActionFromUrl = function(url) {
     return url.substring(0,url.indexOf('/'));
 }
@@ -58,14 +62,10 @@ ClassHelper.prototype.timestampToDate = function(time) {
 }
 
 ClassHelper.prototype.titleClickHandler = function() {
-	if ( $(this).attr('data-parent') == undefined ) {
-		Controller.loadIndexRelative($(this).attr('data-shortTitle') + '.' + $(this).attr('data-index'));
-	} else {
-		var parent = $(this).attr('data-parent');
-		if ( parent.substring(parent.length-1) != '/' ) {
-			parent += '/';
-		}
-		Controller.loadIndex(parent + $(this).attr('data-shortTitle') + '.' + $(this).attr('data-index'));
-	}
+    if ( $(this).attr('data-path') == undefined ) {
+        Controller.loadIndexRelative($(this).attr('data-shortTitle') + '.' + $(this).attr('data-index'));
+    } else {
+        Controller.loadIndex($(this).attr('data-path'));
+    }
 }
 
