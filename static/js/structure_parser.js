@@ -28,9 +28,9 @@ function ClassParser() {}
 
 var Parser = new ClassParser();
 
-var h1Start = "^\s*=(?P<title>[^=]+)=*\s*$";
-var generalH = "^\s*(={2,6}(?P<title>[^=]+)=*)\s*$";
-var invalidSymbols = "[^\w\-_\s]+";
+var h1Start = /^\s*=([^=]+)=*\s*(.*)$/;
+var generalH = /\s*={2,6}([^=]+)=*\s*/g;
+var invalidSymbols = /[^\w\-_\s]+/g;
 
 function getHeadingMatcher(level) {
     var s;
@@ -44,7 +44,7 @@ function getHeadingMatcher(level) {
             /* raise ValueError("level must be between 1 and 6 or 0, but was %d."%level) */
         }
     }
-    return "^\s*={" + s + "}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s][^=§]*))?=*\s*$"
+    return "(?:[^=]|^)={"+s+"}([^=§]+)(?:§([^=]+)=|()=)=*(?:([^=].*)|()$)";
 }
 
 function removeUnallowedChars(s) {
@@ -119,24 +119,27 @@ function turnIntoValidShortTitle(title, shortTitleSet, maxLength) {
 }
 
 function parseStructure(s, shortTitle) {
-    var m = s.match(h1Start);
-    if(m.length > 1){
+    var m = h1Start.exec(s);
+    if (h1Start.test(s) && (m.length > 2)) {
         var title = m[1];
-        title = title.split("§")[0]; /* silently remove attempt to set short_title in H1 */
-        s = s.replace(h1Start,"");
+        title = title.split("§")[0]; // silently remove attempt to set short_title in H1
+        s = m[2];
     } else {
-        return false;
+        return "Must start with H1 heading to set title";
         /*raise InvalidWikiStructure('Must start with H1 heading to set title')*/
     }
+    writeln("________________________");
     title = title.replace(/^\s+|\s+$/g, ''); /* strip in javascript */
     title = title.substring(0, 150);
-    var node = [];
+    writeln("title: "+title);
+    writeln("short_title: "+shortTitle);
+    var node = new Object();
     node['title'] = title.replace(/^\s+|\s+$/g, ''); /* strip in javascript */
     node['short_title'] = shortTitle;
     node['children'] = [];
 
     /* do we need a StructureNode or will a TextNode do? */
-    if (!(s.match(generalH).length <= 1)) {
+    if (!(generalH.test(s))) {
         /* Text Node */
         node['text'] = s.replace(/^\s+|\s+$/g, ''); /* strip in javascript */
         return node
@@ -145,41 +148,41 @@ function parseStructure(s, shortTitle) {
     /* determine used header depth: */
     var level = 0;
     for(var i= 2; i<7; i++) {
-        m = getHeadingMatcher(i);
-        if (s.match(m).length > 1) {
+        m = new RegExp(getHeadingMatcher(i));
+        if (m.test(s)) {
             level = i;
+            writeln("Level ist "+level);
             break;
         }
     }
 
-    var splitDoc = s.split(m);
-    /* now the text before, between and after headings is splitDoc[0::3]
-     the text of the headings are splitDoc[1::3]
-     and the short titles (or None if omitted) are splitDoc[2::3] */
-
     /* leading text is used to set text of structure node */
-    node['text'] = splitDoc[0].replace(/^\s+|\s+$/g, ''); /* strip in javascript */
-    /* assert that no headings are in that text */
-    if(node['text'].match(generalH).length > 1) {
-        return false;
-        /* raise InvalidWikiStructure("Cannot have headers in Node text") */
-    }
+    node['text'] = s.replace(m,'').replace(/^\s+|\s+$/g, '');
+    writeln("Text saved: "+node['text']);
 
-    /* iterate the headings, short_titles, and corresponding texts: */
-    var shortTitleSet = [];
-    var text = "";
-    for (i = 1; i < (splitDoc.length-1)/3; i++) {
-        title = splitDoc[1+i*3];
-        shortTitle = splitDoc[2+i*3];
-        text = splitDoc[3+i*3];
-        /* check if short_title is valid/unique/exists */
-        if ((shortTitle.length <= 0) || (shortTitle.replace(/^\s+|\s+$/g, '').length <= 0)) {
-            shortTitle = title;}
-        shortTitle = turnIntoValidShortTitle(shortTitle, shortTitleSet, 20);
-        shortTitleSet.push(shortTitle);
-
-        node['children'].push(parseStructure("= "+title.replace(/^\s+|\s+$/g, '')+" =\n" + text.replace(/^\s+|\s+$/g, ''), shortTitle));
-    }
+    do {
+        writeln("Child section No. "+(node['children'].length+1)+" ____________");
+        var splitDoc = m.exec(s);
+        writeln("SplitDoc ("+splitDoc+")");
+        writeln("s is ("+s+")");
+        title = splitDoc[1].replace(/^\s+|\s+$/g, '');
+        writeln("  title: "+title);
+        if (splitDoc[2] == undefined) {
+            shortTitle = turnIntoValidShortTitle(title,[],20);
+        } else {
+            shortTitle = turnIntoValidShortTitle(splitDoc[2].replace(/^\s+|\s+$/g, ''),[],20);
+        }
+        writeln("  shortTitle: "+shortTitle);
+        s = splitDoc[4];
+        var textParts = new RegExp("^(?:([^=].*?)(?:={"+level+"}|$)|())").exec(s);
+        writeln(level);
+        writeln(s);
+        var text = textParts[1].replace(/=+$/, '').replace(/^\s+|\s+$/g, '');
+        //var text = s.replace(m).replace(/^\s+|\s+$/g, '');
+        writeln("  text: "+text);
+        node['children'].push(parseStructure("= "+title+" =\n"+ s.replace(m, '').replace(/^\s+|\s+$/g, ''),shortTitle));
+    } while (m.test(s));
+    writeln("done");
     return node;
 }
 

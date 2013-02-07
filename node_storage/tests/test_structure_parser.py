@@ -65,8 +65,23 @@ def js_escape_unicode(s):
         s = s.decode('utf-8')
     return str(ESCAPABLE.sub(_js_escape_unicode_re_callack, s))
 
+def convert_to_unicode(d):
+    for k in d.keys():
+        if type(d[k]) == str:
+            try:
+                d[k] = unicode(d[k])
+            except UnicodeDecodeError:
+                print("Unicode Problem: ")
+                print(k)
+                print(d[k])
+        if type(d[k]) == list:
+            for x in d[k]:
+                x = convert_to_unicode(x)
+    return d
 
-
+class Global(PyV8.JSClass):
+    def writeln(self, arg):
+        print(arg)
 
 class StructureParserTest(TestCase):
     @classmethod
@@ -84,11 +99,11 @@ class StructureParserTest(TestCase):
 
     def setUp(self):
         self.assertIsNotNone(self.jsparser_source)
-        self.ctxt = PyV8.JSContext()
+        self.ctxt = PyV8.JSContext(Global())
         self.ctxt.enter()
         self.ctxt.eval(self.jsparser)
-        testcode = "var s='foo'; var t='bar';parseStructure(s, t);"#%(x.replace('\n', "' + \n '"), y)
-        self.jsparser = lambda x, y : self.ctxt.eval(testcode)
+        testcode = "var s='%s'; var t='%s';parseStructure(s, t);"
+        self.jsparser = lambda x, y : convert_to_unicode(PyV8.convert(self.ctxt.eval(testcode%(x.replace('\n', "' + \n '"), y))))
         self.parser = {"pyparser" : pyparser, "jsparser":self.jsparser}
 
     def test_strip_accents(self):
@@ -334,6 +349,8 @@ class StructureParserTest(TestCase):
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
+            print(s)
+            print(schema)
             self.assertEqual(s,schema, "fail in " + pname)
 
 class CreateStructureFromStructureNodeSchemaTest(TestCase):
