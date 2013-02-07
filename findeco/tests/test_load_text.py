@@ -28,7 +28,7 @@ from django.test import TestCase
 import json
 
 from node_storage import get_root_node
-from node_storage.factory import create_slot, create_user, create_textNode, create_vote, create_structureNode
+from node_storage.factory import create_slot, create_user, create_textNode, create_vote, create_structureNode, create_argument
 from ..api_validation import errorResponseValidator
 
 class LoadTextTest(TestCase):
@@ -69,6 +69,7 @@ class LoadTextTest(TestCase):
         self.slot12.append_child(self.textnode12)
         self.slot13 = create_slot('Datenschutz')
         self.textnode13 = create_textNode('Daaatenschutz', text="Blubb.", authors=[self.hans])
+        self.textnode13_a1 = create_argument(self.textnode13, type='con', title='Dagegen' ,text="...denn ihr seid dafür", authors=[self.hugo])
         self.slot13.append_child(self.textnode13)
         self.structureNode1.append_child(self.slot11)
         self.structureNode1.append_child(self.slot12)
@@ -95,13 +96,15 @@ class LoadTextTest(TestCase):
         self.short_titles = ['Wahlprogramm', 'Grundsatzprogramm', 'Organisatorisches']
         self.full_titles = ['LangerWahlprogrammTitel', 'LangerGrundsatzTitel','Langweilig3']
         self.authors = [[self.hans], [self.hugo], [self.hans, self.hugo]]
+        self.maxDiff = None
 
-    def test_url_gives_correct_text(self):
+    def test_textnode_gives_correct_text(self):
         response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1/Datenschutz.1")))
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'], "=Daaatenschutz=\nBlubb.")
 
+    def test_structurenode_gives_correct_text(self):
         response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1")))
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
@@ -114,6 +117,36 @@ class LoadTextTest(TestCase):
         self.assertEqual(data['loadTextResponse']['paragraphs'][2]['path'], "Wahlprogramm.1/Bildung.1")
         self.assertEqual(data['loadTextResponse']['paragraphs'][3]['wikiText'], "==Daaatenschutz==\nBlubb.")
         self.assertEqual(data['loadTextResponse']['paragraphs'][3]['path'], "Wahlprogramm.1/Datenschutz.1")
+
+    def test_load_text_on_argument_gives_argument_text(self):
+        response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1/Datenschutz.1.con.1")))
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        expected_response = {
+            'loadTextResponse':{
+                'paragraphs':[{
+                    'wikiText':"=Dagegen=\n...denn ihr seid dafür",
+                    'path':"Wahlprogramm.1/Datenschutz.1.con.1",
+                    'isFollowing':0,
+                    'authorGroup': [{
+                        'displayName':"hugo",
+                        'description':"",
+                        'followers':[],
+                        'followees':[]
+                    }]
+                }],
+                'isFollowing':0
+            }
+        }
+        self.assertEqual(data, expected_response)
+
+    def test_multiple_loads_give_same_text(self):
+        response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1/Datenschutz.1")))
+        data_first = json.loads(response.content)
+        for i in range(3):
+            response = self.client.get(reverse('load_text', kwargs=dict(path="Wahlprogramm.1/Datenschutz.1")))
+            data = json.loads(response.content)
+            self.assertEqual(data, data_first)
 
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo', 'Wahlprogramm.1/foo.1.pro', 'Wahlprogramm.1/foo.1.pro.2']

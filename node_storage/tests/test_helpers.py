@@ -27,6 +27,7 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
+from node_storage.models import Node
 from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path
 from ..path_helpers import get_good_path_for_structure_node
@@ -102,7 +103,7 @@ class HelpersTest(TestCase):
         self.assertEqual(n, self.text1)
         n = get_favorite_if_slot(self.slot2)
         self.assertEqual(n, self.text4)
-        n = get_favorite_if_slot(self.slot3)
+        n = get_favorite_if_slot(Node.objects.get(id=self.slot3.id))
         self.assertEqual(n, self.text5)
 
     def test_get_ordered_children_for(self):

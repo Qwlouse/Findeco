@@ -33,6 +33,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse
 from django.utils.translation import ugettext
+import json
 import random
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
@@ -43,7 +44,7 @@ from .view_helpers import store_structure_node, store_argument, store_derivate
 from .view_helpers import create_index_node_for_slot, create_user_info
 from .view_helpers import create_user_settings, create_index_node_for_argument
 from .view_helpers import traverse_derivates_subset, traverse_derivates
-from .view_helpers import build_text
+from .view_helpers import build_text, get_is_following
 
 def home(request, path):
     with open("static/index.html", 'r') as index_html_file:
@@ -94,34 +95,37 @@ def load_graph_data(request, path, graph_data_type):
 
 @ValidPaths("StructureNode", "Argument")
 def load_text(request, path):
-    prefix, path_type = parse_suffix(path)
     try:
-        node = backend.get_node_for_path(prefix)
-    except backend.IllegalPath:
-        return json_error_response(ugettext('IllegalPath'),ugettext('Illegal Path: ')+path)
+        # try to load from cache
+        t = backend.TextCache.objects.get(path=path.strip().strip('/'))
+        paragraphs = json.loads(t.paragraphs)
+    except backend.TextCache.DoesNotExist:
+        try:
+            node = backend.get_node_for_path(path)
+        except backend.IllegalPath:
+            return json_error_response(ugettext('IllegalPath'),ugettext('Illegal Path: ')+path)
+        paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
+                       'path': path,
+                       '_node_id': node.id,
+                       'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}]
+        for slot in backend.get_ordered_children_for(node):
+            favorite = slot.favorite
+            paragraphs.append({'wikiText': build_text(favorite, depth=2),
+                               'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
+                               '_node_id': favorite.id,
+                               'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
+        # write to cache
+        t = json.dumps(paragraphs)
+        backend.TextCache.objects.create(path=path, paragraphs=t)
 
-    paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
-                   'path': path,
-                   'isFollowing': node.votes.filter(user=request.user.id).count()>0,
-                   'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}]
-    for slot in backend.get_ordered_children_for(node):
-        favorite = backend.get_favorite_if_slot(slot)
-        paragraphs.append({'wikiText': build_text(favorite, depth=2),
-                           'path': path + "/" + slot.title + "." + str(favorite.get_index(slot)),
-                           'isFollowing': favorite.votes.filter(user=request.user.id).count()>0,
-                           'authorGroup': [create_user_info(a) for a in favorite.text.authors.all()]})
-    isFollowing = 0
-    v = node.votes.filter(user=request.user.id)
-    if v.count() > 0:
-        v = v[0]
-        isFollowing = 1 # at least transitive follow
-        if v.nodes.order_by('id')[0] == node:
-            isFollowing = 2 # explicit follow
+    for p in paragraphs:
+        p['isFollowing'] = get_is_following(request.user.id, backend.Node.objects.get(id=p['_node_id']))
+        del p['_node_id']
 
     return json_response({
         'loadTextResponse':{
             'paragraphs': paragraphs,
-            'isFollowing': isFollowing}})
+            'isFollowing': paragraphs[0]['isFollowing']}})
 
 def load_user_info(request, name):
     try:
@@ -191,6 +195,7 @@ def flag_node(request, path):
         new_mark.node=node
         new_mark.user_id=request.user.id
         new_mark.save()
+        node.update_favorite_for_all_parents()
     return json_response({'markNodeResponse':{}})
 
 @ValidPaths("StructureNode", "Argument")
@@ -208,6 +213,7 @@ def unflag_node(request, path):
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 1 :
         marks[0].delete()
+        node.update_favorite_for_all_parents()
     return json_response({'markNodeResponse':{}})
 
 @ValidPaths("StructureNode", "Argument")
@@ -236,6 +242,9 @@ def follow_node(request, path):
                 new_mark.nodes.add(n)
             mark.save()
             new_mark.save()
+            node.update_favorite_for_all_parents()
+            for n in traverse_derivates_subset(node, mark.nodes.all()):
+                n.update_favorite_for_all_parents()
     else:
         mark = backend.Vote()
         mark.user_id = request.user.id
@@ -244,6 +253,9 @@ def follow_node(request, path):
         for n in traverse_derivates(node):
             mark.nodes.add(n)
         mark.save()
+        node.update_favorite_for_all_parents()
+        for n in traverse_derivates(node):
+            n.update_favorite_for_all_parents()
     return json_response({'markNodeResponse':{}})
 
 @ValidPaths("StructureNode", "Argument")
@@ -263,10 +275,12 @@ def unfollow_node(request, path):
         mark = marks[0]
         if mark.nodes.count() == 1:
             mark.delete()
+            node.update_favorite_for_all_parents()
         else:
             mark.nodes.remove(node)
             for n in traverse_derivates_subset(node, mark.nodes.all()):
                 mark.nodes.remove(n)
+                n.update_favorite_for_all_parents()
             if mark.nodes.count() == 0:
                 mark.delete()
     return json_response({'markNodeResponse':{}})

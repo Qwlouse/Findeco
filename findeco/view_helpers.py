@@ -27,7 +27,7 @@ import functools
 import json
 
 import node_storage as backend
-from node_storage import Vote, get_node_for_path
+from node_storage import get_node_for_path
 from node_storage.factory import create_argument, create_vote
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
@@ -93,12 +93,12 @@ def create_user_settings(user):
     return user_settings
 
 def create_index_node_for_slot(slot):
-    favorit = backend.get_favorite_if_slot(slot) ##optimization: switch to get_favorit_for_slot that also returns the index
+    favorite = slot.favorite
     index_node = dict(
         shortTitle = slot.title,
-        fullTitle = favorit.title,
-        index = favorit.get_index(slot),
-        authorGroup = [create_user_info(a) for a in favorit.text.authors.all()]
+        fullTitle = favorite.title,
+        index = favorite.get_index(slot),
+        authorGroup = [create_user_info(a) for a in favorite.text.authors.all()]
     )
     return index_node
 
@@ -116,8 +116,7 @@ def build_text(node, depth=2):
     depth = min(depth, 6)
     text = "=" * depth + node.title + "=" * depth + "\n" + node.text.text
     for slot in node.children.all():
-        favorite = backend.get_favorite_if_slot(slot)
-        text += "\n\n" + build_text(favorite, depth + 1)
+        text += "\n\n" + build_text(slot.favorite, depth + 1)
     return text
 
 
@@ -192,3 +191,13 @@ def traverse_derivates(node):
 def get_permission(name):
     a, _, n = name.partition('.')
     return Permission.objects.get(content_type__app_label=a, codename=n)
+
+def get_is_following(user_id, node):
+    isFollowing = 0
+    v = node.votes.filter(user=user_id)
+    if v.count() > 0:
+        v = v[0]
+        isFollowing = 1 # at least transitive follow
+        if v.nodes.order_by('id')[0] == node:
+            isFollowing = 2 # explicit follow
+    return isFollowing

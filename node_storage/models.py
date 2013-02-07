@@ -27,7 +27,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Max
+from django.db.models import Max, Count
 
 ###################### Nodes, Arguments and Texts ##############################
 class Node(models.Model):
@@ -56,6 +56,7 @@ class Node(models.Model):
         blank=True,
         through='Derivation'
     )
+    favorite = models.ForeignKey('self', related_name='favorite_of', null=True, blank=True)
     title = models.CharField(max_length=150)
     node_type = models.CharField(max_length=1, choices=NODETYPE)
 
@@ -67,6 +68,7 @@ class Node(models.Model):
         max_position = agg['position__max'] or 0
         no.position = max_position + 1
         no.save()
+        self.update_favorite_and_invalidate_cache()
 
     def add_derivate(self, derivate, type=None, title="", text="", authors=()):
         if type or title or text or len(authors) > 0:
@@ -98,7 +100,25 @@ class Node(models.Model):
                 copy_argument_text_obj.authors.add(author)
             copy_argument_text_obj.save()
         d.save()
+        d.derivate.update_favorite_for_all_parents()
         return source_argument
+
+    def update_favorite_and_invalidate_cache(self):
+        if self.children.count() == 0:
+            return
+        new_favorite = self.children.annotate(num_votes=Count('votes')).order_by('-num_votes', '-pk')[0]
+        if new_favorite != self.favorite:
+            self.favorite = new_favorite
+            self.save()
+            invalid_paths = []
+            for a in self.traverse_all_ancestors():
+                invalid_paths.append(a.get_a_path()) # TODO: this only collects __a__ path
+            TextCache.objects.filter(path__in=invalid_paths).delete()
+
+
+    def update_favorite_for_all_parents(self):
+        for p in self.parents.all():
+            p.update_favorite_and_invalidate_cache()
 
     def __unicode__(self):
         return "id=%d, title=%s"%(self.id, self.title)
@@ -109,11 +129,18 @@ class Node(models.Model):
         """
         return NodeOrder.objects.get(parent=parent, child=self).position
 
+    def traverse_all_ancestors(self):
+        ancestors = list(self.parents.all())
+        while len(ancestors) > 0:
+            a = ancestors.pop()
+            ancestors += list(a.parents.all())
+            yield a
+
     def get_a_path(self):
         """
         Returns a path which needn't be the only valid path to the node.
         """
-        if self.pk == 1: return ""
+        if self.parents.count() == 0: return ""
         if self.node_type == Node.ARGUMENT:
             self_as_arg = Argument.objects.filter(argument_id=self.id).all()[0]
             npath = self_as_arg.concerns.get_a_path().strip('/')
@@ -241,3 +268,8 @@ class SpamFlag(models.Model):
     node = models.ForeignKey(Node, related_name='spam_flags')
     def __unicode__(self):
         return "id=%d, user=%s"%(self.id, self.user.username)
+
+################################# Caches #######################################
+class TextCache(models.Model):
+    path = models.CharField(max_length=250, primary_key=True)
+    paragraphs = models.TextField()

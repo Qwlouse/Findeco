@@ -22,6 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
+from findeco.view_helpers import get_is_following
 
 from node_storage import get_root_node, Node
 from node_storage.factory import create_user, create_slot, create_textNode, create_vote, create_structureNode, create_argument
@@ -420,3 +421,21 @@ class StoreDerivateTest(TestCase):
         self.assertEqual(self.text1.arguments.all()[0].votes.count(),1)
         self.assertEqual(Node.objects.filter(title="Bla").all()[0].arguments.count(),1)
         self.assertEqual(Node.objects.filter(title="Bla").all()[0].arguments.all()[0].votes.count(),0)
+
+class GetIsFollowingTest(TestCase):
+    def setUp(self):
+        self.n = create_structureNode("woot")
+        self.n1 = create_structureNode("foo1")
+        self.n2 = create_structureNode("foo2")
+        self.n1.add_derivate(self.n2)
+        self.hugo = create_user("hugo")
+        self.v = create_vote(self.hugo, [self.n1, self.n2])
+
+    def test_on_node_without_follow_is_0(self):
+        self.assertEqual(get_is_following(self.hugo.id, self.n), 0)
+
+    def test_on_node_with_transitive_follow_is_1(self):
+        self.assertEqual(get_is_following(self.hugo.id, self.n2), 1)
+
+    def test_on_node_with_explicit_follow_is_2(self):
+        self.assertEqual(get_is_following(self.hugo.id, self.n1), 2)
