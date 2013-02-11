@@ -122,7 +122,7 @@ ClassData.prototype.loadTextResponse = function(data) {
     this.type = 'text';
     
     for ( p in data['paragraphs'] ) {
-        $('<p>' + data['paragraphs'][p].wikiText + '</p>').appendTo(this.html);
+        $('<p>' + Parser.parse(data['paragraphs'][p].wikiText) + '</p>').appendTo(this.html);
     }
 };
 
