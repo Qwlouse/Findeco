@@ -24,10 +24,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ##############################################################################*/
 
-function ClassParser() {}
-
-var Parser = new ClassParser();
-
 var h1Start = /^\s*=([^=]+)=*\s*(.*)$/;
 var generalH = /={2,6}([^=]+)=*[^=]/;
 var invalidSymbols = /[^\w\-_\s]+/g;
@@ -222,8 +218,4 @@ function parseStructure(s, shortTitle) {
     }
     return node;
 }
-
-ClassParser.prototype.parse = function(text){
-    return $('<p>' + text + '</p>');
-};
 

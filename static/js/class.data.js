@@ -124,6 +124,7 @@ ClassData.prototype.loadTextResponse = function(data) {
     for ( p in data['paragraphs'] ) {
         Parser.parse(data['paragraphs'][p].wikiText)
             .appendTo(this.html);
+        //alert("blubb");
     }
 };
 

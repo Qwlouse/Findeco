@@ -88,7 +88,7 @@ class StructureParserTest(TestCase):
     def setUpClass(cls):
         cls.jsparser_source = None
         for static_dir in STATICFILES_DIRS:
-            parser_path = path.join(static_dir, "js", "structure_parser.js")
+            parser_path = path.join(static_dir, "js", "function.structureParser.js")
             if path.exists(parser_path):
                 with open(parser_path, 'r') as f:
                     cls.jsparser_source = f.read()
