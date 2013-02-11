@@ -176,7 +176,9 @@ function parseStructure(s, shortTitle) {
         title = title.split("§")[0]; // silently remove attempt to set short_title in H1
         s = m[2];
     } else {
-        return "Must start with H1 heading to set title";
+        return {'title': "Error",
+            'text': "Must start with H1 heading to set title",
+            'children': []};
         /*raise InvalidWikiStructure('Must start with H1 heading to set title')*/
     }
     title = title.replace(/^\s+|\s+$/g, ''); /* strip in javascript */
@@ -219,3 +221,17 @@ function parseStructure(s, shortTitle) {
     return node;
 }
 
+function convertSchemaToCreole(schema, level) {
+    if (level == undefined) {
+        level = 1
+    }
+    var hSep = "=";
+    while (hSep.length < level) {
+        hSep += "=";
+    }
+    var wikiText = hSep+" "+schema['title']+" "+hSep+"\n"+schema['text'];
+    for (var i = 0; i < schema['children'].length; i++) {
+        wikiText += convertSchemaToCreole(schema['children'][i],level+1);
+    }
+    return wikiText;
+}

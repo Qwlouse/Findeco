@@ -28,7 +28,8 @@ function ClassParser() {}
 
 var Parser = new ClassParser();
 
-ClassParser.prototype.parse = function(text){
+ClassParser.prototype.parse = function(text, shortTitle, level){
+    var wikiText = convertSchemaToCreole(parseStructure(text, shortTitle),level);
     var textDiv = document.createElement("div");
     textDiv.innerHTML = "";
     var creole = new Parse.Simple.Creole( {
@@ -39,6 +40,6 @@ ClassParser.prototype.parse = function(text){
         },
         linkFormat: ''
     } );
-    creole.parse(textDiv,text);
+    creole.parse(textDiv,wikiText);
     return $(textDiv.innerHTML);
 };
