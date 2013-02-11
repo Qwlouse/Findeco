@@ -29,7 +29,6 @@ function ClassParser() {}
 var Parser = new ClassParser();
 
 ClassParser.prototype.parse = function(text){
-    //alert(text);
     var textDiv = document.createElement("div");
     textDiv.innerHTML = "";
     var creole = new Parse.Simple.Creole( {
@@ -41,8 +40,5 @@ ClassParser.prototype.parse = function(text){
         linkFormat: ''
     } );
     creole.parse(textDiv,text);
-    //alert(textDiv.innerHTML);
-    textDiv.innerHTML = textDiv.innerHTML;
     return $(textDiv.innerHTML);
-    //return $('<p>' + text + '</p>');
 };
