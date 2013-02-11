@@ -224,6 +224,6 @@ function parseStructure(s, shortTitle) {
 }
 
 ClassParser.prototype.parse = function(text){
-    return "<p>Not Implemented!</p>";
+    return text;
 };
 
