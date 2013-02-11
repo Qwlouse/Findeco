@@ -29,7 +29,7 @@ function ClassParser() {}
 var Parser = new ClassParser();
 
 var h1Start = /^\s*=([^=]+)=*\s*(.*)$/;
-var generalH = /\s*={2,6}([^=]+)=*\s*/g;
+var generalH = /={2,6}([^=]+)=*[^=]/;
 var invalidSymbols = /[^\w\-_\s]+/g;
 
 function getHeadingMatcher(level) {
@@ -44,7 +44,7 @@ function getHeadingMatcher(level) {
             /* raise ValueError("level must be between 1 and 6 or 0, but was %d."%level) */
         }
     }
-    return "(?:[^=]|^)={"+s+"}([^=§]+)(?:§([^=]+)=|()=)=*(?:([^=].*)|()$)";
+    return "^\s*={"+s+"}([^=§]+)(?:§\s*([^=§\s][^=§]*))?=*\s*(.*)$";
 }
 
 function removeUnallowedChars(s) {
@@ -118,6 +118,61 @@ function turnIntoValidShortTitle(title, shortTitleSet, maxLength) {
     }
 }
 
+function testLevel(s, l) {
+    var levelCounter = 0;
+    var heading = false;
+    var afterEnd = false;
+    for (var i = 0; i < s.length; i++) {
+        if (s[i] == "=") {
+            levelCounter++;
+            if (!(heading) && (levelCounter == l) && ((i+1 >= s.length) || (s[i+1] != "="))) {
+                return true;
+            }
+            afterEnd = true;
+        } else {
+            levelCounter = 0;
+            if (afterEnd) {
+                heading = !heading;
+                afterEnd = false;
+            }
+        }
+    }
+    return false;
+}
+
+function getLevel(s) {
+    for (var i = 2; i<7; i++) {
+        if (testLevel(s, i)) {
+            return i;
+        }
+    }
+    return 0;
+}
+
+function splitAtHeading(s, level) {
+    var before = 0;
+    var levelCounter = 0;
+    var heading = false;
+    var afterEnd = false;
+    for (var i = 0; i < s.length; i++) {
+        if (s[i] != "=") {
+            before = i;
+            levelCounter = 0;
+            if (afterEnd) {
+                heading = !heading;
+                afterEnd = false;
+            }
+        } else {
+            afterEnd = true;
+            levelCounter++;
+            if (!(heading) && (levelCounter == level) && ((i+1 >= s.length) || (s[i+1] != "="))) {
+                return [s.substring(0,before), s.substring(before)];
+            }
+        }
+    }
+    return [s, ""];
+}
+
 function parseStructure(s, shortTitle) {
     var m = h1Start.exec(s);
     if (h1Start.test(s) && (m.length > 2)) {
@@ -128,12 +183,9 @@ function parseStructure(s, shortTitle) {
         return "Must start with H1 heading to set title";
         /*raise InvalidWikiStructure('Must start with H1 heading to set title')*/
     }
-    writeln("________________________");
     title = title.replace(/^\s+|\s+$/g, ''); /* strip in javascript */
     title = title.substring(0, 150);
-    writeln("title: "+title);
-    writeln("short_title: "+shortTitle);
-    var node = new Object();
+    var node = {};
     node['title'] = title.replace(/^\s+|\s+$/g, ''); /* strip in javascript */
     node['short_title'] = shortTitle;
     node['children'] = [];
@@ -146,43 +198,28 @@ function parseStructure(s, shortTitle) {
     } /* else: StructureNode */
 
     /* determine used header depth: */
-    var level = 0;
-    for(var i= 2; i<7; i++) {
-        m = new RegExp(getHeadingMatcher(i));
-        if (m.test(s)) {
-            level = i;
-            writeln("Level ist "+level);
-            break;
-        }
-    }
+    var level = getLevel(s);
 
     /* leading text is used to set text of structure node */
-    node['text'] = s.replace(m,'').replace(/^\s+|\s+$/g, '');
-    writeln("Text saved: "+node['text']);
+    var splitDoc = splitAtHeading(s, level);
+    node['text'] = splitDoc[0].replace(/^\s+|\s+$/g, '');
+    s = splitDoc[1];
 
-    do {
-        writeln("Child section No. "+(node['children'].length+1)+" ____________");
-        var splitDoc = m.exec(s);
-        writeln("SplitDoc ("+splitDoc+")");
-        writeln("s is ("+s+")");
+    /* parsing sections now */
+    m = new RegExp(getHeadingMatcher(level));
+    while (m.test(s.replace(/^\s+|\s+$/g, ''))) {
+        splitDoc = m.exec(s.replace(/^\s+|\s+$/g, ''));
         title = splitDoc[1].replace(/^\s+|\s+$/g, '');
-        writeln("  title: "+title);
         if (splitDoc[2] == undefined) {
-            shortTitle = turnIntoValidShortTitle(title,[],20);
+            shortTitle = turnIntoValidShortTitle(title, [], 20);
         } else {
-            shortTitle = turnIntoValidShortTitle(splitDoc[2].replace(/^\s+|\s+$/g, ''),[],20);
+            shortTitle = turnIntoValidShortTitle(splitDoc[2].replace(/^\s+|\s+$/g, ''), [], 20);
         }
-        writeln("  shortTitle: "+shortTitle);
-        s = splitDoc[4];
-        var textParts = new RegExp("^(?:([^=].*?)(?:={"+level+"}|$)|())").exec(s);
-        writeln(level);
-        writeln(s);
-        var text = textParts[1].replace(/=+$/, '').replace(/^\s+|\s+$/g, '');
-        //var text = s.replace(m).replace(/^\s+|\s+$/g, '');
-        writeln("  text: "+text);
-        node['children'].push(parseStructure("= "+title+" =\n"+ s.replace(m, '').replace(/^\s+|\s+$/g, ''),shortTitle));
-    } while (m.test(s));
-    writeln("done");
+
+        splitDoc = splitAtHeading(splitDoc[3],level);
+        node['children'].push(parseStructure("= " + title + " =\n" + splitDoc[0].replace(/^\s+|\s+$/g, ''), shortTitle));
+        s = splitDoc[1];
+    }
     return node;
 }
 
