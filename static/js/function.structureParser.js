@@ -24,7 +24,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ##############################################################################*/
 
-var h1Start = /^\s*=([^=]+)=*\s*(.*)$/;
+var h1Start = /^\s*=([^=]+)=*\s*([\s\S]*)$/;
 var generalH = /={2,6}([^=]+)=*[^=]/;
 var invalidSymbols = /[^\w\-_\s]+/g;
 
@@ -40,7 +40,7 @@ function getHeadingMatcher(level) {
             /* raise ValueError("level must be between 1 and 6 or 0, but was %d."%level) */
         }
     }
-    return "^\s*={"+s+"}([^=§]+)(?:§\s*([^=§\s][^=§]*))?=*\s*(.*)$";
+    return "^\s*={"+s+"}([^=§]+)(?:§\s*([^=§\s][^=§]*))?=*\s*";
 }
 
 function removeUnallowedChars(s) {
@@ -169,6 +169,32 @@ function splitAtHeading(s, level) {
     return [s, ""];
 }
 
+function textAfterTitle(s, level) {
+    var sc = 0;
+    var count = 0;
+    for (var i = 0; i < s.length; i++) {
+        if ((s[i] == "=") && ((sc == 0) || (sc == 2))) {
+            sc++;
+        }
+        if ((s[i] == "=") && (sc == 1)) {
+            count++;
+        }
+        if ((sc == 1) && (s[i] != "=")) {
+            sc = 2;
+        }
+        if ((sc == 3) && (s[i] != "=")) {
+            if (count == level) {
+                return s.substring(i);
+            } else {
+                count = 0;
+                sc = 0;
+            }
+
+        }
+    }
+    return s;
+}
+
 function parseStructure(s, shortTitle) {
     var m = h1Start.exec(s);
     if (h1Start.test(s) && (m.length > 2)) {
@@ -214,7 +240,7 @@ function parseStructure(s, shortTitle) {
             shortTitle = turnIntoValidShortTitle(splitDoc[2].replace(/^\s+|\s+$/g, ''), [], 20);
         }
 
-        splitDoc = splitAtHeading(splitDoc[3],level);
+        splitDoc = splitAtHeading(textAfterTitle(s,level),level);
         node['children'].push(parseStructure("= " + title + " =\n" + splitDoc[0].replace(/^\s+|\s+$/g, ''), shortTitle));
         s = splitDoc[1];
     }
@@ -223,7 +249,7 @@ function parseStructure(s, shortTitle) {
 
 function convertSchemaToCreole(schema, level) {
     if (level == undefined) {
-        level = 1
+        level = 1;
     }
     var hSep = "=";
     while (hSep.length < level) {
@@ -231,7 +257,7 @@ function convertSchemaToCreole(schema, level) {
     }
     var wikiText = hSep+" "+schema['title']+" "+hSep+"\n"+schema['text'];
     for (var i = 0; i < schema['children'].length; i++) {
-        wikiText += convertSchemaToCreole(schema['children'][i],level+1);
+        wikiText += "\n\n"+convertSchemaToCreole(schema['children'][i],level+1);
     }
     return wikiText;
 }

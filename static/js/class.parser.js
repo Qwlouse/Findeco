@@ -28,8 +28,8 @@ function ClassParser() {}
 
 var Parser = new ClassParser();
 
-ClassParser.prototype.parse = function(text, shortTitle, level){
-    var wikiText = convertSchemaToCreole(parseStructure(text, shortTitle),level);
+ClassParser.prototype.parse = function(text, shortTitle){
+    var wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
     var textDiv = document.createElement("div");
     textDiv.innerHTML = "";
     var creole = new Parse.Simple.Creole( {

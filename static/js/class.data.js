@@ -120,11 +120,12 @@ ClassData.prototype.loadIndexResponse = function(data) {
 
 ClassData.prototype.loadTextResponse = function(data) {
     this.type = 'text';
-    
-    for ( p in data['paragraphs'] ) {
-        Parser.parse(data['paragraphs'][p].wikiText,data['paragraphs'][p].shortTitle,2)
-            .appendTo(this.html);
+    var wikiText = "";
+    for ( var p in data['paragraphs'] ) {
+        wikiText += data['paragraphs'][p].wikiText + "\n\n[[#/" + data['paragraphs'][p].path + "]]\n\n";
     }
+    var shortTitle = data['paragraphs'][0].path.replace(/(.*)\//g,'').replace(/.\d+$/,'');
+    Parser.parse(wikiText,shortTitle).appendTo(this.html);
 };
 
 ClassData.prototype.loadMicrobloggingResponse = function(data) {
