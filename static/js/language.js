@@ -23,22 +23,25 @@
  ****************************************************************************************/
 
  /* Important: de_DE is the default language, add there under all circumstances! */
-function ClassLanguage() {};
+function ClassLanguage() {}
 
 var Language = new ClassLanguage();
 
-ClassLanguage.prototype.get = function(target,lang) {
-switch ( target ) {
-    case 'de_DE':
-        switch ( lang ) {
-            case 'lang_alertLoggedout': return 'Du bist nicht mehr eingeloggt. Bitte lade die Seite neu.';
-            default: return 'undefined';
-        };
-        break;
-    case 'en_GB':
-        switch ( lang ) {
-            default: return 'undefined';
-        };
-        break;
+ClassLanguage.prototype.get = function (target, lang) {
+    switch (target) {
+        case 'de_DE':
+            switch (lang) {
+                case 'lang_alertLoggedout':
+                    return 'Du bist nicht mehr eingeloggt. Bitte lade die Seite neu.';
+                default:
+                    return 'undefined';
+            }
+            break;
+        case 'en_GB':
+            switch (lang) {
+                default:
+                    return 'undefined';
+            }
+            break;
     }
 };

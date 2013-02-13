@@ -31,7 +31,7 @@ ClassMain.prototype.isTypeLoaded = function (type) {
         return true;
     }
     return false;
-}
+};
 
 ClassMain.prototype.load = function (position) {
     // console.log('ClassMain','load');
@@ -58,7 +58,7 @@ ClassMain.prototype.loadText = function (position) {
 
 ClassMain.prototype.reset = function () {
     Main.loaded = {};
-}
+};
 
 ClassMain.prototype.show = function (data) {
     // console.log('ClassMain','show');
@@ -66,7 +66,7 @@ ClassMain.prototype.show = function (data) {
     center.empty();
     Main.append(data);
     Main.loadGraphData();
-}
+};
 
 ClassMain.prototype.append = function (data) {
     // console.log('ClassMain','append');

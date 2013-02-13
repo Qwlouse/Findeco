@@ -26,15 +26,15 @@ function ClassData(json) {this.load(json);}
 
 ClassData.prototype.getInfo = function() {
     return this.info;
-}
+};
 
 ClassData.prototype.getJQueryObject = function() {
     return this.html;
-}
+};
 
 ClassData.prototype.getType = function() {
     return this.info['type'];
-}
+};
 
 ClassData.prototype.load = function(data) {
     this.json = data;
@@ -44,7 +44,7 @@ ClassData.prototype.load = function(data) {
     
     // console.log(data);
     
-    for ( d in data ) {
+    for ( var d in data ) {
         if ( d == 'loadIndexResponse' ) {
             this.loadIndexResponse(data[d]);
         }
@@ -79,17 +79,18 @@ ClassData.prototype.loadArgumentResponse = function(data) {
     
     $('<br>').appendTo(procontra);
     
-    for ( d in data ) {
+    for ( var d in data ) {
         var path = Controller.getPosition() + '.' + data[d].shortTitle + '.' + data[d].index;
         $('<li data-path="' + path + '">' + data[d].fullTitle + '</li>')
             .click(Helper.argumentClickHandler)
             .appendTo(arguments[data[d].shortTitle]);
     }
-}
+};
 
 ClassData.prototype.loadGraphDataResponse = function(data) {
     this.type = 'graphdata';
-}
+    //alert(data);
+};
 
 ClassData.prototype.loadIndexResponse = function(data) {
     this.type = 'index';
@@ -150,10 +151,10 @@ ClassData.prototype.loadMicrobloggingResponse = function(data) {
 
 ClassData.prototype.setInfo = function(type,path) {
     this.info = {'type':type,'path':path};
-}
+};
 
 ClassData.prototype.setType = function(type) {
     if ( typeof this.info != 'object' || this.info == undefined || this.info['type'] == undefined ) {
         this.info['type'] = type;
     }
-}
+};

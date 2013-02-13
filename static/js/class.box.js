@@ -24,7 +24,7 @@
 
 var boxCount = 0;
 
-function ClassBox() { this.id = ++boxCount; this.element = $('<div id="box' + this.id + '"></div>'); };
+function ClassBox() { this.id = ++boxCount; this.element = $('<div id="box' + this.id + '"></div>'); }
 
 ClassBox.prototype.addButtons = function() {
     var arguments = this.element.children('div.arguments');
@@ -50,7 +50,7 @@ ClassBox.prototype.addButtons = function() {
         .appendTo(buttons);
     
     
-}
+};
 
 ClassBox.prototype.printData = function(data) {
     var target = this.element;
@@ -75,7 +75,7 @@ ClassBox.prototype.printData = function(data) {
     target.empty();
     
     data.getJQueryObject().appendTo(target);
-}
+};
 
 ClassBox.prototype.empty = function() {
     if ( this.type == 'center' ) {
@@ -84,7 +84,7 @@ ClassBox.prototype.empty = function() {
     } else {
         this.element.empty();
     }
-}
+};
 
 ClassBox.prototype.show = function(position,container) {
     this.type = position;
@@ -128,7 +128,7 @@ ClassBox.prototype.show = function(position,container) {
         
         this.element.hide();
     }
-}
+};
 
 ClassBox.prototype.swap = function(element) {
     var id = Helper.getId(element.target.id);
@@ -152,4 +152,4 @@ ClassBox.prototype.swap = function(element) {
         var newStyle = 'width: ' + ( $(window).width() / 4 ) + 'px;';
         BoxRegister.get(id).element.attr('style',newStyle);
     }
-}
+};

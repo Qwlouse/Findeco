@@ -68,7 +68,7 @@ ClassNavigation.prototype.show = function (data) {
 ClassNavigation.prototype.updateButtons = function () {
     // console.log('ClassNavigation','updateButtons');
     var buttons = navigation.children();
-    for ( b in buttons ) {
+    for ( var b in buttons ) {
         if ( isNaN(b) ) {
             continue;
         }
@@ -79,4 +79,4 @@ ClassNavigation.prototype.updateButtons = function () {
         }
         buttons[b].innerHTML = title;
     }
-}
+};

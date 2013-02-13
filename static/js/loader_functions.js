@@ -209,13 +209,13 @@ function appendLeftData(json) {
     var box = BoxRegister.newBox();
     box.show('swap',left);
     
-    data = new ClassData();
+    var data = new ClassData();
     data.load(json);
     box.printData(data);
 }
 
 function loadNavigation(json) {
-    for ( j in json ) {
+    for ( var j in json ) {
         $('<li class="button" style="z-index: 501; position: relative;">' + json[j] + '</li>')
             .appendTo(navigation);
     }
@@ -224,8 +224,8 @@ function loadNavigation(json) {
 function loadMicroBlogging() {
     right.empty();
     
-    json = {"loadMicrobloggingResponse":[{"microblogText":"Testblog 1.","microblogID":1,"microblogTime":1357746204,"authorGroup":[{"displayName":"author1"}]},{"microblogText":"Testblog 2.","microblogID":2,"microblogTime":1357746304,"authorGroup":[{"displayName":"author2"}]}]};
-    data = new ClassData();
+    var json = {"loadMicrobloggingResponse":[{"microblogText":"Testblog 1.","microblogID":1,"microblogTime":1357746204,"authorGroup":[{"displayName":"author1"}]},{"microblogText":"Testblog 2.","microblogID":2,"microblogTime":1357746304,"authorGroup":[{"displayName":"author2"}]}]};
+    var data = new ClassData();
     data.load(json);
     right.printData(data);
 }

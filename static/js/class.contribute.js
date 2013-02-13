@@ -107,7 +107,7 @@ ClassContribute.prototype.checkDone = function () {
             
         break;
     }
-}
+};
 
 ClassContribute.prototype.createForm = function () {
     Contribute.form = {};
@@ -142,7 +142,7 @@ ClassContribute.prototype.createForm = function () {
         .hide();
     Contribute.form['type'] = $('<input type="hidden">')
         .appendTo(Contribute.formContainer);
-}
+};
 
 ClassContribute.prototype.markButton = function (type) {
     for ( b in Contribute.buttons ) {
@@ -151,12 +151,12 @@ ClassContribute.prototype.markButton = function (type) {
             Contribute.buttons[b].addClass('marked');
         }
     }
-}
+};
 
 ClassContribute.prototype.setAlt = function () {
     Contribute.markButton('newAlt');
     return false;
-}
+};
 
 ClassContribute.prototype.setArg = function (type) {
     for ( f in Contribute.form ) {
@@ -169,31 +169,31 @@ ClassContribute.prototype.setArg = function (type) {
         }
     }
     return false;
-}
+};
 
 ClassContribute.prototype.setCon = function () {
     Contribute.markButton('newCon');
     Contribute.setArg('con');
     return false;
-}
+};
 
 
 ClassContribute.prototype.setNeut = function () {
     Contribute.markButton('newNeut');
     Contribute.setArg('neut');
     return false;
-}
+};
 
 
 ClassContribute.prototype.setPro = function () {
     Contribute.markButton('newPro');
     Contribute.setArg('pro');
     return false;
-}
+};
 
 
 ClassContribute.prototype.setText = function () {
     Contribute.markButton('newText');
     return false;
-}
+};
 

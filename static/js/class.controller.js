@@ -40,15 +40,16 @@ ClassController.prototype.load = function(element) {
 
 ClassController.prototype.loadArguments = function() {
     Main.loadArguments(Controller.position);
-}
+};
+
 ClassController.prototype.loadText = function() {
     Main.loadText(Controller.position);
-}
+};
 
 ClassController.prototype.loadIndex = function(target) {
     Controller.position = target;
     document.location.hash = Controller.position;
-}
+};
 
 ClassController.prototype.loadIndexRelative = function(target) {
     if ( Controller.position.substring(Controller.position.length-1) != '/' ) {
@@ -56,7 +57,7 @@ ClassController.prototype.loadIndexRelative = function(target) {
     }
     Controller.position += target;
     document.location.hash = Controller.position;
-}
+};
 
 ClassController.prototype.parentPosition = function() {
     var pos = Controller.position.lastIndexOf('/');
@@ -81,4 +82,4 @@ ClassController.prototype.stateHandler = function(event) {
     Microblogging.load(Controller.position);
     Navigation.load(Controller.position);
     Main.load(Controller.position);
-}
+};

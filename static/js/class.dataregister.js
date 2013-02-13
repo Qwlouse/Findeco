@@ -39,11 +39,11 @@ ClassDataRegister.prototype.get = function(callback,type,position,force) {
     data.setInfo(type,position);
     data.load(DataRegister.data[type][position]);
     callback(data);
-}
+};
 
 ClassDataRegister.prototype.getTitle = function(path) {
     return this.title[path];
-}
+};
 
 ClassDataRegister.prototype.handleAjax = function(json) {
     var action = Helper.getActionFromUrl(this.url);
@@ -88,7 +88,7 @@ ClassDataRegister.prototype.handleAjax = function(json) {
     
     // Necessary call to ensure that Navigation Buttons are allways filled!
     Navigation.updateButtons();
-}
+};
 
 ClassDataRegister.prototype.load = function(callback,type,position) {
     // console.log('ClassDataRegister','load');
@@ -112,10 +112,10 @@ ClassDataRegister.prototype.load = function(callback,type,position) {
     }
     
     $.get(loadType + position,DataRegister.handleAjax,'json');
-}
+};
 
 ClassDataRegister.prototype.setTitle = function(path,title) {
     this.title[path] = title;
-}
+};
 
 ClassDataRegister.prototype.title = {};

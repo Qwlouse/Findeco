@@ -28,11 +28,11 @@ var Helper = new ClassHelper();
 
 ClassHelper.prototype.argumentClickHandler = function() {
     Main.loadText($(this).attr('data-path'));
-}
+};
 
 ClassHelper.prototype.getActionFromUrl = function(url) {
     return url.substring(0,url.indexOf('/'));
-}
+};
 
 ClassHelper.prototype.getId = function(string) {
     var search = /(\d+)/;
@@ -41,11 +41,11 @@ ClassHelper.prototype.getId = function(string) {
         return null;
     }
     return parseInt(result[1]);
-}
+};
 
 ClassHelper.prototype.getTargetPathFromUrl = function(url) {
     return url.substring(url.indexOf('/'));
-}
+};
 
 ClassHelper.prototype.objectLength = function(object) {
     var i = 0;
@@ -53,13 +53,13 @@ ClassHelper.prototype.objectLength = function(object) {
         i++;
     }
     return i;
-}
+};
 
 ClassHelper.prototype.timestampToDate = function(time) {
     var d = new Date();
     d.setTime(time*1000);
     return d.toLocaleTimeString() + ', ' + d.toLocaleDateString(); 
-}
+};
 
 ClassHelper.prototype.titleClickHandler = function() {
     if ( $(this).attr('data-path') == undefined ) {
@@ -67,5 +67,5 @@ ClassHelper.prototype.titleClickHandler = function() {
     } else {
         Controller.loadIndex($(this).attr('data-path'));
     }
-}
+};
 

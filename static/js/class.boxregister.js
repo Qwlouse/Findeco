@@ -22,12 +22,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-function ClassBoxRegister() {};
+function ClassBoxRegister() {}
 var BoxRegister = new ClassBoxRegister();
 
 ClassBoxRegister.prototype.get = function(id) {
     return this.register[id];
-}
+};
 
 ClassBoxRegister.prototype.hideAll = function() {
     for ( r in this.register ) {
@@ -38,7 +38,7 @@ ClassBoxRegister.prototype.hideAll = function() {
         this.register[r].blind.show();
         this.register[r].element.hide();
     }
-}
+};
 
 ClassBoxRegister.prototype.newBox = function() {
     var tmp = new ClassBox();
@@ -47,4 +47,4 @@ ClassBoxRegister.prototype.newBox = function() {
     }
     this.register[tmp.id] = tmp;
     return tmp;
-}
+};
