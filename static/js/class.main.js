@@ -43,6 +43,14 @@ ClassMain.prototype.loadArguments = function (position) {
     DataRegister.get(Main.append,'argument',position,true);
 };
 
+ClassMain.prototype.loadGraphData = function (position) {
+    // console.log('ClassMain','loadArguments');
+    if ( position == undefined ) {
+        position = Controller.position;
+    }
+    DataRegister.get(Main.append,'graphdata',position,true);
+};
+
 ClassMain.prototype.loadText = function (position) {
     // console.log('ClassMain','loadText');
     DataRegister.get(Main.append,'text',position,true);
@@ -57,6 +65,7 @@ ClassMain.prototype.show = function (data) {
     Main.reset();
     center.empty();
     Main.append(data);
+    Main.loadGraphData();
 }
 
 ClassMain.prototype.append = function (data) {
