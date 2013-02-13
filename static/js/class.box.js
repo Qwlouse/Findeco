@@ -44,12 +44,10 @@ ClassBox.prototype.addButtons = function() {
         })
         .appendTo(text);
     
-    $('<div style="margin-bottom: 10px;">Etwas beitragen</div>')
+    $('<div style="margin-bottom: 10px;">Mitwirken oder Diskutieren</div>')
         .addClass('button')
         .click(Contribute.handleClick)
         .appendTo(buttons);
-    
-    
 };
 
 ClassBox.prototype.printData = function(data) {

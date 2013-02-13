@@ -49,12 +49,16 @@ ClassContribute.prototype.isDefaultText = function (text) {
 
 ClassContribute.prototype.defaultText = {
     'text': {
-        'wikiText':'= text = ' + "\r\n" + 'wikiText',
-        'wikiTextAlt':'= text = ' + "\r\n" + 'wikiTextAlt'
+        'wikiText':'= Ersetze dies hier durch einen Titel für deinen Text =' + "\r\n" 
+                    + 'Der Titel wird in der Übersicht angezeigt. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!',
+        'wikiTextAlt':''
     },
     'arg': {
-        'wikiText':'= arg = ' + "\r\n" + 'wikiText',
-        'wikiTextAlt':'= arg = ' + "\r\n" + 'wikiTextAlt'
+        'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung für dein Argument =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!',
+        'wikiTextAlt':''
     },
     'alt': {
         'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
@@ -142,20 +146,23 @@ ClassContribute.prototype.checkDone = function () {
             Contribute.buttons['confirm'].removeClass('marked');
             if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) ) {
                 Contribute.buttons['confirm'].addClass('marked');
+                return false;
             }
-        break;
+        return true;
         case 'text':
             Contribute.buttons['confirm'].removeClass('marked');
             if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) ) {
                 Contribute.buttons['confirm'].addClass('marked');
+                return false;
             }
-        break;
+        return true;
         case 'alt':
             Contribute.buttons['confirm'].removeClass('marked');
             if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) || Contribute.isDefaultText(Contribute.form['wikiTextAlt'].val()) ) {
                 Contribute.buttons['confirm'].addClass('marked');
+                return false;
             }
-        break;
+        return true;
     }
 };
 
@@ -167,8 +174,11 @@ ClassContribute.prototype.createForm = function () {
         .keyup(function () {
             Contribute.checkDone();
             Contribute.form['wikiTextDisplay']
-                .empty()
-                .html(Parser.parse($(this).val()));
+                .empty();
+            if ( $(this).val() != '' ) {
+                Contribute.form['wikiTextDisplay']
+                    .html(Parser.parse($(this).val()));
+            }
         })
         .hide();
     Contribute.form['wikiTextDisplay'] = $('<div>')
@@ -182,8 +192,11 @@ ClassContribute.prototype.createForm = function () {
         .keyup(function () {
             Contribute.checkDone();
             Contribute.form['wikiTextAltDisplay']
-                .empty()
-                .html(Parser.parse($(this).val()));
+                .empty();
+            if ( $(this).val() != '' ) {
+                Contribute.form['wikiTextAltDisplay']
+                    .html(Parser.parse($(this).val()));
+            }
         })
         .hide();
     Contribute.form['wikiTextAltDisplay'] = $('<div>')
