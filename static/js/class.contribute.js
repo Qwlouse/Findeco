@@ -22,8 +22,49 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
+ /*
+ * Workaround for JQueryObject.val() destroying carriage returns.
+ */
+ $.valHooks.textarea = {
+  get: function( elem ) {
+      return elem.value.replace( /\r?\n/g, "\r\n" );
+  } };
+ 
 function ClassContribute() {}
 var Contribute = new ClassContribute();
+
+ClassContribute.prototype.isDefaultText = function (text) {
+    if ( text == '' ) {
+        return true;
+    }
+    for ( d in Contribute.defaultText ) {
+        for ( d2 in Contribute.defaultText[d] ) {
+            if ( Contribute.defaultText[d][d2] == text ) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+ClassContribute.prototype.defaultText = {
+    'text': {
+        'wikiText':'= text = ' + "\r\n" + 'wikiText',
+        'wikiTextAlt':'= text = ' + "\r\n" + 'wikiTextAlt'
+    },
+    'arg': {
+        'wikiText':'= arg = ' + "\r\n" + 'wikiText',
+        'wikiTextAlt':'= arg = ' + "\r\n" + 'wikiTextAlt'
+    },
+    'alt': {
+        'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!',
+        'wikiTextAlt':'= Ersetze dies hier durch einen Titel für deinen Alternativtext =' + "\r\n" 
+                    + 'Der Titel wird in der Übersicht angezeigt. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
+    }
+};
 
 
 ClassContribute.prototype.handleClick = function (a,b,c) {
@@ -98,13 +139,22 @@ ClassContribute.prototype.handleClick = function (a,b,c) {
 ClassContribute.prototype.checkDone = function () {
     switch ( Contribute.form['type'].val() ) {
         case 'pro':case 'neut':case 'con':
-            
+            Contribute.buttons['confirm'].removeClass('marked');
+            if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) ) {
+                Contribute.buttons['confirm'].addClass('marked');
+            }
         break;
         case 'text':
-            
+            Contribute.buttons['confirm'].removeClass('marked');
+            if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) ) {
+                Contribute.buttons['confirm'].addClass('marked');
+            }
         break;
         case 'alt':
-            
+            Contribute.buttons['confirm'].removeClass('marked');
+            if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) || Contribute.isDefaultText(Contribute.form['wikiTextAlt'].val()) ) {
+                Contribute.buttons['confirm'].addClass('marked');
+            }
         break;
     }
 };
@@ -155,14 +205,51 @@ ClassContribute.prototype.markButton = function (type) {
 
 ClassContribute.prototype.setAlt = function () {
     Contribute.markButton('newAlt');
+    for ( f in Contribute.form ) {
+        Contribute.form[f].show();
+        if ( f == 'wikiText' ) {
+            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
+                Contribute.form[f]
+                    .val(Contribute.defaultText['alt'][f])
+                    .trigger('keyup');
+            }
+        }
+        if ( f == 'wikiTextAlt' ) {
+            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
+                Contribute.form[f]
+                    .val(Contribute.defaultText['alt'][f])
+                    .trigger('keyup');
+            } else {
+                console.log(Contribute.form[f].val());
+            }
+            Contribute.form[f]
+                .attr('disabled',false);
+        }
+        if ( f == 'type' ) {
+            Contribute.form[f].attr('value','alt');
+        }
+    }
     return false;
 };
 
 ClassContribute.prototype.setArg = function (type) {
     for ( f in Contribute.form ) {
         Contribute.form[f].show();
+        if ( f == 'wikiText' ) {
+            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
+                Contribute.form[f]
+                    .val(Contribute.defaultText['arg'][f])
+                    .trigger('keyup');
+            }
+        }
         if ( f == 'wikiTextAlt' ) {
-            Contribute.form[f].attr('disabled',true);
+            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
+                Contribute.form[f]
+                    .val(Contribute.defaultText['arg'][f])
+                    .trigger('keyup');
+            }
+            Contribute.form[f]
+                .attr('disabled',true);
         }
         if ( f == 'type' ) {
             Contribute.form[f].attr('value',type);
@@ -194,6 +281,28 @@ ClassContribute.prototype.setPro = function () {
 
 ClassContribute.prototype.setText = function () {
     Contribute.markButton('newText');
+    for ( f in Contribute.form ) {
+        Contribute.form[f].show();
+        if ( f == 'wikiText' ) {
+            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
+                Contribute.form[f]
+                    .val(Contribute.defaultText['text'][f])
+                    .trigger('keyup');
+            }
+        }
+        if ( f == 'wikiTextAlt' ) {
+            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
+                Contribute.form[f]
+                    .val(Contribute.defaultText['text'][f])
+                    .trigger('keyup');
+            }
+            Contribute.form[f]
+                .attr('disabled',true);
+        }
+        if ( f == 'type' ) {
+            Contribute.form[f].attr('value','text');
+        }
+    }
     return false;
 };
 

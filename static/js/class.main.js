@@ -75,6 +75,7 @@ ClassMain.prototype.append = function (data) {
     if ( data.getType() == 'index'
         && data.json.loadIndexResponse != undefined 
         && Helper.objectLength(data.json.loadIndexResponse) == 0 ) {
+        Controller.loadArguments();
         Controller.loadText();
     } else {
         var l = 0;
