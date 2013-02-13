@@ -26,6 +26,13 @@ function ClassMain() {}
 var Main = new ClassMain();
 
 
+ClassMain.prototype.isTypeLoaded = function (type) {
+    if ( Main.loaded[type] == true ) {
+        return true;
+    }
+    return false;
+}
+
 ClassMain.prototype.load = function (position) {
     // console.log('ClassMain','load');
     DataRegister.get(this.show,'index',position,true);
@@ -41,14 +48,21 @@ ClassMain.prototype.loadText = function (position) {
     DataRegister.get(Main.append,'text',position,true);
 };
 
+ClassMain.prototype.reset = function () {
+    Main.loaded = {};
+}
+
 ClassMain.prototype.show = function (data) {
     // console.log('ClassMain','show');
+    Main.reset();
     center.empty();
     Main.append(data);
 }
 
 ClassMain.prototype.append = function (data) {
     // console.log('ClassMain','append');
+    Main.loaded[data.getType()] = true;
+    
     if ( data.getType() == 'index'
         && data.json.loadIndexResponse != undefined 
         && Helper.objectLength(data.json.loadIndexResponse) == 0 ) {

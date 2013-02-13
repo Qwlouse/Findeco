@@ -44,20 +44,9 @@ ClassBox.prototype.addButtons = function() {
         })
         .appendTo(text);
     
-    $('<div style="margin-bottom: 10px;">Abschnitt hinzuf&uuml;gen</div>')
+    $('<div style="margin-bottom: 10px;">Etwas beitragen</div>')
         .addClass('button')
-        .addClass('smallbutton')
-        .click(function () {
-            
-        })
-        .appendTo(buttons);
-    
-    $('<div style="margin-bottom: 10px;">Argument hinzuf&uuml;gen</div>')
-        .addClass('button')
-        .addClass('smallbutton')
-        .click(function () {
-            
-        })
+        .click(Contribute.handleClick)
         .appendTo(buttons);
     
     
@@ -121,10 +110,10 @@ ClassBox.prototype.show = function(position,container) {
             .addClass('arguments')
             .appendTo(this.element);
         $('<div>')
-            .addClass('text')
+            .addClass('buttons')
             .appendTo(this.element);
         $('<div>')
-            .addClass('buttons')
+            .addClass('text')
             .appendTo(this.element);
         
         this.addButtons();
