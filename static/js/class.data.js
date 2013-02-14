@@ -89,7 +89,6 @@ ClassData.prototype.loadArgumentResponse = function(data) {
 
 ClassData.prototype.loadGraphDataResponse = function(data) {
     this.type = 'graphdata';
-    console.log('ClassData','loadGraphDataResponse',data);
     //alert(data['graphDataChildren'].length);
     //alert(data['graphDataChildren'][0]['path']);
     //alert(data['graphDataRelated'].length);
@@ -101,8 +100,8 @@ ClassData.prototype.loadGraphDataResponse = function(data) {
     graphNode.paddingLeft = 30.0;
     graphNode.paddingRight = 30.0;
     graphNode.paddingBottom = 30.0;
-    document.getElementsByClassName('graphdata')[0].appendChild(graphNode);
     Graphbuilder.buildAnchorGraph(data, graphNode);
+    $(graphNode).appendTo(this.html);
 };
 
 ClassData.prototype.loadIndexResponse = function(data) {
