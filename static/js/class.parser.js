@@ -38,15 +38,13 @@ ClassParser.prototype.parse = function(text, shortTitle){
     var wikiText = '';
     try {
         Parser.errorState = false;
-        wikiText = parseStructure(text, shortTitle);
+        wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
     } catch (e) {
         Parser.errorState = true;
         wikiText = e;
     }
-    wikiText = convertSchemaToCreole(wikiText);
     var textDiv = document.createElement("div");
-    textDiv.innerHTML = wikiText;
-    return $('<p>' + textDiv.innerHTML + '</p>');
+    textDiv.innerHTML = "";
     var creole = new Parse.Simple.Creole( {
         forIE: document.all,
         interwiki: {
@@ -56,5 +54,5 @@ ClassParser.prototype.parse = function(text, shortTitle){
         linkFormat: ''
     } );
     creole.parse(textDiv,wikiText);
-    return $(textDiv.innerHTML);
+    return $('<div>' + textDiv.innerHTML + '<div>');
 };
