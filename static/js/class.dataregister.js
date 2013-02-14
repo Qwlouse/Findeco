@@ -32,6 +32,7 @@ ClassDataRegister.prototype.get = function(callback,type,position,force) {
     // console.log('ClassDataRegister','get',type,force);
     if ( DataRegister.data[type][position] == undefined
         || force != undefined ) {
+        // console.log('ClassDataRegister','get','load');
         DataRegister.load(callback,type,position);
         return;
     }
@@ -65,7 +66,10 @@ ClassDataRegister.prototype.handleAjax = function(json) {
             position = position.replace(/\/\d+/g,'');
         break;
         case '.json_loadText': type = 'text'; break;
-        case '.json_loadGraphData': type = 'graphdata'; break;
+        case '.json_loadGraphData': 
+            type = 'graphdata';
+            position = position.replace(/\/(default|full|withSpam)/g,'');
+        break;
     }
     // console.log(type,position,DataRegister.data[type]);
     var callbacks = DataRegister.data[type][position];
@@ -97,15 +101,17 @@ ClassDataRegister.prototype.load = function(callback,type,position) {
         || DataRegister.data[type][position].next == undefined ) {
         DataRegister.data[type][position] = {'next':1,0:callback};
     } else {
+        // console.log(DataRegister.data,DataRegister.data[type],DataRegister.data[type][position]);
         DataRegister.data[type][position][DataRegister.data[type][position].next++] = callback;
         return;
     }
     
     var loadType = '';
     
+    // console.log('ClassDataRegister','load','switch');
     switch ( type ) {
         case 'index': loadType = '.json_loadIndex'; break;
-        case 'graphdata': $.get('.json_loadGraphData/default' + position,DataRegister.handleAjax,'json'); break;
+        case 'graphdata': $.get('.json_loadGraphData/default' + position,DataRegister.handleAjax,'json'); return;
         case 'microblogging': $.get('.json_loadMicroblogging/newer' + position,DataRegister.handleAjax,'json'); return;
         case 'argument': $.get('.json_loadIndex/True' + position,DataRegister.handleAjax,'json'); return;
         case 'text': loadType = '.json_loadText'; break;

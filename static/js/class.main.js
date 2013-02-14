@@ -35,6 +35,7 @@ ClassMain.prototype.isTypeLoaded = function (type) {
 
 ClassMain.prototype.load = function (position) {
     // console.log('ClassMain','load');
+    Main.position = position;
     DataRegister.get(this.show,'index',position,true);
 };
 
@@ -46,7 +47,8 @@ ClassMain.prototype.loadArguments = function (position) {
 ClassMain.prototype.loadGraphData = function (position) {
     // console.log('ClassMain','loadArguments');
     if ( position == undefined ) {
-        position = Controller.position;
+        // console.log('ClassMain','loadArguments','undefined');
+        position = Main.position;
     }
     DataRegister.get(Main.append,'graphdata',position,true);
 };
@@ -69,7 +71,7 @@ ClassMain.prototype.show = function (data) {
 };
 
 ClassMain.prototype.append = function (data) {
-    // console.log('ClassMain','append');
+    // console.log('ClassMain','append',data);
     Main.loaded[data.getType()] = true;
     
     if ( data.getType() == 'index'

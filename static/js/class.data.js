@@ -89,6 +89,7 @@ ClassData.prototype.loadArgumentResponse = function(data) {
 
 ClassData.prototype.loadGraphDataResponse = function(data) {
     this.type = 'graphdata';
+    console.log('ClassData','loadGraphDataResponse',data);
     //alert(data['graphDataChildren'].length);
     //alert(data['graphDataChildren'][0]['path']);
     //alert(data['graphDataRelated'].length);
