@@ -28,18 +28,30 @@ function ClassParser() {}
 
 var Parser = new ClassParser();
 
+ClassParser.prototype.errorState = false;
+
+ClassParser.prototype.isErrorState = function() {
+    return Parser.errorState;
+}
+
 ClassParser.prototype.parse = function(text, shortTitle){
-    var wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
-    var textDiv = document.createElement("div");
-    textDiv.innerHTML = "";
-    var creole = new Parse.Simple.Creole( {
-        forIE: document.all,
-        interwiki: {
-            WikiCreole: 'http://www.wikicreole.org/wiki/',
-            Wikipedia: 'http://en.wikipedia.org/wiki/'
-        },
-        linkFormat: ''
-    } );
-    creole.parse(textDiv,wikiText);
-    return $(textDiv.innerHTML);
+    try {
+        Parser.errorState = false;
+        var wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
+        var textDiv = document.createElement("div");
+        textDiv.innerHTML = "";
+        var creole = new Parse.Simple.Creole( {
+            forIE: document.all,
+            interwiki: {
+                WikiCreole: 'http://www.wikicreole.org/wiki/',
+                Wikipedia: 'http://en.wikipedia.org/wiki/'
+            },
+            linkFormat: ''
+        } );
+        creole.parse(textDiv,wikiText);
+        return $(textDiv.innerHTML);
+    } catch (e) {
+        Parser.errorState = true;
+        return e;
+    }
 };
