@@ -36,17 +36,17 @@ ClassParser.prototype.isErrorState = function() {
 
 ClassParser.prototype.parse = function(text, shortTitle){
     var wikiText = '';
-    
     try {
         Parser.errorState = false;
-        wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
+        wikiText = parseStructure(text, shortTitle);
     } catch (e) {
         Parser.errorState = true;
         wikiText = e;
     }
-    
+    wikiText = convertSchemaToCreole(wikiText);
     var textDiv = document.createElement("div");
-    textDiv.innerHTML = "";
+    textDiv.innerHTML = wikiText;
+    return $('<p>' + textDiv.innerHTML + '</p>');
     var creole = new Parse.Simple.Creole( {
         forIE: document.all,
         interwiki: {
