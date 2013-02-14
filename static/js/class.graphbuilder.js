@@ -39,7 +39,7 @@ ClassGraphbuilder.prototype.createCircleStructure = function (path, newFollows, 
     var innerDIV = document.createElement("div");
     innerDIV.appendChild(linkDIV);
     innerDIV.setAttribute("class", "circle");
-    innerDIV.setAttribute("onClick", "alert('"+path+"');"); // Link to path would be better...
+    innerDIV.setAttribute("onClick", "Controller.loadIndex('/"+path+"');"); // Link to path would be better...
     var outerDIV = document.createElement("div");
     outerDIV.setAttribute("class", "masspoint");
     var diagramDIV = document.createElement("div");

@@ -232,10 +232,10 @@ function parseStructure(s, shortTitle, recusionDepth) {
     s = splitDoc[1];
 
     /* parsing sections now */
-    var bla = 0;
+    var paragraphCount = 1;
     m = new RegExp(getHeadingMatcher(level));
     while (m.test(s.replace(/^\s+|\s+$/g, ''))) {
-        if (bla > 100) {throw "More than 100 paragraphs."} // TODO: Why do we need that?
+        if (paragraphCount > 100) {throw "More than 100 paragraphs. Or we screwed something up. Try typing the rest of the heading and enter a newline."} // TODO: Why do we need that?
         splitDoc = m.exec(s.replace(/^\s+|\s+$/g, ''));
         title = splitDoc[1].replace(/^\s+|\s+$/g, '');
         if (splitDoc[2] == undefined) {
@@ -247,7 +247,7 @@ function parseStructure(s, shortTitle, recusionDepth) {
         splitDoc = splitAtHeading(textAfterTitle(s,level),level);
         node['children'].push(parseStructure("= " + title + " =\n" + splitDoc[0].replace(/^\s+|\s+$/g, ''), shortTitle, recusionDepth+1));
         s = splitDoc[1];
-        bla++;
+        paragraphCount++;
     }
     return node;
 }
