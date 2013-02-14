@@ -36,7 +36,6 @@ ClassParser.prototype.isErrorState = function() {
 
 ClassParser.prototype.parse = function(text, shortTitle){
     var wikiText = '';
-    
     try {
         Parser.errorState = false;
         wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
@@ -44,7 +43,6 @@ ClassParser.prototype.parse = function(text, shortTitle){
         Parser.errorState = true;
         wikiText = e;
     }
-    
     var textDiv = document.createElement("div");
     textDiv.innerHTML = "";
     var creole = new Parse.Simple.Creole( {
@@ -56,5 +54,5 @@ ClassParser.prototype.parse = function(text, shortTitle){
         linkFormat: ''
     } );
     creole.parse(textDiv,wikiText);
-    return $(textDiv.innerHTML);
+    return $('<div>' + textDiv.innerHTML + '<div>');
 };
