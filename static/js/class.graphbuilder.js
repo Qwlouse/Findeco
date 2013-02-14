@@ -29,7 +29,7 @@ function ClassGraphbuilder() {}
 var Graphbuilder = new ClassGraphbuilder();
 
 /////////////////////// Graph Construction /////////////////////////////////
-ClassGraphbuilder.prototype.createCircleStructure = function (path, newFollows, follows, unFollows) {
+ClassGraphbuilder.prototype.createCircleStructure = function (path, newFollows, follows, unFollows, originGroup) {
     var pathParts = path.split('.');
     var title = pathParts[pathParts.length-1];
     var newText = document.createTextNode(title);
@@ -39,7 +39,7 @@ ClassGraphbuilder.prototype.createCircleStructure = function (path, newFollows, 
     var innerDIV = document.createElement("div");
     innerDIV.appendChild(linkDIV);
     innerDIV.setAttribute("class", "circle");
-    innerDIV.setAttribute("onClick", "showNode(this.parentNode, true);"); // Link to path would be better...
+    innerDIV.setAttribute("onClick", "alert('"+path+"');"); // Link to path would be better...
     var outerDIV = document.createElement("div");
     outerDIV.setAttribute("class", "masspoint");
     var diagramDIV = document.createElement("div");
@@ -56,6 +56,7 @@ ClassGraphbuilder.prototype.createCircleStructure = function (path, newFollows, 
     outerDIV.particle.targetY = 0.0;
     //outerDIV.setAttribute("id", "circle_"+title.replace(/^\s+|\s+$/g, ''));
     outerDIV.path = path;
+    outerDIV.originGroup = originGroup;
 
     var data = [newFollows, follows-newFollows, unFollows];
 
@@ -125,6 +126,23 @@ ClassGraphbuilder.prototype.createArrowStructure = function (parentCircle, child
 };
 
 
+ClassGraphbuilder.prototype.getConnections = function (nodes) {
+    var connections = [];
+    for (var i = 0; i < nodes.length; i++) {
+        var node = nodes[i];
+        for (var j = 0; j < node.originGroup.length; j++) {
+            for (var k = 0; k < nodes.length; k++) {
+                if (nodes[k].path == node.originGroup[j]) {
+                    var newConnection = {'sourceNodePath': node.originGroup[j], 'targetNodePath': node.path};
+                    connections.push(newConnection);
+                }
+            }
+        }
+    }
+    return connections;
+};
+
+
 ClassGraphbuilder.prototype.buildAnchorGraph = function (data, graphNode) {
     this.graphNode = graphNode;
     var Anchors = data["graphDataChildren"];
@@ -135,7 +153,7 @@ ClassGraphbuilder.prototype.buildAnchorGraph = function (data, graphNode) {
 
     for (var i = 0; i < Anchors.length; ++i) {
         var anchor = Anchors[i];
-        var anchor_circle = this.createCircleStructure(anchor['path'], anchor['newFollows'], anchor['follows'], anchor['unFollows']);
+        var anchor_circle = this.createCircleStructure(anchor['path'], anchor['newFollows'], anchor['follows'], anchor['unFollows'], anchor['originGroup']);
         anchor_circle.particle.x = i*80;
         anchor_circle.particle.targetX = i*80;
         anchor_circle.particle.targetForce = 0.05;
@@ -147,7 +165,7 @@ ClassGraphbuilder.prototype.buildAnchorGraph = function (data, graphNode) {
     var relatedNodes = data['graphDataRelated'];
     for (i = 0; i < relatedNodes.length; ++i) {
         var node = relatedNodes[i];
-        var node_circle = this.createCircleStructure(node['path'], node['newFollows'], node['follows'], node['unFollows']);
+        var node_circle = this.createCircleStructure(node['path'], node['newFollows'], node['follows'], node['unFollows'], node['originGroup']);
         node_circle.particle.y = -160;
         node_circle.particle.x = i*80;
         this.circles.push(node_circle);
@@ -155,15 +173,15 @@ ClassGraphbuilder.prototype.buildAnchorGraph = function (data, graphNode) {
     }
 
     // add connections
-   /* var connections = data['connections'];
+    var connections = this.getConnections(this.circles);
     for (i = 0; i < connections.length; ++i) {
         var connection = connections[i];
-        var source_node = this.getNodeByPath(this.circles, connection[0]);
-        var target_node = this.getNodeByPath(this.circles, connection[1]);
-        var arrow = this.createArrowStructure(source_node, target_node);
+        var sourceNode = this.getNodeByPath(this.circles, connection['sourceNodePath']);
+        var targetNode = this.getNodeByPath(this.circles, connection['targetNodePath']);
+        var arrow = this.createArrowStructure(sourceNode, targetNode);
         this.arrows.push(arrow);
         graphNode.insertBefore(arrow, graphNode.firstChild);
-    } */
+    }
     if (!(this.stepRuns)) {
         this.stepRuns = true;
         step();
@@ -180,7 +198,7 @@ ClassGraphbuilder.prototype.updateGraph = function (data) {
     for (var i = 0; i < Anchors.length; ++i) {
         var anchor = Anchors[i];
         var old_circle = this.getNodeByPath(this.circles, anchor['path']);
-        var anchor_circle = this.createCircleStructure(anchor['path'], anchor['newFollows'], anchor['follows'], anchor['unFollows']);
+        var anchor_circle = this.createCircleStructure(anchor['path'], anchor['newFollows'], anchor['follows'], anchor['unFollows'], anchor['originGroup']);
         anchor_circle.particle.x = i*80;
         if (old_circle != -1) {
             anchor_circle.particle.x = old_circle.particle.x;
@@ -195,7 +213,7 @@ ClassGraphbuilder.prototype.updateGraph = function (data) {
     var relatedNodes = JSON.parse(data["graph_data"])['related_nodes'];
     for (i = 0; i < relatedNodes.length; ++i) {
         var node = relatedNodes[i];
-        var node_circle = this.createCircleStructure(node['path'], node['newFollows'], node['follows'], node['unFollows']);
+        var node_circle = this.createCircleStructure(node['path'], node['newFollows'], node['follows'], node['unFollows'], node['originGroup']);
         node_circle.particle.y = -160;
         node_circle.particle.x = i*80;
         old_circle = this.getNodeByPath(this.circles, node['path']);
@@ -260,7 +278,7 @@ function step() {
     }
     // draw arrows
     for (i = 0; i < arrows.length; i++) {
-        this.drawArrow(arrows[i]);
+        Graphbuilder.drawArrow(arrows[i]);
     }
 
     // adjust graph dimensions
