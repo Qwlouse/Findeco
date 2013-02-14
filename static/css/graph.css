@@ -1,0 +1,98 @@
+.graphdata {
+    text-align: center;
+}
+
+div#graph {
+    /*margin: 0;
+    overflow: hidden;*/
+}
+
+div#graph div.fixpoint {
+    width: 0;
+    height: 0;
+    margin: auto;
+    padding: 0;
+    border: 0 solid black;
+    overflow: visible;
+    display: block;
+    text-align: left;
+    vertical-align: top;
+    position: relative;
+}
+
+div#graph div.arrow {
+    height: 0;
+    width: 120px;
+    top: 0;
+    left: 0;
+    display: block;
+    border-bottom: 4px solid black;
+    border-left: 5px solid red;
+    position: relative;
+    margin: 0;
+}
+
+div#graph div.masspoint {
+    width: 0;
+    height: 0;
+    margin: auto;
+    padding: 0;
+    border: 0 solid black;
+    overflow: visible;
+    display: block;
+    text-align: left;
+    vertical-align: middle;
+    position: relative;
+}
+
+div.whitener {
+    height: 60px;
+    width: 60px;
+    border-radius: 50px;
+    background: white;
+    position: relative;
+    top: -27px;
+    left: -27px;
+}
+
+div.circle {
+    border: 3px solid black;
+    min-width: 54px;
+    padding: 0 3px;
+    height: 60px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 60px;
+    margin: 0;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+div.diagram_container {
+    width: 0;
+    height: 0;
+    overflow: visible;
+    position: relative;
+    top: -37px;
+    left: -37px;
+}
+
+div#graph div.circle {
+    position: relative;
+    left: -30px;
+    top: -30px;
+    display: inline-block;
+    overflow: visible;
+}
+
+div#newProposal {
+    position: absolute;
+    right: 10px;
+    top: 33px;
+    overflow: visible;
+}
+
+div#rawgraph div {
+    margin: 1px 1px 1px 1em;
+    border: 1px solid #d3d3d3;
+}

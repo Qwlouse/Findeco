@@ -29,7 +29,9 @@ function ClassGraphbuilder() {}
 var Graphbuilder = new ClassGraphbuilder();
 
 /////////////////////// Graph Construction /////////////////////////////////
-ClassGraphbuilder.prototype.createCircleStructure = function (title, id, type, consent) {
+ClassGraphbuilder.prototype.createCircleStructure = function (path, newFollows, follows, unFollows) {
+    var pathParts = path.split('.');
+    var title = pathParts[pathParts.length-1];
     var newText = document.createTextNode(title);
     var linkDIV = document.createElement("div");
     linkDIV.appendChild(newText);
@@ -37,7 +39,7 @@ ClassGraphbuilder.prototype.createCircleStructure = function (title, id, type, c
     var innerDIV = document.createElement("div");
     innerDIV.appendChild(linkDIV);
     innerDIV.setAttribute("class", "circle");
-    innerDIV.setAttribute("onClick", "showNode(this.parentNode, true);");
+    innerDIV.setAttribute("onClick", "showNode(this.parentNode, true);"); // Link to path would be better...
     var outerDIV = document.createElement("div");
     outerDIV.setAttribute("class", "masspoint");
     var diagramDIV = document.createElement("div");
@@ -53,10 +55,9 @@ ClassGraphbuilder.prototype.createCircleStructure = function (title, id, type, c
     outerDIV.particle = new ClassParticle();
     outerDIV.particle.targetY = 0.0;
     //outerDIV.setAttribute("id", "circle_"+title.replace(/^\s+|\s+$/g, ''));
-    outerDIV.dbId = id;
-    outerDIV.type = type;
+    outerDIV.path = path;
 
-    var data = [consent, 1.0-consent];
+    var data = [newFollows, follows-newFollows, unFollows];
 
     var r = 40,
         h = 2*r,
@@ -124,88 +125,62 @@ ClassGraphbuilder.prototype.createArrowStructure = function (parentCircle, child
 };
 
 
-function initPage(anchorGraphData, navigationData, selected_id, doNodeUpdate) {
-    document.getElementById('microblog').loading = false;
-    document.getElementById("text").waitForText = selected_id;
-    window.onscroll = reloadTest;
-    if (document.getElementById('graph')) {
-        document.getElementById('graph').paddingTop = 30.0;
-        document.getElementById('graph').paddingLeft = 30.0;
-        document.getElementById('graph').paddingRight = 30.0;
-        document.getElementById('graph').paddingBottom = 30.0;
-        buildAnchorGraph(JSON.parse(anchorGraphData));
-        // get selected Node:
-        var graphNode = document.getElementById('graph');
-        for (var i = 0; i < graphNode.circles.length; ++i) {
-            var node = graphNode.circles[i];
-            if ((node.dbId == selected_id) && node.type != "Slot") {
-                showNode(node, doNodeUpdate);
-                break;
-            }
-        }
-    } else {
-        Dajaxice.microblogging.getAllActivities(showMicroblogging);
-    }
-    updateNavigation(JSON.parse(navigationData));
-}
-
-
-ClassGraphbuilder.prototype.buildAnchorGraph = function (data) {
-    var Anchors = data["Anchors"];
-    var graphNode = document.getElementById('graph');
-    graphNode.stepRuns = false;
+ClassGraphbuilder.prototype.buildAnchorGraph = function (data, graphNode) {
+    this.graphNode = graphNode;
+    var Anchors = data["graphDataChildren"];
+    this.stepRuns = false;
     while ( graphNode.firstChild ) graphNode.removeChild( graphNode.firstChild );
-    graphNode.circles = [];
-    graphNode.arrows = [];
+    this.circles = [];
+    this.arrows = [];
 
     for (var i = 0; i < Anchors.length; ++i) {
         var anchor = Anchors[i];
-        var anchor_circle = this.createCircleStructure(anchor['nr_in_parent'], anchor['id'], anchor['type'], anchor['consent']);
+        var anchor_circle = this.createCircleStructure(anchor['path'], anchor['newFollows'], anchor['follows'], anchor['unFollows']);
         anchor_circle.particle.x = i*80;
         anchor_circle.particle.targetX = i*80;
         anchor_circle.particle.targetForce = 0.05;
-        graphNode.circles.push(anchor_circle);
+        this.circles.push(anchor_circle);
         graphNode.appendChild(anchor_circle);
     }
 
     // add related nodes
-    var relatedNodes = data['related_nodes'];
+    var relatedNodes = data['graphDataRelated'];
     for (i = 0; i < relatedNodes.length; ++i) {
         var node = relatedNodes[i];
-        var node_circle = this.createCircleStructure(node['nr_in_parent'], node['id'], node['type'], anchor['consent']);
+        var node_circle = this.createCircleStructure(node['path'], node['newFollows'], node['follows'], node['unFollows']);
         node_circle.particle.y = -160;
         node_circle.particle.x = i*80;
-        graphNode.circles.push(node_circle);
+        this.circles.push(node_circle);
         graphNode.appendChild(node_circle);
     }
 
     // add connections
-    var connections = data['connections'];
+   /* var connections = data['connections'];
     for (i = 0; i < connections.length; ++i) {
         var connection = connections[i];
-        var source_node = this.getNodeById(graphNode.circles, connection[0], "TextNode");
-        var target_node = this.getNodeById(graphNode.circles, connection[1], "TextNode");
+        var source_node = this.getNodeByPath(this.circles, connection[0]);
+        var target_node = this.getNodeByPath(this.circles, connection[1]);
         var arrow = this.createArrowStructure(source_node, target_node);
-        graphNode.arrows.push(arrow);
+        this.arrows.push(arrow);
         graphNode.insertBefore(arrow, graphNode.firstChild);
-    }
-    if (!(graphNode.stepRuns)) {
-        graphNode.stepRuns = true;
-        this.step();
+    } */
+    if (!(this.stepRuns)) {
+        this.stepRuns = true;
+        step();
     }
 };
 
+
 ClassGraphbuilder.prototype.updateGraph = function (data) {
-    var graphNode = document.getElementById('graph');
-    var Anchors = JSON.parse(data["graph_data"])["Anchors"];
+    var Anchors = data["graphDataChildren"];
     // draw voting
-    updateVoting(data["voting_data"]);
+    ////updateVoting(data["voting_data"]);
 
     var newCircles = [];
     for (var i = 0; i < Anchors.length; ++i) {
         var anchor = Anchors[i];
-        var old_circle = this.getNodeById(graphNode.circles, anchor['id'], anchor['type']);
-        var anchor_circle = this.createCircleStructure(anchor['nr_in_parent'], anchor['id'], anchor['type'], anchor['consent']);
+        var old_circle = this.getNodeByPath(this.circles, anchor['path']);
+        var anchor_circle = this.createCircleStructure(anchor['path'], anchor['newFollows'], anchor['follows'], anchor['unFollows']);
         anchor_circle.particle.x = i*80;
         if (old_circle != -1) {
             anchor_circle.particle.x = old_circle.particle.x;
@@ -220,10 +195,10 @@ ClassGraphbuilder.prototype.updateGraph = function (data) {
     var relatedNodes = JSON.parse(data["graph_data"])['related_nodes'];
     for (i = 0; i < relatedNodes.length; ++i) {
         var node = relatedNodes[i];
-        var node_circle = this.createCircleStructure(node['nr_in_parent'], node['id'], node['type'], anchor['consent']);
+        var node_circle = this.createCircleStructure(node['path'], node['newFollows'], node['follows'], node['unFollows']);
         node_circle.particle.y = -160;
         node_circle.particle.x = i*80;
-        old_circle = this.getNodeById(graphNode.circles, node['id'], node['type']);
+        old_circle = this.getNodeByPath(this.circles, node['path']);
         if (old_circle != -1) {
             node_circle.particle.x = old_circle.particle.x;
             node_circle.particle.y = old_circle.particle.y;
@@ -231,52 +206,52 @@ ClassGraphbuilder.prototype.updateGraph = function (data) {
         newCircles.push(node_circle);
     }
     // clear graphNode and (re-)insert nodes
-    while ( graphNode.firstChild ) graphNode.removeChild( graphNode.firstChild );
-    graphNode.circles = newCircles;
+    while ( this.graphNode.firstChild ) this.graphNode.removeChild( this.graphNode.firstChild );
+    this.circles = newCircles;
     for (i = 0; i < newCircles.length; ++i) {
-        graphNode.appendChild(newCircles[i]);
+        this.graphNode.appendChild(newCircles[i]);
     }
 
     // add connections
     var connections = JSON.parse(data["graph_data"])['connections'];
     for (i = 0; i < connections.length; ++i) {
         var connection = connections[i];
-        var source_node = this.getNodeById(graphNode.circles, connection[0], "TextNode");
-        var target_node = this.getNodeById(graphNode.circles, connection[1], "TextNode");
+        var source_node = this.getNodeByPath(this.circles, connection[0]);
+        var target_node = this.getNodeByPath(this.circles, connection[1]);
         var arrow = this.createArrowStructure(source_node, target_node);
-        graphNode.arrows.push(arrow);
-        graphNode.insertBefore(arrow, graphNode.firstChild);
+        this.arrows.push(arrow);
+        this.graphNode.insertBefore(arrow, this.graphNode.firstChild);
     }
-    if (!(graphNode.stepRuns)) {
-        graphNode.stepRuns = true;
-        step();
+    if (!(this.stepRuns)) { // TODO: This part is repeated below. This seems stupid.
+        this.stepRuns = true;
+        this.step();
     }
 
     // mark centerCircle clicked
-    var currentIndex = this.getIndexInCircles(graphNode.circles, data['id'], data['type']);
-    var currentNode = graphNode.circles[currentIndex];
+    var currentIndex = this.getIndexInCircles(this.circles, data['path']);
+    var currentNode = this.circles[currentIndex];
     currentNode.firstChild.nextSibling.nextSibling.firstChild.setAttribute("class", "");
 
     // reposition graph
-    if (!(graphNode.stepRuns)) {
-        graphNode.stepRuns = true;
-        this.step();
+    if (!(this.stepRuns)) {
+        this.stepRuns = true;
+        step();
     }
 };
 
 
 /////////////////////// Simulation /////////////////////////////////
-ClassGraphbuilder.prototype.step = function () {
-    var graphNode = document.getElementById('graph');
-    var circles = graphNode.circles;
-    var arrows = graphNode.arrows;
+function step() {
+    var graphNode = Graphbuilder.graphNode;
+    var circles = Graphbuilder.circles;
+    var arrows = Graphbuilder.arrows;
     var particles = [];
     for (var i = 0; i < circles.length; ++i)
         particles.push(circles[i].particle);
     var springs = [];
     for (i = 0; i < arrows.length; ++i)
         springs.push(arrows[i].spring);
-    var particleMovement = this.updateParticles(particles, springs);
+    var particleMovement = updateParticles(particles, springs);
 
     // set new position
     for (i = 0; i < circles.length; ++i) {
@@ -319,11 +294,11 @@ ClassGraphbuilder.prototype.step = function () {
     //graphNode.style.height = Math.round(paddingTop+paddingBottom) + "px";
     // iterate
     if (particleMovement > 0.2) {
-        setTimeout("this.step()", 25);
+        setTimeout("step()", 25);
     } else {
-        graphNode.stepRuns = false;
+        Graphbuilder.stepRuns = false;
     }
-};
+}
 
 
 /////////////////////// Drawing /////////////////////////////////
@@ -332,41 +307,41 @@ ClassGraphbuilder.prototype.drawArrow = function (arrowdiv) {
     var arrowLine = svg.firstChild.nextSibling;
     var particleA = arrowdiv.A.particle;
     var particleB = arrowdiv.B.particle;
-    svg.setAttribute("width", Math.max(Math.round(Math.abs(particleB.x-particleA.x))+10,10));
-    svg.setAttribute("height", Math.max(Math.round(Math.abs(particleB.y-particleA.y))+10,10));
+    svg.setAttribute("width", String(Math.max(Math.round(Math.abs(particleB.x-particleA.x))+10,10)));
+    svg.setAttribute("height", String(Math.max(Math.round(Math.abs(particleB.y-particleA.y))+10,10)));
     if (particleB.x - particleA.x < 0) {
         arrowLine.setAttribute("x2", "5");
-        arrowLine.setAttribute("x1", particleA.x-particleB.x+5);
+        arrowLine.setAttribute("x1", String(particleA.x-particleB.x+5));
         //alert(arrowdiv.style.width);
         arrowdiv.style.left = Math.round(particleA.x - 28)+Math.round(particleB.x - particleA.x)-5+"px";
     } else {
         arrowLine.setAttribute("x1", "5");
-        arrowLine.setAttribute("x2", particleB.x-particleA.x+5);
+        arrowLine.setAttribute("x2", String(particleB.x-particleA.x+5));
         arrowdiv.style.left = Math.round(particleA.x - 28 - 5)+"px";
     }
     if (particleB.y - particleA.y < 0) {
         arrowLine.setAttribute("y2", "5");
-        arrowLine.setAttribute("y1", particleA.y-particleB.y+5);
+        arrowLine.setAttribute("y1", String(particleA.y-particleB.y+5));
         arrowdiv.style.top = Math.round(particleA.y - arrowdiv.style.height / 2)+Math.round(particleB.y - particleA.y)-5+"px";
     } else {
         arrowLine.setAttribute("y1", "5");
-        arrowLine.setAttribute("y2", particleB.y-particleA.y+5);
+        arrowLine.setAttribute("y2", String(particleB.y-particleA.y+5));
         arrowdiv.style.top = Math.round(particleA.y - arrowdiv.style.height / 2 - 5)+"px";
     }
 };
 
 
 /////////////////////// Helpers ///////////////////////////////////////////////////
-ClassGraphbuilder.prototype.getIndexInCircles = function (circles, id, type) {
+ClassGraphbuilder.prototype.getIndexInCircles = function (circles, path) {
     for (var i = 0; i < circles.length; i++) {
-        if ((circles[i].dbId == id) && (circles[i].type == type)) return i;
+        if (circles[i].path == path) return i;
     }
     return -1;
 };
 
-ClassGraphbuilder.prototype.getNodeById = function (circles, id, type) {
+ClassGraphbuilder.prototype.getNodeByPath = function (circles, path) {
     for (var i = 0; i < circles.length; i++) {
-        if ((circles[i].dbId == id) && (circles[i].type == type)) return circles[i];
+        if (circles[i].path == path) return circles[i];
     }
     return -1;
 };
