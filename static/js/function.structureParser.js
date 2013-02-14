@@ -194,7 +194,13 @@ function textAfterTitle(s, level) {
     return s;
 }
 
-function parseStructure(s, shortTitle) {
+function parseStructure(s, shortTitle, recusionDepth) {
+    if (recusionDepth == undefined) {
+        recusionDepth = 1;
+    }
+    if (recusionDepth > 7) {
+        throw "Structure is too deep."
+    }
     var m = h1Start.exec(s);
     if (h1Start.test(s) && (m.length > 2)) {
         var title = m[1];
@@ -226,8 +232,10 @@ function parseStructure(s, shortTitle) {
     s = splitDoc[1];
 
     /* parsing sections now */
+    var bla = 0;
     m = new RegExp(getHeadingMatcher(level));
     while (m.test(s.replace(/^\s+|\s+$/g, ''))) {
+        if (bla > 100) {throw "More than 100 paragraphs."} // TODO: Why do we need that?
         splitDoc = m.exec(s.replace(/^\s+|\s+$/g, ''));
         title = splitDoc[1].replace(/^\s+|\s+$/g, '');
         if (splitDoc[2] == undefined) {
@@ -237,8 +245,9 @@ function parseStructure(s, shortTitle) {
         }
 
         splitDoc = splitAtHeading(textAfterTitle(s,level),level);
-        node['children'].push(parseStructure("= " + title + " =\n" + splitDoc[0].replace(/^\s+|\s+$/g, ''), shortTitle));
+        node['children'].push(parseStructure("= " + title + " =\n" + splitDoc[0].replace(/^\s+|\s+$/g, ''), shortTitle, recusionDepth+1));
         s = splitDoc[1];
+        bla++;
     }
     return node;
 }
