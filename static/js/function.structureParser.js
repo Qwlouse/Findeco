@@ -36,8 +36,7 @@ function getHeadingMatcher(level) {
         if (level == 0) {
             s = "1, 6";
         } else {
-            return false;
-            /* raise ValueError("level must be between 1 and 6 or 0, but was %d."%level) */
+            throw "level must be between 1 and 6 or 0, but was "+level+".";
         }
     }
     return "^\s*={"+s+"}([^=§]+)(?:§\s*([^=§\s][^=§]*))?=*\s*";
@@ -202,10 +201,7 @@ function parseStructure(s, shortTitle) {
         title = title.split("§")[0]; // silently remove attempt to set short_title in H1
         s = m[2];
     } else {
-        return {'title': "Error",
-            'text': "Must start with H1 heading to set title",
-            'children': []};
-        /*raise InvalidWikiStructure('Must start with H1 heading to set title')*/
+        throw "Must start with H1 heading to set title.";
     }
     title = title.replace(/^\s+|\s+$/g, ''); /* strip in javascript */
     title = title.substring(0, 150);
