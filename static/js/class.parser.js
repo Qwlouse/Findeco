@@ -28,8 +28,23 @@ function ClassParser() {}
 
 var Parser = new ClassParser();
 
+ClassParser.prototype.errorState = false;
+
+ClassParser.prototype.isErrorState = function() {
+    return Parser.errorState;
+}
+
 ClassParser.prototype.parse = function(text, shortTitle){
-    var wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
+    var wikiText = '';
+    
+    try {
+        Parser.errorState = false;
+        wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
+    } catch (e) {
+        Parser.errorState = true;
+        wikiText = e;
+    }
+    
     var textDiv = document.createElement("div");
     textDiv.innerHTML = "";
     var creole = new Parse.Simple.Creole( {
