@@ -67,7 +67,7 @@ ClassDataRegister.prototype.handleAjax = function(json) {
         break;
         case '.json_loadText': type = 'text'; break;
         case '.json_loadGraphData': 
-            console.log('graphdata it is');
+            // console.log('graphdata it is');
             type = 'graphdata';
             position = position.replace(/\/(default|full|withSpam)/g,'');
         break;
@@ -87,7 +87,7 @@ ClassDataRegister.prototype.handleAjax = function(json) {
         if ( c == 'next' ) {
             continue;
         }
-        console.log(callbacks,c,data);
+        // console.log(callbacks,c,data);
         callbacks[c](data);
     }
     

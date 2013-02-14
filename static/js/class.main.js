@@ -71,7 +71,7 @@ ClassMain.prototype.show = function (data) {
 };
 
 ClassMain.prototype.append = function (data) {
-    console.log('ClassMain','append',data);
+    // console.log('ClassMain','append',data);
     Main.loaded[data.getType()] = true;
     
     if ( data.getType() == 'index'
