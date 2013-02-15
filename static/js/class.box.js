@@ -26,6 +26,10 @@ var boxCount = 0;
 
 function ClassBox() { this.id = ++boxCount; this.element = $('<div id="box' + this.id + '"></div>'); }
 
+ClassBox.prototype.getWidth = function() {
+    return this.element.width();
+}
+
 ClassBox.prototype.addButtons = function() {
     var arguments = this.element.children('div.arguments');
     var text = this.element.children('div.text');

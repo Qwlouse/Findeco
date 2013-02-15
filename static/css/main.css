@@ -44,30 +44,22 @@ html,body {
 br,.clear {
     clear: both;
 }
-h1,h2,h3,.arguments  li {
+h1,h2,h3,h4,h5,h6,.arguments  li {
     font-family: 'Exo',sans-serif;
     font-weight: bold;
     color: #FF9900;
     margin: 0;
 }
 
-h1:hover,h2:hover,h3:hover,.arguments  li:hover {
+h1:hover,h2:hover,h3:hover,h4:hover,h5:hover,h6:hover,.arguments  li:hover {
     color: #999;
     cursor: pointer;
     text-shadow: #FF9900 0 0 5px; 
 }
-#back, #forward, #position {
+#login {
     position: absolute;
     top: 10px;
     z-index: 500;
-}
-#back {
-    right: 100px;
-}
-#forward {
-    right: 70px;
-}
-#position {
     right: 40px;
 }
 .argumentButton {

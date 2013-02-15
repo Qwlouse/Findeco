@@ -25,6 +25,9 @@
 function ClassMain() {}
 var Main = new ClassMain();
 
+ClassMain.prototype.getWidth = function() {
+    return center.getWidth();
+}
 
 ClassMain.prototype.isTypeLoaded = function (type) {
     if ( Main.loaded[type] == true ) {
