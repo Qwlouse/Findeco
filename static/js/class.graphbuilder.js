@@ -145,7 +145,7 @@ ClassGraphbuilder.prototype.getConnections = function (nodes) {
 
 ClassGraphbuilder.prototype.buildAnchorGraph = function (data, graphNode) {
     this.graphNode = graphNode;
-    var Anchors = data["graphDataChildren"];
+    var Anchors = data['graphDataChildren'];
     this.stepRuns = false;
     while ( graphNode.firstChild ) graphNode.removeChild( graphNode.firstChild );
     this.circles = [];
