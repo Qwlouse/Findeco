@@ -70,6 +70,12 @@ h1:hover,h2:hover,h3:hover,.arguments  li:hover {
 #position {
     right: 40px;
 }
+.argumentButton {
+    text-align: center;
+    float: left;
+    width: 45%;
+    margin-bottom: 10px !important;
+}
 .button,#back, #forward {
     font-family: 'Exo',sans-serif;
     font-weight: bold;
@@ -261,26 +267,30 @@ h1:hover,h2:hover,h3:hover,.arguments  li:hover {
     min-width: 200px;
 }
 .center {
-    right: 25%;
+    right: 20%;
     margin-right: 90px;
     background: #f7f7f7;
     -moz-border-radius: 15px;
     border-radius: 15px;
-    width: 35%;
+    width: 55%;
     z-index: 100;
     overflow: auto;
 }
+.argumentContainer {
+    width: 100%;
+}
+
 .contributeContainer {
     position: absolute;
     top: 185px;
     bottom: 75px;
     min-width: 200px;
-    right: 25%;
+    right: 20%;
     margin-right: 90px;
     background: #f7f7f7;
     -moz-border-radius: 15px;
     border-radius: 15px;
-    width: 35%;
+    width: 55%;
     z-index: 200;
     overflow: auto;
 }
