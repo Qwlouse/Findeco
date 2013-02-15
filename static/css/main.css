@@ -355,3 +355,21 @@ h1:hover,h2:hover,h3:hover,h4:hover,h5:hover,h6:hover,.arguments  li:hover {
     width: 96%;
     min-height:24%;
 }
+
+#inputname input, #inputpass input {
+    z-index: 100;
+}
+
+#inputname:before {
+    z-index: 50;
+    content: "Name";
+    position: absolute;
+    padding: 5px;
+}
+
+#inputpass:before {
+    z-index: 50;
+    content: "Passwort";
+    position: absolute;
+    padding: 5px;
+}

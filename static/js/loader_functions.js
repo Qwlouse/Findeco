@@ -47,6 +47,8 @@ function load(){
     center.show('center');
     right.show('right');
     
+    Login.show();
+    
     $(window).bind('hashchange',Controller.stateHandler);
     
     if ( document.location.hash == '' ) {

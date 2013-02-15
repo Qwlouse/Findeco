@@ -25,12 +25,39 @@
 function ClassLogin() {}
 var Login = new ClassLogin();
 
+ClassLogin.prototype.form = {};
+ClassLogin.prototype.user = null;
+
+ClassLogin.prototype.hasUser = function() {
+    if ( Login.user != null ) {
+        return true;
+    }
+    return false;
+}
+
+ClassLogin.prototype.fieldClickHandler = function() {
+    $(this).attr('id','');
+}
+
 ClassLogin.prototype.show = function() {
     Login.root = $('#login');
+    console.log('hello');
     if ( Login.hasUser() ) {
+        console.log('bye');
         // Show Userinfo
         return;
     }
+    console.log('here we go');
     // Show Login form.
-    
+    Login.form = {};
+    Login.form['name'] = $('<span id="inputname"><input type="text"></span>')
+        .keydown(Login.fieldClickHandler)
+        .click(function() {this.firstChild.focus();})
+        .appendTo(Login.root);
+    Login.form['password'] = $('<span id="inputpass"><input type="password"></span>')
+        .keydown(Login.fieldClickHandler)
+        .click(function() {this.firstChild.focus();})
+        .appendTo(Login.root);
+    Login.form['submit'] = $('<div class="button">Einloggen</div>')
+        .appendTo(Login.root);
 };
