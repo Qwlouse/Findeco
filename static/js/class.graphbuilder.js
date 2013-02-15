@@ -60,7 +60,7 @@ ClassGraphbuilder.prototype.createCircleStructure = function (path, newFollows, 
 
     var data = [newFollows, follows-newFollows, unFollows];
 
-    var r = 40,
+    var r = 30,
         h = 2*r,
         w = 2*r,
         color = ["#FF9900","#0066CC", "#999999"],
@@ -94,7 +94,7 @@ ClassGraphbuilder.prototype.createArrowStructure = function (parentCircle, child
     svgDocument.setAttribute("height", "10");
     var defsTag = document.createElementNS("http://www.w3.org/2000/svg", "defs");
     var marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
-    marker.setAttribute("refX", "13");
+    marker.setAttribute("refX", "5");
     marker.setAttribute("refY", "0");
     marker.setAttribute("id", "arrow");
     marker.setAttribute("orient", "auto");
@@ -119,7 +119,7 @@ ClassGraphbuilder.prototype.createArrowStructure = function (parentCircle, child
     var outerArrow = document.createElement("div");
     outerArrow.setAttribute("class", "fixpoint");
     outerArrow.appendChild(svgDocument);
-    outerArrow.spring = new ClassSpring(parentCircle.particle, childCircle.particle, 80.0);
+    outerArrow.spring = new ClassSpring(parentCircle.particle, childCircle.particle, 50.0);
     outerArrow.A = parentCircle;
     outerArrow.B = childCircle;
     return outerArrow
@@ -154,8 +154,8 @@ ClassGraphbuilder.prototype.buildAnchorGraph = function (data, graphNode) {
     for (var i = 0; i < Anchors.length; ++i) {
         var anchor = Anchors[i];
         var anchor_circle = this.createCircleStructure(anchor['path'], anchor['newFollows'], anchor['follows'], anchor['unFollows'], anchor['originGroup']);
-        anchor_circle.particle.x = i*80;
-        anchor_circle.particle.targetX = i*80;
+        anchor_circle.particle.x = i*50;
+        anchor_circle.particle.targetX = i*50;
         anchor_circle.particle.targetForce = 0.05;
         this.circles.push(anchor_circle);
         graphNode.appendChild(anchor_circle);
@@ -166,8 +166,8 @@ ClassGraphbuilder.prototype.buildAnchorGraph = function (data, graphNode) {
     for (i = 0; i < relatedNodes.length; ++i) {
         var node = relatedNodes[i];
         var node_circle = this.createCircleStructure(node['path'], node['newFollows'], node['follows'], node['unFollows'], node['originGroup']);
-        node_circle.particle.y = -160;
-        node_circle.particle.x = i*80;
+        node_circle.particle.y = -100;
+        node_circle.particle.x = i*50;
         this.circles.push(node_circle);
         graphNode.appendChild(node_circle);
     }
@@ -199,12 +199,12 @@ ClassGraphbuilder.prototype.updateGraph = function (data) {
         var anchor = Anchors[i];
         var old_circle = this.getNodeByPath(this.circles, anchor['path']);
         var anchor_circle = this.createCircleStructure(anchor['path'], anchor['newFollows'], anchor['follows'], anchor['unFollows'], anchor['originGroup']);
-        anchor_circle.particle.x = i*80;
+        anchor_circle.particle.x = i*50;
         if (old_circle != -1) {
             anchor_circle.particle.x = old_circle.particle.x;
             anchor_circle.particle.y = old_circle.particle.y;
         }
-        anchor_circle.particle.targetX = i*80;
+        anchor_circle.particle.targetX = i*50;
         anchor_circle.particle.targetForce = 0.05;
         newCircles.push(anchor_circle);
     }
@@ -214,8 +214,8 @@ ClassGraphbuilder.prototype.updateGraph = function (data) {
     for (i = 0; i < relatedNodes.length; ++i) {
         var node = relatedNodes[i];
         var node_circle = this.createCircleStructure(node['path'], node['newFollows'], node['follows'], node['unFollows'], node['originGroup']);
-        node_circle.particle.y = -160;
-        node_circle.particle.x = i*80;
+        node_circle.particle.y = -100;
+        node_circle.particle.x = i*50;
         old_circle = this.getNodeByPath(this.circles, node['path']);
         if (old_circle != -1) {
             node_circle.particle.x = old_circle.particle.x;
@@ -273,7 +273,7 @@ function step() {
 
     // set new position
     for (i = 0; i < circles.length; ++i) {
-        circles[i].style.left = Math.round(particles[i].x - circles[i].style.width / 2 - 30) + "px";
+        circles[i].style.left = Math.round(particles[i].x - circles[i].style.width / 2 - 20) + "px";
         circles[i].style.top = Math.round(particles[i].y - circles[i].style.height / 2) + "px";
     }
     // draw arrows
@@ -289,20 +289,20 @@ function step() {
     for (i = 0; i < particles.length; i++) {
         minPosY = Math.min(particles[i].y, minPosY);
         maxPosY = Math.max(particles[i].y, maxPosY);
-        minPosX = Math.min(particles[i].x - 30, minPosX);
-        maxPosX = Math.max(particles[i].x - 30, maxPosX);
+        minPosX = Math.min(particles[i].x - 20, minPosX);
+        maxPosX = Math.max(particles[i].x - 20, maxPosX);
     }
-    var paddingRight = Math.max(maxPosX + 36, graphNode.paddingRight - 2);
-    particleMovement += Math.abs(maxPosX + 36 - graphNode.paddingRight);
+    var paddingRight = Math.max(maxPosX + 24, graphNode.paddingRight - 2);
+    particleMovement += Math.abs(maxPosX + 24 - graphNode.paddingRight);
     graphNode.paddingRight = paddingRight;
-    var paddingBottom = Math.max(maxPosY + 36, graphNode.paddingBottom - 2);
-    particleMovement += Math.abs(maxPosY + 36 - graphNode.paddingBottom);
+    var paddingBottom = Math.max(maxPosY + 24, graphNode.paddingBottom - 2);
+    particleMovement += Math.abs(maxPosY + 24 - graphNode.paddingBottom);
     graphNode.paddingBottom = paddingBottom;
-    var paddingTop = Math.max(minPosY * -1 + 31, graphNode.paddingTop - 2);
-    particleMovement += Math.abs(minPosY * -1 + 31 - graphNode.paddingTop);
+    var paddingTop = Math.max(minPosY * -1 + 21, graphNode.paddingTop - 2);
+    particleMovement += Math.abs(minPosY * -1 + 21 - graphNode.paddingTop);
     graphNode.paddingTop = paddingTop;
-    var paddingLeft = Math.max(minPosX * -1 + 31, graphNode.paddingLeft - 2);
-    particleMovement += Math.abs(minPosX * -1 + 31 - graphNode.paddingLeft);
+    var paddingLeft = Math.max(minPosX * -1 + 21, graphNode.paddingLeft - 2);
+    particleMovement += Math.abs(minPosX * -1 + 21 - graphNode.paddingLeft);
     graphNode.paddingLeft = paddingLeft;
     graphNode.style.paddingRight = Math.round(paddingRight) + "px";
     graphNode.style.paddingBottom = Math.round(paddingBottom) + "px";
@@ -340,11 +340,11 @@ ClassGraphbuilder.prototype.drawArrow = function (arrowdiv) {
     if (particleB.y - particleA.y < 0) {
         arrowLine.setAttribute("y2", "5");
         arrowLine.setAttribute("y1", String(particleA.y-particleB.y+5));
-        arrowdiv.style.top = Math.round(particleA.y - arrowdiv.style.height / 2)+Math.round(particleB.y - particleA.y)-5+"px";
+        arrowdiv.style.top = Math.round(particleA.y - arrowdiv.style.height / 2)+Math.round(particleB.y - particleA.y)-3+"px";
     } else {
         arrowLine.setAttribute("y1", "5");
         arrowLine.setAttribute("y2", String(particleB.y-particleA.y+5));
-        arrowdiv.style.top = Math.round(particleA.y - arrowdiv.style.height / 2 - 5)+"px";
+        arrowdiv.style.top = Math.round(particleA.y - arrowdiv.style.height / 2 - 3)+"px";
     }
 };
 

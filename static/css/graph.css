@@ -46,25 +46,25 @@ div#graph div.masspoint {
 }
 
 div.whitener {
-    height: 60px;
-    width: 60px;
-    border-radius: 50px;
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
     background: white;
     position: relative;
-    top: -27px;
-    left: -27px;
+    top: -13px;
+    left: -13px;
 }
 
 div.circle {
-    border: 3px solid black;
-    min-width: 54px;
+    border: 2px solid black;
+    min-width: 33px;
     padding: 0 3px;
-    height: 60px;
+    height: 40px;
     font-weight: bold;
     text-align: center;
-    line-height: 60px;
+    line-height: 40px;
     margin: 0;
-    border-radius: 50px;
+    border-radius: 40px;
     cursor: pointer;
 }
 
@@ -73,14 +73,14 @@ div.diagram_container {
     height: 0;
     overflow: visible;
     position: relative;
-    top: -37px;
-    left: -37px;
+    top: -23px;
+    left: -23px;
 }
 
 div#graph div.circle {
     position: relative;
-    left: -30px;
-    top: -30px;
+    left: -15px;
+    top: -15px;
     display: inline-block;
     overflow: visible;
 }
