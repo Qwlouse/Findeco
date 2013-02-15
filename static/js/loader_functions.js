@@ -61,8 +61,10 @@ function loadImprint() {
     center.empty();
     left.empty();
     navigation.empty();
-    
-    loadCenterData(jsonData.imprint);
+    var data = new ClassData();
+    data.load(jsonData.imprint);
+    data.setInfo('text','/');
+    center.printData(data);
 }
 
 
@@ -92,7 +94,7 @@ var jsonData = {
         ,{"shortTitle":"contra","index":1,"fullTitle":"Alle doof außer Mama!","authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}
         ,{"shortTitle":"neutral","index":1,"fullTitle":"Irgendwie fällt mir dazu nichts ein...","authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}
     ]}
-    ,"imprint" : {"loadTextResponse":{"paragraphs":[{"wikiText":"<h2>Impressum</h2>Angaben gemäß § 5 TMG:<br>\r\n<br>\r\nKrohlas & Wingert IT GbR<br>\r\n<br>\r\nHauptstraße 91<br>\r\n<br>\r\n76706 Dettenheim<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\nVertreten durch: Sven Krohlas, Justus Wingert<br>\r\n<br>\r\nIhr Ansprechpartner für Fragen jeder Art: Justus Wingert <a href=\"mailto:justus_wingert@web.de\">justus_wingert@web.de</a>","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}],"isFollowing":1}}
+    ,"imprint" : {"loadTextResponse":{"paragraphs":[{"wikiText":"=Impressum=\r\nAngaben gemäß § 5 TMG:\r\n\r\n\r\nKrohlas & Wingert IT GbR\r\n\r\nHauptstraße 91\r\n\r\n76706 Dettenheim\r\n\r\n\r\n\r\nVertreten durch: Sven Krohlas, Justus Wingert\r\n\r\nIhr Ansprechpartner für Fragen jeder Art: Justus Wingert (justus_wingert@web.de)","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]}],"isFollowing":1}}
 };
 
 

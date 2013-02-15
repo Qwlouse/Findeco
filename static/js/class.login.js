@@ -26,6 +26,7 @@ function ClassLogin() {}
 var Login = new ClassLogin();
 
 ClassLogin.prototype.show = function() {
+    Login.root = $('#login');
     if ( Login.hasUser() ) {
         // Show Userinfo
         return;

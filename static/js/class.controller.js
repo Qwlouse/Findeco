@@ -34,7 +34,7 @@ ClassController.prototype.load = function(element) {
         loadImprint();
     }
     if ( element.id == 'content' ) {
-        loadPosition();
+        Controller.stateHandler();
     }
 };
 
