@@ -354,10 +354,40 @@ ClassContribute.prototype.setText = function () {
 };
 
 ClassContribute.prototype.submit = function () {
-        if ( Contribute.checkDone() == true ) {
-            alert("done!");
-        } else {
+        if ( Contribute.checkDone() != true ) {
             alert("not done!");
+            return false;
         }
+        var data = {};
+        switch ( Contribute.form['type'].val() ) {
+            case 'pro':
+                data['wikiText'] = Contribute.form['wikiText'].val();
+                data['argumentType'] = 'pro';
+            case 'neut':
+                data['wikiText'] = Contribute.form['wikiText'].val();
+                data['argumentType'] = 'neut';
+            case 'con':
+                data['wikiText'] = Contribute.form['wikiText'].val();
+                data['argumentType'] = 'con';
+            break;
+            case 'text':
+                data['wikiText'] = Contribute.form['wikiText'].val();
+            break;
+            case 'alt':
+                data['wikiText'] = Contribute.form['wikiText'].val();
+                data['wikiTextAlternative'] = Contribute.form['wikiTextAlt'].val();
+            break;
+        }
+    
+        $.post(
+            '.json_storeText' + Controller.getPosition(),
+            data,
+            Contribute.callback,
+            'json'
+        );
         return false;
+}
+
+ClassContribute.prototype.callback = function(data) {
+    console.log(data);
 }
