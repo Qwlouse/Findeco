@@ -51,6 +51,8 @@ function load(){
     
     if ( document.location.hash == '' ) {
         document.location.hash = '#/';
+    } else {
+        Controller.stateHandler();
     }
 }
 
