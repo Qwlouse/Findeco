@@ -34,24 +34,6 @@ var endPosition = 0;
 
 $(document).ready(load);
 
-function previous() {
-    if ( currentPosition == 0 ) {
-        return;
-    }
-    currentPosition--;
-    location.hash = '#' + currentPosition;
-    loadPosition();
-}
-
-function next() {
-    if ( currentPosition == endPosition ) {
-        return;
-    }
-    currentPosition++;
-    location.hash = '#' + currentPosition;
-    loadPosition();
-}
-
 function load(){
     navigation = $('#location');
     $(document).ajaxStart(function() {
@@ -61,27 +43,15 @@ function load(){
         $('#loading').hide();
     });
     
-    if ( document.location.hash == '' ) {
-        document.location.hash = '#/';
-    }
-    
-    if ( location.hash.length == 2 ) {
-        var hash = location.hash.replace(/#/,'');
-        currentPosition = parseInt(hash);
-        if ( isNaN(currentPosition) ) {
-            currentPosition = 9;
-        }
-    } else {
-        currentPosition = 9;
-    }
-    
     left.show('left');
     center.show('center');
     right.show('right');
-
-    loadPosition();
     
     $(window).bind('hashchange',Controller.stateHandler);
+    
+    if ( document.location.hash == '' ) {
+        document.location.hash = '#/';
+    }
 }
 
 function loadImprint() {
@@ -93,142 +63,6 @@ function loadImprint() {
     loadCenterData(jsonData.imprint);
 }
 
-function loadPosition() {
-    right.empty();
-    center.empty();
-    left.empty();
-    navigation.empty();
-    
-    switch ( currentPosition ) {
-        case 0:
-            loadMicroBlogging();
-            loadCenterData(jsonData.topicList);
-        break;
-        case 1:
-            loadMicroBlogging();
-            loadCenterData(jsonData.subTopicList);
-            appendLeftData(jsonData.topicList);
-            loadNavigation(["Wahlprogramm"]);
-        break;
-        case 2:
-            loadMicroBlogging();
-            loadCenterData(jsonData.subSubTopicList);
-            appendLeftData(jsonData.topicList);
-            appendLeftData(jsonData.subTopicList);
-            loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz"]);
-        break;
-        case 3:
-            loadMicroBlogging();
-            loadCenterData(jsonData.subSubSubTopicList);
-            appendLeftData(jsonData.topicList);
-            appendLeftData(jsonData.subTopicList);
-            appendLeftData(jsonData.subSubTopicList);
-            loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
-        break;
-        case 4:
-            loadMicroBlogging();
-            loadCenterData(jsonData.subSubSubSubTopicOverview);
-            appendLeftData(jsonData.topicList);
-            appendLeftData(jsonData.subTopicList);
-            appendLeftData(jsonData.subSubTopicList);
-            appendLeftData(jsonData.subSubSubTopicList);
-            loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft","Abwasser"]);
-        break;
-        case 5:
-            loadMicroBlogging();
-            loadCenterData(jsonData.subSubSubSubTopicOverview);
-            appendCenterData(jsonData.subSubSubTopicArguments);
-            appendLeftData(jsonData.topicList);
-            appendLeftData(jsonData.subTopicList);
-            appendLeftData(jsonData.subSubTopicList);
-            appendLeftData(jsonData.subSubSubTopicList);
-            loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft","Abwasser"]);
-        break;
-        case 6:
-            loadMicroBlogging();
-            loadCenterData(jsonData.subSubSubTopicList);
-            appendLeftData(jsonData.topicList);
-            appendLeftData(jsonData.subTopicList);
-            appendLeftData(jsonData.subSubTopicList);
-            loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
-        break;
-        case 7:
-            loadMicroBlogging();
-            loadCenterData(jsonData.subSubSubTopicList);
-            appendCenterData(jsonData.subSubSubTopicOverview);
-            appendLeftData(jsonData.topicList);
-            appendLeftData(jsonData.subTopicList);
-            appendLeftData(jsonData.subSubTopicList);
-            loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
-        break;
-        case 8:
-            loadMicroBlogging();
-            loadCenterData(jsonData.subSubSubTopicList);
-            appendCenterData(jsonData.subSubSubTopicArguments);
-            appendCenterData(jsonData.subSubSubTopicOverview);
-            appendLeftData(jsonData.topicList);
-            appendLeftData(jsonData.subTopicList);
-            appendLeftData(jsonData.subSubTopicList);
-            loadNavigation(["Wahlprogramm","Umwelt und Verbraucherschutz","Wasserwirtschaft"]);
-        break;
-        case 9:
-            if ( document.location.hash == '#9' ) document.location.hash = '#/';
-            Controller.stateHandler();
-        break;
-    }
-    
-    endPosition = 9;
-    
-    document.getElementById('position').innerHTML = currentPosition + '/' + endPosition;
-    
-    // loadCenterTopicOverview();
-    // loadLeftHistory();
-}
-
-function loadRootNode() {
-    $.get('.json_loadIndex/',function(json){
-        loadCenterData(json);
-    },'json');
-    // $.get('.json_loadText/',function(json){
-        // appendCenterData(json);
-    // },'json');
-}
-
-function loadCenterData(json) {
-    center.empty();
-    appendCenterData(json);
-}
-
-function appendCenterData(json) {
-    var data = new ClassData();
-    data.load(json);
-    center.printData(data);
-}
-
-function appendLeftData(json) {
-    var box = BoxRegister.newBox();
-    box.show('swap',left);
-    
-    var data = new ClassData();
-    data.load(json);
-    box.printData(data);
-}
-
-function loadNavigation(json) {
-    for ( var j in json ) {
-        $('<li class="button" style="z-index: 501; position: relative;">' + json[j] + '</li>')
-            .appendTo(navigation);
-    }
-}
-
-function loadMicroBlogging() {
-    right.empty();
-    
-    var json = {"loadMicrobloggingResponse":[{"microblogText":"Testblog 1.","microblogID":1,"microblogTime":1357746204,"authorGroup":[{"displayName":"author1"}]},{"microblogText":"Testblog 2.","microblogID":2,"microblogTime":1357746304,"authorGroup":[{"displayName":"author2"}]}]};
-    var data = new ClassData();
-    data.load(json);
-    right.printData(data);
-}
 
 var jsonData = {
     "topicList" : {"loadIndexResponse":[{"shortTitle":"topic","index":1,"fullTitle":"<h2>Wahlprogramm</h2>","authorGroup":[{"displayName":"author1"},{"displayName":"author2"}]},{"shortTitle":"topic","index":2,"fullTitle":"<h2>Grundsatzprogramm</h2>","authorGroup":[{"displayName":"author1"},{"displayName":"author3"}]},{"shortTitle":"topic","index":3,"fullTitle":"<h2>Satzung</h2>","authorGroup":[{"displayName":"author1"}]}]}

@@ -26,5 +26,10 @@ function ClassLogin() {}
 var Login = new ClassLogin();
 
 ClassLogin.prototype.show = function() {
+    if ( Login.hasUser() ) {
+        // Show Userinfo
+        return;
+    }
+    // Show Login form.
     
 };
