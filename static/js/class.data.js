@@ -135,7 +135,7 @@ ClassData.prototype.loadTextResponse = function(data) {
     this.type = 'text';
     var wikiText = "";
     for ( var p in data['paragraphs'] ) {
-        wikiText += data['paragraphs'][p].wikiText + "\n\n[[#/" + data['paragraphs'][p].path + "|go to this part ...]]\n\n";
+        wikiText += data['paragraphs'][p].wikiText + "\n\n[[#/" + data['paragraphs'][p].path + "|{{/static/images/gototext.png|go to this part ...}}]]\n\n";
     }
     var shortTitle = data['paragraphs'][0].path.replace(/(.*)\//g,'').replace(/.\d+$/,'');
     Parser.parse(wikiText,shortTitle).appendTo(this.html);
