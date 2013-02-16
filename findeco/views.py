@@ -26,6 +26,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
@@ -46,6 +47,7 @@ from .view_helpers import create_user_settings, create_index_node_for_argument
 from .view_helpers import traverse_derivates_subset, traverse_derivates
 from .view_helpers import build_text, get_is_following
 
+@ensure_csrf_cookie
 def home(request, path):
     with open("static/index.html", 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), mimetype='text/html')
