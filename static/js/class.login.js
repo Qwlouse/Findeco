@@ -169,12 +169,16 @@ ClassLogin.prototype.submitLogin = function() {
         return false;
     }
     
-    $.post(
-        '.json_login',
-        tmp,
-        Login.handleRequest,
-        'json'
-    );
+    $.ajax({
+        type: 'POST',
+        url: '.json_login',
+        data: tmp,
+        success: Login.handleRequest,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
+        }
+    });
 }
 
 ClassLogin.prototype.submitRegister = function() {

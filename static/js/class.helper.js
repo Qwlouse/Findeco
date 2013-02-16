@@ -30,6 +30,26 @@ ClassHelper.prototype.argumentClickHandler = function() {
     Main.loadText($(this).attr('data-path'));
 };
 
+ClassHelper.prototype.getCookie = function(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+ClassHelper.prototype.getCSRFToken = function() {
+    return Helper.getCookie('csrftoken');
+}
+
 ClassHelper.prototype.getActionFromUrl = function(url) {
     return url.substring(0,url.indexOf('/'));
 };

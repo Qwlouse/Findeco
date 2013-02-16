@@ -375,16 +375,22 @@ ClassContribute.prototype.submit = function () {
             break;
             case 'alt':
                 data['wikiText'] = Contribute.form['wikiText'].val();
+                data['argumentType'] = 'con';
                 data['wikiTextAlternative'] = Contribute.form['wikiTextAlt'].val();
             break;
         }
-    
-        $.post(
-            '.json_storeText' + Controller.getPosition(),
-            data,
-            Contribute.callback,
-            'json'
-        );
+        
+        
+        $.ajax({
+            type: 'POST',
+            url: '.json_storeText' + Controller.getPosition(),
+            data: data,
+            success: Contribute.callback,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
+            }
+        });
         return false;
 }
 
