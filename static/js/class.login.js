@@ -28,6 +28,21 @@ var Login = new ClassLogin();
 ClassLogin.prototype.form = {};
 ClassLogin.prototype.user = null;
 
+ClassLogin.prototype.close = function () {
+    if ( $(this).attr('id') == 'overlay' || $(this).attr('id') == 'cancelbutton' ) {
+        $('#overlay').hide();
+    }
+}
+
+ClassLogin.prototype.isLoggedin = function() {
+    // TODO: Decide what functions to allow for someone who is not loggedin.
+    return this.hasUser();
+}
+
+ClassLogin.prototype.handleRequest = function(data) {
+    console.log(data);
+}
+
 ClassLogin.prototype.hasUser = function() {
     if ( Login.user != null ) {
         return true;
@@ -41,23 +56,127 @@ ClassLogin.prototype.fieldClickHandler = function() {
 
 ClassLogin.prototype.show = function() {
     Login.root = $('#login');
-    console.log('hello');
     if ( Login.hasUser() ) {
-        console.log('bye');
         // Show Userinfo
         return;
     }
-    console.log('here we go');
-    // Show Login form.
-    Login.form = {};
-    Login.form['name'] = $('<span id="inputname"><input type="text"></span>')
-        .keydown(Login.fieldClickHandler)
-        .click(function() {this.firstChild.focus();})
+    // Show Login link.
+    $('<div class="button">Einloggen</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.showLoginForm)
         .appendTo(Login.root);
-    Login.form['password'] = $('<span id="inputpass"><input type="password"></span>')
-        .keydown(Login.fieldClickHandler)
-        .click(function() {this.firstChild.focus();})
-        .appendTo(Login.root);
-    Login.form['submit'] = $('<div class="button">Einloggen</div>')
+    $('<div class="button">Registrieren</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.showRegisterForm)
         .appendTo(Login.root);
 };
+
+ClassLogin.prototype.createTableFormField = function(name,input,targetTable) {
+    var tr = $('<tr>')
+        .appendTo(targetTable);
+    $('<td>' + name + '</td>')
+        .appendTo(tr);
+    return $(input)
+        .appendTo(
+            $('<td>')
+                .appendTo(tr)
+            );
+    
+}
+
+ClassLogin.prototype.showRegisterForm = function() {
+    Login.overlay = $('#overlay')
+        .click(Login.close)
+        .show();
+    Login.overlay.empty();
+    
+    Login.container = $('<div>')
+        .addClass('contributeContainer')
+        .click(function () {return false;})
+        .appendTo(Login.overlay);
+    
+    var table = $('<table>')
+        .attr('style','margin: auto; width: 200px;')
+        .appendTo(Login.container);
+    
+    Login.form = {'type':'register'};
+    Login.form['name'] = Login.createTableFormField('Name','<input type="text">',table);
+    Login.form['email'] = Login.createTableFormField('E-Mail','<input type="text">',table);
+    Login.form['password'] = Login.createTableFormField('Passwort','<input type="password">',table);
+    Login.form['password2'] = Login.createTableFormField('Passwort wiederholen','<input type="password">',table);
+    tr = $('<tr>')
+        .appendTo(table);
+    td = $('<td colspan="2">')
+        .appendTo(tr);
+    Login.form['submit'] = $('<div id="inputsubmit" class="button">Einloggen</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.submit)
+        .appendTo(td);
+    Login.form['cancel'] = $('<div id="cancelbutton" class="button">Abbrechen</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.close)
+        .appendTo(td);
+}
+
+ClassLogin.prototype.showLoginForm = function() {
+    Login.overlay = $('#overlay')
+        .click(Login.close)
+        .show();
+    Login.overlay.empty();
+    
+    Login.container = $('<div>')
+        .addClass('contributeContainer')
+        .click(function () {return false;})
+        .appendTo(Login.overlay);
+    
+    var table = $('<table>')
+        .attr('style','margin: auto; width: 200px;')
+        .appendTo(Login.container);
+    
+    Login.form = {'type':'login'};
+    Login.form['name'] = Login.createTableFormField('Name','<input type="text">',table);
+    Login.form['password'] = Login.createTableFormField('Passwort','<input type="password">',table);
+    tr = $('<tr>')
+        .appendTo(table);
+    td = $('<td colspan="2">')
+        .appendTo(tr);
+    Login.form['submit'] = $('<div id="inputsubmit" class="button">Einloggen</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.submit)
+        .appendTo(td);
+    Login.form['cancel'] = $('<div id="cancelbutton" class="button">Abbrechen</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.close)
+        .appendTo(td);
+};
+
+ClassLogin.prototype.submit = function() {
+    switch ( Login.form['type'] ) {
+        case 'login': return Login.submitLogin();
+        case 'register': return Login.submitRegister();
+    }
+    return false;
+};
+
+ClassLogin.prototype.submitLogin = function() {
+    var tmp = {
+        'username': Login.form['name'].val(),
+        'password': Login.form['password'].val()
+    };
+    if ( tmp['name'] == '' 
+        || tmp['password'] == '' ) {
+        alert('Bitte fülle alle Felder aus!');
+        return false;
+    }
+    
+    $.post(
+        '.json_login',
+        tmp,
+        Login.handleRequest,
+        'json'
+    );
+}
+
+ClassLogin.prototype.submitRegister = function() {
+
+}
