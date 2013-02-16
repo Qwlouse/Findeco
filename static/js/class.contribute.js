@@ -363,9 +363,11 @@ ClassContribute.prototype.submit = function () {
             case 'pro':
                 data['wikiText'] = Contribute.form['wikiText'].val();
                 data['argumentType'] = 'pro';
+            break;
             case 'neut':
                 data['wikiText'] = Contribute.form['wikiText'].val();
                 data['argumentType'] = 'neut';
+            break;
             case 'con':
                 data['wikiText'] = Contribute.form['wikiText'].val();
                 data['argumentType'] = 'con';
