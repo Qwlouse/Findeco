@@ -187,7 +187,6 @@ h1:hover,h2:hover,h3:hover,h4:hover,h5:hover,h6:hover,.arguments  li:hover {
     background-image: url('../images/pbar-ani.gif');
     background-repeat: no-repeat;
     background-position: center center;
-    background-color: lightgrey;
 
     /* Theoretically for IE 8 & 9 (more valid) */
     /* ...but not required as filter works too */
