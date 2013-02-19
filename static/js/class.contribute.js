@@ -397,5 +397,10 @@ ClassContribute.prototype.submit = function () {
 }
 
 ClassContribute.prototype.callback = function(data) {
-    console.log(data);
+    if ( data['storeTextResponse'] == undefined
+        || data['storeTextResponse']['path'] == undefined ) {
+        return false;
+    }
+    Contribute.overlay.hide();
+    Controller.loadIndex(data['storeTextResponse']['path'].replace(/\.(pro|con|neut)\.\d+/g,''));
 }

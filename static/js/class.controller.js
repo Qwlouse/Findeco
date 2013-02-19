@@ -48,15 +48,18 @@ ClassController.prototype.loadText = function() {
 
 ClassController.prototype.loadIndex = function(target) {
     Controller.position = target;
-    document.location.hash = Controller.position;
+    if ( document.location.hash == Controller.position ) {
+        Controller.stateHandler();
+    } else {
+        document.location.hash = Controller.position;
+    }
 };
 
 ClassController.prototype.loadIndexRelative = function(target) {
     if ( Controller.position.substring(Controller.position.length-1) != '/' ) {
-        Controller.position += '/';
+        target = '/' + target;
     }
-    Controller.position += target;
-    document.location.hash = Controller.position;
+    Controller.loadIndex(Controller.position + target);
 };
 
 ClassController.prototype.parentPosition = function() {
@@ -76,7 +79,11 @@ ClassController.prototype.stateHandler = function(event) {
     }
     
     if ( Controller.position != document.location.hash.substring(1) ) {
-         Controller.position = document.location.hash.substring(1);
+        Controller.position = document.location.hash.substring(1);
+    }
+    if ( Controller.position.substr(0,1) != '/' ) {
+        document.location.hash = '/' + Controller.position;
+        return;
     }
     // console.log('ClassController','stateHandler',event,document.location.hash);
     Microblogging.load(Controller.position);

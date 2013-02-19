@@ -22,11 +22,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
  
+ 
+ // TODO: Error Handling
 function ClassLogin() {}
 var Login = new ClassLogin();
 
 ClassLogin.prototype.form = {};
 ClassLogin.prototype.user = null;
+
+ClassLogin.prototype.checkKey = function (e) {
+    if ( e.which == 13 ) {
+        Login.submit();
+    }
+}
 
 ClassLogin.prototype.close = function () {
     if ( $(this).attr('id') == 'overlay' || $(this).attr('id') == 'cancelbutton' ) {
@@ -40,7 +48,20 @@ ClassLogin.prototype.isLoggedin = function() {
 }
 
 ClassLogin.prototype.handleRequest = function(data) {
-    console.log(data);
+    if ( data['loginResponse'] == undefined
+        || data['loginResponse']['userInfo'] == undefined
+        || data['loginResponse']['userSettings'] == undefined ) {
+        return false;
+    }
+    Login.user = new ClassUser();
+    if ( Login.user.load(data['loginResponse']) == false ) {
+        Login.user = null;
+        return false;
+    }
+    Login.show();
+    Login.overlay
+        .hide()
+        .empty();
 }
 
 ClassLogin.prototype.hasUser = function() {
@@ -50,14 +71,26 @@ ClassLogin.prototype.hasUser = function() {
     return false;
 }
 
+ClassLogin.prototype.logout = function() {
+    $.get('.json_logout',function(data) {
+        Login.user = null;
+        Login.show();
+        alert(data['logoutResponse']['farewellMessage']);
+    },'json');
+}
+
 ClassLogin.prototype.fieldClickHandler = function() {
     $(this).attr('id','');
 }
 
 ClassLogin.prototype.show = function() {
-    Login.root = $('#login');
+    Login.root = $('#login')
+        .empty();
     if ( Login.hasUser() ) {
-        // Show Userinfo
+        $('<div class="button">Ausloggen</div>')
+            .attr('style','margin-bottom: 10px;')
+            .click(Login.logout)
+            .appendTo(Login.root);
         return;
     }
     // Show Login link.
@@ -71,12 +104,13 @@ ClassLogin.prototype.show = function() {
         .appendTo(Login.root);
 };
 
-ClassLogin.prototype.createTableFormField = function(name,input,targetTable) {
+ClassLogin.prototype.createTableFormField = function(name,input,targetTable,func) {
     var tr = $('<tr>')
         .appendTo(targetTable);
     $('<td>' + name + '</td>')
         .appendTo(tr);
     return $(input)
+        .keypress(func)
         .appendTo(
             $('<td>')
                 .appendTo(tr)
@@ -134,8 +168,8 @@ ClassLogin.prototype.showLoginForm = function() {
         .appendTo(Login.container);
     
     Login.form = {'type':'login'};
-    Login.form['name'] = Login.createTableFormField('Name','<input type="text">',table);
-    Login.form['password'] = Login.createTableFormField('Passwort','<input type="password">',table);
+    Login.form['name'] = Login.createTableFormField('Name','<input type="text">',table,Login.checkKey);
+    Login.form['password'] = Login.createTableFormField('Passwort','<input type="password">',table,Login.checkKey);
     tr = $('<tr>')
         .appendTo(table);
     td = $('<td colspan="2">')
