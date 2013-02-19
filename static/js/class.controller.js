@@ -48,7 +48,7 @@ ClassController.prototype.loadText = function() {
 
 ClassController.prototype.loadIndex = function(target) {
     Controller.position = target;
-    if ( document.location.hash == Controller.position ) {
+    if ( document.location.hash.substring(1) == Controller.position ) {
         Controller.stateHandler();
     } else {
         document.location.hash = Controller.position;
