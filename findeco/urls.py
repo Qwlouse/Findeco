@@ -120,6 +120,10 @@ urlpatterns = patterns('',
     url(r'^\.json_storeText/' + PATH + '$',
         'findeco.views.store_text',
         name='store_text'),
+                       
+    url(r'^\.json_registerUser/?$',
+        'findeco.views.register_user',
+        name='register_user'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),

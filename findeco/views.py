@@ -34,6 +34,8 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse
 from django.utils.translation import ugettext
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 import json
 import random
 
@@ -46,6 +48,7 @@ from .view_helpers import create_index_node_for_slot, create_user_info
 from .view_helpers import create_user_settings, create_index_node_for_argument
 from .view_helpers import traverse_derivates_subset, traverse_derivates
 from .view_helpers import build_text, get_is_following
+#from django.views.decorators.csrf import csrf_exempt
 
 @ensure_csrf_cookie
 def home(request, path):
@@ -348,6 +351,45 @@ def store_text(request, path):
 
     return json_response({'storeTextResponse':{'path':new_path}})
 
+#@csrf_exempt
+def register_user(request):
+    if not 'displayName' in request.POST and not 'password' in request.POST and not 'mail' in request.POST:
+        return json_error_response(ugettext('Missing Parameter'),
+        ugettext('Post Parameter is missing'))
+    emailAddress = request.POST['emailAddress']
+    password = request.POST['password'] 
+    displayName = request.POST['displayName'] 
+    #Check for not Filled Values 
+    if displayName == '' or password == '' or emailAddress == '':
+        return json_error_response(ugettext('Missing Parameter'),
+        ugettext('You need to Provide displayName, Password and a valid E-Mail Address'))
+    try:
+        validate_email( emailAddress )
+    except ValidationError:
+        return json_error_response(ugettext('Invalid Email'),
+        ugettext('This E-Mailaddress seems to be invalid. Please choose another one ')) 
+ 
+    #Check for already existing Username
+    if (User.objects.filter(username = displayName).count()):
+        return json_error_response(ugettext('Username unavailiable'),
+        ugettext('This Username is currently in use. Please choose another one '))
+        
+    #Check for already existing Mail 
+    if (User.objects.filter(email = emailAddress).count()):
+        return json_error_response(ugettext('Email unavailiable'),
+        ugettext('This E-Mailaddress is currently in use. Please choose another one '))
+
+    
+    
+    user = User.objects.create_user(displayName, emailAddress , password)
+    #user.is_active = False
+    user.save()
+    
+    
+    return json_response({'registerUserResponse':{}})
+    
+    
+    
 def error_404(request):
     return json_error_response(ugettext('Invalid URL'),
         ugettext('The URL you requested is not specified in the Findeco-API.'))
