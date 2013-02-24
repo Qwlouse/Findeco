@@ -189,6 +189,10 @@ LOGGING = {
     }
 }
 
+# django-registration
+# Registration settings
+ACCOUNT_ACTIVATION_DAYS=7
+EMAIL_HOST='localhost'
 ADMINS = (
     ('Your Name', 'your_name@email.com'),
 )
@@ -199,10 +203,6 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_HOST_USER = ''
 EMAIL_SUBJECT_PREFIX = ''
 EMAIL_USE_TLS = True
-
-FINDECO_BASE_URL = 'http://127.0.0.1:8000/'
-REGISTRATION_TITLE = 'Your Findeco registration'
-REGISTRATION_BODY = 'You have registred an Findeco Account with this E-Mail address. You can activate it with the Link below. If you did not register it you just need to ignore this Mail '
 
 # try to import secret_settings and overwrite some of the default values
 try:
