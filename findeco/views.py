@@ -48,7 +48,7 @@ from .view_helpers import create_index_node_for_slot, create_user_info
 from .view_helpers import create_user_settings, create_index_node_for_argument
 from .view_helpers import traverse_derivates_subset, traverse_derivates
 from .view_helpers import build_text, get_is_following
-from django.views.decorators.csrf import csrf_exempt
+#from django.views.decorators.csrf import csrf_exempt
 
 @ensure_csrf_cookie
 def home(request, path):
@@ -351,7 +351,7 @@ def store_text(request, path):
 
     return json_response({'storeTextResponse':{'path':new_path}})
 
-@csrf_exempt
+#@csrf_exempt
 def register_user(request):
     if not 'displayName' in request.POST or not 'password' in request.POST or not 'emailAddress' in request.POST:
         return json_error_response(ugettext('Missing Parameter'),
@@ -386,7 +386,7 @@ def register_user(request):
     
     return json_response({'registerUserResponse':{}})
 
-@csrf_exempt
+#@csrf_exempt
 def activate_user(request):
     if not 'activationKey' in request.POST:
         return json_error_response(ugettext('No activationKey submitted'),
