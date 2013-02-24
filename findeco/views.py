@@ -36,6 +36,8 @@ from django.http import HttpResponse
 from django.utils.translation import ugettext
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.conf import settings
 import json
 import random
 
@@ -48,7 +50,7 @@ from .view_helpers import create_index_node_for_slot, create_user_info
 from .view_helpers import create_user_settings, create_index_node_for_argument
 from .view_helpers import traverse_derivates_subset, traverse_derivates
 from .view_helpers import build_text, get_is_following
-#from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 
 @ensure_csrf_cookie
 def home(request, path):
@@ -351,7 +353,7 @@ def store_text(request, path):
 
     return json_response({'storeTextResponse':{'path':new_path}})
 
-#@csrf_exempt
+@csrf_exempt
 def register_user(request):
     if not 'displayName' in request.POST or not 'password' in request.POST or not 'emailAddress' in request.POST:
         return json_error_response(ugettext('Missing Parameter'),
@@ -381,12 +383,15 @@ def register_user(request):
 
     user = User.objects.create_user(displayName, emailAddress , password)
     user.is_active = False
-    user.profile.activationKey = random.getrandbits(256)
+    activationKey=random.getrandbits(256)
+    user.profile.activationKey = activationKey
     user.save()
+    send_mail(settings.REGISTRATION_TITLE, settings.REGISTRATION_BODY + ' '+  settings.FINDECO_BASE_URL+'fixed/activate/'+ str(activationKey), settings.EMAIL_HOST_USER ,
+    [emailAddress])
     
     return json_response({'registerUserResponse':{}})
 
-#@csrf_exempt
+@csrf_exempt
 def activate_user(request):
     if not 'activationKey' in request.POST:
         return json_error_response(ugettext('No activationKey submitted'),
@@ -407,6 +412,7 @@ def activate_user(request):
         user.profile.activationKey=''
         user.is_active = True
         user.save()
+        
     return json_response({'activateUserResponse':{}})
 
     
