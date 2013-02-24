@@ -73,7 +73,10 @@ class UserProfile(models.Model):
         blank=True,
         help_text="Profiles of users this user blocked."
     )
-
+    
+    activationKey = models.TextField(
+        blank=True,
+        help_text="activationKey")
     # Override the save method to prevent integrity errors
     # These happen because both teh post_save signal and the inlined admin
     # interface try to create the UserProfile. See:
@@ -88,6 +91,7 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return '<Profile of %s>' % self.user.username
+    
 
 # Use post_save signal to ensure the profile will be created automatically
 # when a user is created (saved for the first time)

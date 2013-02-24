@@ -48,7 +48,7 @@ from .view_helpers import create_index_node_for_slot, create_user_info
 from .view_helpers import create_user_settings, create_index_node_for_argument
 from .view_helpers import traverse_derivates_subset, traverse_derivates
 from .view_helpers import build_text, get_is_following
-#from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 
 @ensure_csrf_cookie
 def home(request, path):
@@ -351,9 +351,9 @@ def store_text(request, path):
 
     return json_response({'storeTextResponse':{'path':new_path}})
 
-#@csrf_exempt
+@csrf_exempt
 def register_user(request):
-    if not 'displayName' in request.POST and not 'password' in request.POST and not 'mail' in request.POST:
+    if not 'displayName' in request.POST or not 'password' in request.POST or not 'emailAddress' in request.POST:
         return json_error_response(ugettext('Missing Parameter'),
         ugettext('Post Parameter is missing'))
     emailAddress = request.POST['emailAddress']
@@ -379,16 +379,36 @@ def register_user(request):
         return json_error_response(ugettext('Email unavailiable'),
         ugettext('This E-Mailaddress is currently in use. Please choose another one '))
 
-    
-    
     user = User.objects.create_user(displayName, emailAddress , password)
-    #user.is_active = False
+    user.is_active = False
+    user.profile.activationKey = random.getrandbits(256)
     user.save()
     
-    
     return json_response({'registerUserResponse':{}})
-    
-    
+
+@csrf_exempt
+def activate_user(request):
+    if not 'activationKey' in request.POST:
+        return json_error_response(ugettext('No activationKey submitted'),
+        ugettext('You did not provide an activation key'))
+    activationKey = request.POST['activationKey']
+    #Check for not Filled Values 
+    if activationKey == '' :
+        return json_error_response(ugettext('No activationKey submitted'),
+        ugettext('You did not provide an activation key')) 
+ 
+    #Check for already existing Username
+    if not ((User.objects.filter(profile__activationKey__exact = activationKey).count())==1):
+        return json_error_response(ugettext('Activation Key is invalid'),
+        ugettext('The activation Key you are using is invalid'))
+    else:
+        user= User.objects.get(profile__activationKey__exact=activationKey )
+        
+        user.profile.activationKey=''
+        user.is_active = True
+        user.save()
+    return json_response({'activateUserResponse':{}})
+
     
 def error_404(request):
     return json_error_response(ugettext('Invalid URL'),

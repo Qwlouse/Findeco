@@ -124,6 +124,9 @@ urlpatterns = patterns('',
     url(r'^\.json_registerUser/?$',
         'findeco.views.register_user',
         name='register_user'),
+    url(r'^\.json_activateUser/?$',
+        'findeco.views.activate_user',
+        name='activate_user'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
