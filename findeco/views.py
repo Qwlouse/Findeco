@@ -354,7 +354,7 @@ def store_text(request, path):
     return json_response({'storeTextResponse':{'path':new_path}})
 
 #@csrf_exempt
-def register_user(request):
+def account_registration(request):
     if not 'displayName' in request.POST or not 'password' in request.POST or not 'emailAddress' in request.POST:
         return json_error_response(ugettext('Missing Parameter'),
         ugettext('Post Parameter is missing'))
@@ -386,13 +386,13 @@ def register_user(request):
     activationKey=random.getrandbits(256)
     user.profile.activationKey = activationKey
     user.save()
-    send_mail(settings.REGISTRATION_TITLE, settings.REGISTRATION_BODY + ' '+  settings.FINDECO_BASE_URL+'fixed/activate/'+ str(activationKey), settings.EMAIL_HOST_USER ,
+    send_mail(settings.REGISTRATION_TITLE, settings.REGISTRATION_BODY + ' '+  settings.FINDECO_BASE_URL+'/#activate/'+ str(activationKey), settings.EMAIL_HOST_USER ,
     [emailAddress])
     
-    return json_response({'registerUserResponse':{}})
+    return json_response({'accountRegistrationResponse':{}})
 
 #@csrf_exempt
-def activate_user(request):
+def account_activation(request):
     if not 'activationKey' in request.POST:
         return json_error_response(ugettext('No activationKey submitted'),
         ugettext('You did not provide an activation key'))
@@ -403,18 +403,96 @@ def activate_user(request):
         ugettext('You did not provide an activation key')) 
  
     #Check for already existing Username
-    if not ((User.objects.filter(profile__activationKey__exact = activationKey).count())==1):
+    if not ((User.objects.filter(profile__activationKey__exact = activationKey).filter(is_active=False).count())==1):
         return json_error_response(ugettext('Activation Key is invalid'),
-        ugettext('The activation Key you are using is invalid'))
+        ugettext('The activation Key you are using is invalid or already used'))
     else:
         user= User.objects.get(profile__activationKey__exact=activationKey )
         
         user.profile.activationKey=''
         user.is_active = True
         user.save()
-    return json_response({'activateUserResponse':{}})
+    return json_response({'accountActivationResponse':{}})
 
+#@csrf_exempt
+def account_reset_request_by_name(request):
+    if not 'displayName' in request.POST:
+        return json_error_response(ugettext('No displayName submitted'),
+        ugettext('displayName is missing'))
+    displayName = request.POST['displayName'] 
+    #Check for not Filled Values 
+    if displayName == '':
+        return json_error_response(ugettext('Missing displayName'),
+        ugettext('You need to Provide displayName'))
     
+    #Check for activated User with displayname
+    if not ((User.objects.filter(username = displayName).filter(is_active=True).filter(profile__activationKey__exact ='').count())==1):
+        return json_error_response(ugettext('User not existing or not activated'),
+        ugettext('The Username is not assinged to an activated account or you have requested a Passwordeset to often. Please wait for Reset'))
+
+    user= User.objects.get(username=displayName)
+    activationKey=random.getrandbits(256)
+    user.profile.activationKey = activationKey
+    user.save()
+    send_mail(settings.REGISTRATION_RECOVERY_TITLE , settings.REGISTRATION_RECOVERY_BODY + ' '+  settings.FINDECO_BASE_URL+'/#confirm/'+ str(activationKey), settings.EMAIL_HOST_USER ,
+    [user.email])
+    
+    return json_response({'accountResetRequestByNameResponse':{}})
+
+#@csrf_exempt
+def account_reset_request_by_mail(request):
+    if not 'emailAddress' in request.POST:
+        return json_error_response(ugettext('No emailAddress submitted'),
+        ugettext('emailAddress is missing'))
+    emailAddress = request.POST['emailAddress'] 
+    #Check for not Filled Values 
+    if emailAddress == '':
+        return json_error_response(ugettext('Missing emailAddress'),
+        ugettext('You need to Provide an valid email address'))
+    
+    #Check for activated User with displayname
+    if not ((User.objects.filter(email = emailAddress).filter(is_active=True).filter(profile__activationKey__exact ='').count())==1):
+        return json_error_response(ugettext('User not existing or not activated'),
+        ugettext('This email address is not assinged to an activated account or you have requested a Passwordreset to often. Please wait for Reset'))
+
+    user= User.objects.get(email=emailAddress)
+    activationKey=random.getrandbits(256)
+    user.profile.activationKey = activationKey
+    user.save()
+    send_mail(settings.REGISTRATION_RECOVERY_TITLE , settings.REGISTRATION_RECOVERY_BODY + ' '+  settings.FINDECO_BASE_URL+'/#confirm/'+ str(activationKey), settings.EMAIL_HOST_USER ,
+    [user.email])
+    
+    return json_response({'accountRestRequestByMailResponse':{}})
+
+
+
+#@csrf_exempt
+def account_reset_confirmation(request):
+    if not 'activationKey' in request.POST:
+        return json_error_response(ugettext('No activationKey submitted'),
+        ugettext('You did not provide an activation key'))
+    activationKey = request.POST['activationKey']
+    #Check for not Filled Values 
+    if activationKey == '' :
+        return json_error_response(ugettext('No activationKey submitted'),
+        ugettext('You did not provide an activation key')) 
+ 
+    #Check for already existing Username
+    if not ((User.objects.filter(profile__activationKey__exact = activationKey).filter(is_active=True).count())==1):
+        return json_error_response(ugettext('Activation Key is invalid'),
+        ugettext('The activation Key you are using is invalid or already used'))
+    else:
+        user= User.objects.get(profile__activationKey__exact=activationKey )
+        user.profile.activationKey=''
+        password = User.objects.make_random_password()
+        user.set_password(password)
+        user.save()
+        send_mail(settings.REGISTRATION_RECOVERY_TITLE_SUCCESS , settings.REGISTRATION_RECOVERY_BODY_SUCCESS + ' Password : '+ str(password), settings.EMAIL_HOST_USER ,
+    [user.email])
+    return json_response({'accountResetConfirmationResponse':{}})
+
+
+
 def error_404(request):
     return json_error_response(ugettext('Invalid URL'),
         ugettext('The URL you requested is not specified in the Findeco-API.'))

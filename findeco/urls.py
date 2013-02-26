@@ -121,13 +121,26 @@ urlpatterns = patterns('',
         'findeco.views.store_text',
         name='store_text'),
                        
-    url(r'^\.json_registerUser/?$',
-        'findeco.views.register_user',
-        name='register_user'),
-    url(r'^\.json_activateUser/?$',
-        'findeco.views.activate_user',
-        name='activate_user'),
+    url(r'^\.json_accountRegistration/?$',
+        'findeco.views.account_registration',
+        name='account_registration'),
+                       
+    url(r'^\.json_accountActivation/?$',
+        'findeco.views.account_activation',
+        name='account_activation'),
+                       
+    url(r'^\.json_accountResetRequestByMail/?$',
+        'findeco.views.account_reset_request_by_mail',
+        name='account_reset_request_by_mail'),
 
+    url(r'^\.json_accountResetRequestByName/?$',
+        'findeco.views.account_reset_request_by_name',
+        name='account_reset_request_by_name'),
+    
+    url(r'^\.json_accountResetConfirmation/?$',
+        'findeco.views.account_reset_confirmation',
+        name='account_reset_confirmation'),                       
+                       
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/', include('django.contrib.admindocs.urls')),
 
