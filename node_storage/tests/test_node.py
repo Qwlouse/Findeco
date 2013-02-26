@@ -23,8 +23,10 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from node_storage import Node, get_root_node
-from node_storage.factory import create_structureNode, create_user, create_vote, create_argument
+from node_storage.factory import create_structureNode, create_user, create_vote
+from node_storage.factory import create_argument
 from node_storage.models import NodeOrder, Derivation
+
 
 class NodeTest(TestCase):
     def setUp(self):
@@ -77,16 +79,17 @@ class NodeTest(TestCase):
 
         self.assertIn(n, v1.nodes.all())
         self.assertIn(d, v1.nodes.all())
-        self.assertEqual(v1.nodes.count(),2)
+        self.assertEqual(v1.nodes.count(), 2)
         self.assertIn(n, v2.nodes.all())
         self.assertIn(d, v2.nodes.all())
-        self.assertEqual(v2.nodes.count(),2)
+        self.assertEqual(v2.nodes.count(), 2)
         self.assertEqual(d.votes.count(), 2)
 
     def test_add_derivate_creates_commit_argument(self):
         s = create_structureNode("Source", authors=[self.hans])
         d = create_structureNode("Derivate", authors=[self.hans])
-        s.add_derivate(d, arg_type='c', title="arg", text="ument", authors=[self.hugo])
+        s.add_derivate(d, arg_type='c', title="arg", text="ument",
+                       authors=[self.hugo])
         no = Derivation.objects.filter(source=s, derivate=d)
         self.assertTrue(no.count() == 1)
         no = no[0]
@@ -99,10 +102,12 @@ class NodeTest(TestCase):
     def test_add_derivate_copies_arguments(self):
         s = create_structureNode("Source", authors=[self.hans])
         d = create_structureNode("Derivate", authors=[self.hans])
-        a = create_argument(s, arg_type='p', title="myArg", text="cool", authors=[self.hugo])
+        a = create_argument(s, arg_type='p', title="myArg", text="cool",
+                            authors=[self.hugo])
         self.assertEqual(s.arguments.count(), 1)
         self.assertEqual(s.arguments.all()[0], a)
-        s.add_derivate(d, arg_type='c', title="yourArg", text="ument", authors=[self.hans])
+        s.add_derivate(d, arg_type='c', title="yourArg", text="ument",
+                       authors=[self.hans])
         self.assertEqual(s.arguments.count(), 2)
         sa1, sa2 = s.arguments.order_by('index')
         self.assertEqual(sa1, a)
@@ -124,12 +129,6 @@ class NodeTest(TestCase):
         self.assertEqual(da2.text.text, 'ument')
         self.assertEqual(da2.text.authors.count(), 1)
         self.assertIn(self.hans, da2.text.authors.all())
-
-
-
-
-
-
 
     def test_get_unfollows_on_node_without_sources_returns_0(self):
         self.assertEqual(self.root.get_unfollows(), 0)
@@ -178,7 +177,7 @@ class NodeTest(TestCase):
     def test_get_newfollows_on_node_without_votes_or_sources_returns_0(self):
         self.assertEqual(self.root.get_newfollows(), 0)
 
-    def test_get_newfollows_on_node_without_sources_returns_number_of_follows(self):
+    def test_get_newfollows_without_sources_returns_number_of_follows(self):
         n = create_structureNode('Foo')
         create_vote(self.hans, [n])
         create_vote(self.hugo, [n])
