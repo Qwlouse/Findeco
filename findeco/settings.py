@@ -205,7 +205,10 @@ EMAIL_USE_TLS = True
 FINDECO_BASE_URL = 'http://127.0.0.1:8000/'
 REGISTRATION_TITLE = 'Your Findeco registration'
 REGISTRATION_BODY = 'You have registred an Findeco Account with this E-Mail address. You can activate it with the Link below. If you did not register it you just need to ignore this Mail '  
-
+REGISTRATION_RECOVERY_TITLE =  'You requested a Password reset'
+REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco Account. You can request it with the Link below. If you did not request it you just need to ignore this Mail '
+REGISTRATION_RECOVERY_TITLE_SUCCESS =  'Your new Findeco Password'
+REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
 
 # try to import secret_settings and overwrite some of the default values
 try:
