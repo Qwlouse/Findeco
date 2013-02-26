@@ -34,15 +34,18 @@ from node_storage.path_helpers import get_good_path_for_structure_node
 from .paths import parse_suffix
 from .api_validation import validate_response
 
+
 def json_response(data):
     return HttpResponse(json.dumps(data), mimetype='application/json')
 
+
 def json_error_response(title, message):
-    response = {'errorResponse':{
-        'errorTitle':title,
-        'errorMessage':message,
-        }}
+    response = {'errorResponse': {
+        'errorTitle': title,
+        'errorMessage': message,
+    }}
     return json_response(response)
+
 
 def ValidPaths(*allowed_path_types):
     def wrapper(f):
@@ -59,24 +62,31 @@ def ValidPaths(*allowed_path_types):
             else:
                 path_type = 'StructureNode'
             if path_type not in allowed_path_types:
-                return json_error_response('IllegalPath',
-                    "%s can be called only for %s but was called with %s"%(
-                        f.__name__, allowed_path_types, path_type))
+                return json_error_response(
+                    'IllegalPath',
+                    "%s can be called only for %s but was called with %s" %
+                    (f.__name__, allowed_path_types, path_type))
                 #noinspection PyCallingNonCallable
             response = f(request, path, *args, **kwargs)
             validate_response(response.content, f.__name__)
             return response
+
         return wrapped
+
     return wrapper
+
 
 def create_user_info(user):
     user_info = dict(
-        displayName = user.username,
-        description = user.profile.description,
-        followers = [{'displayName':u.user.username} for u in user.profile.followers.all()],
-        followees = [{'displayName':u.user.username} for u in user.profile.followees.all()]
+        displayName=user.username,
+        description=user.profile.description,
+        followers=[{'displayName': u.user.username} for u in
+                   user.profile.followers.all()],
+        followees=[{'displayName': u.user.username} for u in
+                   user.profile.followees.all()]
     )
     return user_info
+
 
 def create_user_settings(user):
     rights = 0
@@ -87,30 +97,33 @@ def create_user_settings(user):
     if user.is_superuser:
         rights += 4
     user_settings = dict(
-        blockedUsers = [{'displayName':u.user.username} for u in user.profile.blocked.all()],
-        userRights = rights
+        blockedUsers=[{'displayName': u.user.username} for u in
+                      user.profile.blocked.all()],
+        userRights=rights
     )
     return user_settings
+
 
 def create_index_node_for_slot(slot):
     favorite = slot.favorite
     index_node = dict(
-        shortTitle = slot.title,
-        fullTitle = favorite.title,
-        index = favorite.get_index(slot),
-        authorGroup = [create_user_info(a) for a in favorite.text.authors.all()]
+        shortTitle=slot.title,
+        fullTitle=favorite.title,
+        index=favorite.get_index(slot),
+        authorGroup=[create_user_info(a) for a in favorite.text.authors.all()]
     )
     return index_node
 
 
 def create_index_node_for_argument(argument, node):
     index_node = dict(
-        shortTitle = Argument.long_arg_type(argument.arg_type),
-        fullTitle = argument.title,
-        index = argument.index,
-        authorGroup = [create_user_info(a) for a in argument.text.authors.all()]
+        shortTitle=Argument.long_arg_type(argument.arg_type),
+        fullTitle=argument.title,
+        index=argument.index,
+        authorGroup=[create_user_info(a) for a in argument.text.authors.all()]
     )
     return index_node
+
 
 def build_text(node, depth=2):
     depth = min(depth, 6)
@@ -120,7 +133,8 @@ def build_text(node, depth=2):
     return text
 
 
-def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_path=None):
+def create_graph_data_node_for_structure_node(node, slot=None, path=None,
+                                              slot_path=None):
     if slot_path:
         slot = get_node_for_path(slot_path)
 
@@ -130,8 +144,10 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_p
     if slot:
         if not slot_path:
             slot_path = slot.get_a_path()
-        origin_group = [slot_path + '.' + str(n.get_index(slot)) for n in node.sources.filter(parents__in=[slot]).all()]
-        origin_group += [n.get_a_path() for n in node.sources.exclude(parents__in=[slot]).all()]
+        origin_group = [slot_path + '.' + str(n.get_index(slot)) for n in
+                        node.sources.filter(parents__in=[slot]).all()]
+        origin_group += [n.get_a_path() for n in
+                         node.sources.exclude(parents__in=[slot]).all()]
     else:
         origin_group = [n.get_a_path() for n in node.sources.all()]
 
@@ -145,34 +161,43 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None, slot_p
     )
     return graph_data_node
 
+
 def store_structure_node(path, wiki_text, author):
-    slot_path = path.rsplit('.',1)[0]
+    slot_path = path.rsplit('.', 1)[0]
     slot = get_node_for_path(slot_path)
     structure = backend.parse(wiki_text, None)
-    structure_node = backend.create_structure_from_structure_node_schema(structure, slot, [author])
+    structure_node = backend.create_structure_from_structure_node_schema(
+        structure, slot, [author])
     # add auto follow
     create_vote(author, [structure_node])
-    return structure_node, get_good_path_for_structure_node(structure_node, slot, slot_path)
+    return structure_node, get_good_path_for_structure_node(structure_node,
+                                                            slot, slot_path)
+
 
 def store_argument(path, arg_text, arg_type, author):
     node = get_node_for_path(path)
     title = backend.get_title_from_text(arg_text)
-    original_argument = create_argument(node, arg_type, title, arg_text, [author])
+    original_argument = create_argument(node, arg_type, title, arg_text,
+                                        [author])
     # add auto follow
     create_vote(author, [original_argument])
     # copy argument for all derivates
     for d in traverse_derivates(node):
-        new_argument=create_argument(d, arg_type, title, arg_text, [author])
+        new_argument = create_argument(d, arg_type, title, arg_text, [author])
         original_argument.add_derivate(new_argument)
     return path + "." + arg_type + "." + str(node.arguments.count())
+
 
 def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     new_node, new_path = store_structure_node(path, derivate_wiki_text, author)
     node = get_node_for_path(path)
-    arg = node.add_derivate(new_node, arg_type=arg_type, title=backend.get_title_from_text(arg_text), text=arg_text, authors=[author])
+    arg = node.add_derivate(new_node, arg_type=arg_type,
+                            title=backend.get_title_from_text(arg_text),
+                            text=arg_text, authors=[author])
     # add auto follow
     create_vote(author, [arg])
     return new_path
+
 
 def traverse_derivates_subset(node, subset):
     der_list = list((node.derivates.all() & subset).all())
@@ -181,6 +206,7 @@ def traverse_derivates_subset(node, subset):
         der_list += list((derivate.derivates.all() & subset).all())
         yield derivate
 
+
 def traverse_derivates(node):
     der_list = list(node.derivates.all())
     while len(der_list) > 0:
@@ -188,16 +214,18 @@ def traverse_derivates(node):
         der_list += list(derivate.derivates.all())
         yield derivate
 
+
 def get_permission(name):
     a, _, n = name.partition('.')
     return Permission.objects.get(content_type__app_label=a, codename=n)
+
 
 def get_is_following(user_id, node):
     isFollowing = 0
     v = node.votes.filter(user=user_id)
     if v.count() > 0:
         v = v[0]
-        isFollowing = 1 # at least transitive follow
+        isFollowing = 1  # at least transitive follow
         if v.nodes.order_by('id')[0] == node:
-            isFollowing = 2 # explicit follow
+            isFollowing = 2  # explicit follow
     return isFollowing
