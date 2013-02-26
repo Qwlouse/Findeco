@@ -37,6 +37,7 @@ from django.utils.translation import ugettext
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.conf import settings
+from django.core.mail import send_mail
 import json
 import random
 
@@ -413,28 +414,6 @@ def activate_user(request):
         user.save()
     return json_response({'activateUserResponse':{}})
 
-#@csrf_exempt
-def request_password(request):
-    if not 'activationKey' in request.POST:
-        return json_error_response(ugettext('No activationKey submitted'),
-        ugettext('You did not provide an activation key'))
-    activationKey = request.POST['activationKey']
-    #Check for not Filled Values 
-    if activationKey == '' :
-        return json_error_response(ugettext('No activationKey submitted'),
-        ugettext('You did not provide an activation key')) 
- 
-    #Check for already existing Username
-    if not ((User.objects.filter(profile__activationKey__exact = activationKey).count())==1):
-        return json_error_response(ugettext('Activation Key is invalid'),
-        ugettext('The activation Key you are using is invalid'))
-    else:
-        user= User.objects.get(profile__activationKey__exact=activationKey )
-        
-        user.profile.activationKey=''
-        user.is_active = True
-        user.save()
-    return json_response({'activateUserResponse':{}})
     
 def error_404(request):
     return json_error_response(ugettext('Invalid URL'),
