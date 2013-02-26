@@ -197,9 +197,9 @@ class CreateIndexNodeForArgumentTest(TestCase):
         self.foo = create_slot('foo')
         self.foo1 = create_structureNode('FooooBar')
         # add arguments
-        self.foo_pro = create_argument(self.foo1, type='pro', title="geil", authors=[self.hugo])
-        self.foo_neut = create_argument(self.foo1, type='neut', title="ist", authors=[self.hans])
-        self.foo_con = create_argument(self.foo1, type='con', title="geiz", authors=[self.hugo, self.hans])
+        self.foo_pro = create_argument(self.foo1, arg_type='pro', title="geil", authors=[self.hugo])
+        self.foo_neut = create_argument(self.foo1, arg_type='neut', title="ist", authors=[self.hans])
+        self.foo_con = create_argument(self.foo1, arg_type='con', title="geiz", authors=[self.hugo, self.hans])
         # summary variables
         self.foo_arguments = [self.foo_pro, self.foo_neut, self.foo_con]
         self.arg_titles = ['geil', 'ist', 'geiz']

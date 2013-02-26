@@ -24,15 +24,18 @@ from __future__ import division, print_function, unicode_literals
 from django.contrib import admin
 from models import Node, Argument, Text, Vote, NodeOrder, Derivation
 
+
 class TextInline(admin.StackedInline):
     model = Text
     max_num = 1
     can_delete = True
 
+
 class ChildInline(admin.TabularInline):
     model = NodeOrder
     extra = 1
     fk_name = "parent"
+
 
 class ParentInline(admin.TabularInline):
     model = NodeOrder
@@ -45,21 +48,25 @@ class DerivationInline(admin.TabularInline):
     extra = 1
     fk_name = "source"
 
+
 class ArgumentAdmin(admin.ModelAdmin):
     model = Argument
     radio_fields = {"arg_type": admin.HORIZONTAL}
     list_display = ('title', 'id', 'node_type')
     inlines = [TextInline]
 
+
 class NodeAdmin(admin.ModelAdmin):
     model = Node
     list_display = ('get_a_path', 'title', 'get_follows', 'id', 'node_type')
     inlines = [ParentInline, ChildInline, TextInline, DerivationInline]
 
+
 class VoteAdmin(admin.ModelAdmin):
     model = Vote
     list_display = ('id', 'user', 'head')
     list_display_links = ('head',)
+
 
 admin.site.register(Node, NodeAdmin)
 admin.site.register(Argument, ArgumentAdmin)

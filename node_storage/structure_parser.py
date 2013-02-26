@@ -26,36 +26,46 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-import re, unicodedata
+import re
+import unicodedata
 from factory import create_structureNode, create_slot
 
 h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*\s*$", flags=re.MULTILINE)
-general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*$", flags=re.MULTILINE)
+general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*$",
+                       flags=re.MULTILINE)
 invalid_symbols = re.compile(r"[^\w\-_\s]+")
 
+
 def strip_accents(s):
-    return ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
+    return ''.join(
+        (c for c in unicodedata.normalize('NFD', s) if unicodedata.category(
+            c) != 'Mn'))
+
 
 REPLACEMENTS = {
-          ord('ä'): 'ae',
-          ord('ö'): 'oe',
-          ord('ü'): 'ue',
-          ord('ß'): 'ss',
-          ord('Ä'): 'Ae',
-          ord('Ö'): 'Oe',
-          ord('Ü'): 'Ue',
-          ord('ẞ'): 'SS',
-        }
+    ord('ä'): 'ae',
+    ord('ö'): 'oe',
+    ord('ü'): 'ue',
+    ord('ß'): 'ss',
+    ord('Ä'): 'Ae',
+    ord('Ö'): 'Oe',
+    ord('Ü'): 'Ue',
+    ord('ẞ'): 'SS',
+}
+
 
 def substitute_umlauts(s):
     return s.translate(REPLACEMENTS)
 
+
 def remove_unallowed_chars(s):
-    s = invalid_symbols.sub('',s)
+    s = invalid_symbols.sub('', s)
     return s
+
 
 def remove_and_compress_whitespaces(s):
     return '_'.join(s.split())
+
 
 def turn_into_valid_short_title(title, short_title_set=(), max_length=20):
     st = substitute_umlauts(title)
@@ -70,29 +80,29 @@ def turn_into_valid_short_title(title, short_title_set=(), max_length=20):
             new_st = str(i)
             if new_st not in short_title_set:
                 return new_st
-    if st not in short_title_set :
+    if st not in short_title_set:
         return st
     else:
         i = 0
         while True:
             i += 1
             suffix = str(i)
-            new_st = st[:min(max_length-len(suffix), len(st))] + suffix
+            new_st = st[:min(max_length - len(suffix), len(st))] + suffix
             if new_st not in short_title_set:
                 return new_st
 
 
-
-
 def getHeadingMatcher(level=0):
     if 0 < level < 7:
-        s = "%d"%level
+        s = "%d" % level
     elif level == 0:
         s = "1, 6"
     else:
-        raise ValueError("level must be between 1 and 6 or 0, but was %d."%level)
-    return re.compile(r"^\s*={%s}(?P<title>[^=§]+)(?:§\s*(?P<short_title>[^=§\s][^=§]*))?=*\s*$"%s, flags=re.MULTILINE)
-
+        raise ValueError(
+            "level must be between 1 and 6 or 0, but was %d." % level)
+    pattern = r"^\s*={%s}(?P<title>[^=§]+)"\
+              r"(?:§\s*(?P<short_title>[^=§\s][^=§]*))?=*\s*$"
+    return re.compile(pattern % s, flags=re.MULTILINE)
 
 
 def validate_structure_schema(structure):
@@ -109,42 +119,49 @@ def validate_structure_schema(structure):
                ('text', unicode),
                ('children', list)]
     for n, t in entries:
-        assert n in structure, "Required field '%s' is missing."%n
-        assert type(structure[n]) is t, "Type of field '%s' should be %s but was %s"%(n, t, type(structure[n]))
-    # validate short title
-    assert 1 <= len(structure['short_title']) <= 20, "Length of short title must be between 1 and 20 (but was %d)."%len(structure['short_title'])
+        assert n in structure, "Required field '%s' is missing." % n
+        assert type(
+            structure[n]) is t, "Type of field '%s' should be %s but was %s" % \
+                                (n, t, type(structure[n]))
+        # validate short title
+    assert 1 <= len(structure['short_title']) <= 20, \
+        "Length of short title must be between 1 and 20 (but was %d)." % len(
+        structure['short_title'])
     # validate children
     for c in structure['children']:
         validate_structure_schema(c)
     return True
 
+
 class InvalidWikiStructure(Exception):
     pass
+
 
 def parse(s, short_title):
     #make sure we start with a heading 1
     m = h1_start.match(s)
-    if m :
+    if m:
         title = m.groups("title")[0]
-        title = title.partition("§")[0] # silently remove attempt to set short_title in H1
+        # silently remove attempt to set short_title in H1
+        title = title.partition("§")[0]
         s = h1_start.sub("", s)
-    else :
+    else:
         raise InvalidWikiStructure('Must start with H1 heading to set title')
 
     title = title.strip()
     title = title[:min(150, len(title))]
     node = {
-        'title':title.strip(),
-        'short_title':short_title,
-        'children':[]
+        'title': title.strip(),
+        'short_title': short_title,
+        'children': []
     }
 
     # do we need a StructureNode or will a TextNode do?
-    if not general_h.search(s) :
+    if not general_h.search(s):
         # TextNode
         node['text'] = s.strip()
         return node
-    # else : StructureNode
+        # else : StructureNode
 
     # determine used header depth:
     level = 0
@@ -165,18 +182,28 @@ def parse(s, short_title):
     # assert that no headings are in that text
     if general_h.search(node['text']):
         raise InvalidWikiStructure("Cannot have headers in Node text")
-    #Exception Textvorschlag: Du hast eine kleine Überschrift in den Einleitungsabsatz geschrieben. Findeco kann nur Überschriften in absteigender Reihenfolge darstellen. Eine kleine Überschrift vor der ersten nächstgrößeren Überschrift ergibt keinen Sinn und kann nicht verarbeitet werden. Bitte ändere deinen Text so, dass die Überschriften in absteigender Größe vorkommen.\n\nBeispiel:\n= einzigartige Gesamtüberschrift =\nEinleitungstext\n== Überschrift 2 ==\n=== Überschrift 3 ===\nEtwas Text.\n==== Überschrift 4 ====\nWeiterer Text.\n== Überschrift 2 nochmal ==\nText auf Ebene zwei.
+        #Exception Textvorschlag: Du hast eine kleine Überschrift in den
+        # Einleitungsabsatz geschrieben. Findeco kann nur Überschriften in
+        # absteigender Reihenfolge darstellen. Eine kleine Überschrift vor der
+        # ersten nächstgrößeren Überschrift ergibt keinen Sinn und kann nicht
+        # verarbeitet werden. Bitte ändere deinen Text so, dass die
+        # Überschriften in absteigender Größe vorkommen.\n\nBeispiel:\n=
+        # einzigartige Gesamtüberschrift =\nEinleitungstext\n== Überschrift 2
+        # ==\n=== Überschrift 3 ===\nEtwas Text.\n==== Überschrift 4 ====\n
+        # Weiterer Text.\n== Überschrift 2 nochmal ==\nText auf Ebene zwei.
 
     # iterate the headings, short_titles, and corresponding texts:
     short_title_set = set()
-    for title, short_title, text in zip(split_doc[1::3], split_doc[2::3], split_doc[3::3]):
+    for title, short_title, text in zip(split_doc[1::3], split_doc[2::3],
+                                        split_doc[3::3]):
         # check if short_title is valid/unique/exists
         if not short_title or len(short_title.strip()) == 0:
-            short_title=title
-        short_title=turn_into_valid_short_title(short_title, short_title_set)
+            short_title = title
+        short_title = turn_into_valid_short_title(short_title, short_title_set)
         short_title_set.add(short_title)
 
-        node['children'].append(parse("= %s =\n"%title.strip() + text.strip(), short_title))
+        node['children'].append(
+            parse("= %s =\n" % title.strip() + text.strip(), short_title))
 
     return node
 
@@ -184,39 +211,50 @@ def parse(s, short_title):
 def get_title_from_text(text):
     #make sure we start with a heading 1
     m = h1_start.match(text)
-    if m :
+    if m:
         title = m.groups("title")[0]
-        title = title.partition("§")[0] # silently remove attempt to set short_title in H1
+        # silently remove attempt to set short_title in H1
+        title = title.partition("§")[0]
         return title.strip()
-    else :
+    else:
         raise InvalidWikiStructure('Must start with H1 heading to set title')
 
 
-def create_structure_from_structure_node_schema(schema, parent_slot, authors, origin_group=None, arg_type=None, arg_title="", arg_text=""):
-    if not origin_group: origin_group = []
+def create_structure_from_structure_node_schema(schema, parent_slot, authors,
+                                                origin_group=None,
+                                                arg_type=None, arg_title="",
+                                                arg_text=""):
+    if not origin_group:
+        origin_group = []
     origin_found = False
     if len(origin_group) > 0 and (arg_type or arg_title or arg_text):
         for origin in origin_group:
-            if origin.title == schema['title'] and origin.text.text == schema['text'] and\
-               [child['short_title'] for child in schema['children']] == [child.title for child in
-                                                                          origin.children.all()]:
+            if origin.title == schema['title'] and origin.text.text == schema[
+                'text'] and [child['short_title'] for child in
+                             schema['children']] == [child.title for child in
+                                                     origin.children.all()]:
                 structure = origin
                 origin_found = True
     if not origin_found:
-        structure = create_structureNode(long_title=schema['title'], text=schema['text'], authors=authors)
+        structure = create_structureNode(long_title=schema['title'],
+                                         text=schema['text'], authors=authors)
         parent_slot.append_child(structure)
         for origin in origin_group:
-            origin.add_derivate(structure, type=arg_type, title=arg_title, text=arg_text, authors=authors)
+            origin.add_derivate(structure, arg_type=arg_type, title=arg_title,
+                                text=arg_text, authors=authors)
     for child in schema['children']:
         if origin_found:
-            child_slot = structure.children.filter(title=child['short_title']).all()[0]
+            child_slot = structure.children.filter(title=child['short_title'])\
+                .all()[0]
         else:
             child_slot = create_slot(child['short_title'])
             structure.append_child(child_slot)
         sub_origin_group = []
         for origin in origin_group:
-            for origin_slot in origin.children.filter(title=child['short_title']).all():
+            for origin_slot in origin.children.filter(
+                    title=child['short_title']).all():
                 sub_origin_group += origin_slot.children.all()
-        create_structure_from_structure_node_schema(child, child_slot, authors, sub_origin_group, arg_type, arg_title, arg_text)
+        create_structure_from_structure_node_schema(child, child_slot, authors,
+                                                    sub_origin_group, arg_type,
+                                                    arg_title, arg_text)
     return structure
-

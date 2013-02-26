@@ -30,11 +30,14 @@ from models import Node, NodeOrder
 
 from findeco.paths import parse_path
 
+
 class IllegalPath(Exception):
     pass
 
+
 def get_root_node():
     return Node.objects.filter(id=1)[0]
+
 
 def get_node_for_path(path):
     """
@@ -47,8 +50,8 @@ def get_node_for_path(path):
         if len(children) != 1:
             raise IllegalPath(path)
         else:
-            order = NodeOrder.objects.filter(parent__in=children).\
-                                      filter(position=pos_id).prefetch_related('child').all()
+            order = NodeOrder.objects.filter(parent__in=children). \
+                filter(position=pos_id).prefetch_related('child').all()
             if len(order) != 1:
                 raise IllegalPath(path)
             else:
@@ -60,12 +63,14 @@ def get_node_for_path(path):
         else:
             node = children[0]
     elif 'arg_type' in last and 'arg_id' in last:
-        argument_order = node.arguments.filter(index=last['arg_id']).prefetch_related('argument').all()
+        argument_order = node.arguments.filter(
+            index=last['arg_id']).prefetch_related('argument').all()
         if len(argument_order) != 1:
             raise IllegalPath(path)
         else:
             node = argument_order[0].argument
     return node
+
 
 def get_favorite_if_slot(node):
     """
@@ -76,11 +81,13 @@ def get_favorite_if_slot(node):
     else:
         return node
 
+
 def get_ordered_children_for(node):
     """
     Return a list of children for given node ordered by their position.
     """
-    order = NodeOrder.objects.filter(parent=node).order_by('position').prefetch_related('child')
+    order = NodeOrder.objects.filter(parent=node).order_by(
+        'position').prefetch_related('child')
     return [oN.child for oN in order]
 
 
@@ -96,7 +103,8 @@ def get_good_path_for_structure_node(node, slot=None, slot_path=None):
         slot = get_node_for_path(slot_path)
         return slot_path + '.' + str(node.get_index(slot))
     else:
-        if node.id == 1: return ""
+        if node.id == 1:
+            return ""
         no = NodeOrder.objects.filter(child=node)[0]
         slot = no.parent
         index = no.position

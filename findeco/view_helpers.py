@@ -169,7 +169,7 @@ def store_argument(path, arg_text, arg_type, author):
 def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     new_node, new_path = store_structure_node(path, derivate_wiki_text, author)
     node = get_node_for_path(path)
-    arg = node.add_derivate(new_node, type=arg_type, title=backend.get_title_from_text(arg_text), text=arg_text, authors=[author])
+    arg = node.add_derivate(new_node, arg_type=arg_type, title=backend.get_title_from_text(arg_text), text=arg_text, authors=[author])
     # add auto follow
     create_vote(author, [arg])
     return new_path

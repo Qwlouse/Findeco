@@ -25,9 +25,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 from django.db.models import Max, Count
+
 
 ###################### Nodes, Arguments and Texts ##############################
 class Node(models.Model):
@@ -40,7 +41,7 @@ class Node(models.Model):
         (STRUCTURE_NODE, 'StructureNode'),
         (SLOT, 'Slot'),
         (TEXTNODE, 'TextNode')
-        )
+    )
 
     parents = models.ManyToManyField(
         'self',
@@ -56,7 +57,8 @@ class Node(models.Model):
         blank=True,
         through='Derivation'
     )
-    favorite = models.ForeignKey('self', related_name='favorite_of', null=True, blank=True)
+    favorite = models.ForeignKey('self', related_name='favorite_of', null=True,
+                                 blank=True)
     title = models.CharField(max_length=150)
     node_type = models.CharField(max_length=1, choices=NODETYPE)
 
@@ -70,12 +72,12 @@ class Node(models.Model):
         no.save()
         self.update_favorite_and_invalidate_cache()
 
-    def add_derivate(self, derivate, type=None, title="", text="", authors=()):
-        if type or title or text or len(authors) > 0:
-            if not type: type = 'n'
-            arg_type = Argument.short_arg_type(type)
+    def add_derivate(self, derivate, arg_type=None, title="", text="",
+                     authors=()):
+        if arg_type or title or text or len(authors) > 0:
+            arg_type = Argument.short_arg_type(arg_type)
             source_argument = Argument(arg_type=arg_type, title=title,
-                node_type=Node.ARGUMENT, concerns=self)
+                                       node_type=Node.ARGUMENT, concerns=self)
             source_argument.save()
             source_argument_text_obj = Text(node=source_argument, text=text)
             source_argument_text_obj.save()
@@ -87,11 +89,12 @@ class Node(models.Model):
         d = Derivation(argument=source_argument, source=self, derivate=derivate)
         d.save()
         for vote in self.votes.all():
-            if d.derivate.votes.filter(user=vote.user).count()==0:
+            if d.derivate.votes.filter(user=vote.user).count() == 0:
                 vote.nodes.add(d.derivate)
         for argument in self.arguments.all():
             copy_argument = Argument(title=argument.title, concerns=derivate,
-                arg_type=argument.arg_type,  node_type=Node.ARGUMENT)
+                                     arg_type=argument.arg_type,
+                                     node_type=Node.ARGUMENT)
             copy_argument.save()
             copy_argument_text_obj = Text(node=copy_argument,
                                           text=argument.text.text)
@@ -106,22 +109,23 @@ class Node(models.Model):
     def update_favorite_and_invalidate_cache(self):
         if self.children.count() == 0:
             return
-        new_favorite = self.children.annotate(num_votes=Count('votes')).order_by('-num_votes', '-pk')[0]
+        new_favorite = self.children.annotate(num_votes=Count('votes')).\
+            order_by('-num_votes', '-pk')[0]
         if new_favorite != self.favorite:
             self.favorite = new_favorite
             self.save()
             invalid_paths = []
             for a in self.traverse_all_ancestors():
-                invalid_paths.append(a.get_a_path()) # TODO: this only collects __a__ path
+                invalid_paths.append(a.get_a_path())
+                # TODO: this only collects __a__ path
             TextCache.objects.filter(path__in=invalid_paths).delete()
-
 
     def update_favorite_for_all_parents(self):
         for p in self.parents.all():
             p.update_favorite_and_invalidate_cache()
 
     def __unicode__(self):
-        return "id=%d, title=%s"%(self.id, self.title)
+        return "id=%d, title=%s" % (self.id, self.title)
 
     def get_index(self, parent):
         """
@@ -140,11 +144,12 @@ class Node(models.Model):
         """
         Returns a path which needn't be the only valid path to the node.
         """
-        if self.parents.count() == 0: return ""
+        if self.parents.count() == 0:
+            return ""
         if self.node_type == Node.ARGUMENT:
             self_as_arg = Argument.objects.filter(argument_id=self.id).all()[0]
             npath = self_as_arg.concerns.get_a_path().strip('/')
-            return '%s.%s.%d'%(npath, self_as_arg.arg_type, self_as_arg.index)
+            return '%s.%s.%d' % (npath, self_as_arg.arg_type, self_as_arg.index)
         parent = self.parents.all()[0]
         if self.node_type == Node.SLOT:
             suffix = self.title
@@ -156,12 +161,11 @@ class Node(models.Model):
         return self.votes.count()
 
     def get_unfollows(self):
-        return User.objects.filter(vote__nodes__in=self.sources.all()).\
-                            exclude(vote__nodes__in=[self]).distinct().count()
+        return User.objects.filter(vote__nodes__in=self.sources.all()). \
+            exclude(vote__nodes__in=[self]).distinct().count()
 
     def get_newfollows(self):
         return self.votes.exclude(nodes__in=self.sources.all()).count()
-
 
 
 class Argument(Node):
@@ -184,23 +188,24 @@ class Argument(Node):
 
     @classmethod
     def long_arg_type(cls, arg_type):
-        return {'pro':'pro',
-                'neut':'neut',
-                'con':'con',
-                cls.PRO :'pro',
-                cls.NEUT :'neut',
-                cls.CON :'con'
-           }[arg_type]
+        return {'pro': 'pro',
+                'neut': 'neut',
+                'con': 'con',
+                cls.PRO: 'pro',
+                cls.NEUT: 'neut',
+                cls.CON: 'con'
+                }[arg_type]
 
     @classmethod
     def short_arg_type(cls, arg_type):
-        return {'pro' :cls.PRO,
-                'neut':cls.NEUT,
-                'con' :cls.CON,
-                cls.PRO :cls.PRO,
-                cls.NEUT:cls.NEUT,
-                cls.CON :cls.CON
-           }[arg_type]
+        return {None: cls.NEUT,
+                'pro': cls.PRO,
+                'neut': cls.NEUT,
+                'con': cls.CON,
+                cls.PRO: cls.PRO,
+                cls.NEUT: cls.NEUT,
+                cls.CON: cls.CON
+                }[arg_type]
 
     def save(self, *args, **kwargs):
         if self.index is None:
@@ -208,7 +213,7 @@ class Argument(Node):
         models.Model.save(self, *args, **kwargs)
 
     def __unicode__(self):
-        return "id=%d, type=%s"%(self.id, self.arg_type)
+        return "id=%d, type=%s" % (self.id, self.arg_type)
 
 
 class Text(models.Model):
@@ -220,21 +225,22 @@ class Text(models.Model):
     )
 
     def __unicode__(self):
-        return "id=%d, text=%s"%(self.id, self.text[:min(len(self.text), 30)])
+        return "id=%d, text=%s" % (self.id, self.text[:min(len(self.text), 30)])
+
 
 ############################# Relations ########################################
 class Derivation(models.Model):
-    derivate=models.ForeignKey(Node, related_name='source_order_set')
-    source=models.ForeignKey(Node, related_name='derivative_order_set')
-    argument=models.ForeignKey(Argument, null=True, blank=True)
+    derivate = models.ForeignKey(Node, related_name='source_order_set')
+    source = models.ForeignKey(Node, related_name='derivative_order_set')
+    argument = models.ForeignKey(Argument, null=True, blank=True)
 
     class Meta:
         unique_together = (('source', 'derivate'), )
 
     def __unicode__(self):
-        return "source_id=%d, derivate_id=%d, argument_id=%d"%(self.source_id,
-                                                               self.derivate_id,
-                                                               self.argument_id)
+        return "source_id=%d, derivate_id=%d, argument_id=%d" % \
+               (self.source_id, self.derivate_id, self.argument_id)
+
 
 class NodeOrder(models.Model):
     child = models.ForeignKey(Node, related_name='parent_order_set')
@@ -245,9 +251,10 @@ class NodeOrder(models.Model):
         unique_together = (('parent', 'child'), )
 
     def __unicode__(self):
-        return "pos=%d, child_id=%d, parent_id=%d"%(self.position,
-                                                    self.child_id,
-                                                    self.parent_id)
+        return "pos=%d, child_id=%d, parent_id=%d" % (self.position,
+                                                      self.child_id,
+                                                      self.parent_id)
+
 
 ################################# Votes ########################################
 class Vote(models.Model):
@@ -261,13 +268,16 @@ class Vote(models.Model):
         return self.nodes.order_by('id').all()[0]
 
     def __unicode__(self):
-        return "id=%d, user=%s"%(self.id, self.user.username)
+        return "id=%d, user=%s" % (self.id, self.user.username)
+
 
 class SpamFlag(models.Model):
     user = models.ForeignKey(User)
     node = models.ForeignKey(Node, related_name='spam_flags')
+
     def __unicode__(self):
-        return "id=%d, user=%s"%(self.id, self.user.username)
+        return "id=%d, user=%s" % (self.id, self.user.username)
+
 
 ################################# Caches #######################################
 class TextCache(models.Model):
