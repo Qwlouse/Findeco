@@ -35,15 +35,16 @@ from django.contrib.auth.management import create_superuser
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models import signals
+
 from findeco.view_helpers import get_permission
 import node_storage.models as node_storage
-
 from node_storage import Node, Text
 
 try:
     from local_settings import ADMIN_PASS
-except ImportError :
+except ImportError:
     ADMIN_PASS = "1234"
+
 
 ####################### Add profile to each user ###############################
 class UserProfile(models.Model):
@@ -73,10 +74,11 @@ class UserProfile(models.Model):
         blank=True,
         help_text="Profiles of users this user blocked."
     )
-    
+
     activationKey = models.TextField(
         blank=True,
         help_text="activationKey")
+
     # Override the save method to prevent integrity errors
     # These happen because both teh post_save signal and the inlined admin
     # interface try to create the UserProfile. See:
@@ -84,14 +86,14 @@ class UserProfile(models.Model):
     def save(self, *args, **kwargs):
         try:
             existing = UserProfile.objects.get(user=self.user)
-            self.id = existing.id #force update instead of insert
+            self.id = existing.id  # force update instead of insert
         except UserProfile.DoesNotExist:
             pass
         models.Model.save(self, *args, **kwargs)
 
     def __unicode__(self):
         return '<Profile of %s>' % self.user.username
-    
+
 
 # Use post_save signal to ensure the profile will be created automatically
 # when a user is created (saved for the first time)
@@ -101,6 +103,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     else:
         # also save the profile when the user is saved
         instance.profile.save()
+
 
 signals.post_save.connect(create_user_profile, sender=User)
 
@@ -114,6 +117,7 @@ signals.post_syncdb.disconnect(
     sender=auth_models,
     dispatch_uid='django.contrib.auth.management.create_superuser')
 
+
 # Create our own admin user automatically.
 def create_admin():
     #if not settings.DEBUG:
@@ -122,16 +126,17 @@ def create_admin():
         auth_models.User.objects.get(username='admin')
     except auth_models.User.DoesNotExist:
         print('*' * 80)
-        print('Creating admin -- login: admin, password: '+ADMIN_PASS)
+        print('Creating admin -- login: admin, password: ' + ADMIN_PASS)
         print('*' * 80)
         auth_models.User.objects.create_superuser('admin', 'a@b.de', ADMIN_PASS)
     else:
         print('Admin user already exists.')
 
+
 def create_root():
     print('Creating root node ...')
     node = Node()
-    node.node_type=Node.STRUCTURE_NODE
+    node.node_type = Node.STRUCTURE_NODE
     node.title = "ROOT"
     node.save()
     root_text = Text()
@@ -141,8 +146,10 @@ def create_root():
     root_text.authors = [auth_models.User.objects.get(username='admin')]
     root_text.save()
 
+
 def create_groups():
-    if Group.objects.filter(name__in=["texters", "voters", "bloggers"]).count() > 0:
+    if Group.objects.filter(
+            name__in=["texters", "voters", "bloggers"]).count() > 0:
         print("groups already present... skipping")
         return
     print('*' * 80)
@@ -153,7 +160,7 @@ def create_groups():
     perms = ['node_storage.add_node', 'node_storage.add_argument',
              'node_storage.add_derivation', 'node_storage.add_nodeorder',
              'node_storage.add_text']
-    for p in perms :
+    for p in perms:
         g.permissions.add(get_permission(p))
     g.save()
     #### Create a group of Voters
@@ -162,15 +169,16 @@ def create_groups():
              'node_storage.change_vote', 'node_storage.change_spamflag',
              'node_storage.delete_vote', 'node_storage.delete_spamflag'
              ]
-    for p in perms :
+    for p in perms:
         g.permissions.add(get_permission(p))
     g.save()
     #### Create a group of Bloggers
     g = Group.objects.create(name="bloggers")
     perms = ['microblogging.add_post']
-    for p in perms :
+    for p in perms:
         g.permissions.add(get_permission(p))
     g.save()
+
 
 def initialize_database(sender, **kwargs):
     create_admin()
@@ -178,9 +186,11 @@ def initialize_database(sender, **kwargs):
     if Node.objects.all().count() > 0:
         print('Root node already present. Skipping initialization.')
         return
-    print('*'*80)
+    print('*' * 80)
     create_root()
-    print('*'*80)
+    print('*' * 80)
+
 
 signals.post_syncdb.connect(initialize_database,
-    sender=node_storage, dispatch_uid='findeco.models.initialize_database')
+                            sender=node_storage,
+                            dispatch_uid='findeco.models.initialize_database')
