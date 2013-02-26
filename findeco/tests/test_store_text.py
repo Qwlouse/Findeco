@@ -40,11 +40,10 @@ class StoreTextTest(TestCase):
         create_user("Notpermitted", password="fghjfgh")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
+        self.url = reverse('store_text', kwargs=dict(path="Slot.1"))
 
     def test_not_authenticated(self):
-        response = self.client.post(
-            reverse('store_text', kwargs=dict(path="Slot.1")),
-            dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             json.loads(response.content)['errorResponse']['errorTitle'],
@@ -53,9 +52,7 @@ class StoreTextTest(TestCase):
     def test_not_permitted(self):
         self.assertTrue(
             self.client.login(username="Notpermitted", password="fghjfgh"))
-        response = self.client.post(
-            reverse('store_text', kwargs=dict(path="Slot.1")),
-            dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             json.loads(response.content)['errorResponse']['errorTitle'],
@@ -63,9 +60,7 @@ class StoreTextTest(TestCase):
 
     def test_store_textNode(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(
-            reverse('store_text', kwargs=dict(path="Slot.1")),
-            dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             json.loads(response.content)['storeTextResponse']['path'], "Slot.1")
@@ -77,8 +72,7 @@ class StoreTextTest(TestCase):
 
     def test_store_missing_text(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(
-            reverse('store_text', kwargs=dict(path="Slot.1")), )
+        response = self.client.post(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             json.loads(response.content)['errorResponse']['errorTitle'],
@@ -86,10 +80,8 @@ class StoreTextTest(TestCase):
 
     def test_store_missing_argument_type(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(
-            reverse('store_text', kwargs=dict(path="Slot.1")),
-            dict(wikiText="= Hopp =\nGrumpf.",
-                 wikiTextAlternative="= Bla =\nBlubb."))
+        response = self.client.post(self.url, dict(wikiText="= Hopp =\nGrumpf.",
+                                    wikiTextAlternative="= Bla =\nBlubb."))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             json.loads(response.content)['errorResponse']['errorTitle'],
@@ -97,14 +89,10 @@ class StoreTextTest(TestCase):
 
     def test_store_with_argument_and_alternative(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(
-            reverse('store_text', kwargs=dict(path="Slot.1")),
-            dict(wikiText="= Bla =\nBlubb."))
-        response = self.client.post(
-            reverse('store_text', kwargs=dict(path="Slot.1")),
-            dict(argumentType="con",
-                 wikiText="= Argumenttitel =\nDas ist jetzt besser",
-                 wikiTextAlternative="= Bla 2 =\nFollopp."))
+        response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(self.url, dict(argumentType="con",
+            wikiText="= Argumenttitel =\nDas ist jetzt besser",
+            wikiTextAlternative="= Bla 2 =\nFollopp."))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             json.loads(response.content)['storeTextResponse']['path'], "Slot.2")
@@ -128,13 +116,9 @@ class StoreTextTest(TestCase):
 
     def test_store_with_argumente(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(
-            reverse('store_text', kwargs=dict(path="Slot.1")),
-            dict(wikiText="= Bla =\nBlubb."))
-        response = self.client.post(
-            reverse('store_text', kwargs=dict(path="Slot.1")),
-            dict(argumentType="con",
-                 wikiText="= Argumenttitel =\nDas ist jetzt besser"))
+        response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(self.url, dict(argumentType="con",
+            wikiText="= Argumenttitel =\nDas ist jetzt besser"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             json.loads(response.content)['storeTextResponse']['path'],
