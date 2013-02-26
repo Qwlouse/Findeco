@@ -24,7 +24,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from models import Node, Text, Vote, Argument, SpamFlag
 
 
@@ -96,13 +96,17 @@ def create_argument(node, arg_type='n', title="", text="", authors=()):
     return arg
 
 
-def create_user(username, description="", mail="a@bc.de", password=None):
+def create_user(username, description="", mail="a@bc.de", password=None,
+                groups=()):
     if password:
         new_user = User.objects.create_user(username, mail, password)
     else:
         new_user = User(username=username)
         new_user.save()
+    for group in groups:
+        Group.objects.get(name=group).user_set.add(new_user)
 
     new_user.profile.description = description
     new_user.profile.save()
+
     return new_user

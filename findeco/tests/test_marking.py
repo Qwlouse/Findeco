@@ -33,8 +33,7 @@ from node_storage.factory import create_textNode, create_slot, create_user, crea
 class UnFollowTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
-        self.hugo = create_user("Hugo", password="1234")
-        self.hugo.user_permissions.add(get_permission('node_storage.delete_vote'))
+        self.hugo = create_user("Hugo", password="1234", groups=['voters'])
         self.permela = create_user("Permela", password="xxx")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
@@ -95,12 +94,8 @@ class UnFollowTest(TestCase):
 class FollowTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
-        self.hugo = create_user("Hugo", password="1234")
-        self.hugo.user_permissions.add(get_permission('node_storage.add_vote'))
-        self.hugo.user_permissions.add(get_permission('node_storage.change_vote'))
-        self.ulf = create_user("Ulf", password="abcde")
-        self.ulf.user_permissions.add(get_permission('node_storage.add_vote'))
-        self.ulf.user_permissions.add(get_permission('node_storage.change_vote'))
+        self.hugo = create_user("Hugo", password="1234", groups=['voters'])
+        self.ulf = create_user("Ulf", password="abcde", groups=['voters'])
         self.permela = create_user("Permela", password="xxx")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
@@ -164,8 +159,7 @@ class FollowTest(TestCase):
 class MarkSpamTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
-        self.hugo = create_user("Hugo", password="1234")
-        self.hugo.user_permissions.add(get_permission('node_storage.add_spamflag'))
+        self.hugo = create_user("Hugo", password="1234", groups=['voters'])
         self.permela = create_user("Permela", password="xxx")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
@@ -212,8 +206,7 @@ class MarkSpamTest(TestCase):
 class UnMarkSpamTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
-        self.hugo = create_user("Hugo", password="1234")
-        self.hugo.user_permissions.add(get_permission('node_storage.delete_spamflag'))
+        self.hugo = create_user("Hugo", password="1234", groups=['voters'])
         self.permela = create_user("Permela", password="xxx")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)

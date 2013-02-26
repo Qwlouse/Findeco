@@ -22,7 +22,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext
 from django.test import TestCase
@@ -35,14 +34,8 @@ from node_storage.factory import create_user, create_slot
 class StoreTextTest(TestCase):
     def setUp(self):
         self.root = get_root_node()
-        self.hugo = create_user("Hugo", password="1234")
-
-        texters = Group.objects.get(name='texters')
-        voters = Group.objects.get(name='voters')
-        bloggers = Group.objects.get(name='bloggers')
-        texters.user_set.add(self.hugo)
-        voters.user_set.add(self.hugo)
-        bloggers.user_set.add(self.hugo)
+        self.hugo = create_user("Hugo", password="1234",
+                                groups=['texters', 'voters', 'bloggers'])
 
         create_user("Notpermitted", password="fghjfgh")
         self.slot = create_slot("Slot")
