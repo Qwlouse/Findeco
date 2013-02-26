@@ -74,6 +74,21 @@ class Node(models.Model):
 
     def add_derivate(self, derivate, arg_type=None, title="", text="",
                      authors=()):
+        for vote in self.votes.all():
+            if derivate.votes.filter(user=vote.user).count() == 0:
+                vote.nodes.add(derivate)
+        for argument in self.arguments.all():
+            copy_argument = Argument(title=argument.title, concerns=derivate,
+                                     arg_type=argument.arg_type,
+                                     node_type=Node.ARGUMENT)
+            copy_argument.save()
+            copy_argument_text_obj = Text(node=copy_argument,
+                                          text=argument.text.text)
+            copy_argument_text_obj.save()
+            for author in argument.text.authors.all():
+                copy_argument_text_obj.authors.add(author)
+            copy_argument_text_obj.save()
+        derivate.update_favorite_for_all_parents()
         if arg_type or title or text or len(authors) > 0:
             arg_type = Argument.short_arg_type(arg_type)
             source_argument = Argument(arg_type=arg_type, title=title,
@@ -88,22 +103,6 @@ class Node(models.Model):
             source_argument = None
         d = Derivation(argument=source_argument, source=self, derivate=derivate)
         d.save()
-        for vote in self.votes.all():
-            if d.derivate.votes.filter(user=vote.user).count() == 0:
-                vote.nodes.add(d.derivate)
-        for argument in self.arguments.all():
-            copy_argument = Argument(title=argument.title, concerns=derivate,
-                                     arg_type=argument.arg_type,
-                                     node_type=Node.ARGUMENT)
-            copy_argument.save()
-            copy_argument_text_obj = Text(node=copy_argument,
-                                          text=argument.text.text)
-            copy_argument_text_obj.save()
-            for author in argument.text.authors.all():
-                copy_argument_text_obj.authors.add(author)
-            copy_argument_text_obj.save()
-        d.save()
-        d.derivate.update_favorite_for_all_parents()
         return source_argument
 
     def update_favorite_and_invalidate_cache(self):

@@ -488,11 +488,6 @@ class StoreDerivateTest(TestCase):
             Node.objects.filter(title="Bla").all()[0].votes.count(), 1)
         self.assertEqual(self.text1.arguments.count(), 1)
         self.assertEqual(self.text1.arguments.all()[0].votes.count(), 1)
-        self.assertEqual(
-            Node.objects.filter(title="Bla").all()[0].arguments.count(), 1)
-        self.assertEqual(
-            Node.objects.filter(title="Bla").all()[0].arguments.all()[
-                0].votes.count(), 0)
 
 
 class GetIsFollowingTest(TestCase):

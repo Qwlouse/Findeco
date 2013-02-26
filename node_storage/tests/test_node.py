@@ -117,18 +117,13 @@ class NodeTest(TestCase):
         self.assertEqual(sa2.text.authors.count(), 1)
         self.assertIn(self.hans, sa2.text.authors.all())
 
-        self.assertEqual(d.arguments.count(), 2)
-        da1, da2 = d.arguments.order_by('index')
+        self.assertEqual(d.arguments.count(), 1)
+        da1, = d.arguments.order_by('index')
         self.assertEqual(da1.arg_type, 'p')
         self.assertEqual(da1.title, 'myArg')
         self.assertEqual(da1.text.text, 'cool')
-        self.assertEqual(da2.text.authors.count(), 1)
+        self.assertEqual(da1.text.authors.count(), 1)
         self.assertIn(self.hugo, da1.text.authors.all())
-        self.assertEqual(da2.arg_type, 'c')
-        self.assertEqual(da2.title, 'yourArg')
-        self.assertEqual(da2.text.text, 'ument')
-        self.assertEqual(da2.text.authors.count(), 1)
-        self.assertIn(self.hans, da2.text.authors.all())
 
     def test_get_unfollows_on_node_without_sources_returns_0(self):
         self.assertEqual(self.root.get_unfollows(), 0)
