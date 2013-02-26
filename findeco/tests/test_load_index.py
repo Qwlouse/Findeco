@@ -120,9 +120,9 @@ class LoadArgumentIndexTest(TestCase):
         self.foo1 = create_structureNode('FooooBar')
         self.foo.append_child(self.foo1)
         # add arguments
-        self.foo_pro = create_argument(self.foo, type='pro', text="weils geil ist", authors=[self.hugo])
-        self.foo_neut = create_argument(self.foo, type='neut', text="kann noch geiler werden", authors=[self.hugo])
-        self.foo_con = create_argument(self.foo, type='con', text="is aber leider root", authors=[self.hugo])
+        self.foo_pro = create_argument(self.foo, arg_type='pro', text="weils geil ist", authors=[self.hugo])
+        self.foo_neut = create_argument(self.foo, arg_type='neut', text="kann noch geiler werden", authors=[self.hugo])
+        self.foo_con = create_argument(self.foo, arg_type='con', text="is aber leider root", authors=[self.hugo])
         # summary variables
         self.foo_arguments = [self.foo_pro, self.foo_neut, self.foo_con]
 

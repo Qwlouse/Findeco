@@ -58,7 +58,7 @@ class NodeTest(TestCase):
     def test_add_derivate_adds_only_correct_derivation(self):
         n = create_structureNode("Source", authors=[self.hans])
         d = create_structureNode("Derivate", authors=[self.hans])
-        n.add_derivate(d, type='n')
+        n.add_derivate(d, arg_type='n')
         self.assertIn(d, n.derivates.all())
         self.assertIn(n, d.sources.all())
 
@@ -73,7 +73,7 @@ class NodeTest(TestCase):
         v1 = create_vote(self.hans, [n])
         v2 = create_vote(self.hugo, [n])
         d = create_structureNode("Derivate", authors=[self.hans])
-        n.add_derivate(d, type='n')
+        n.add_derivate(d, arg_type='n')
 
         self.assertIn(n, v1.nodes.all())
         self.assertIn(d, v1.nodes.all())
@@ -86,7 +86,7 @@ class NodeTest(TestCase):
     def test_add_derivate_creates_commit_argument(self):
         s = create_structureNode("Source", authors=[self.hans])
         d = create_structureNode("Derivate", authors=[self.hans])
-        s.add_derivate(d, type='c', title="arg", text="ument", authors=[self.hugo])
+        s.add_derivate(d, arg_type='c', title="arg", text="ument", authors=[self.hugo])
         no = Derivation.objects.filter(source=s, derivate=d)
         self.assertTrue(no.count() == 1)
         no = no[0]
@@ -99,10 +99,10 @@ class NodeTest(TestCase):
     def test_add_derivate_copies_arguments(self):
         s = create_structureNode("Source", authors=[self.hans])
         d = create_structureNode("Derivate", authors=[self.hans])
-        a = create_argument(s, type='p', title="myArg", text="cool", authors=[self.hugo])
+        a = create_argument(s, arg_type='p', title="myArg", text="cool", authors=[self.hugo])
         self.assertEqual(s.arguments.count(), 1)
         self.assertEqual(s.arguments.all()[0], a)
-        s.add_derivate(d, type='c', title="yourArg", text="ument", authors=[self.hans])
+        s.add_derivate(d, arg_type='c', title="yourArg", text="ument", authors=[self.hans])
         self.assertEqual(s.arguments.count(), 2)
         sa1, sa2 = s.arguments.order_by('index')
         self.assertEqual(sa1, a)

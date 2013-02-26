@@ -27,20 +27,23 @@
 from django.contrib.auth.models import User
 from models import Node, Text, Vote, Argument, SpamFlag
 
+
 def create_slot(short_title):
-    slot = Node(node_type = Node.SLOT, title=short_title)
+    slot = Node(node_type=Node.SLOT, title=short_title)
     slot.save()
     return slot
+
 
 def create_structureNode(long_title, text="", authors=()):
     structure = Node(node_type=Node.STRUCTURE_NODE, title=long_title)
     structure.save()
-    text_obj = Text(node = structure, text = text)
+    text_obj = Text(node=structure, text=text)
     text_obj.save()
     for author in authors:
         text_obj.authors.add(author)
     text_obj.save()
     return structure
+
 
 def create_textNode(long_title, text="", authors=()):
     text_node = Node()
@@ -56,6 +59,7 @@ def create_textNode(long_title, text="", authors=()):
     text_obj.save()
     return text_node
 
+
 def create_vote(voter, nodes):
     v = Vote()
     v.user = voter
@@ -67,7 +71,9 @@ def create_vote(voter, nodes):
         node.update_favorite_for_all_parents()
     return v
 
+
 def create_spam_flag(voter, nodes):
+    v = None
     for node in nodes:
         v = SpamFlag()
         v.user = voter
@@ -75,8 +81,9 @@ def create_spam_flag(voter, nodes):
         v.save()
     return v
 
-def create_argument(node, type='n', title="", text="", authors=()):
-    arg_type = Argument.short_arg_type(type)
+
+def create_argument(node, arg_type='n', title="", text="", authors=()):
+    arg_type = Argument.short_arg_type(arg_type)
     arg = Argument(arg_type=arg_type, title=title)
     arg.node_type = Node.ARGUMENT
     arg.concerns = node
@@ -87,6 +94,7 @@ def create_argument(node, type='n', title="", text="", authors=()):
         text_obj.authors.add(author)
     text_obj.save()
     return arg
+
 
 def create_user(username, description="", mail="a@bc.de", password=None):
     if password:
