@@ -282,3 +282,8 @@ class SpamFlag(models.Model):
 class TextCache(models.Model):
     path = models.CharField(max_length=250, primary_key=True)
     paragraphs = models.TextField()
+
+
+class PathCache(models.Model):
+    path = models.CharField(max_length=250, primary_key=True)
+    node = models.ForeignKey(Node, related_name='paths')
