@@ -26,13 +26,16 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from models import Node, NodeOrder
-
-from findeco.paths import parse_path
+from models import Node, NodeOrder, PathCache, Argument
+import re
 
 
 class IllegalPath(Exception):
     pass
+
+
+def is_argument(path):
+    return re.match(r".*\.(pro|neut|con|all)\.[0-9]+$", path) is not None
 
 
 def get_root_node():
@@ -43,32 +46,13 @@ def get_node_for_path(path):
     """
     Return the node corresponding node to the given path.
     """
-    node = get_root_node()
-    layers, last = parse_path(path)
-    for title, pos_id in layers:
-        children = node.children.filter(title=title).all()
-        if len(children) != 1:
-            raise IllegalPath(path)
-        else:
-            order = NodeOrder.objects.filter(parent__in=children). \
-                filter(position=pos_id).prefetch_related('child').all()
-            if len(order) != 1:
-                raise IllegalPath(path)
-            else:
-                node = order[0].child
-    if 'slot' in last:
-        children = node.children.filter(title=last['slot']).all()
-        if len(children) != 1:
-            raise IllegalPath(path)
-        else:
-            node = children[0]
-    elif 'arg_type' in last and 'arg_id' in last:
-        argument_order = node.arguments.filter(
-            index=last['arg_id']).prefetch_related('argument').all()
-        if len(argument_order) != 1:
-            raise IllegalPath(path)
-        else:
-            node = argument_order[0].argument
+    nodes = PathCache.objects.filter(path=path.strip('/'))
+    if nodes.count() == 0:
+        raise IllegalPath(path)
+
+    node = nodes[0].node
+    if is_argument(path):
+        return Argument.objects.get(id=node.id)
     return node
 
 
