@@ -21,9 +21,16 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from test_helpers import HelpersTest
-from test_node import NodeTest
-from test_structure_parser import StructureParserTest
-from test_structure_parser import CreateStructureFromStructureNodeSchemaTest
-from test_nodepath_cache import NodePathCacheTest
+from django.test import TestCase
+from ..models import PathCache
+from node_storage.path_helpers import get_root_node
 
+
+class NodePathCacheTest(TestCase):
+    def test_root_node_has_path(self):
+        root = get_root_node()
+        r = PathCache.objects.get(path='/').node
+        self.assertEqual(r, root)
+
+        p = PathCache.objects.get(node=root).path
+        self.assertEqual(p, '/')
