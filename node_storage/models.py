@@ -72,6 +72,14 @@ class Node(models.Model):
         no.save()
         self.update_favorite_and_invalidate_cache()
 
+        if child.node_type == Node.SLOT:
+            suffix = child.title
+        else:
+            suffix = "." + str(child.get_index(self)) + "/"
+        child_path = self.get_a_path() + suffix  # TODO: add all paths
+
+        PathCache.objects.create(path=child_path, node=child)
+
     def add_derivate(self, derivate, arg_type=None, title="", text="",
                      authors=()):
         for vote in self.votes.all():

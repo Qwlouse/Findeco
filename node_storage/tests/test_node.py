@@ -41,8 +41,9 @@ class NodeTest(TestCase):
         self.assertEqual(n.node_type, Node.STRUCTURE_NODE)
 
     def test_node_append_child(self):
-        n = Node()
+        n = Node(title='foo')
         n.save()
+        self.root.append_child(n)
         c = Node()
         c.save()
         n.append_child(c)

@@ -23,14 +23,23 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from ..models import PathCache
+from node_storage.factory import create_slot
 from node_storage.path_helpers import get_root_node
 
 
 class NodePathCacheTest(TestCase):
-    def test_root_node_has_path(self):
-        root = get_root_node()
-        r = PathCache.objects.get(path='/').node
-        self.assertEqual(r, root)
+    def setUp(self):
+        self.root = get_root_node()
 
-        p = PathCache.objects.get(node=root).path
-        self.assertEqual(p, '/')
+    def test_root_node_has_path(self):
+        r = PathCache.objects.get(path='').node
+        self.assertEqual(r, self.root)
+
+        p = PathCache.objects.get(node=self.root).path
+        self.assertEqual(p, '')
+
+    def test_append_child_adds_to_path_cache(self):
+        slot = create_slot('Foo')
+        self.root.append_child(slot)
+        self.assertEqual(slot, PathCache.objects.get(path='Foo').node)
+        self.assertEqual('Foo', PathCache.objects.get(node=slot).path)
