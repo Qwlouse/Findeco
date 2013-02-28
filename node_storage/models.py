@@ -63,6 +63,9 @@ class Node(models.Model):
     node_type = models.CharField(max_length=1, choices=NODETYPE)
 
     def append_child(self, child):
+        assert PathCache.objects.filter(node=self).count() > 0, \
+            "You cannot add children to nodes that are not descendants of root."
+
         no = NodeOrder()
         no.parent = self
         no.child = child
@@ -78,7 +81,7 @@ class Node(models.Model):
             suffix = "." + str(child.get_index(self)) + "/"
         child_path = self.get_a_path() + suffix  # TODO: add all paths
 
-        PathCache.objects.create(path=child_path, node=child)
+        PathCache.objects.create(path=child_path.strip('/'), node=child)
 
     def add_derivate(self, derivate, arg_type=None, title="", text="",
                      authors=()):

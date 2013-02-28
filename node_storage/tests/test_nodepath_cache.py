@@ -23,7 +23,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from ..models import PathCache
-from node_storage.factory import create_slot
+from node_storage.factory import create_slot, create_structureNode
 from node_storage.path_helpers import get_root_node
 
 
@@ -38,8 +38,17 @@ class NodePathCacheTest(TestCase):
         p = PathCache.objects.get(node=self.root).path
         self.assertEqual(p, '')
 
-    def test_append_child_adds_to_path_cache(self):
+    def test_append_slot_adds_to_path_cache(self):
         slot = create_slot('Foo')
         self.root.append_child(slot)
         self.assertEqual(slot, PathCache.objects.get(path='Foo').node)
         self.assertEqual('Foo', PathCache.objects.get(node=slot).path)
+
+    def test_append_structure_node_adds_to_path_cache(self):
+        slot = create_slot('Foo')
+        self.root.append_child(slot)
+        sn = create_structureNode("Foobarbaz")
+        slot.append_child(sn)
+
+        self.assertEqual(sn, PathCache.objects.get(path='Foo.1').node)
+        self.assertEqual('Foo.1', PathCache.objects.get(node=sn).path)
