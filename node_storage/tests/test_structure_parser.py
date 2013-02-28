@@ -28,7 +28,7 @@ from node_storage.structure_parser import validate_structure_schema
 import os.path as path
 import PyV8
 
-from ..factory import create_argument, create_slot, create_structureNode
+from ..factory import create_slot, create_structureNode
 from ..factory import create_textNode, create_user
 from ..path_helpers import get_root_node
 from ..models import Node
@@ -57,6 +57,7 @@ def _js_escape_unicode_re_callack(match):
         s2 = 0xdc00 | (n & 0x3ff)
         return '\\u%04x\\u%04x' % (s1, s2)
 
+
 def js_escape_unicode(s):
     """Return an ASCII-only representation of a JavaScript string"""
     if isinstance(s, str):
@@ -64,6 +65,7 @@ def js_escape_unicode(s):
             return s
         s = s.decode('utf-8')
     return str(ESCAPABLE.sub(_js_escape_unicode_re_callack, s))
+
 
 def convert_to_unicode(d):
     for k in d.keys():
@@ -79,16 +81,19 @@ def convert_to_unicode(d):
                 x = convert_to_unicode(x)
     return d
 
+
 class Global(PyV8.JSClass):
     def writeln(self, arg):
         print(arg)
+
 
 class StructureParserTest(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.jsparser_source = None
         for static_dir in STATICFILES_DIRS:
-            parser_path = path.join(static_dir, "js", "function.structureParser.js")
+            parser_path = path.join(static_dir, "js",
+                                    "function.structureParser.js")
             if path.exists(parser_path):
                 with open(parser_path, 'r') as f:
                     cls.jsparser_source = f.read()
@@ -96,19 +101,19 @@ class StructureParserTest(TestCase):
 
         cls.jsparser = js_escape_unicode(cls.jsparser_source)
 
-
     def setUp(self):
         self.assertIsNotNone(self.jsparser_source)
         self.ctxt = PyV8.JSContext(Global())
         self.ctxt.enter()
         self.ctxt.eval(self.jsparser)
         testcode = "var s='%s'; var t='%s';parseStructure(s, t);"
-        self.jsparser = lambda x, y : convert_to_unicode(PyV8.convert(self.ctxt.eval(testcode%(x.replace('\n', "' + \n '"), y))))
-        self.parser = {"pyparser" : pyparser, "jsparser":self.jsparser}
+        self.jsparser = lambda x, y: convert_to_unicode(PyV8.convert(
+            self.ctxt.eval(testcode % (x.replace('\n', "' + \n '"), y))))
+        self.parser = {"pyparser": pyparser, "jsparser": self.jsparser}
 
     def test_strip_accents(self):
         self.assertEqual(strip_accents("aäàáâeèéêiìíîoöòóôuüùúû"),
-                                       "aaaaaeeeeiiiiooooouuuuu")
+                         "aaaaaeeeeiiiiooooouuuuu")
 
     def test_substitute_umlauts(self):
         self.assertEqual(substitute_umlauts("Haßloch"), "Hassloch")
@@ -118,23 +123,31 @@ class StructureParserTest(TestCase):
         self.assertEqual(substitute_umlauts("Ärger"), "Aerger")
 
     def test_remove_unallowed_chars(self):
-        self.assertEqual(remove_unallowed_chars("abc()[]{}<>?!.,:;+^`~|$#%def"), "abcdef")
+        self.assertEqual(remove_unallowed_chars("abc()[]{}<>?!.,:;+^`~|$#%def"),
+                         "abcdef")
 
     def test_remove_unallowde_chars_keeps_allowed_chars(self):
-        valid = "abcdefghijklmnopqrstuvwxyz-1234567890_ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        valid = "abcdefghijklmnopqrstuvwxyz-1234567890" \
+                "_ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         self.assertEqual(remove_unallowed_chars(valid), valid)
 
     def test_turn_into_valid_short_title(self):
         titles = [
-            ("schöner Titel was?", "schoener_Titel_was", ["schoener_Titel_was", "schoener_Titel_was1"],
+            ("schöner Titel was?", "schoener_Titel_was",
+             ["schoener_Titel_was", "schoener_Titel_was1"],
              "schoener_Titel_was2"),
             ("viiiiiieeeeeel zuuuuuuu laaaaaaaang", "viiiiiieeeeeel_zuuuu",
-             ["viiiiiieeeeeel_zuuuu", "viiiiiieeeeeel_zuuu1", "viiiiiieeeeeel_zuuu2", "viiiiiieeeeeel_zuuu3",
-              "viiiiiieeeeeel_zuuu4", "viiiiiieeeeeel_zuuu5", "viiiiiieeeeeel_zuuu6", "viiiiiieeeeeel_zuuu7",
-              "viiiiiieeeeeel_zuuu8", "viiiiiieeeeeel_zuuu9"], "viiiiiieeeeeel_zuu10"),
-            ("viel )()()(()()( zu {}{}{}{ lang", "viel_zu_lang", ["viel_zu_lang"], "viel_zu_lang1"),
+             ["viiiiiieeeeeel_zuuuu", "viiiiiieeeeeel_zuuu1",
+              "viiiiiieeeeeel_zuuu2", "viiiiiieeeeeel_zuuu3",
+              "viiiiiieeeeeel_zuuu4", "viiiiiieeeeeel_zuuu5",
+              "viiiiiieeeeeel_zuuu6", "viiiiiieeeeeel_zuuu7",
+              "viiiiiieeeeeel_zuuu8", "viiiiiieeeeeel_zuuu9"],
+             "viiiiiieeeeeel_zuu10"),
+            ("viel )()()(()()( zu {}{}{}{ lang", "viel_zu_lang",
+             ["viel_zu_lang"], "viel_zu_lang1"),
             ("", "1", ["1", "2", "3"], "4"),
-            ("N0body is as L€€+.a$.m3", "N0body_is_as_Lam3", ["N0body_is_as_Lam3"], "N0body_is_as_Lam31")
+            ("N0body is as L€€+.a$.m3", "N0body_is_as_Lam3",
+             ["N0body_is_as_Lam3"], "N0body_is_as_Lam31")
         ]
         for t, st, _, _ in titles:
             self.assertEqual(turn_into_valid_short_title(t), st)
@@ -142,7 +155,8 @@ class StructureParserTest(TestCase):
             self.assertEqual(turn_into_valid_short_title(t, set(st_set)), st)
 
     def test_validate_structure_schema_on_simple_example_with_slot(self):
-        simple = dict(title="foo", short_title="foo", text="und bar und so", children=[])
+        simple = dict(title="foo", short_title="foo", text="und bar und so",
+                      children=[])
         self.assertTrue(validate_structure_schema(simple))
 
     def test_validate_structure_schema_on_simple_example(self):
@@ -153,51 +167,51 @@ class StructureParserTest(TestCase):
         wiki = """=Titel=
         Der text."""
         schema = {
-            'short_title':"foo",
-            'title':"Titel",
-            'text':"Der text.",
+            'short_title': "foo",
+            'title': "Titel",
+            'text': "Der text.",
             'children': []
         }
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s,schema, "fail in " + pname)
+            self.assertEqual(s, schema, "fail in " + pname)
 
     def test_structure_parser_processes_short_title(self):
         wiki = """=Titel=
         == Slot § shört, title!#$|~ ==
         """
         schema = {
-            'short_title':"foo", 'title':"Titel", 'text':"",
+            'short_title': "foo", 'title': "Titel", 'text': "",
             'children': [
-                {   'short_title':"shoert_title", 'title':"Slot", 'text':"",
-                    'children': []
-                }
+                {'short_title': "shoert_title", 'title': "Slot", 'text': "",
+                 'children': []
+                 }
             ]
         }
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s,schema, "fail in " + pname)
+            self.assertEqual(s, schema, "fail in " + pname)
 
     def test_structure_parser_turns_title_into_short_title(self):
         wiki = """=Titel=
         == ..::Very(!) long, slot title with special characters::..  ==
         """
         schema = {
-            'short_title':"foo", 'title':"Titel", 'text':"",
+            'short_title': "foo", 'title': "Titel", 'text': "",
             'children': [
-                {   'short_title':"Very_long_slot_title",
-                    'title':"..::Very(!) long, slot title with special characters::..",
-                    'text':"",
-                    'children': []
-                }
+                {'short_title': "Very_long_slot_title",
+                 'title': "..::Very(!) long, title with special characters::..",
+                 'text': "",
+                 'children': []
+                 }
             ]
         }
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s,schema, "fail in " + pname)
+            self.assertEqual(s, schema, "fail in " + pname)
 
     def test_structure_parser_with_single_node_example_strips_whitespace(self):
         wiki = """
@@ -210,15 +224,15 @@ class StructureParserTest(TestCase):
 
         """
         schema = {
-            'short_title':"foo",
-            'title':"Titel",
-            'text':"Der text.",
+            'short_title': "foo",
+            'title': "Titel",
+            'text': "Der text.",
             'children': []
         }
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s,schema, "fail in " + pname)
+            self.assertEqual(s, schema, "fail in " + pname)
 
     def test_structure_parser_without_title_raises_exception(self):
         wiki = "nur text"
@@ -237,15 +251,15 @@ class StructureParserTest(TestCase):
         Der text.
         """
         schema = {
-            'short_title':"foo",
-            'title':"Titel",
-            'text':"Der text.",
+            'short_title': "foo",
+            'title': "Titel",
+            'text': "Der text.",
             'children': []
         }
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s,schema, "fail in " + pname)
+            self.assertEqual(s, schema, "fail in " + pname)
 
     def test_structure_parser_with_nested_h2(self):
         wiki = """
@@ -268,12 +282,12 @@ class StructureParserTest(TestCase):
                        'title': "Toller Slot",
                        'text': "mehr text",
                        'children': []},
-                      ]}
+                  ]}
 
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s,schema, "fail in " + pname)
+            self.assertEqual(s, schema, "fail in " + pname)
 
     def test_structure_parser_with_nested_h4(self):
         wiki = """
@@ -296,11 +310,11 @@ class StructureParserTest(TestCase):
                        'title': "Toller Slot",
                        'text': "mehr text",
                        'children': []},
-                      ]}
+                  ]}
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s,schema, "fail in " + pname)
+            self.assertEqual(s, schema, "fail in " + pname)
 
     def test_structure_parser_with_deep_example(self):
         wiki = """
@@ -323,35 +337,44 @@ class StructureParserTest(TestCase):
         ==== Titel221 § slot221 ===
         text221
         """
-        schema = {'title': "Titel",'short_title': "foo", 'text': "text",
+        schema = {'title': "Titel", 'short_title': "foo", 'text': "text",
                   'children': [
-                      {'title': "Titel1",'short_title': "slot1", 'text': "text1",
+                      {'title': "Titel1", 'short_title': "slot1",
+                       'text': "text1",
                        'children': [
-                           {'title': "Titel11",'short_title': "slot11", 'text': "text11",
+                           {'title': "Titel11", 'short_title': "slot11",
+                            'text': "text11",
                             'children': [
-                                {'title': "Titel111",'short_title': "slot111", 'text': "text111",
+                                {'title': "Titel111", 'short_title': "slot111",
+                                 'text': "text111",
                                  'children': []}
                             ]},
-                           {'title': "Titel12",'short_title': "slot12", 'text': "text12",
+                           {'title': "Titel12", 'short_title': "slot12",
+                            'text': "text12",
                             'children': []},
                        ]},
-                      {'title': "Titel2",'short_title': "slot2", 'text': "text2",
+                      {'title': "Titel2", 'short_title': "slot2",
+                       'text': "text2",
                        'children': [
-                           {'title': "Titel21",'short_title': "slot21", 'text': "text21",
+                           {'title': "Titel21", 'short_title': "slot21",
+                            'text': "text21",
                             'children': []},
-                           {'title': "Titel22",'short_title': "slot22", 'text': "text22",
+                           {'title': "Titel22", 'short_title': "slot22",
+                            'text': "text22",
                             'children': [
-                                {'title': "Titel221",'short_title': "slot221", 'text': "text221",
+                                {'title': "Titel221", 'short_title': "slot221",
+                                 'text': "text221",
                                  'children': []}
                             ]},
                        ]},
-                      ]}
+                  ]}
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
             print(s)
             print(schema)
-            self.assertEqual(s,schema, "fail in " + pname)
+            self.assertEqual(s, schema, "fail in " + pname)
+
 
 class CreateStructureFromStructureNodeSchemaTest(TestCase):
     def setUp(self):
@@ -359,18 +382,20 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
         self.root = get_root_node()
         self.slot1 = create_slot("Slot_1")
         self.root.append_child(self.slot1)
-        self.structure1 = create_structureNode("Layer 1","text",[self.hugo])
+        self.structure1 = create_structureNode("Layer 1", "text", [self.hugo])
         self.slot1.append_child(self.structure1)
         self.slot11 = create_slot("SubSlot1")
         self.structure1.append_child(self.slot11)
-        self.text1 = create_textNode("Layer 2","Layer 2 text.",[self.hugo])
+        self.text1 = create_textNode("Layer 2", "Layer 2 text.", [self.hugo])
         self.slot11.append_child(self.text1)
         self.slot12 = create_slot("SubSlot2")
         self.structure1.append_child(self.slot12)
-        self.text2 = create_textNode("Layer 2 second heading","Layer 2 text 2.",[self.hugo])
+        self.text2 = create_textNode("Layer 2 second heading",
+                                     "Layer 2 text 2.", [self.hugo])
         self.slot12.append_child(self.text2)
 
-    def test_create_structure_from_structure_node_schema_with_origin_group(self):
+    def test_create_structure_from_structure_node_schema_with_origin_group(
+            self):
         schema = {'short_title': "Ignored",
                   'title': "Layer 1",
                   'text': "text",
@@ -384,32 +409,35 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'text': "Layer 2 text 2.",
                        'children': []},
                   ]}
-        create_structure_from_structure_node_schema(schema,self.slot1,[self.hugo],origin_group=[self.structure1],arg_type='n')
+        create_structure_from_structure_node_schema(
+            schema, self.slot1, [self.hugo],
+            origin_group=[self.structure1], arg_type='n')
         node_list = Node.objects.filter(title="Layer 1").all()
-        self.assertEqual(len(node_list),1)
+        self.assertEqual(len(node_list), 1)
         n = node_list[0]
-        self.assertEqual(n,self.structure1)
-        self.assertEqual(n.text.text,"text")
+        self.assertEqual(n, self.structure1)
+        self.assertEqual(n.text.text, "text")
         slots = n.children.all()
-        self.assertEqual(len(slots),2)
-        self.assertEqual(slots[0],self.slot11)
+        self.assertEqual(len(slots), 2)
+        self.assertEqual(slots[0], self.slot11)
         self.assertEqual(slots[0].title, "SubSlot1")
-        self.assertEqual(slots[1],self.slot12)
+        self.assertEqual(slots[1], self.slot12)
         self.assertEqual(slots[1].title, "SubSlot2")
-        self.assertEqual(len(slots[0].children.all()),1)
+        self.assertEqual(len(slots[0].children.all()), 1)
         sub_structure1 = slots[0].children.all()[0]
-        self.assertEqual(sub_structure1,self.text1)
+        self.assertEqual(sub_structure1, self.text1)
         self.assertEqual(sub_structure1.title, "Layer 2")
         self.assertEqual(sub_structure1.text.text, "Layer 2 text.")
-        self.assertEqual(len(sub_structure1.children.all()),0)
-        self.assertEqual(len(slots[1].children.all()),1)
+        self.assertEqual(len(sub_structure1.children.all()), 0)
+        self.assertEqual(len(slots[1].children.all()), 1)
         sub_structure2 = slots[1].children.all()[0]
-        self.assertEqual(sub_structure2,self.text2)
+        self.assertEqual(sub_structure2, self.text2)
         self.assertEqual(sub_structure2.title, "Layer 2 second heading")
         self.assertEqual(sub_structure2.text.text, "Layer 2 text 2.")
-        self.assertEqual(len(sub_structure2.children.all()),0)
+        self.assertEqual(len(sub_structure2.children.all()), 0)
 
-    def test_create_structure_from_structure_node_schema_with_origin_group_difference_in_second_layer(self):
+    def test_create_structure_from_structure_node_schema_with_origin_group_difference_in_second_layer(
+            self):
         schema = {'short_title': "Ignored",
                   'title': "Layer 1",
                   'text': "text",
@@ -422,34 +450,38 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'title': "Layer 2 second heading",
                        'text': "Layer 2 text 2 but changed.",
                        'children': []},
-                      ]}
-        create_structure_from_structure_node_schema(schema,self.slot1,[self.hugo],origin_group=[self.structure1],arg_type='n')
+                  ]}
+        create_structure_from_structure_node_schema(
+            schema, self.slot1, [self.hugo],
+            origin_group=[self.structure1], arg_type='n')
         node_list = Node.objects.filter(title="Layer 1").all()
-        self.assertEqual(len(node_list),1)
+        self.assertEqual(len(node_list), 1)
         n = node_list[0]
-        self.assertEqual(n,self.structure1)
-        self.assertEqual(n.text.text,"text")
+        self.assertEqual(n, self.structure1)
+        self.assertEqual(n.text.text, "text")
         slots = n.children.all()
-        self.assertEqual(len(slots),2)
-        self.assertEqual(slots[0],self.slot11)
+        self.assertEqual(len(slots), 2)
+        self.assertEqual(slots[0], self.slot11)
         self.assertEqual(slots[0].title, "SubSlot1")
-        self.assertEqual(slots[1],self.slot12)
+        self.assertEqual(slots[1], self.slot12)
         self.assertEqual(slots[1].title, "SubSlot2")
-        self.assertEqual(len(slots[0].children.all()),1)
+        self.assertEqual(len(slots[0].children.all()), 1)
         sub_structure1 = slots[0].children.all()[0]
-        self.assertEqual(sub_structure1,self.text1)
+        self.assertEqual(sub_structure1, self.text1)
         self.assertEqual(sub_structure1.title, "Layer 2")
         self.assertEqual(sub_structure1.text.text, "Layer 2 text.")
-        self.assertEqual(len(sub_structure1.children.all()),0)
-        self.assertEqual(len(slots[1].children.all()),2)
+        self.assertEqual(len(sub_structure1.children.all()), 0)
+        self.assertEqual(len(slots[1].children.all()), 2)
         sub_structure2 = slots[1].children.all()[1]
-        self.assertNotEqual(sub_structure2,self.text2)
+        self.assertNotEqual(sub_structure2, self.text2)
         self.assertEqual(sub_structure2.title, "Layer 2 second heading")
-        self.assertEqual(sub_structure2.text.text, "Layer 2 text 2 but changed.")
-        self.assertEqual(len(sub_structure2.children.all()),0)
-        self.assertEqual(sub_structure2.sources.all()[0],self.text2)
+        self.assertEqual(sub_structure2.text.text,
+                         "Layer 2 text 2 but changed.")
+        self.assertEqual(len(sub_structure2.children.all()), 0)
+        self.assertEqual(sub_structure2.sources.all()[0], self.text2)
 
-    def test_create_structure_from_structure_node_schema_without_origin_group(self):
+    def test_create_structure_from_structure_node_schema_without_origin_group(
+            self):
         schema = {'short_title': "Ignored",
                   'title': "My first structure Node",
                   'text': "This is the text.",
@@ -462,25 +494,24 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'title': "Layer 1 Heading 2",
                        'text': "Layer 1, second text.",
                        'children': []},
-                      ]}
-        create_structure_from_structure_node_schema(schema,self.slot1,[self.hugo])
+                  ]}
+        create_structure_from_structure_node_schema(schema, self.slot1,
+                                                    [self.hugo])
         node_list = Node.objects.filter(title="My first structure Node").all()
-        self.assertEqual(len(node_list),1)
+        self.assertEqual(len(node_list), 1)
         n = node_list[0]
-        self.assertEqual(n.text.text,"This is the text.")
+        self.assertEqual(n.text.text, "This is the text.")
         slots = n.children.all()
-        self.assertEqual(len(slots),2)
+        self.assertEqual(len(slots), 2)
         self.assertEqual(slots[0].title, "Layer_1a")
         self.assertEqual(slots[1].title, "Layer_1b")
-        self.assertEqual(len(slots[0].children.all()),1)
+        self.assertEqual(len(slots[0].children.all()), 1)
         sub_structure1 = slots[0].children.all()[0]
         self.assertEqual(sub_structure1.title, "Layer 1 Heading 1")
         self.assertEqual(sub_structure1.text.text, "Layer 1, first text.")
-        self.assertEqual(len(sub_structure1.children.all()),0)
-        self.assertEqual(len(slots[1].children.all()),1)
+        self.assertEqual(len(sub_structure1.children.all()), 0)
+        self.assertEqual(len(slots[1].children.all()), 1)
         sub_structure2 = slots[1].children.all()[0]
         self.assertEqual(sub_structure2.title, "Layer 1 Heading 2")
         self.assertEqual(sub_structure2.text.text, "Layer 1, second text.")
-        self.assertEqual(len(sub_structure2.children.all()),0)
-
-
+        self.assertEqual(len(sub_structure2.children.all()), 0)
