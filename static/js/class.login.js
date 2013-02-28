@@ -48,20 +48,17 @@ ClassLogin.prototype.isLoggedin = function() {
 }
 
 ClassLogin.prototype.handleRequest = function(data) {
-    if ( data['loginResponse'] == undefined
-        || data['loginResponse']['userInfo'] == undefined
-        || data['loginResponse']['userSettings'] == undefined ) {
+
+   if ( typeof data['errorResponse'] !=  'undefined') {
+        alert(data['errorResponse']['errorTitle'] + "\n" + data['errorResponse']['errorMessage']);
         return false;
     }
     Login.user = new ClassUser();
-    if ( Login.user.load(data['loginResponse']) == false ) {
-        Login.user = null;
-        return false;
-    }
     Login.show();
     Login.overlay
         .hide()
         .empty();
+        
 }
 
 ClassLogin.prototype.hasUser = function() {
