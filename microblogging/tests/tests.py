@@ -57,15 +57,16 @@ class MicrobloggingTests(TestCase):
                                      [self.user_max])
         slot2.append_child(text_node2)
 
-    def test_post_creation(self):
-        posts = []
+        self.posts = []
         for i in range(25):
-            posts.append(create_post("Ich finde /Bla.1 gut.", self.user_max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
-        posts.append(create_post("Ich finde /Follopp schlecht.", self.user_max))
+            self.posts.append(
+                create_post("Ich finde /Bla.1 gut.", self.user_max))
+        self.posts.append(
+            create_post("Ich finde /Blubb schlecht.", self.user_max))
 
+    def test_post_creation(self):
         all_posts = Post.objects.all()
-        self.assertSequenceEqual(all_posts, posts)
+        self.assertSequenceEqual(all_posts, self.posts)
         self.assertEqual(
             all_posts[0].text,
             'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
@@ -95,11 +96,6 @@ class MicrobloggingTests(TestCase):
             "NotAuthenticated")
 
     def test_load_microblogging_illegal_path(self):
-        posts = []
-        for i in range(25):
-            posts.append(create_post("Ich finde /Bla.1 gut.", self.user_max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
-
         self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(
@@ -113,11 +109,6 @@ class MicrobloggingTests(TestCase):
             '"errorMessage": "Illegal path: Slot_4.1/SubSlot_1.1"}}')
 
     def test_load_microblogging_0_newer(self):
-        posts = []
-        for i in range(25):
-            posts.append(create_post("Ich finde /Bla.1 gut.", self.user_max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
-
         self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(
@@ -147,11 +138,6 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(data['loadMicrobloggingResponse']), 20)
 
     def test_load_microblogging_no_select_id(self):
-        posts = []
-        for i in range(25):
-            posts.append(create_post("Ich finde /Bla.1 gut.", self.user_max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
-
         self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(
@@ -181,11 +167,6 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(data['loadMicrobloggingResponse']), 20)
 
     def test_load_microblogging_3_newer(self):
-        posts = []
-        for i in range(25):
-            posts.append(create_post("Ich finde /Bla.1 gut.", self.user_max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
-
         self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(
@@ -215,11 +196,6 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(data['loadMicrobloggingResponse']), 20)
 
     def test_load_microblogging_6_newer(self):
-        posts = []
-        for i in range(25):
-            posts.append(create_post("Ich finde /Bla.1 gut.", self.user_max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
-
         self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(
@@ -249,11 +225,6 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(data['loadMicrobloggingResponse']), 19)
 
     def test_load_microblogging_only_one_post(self):
-        posts = []
-        for i in range(25):
-            posts.append(create_post("Ich finde /Bla.1 gut.", self.user_max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
-
         self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(
@@ -278,11 +249,6 @@ class MicrobloggingTests(TestCase):
         self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][0])
 
     def test_load_timeline_with_select_id(self):
-        posts = []
-        for i in range(25):
-            posts.append(create_post("Ich finde /Bla.1 gut.", self.user_max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
-
         self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(
@@ -311,11 +277,6 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(data['loadMicrobloggingResponse']), 20)
 
     def test_load_timeline_without_select_id(self):
-        posts = []
-        for i in range(25):
-            posts.append(create_post("Ich finde /Bla.1 gut.", self.user_max))
-        posts.append(create_post("Ich finde /Blubb schlecht.", self.user_max))
-
         self.assertTrue(self.client.login(username="max", password="1234"))
 
         response = self.client.get(
