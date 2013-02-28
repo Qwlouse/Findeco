@@ -125,6 +125,7 @@ class Node(models.Model):
         if new_favorite != self.favorite:
             self.favorite = new_favorite
             self.save()
+            # TODO: optimize this
             invalid_paths = []
             for a in self.traverse_all_ancestors():
                 invalid_paths += [p.path for p in a.paths.all()]
