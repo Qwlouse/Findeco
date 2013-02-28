@@ -49,15 +49,22 @@ ClassLogin.prototype.isLoggedin = function() {
 
 ClassLogin.prototype.handleRequest = function(data) {
 
-   if ( typeof data['errorResponse'] !=  'undefined') {
+    if ( typeof data['errorResponse'] !=  'undefined') {
         alert(data['errorResponse']['errorTitle'] + "\n" + data['errorResponse']['errorMessage']);
         return false;
     }
+    alert (JSON.stringify(data));
+    if ( typeof data['loginResponse'] !=  'undefined') {
     Login.user = new ClassUser();
     Login.show();
     Login.overlay
         .hide()
         .empty();
+    }
+    if ( typeof data['laccountRegistrationResponse'] !=  'undefined') {
+    	alert('Die Registrierung war erfolgreich!! \n Du erhälst in den nächsten Minuten eine Aktivierungsemail.');
+    }
+    
         
 }
 
@@ -213,5 +220,33 @@ ClassLogin.prototype.submitLogin = function() {
 }
 
 ClassLogin.prototype.submitRegister = function() {
+ 	var tmp = {
+        'displayName': Login.form['name'].val(),
+        'emailAddress': Login.form['email'].val(),
+        'password': Login.form['password'].val(),
+        'password2': Login.form['password2'].val()
+    };
+    if ( tmp['displayName'] == '' 
+    	|| tmp['emailAddress'] == ''
+        || tmp['password'] == ''
+        || tmp['password2'] == '' ) {
+        alert('Bitte fülle alle Felder aus!');
+        return false;
+    }
+       if ( tmp['password'] != tmp['password2'] ) {
+        alert('Die Passwörter stimmen nicht überein');
+        return false;
+    }
+    $.ajax({
+        type: 'POST',
+        url: '.json_accountRegistration',
+        data: tmp,
+        success: Login.handleRequest,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
+        }
+    });
+
 
 }
