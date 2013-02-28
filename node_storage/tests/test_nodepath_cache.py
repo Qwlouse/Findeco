@@ -22,8 +22,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from ..models import PathCache
-from node_storage.factory import create_slot, create_structureNode
+from ..models import PathCache, Node
+from node_storage.factory import create_slot, create_structureNode, create_argument
 from node_storage.path_helpers import get_root_node
 
 
@@ -69,3 +69,13 @@ class NodePathCacheTest(TestCase):
 
         self.assertEqual(sn_test, PathCache.objects.get(path='Foo.1/Ba.1').node)
         self.assertEqual(sn_test, PathCache.objects.get(path='Foo.2/Ba.1').node)
+
+    def test_creating_an_argument_adds_to_path_cache(self):
+        slot = create_slot('Foo')
+        self.root.append_child(slot)
+        sn = create_structureNode("Foobarbaz1")
+        slot.append_child(sn)
+
+        a = create_argument(sn, arg_type='con')
+        node_a = Node.objects.get(id=a.id)
+        self.assertEqual(node_a, PathCache.objects.get(path='Foo.1.con.1').node)

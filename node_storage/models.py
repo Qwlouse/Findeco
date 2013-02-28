@@ -84,7 +84,6 @@ class Node(models.Model):
             child_path = p.path + suffix
             PathCache.objects.create(path=child_path.strip('/'), node=child)
 
-
     def add_derivate(self, derivate, arg_type=None, title="", text="",
                      authors=()):
         for vote in self.votes.all():
@@ -220,9 +219,21 @@ class Argument(Node):
                 }[arg_type]
 
     def save(self, *args, **kwargs):
+        new = False
         if self.index is None:
+            # new Argument!
             self.index = self.concerns.arguments.count() + 1
+            new = True
+
         models.Model.save(self, *args, **kwargs)
+        if new:
+            assert self.concerns.paths.count() > 0, \
+                "You can only add arguments to descendants of root"
+            for p in self.concerns.paths.all():
+                path = '%s.%s.%d' % (p.path,
+                                     self.long_arg_type(self.arg_type),
+                                     self.index)
+                PathCache.objects.create(path=path, node=self)
 
     def __unicode__(self):
         return "id=%d, type=%s" % (self.id, self.arg_type)

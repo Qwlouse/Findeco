@@ -74,8 +74,8 @@ class LoadTextTest(TestCase):
         self.slot13 = create_slot('Datenschutz')
         self.structureNode1.append_child(self.slot13)
         self.textnode13 = create_textNode('Daaatenschutz', text="Blubb.", authors=[self.hans])
-        self.textnode13_a1 = create_argument(self.textnode13, arg_type='con', title='Dagegen' ,text="...denn ihr seid dafür", authors=[self.hugo])
         self.slot13.append_child(self.textnode13)
+        self.textnode13_a1 = create_argument(self.textnode13, arg_type='con', title='Dagegen' ,text="...denn ihr seid dafür", authors=[self.hugo])
 
 
         self.slot2 = create_slot('Grundsatzprogramm')
