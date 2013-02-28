@@ -76,12 +76,14 @@ class Node(models.Model):
         self.update_favorite_and_invalidate_cache()
 
         if child.node_type == Node.SLOT:
-            suffix = child.title
+            suffix = "/" + child.title
         else:
-            suffix = "." + str(child.get_index(self)) + "/"
-        child_path = self.get_a_path() + suffix  # TODO: add all paths
+            suffix = "." + str(child.get_index(self))
 
-        PathCache.objects.create(path=child_path.strip('/'), node=child)
+        for p in self.paths.all():
+            child_path = p.path + suffix
+            PathCache.objects.create(path=child_path.strip('/'), node=child)
+
 
     def add_derivate(self, derivate, arg_type=None, title="", text="",
                      authors=()):
