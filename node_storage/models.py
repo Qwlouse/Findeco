@@ -127,8 +127,7 @@ class Node(models.Model):
             self.save()
             invalid_paths = []
             for a in self.traverse_all_ancestors():
-                invalid_paths.append(a.get_a_path())
-                # TODO: this only collects __a__ path
+                invalid_paths += [p.path for p in a.paths.all()]
             TextCache.objects.filter(path__in=invalid_paths).delete()
 
     def update_favorite_for_all_parents(self):
