@@ -53,7 +53,7 @@ ClassLogin.prototype.handleRequest = function(data) {
         alert(data['errorResponse']['errorTitle'] + "\n" + data['errorResponse']['errorMessage']);
         return false;
     }
-    alert (JSON.stringify(data));
+    //alert (JSON.stringify(data));
     if ( typeof data['loginResponse'] !=  'undefined') {
     Login.user = new ClassUser();
     Login.show();
@@ -61,8 +61,11 @@ ClassLogin.prototype.handleRequest = function(data) {
         .hide()
         .empty();
     }
-    if ( typeof data['laccountRegistrationResponse'] !=  'undefined') {
+    if ( typeof data['accountRegistrationResponse'] !=  'undefined') {
     	alert('Die Registrierung war erfolgreich!! \n Du erhälst in den nächsten Minuten eine Aktivierungsemail.');
+    }
+    if ( typeof data['accountActivationResponse'] !=  'undefined') {
+    	alert('Dein Account wurde gerade freigeschaltet. Du kannst dich jetzt einloggen');
     }
     
         
@@ -146,7 +149,7 @@ ClassLogin.prototype.showRegisterForm = function() {
         .appendTo(table);
     td = $('<td colspan="2">')
         .appendTo(tr);
-    Login.form['submit'] = $('<div id="inputsubmit" class="button">Einloggen</div>')
+    Login.form['submit'] = $('<div id="inputsubmit" class="button">Registrieren</div>')
         .attr('style','margin-bottom: 10px;')
         .click(Login.submit)
         .appendTo(td);
@@ -247,6 +250,21 @@ ClassLogin.prototype.submitRegister = function() {
             xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
         }
     });
-
-
-}
+ }
+ 
+ 
+ ClassLogin.prototype.submitActivation = function(activationKey) {
+ 	var tmp = {
+        'activationKey': activationKey,
+    };
+    $.ajax({
+        type: 'POST',
+        url: '.json_accountActivation',
+        data: tmp,
+        success: Login.handleRequest,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
+        }
+    });
+ }
