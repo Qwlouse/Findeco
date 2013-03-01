@@ -31,6 +31,7 @@ from node_storage import get_root_node
 from node_storage.factory import create_slot, create_user, create_textNode, create_vote, create_structureNode, create_argument
 from ..api_validation import errorResponseValidator
 
+
 class LoadTextTest(TestCase):
     def setUp(self):
         self.hans = create_user('hans')
@@ -41,7 +42,9 @@ class LoadTextTest(TestCase):
         self.root.append_child(self.slot1)
         self.structureNode1 = create_structureNode('LangerWahlprogrammTitel',
             text="Einleitungstext", authors=[self.hans])
+        self.slot1.append_child(self.structureNode1)
         self.slot11 = create_slot('Transparenz')
+        self.structureNode1.append_child(self.slot11)
         self.structureNode11 = create_structureNode('Traaaansparenz', text="Transparenz ist wichtig.", authors=[self.hans])
         self.slot11.append_child(self.structureNode11)
         self.slot111 = create_slot('Ebene_3')
@@ -65,16 +68,15 @@ class LoadTextTest(TestCase):
         self.textnode1111111 = create_textNode('Traaaansparenz', text="Auf Ebene 7.", authors=[self.hans])
         self.slot1111111.append_child(self.textnode1111111)
         self.slot12 = create_slot('Bildung')
+        self.structureNode1.append_child(self.slot12)
         self.textnode12 = create_textNode('Biiildung', authors=[self.hans])
         self.slot12.append_child(self.textnode12)
         self.slot13 = create_slot('Datenschutz')
-        self.textnode13 = create_textNode('Daaatenschutz', text="Blubb.", authors=[self.hans])
-        self.textnode13_a1 = create_argument(self.textnode13, arg_type='con', title='Dagegen' ,text="...denn ihr seid dafür", authors=[self.hugo])
-        self.slot13.append_child(self.textnode13)
-        self.structureNode1.append_child(self.slot11)
-        self.structureNode1.append_child(self.slot12)
         self.structureNode1.append_child(self.slot13)
-        self.slot1.append_child(self.structureNode1)
+        self.textnode13 = create_textNode('Daaatenschutz', text="Blubb.", authors=[self.hans])
+        self.slot13.append_child(self.textnode13)
+        self.textnode13_a1 = create_argument(self.textnode13, arg_type='con', title='Dagegen' ,text="...denn ihr seid dafür", authors=[self.hugo])
+
 
         self.slot2 = create_slot('Grundsatzprogramm')
         self.root.append_child(self.slot2)

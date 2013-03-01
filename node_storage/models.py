@@ -63,6 +63,9 @@ class Node(models.Model):
     node_type = models.CharField(max_length=1, choices=NODETYPE)
 
     def append_child(self, child):
+        assert PathCache.objects.filter(node=self).count() > 0, \
+            "You cannot add children to nodes that are not descendants of root."
+
         no = NodeOrder()
         no.parent = self
         no.child = child
@@ -71,6 +74,15 @@ class Node(models.Model):
         no.position = max_position + 1
         no.save()
         self.update_favorite_and_invalidate_cache()
+
+        if child.node_type == Node.SLOT:
+            suffix = "/" + child.title
+        else:
+            suffix = "." + str(child.get_index(self))
+
+        for p in self.paths.all():
+            child_path = p.path + suffix
+            PathCache.objects.create(path=child_path.strip('/'), node=child)
 
     def add_derivate(self, derivate, arg_type=None, title="", text="",
                      authors=()):
@@ -113,10 +125,10 @@ class Node(models.Model):
         if new_favorite != self.favorite:
             self.favorite = new_favorite
             self.save()
+            # TODO: optimize this
             invalid_paths = []
             for a in self.traverse_all_ancestors():
-                invalid_paths.append(a.get_a_path())
-                # TODO: this only collects __a__ path
+                invalid_paths += [p.path for p in a.paths.all()]
             TextCache.objects.filter(path__in=invalid_paths).delete()
 
     def update_favorite_for_all_parents(self):
@@ -143,18 +155,7 @@ class Node(models.Model):
         """
         Returns a path which needn't be the only valid path to the node.
         """
-        if self.parents.count() == 0:
-            return ""
-        if self.node_type == Node.ARGUMENT:
-            self_as_arg = Argument.objects.filter(argument_id=self.id).all()[0]
-            npath = self_as_arg.concerns.get_a_path().strip('/')
-            return '%s.%s.%d' % (npath, self_as_arg.arg_type, self_as_arg.index)
-        parent = self.parents.all()[0]
-        if self.node_type == Node.SLOT:
-            suffix = self.title
-        else:
-            suffix = "." + str(self.get_index(parent)) + "/"
-        return parent.get_a_path() + suffix
+        return PathCache.objects.filter(node=self)[0].path
 
     def get_follows(self):
         return self.votes.count()
@@ -207,9 +208,21 @@ class Argument(Node):
                 }[arg_type]
 
     def save(self, *args, **kwargs):
+        new = False
         if self.index is None:
+            # new Argument!
             self.index = self.concerns.arguments.count() + 1
+            new = True
+
         models.Model.save(self, *args, **kwargs)
+        if new:
+            assert self.concerns.paths.count() > 0, \
+                "You can only add arguments to descendants of root"
+            for p in self.concerns.paths.all():
+                path = '%s.%s.%d' % (p.path,
+                                     self.long_arg_type(self.arg_type),
+                                     self.index)
+                PathCache.objects.create(path=path, node=self)
 
     def __unicode__(self):
         return "id=%d, type=%s" % (self.id, self.arg_type)
@@ -282,3 +295,8 @@ class SpamFlag(models.Model):
 class TextCache(models.Model):
     path = models.CharField(max_length=250, primary_key=True)
     paragraphs = models.TextField()
+
+
+class PathCache(models.Model):
+    path = models.CharField(max_length=250, primary_key=True)
+    node = models.ForeignKey(Node, related_name='paths')

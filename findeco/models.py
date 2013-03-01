@@ -145,6 +145,7 @@ def create_root():
     root_text.save()
     root_text.authors = [auth_models.User.objects.get(username='admin')]
     root_text.save()
+    node_storage.PathCache.objects.create(path='', node=node)
 
 
 def create_groups():

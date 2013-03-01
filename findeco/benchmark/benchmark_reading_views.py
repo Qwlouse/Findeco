@@ -55,7 +55,7 @@ if __name__ == "__main__":
         ('load_microblogging', dict(path='Wahlprogramm_BTW.1/Urheberrecht.3', select_id=None, microblogging_load_type='newer')),
         ('load_text', dict(path='Wahlprogramm_BTW.1/Urheberrecht.3'))
     ]
-    repetitions = 10
+    repetitions = 100
     for i, (v, kwargs) in enumerate(views):
         time = time_view(v, kwargs, repetitions)
         url = reverse(v, kwargs=kwargs)

@@ -24,7 +24,7 @@ from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from node_storage import Node, get_root_node
 from node_storage.factory import create_structureNode, create_user, create_vote
-from node_storage.factory import create_argument
+from node_storage.factory import create_argument, create_slot
 from node_storage.models import NodeOrder, Derivation
 
 
@@ -33,6 +33,8 @@ class NodeTest(TestCase):
         self.root = get_root_node()
         self.hans = create_user('hans')
         self.hugo = create_user('hugo')
+        self.foo = create_slot("Foo")
+        self.root.append_child(self.foo)
 
     def test_node_constructable(self):
         n = Node()
@@ -41,8 +43,9 @@ class NodeTest(TestCase):
         self.assertEqual(n.node_type, Node.STRUCTURE_NODE)
 
     def test_node_append_child(self):
-        n = Node()
+        n = Node(title='foo')
         n.save()
+        self.root.append_child(n)
         c = Node()
         c.save()
         n.append_child(c)
@@ -59,7 +62,10 @@ class NodeTest(TestCase):
 
     def test_add_derivate_adds_only_correct_derivation(self):
         n = create_structureNode("Source", authors=[self.hans])
+        self.foo.append_child(n)
         d = create_structureNode("Derivate", authors=[self.hans])
+        self.foo.append_child(d)
+
         n.add_derivate(d, arg_type='n')
         self.assertIn(d, n.derivates.all())
         self.assertIn(n, d.sources.all())
@@ -72,9 +78,11 @@ class NodeTest(TestCase):
 
     def test_add_derivate_creates_transitive_votes(self):
         n = create_structureNode("Source", authors=[self.hans])
+        self.foo.append_child(n)
         v1 = create_vote(self.hans, [n])
         v2 = create_vote(self.hugo, [n])
         d = create_structureNode("Derivate", authors=[self.hans])
+        self.foo.append_child(d)
         n.add_derivate(d, arg_type='n')
 
         self.assertIn(n, v1.nodes.all())
@@ -87,7 +95,9 @@ class NodeTest(TestCase):
 
     def test_add_derivate_creates_commit_argument(self):
         s = create_structureNode("Source", authors=[self.hans])
+        self.foo.append_child(s)
         d = create_structureNode("Derivate", authors=[self.hans])
+        self.foo.append_child(d)
         s.add_derivate(d, arg_type='c', title="arg", text="ument",
                        authors=[self.hugo])
         no = Derivation.objects.filter(source=s, derivate=d)
@@ -101,7 +111,9 @@ class NodeTest(TestCase):
 
     def test_add_derivate_copies_arguments(self):
         s = create_structureNode("Source", authors=[self.hans])
+        self.foo.append_child(s)
         d = create_structureNode("Derivate", authors=[self.hans])
+        self.foo.append_child(d)
         a = create_argument(s, arg_type='p', title="myArg", text="cool",
                             authors=[self.hugo])
         self.assertEqual(s.arguments.count(), 1)

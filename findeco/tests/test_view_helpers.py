@@ -203,7 +203,9 @@ class CreateIndexNodeForArgumentTest(TestCase):
         # create nodes
         self.root = get_root_node()
         self.foo = create_slot('foo')
+        self.root.append_child(self.foo)
         self.foo1 = create_structureNode('FooooBar')
+        self.foo.append_child(self.foo1)
         # add arguments
         self.foo_pro = create_argument(self.foo1, arg_type='pro', title="geil",
                                        authors=[self.hugo])
@@ -420,6 +422,7 @@ class StoreArgumentTest(TestCase):
         self.slot.append_child(self.text1)
         self.text2 = create_textNode("Secondary Text", "Dudelda",
                                      [self.mustermann])
+        self.slot.append_child(self.text2)
         self.text1.add_derivate(self.text2)
 
     def test_store_con(self):

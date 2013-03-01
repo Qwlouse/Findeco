@@ -461,6 +461,7 @@ def account_registration(request):
 
     return json_response({'accountRegistrationResponse': {}})
 
+
 #@csrf_exempt
 def account_activation(request):
     if not 'activationKey' in request.POST:
@@ -489,6 +490,7 @@ def account_activation(request):
         user.is_active = True
         user.save()
     return json_response({'accountActivationResponse': {}})
+
 
 #@csrf_exempt
 def account_reset_request_by_name(request):
@@ -522,6 +524,7 @@ def account_reset_request_by_name(request):
               [user.email])
 
     return json_response({'accountResetRequestByNameResponse': {}})
+
 
 #@csrf_exempt
 def account_reset_request_by_mail(request):
