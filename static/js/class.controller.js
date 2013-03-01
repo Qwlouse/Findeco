@@ -76,7 +76,12 @@ ClassController.prototype.stateHandler = function(event) {
     // TODO: Mockup legacy, remove or comment out after testing is done.
     
     if (document.location.hash.indexOf('#/activate/') == 0){
-        Login.submitActivation(document.location.hash.substring(11))
+        Login.submitActivation(document.location.hash.substring(11));
+        Login.showLoginForm();
+    	return false;
+    }
+    if (document.location.hash.indexOf('#/confirm/') == 0){
+        Login.submitRecovery(document.location.hash.substring(10));    
         Login.showLoginForm();
     	return false;
     }
