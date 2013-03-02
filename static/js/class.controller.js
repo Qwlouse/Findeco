@@ -22,8 +22,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-function ClassController() {}
+function ClassController() {};
 var Controller = new ClassController();
+var Settings = {
+	locales:"de_DE"
+	}
+
 
 ClassController.prototype.getPosition = function() {
     return Controller.position.replace(/\/$/g,'');

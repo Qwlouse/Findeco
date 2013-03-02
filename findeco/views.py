@@ -477,7 +477,7 @@ def account_reset_request_by_mail(request):
     if not ((User.objects.filter(email=emailAddress).filter(
             is_active=True).filter(
             profile__activationKey__exact='').count()) == 1):
-        return json_error_response('UnknownUser', emailAddress)
+        return json_error_response('UnknownEmailAddress', emailAddress)
 
     user = User.objects.get(email=emailAddress)
     activationKey = random.getrandbits(256)
