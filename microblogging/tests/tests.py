@@ -26,6 +26,7 @@
 ################################################################################
 
 from django.test import TestCase
+from findeco.tests.helpers import assert_is_error_response
 from node_storage.factory import create_slot, create_textNode
 from node_storage.factory import create_user
 from ..models import create_post
@@ -82,7 +83,6 @@ class MicrobloggingTests(TestCase):
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
             dict(microBlogText="Bla bla bla. I had to say it."))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.content)), 0)
         self.assertEqual(len(
             Post.objects.filter(text="Bla bla bla. I had to say it.").all()), 1)
 
@@ -90,10 +90,7 @@ class MicrobloggingTests(TestCase):
         response = self.client.post(
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
             dict(microBlogText="Bla bla bla. I had to say it."))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            json.loads(response.content)['errorResponse']['errorTitle'],
-            "NotAuthenticated")
+        assert_is_error_response(response, 'NotAuthenticated')
 
     def test_load_microblogging_illegal_path(self):
         self.assertTrue(self.client.login(username="max", password="1234"))
@@ -103,10 +100,7 @@ class MicrobloggingTests(TestCase):
                     kwargs=dict(path="Slot_4.1/SubSlot_1.1",
                                 select_id=0,
                                 microblogging_load_type="newer")))
-        self.assertEqual(
-            response.content,
-            '{"errorResponse": {"errorTitle": "Illegal path", '
-            '"errorMessage": "Illegal path: Slot_4.1/SubSlot_1.1"}}')
+        assert_is_error_response(response, 'UnknownNode')
 
     def test_load_microblogging_0_newer(self):
         self.assertTrue(self.client.login(username="max", password="1234"))

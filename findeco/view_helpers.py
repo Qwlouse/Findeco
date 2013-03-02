@@ -62,10 +62,7 @@ def ValidPaths(*allowed_path_types):
             else:
                 path_type = 'StructureNode'
             if path_type not in allowed_path_types:
-                return json_error_response(
-                    'IllegalPath',
-                    "%s can be called only for %s but was called with %s" %
-                    (f.__name__, allowed_path_types, path_type))
+                return json_error_response('IllegalPath', path)
                 #noinspection PyCallingNonCallable
             response = f(request, path, *args, **kwargs)
             validate_response(response.content, f.__name__)
