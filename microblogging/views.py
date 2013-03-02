@@ -25,18 +25,17 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-from django.contrib.auth.models import User
+from findeco.view_helpers import assert_node_for_path, assert_active_user, ViewErrorHandling
+from findeco.view_helpers import assert_authentication, assert_post_parameters
 from models import create_post, Post
-from findeco.views import json_response, json_error_response
-import node_storage as backend
+from findeco.views import json_response
 from time import mktime
 
 
-def convert_response_list(list):
+def convert_response_list(post_list):
     response_list = []
-    for post in list:
+    for post in post_list:
         authors = [{'displayName': post.author.username}]
         if post.is_reference_to: authors.append({'displayName': post.is_reference_to.author.username})
         response_list.append({'microblogText': post.text,
@@ -46,11 +45,9 @@ def convert_response_list(list):
     return response_list
 
 
+@ViewErrorHandling
 def load_microblogging(request, path, select_id, microblogging_load_type):
-    try:
-        node = backend.get_node_for_path(path)
-    except backend.IllegalPath:
-        return json_error_response('UnknownNode', path)
+    node = assert_node_for_path(path)
     if not select_id:  # Get latest posts
         posts = node.microblogging_references.prefetch_related('author', 'is_reference_to')[:20]
     else:
@@ -62,6 +59,7 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
     return json_response({'loadMicrobloggingResponse': convert_response_list(reversed(posts))})
 
 
+@ViewErrorHandling
 def load_timeline(request, name, select_id, microblogging_load_type):
     """
     Use this function to get the timeline for the given user.
@@ -69,14 +67,13 @@ def load_timeline(request, name, select_id, microblogging_load_type):
     Referenced posts will show up in the timeline as the originals do. Hiding of the original posts for a tidy
     timeline should be done in the frontend due to performance resons.
     """
-    try:
-        named_user = User.objects.filter(username=name).all()[0]
-    except ObjectDoesNotExist:
-        return json_error_response('UnknownUser', name)
+    named_user = assert_active_user(name)
+
     if named_user == request.user:
         followed = Q(author__profile__followers=request.user)
-    else: followed = Q(author = named_user)
-    own = Q(author = named_user)
+    else:
+        followed = Q(author = named_user)
+    own = Q(author=named_user)
     if not select_id: # Get latest posts
         feed =  Post.objects.filter(followed | own).\
                 order_by('-time').prefetch_related('author', 'is_reference_to')[:20]
@@ -91,11 +88,9 @@ def load_timeline(request, name, select_id, microblogging_load_type):
         return json_response({'loadMicrobloggingResponse':convert_response_list(reversed(feed))})
 
 
+@ViewErrorHandling
 def store_microblog_post(request, path):
-    if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated')
-    if not 'microBlogText' in request.POST:
-        return json_error_response('MissingPOSTParameter', 'microBlogText')
-
+    assert_authentication(request)
+    assert_post_parameters(request, ['microBlogText'])
     create_post(request.POST['microBlogText'], request.user)
     return json_response({'storeMicrobloggingResponse': {}})
