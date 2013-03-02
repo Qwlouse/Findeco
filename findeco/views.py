@@ -43,6 +43,7 @@ import random
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
 import node_storage as backend
+from node_storage.factory import create_user
 from .paths import parse_suffix
 from .view_helpers import ValidPaths, json_error_response, json_response
 from .view_helpers import store_structure_node, store_argument, store_derivate
@@ -451,8 +452,11 @@ def account_registration(request):
             ugettext('Email unavailiable'),
             ugettext('This E-Mailaddress is currently in use. '
                      'Please choose another one '))
-
-    user = User.objects.create_user(displayName, emailAddress, password)
+    user = create_user(displayName,
+                       description="",
+                       mail=emailAddress,
+                       password=password,
+                       groups=['texters', 'voters', 'bloggers'])
     user.is_active = False
     activationKey = random.getrandbits(256)
     user.profile.activationKey = activationKey
