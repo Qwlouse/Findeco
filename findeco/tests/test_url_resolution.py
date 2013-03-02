@@ -40,236 +40,241 @@ from ..views import follow_node, unfollow_node, store_settings
 valid_routes = [
     #### loadGraphData
     dict(url='/.json_loadGraphData/default/some.1/path.2',
-        func=load_graph_data,
-        url_name='load_graph_data',
-        kwargs=dict(graph_data_type='default', path='some.1/path.2')),
+         func=load_graph_data,
+         url_name='load_graph_data',
+         kwargs=dict(graph_data_type='default', path='some.1/path.2')),
 
     dict(url='/.json_loadGraphData/full/some.1/path.2',
-        func=load_graph_data,
-        url_name='load_graph_data',
-        kwargs=dict(graph_data_type='full', path='some.1/path.2')),
+         func=load_graph_data,
+         url_name='load_graph_data',
+         kwargs=dict(graph_data_type='full', path='some.1/path.2')),
 
     dict(url='/.json_loadGraphData/withSpam/some.1/path.2',
-        func=load_graph_data,
-        url_name='load_graph_data',
-        kwargs=dict(graph_data_type='withSpam', path='some.1/path.2')),
+         func=load_graph_data,
+         url_name='load_graph_data',
+         kwargs=dict(graph_data_type='withSpam', path='some.1/path.2')),
 
     #### loadIndex
     dict(url='/.json_loadIndex/some.1/path.2',
-        func=load_index,
-        url_name='load_index',
-        kwargs=dict(path='some.1/path.2')),
+         func=load_index,
+         url_name='load_index',
+         kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_loadIndex/False/some.1/path.2',
-        func=load_index,
-        url_name='load_index',
-        kwargs=dict(path='some.1/path.2')),
+         func=load_index,
+         url_name='load_index',
+         kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_loadIndex/True/some.1/path.2',
-        func=load_argument_index,
-        url_name='load_argument_index',
-        kwargs=dict(path='some.1/path.2')),
+         func=load_argument_index,
+         url_name='load_argument_index',
+         kwargs=dict(path='some.1/path.2')),
 
     #### loadMicroblogging
     dict(url='/.json_loadMicroblogging/0/newer/some.1/path.2',
-        func=load_microblogging,
-        url_name='load_microblogging',
-        kwargs=dict(path='some.1/path.2', select_id='0', microblogging_load_type='newer')),
+         func=load_microblogging,
+         url_name='load_microblogging',
+         kwargs=dict(path='some.1/path.2', select_id='0',
+                     microblogging_load_type='newer')),
 
     dict(url='/.json_loadMicroblogging/74/newer/some.1/path.2',
-        func=load_microblogging,
-        url_name='load_microblogging',
-        kwargs=dict(path='some.1/path.2', select_id='74', microblogging_load_type='newer')),
+         func=load_microblogging,
+         url_name='load_microblogging',
+         kwargs=dict(path='some.1/path.2', select_id='74',
+                     microblogging_load_type='newer')),
 
     dict(url='/.json_loadMicroblogging/0/older/some.1/path.2',
-        func=load_microblogging,
-        url_name='load_microblogging',
-        kwargs=dict(path='some.1/path.2', select_id='0', microblogging_load_type='older')),
+         func=load_microblogging,
+         url_name='load_microblogging',
+         kwargs=dict(path='some.1/path.2', select_id='0',
+                     microblogging_load_type='older')),
 
     dict(url='/.json_loadMicroblogging/74/older/some.1/path.2',
-        func=load_microblogging,
-        url_name='load_microblogging',
-        kwargs=dict(path='some.1/path.2', select_id='74', microblogging_load_type='older')),
+         func=load_microblogging,
+         url_name='load_microblogging',
+         kwargs=dict(path='some.1/path.2', select_id='74',
+                     microblogging_load_type='older')),
 
     dict(url='/.json_loadMicroblogging/older/some.1/path.2',
-        func=load_microblogging,
-        url_name='load_microblogging',
-        kwargs=dict(path='some.1/path.2', select_id=None, microblogging_load_type='older')),
+         func=load_microblogging,
+         url_name='load_microblogging',
+         kwargs=dict(path='some.1/path.2', select_id=None,
+                     microblogging_load_type='older')),
 
     #### loadText
     dict(url='/.json_loadText/some.1/path.2',
-        func=load_text,
-        url_name='load_text',
-        kwargs=dict(path='some.1/path.2')),
+         func=load_text,
+         url_name='load_text',
+         kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_loadText/some.1/path',
-        func=load_text,
-        url_name='load_text',
-        kwargs=dict(path='some.1/path')),
+         func=load_text,
+         url_name='load_text',
+         kwargs=dict(path='some.1/path')),
 
     dict(url='/.json_loadText/some.1/path.2.neut.17',
-        func=load_text,
-        url_name='load_text',
-        kwargs=dict(path='some.1/path.2.neut.17')),
+         func=load_text,
+         url_name='load_text',
+         kwargs=dict(path='some.1/path.2.neut.17')),
 
     dict(url='/.json_loadText/some.1/path.2.con.1/',
-        func=load_text,
-        url_name='load_text',
-        kwargs=dict(path='some.1/path.2.con.1')),
+         func=load_text,
+         url_name='load_text',
+         kwargs=dict(path='some.1/path.2.con.1')),
 
     dict(url='/.json_loadText/some.1/path.2.pro.144',
-        func=load_text,
-        url_name='load_text',
-        kwargs=dict(path='some.1/path.2.pro.144')),
+         func=load_text,
+         url_name='load_text',
+         kwargs=dict(path='some.1/path.2.pro.144')),
 
     #### loadUserInfo
     dict(url='/.json_loadUserInfo/somebody',
-        func=load_user_info,
-        url_name='load_user_info',
-        kwargs=dict(name='somebody')),
+         func=load_user_info,
+         url_name='load_user_info',
+         kwargs=dict(name='somebody')),
 
     dict(url='/.json_loadUserInfo/somebody/',
-        func=load_user_info,
-        url_name='load_user_info',
-        kwargs=dict(name='somebody')),
+         func=load_user_info,
+         url_name='load_user_info',
+         kwargs=dict(name='somebody')),
 
     #### loadUserSettings
     dict(url='/.json_loadUserSettings/',
-        func=load_user_settings,
-        url_name='load_user_settings',
-        kwargs=dict()),
+         func=load_user_settings,
+         url_name='load_user_settings',
+         kwargs=dict()),
 
     dict(url='/.json_loadUserSettings',
-        func=load_user_settings,
-        url_name='load_user_settings',
-        kwargs=dict()),
+         func=load_user_settings,
+         url_name='load_user_settings',
+         kwargs=dict()),
 
     #### login
     dict(url='/.json_login/',
-        func=login,
-        url_name='login',
-        kwargs=dict()),
+         func=login,
+         url_name='login',
+         kwargs=dict()),
 
     #### logout
     dict(url='/.json_logout/',
-        func=logout,
-        url_name='logout',
-        kwargs=dict()),
+         func=logout,
+         url_name='logout',
+         kwargs=dict()),
 
     #### markNode
     dict(url='/.json_markNode/spam/some.1/path.2',
-        func=flag_node,
-        url_name='flag_node',
-        kwargs=dict(path='some.1/path.2')),
+         func=flag_node,
+         url_name='flag_node',
+         kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/notspam/some.1/path.2',
-        func=unflag_node,
-        url_name='unflag_node',
-        kwargs=dict(path='some.1/path.2')),
+         func=unflag_node,
+         url_name='unflag_node',
+         kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/follow/some.1/path.2',
-        func=follow_node,
-        url_name='follow_node',
-        kwargs=dict(path='some.1/path.2')),
+         func=follow_node,
+         url_name='follow_node',
+         kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2',
-        func=unfollow_node,
-        url_name='unfollow_node',
-        kwargs=dict(path='some.1/path.2')),
+         func=unfollow_node,
+         url_name='unfollow_node',
+         kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/spam/some.1/path.2.pro.1',
-        func=flag_node,
-        url_name='flag_node',
-        kwargs=dict(path='some.1/path.2.pro.1')),
+         func=flag_node,
+         url_name='flag_node',
+         kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/notspam/some.1/path.2.pro.1',
-        func=unflag_node,
-        url_name='unflag_node',
-        kwargs=dict(path='some.1/path.2.pro.1')),
+         func=unflag_node,
+         url_name='unflag_node',
+         kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/follow/some.1/path.2.pro.1',
-        func=follow_node,
-        url_name='follow_node',
-        kwargs=dict(path='some.1/path.2.pro.1')),
+         func=follow_node,
+         url_name='follow_node',
+         kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2.pro.1',
-        func=unfollow_node,
-        url_name='unfollow_node',
-        kwargs=dict(path='some.1/path.2.pro.1')),
+         func=unfollow_node,
+         url_name='unfollow_node',
+         kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/spam/some.1/path.2.con.003',
-        func=flag_node,
-        url_name='flag_node',
-        kwargs=dict(path='some.1/path.2.con.003')),
+         func=flag_node,
+         url_name='flag_node',
+         kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/notspam/some.1/path.2.con.003',
-        func=unflag_node,
-        url_name='unflag_node',
-        kwargs=dict(path='some.1/path.2.con.003')),
+         func=unflag_node,
+         url_name='unflag_node',
+         kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/follow/some.1/path.2.con.003',
-        func=follow_node,
-        url_name='follow_node',
-        kwargs=dict(path='some.1/path.2.con.003')),
+         func=follow_node,
+         url_name='follow_node',
+         kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2.con.003',
-        func=unfollow_node,
-        url_name='unfollow_node',
-        kwargs=dict(path='some.1/path.2.con.003')),
+         func=unfollow_node,
+         url_name='unfollow_node',
+         kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/spam/some.1/path.2.neut.8437569384',
-        func=flag_node,
-        url_name='flag_node',
-        kwargs=dict(path='some.1/path.2.neut.8437569384')),
+         func=flag_node,
+         url_name='flag_node',
+         kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     dict(url='/.json_markNode/notspam/some.1/path.2.neut.8437569384',
-        func=unflag_node,
-        url_name='unflag_node',
-        kwargs=dict(path='some.1/path.2.neut.8437569384')),
+         func=unflag_node,
+         url_name='unflag_node',
+         kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     dict(url='/.json_markNode/follow/some.1/path.2.neut.8437569384',
-        func=follow_node,
-        url_name='follow_node',
-        kwargs=dict(path='some.1/path.2.neut.8437569384')),
+         func=follow_node,
+         url_name='follow_node',
+         kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2.neut.8437569384',
-        func=unfollow_node,
-        url_name='unfollow_node',
-        kwargs=dict(path='some.1/path.2.neut.8437569384')),
+         func=unfollow_node,
+         url_name='unfollow_node',
+         kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     #### storeMicroBlogPost
     dict(url='/.json_storeMicroblogPost/some.1/path.2',
-        func=store_microblog_post,
-        url_name='store_microblog_post',
-        kwargs=dict(path='some.1/path.2')),
+         func=store_microblog_post,
+         url_name='store_microblog_post',
+         kwargs=dict(path='some.1/path.2')),
 
     #### storeSettings
     dict(url='/.json_storeSettings/',
-        func=store_settings,
-        url_name='store_settings',
-        kwargs=dict()),
+         func=store_settings,
+         url_name='store_settings',
+         kwargs=dict()),
 
     #### storeText
     dict(url='/.json_storeText/some.1/path.2',
-        func=store_text,
-        url_name='store_text',
-        kwargs=dict(path='some.1/path.2')),
+         func=store_text,
+         url_name='store_text',
+         kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_storeText/some.1/path.2.neut.5',
-        func=store_text,
-        url_name='store_text',
-        kwargs=dict(path='some.1/path.2.neut.5')),
+         func=store_text,
+         url_name='store_text',
+         kwargs=dict(path='some.1/path.2.neut.5')),
 
     dict(url='/.json_storeText/some.1/path.2.con.995',
-        func=store_text,
-        url_name='store_text',
-        kwargs=dict(path='some.1/path.2.con.995')),
+         func=store_text,
+         url_name='store_text',
+         kwargs=dict(path='some.1/path.2.con.995')),
 
     dict(url='/.json_storeText/some.1/path.2.pro.1',
-        func=store_text,
-        url_name='store_text',
-        kwargs=dict(path='some.1/path.2.pro.1')),
-    ]
+         func=store_text,
+         url_name='store_text',
+         kwargs=dict(path='some.1/path.2.pro.1')),
+]
 
 invalid_routes = [
     #### loadGraphData
@@ -329,7 +334,8 @@ invalid_routes = [
     dict(url='/.json_storeText/bla/some.1/path.2.neut.5'),
     dict(url='/.json_storeText/some.1/path.2.con.995.77'),
     dict(url='/.json_storeText/some.1/path.2.prow.1'),
-    ]
+]
+
 
 class UrlResolutionTest(TestCase):
     def test_routing(self):
@@ -337,7 +343,7 @@ class UrlResolutionTest(TestCase):
             try:
                 res = resolve(route['url'])
             except Resolver404:
-                self.fail("Could not resolve: '%s'"%route['url'])
+                self.fail("Could not resolve: '%s'" % route['url'])
             self.assertEqual(res.url_name, route['url_name'])
             self.assertEqual(res.func, route['func'])
             if 'kwargs' in route:
@@ -347,6 +353,7 @@ class UrlResolutionTest(TestCase):
         for route in invalid_routes:
             try:
                 res = resolve(route['url'])
-                self.fail("Resolved invalid url: '%s' as %s"%(route['url'],res.url_name))
+                self.fail("Resolved invalid url: '%s' as %s" % (
+                    route['url'], res.url_name))
             except Resolver404:
                 pass

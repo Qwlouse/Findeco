@@ -89,10 +89,11 @@ class StoreTextTest(TestCase):
 
     def test_store_with_argument_and_alternative(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
-        response = self.client.post(self.url, dict(argumentType="con",
-            wikiText="= Argumenttitel =\nDas ist jetzt besser",
-            wikiTextAlternative="= Bla 2 =\nFollopp."))
+        self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(
+            self.url, dict(argumentType="con",
+                           wikiText="= Argumenttitel =\nDas ist jetzt besser",
+                           wikiTextAlternative="= Bla 2 =\nFollopp."))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             json.loads(response.content)['storeTextResponse']['path'], "Slot.2")
@@ -116,9 +117,10 @@ class StoreTextTest(TestCase):
 
     def test_store_with_argumente(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
-        response = self.client.post(self.url, dict(argumentType="con",
-            wikiText="= Argumenttitel =\nDas ist jetzt besser"))
+        self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
+        response = self.client.post(
+            self.url, dict(argumentType="con",
+                           wikiText="= Argumenttitel =\nDas ist jetzt besser"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             json.loads(response.content)['storeTextResponse']['path'],

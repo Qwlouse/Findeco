@@ -30,6 +30,7 @@ from django.test import TestCase
 
 from ..paths import pathMatcher, parse_path, parse_suffix
 
+
 class PathRegExTest(TestCase):
     def test_matches_valid_paths(self):
         valid_paths = [
@@ -44,7 +45,7 @@ class PathRegExTest(TestCase):
             "Bildung.1/Einleitung.3/foo.7/first.1/second.2/third.3/fourth",
             "JustTwentyCharacters",
             "JustTwentyCharacters.20",
-            "JustTwentyCharacters.20/JustTwentyCharacters.20/JustTwentyCharacters.20/",
+            "JustTwentyCharacters.20/JustTwentyCharacters.20/",
             "Hy-phens.3/Under_scores.4/Numb3rs.1",
             "A1234.4321/B123",
             "longID.1234567890/is_ok",
@@ -82,11 +83,10 @@ class PathRegExTest(TestCase):
             "path.4/with.2/argument.2.con/inbetween",
             "path.4/with.2/argument.2.pro.2/inbetween",
             "path.4/with.2/argument.2.neut.7/inbetween",
-            "path.4/with.2/argument.2.con.6/inbetween",
-            ]
+            "path.4/with.2/argument.2.con.6/inbetween"]
         for ip in invalid_paths:
             m = pathMatcher.match(ip)
-            if m :
+            if m:
                 self.assertNotEqual(m.group(), ip)
 
     def test_parse_suffix(self):
@@ -127,9 +127,9 @@ class PathRegExTest(TestCase):
             ("Bildung.2", [('Bildung', 2)], {}),
             ("Bildung.8/", [('Bildung', 8)], {}),
             ("Bildung.6/Einleitung", [('Bildung', 6)], {'slot':'Einleitung'}),
-            ("Bildung.7/Einleitung.4", [('Bildung', 7),('Einleitung', 4)], {}),
+            ("Bildung.7/Einleitung.4", [('Bildung', 7), ('Einleitung', 4)], {}),
             ("Bildung.1/Einleitung.3/foo.7",
-                [('Bildung', 1),('Einleitung', 3), ('foo', 7)],
+                [('Bildung', 1), ('Einleitung', 3), ('foo', 7)],
                 {}),
             ("path.4/with.2/argument.2.pro",
                 [('path', 4), ('with', 2), ('argument', 2)],
@@ -148,4 +148,3 @@ class PathRegExTest(TestCase):
             n, l = parse_path(path)
             self.assertEqual(nodes, n)
             self.assertEqual(last, l)
-

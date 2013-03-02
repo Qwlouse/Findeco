@@ -40,8 +40,10 @@ views = [('load_index', dict(path='')),
          ('load_graph_data', dict(graph_data_type='default', path='')),
          ('load_graph_data', dict(graph_data_type='full', path='')),
          ('load_graph_data', dict(graph_data_type='withSpam', path='')),
-         ('load_microblogging', dict(path='', select_id=0, microblogging_load_type='newer')),
-         ('load_microblogging', dict(path='', select_id=0, microblogging_load_type='older')),
+         ('load_microblogging', dict(path='', select_id=0,
+                                     microblogging_load_type='newer')),
+         ('load_microblogging', dict(path='', select_id=0,
+                                     microblogging_load_type='older')),
          ('load_text', dict(path='')),
          ('load_user_info', dict(name='admin')),
          ('logout', dict()),
@@ -51,14 +53,14 @@ views = [('load_index', dict(path='')),
          ('unfollow_node', dict(path='')),
          ('store_microblog_post', dict(path='')),
          ('store_settings', dict()),
-         ('store_text', dict(path=''))
-]
+         ('store_text', dict(path=''))]
 
 ################# example paths ################################################
 structure_node_paths = ['', 'foo.1', 'foo.1/bar.2']
 slot_paths = ['foo', 'foo.1/bar']
 argument_category_paths = ['foo.1.pro', 'foo.1/bar.2.con', 'foo.1/bar.2.neut']
 argument_paths = ['foo.1.pro.3', 'foo.1/bar.2.con.4', 'foo.1/bar.2.neut.5']
+
 
 ################# Tests ########################################################
 class ViewTest(TestCase):
@@ -79,28 +81,34 @@ class ViewTest(TestCase):
 
     def test_load_index_response_is_valid(self):
         for p in structure_node_paths:
-            response = self.client.get(reverse('load_index', kwargs=dict(path=p)))
+            response = self.client.get(
+                reverse('load_index', kwargs=dict(path=p)))
             validate_response(response.content, 'load_index')
 
     def test_load_graph_data_response_is_valid(self):
         paths = slot_paths + argument_category_paths
         graph_types = ['default', 'full', 'withSpam']
         for p, t in itertools.product(paths, graph_types):
-            response = self.client.get(reverse('load_graph_data',
-                kwargs=dict(path=p, graph_data_type=t)))
+            response = self.client.get(
+                reverse('load_graph_data',
+                        kwargs=dict(path=p, graph_data_type=t)))
             validate_response(response.content, 'load_graph_data')
 
     def test_load_microblogging_response_is_valid(self):
         paths = structure_node_paths + argument_paths
         load_type = ['newer', 'older']
         for p, t in itertools.product(paths, load_type):
-            result = self.client.get(reverse('load_microblogging',
-                kwargs=dict(path=p, microblogging_load_type=t, select_id=1)))
+            result = self.client.get(
+                reverse('load_microblogging',
+                        kwargs=dict(path=p,
+                                    microblogging_load_type=t,
+                                    select_id=1)))
             validate_response(result.content, 'load_microblogging')
 
     def test_load_text_response_is_valid(self):
         for p in structure_node_paths + slot_paths + argument_paths:
-            response = self.client.get(reverse('load_text', kwargs=dict(path=p)))
+            response = self.client.get(
+                reverse('load_text', kwargs=dict(path=p)))
             validate_response(response.content, 'load_text')
 
     def test_mark_node_response_is_valid(self):
@@ -113,7 +121,8 @@ class ViewTest(TestCase):
     def test_load_user_info_response_is_valid(self):
         usernames = ['admin', 'fred']
         for u in usernames:
-            response = self.client.get(reverse('load_user_info', kwargs=dict(name=u)))
+            response = self.client.get(
+                reverse('load_user_info', kwargs=dict(name=u)))
             validate_response(response.content, 'load_user_info')
 
     def test_load_user_settings_response_is_valid(self):

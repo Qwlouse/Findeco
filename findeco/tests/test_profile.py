@@ -30,6 +30,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from ..models import UserProfile
 
+
 class UserProfileTest(TestCase):
     def test_fresh_user_has_profile(self):
         u = User.objects.create_user('__test_user1', 'user@mail.de', 'password')

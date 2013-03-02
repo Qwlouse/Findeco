@@ -29,7 +29,9 @@ import json
 from findeco.api_validation import storeSettingsResponseValidator
 
 from node_storage.factory import create_user
-from ..api_validation import errorResponseValidator, loadUserInfoResponseValidator, loadUserSettingsResponseValidator
+from ..api_validation import errorResponseValidator
+from ..api_validation import loadUserInfoResponseValidator
+from ..api_validation import loadUserSettingsResponseValidator
 from ..view_helpers import create_user_info, create_user_settings
 
 
@@ -42,18 +44,23 @@ class LoadUserInfoTest(TestCase):
 
     def test_with_valid_username_returns_correct_user_info(self):
         for u in self.users:
-            response = self.client.get(reverse('load_user_info', kwargs=dict(name=u.username)))
+            response = self.client.get(
+                reverse('load_user_info', kwargs=dict(name=u.username)))
             parsed = json.loads(response.content)
             self.assertTrue(loadUserInfoResponseValidator.validate(parsed))
             user_info = create_user_info(u)
-            self.assertEqual(parsed['loadUserInfoResponse']['userInfo'], user_info)
+            self.assertEqual(parsed['loadUserInfoResponse']['userInfo'],
+                             user_info)
 
     def test_with_invalid_username_returns_error_response(self):
         for n in ['hannes', 'harbart', 'nieh']:
-            response = self.client.get(reverse('load_user_info', kwargs=dict(name=n)))
+            response = self.client.get(
+                reverse('load_user_info', kwargs=dict(name=n)))
             parsed = json.loads(response.content)
             self.assertTrue(errorResponseValidator.validate(parsed))
-            self.assertEqual(parsed['errorResponse']['errorTitle'], ugettext("UnknownUser"))
+            self.assertEqual(parsed['errorResponse']['errorTitle'],
+                             ugettext("UnknownUser"))
+
 
 class LoadUserSettingsTest(TestCase):
     def setUp(self):
@@ -64,74 +71,88 @@ class LoadUserSettingsTest(TestCase):
 
     def test_response_validates(self):
         for u in self.users:
-            self.assertTrue(self.client.login(username=u.username, password='1234'))
+            self.assertTrue(
+                self.client.login(username=u.username, password='1234'))
             response = self.client.get(reverse('load_user_settings'))
             parsed = json.loads(response.content)
             self.assertTrue(loadUserSettingsResponseValidator.validate(parsed))
 
     def test_returns_correct_user_info_for_logged_in_user(self):
         for u in self.users:
-            self.assertTrue(self.client.login(username=u.username, password='1234'))
+            self.assertTrue(
+                self.client.login(username=u.username, password='1234'))
             response = self.client.get(reverse('load_user_settings'))
             parsed = json.loads(response.content)
-            self.assertEqual(parsed['loadUserSettingsResponse']['userInfo'], create_user_info(u))
+            self.assertEqual(parsed['loadUserSettingsResponse']['userInfo'],
+                             create_user_info(u))
 
     def test_returns_correct_user_settings_for_logged_in_user(self):
         for u in self.users:
-            self.assertTrue(self.client.login(username=u.username, password='1234'))
+            self.assertTrue(
+                self.client.login(username=u.username, password='1234'))
             response = self.client.get(reverse('load_user_settings'))
             parsed = json.loads(response.content)
-            self.assertEqual(parsed['loadUserSettingsResponse']['userSettings'], create_user_settings(u))
+            self.assertEqual(parsed['loadUserSettingsResponse']['userSettings'],
+                             create_user_settings(u))
 
     def test_not_logged_in_returns_error_response(self):
-        for u in self.users:
-            response = self.client.get(reverse('load_user_settings'))
-            parsed = json.loads(response.content)
-            self.assertTrue(errorResponseValidator.validate(parsed))
-            self.assertEqual(parsed['errorResponse']['errorTitle'], ugettext("NotAuthenticated"))
+        response = self.client.get(reverse('load_user_settings'))
+        parsed = json.loads(response.content)
+        self.assertTrue(errorResponseValidator.validate(parsed))
+        self.assertEqual(parsed['errorResponse']['errorTitle'],
+                         ugettext("NotAuthenticated"))
 
 
 class StoreSettingsTest(TestCase):
     def setUp(self):
-        self.hans = create_user('hans', description='noneSoFar', password="1234")
+        self.hans = create_user('hans', description='noneSoFar',
+                                password="1234")
 
     def test_response_validates(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'), dict(description="", displayName='hans'))
+        response = self.client.post(reverse('store_settings'),
+                                    dict(description="", displayName='hans'))
         parsed = json.loads(response.content)
         self.assertTrue(storeSettingsResponseValidator.validate(parsed))
 
     def test_missing_description_parameter_returns_error(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'), dict(displayName='hans'))
+        response = self.client.post(reverse('store_settings'),
+                                    dict(displayName='hans'))
         parsed = json.loads(response.content)
         self.assertTrue(errorResponseValidator.validate(parsed))
-        self.assertEqual(parsed['errorResponse']['errorTitle'], ugettext("MissingPOSTParameter"))
+        self.assertEqual(parsed['errorResponse']['errorTitle'],
+                         ugettext("MissingPOSTParameter"))
 
     def test_missing_displayname_parameter_returns_error(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'), dict(description=''))
+        response = self.client.post(reverse('store_settings'),
+                                    dict(description=''))
         parsed = json.loads(response.content)
         self.assertTrue(errorResponseValidator.validate(parsed))
-        self.assertEqual(parsed['errorResponse']['errorTitle'], ugettext("MissingPOSTParameter"))
+        self.assertEqual(parsed['errorResponse']['errorTitle'],
+                         ugettext("MissingPOSTParameter"))
 
     def test_unavailable_displayname_returns_error(self):
         self.hugo = create_user('hugo', description='notHulk', password="1234")
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'), dict(displayName='hugo', description=''))
+        response = self.client.post(reverse('store_settings'),
+                                    dict(displayName='hugo', description=''))
         parsed = json.loads(response.content)
         self.assertTrue(errorResponseValidator.validate(parsed))
-        self.assertEqual(parsed['errorResponse']['errorTitle'], ugettext("NameNotAvailable"))
+        self.assertEqual(parsed['errorResponse']['errorTitle'],
+                         ugettext("NameNotAvailable"))
 
     def test_change_description_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'), dict(description="foo", displayName='hans'))
-        hans = User.objects.get(id =self.hans.id)
+        _ = self.client.post(reverse('store_settings'),
+                             dict(description="foo", displayName='hans'))
+        hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.profile.description, "foo")
 
     def test_change_username_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'), dict(description="foo", displayName='hans2'))
-        hans = User.objects.get(id =self.hans.id)
+        _ = self.client.post(reverse('store_settings'),
+                             dict(description="foo", displayName='hans2'))
+        hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.username, "hans2")
-
