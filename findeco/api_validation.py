@@ -50,6 +50,7 @@ graphDataNode_schema = {
     'path': string,
     'authorGroup': authorGroup_schema,
     'follows': integer,
+    'spamFlags': integer,
     'unFollows': integer,
     'newFollows': integer,
     'originGroup': originGroup_schema
@@ -71,6 +72,7 @@ textNode_schema = {
     'wikiText': string,
     'path': string,
     'isFollowing': integer,
+    'isFlagging': integer,
     'authorGroup': authorGroup_schema
 }
 loadGraphDataResponse_schema = {
@@ -89,6 +91,7 @@ loadTextResponse_schema = {
     'loadTextResponse': {
         'paragraphs': [textNode_schema],
         'isFollowing': integer,
+        'isFlagging': integer
     }
 }
 loadUserInfoResponse_schema = {
