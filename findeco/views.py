@@ -140,10 +140,7 @@ def load_text(request, path):
 
 @ViewErrorHandling
 def load_user_info(request, name):
-    try:
-        user = User.objects.get(username=name)
-    except User.DoesNotExist:
-        raise UnknownUser(name)
+    user = assert_active_user(name)
     user_info = create_user_info(user)
     return json_response({
         'loadUserInfoResponse': {
@@ -416,11 +413,7 @@ def account_reset_request_by_name(request):
         raise MissingPOSTParameter('displayName')
     displayName = request.POST['displayName']
 
-    #Check for activated User with displayname
-    if not ((User.objects.filter(username=displayName).filter(
-            is_active=True).filter(
-            profile__activationKey__exact='').count()) == 1):
-        raise UnknownUser(displayName)
+    assert_active_user(displayName)
 
     user = User.objects.get(username=displayName)
     activationKey = random.getrandbits(256)
@@ -441,12 +434,7 @@ def account_reset_request_by_mail(request):
         raise MissingPOSTParameter('emailAddress')
     emailAddress = request.POST['emailAddress']
 
-    #Check for activated User with displayname
-    if not ((User.objects.filter(email=emailAddress).filter(
-            is_active=True).filter(
-            profile__activationKey__exact='').count()) == 1):
-        raise UnknownUser(emailAddress)
-
+    assert_active_user(emailAddress)
     user = User.objects.get(email=emailAddress)
     activationKey = random.getrandbits(256)
     user.profile.activationKey = activationKey

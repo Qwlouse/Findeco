@@ -21,7 +21,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, User
 from django.http import HttpResponse
 import functools
 import json
@@ -118,6 +118,22 @@ def assert_node_for_path(path):
 def assert_authentication(request):
     if not request.user.is_authenticated():
         raise NotAuthenticated()
+
+
+def assert_active_user(username=None, email=None):
+    assert username or email
+    if username:
+        users = User.objects.filter(username=username)
+    else:
+        users = User.objects.filter(email=email)
+
+    if not users.count() == 1:
+        raise UnknownUser(username or email)
+    user = users[0]
+    if not user.is_active or user.profile.activationKey != '':
+        raise UnknownUser(username or email)
+
+    return user
 
 
 def assert_permissions(request, permissions):
