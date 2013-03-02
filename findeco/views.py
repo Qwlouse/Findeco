@@ -33,7 +33,6 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse
-from django.utils.translation import ugettext
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.conf import settings
@@ -45,13 +44,7 @@ from findeco.view_helpers import create_graph_data_node_for_structure_node
 import node_storage as backend
 from node_storage.factory import create_user
 from .paths import parse_suffix
-from .view_helpers import ValidPaths, json_error_response, json_response
-from .view_helpers import store_structure_node, store_argument, store_derivate
-from .view_helpers import create_index_node_for_slot, create_user_info
-from .view_helpers import create_user_settings, create_index_node_for_argument
-from .view_helpers import traverse_derivates_subset, traverse_derivates
-from .view_helpers import build_text, get_is_following
-#from django.views.decorators.csrf import csrf_exempt
+from .view_helpers import *
 
 
 @ensure_csrf_cookie
@@ -60,30 +53,34 @@ def home(request, path):
         return HttpResponse(index_html_file.read(), mimetype='text/html')
 
 
+
 @ValidPaths("StructureNode")
+@ViewErrorHandling
 def load_index(request, path):
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('UnknownNode', path)
+        raise UnknownNode(path)
     slot_list = backend.get_ordered_children_for(node)
     index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
     return json_response({'loadIndexResponse': index_nodes})
 
 
 @ValidPaths("StructureNode")
+@ViewErrorHandling
 def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     try:
         node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
-        return json_error_response('UnknownNode', path)
+        raise UnknownNode(path)
     data = [create_index_node_for_argument(a, node) for a in
             node.arguments.order_by('index')]
     return json_response({'loadIndexResponse': data})
 
 
 @ValidPaths("StructureNode")
+@ViewErrorHandling
 def load_graph_data(request, path, graph_data_type):
     if not path.strip('/'):  # root node!
         nodes = [backend.get_root_node()]
@@ -93,7 +90,7 @@ def load_graph_data(request, path, graph_data_type):
         try:
             slot = backend.get_node_for_path(slot_path)
         except backend.IllegalPath:
-            return json_error_response('UnknownNode', path)
+            raise UnknownNode(path)
         nodes = backend.get_ordered_children_for(slot)
         sources = Q(derivates__in=nodes)
         derivates = Q(sources__in=nodes)
@@ -110,6 +107,7 @@ def load_graph_data(request, path, graph_data_type):
 
 
 @ValidPaths("StructureNode", "Argument")
+@ViewErrorHandling
 def load_text(request, path):
     try:
         # try to load from cache
@@ -119,7 +117,7 @@ def load_text(request, path):
         try:
             node = backend.get_node_for_path(path)
         except backend.IllegalPath:
-            return json_error_response('UnknownNode', path)
+            raise UnknownNode(path)
         paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
                        'path': path,
                        '_node_id': node.id,
@@ -152,11 +150,12 @@ def load_text(request, path):
             'isFlagging': paragraphs[0]['isFlagging']}})
 
 
+@ViewErrorHandling
 def load_user_info(request, name):
     try:
         user = User.objects.get(username=name)
     except User.DoesNotExist:
-        return json_error_response('UnknownUser', name)
+        raise UnknownUser(name)
     user_info = create_user_info(user)
     return json_response({
         'loadUserInfoResponse': {
@@ -164,9 +163,10 @@ def load_user_info(request, name):
         }})
 
 
+@ViewErrorHandling
 def load_user_settings(request):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated')
+        raise NotAuthenticated()
     user = User.objects.get(id=request.user.id)
     return json_response({'loadUserSettingsResponse': {
         'userInfo': create_user_info(user),
@@ -174,6 +174,7 @@ def load_user_settings(request):
     }})
 
 
+@ViewErrorHandling
 def login(request):
     username = request.POST['username']
     password = request.POST['password']
@@ -187,9 +188,9 @@ def login(request):
                     'userSettings': create_user_settings(user)
                 }})
         else:
-            return json_error_response('DisabledAccount', username)
+            raise DisabledAccount(username)
     else:
-        return json_error_response('InvalidLogin')
+        raise InvalidLogin()
 
 
 def logout(request):
@@ -206,16 +207,17 @@ def logout(request):
 
 
 @ValidPaths("StructureNode", "Argument")
+@ViewErrorHandling
 def flag_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated')
+        raise NotAuthenticated()
     if not request.user.has_perm('node_storage.add_spamflag'):
-        return json_error_response('PermissionDenied')
+        raise PermissionDenied()
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('UnknownNode', path)
+        return UnknownNode(path)
 
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 0:
@@ -228,16 +230,17 @@ def flag_node(request, path):
 
 
 @ValidPaths("StructureNode", "Argument")
+@ViewErrorHandling
 def unflag_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated')
+        raise NotAuthenticated()
     if not request.user.has_perm('node_storage.delete_spamflag'):
-        return json_error_response('PermissionDenied', path)
+        raise PermissionDenied()
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('UnknownNode', path)
+        return UnknownNode(path)
 
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 1:
@@ -247,18 +250,19 @@ def unflag_node(request, path):
 
 
 @ValidPaths("StructureNode", "Argument")
+@ViewErrorHandling
 def follow_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated')
+        raise NotAuthenticated()
     if not request.user.has_perm(
             'node_storage.add_vote') or not request.user.has_perm(
             'node_storage.change_vote'):
-        return json_error_response('PermissionDenied')
+        raise PermissionDenied()
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('UnknownNode', path)
+        raise UnknownNode(path)
 
     marks = node.votes.filter(user=user.id).all()
     if marks.count() >= 1:
@@ -292,16 +296,17 @@ def follow_node(request, path):
 
 
 @ValidPaths("StructureNode", "Argument")
+@ViewErrorHandling
 def unfollow_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated')
+        raise NotAuthenticated()
     if not request.user.has_perm('node_storage.delete_vote'):
-        return json_error_response('PermissionDenied', path)
+        raise PermissionDenied(path)
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('UnknownNode', path)
+        raise UnknownNode(path)
 
     marks = node.votes.filter(user=user.id).all()
     if marks.count() > 0:
@@ -319,22 +324,23 @@ def unfollow_node(request, path):
     return json_response({'markNodeResponse': {}})
 
 
+@ViewErrorHandling
 def store_settings(request):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated')
+        raise NotAuthenticated()
     user = User.objects.get(id=request.user.id)
 
     if not 'description' in request.POST:
-        return json_error_response('MissingPOSTParameter', 'description')
+        raise MissingPOSTParameter('description')
     user.profile.description = request.POST['description']
     user.profile.save()
     if not 'displayName' in request.POST:
-        return json_error_response('MissingPOSTParameter', 'displayName')
+        raise MissingPOSTParameter('displayName')
     display_name = request.POST['displayName']
     if display_name != user.username:
         is_available = User.objects.filter(username=display_name).count() == 0
         if not is_available:
-            return json_error_response('UsernameNotAvailable', display_name)
+            raise UsernameNotAvailable(display_name)
         else:
             user.username = display_name
     user.save()
@@ -343,9 +349,10 @@ def store_settings(request):
 
 
 @ValidPaths("StructureNode")
+@ViewErrorHandling
 def store_text(request, path):
     if not request.user.is_authenticated():
-        return json_error_response('NotAuthenticated')
+        raise NotAuthenticated()
     if not request.user.has_perm('node_storage.add_node') or \
             not request.user.has_perm('node_storage.add_argument') or \
             not request.user.has_perm('node_storage.add_vote') or \
@@ -353,15 +360,15 @@ def store_text(request, path):
             not request.user.has_perm('node_storage.add_derivation') or \
             not request.user.has_perm('node_storage.change_vote') or \
             not request.user.has_perm('node_storage.add_text'):
-        return json_error_response('PermissionDenied')
+        raise PermissionDenied()
     user = request.user
 
     if not 'wikiText' in request.POST:
-        return json_error_response('MissingPOSTParameter', 'wikiText')
+        raise MissingPOSTParameter('wikiText')
 
     if not 'argumentType' in request.POST:
         if 'wikiTextAlternative' in request.POST:
-            return json_error_response('MissingPOSTParameter', 'argumentType')
+            raise MissingPOSTParameter('argumentType')
             # store new structure node
         _, new_path = store_structure_node(path, request.POST['wikiText'], user)
 
@@ -381,14 +388,14 @@ def store_text(request, path):
     return json_response({'storeTextResponse': {'path': new_path}})
 
 
-#@csrf_exempt
+@ViewErrorHandling
 def account_registration(request):
     if not 'displayName' in request.POST or not request.POST['displayName']:
-        return json_error_response('MissingPOSTParameter', 'displayName')
+        raise MissingPOSTParameter('displayName')
     if not 'password' in request.POST or not request.POST['password']:
-        return json_error_response('MissingPOSTParameter', 'password')
+        raise MissingPOSTParameter('password')
     if not 'emailAddress' in request.POST or not request.POST['emailAddress']:
-        return json_error_response('MissingPOSTParameter', 'emailAddress')
+        raise MissingPOSTParameter('emailAddress')
 
     emailAddress = request.POST['emailAddress']
     password = request.POST['password']
@@ -396,15 +403,15 @@ def account_registration(request):
     try:
         validate_email(emailAddress)
     except ValidationError:
-        return json_error_response('InvalidEmailAddress', emailAddress)
+        raise InvalidEmailAddress(emailAddress)
 
     #Check for already existing Username
     if User.objects.filter(username=displayName).count():
-        return json_error_response('UsernameNotAvailable', displayName)
+        raise UsernameNotAvailable(displayName)
 
     #Check for already existing Mail 
     if User.objects.filter(email=emailAddress).count():
-        return json_error_response('EmailAddressNotAvailiable', emailAddress)
+        raise EmailAddressNotAvailiable(emailAddress)
     user = create_user(displayName,
                        description="",
                        mail=emailAddress,
@@ -422,17 +429,17 @@ def account_registration(request):
     return json_response({'accountRegistrationResponse': {}})
 
 
-#@csrf_exempt
+@ViewErrorHandling
 def account_activation(request):
     if not 'activationKey' in request.POST or not request.POST['activationKey']:
-        return json_error_response("MissingPOSTParameter", 'activationKey')
+        raise MissingPOSTParameter('activationKey')
     activationKey = request.POST['activationKey']
 
     #Check for already existing Username
     if not ((User.objects.filter(
             profile__activationKey__exact=activationKey).filter(
             is_active=False).count()) == 1):
-        return json_error_response('InvalidActivationKey')
+        raise InvalidActivationKey()
     else:
         user = User.objects.get(profile__activationKey__exact=activationKey)
 
@@ -442,17 +449,17 @@ def account_activation(request):
     return json_response({'accountActivationResponse': {}})
 
 
-#@csrf_exempt
+@ViewErrorHandling
 def account_reset_request_by_name(request):
     if not 'displayName' in request.POST or not request.POST['displayName']:
-        return json_error_response('MissingPOSTParameter', 'displayName')
+        raise MissingPOSTParameter('displayName')
     displayName = request.POST['displayName']
 
     #Check for activated User with displayname
     if not ((User.objects.filter(username=displayName).filter(
             is_active=True).filter(
             profile__activationKey__exact='').count()) == 1):
-        return json_error_response('UnknownUser', displayName)
+        raise UnknownUser(displayName)
 
     user = User.objects.get(username=displayName)
     activationKey = random.getrandbits(256)
@@ -467,17 +474,17 @@ def account_reset_request_by_name(request):
     return json_response({'accountResetRequestByNameResponse': {}})
 
 
-#@csrf_exempt
+@ViewErrorHandling
 def account_reset_request_by_mail(request):
     if not 'emailAddress' in request.POST or not request.POST['emailAddress']:
-        return json_error_response('MissingPOSTParameter', 'emailAddress')
+        raise MissingPOSTParameter('emailAddress')
     emailAddress = request.POST['emailAddress']
 
     #Check for activated User with displayname
     if not ((User.objects.filter(email=emailAddress).filter(
             is_active=True).filter(
             profile__activationKey__exact='').count()) == 1):
-        return json_error_response('UnknownUser', emailAddress)
+        raise UnknownUser(emailAddress)
 
     user = User.objects.get(email=emailAddress)
     activationKey = random.getrandbits(256)
@@ -492,17 +499,17 @@ def account_reset_request_by_mail(request):
     return json_response({'accountResetRequestByMailResponse': {}})
 
 
-#@csrf_exempt
+@ViewErrorHandling
 def account_reset_confirmation(request):
     if not 'activationKey' in request.POST or not request.POST['activationKey']:
-        return json_error_response('MissingPOSTParameter', 'activationKey')
+        raise MissingPOSTParameter('activationKey')
     activationKey = request.POST['activationKey']
 
     #Check for already existing Username
     if not ((User.objects.filter(
             profile__activationKey__exact=activationKey).filter(
             is_active=True).count()) == 1):
-        return json_error_response('InvalidActivationKey')
+        raise InvalidActivationKey()
     else:
         user = User.objects.get(profile__activationKey__exact=activationKey)
         user.profile.activationKey = ''
@@ -516,5 +523,6 @@ def account_reset_confirmation(request):
     return json_response({'accountResetConfirmationResponse': {}})
 
 
+@ViewErrorHandling
 def error_404(request):
-    return json_error_response('InvalidURL')
+    raise InvalidURL()

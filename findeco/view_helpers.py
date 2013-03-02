@@ -73,6 +73,39 @@ def ValidPaths(*allowed_path_types):
     return wrapper
 
 
+class ViewError(Exception):
+    def __init__(self, identifier, *args):
+        super(Exception, self).__init__(identifier)
+        self.identifier = identifier
+        self.additional_info = args
+
+
+UnknownNode = functools.partial(ViewError, 'UnknownNode')
+UnknownUser = functools.partial(ViewError, 'UnknownUser')
+UnknownEmailAddress = functools.partial(ViewError, 'UnknownEmailAddress')
+MissingPOSTParameter = functools.partial(ViewError, 'MissingPOSTParameter')
+IllegalPath = functools.partial(ViewError, 'IllegalPath')
+NotAuthenticated = functools.partial(ViewError, 'NotAuthenticated')
+PermissionDenied = functools.partial(ViewError, 'PermissionDenied')
+DisabledAccount = functools.partial(ViewError, 'DisabledAccount')
+UsernameNotAvailable = functools.partial(ViewError, 'UsernameNotAvailable')
+EmailAddressNotAvailiable = functools.partial(ViewError,
+                                              'EmailAddressNotAvailiable')
+InvalidLogin = functools.partial(ViewError, 'InvalidLogin')
+InvalidEmailAddress = functools.partial(ViewError, 'InvalidEmailAddress')
+InvalidActivationKey = functools.partial(ViewError, 'InvalidActivationKey')
+InvalidURL = functools.partial(ViewError, 'InvalidURL')
+
+
+def ViewErrorHandling(f):
+    @functools.wraps(f)
+    def wrapped(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except ViewError, e:
+            return json_error_response(e.identifier, *e.additional_info)
+    return wrapped
+
 def create_user_info(user):
     user_info = dict(
         displayName=user.username,
