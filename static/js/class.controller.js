@@ -74,6 +74,9 @@ ClassController.prototype.position = '/';
 
 ClassController.prototype.stateHandler = function(event) {
     // TODO: Mockup legacy, remove or comment out after testing is done.
+    
+
+     
     if ( parseInt(document.location.hash.substring(1)) >= 0 || parseInt(document.location.hash.substring(1)) <= 100 ) {
         return;
     }
@@ -85,7 +88,20 @@ ClassController.prototype.stateHandler = function(event) {
         document.location.hash = '/' + Controller.position;
         return;
     }
-    // console.log('ClassController','stateHandler',event,document.location.hash);
+    
+    
+    if (document.location.hash.indexOf('#/activate/') == 0){
+        Login.submitActivation(document.location.hash.substring(11));
+        Login.showLoginForm();
+         document.location.hash ='#/';
+         Controller.position='/';
+    }
+    if (document.location.hash.indexOf('#/confirm/') == 0){
+        Login.submitRecovery(document.location.hash.substring(10));    
+        Login.showLoginForm();
+        document.location.hash ='#/';
+        Controller.position='/';
+    }
     Microblogging.load(Controller.position);
     Navigation.load(Controller.position);
     Main.load(Controller.position);

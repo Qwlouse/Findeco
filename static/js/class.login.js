@@ -53,7 +53,7 @@ ClassLogin.prototype.handleRequest = function(data) {
         alert(data['errorResponse']['errorTitle'] + "\n" + data['errorResponse']['errorMessage']);
         return false;
     }
-    alert (JSON.stringify(data));
+    //alert (JSON.stringify(data));
     if ( typeof data['loginResponse'] !=  'undefined') {
     Login.user = new ClassUser();
     Login.show();
@@ -61,10 +61,20 @@ ClassLogin.prototype.handleRequest = function(data) {
         .hide()
         .empty();
     }
-    if ( typeof data['laccountRegistrationResponse'] !=  'undefined') {
+    if ( typeof data['accountRegistrationResponse'] !=  'undefined') {
     	alert('Die Registrierung war erfolgreich!! \n Du erhälst in den nächsten Minuten eine Aktivierungsemail.');
     }
-    
+    if ( typeof data['accountActivationResponse'] !=  'undefined') {
+    	alert('Dein Account wurde gerade freigeschaltet. Du kannst dich jetzt einloggen');
+    }
+    if ( (typeof data['accountResetRequestByNameResponse'] !=  'undefined')
+    	||(typeof data['accountResetRequestByMailResponse'] !=  'undefined')
+    ) {
+    	alert('Wir haben dir eine Wiederherstellungsmail an deine Emailadresse gesendet.');
+    }
+    if ( typeof data['accountResetConfirmationResponse'] !=  'undefined') {
+    	alert('Die Wiederherstellung war erfolgreich. Wir haben dir ein neues Passwort zugesendet.');
+    }    
         
 }
 
@@ -146,7 +156,7 @@ ClassLogin.prototype.showRegisterForm = function() {
         .appendTo(table);
     td = $('<td colspan="2">')
         .appendTo(tr);
-    Login.form['submit'] = $('<div id="inputsubmit" class="button">Einloggen</div>')
+    Login.form['submit'] = $('<div id="inputsubmit" class="button">Registrieren</div>')
         .attr('style','margin-bottom: 10px;')
         .click(Login.submit)
         .appendTo(td);
@@ -154,6 +164,7 @@ ClassLogin.prototype.showRegisterForm = function() {
         .attr('style','margin-bottom: 10px;')
         .click(Login.close)
         .appendTo(td);
+   
 }
 
 ClassLogin.prototype.showLoginForm = function() {
@@ -186,12 +197,81 @@ ClassLogin.prototype.showLoginForm = function() {
         .attr('style','margin-bottom: 10px;')
         .click(Login.close)
         .appendTo(td);
+     $('<br><div class="button">Passwort vergessen? </div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.showRecoveryFormByName)
+        .appendTo(td);
+};
+ClassLogin.prototype.showRecoveryFormByName = function() {
+    Login.overlay = $('#overlay');
+    
+    Login.container = $('<div>')
+        .addClass('contributeContainer')
+        .click(function () {return false;})
+        .appendTo(Login.overlay);
+    
+    var table = $('<table>')
+        .attr('style','margin: auto; width: 200px;')
+        .appendTo(Login.container);
+        
+    Login.form = {'type':'recoverByName'};
+    Login.form['name'] = Login.createTableFormField('Benutzername:','<input type="text">',table,Login.checkKey);
+    tr = $('<tr>')
+        .appendTo(table);
+    td = $('<td colspan="2">')
+        .appendTo(tr);
+    Login.form['submit'] = $('<div id="inputsubmit" class="button">Wiederherstellung mit Benutzername</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.submit)
+        .appendTo(td);
+    Login.form['cancel'] = $('<div id="cancelbutton" class="button">Abbrechen</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.close)
+        .appendTo(td);
+    $('<br><div class="button">Nutzername Vergessen?</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.showRecoveryFormByMail)
+        .appendTo(td);
+
+};
+ClassLogin.prototype.showRecoveryFormByMail = function() {
+    Login.overlay = $('#overlay');
+    
+    Login.container = $('<div>')
+        .addClass('contributeContainer')
+        .click(function () {return false;})
+        .appendTo(Login.overlay);
+    
+    var table = $('<table>')
+        .attr('style','margin: auto; width: 200px;')
+        .appendTo(Login.container);
+    Login.form = {'type':'recoverByMail'};
+    Login.form['mail'] = Login.createTableFormField('Email:','<input type="text">',table,Login.checkKey);
+    tr = $('<tr>')
+        .appendTo(table);
+    td = $('<td colspan="2">')
+        .appendTo(tr);
+    Login.form['submit'] = $('<div id="inputsubmit" class="button">Wiederherstellung mit Emailadresse</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.submit)
+        .appendTo(td);
+    Login.form['cancel'] = $('<div id="cancelbutton" class="button">Abbrechen</div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.close)
+        .appendTo(td);
+    $('<br><div class="button">Doch per Name? </div>')
+        .attr('style','margin-bottom: 10px;')
+        .click(Login.showRecoveryFormByName)
+        .appendTo(td);
+
 };
 
 ClassLogin.prototype.submit = function() {
     switch ( Login.form['type'] ) {
         case 'login': return Login.submitLogin();
         case 'register': return Login.submitRegister();
+        case 'recoverByName': return Login.submitRecoveryByName();
+        case 'recoverByMail': return Login.submitRecoveryByMail();
     }
     return false;
 };
@@ -218,6 +298,51 @@ ClassLogin.prototype.submitLogin = function() {
         }
     });
 }
+
+ClassLogin.prototype.submitRecoveryByMail = function() {
+ 	var tmp = {
+       'emailAddress': Login.form['mail'].val()
+    };
+    if ( tmp['emailAddress'] == '') 
+ 	{
+        alert('Bitte fülle alle Felder aus!');
+        return false;
+    }
+    $.ajax({
+        type: 'POST',
+        url: '.json_accountResetRequestByMail',
+        data: tmp,
+        success: Login.handleRequest,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
+        }
+    });
+ }
+ 
+ClassLogin.prototype.submitRecoveryByName = function() {
+alert('name');
+ 	var tmp = {
+        'displayName': Login.form['name'].val()
+    };
+    if ( tmp['displayName'] == '') 
+ 	{
+        alert('Bitte fülle alle Felder aus!');
+        return false;
+    }
+    $.ajax({
+        type: 'POST',
+        url: '.json_accountResetRequestByName',
+        data: tmp,
+        success: Login.handleRequest,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
+        }
+    });
+ }
+ 
+ 
 
 ClassLogin.prototype.submitRegister = function() {
  	var tmp = {
@@ -247,6 +372,36 @@ ClassLogin.prototype.submitRegister = function() {
             xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
         }
     });
-
-
-}
+ }
+ 
+ 
+ ClassLogin.prototype.submitActivation = function(activationKey) {
+ 	var tmp = {
+        'activationKey': activationKey,
+    };
+    $.ajax({
+        type: 'POST',
+        url: '.json_accountActivation',
+        data: tmp,
+        success: Login.handleRequest,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
+        }
+    });
+ }
+  ClassLogin.prototype.submitRecovery = function(activationKey) {
+ 	var tmp = {
+        'activationKey': activationKey,
+    };
+    $.ajax({
+        type: 'POST',
+        url: '.json_accountResetConfirmation',
+        data: tmp,
+        success: Login.handleRequest,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
+        }
+    });
+ }

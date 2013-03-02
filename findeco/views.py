@@ -561,7 +561,7 @@ def account_reset_request_by_mail(request):
               settings.EMAIL_HOST_USER,
               [user.email])
 
-    return json_response({'accountRestRequestByMailResponse': {}})
+    return json_response({'accountResetRequestByMailResponse': {}})
 
 
 #@csrf_exempt
