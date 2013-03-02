@@ -217,6 +217,15 @@ In return you get a JSON response from the server.
 </tbody></table>
 
 <br>
+<b><a name="ValueSpamFlags">Value::spamFlags</a></b>
+<table><tbody>
+<tr><td>Parametername:</td><td>spamFlags</td></tr>
+<tr><td>Type:</td><td>Integer</td></tr>
+<tr><td>Description:</td><td>The number of spam flags a node has. </td></tr>
+<tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
 <b><a name="ValueFullTitle">Value::fullTitle</a></b>
 <table><tbody>
     <tr><td>Parametername:</td><td>fullTitle</td></tr>
@@ -249,6 +258,15 @@ In return you get a JSON response from the server.
     <tr><td>Parametername:</td><td>isFollowing</td></tr>
     <tr><td>Type:</td><td>Integer</td></tr>
     <tr><td>Description:</td><td>Shows wether the currently logged in user is following a node. 0 for not following, 1 for transitive following (user is following a node above this node), 2 for following.</td></tr>
+    <tr><td>Supported Values:</td><td>Output only.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueIsFlagging">Value::isFlagging</a></b>
+<table><tbody>
+    <tr><td>Parametername:</td><td>isFlagging</td></tr>
+    <tr><td>Type:</td><td>Integer</td></tr>
+    <tr><td>Description:</td><td>Shows wether the currently logged in user is flagging this node as Spam. 0 for not flagging, 1 for flagging.</td></tr>
     <tr><td>Supported Values:</td><td>Output only.</td></tr>
 </tbody></table>
 
@@ -472,6 +490,7 @@ available. </td></tr>
     <tr><td>Content:</td><td><a href="#ValuePath">Value::path</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#JSONauthorGroup">JSON::authorGroup</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueFollows">Value::follows</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueSpamFlags">Value::spamFlags</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueUnFollows">Value::unFollows</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueNewFollows">Value::newFollows</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#JSONoriginGroup">JSON::originGroup</a></td></tr>
@@ -516,6 +535,7 @@ available. </td></tr>
 <table><tbody>
     <tr><td>Content:</td><td><a href="#JSONparagraph">JSON::paragraphs</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueIsFollowing">Value::isFollowing</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueIsFlagging">Value::isFlagging</a></td></tr>
     <tr><td>Example:</td><td>{"loadTextResponse":{"paragraphs":[{"wikiText":"= This is a subsubtopic! =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic.1","isFollowing":1,"authorGroup":["author1","author2"]},{"wikiText":"= This is a second subsubtopic! =\r\nBlablabla.\r\nBlablubblubb.","path":"topic.1\/subtopic.1\/subsubtopic2.1","isFollowing":1,"authorGroup":["author1","author3"]}],"isFollowing":1}}</td></tr>
 </tbody></table>
 
@@ -604,6 +624,7 @@ available. </td></tr>
     <tr><td>Content:</td><td><a href="#ValueWikiText">Value::wikiText</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValuePath">Value::path</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueIsFollowing">Value::isFollowing</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueIsFlagging">Value::isFlagging</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#JSONauthorGroup">JSON::authorGroup</a></td></tr>
 </tbody></table>
 
