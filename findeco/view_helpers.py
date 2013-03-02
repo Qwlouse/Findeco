@@ -120,6 +120,12 @@ def assert_authentication(request):
         raise NotAuthenticated()
 
 
+def assert_permissions(request, permissions):
+    assert isinstance(permissions, list)
+    for p in permissions:
+        if not request.user.has_perm(p):
+            raise PermissionDenied()
+
 
 def create_user_info(user):
     user_info = dict(

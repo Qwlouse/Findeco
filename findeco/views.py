@@ -197,8 +197,7 @@ def logout(request):
 @ViewErrorHandling
 def flag_node(request, path):
     assert_authentication(request)
-    if not request.user.has_perm('node_storage.add_spamflag'):
-        raise PermissionDenied()
+    assert_permissions(request, ['node_storage.add_spamflag'])
     user = request.user
     node = assert_node_for_path(path)
 
@@ -216,8 +215,7 @@ def flag_node(request, path):
 @ViewErrorHandling
 def unflag_node(request, path):
     assert_authentication(request)
-    if not request.user.has_perm('node_storage.delete_spamflag'):
-        raise PermissionDenied()
+    assert_permissions(request, ['node_storage.delete_spamflag'])
     user = request.user
     node = assert_node_for_path(path)
 
@@ -232,10 +230,8 @@ def unflag_node(request, path):
 @ViewErrorHandling
 def follow_node(request, path):
     assert_authentication(request)
-    if not request.user.has_perm(
-            'node_storage.add_vote') or not request.user.has_perm(
-            'node_storage.change_vote'):
-        raise PermissionDenied()
+    assert_permissions(request, ['node_storage.add_vote',
+                                 'node_storage.change_vote'])
     user = request.user
     node = assert_node_for_path(path)
 
@@ -274,8 +270,7 @@ def follow_node(request, path):
 @ViewErrorHandling
 def unfollow_node(request, path):
     assert_authentication(request)
-    if not request.user.has_perm('node_storage.delete_vote'):
-        raise PermissionDenied(path)
+    assert_permissions(request, ['node_storage.delete_vote'])
     user = request.user
     node = assert_node_for_path(path)
 
@@ -322,14 +317,11 @@ def store_settings(request):
 @ViewErrorHandling
 def store_text(request, path):
     assert_authentication(request)
-    if not request.user.has_perm('node_storage.add_node') or \
-            not request.user.has_perm('node_storage.add_argument') or \
-            not request.user.has_perm('node_storage.add_vote') or \
-            not request.user.has_perm('node_storage.add_nodeorder') or \
-            not request.user.has_perm('node_storage.add_derivation') or \
-            not request.user.has_perm('node_storage.change_vote') or \
-            not request.user.has_perm('node_storage.add_text'):
-        raise PermissionDenied()
+    assert_permissions(request,
+                       ['node_storage.add_node', 'node_storage.add_argument',
+                        'node_storage.add_vote', 'node_storage.add_nodeorder',
+                        'node_storage.add_derivation', 'node_storage.add_text',
+                        'node_storage.change_vote'])
     user = request.user
 
     if not 'wikiText' in request.POST:
