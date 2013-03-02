@@ -26,6 +26,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext
 from django.test import TestCase
 import json
+from findeco.tests.helpers import assert_is_error_response
 
 from node_storage import get_root_node
 from node_storage.factory import create_slot, create_user, create_textNode
@@ -203,7 +204,4 @@ class LoadTextTest(TestCase):
         for p in illegal_paths:
             response = self.client.get(
                 reverse('load_text', kwargs=dict(path=p)))
-            parsed = json.loads(response.content)
-            self.assertTrue(errorResponseValidator.validate(parsed))
-            self.assertEqual(parsed['errorResponse']['errorTitle'],
-                             ugettext("IllegalPath"))
+            assert_is_error_response(response, "IllegalPath")

@@ -39,10 +39,10 @@ def json_response(data):
     return HttpResponse(json.dumps(data), mimetype='application/json')
 
 
-def json_error_response(title, message):
+def json_error_response(identifier, *args):
     response = {'errorResponse': {
-        'errorTitle': title,
-        'errorMessage': message,
+        'errorID': identifier,
+        'additionalInfo': args,
     }}
     return json_response(response)
 

@@ -27,6 +27,7 @@ from django.utils.translation import ugettext
 from django.test import TestCase
 import json
 from findeco.api_validation import storeSettingsResponseValidator
+from findeco.tests.helpers import assert_is_error_response
 
 from node_storage.factory import create_user
 from ..api_validation import errorResponseValidator
@@ -56,10 +57,7 @@ class LoadUserInfoTest(TestCase):
         for n in ['hannes', 'harbart', 'nieh']:
             response = self.client.get(
                 reverse('load_user_info', kwargs=dict(name=n)))
-            parsed = json.loads(response.content)
-            self.assertTrue(errorResponseValidator.validate(parsed))
-            self.assertEqual(parsed['errorResponse']['errorTitle'],
-                             ugettext("UnknownUser"))
+            assert_is_error_response(response, "UnknownUser")
 
 
 class LoadUserSettingsTest(TestCase):
@@ -97,10 +95,7 @@ class LoadUserSettingsTest(TestCase):
 
     def test_not_logged_in_returns_error_response(self):
         response = self.client.get(reverse('load_user_settings'))
-        parsed = json.loads(response.content)
-        self.assertTrue(errorResponseValidator.validate(parsed))
-        self.assertEqual(parsed['errorResponse']['errorTitle'],
-                         ugettext("NotAuthenticated"))
+        assert_is_error_response(response, "NotAuthenticated")
 
 
 class StoreSettingsTest(TestCase):
@@ -119,29 +114,20 @@ class StoreSettingsTest(TestCase):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         response = self.client.post(reverse('store_settings'),
                                     dict(displayName='hans'))
-        parsed = json.loads(response.content)
-        self.assertTrue(errorResponseValidator.validate(parsed))
-        self.assertEqual(parsed['errorResponse']['errorTitle'],
-                         ugettext("MissingPOSTParameter"))
+        assert_is_error_response(response, "MissingPOSTParameter")
 
     def test_missing_displayname_parameter_returns_error(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         response = self.client.post(reverse('store_settings'),
                                     dict(description=''))
-        parsed = json.loads(response.content)
-        self.assertTrue(errorResponseValidator.validate(parsed))
-        self.assertEqual(parsed['errorResponse']['errorTitle'],
-                         ugettext("MissingPOSTParameter"))
+        assert_is_error_response(response, "MissingPOSTParameter")
 
     def test_unavailable_displayname_returns_error(self):
         self.hugo = create_user('hugo', description='notHulk', password="1234")
         self.assertTrue(self.client.login(username="hans", password='1234'))
         response = self.client.post(reverse('store_settings'),
                                     dict(displayName='hugo', description=''))
-        parsed = json.loads(response.content)
-        self.assertTrue(errorResponseValidator.validate(parsed))
-        self.assertEqual(parsed['errorResponse']['errorTitle'],
-                         ugettext("NameNotAvailable"))
+        assert_is_error_response(response, "UsernameNotAvailable")
 
     def test_change_description_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))

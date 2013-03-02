@@ -26,6 +26,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext
 from django.test import TestCase
 import json
+from findeco.tests.helpers import assert_is_error_response
 
 from node_storage import get_root_node, Node, Argument
 from node_storage.factory import create_user, create_slot
@@ -44,19 +45,13 @@ class StoreTextTest(TestCase):
 
     def test_not_authenticated(self):
         response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            json.loads(response.content)['errorResponse']['errorTitle'],
-            ugettext("NotAuthenticated"))
+        assert_is_error_response(response, "NotAuthenticated")
 
     def test_not_permitted(self):
         self.assertTrue(
             self.client.login(username="Notpermitted", password="fghjfgh"))
         response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            json.loads(response.content)['errorResponse']['errorTitle'],
-            ugettext("PermissionDenied"))
+        assert_is_error_response(response, "PermissionDenied")
 
     def test_store_textNode(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
@@ -73,19 +68,13 @@ class StoreTextTest(TestCase):
     def test_store_missing_text(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.post(self.url)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            json.loads(response.content)['errorResponse']['errorTitle'],
-            ugettext("MissingPostParameter"))
+        assert_is_error_response(response, "MissingPOSTParameter")
 
     def test_store_missing_argument_type(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.post(self.url, dict(wikiText="= Hopp =\nGrumpf.",
                                     wikiTextAlternative="= Bla =\nBlubb."))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            json.loads(response.content)['errorResponse']['errorTitle'],
-            ugettext("MissingPostParameter"))
+        assert_is_error_response(response, "MissingPOSTParameter")
 
     def test_store_with_argument_and_alternative(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))

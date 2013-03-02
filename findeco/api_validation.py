@@ -22,7 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 import json
-from findeco.jsonvalidator import JSONValidator
+from findeco.jsonvalidator import JSONValidator, JSONValidationError
 
 
 ################# JSON Schemas #################################################
@@ -135,10 +135,27 @@ storeTextResponse_schema = {
 }
 errorResponse_schema = {
     'errorResponse': {
-        'errorTitle': string,
-        'errorMessage': string
+        'errorID': string,
+        'additionalInfo': [string, None]
     }
 }
+
+ERROR_LIST = [
+    "UnknownNode",
+    "UnknownUser",
+    "MissingPOSTParameter",
+    "IllegalPath",
+    "NotAuthenticated",
+    "PermissionDenied",
+    "DisabledAccount",
+    "UsernameNotAvailable",
+    "EmailNotAvailable",
+    "InvalidLogin",
+    "InvalidEmail",
+    "InvalidActivationKey",
+    "InvalidURL"
+]
+
 
 ################################################################################
 
@@ -161,7 +178,18 @@ storeMicroblogPostResponseValidator = JSONValidator(
     storeMicroblogPostResponse_schema)
 storeSettingsResponseValidator = JSONValidator(storeSettingsResponse_schema)
 storeTextResponseValidator = JSONValidator(storeTextResponse_schema)
-errorResponseValidator = JSONValidator(errorResponse_schema)
+
+
+class ErrorResponseValidator(object):
+    def __init__(self):
+        self.validator = JSONValidator(errorResponse_schema)
+
+    def validate(self, data):
+        self.validator.validate(data)
+        if not data['errorResponse']['errorID'] in ERROR_LIST:
+            raise JSONValidationError('Invalid errorID "%s"'%data['errorResponse']['errorID'])
+
+errorResponseValidator = ErrorResponseValidator()
 
 view_validators = {
     'load_graph_data': loadGraphDataResponseValidator,

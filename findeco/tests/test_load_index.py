@@ -23,14 +23,13 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext
 import json
+from findeco.tests.helpers import assert_is_error_response
 
 from node_storage import get_root_node
 from node_storage.factory import create_slot, create_user, create_textNode
 from node_storage.factory import create_vote, create_structureNode
 from node_storage.factory import create_argument
-from ..api_validation import errorResponseValidator
 from ..view_helpers import create_index_node_for_slot
 from ..view_helpers import create_index_node_for_argument
 
@@ -107,20 +106,14 @@ class LoadIndexTest(TestCase):
     def test_on_non_existing_node_gives_error_response(self):
         response = self.client.get(
             reverse('load_index', kwargs=dict(path='doesnotexist.1')))
-        parsed = json.loads(response.content)
-        self.assertTrue(errorResponseValidator.validate(parsed))
-        self.assertEqual(parsed['errorResponse']['errorTitle'],
-                         ugettext("NonExistingNode"))
+        assert_is_error_response(response, "UnknownNode")
 
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo.1.pro.2']
         for p in illegal_paths:
             response = self.client.get(
                 reverse('load_index', kwargs=dict(path=p)))
-            parsed = json.loads(response.content)
-            self.assertTrue(errorResponseValidator.validate(parsed))
-            self.assertEqual(parsed['errorResponse']['errorTitle'],
-                             ugettext("IllegalPath"))
+            assert_is_error_response(response, "IllegalPath")
 
 
 class LoadArgumentIndexTest(TestCase):
@@ -159,7 +152,4 @@ class LoadArgumentIndexTest(TestCase):
     def test_on_non_existing_node_gives_error_response(self):
         response = self.client.get(
             reverse('load_argument_index', kwargs=dict(path='doesnotexist.1')))
-        parsed = json.loads(response.content)
-        self.assertTrue(errorResponseValidator.validate(parsed))
-        self.assertEqual(parsed['errorResponse']['errorTitle'],
-                         ugettext("NonExistingNode"))
+        assert_is_error_response(response, "UnknownNode")
