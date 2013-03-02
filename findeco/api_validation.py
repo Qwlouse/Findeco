@@ -215,7 +215,6 @@ view_validators = {
 def validate_response(response, view):
     response = json.loads(response)
     if 'errorResponse' in response:
-        print(response)
         errorResponseValidator.validate(response)
         return False
     validator = view_validators[view]

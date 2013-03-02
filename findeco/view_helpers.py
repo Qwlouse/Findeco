@@ -115,6 +115,12 @@ def assert_node_for_path(path):
     return node
 
 
+def assert_authentication(request):
+    if not request.user.is_authenticated():
+        raise NotAuthenticated()
+
+
+
 def create_user_info(user):
     user_info = dict(
         displayName=user.username,

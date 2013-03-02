@@ -153,8 +153,7 @@ def load_user_info(request, name):
 
 @ViewErrorHandling
 def load_user_settings(request):
-    if not request.user.is_authenticated():
-        raise NotAuthenticated()
+    assert_authentication(request)
     user = User.objects.get(id=request.user.id)
     return json_response({'loadUserSettingsResponse': {
         'userInfo': create_user_info(user),
@@ -197,8 +196,7 @@ def logout(request):
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
 def flag_node(request, path):
-    if not request.user.is_authenticated():
-        raise NotAuthenticated()
+    assert_authentication(request)
     if not request.user.has_perm('node_storage.add_spamflag'):
         raise PermissionDenied()
     user = request.user
@@ -217,8 +215,7 @@ def flag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
 def unflag_node(request, path):
-    if not request.user.is_authenticated():
-        raise NotAuthenticated()
+    assert_authentication(request)
     if not request.user.has_perm('node_storage.delete_spamflag'):
         raise PermissionDenied()
     user = request.user
@@ -234,8 +231,7 @@ def unflag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
 def follow_node(request, path):
-    if not request.user.is_authenticated():
-        raise NotAuthenticated()
+    assert_authentication(request)
     if not request.user.has_perm(
             'node_storage.add_vote') or not request.user.has_perm(
             'node_storage.change_vote'):
@@ -277,8 +273,7 @@ def follow_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
 def unfollow_node(request, path):
-    if not request.user.is_authenticated():
-        raise NotAuthenticated()
+    assert_authentication(request)
     if not request.user.has_perm('node_storage.delete_vote'):
         raise PermissionDenied(path)
     user = request.user
@@ -302,8 +297,7 @@ def unfollow_node(request, path):
 
 @ViewErrorHandling
 def store_settings(request):
-    if not request.user.is_authenticated():
-        raise NotAuthenticated()
+    assert_authentication(request)
     user = User.objects.get(id=request.user.id)
 
     if not 'description' in request.POST:
@@ -327,8 +321,7 @@ def store_settings(request):
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def store_text(request, path):
-    if not request.user.is_authenticated():
-        raise NotAuthenticated()
+    assert_authentication(request)
     if not request.user.has_perm('node_storage.add_node') or \
             not request.user.has_perm('node_storage.add_argument') or \
             not request.user.has_perm('node_storage.add_vote') or \
