@@ -106,6 +106,15 @@ def ViewErrorHandling(f):
             return json_error_response(e.identifier, *e.additional_info)
     return wrapped
 
+
+def assert_node_for_path(path):
+    try:
+        node = backend.get_node_for_path(path)
+    except backend.IllegalPath:
+        raise UnknownNode(path)
+    return node
+
+
 def create_user_info(user):
     user_info = dict(
         displayName=user.username,

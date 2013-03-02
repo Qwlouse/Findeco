@@ -57,10 +57,7 @@ def home(request, path):
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def load_index(request, path):
-    try:
-        node = backend.get_node_for_path(path)
-    except backend.IllegalPath:
-        raise UnknownNode(path)
+    node = assert_node_for_path(path)
     slot_list = backend.get_ordered_children_for(node)
     index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
     return json_response({'loadIndexResponse': index_nodes})
@@ -70,10 +67,7 @@ def load_index(request, path):
 @ViewErrorHandling
 def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
-    try:
-        node = backend.get_node_for_path(prefix)
-    except backend.IllegalPath:
-        raise UnknownNode(path)
+    node = assert_node_for_path(prefix)
     data = [create_index_node_for_argument(a, node) for a in
             node.arguments.order_by('index')]
     return json_response({'loadIndexResponse': data})
@@ -87,10 +81,7 @@ def load_graph_data(request, path, graph_data_type):
         related_nodes = []
     else:
         slot_path = path.rsplit('.', 1)[0]
-        try:
-            slot = backend.get_node_for_path(slot_path)
-        except backend.IllegalPath:
-            raise UnknownNode(path)
+        slot = assert_node_for_path(slot_path)
         nodes = backend.get_ordered_children_for(slot)
         sources = Q(derivates__in=nodes)
         derivates = Q(sources__in=nodes)
@@ -114,10 +105,7 @@ def load_text(request, path):
         t = backend.TextCache.objects.get(path=path.strip().strip('/'))
         paragraphs = json.loads(t.paragraphs)
     except backend.TextCache.DoesNotExist:
-        try:
-            node = backend.get_node_for_path(path)
-        except backend.IllegalPath:
-            raise UnknownNode(path)
+        node = assert_node_for_path(path)
         paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
                        'path': path,
                        '_node_id': node.id,
@@ -214,10 +202,7 @@ def flag_node(request, path):
     if not request.user.has_perm('node_storage.add_spamflag'):
         raise PermissionDenied()
     user = request.user
-    try:
-        node = backend.get_node_for_path(path)
-    except backend.IllegalPath:
-        return UnknownNode(path)
+    node = assert_node_for_path(path)
 
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 0:
@@ -237,10 +222,7 @@ def unflag_node(request, path):
     if not request.user.has_perm('node_storage.delete_spamflag'):
         raise PermissionDenied()
     user = request.user
-    try:
-        node = backend.get_node_for_path(path)
-    except backend.IllegalPath:
-        return UnknownNode(path)
+    node = assert_node_for_path(path)
 
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 1:
@@ -259,10 +241,7 @@ def follow_node(request, path):
             'node_storage.change_vote'):
         raise PermissionDenied()
     user = request.user
-    try:
-        node = backend.get_node_for_path(path)
-    except backend.IllegalPath:
-        raise UnknownNode(path)
+    node = assert_node_for_path(path)
 
     marks = node.votes.filter(user=user.id).all()
     if marks.count() >= 1:
@@ -303,10 +282,7 @@ def unfollow_node(request, path):
     if not request.user.has_perm('node_storage.delete_vote'):
         raise PermissionDenied(path)
     user = request.user
-    try:
-        node = backend.get_node_for_path(path)
-    except backend.IllegalPath:
-        raise UnknownNode(path)
+    node = assert_node_for_path(path)
 
     marks = node.votes.filter(user=user.id).all()
     if marks.count() > 0:
