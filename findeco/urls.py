@@ -36,9 +36,9 @@ BLOG_ID = r'(?P<select_id>' + ID + ')'
 BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
 USERNAME = r'(?P<name>[a-zA-Z][a-zA-Z0-9-_]{0,19})'
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
-
 
     url(r'^\.json_loadUserSettings/?$',
         'findeco.views.load_user_settings',
@@ -56,25 +56,26 @@ urlpatterns = patterns('',
         'findeco.views.load_argument_index',
         name='load_argument_index'),
 
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + RESTRICTED_PATH + '$',
+    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
+        RESTRICTED_PATH + '$',
         'microblogging.views.load_microblogging',
         name='load_microblogging'),
 
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/' + RESTRICTED_PATH + '$',
+    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/' +
+        RESTRICTED_PATH + '$',
         'microblogging.views.load_microblogging',
         name='load_microblogging',
-        kwargs={'select_id':None}
-    ),
+        kwargs={'select_id': None}),
 
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
+    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
+        USERNAME + '$',
         'microblogging.views.load_timeline',
         name='load_timeline'),
 
     url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
         'microblogging.views.load_timeline',
         name='load_timeline',
-        kwargs={'select_id':None}
-    ),
+        kwargs={'select_id': None}),
 
     url(r'^\.json_loadText/' + PATH + '$',
         'findeco.views.load_text',

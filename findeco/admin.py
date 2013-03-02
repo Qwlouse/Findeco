@@ -32,6 +32,7 @@ from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 
 from .models import UserProfile
 
+
 class UserProfileInline(admin.StackedInline):
     """
     Configure UserProfile to be inlined into user administration
@@ -39,6 +40,7 @@ class UserProfileInline(admin.StackedInline):
     model = UserProfile
     max_num = 1
     can_delete = False
+
 
 class UserAdmin(AuthUserAdmin):
     # add UserProfile inline as an inline to UserAdmin page

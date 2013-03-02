@@ -31,7 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * Author: Maxim Derkachev (max.derkachev@gmail.com)
 * http://code.google.com/p/jsonvalidator/
 *
-Schema is a JSON-compatible string or Python object, is an example of a valid data structure.
+Schema is a JSON-compatible string or Python object, is an example of a valid
+data structure.
 Example schemas:
 *   '["string", "number"]'
     '["anything", 1]'
@@ -39,8 +40,10 @@ Example schemas:
     Invalid for {}, 1, "", [true], [1, false]
 
 *   {"one": 1, "two": {"three":"string?"}}
-    Valid for {"one":0, "two":{}}, {"one":0, "two":{"three":"something"}}, {"one":2, "two":{"three":""}}
-    Invalid for 1, "", [], {}, {"one":0}, {"one":0, "two":{"three":1}}, {"one":0, "two":{}, "foo":"bar"}
+    Valid for {"one":0, "two":{}}, {"one":0, "two":{"three":"something"}},
+              {"one":2, "two":{"three":""}}
+    Invalid for 1, "", [], {}, {"one":0}, {"one":0, "two":{"three":1}},
+              {"one":0, "two":{}, "foo":"bar"}
 
 The following schemas are equivalent:
 1. {"a":"there can be a string"}, {"a": "string"}, {"a": ""}
@@ -48,10 +51,11 @@ The following schemas are equivalent:
 
 Value types can be defined as:
 *  literals of that type, e.g. {} for object, [] for array,
-   1 for number, "anything" for string, null for null, false or true for boolean;
-* "string" for string, "number" for number, "bool" for boolean. In this case you can add "?"
-  to indicate that the value can be undefined or null. E.g. "number?" is matched by numbers,
-  undefined values and nulls
+   1 for number, "anything" for string, null for null,
+   false or true for boolean;
+* "string" for string, "number" for number, "bool" for boolean.
+   In this case you can add "?" to indicate that the value can be undefined or
+   null. E.g. "number?" is matched by numbers, undefined values and nulls
 
 
 * API:
@@ -62,15 +66,17 @@ schema = ["any string", 1]
 validator = JSONValidator(schema)
 isValid = validator.validate(data) # data is a Python object  or a JSON string
 
-Raise JSONError on invalid JSON (that can not be parsed),
-or JSONValidationError (no JSON parse errors, but invalid for the schema specified)
+Raise JSONError on invalid JSON (that can not be parsed), or JSONValidationError
+(no JSON parse errors, but invalid for the schema specified)
 """
 
-import json, types
+import json
+import types
 
 
 class JSONValidationError(Exception):
     pass
+
 
 class JSONError(Exception):
     pass
@@ -79,7 +85,7 @@ class JSONError(Exception):
 class BaseHandler(object):
     def __init__(self, schema, required):
         self.required = required
-        
+
     def __call__(self, data):
         return self.validate(data)
 
@@ -87,7 +93,7 @@ class BaseHandler(object):
         if data is None and self.required:
             raise JSONValidationError("Required field is missing")
         return data
-                                      
+
 
 class StringHandler(BaseHandler):
     def validate(self, data):
@@ -95,7 +101,8 @@ class StringHandler(BaseHandler):
         if data and not isinstance(data, basestring):
             raise JSONValidationError("data is not a string: %s" % str(data))
         return data
-    
+
+
 class NumberHandler(BaseHandler):
     def validate(self, data):
         data = super(NumberHandler, self).validate(data)
@@ -103,12 +110,14 @@ class NumberHandler(BaseHandler):
             raise JSONValidationError("data is not a number: %s" % str(data))
         return data
 
+
 class BooleanHandler(BaseHandler):
     def validate(self, data):
         data = super(BooleanHandler, self).validate(data)
         if data is not None and not isinstance(data, bool):
             raise JSONValidationError("data is not a boolean: %s" % str(data))
         return data
+
 
 class NullHandler(BaseHandler):
     def validate(self, data):
@@ -126,25 +135,25 @@ class ObjectHandler(BaseHandler):
             _type, handler = getValidator(value)
             self.handlers[key] = handler
             self.validKeys.add(key)
-        
+
     def validate(self, data):
         data = super(ObjectHandler, self).validate(data)
         if not isinstance(data, dict):
-            raise JSONValidationError("data is not an object: %s" %str(data))
+            raise JSONValidationError("data is not an object: %s" % str(data))
         handlers = self.handlers
         for key, handler in handlers.items():
             keyData = data.get(key, None)
             try:
                 keydata = handler(keyData)
             except JSONValidationError as e:
-                raise JSONValidationError("(%s)"%key + e.message)
+                raise JSONValidationError("(%s)" % key + e.message)
         if self.validKeys:
             for key in data:
                 if not key in self.validKeys:
-                    raise JSONValidationError("invalid object key: %s" %key)
+                    raise JSONValidationError("invalid object key: %s" % key)
         return data
-        
-        
+
+
 class ArrayHandler(BaseHandler):
     def __init__(self, schema, required):
         super(ArrayHandler, self).__init__(schema, required)
@@ -157,25 +166,28 @@ class ArrayHandler(BaseHandler):
         data = super(ArrayHandler, self).validate(data)
         if not isinstance(data, list):
             raise JSONValidationError("data is not an array")
-        if self.handlers and not self.handlers.get(types.NoneType, False) and not data:
+        if self.handlers and not self.handlers.get(types.NoneType,
+                                                   False) and not data:
             raise JSONValidationError("this array should not be empty")
         for value in data:
             handler = self.handlers.get(type(value), None)
             if not handler:
-                raise JSONValidationError("invalid data member in array: %s" % str(value))
+                raise JSONValidationError(
+                    "invalid data member in array: %s" % str(value))
             value = handler(value)
-        return data        
+        return data
+
 
 HANDLERS_BY_TYPE = {str: StringHandler,
-           unicode : StringHandler,
-           int: NumberHandler,
-           long: NumberHandler,
-           float: NumberHandler,
-           dict: ObjectHandler,
-           list: ArrayHandler,
-           bool: BooleanHandler,
-           type(None): NullHandler
-          }
+                    unicode: StringHandler,
+                    int: NumberHandler,
+                    long: NumberHandler,
+                    float: NumberHandler,
+                    dict: ObjectHandler,
+                    list: ArrayHandler,
+                    bool: BooleanHandler,
+                    type(None): NullHandler}
+
 
 def getValidator(schema):
     required = True
@@ -191,6 +203,7 @@ def getValidator(schema):
         return _type, handler(schema, required)
     else:
         raise JSONError("Unsupported JSON type in schema")
+
 
 class JSONValidator(object):
     validator = None

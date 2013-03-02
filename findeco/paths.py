@@ -53,21 +53,23 @@ SLOT = SHORT_TITLE
 NODE = '(' + SLOT + r'\.' + ID + ')'
 ARG_CATEGORY = r'(' + NODE + r'\.' + '(pro|neut|con|all)' + ')'
 ARG = r'(' + NODE + r'\.' + '(pro|neut|con|all)' + r'(\.' + ID + '))'
-SUFFIX = r'('  + ARG + '|' + ARG_CATEGORY + '|' + NODE + '|' +  SLOT + ')'
+SUFFIX = r'(' + ARG + '|' + ARG_CATEGORY + '|' + NODE + '|' + SLOT + ')'
 RESTRICTED_SUFFIX = r'(' + ARG + '|' + NODE + ')'
 PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
-RESTRICTED_PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + RESTRICTED_SUFFIX + '?' + ')' + '/?'
+RESTRICTED_PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + RESTRICTED_SUFFIX + \
+                  '?' + ')' + '/?'
 pathMatcher = re.compile(PATH)
+
 
 def parse_suffix(path):
     path = path.strip('/')
     if not path:
         return "", {}
-    parts = path.rsplit('/',1)
+    parts = path.rsplit('/', 1)
     prefix, suffix = parts if len(parts) == 2 else ("", path)
     parts = suffix.split('.')
     if len(parts) == 1:
-        return prefix, {'slot':suffix}
+        return prefix, {'slot': suffix}
     prefix = (prefix + '/' + parts[0] + '.' + parts[1]).strip('/')
     path_type = {}
     if len(parts) >= 3:
@@ -83,21 +85,17 @@ def parse_path(path):
     parts = path.split('/')
     nodes = []
     for p in parts[:-1]:
-        short_title, id = p.split('.')
-        nodes.append((short_title, int(id)))
+        short_title, node_id = p.split('.')
+        nodes.append((short_title, int(node_id)))
     last = parts[-1].split('.')
     if len(last) == 1:
-        if last[0] :
+        if last[0]:
             last = dict(slot=last[0])
         else:
             last = {}
-    else: # len(last) >= 2 because zero is impossible
+    else:  # len(last) >= 2 because zero is impossible
         nodes.append((last[0], int(last[1])))
         last = dict(zip(['arg_type', 'arg_id'], last[2:]))
         if 'arg_id' in last:
             last['arg_id'] = int(last['arg_id'])
     return nodes, last
-
-
-
-

@@ -30,7 +30,10 @@ from __future__ import division, print_function, unicode_literals
 
 import os
 
-PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
+PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                           os.path.pardir))
+
+
 def projectPath(filename):
     return os.path.join(PROJECT_DIR, filename)
 
@@ -45,12 +48,16 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': projectPath("Database.sqlite3"), # Or path to database file if using sqlite3.
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3',
+        # DBName of path to database file if using sqlite3.
+        'NAME': projectPath("Database.sqlite3"),
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
     }
 }
 
@@ -109,7 +116,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -119,7 +125,6 @@ SECRET_KEY = '+90q803@g1p7s$ks8o0v%t7ojxdg_g+pvf5lz%gf$1b*$^ih!l'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -128,8 +133,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'findeco.urls'
@@ -138,7 +141,6 @@ ROOT_URLCONF = 'findeco.urls'
 WSGI_APPLICATION = 'findeco.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     PROJECT_DIR + '/templates/',
@@ -204,14 +206,19 @@ EMAIL_SUBJECT_PREFIX = '[Findeco]'
 EMAIL_USE_TLS = True
 FINDECO_BASE_URL = 'http://127.0.0.1:8000/'
 REGISTRATION_TITLE = 'Your Findeco registration'
-REGISTRATION_BODY = 'You have registred an Findeco Account with this E-Mail address. You can activate it with the Link below. If you did not register it you just need to ignore this Mail '  
-REGISTRATION_RECOVERY_TITLE =  'You requested a Password reset'
-REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco Account. You can request it with the Link below. If you did not request it you just need to ignore this Mail '
-REGISTRATION_RECOVERY_TITLE_SUCCESS =  'Your new Findeco Password'
+REGISTRATION_BODY = 'You have registred an Findeco Account with this E-Mail ' \
+                    'address. You can activate it with the Link below. If you' \
+                    ' did not register it you just need to ignore this Mail '
+REGISTRATION_RECOVERY_TITLE = 'You requested a Password reset'
+REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco' \
+                             ' Account. You can request it with the Link ' \
+                             'below. If you did not request it you just need' \
+                             ' to ignore this Mail '
+REGISTRATION_RECOVERY_TITLE_SUCCESS = 'Your new Findeco Password'
 REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
 
 # try to import secret_settings and overwrite some of the default values
 try:
-  from local_settings import *
-except ImportError :
-  pass
+    from local_settings import *
+except ImportError:
+    pass
