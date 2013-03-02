@@ -27,7 +27,7 @@ from findeco.view_helpers import get_is_following
 from node_storage import get_root_node, Node
 from node_storage.factory import create_user, create_slot, create_textNode
 from node_storage.factory import create_vote, create_structureNode
-from node_storage.factory import create_argument
+from node_storage.factory import create_argument, create_spam_flag
 from ..api_validation import userInfoValidator, indexNodeValidator
 from ..api_validation import userSettingsValidator
 from ..view_helpers import create_index_node_for_slot, create_user_settings
@@ -284,6 +284,7 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
                                            authors=[self.hans, self.hugo])
         self.slot3.append_child(self.textnode33d)
         self.textnode33.add_derivate(self.textnode33d)
+        create_spam_flag(self.hugo, [self.textnode33d])
         create_vote(self.hans, [self.textnode33])
         self.nodes = [self.textnode31, self.textnode32, self.textnode32d,
                       self.textnode33, self.textnode33d]
@@ -296,10 +297,11 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
                              [create_user_info(self.hans),
                               create_user_info(self.hugo)]]
         self.follows = [0, 1, 1, 1, 0]
+        self.spamFlags = [0, 0, 0, 0, 1]
         self.unFollows = [0, 0, 0, 0, 1]
         self.newFollows = [0, 1, 0, 1, 0]
         self.originGroups = [[], [], ['Organisatorisches.2'], [],
-                                     ['Organisatorisches.4']]
+                             ['Organisatorisches.4']]
 
     def test_text_nodes_no_path(self):
         for i in range(5):
@@ -307,6 +309,7 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
             self.assertEqual(data['path'], 'Organisatorisches.' + str(i + 1))
             self.assertSequenceEqual(data['authorGroup'], self.authorGroups[i])
             self.assertEqual(data['follows'], self.follows[i])
+            self.assertEqual(data['spamFlags'], self.spamFlags[i])
             self.assertEqual(data['unFollows'], self.unFollows[i])
             self.assertEqual(data['newFollows'], self.newFollows[i])
             self.assertEqual(data['originGroup'], self.originGroups[i])
@@ -318,6 +321,7 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
             self.assertEqual(data['path'], 'Organisatorisches.' + str(i + 1))
             self.assertSequenceEqual(data['authorGroup'], self.authorGroups[i])
             self.assertEqual(data['follows'], self.follows[i])
+            self.assertEqual(data['spamFlags'], self.spamFlags[i])
             self.assertEqual(data['unFollows'], self.unFollows[i])
             self.assertEqual(data['newFollows'], self.newFollows[i])
             self.assertEqual(data['originGroup'], self.originGroups[i])
@@ -330,6 +334,7 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
             self.assertEqual(data['path'], 'Organisatorisches.' + str(i + 1))
             self.assertSequenceEqual(data['authorGroup'], self.authorGroups[i])
             self.assertEqual(data['follows'], self.follows[i])
+            self.assertEqual(data['spamFlags'], self.spamFlags[i])
             self.assertEqual(data['unFollows'], self.unFollows[i])
             self.assertEqual(data['newFollows'], self.newFollows[i])
             self.assertEqual(data['originGroup'], self.originGroups[i])
@@ -342,6 +347,7 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
             self.assertEqual(data['path'], 'Organisatorisches.' + str(i + 1))
             self.assertSequenceEqual(data['authorGroup'], self.authorGroups[i])
             self.assertEqual(data['follows'], self.follows[i])
+            self.assertEqual(data['spamFlags'], self.spamFlags[i])
             self.assertEqual(data['unFollows'], self.unFollows[i])
             self.assertEqual(data['newFollows'], self.newFollows[i])
             self.assertEqual(data['originGroup'], self.originGroups[i])
@@ -355,6 +361,7 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
             self.assertEqual(data['path'], 'Organisatorisches.' + str(i + 1))
             self.assertSequenceEqual(data['authorGroup'], self.authorGroups[i])
             self.assertEqual(data['follows'], self.follows[i])
+            self.assertEqual(data['spamFlags'], self.spamFlags[i])
             self.assertEqual(data['unFollows'], self.unFollows[i])
             self.assertEqual(data['newFollows'], self.newFollows[i])
             self.assertEqual(data['originGroup'], self.originGroups[i])
