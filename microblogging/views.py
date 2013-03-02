@@ -24,6 +24,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
+from __future__ import division, print_function, unicode_literals
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -49,7 +50,7 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response('Illegal path', 'Illegal path: ' + path)
+        return json_error_response('UnknownNode', path)
     if not select_id:  # Get latest posts
         posts = node.microblogging_references.prefetch_related('author', 'is_reference_to')[:20]
     else:
@@ -71,7 +72,7 @@ def load_timeline(request, name, select_id, microblogging_load_type):
     try:
         named_user = User.objects.filter(username=name).all()[0]
     except ObjectDoesNotExist:
-        return json_error_response('Unknown user','The user "'+name+'" does not exist.')
+        return json_error_response('UnknownUser', name)
     if named_user == request.user:
         followed = Q(author__profile__followers=request.user)
     else: followed = Q(author = named_user)
@@ -89,12 +90,12 @@ def load_timeline(request, name, select_id, microblogging_load_type):
                 filter(startpoint).order_by('time').prefetch_related('author', 'is_reference_to')[:20]
         return json_response({'loadMicrobloggingResponse':convert_response_list(reversed(feed))})
 
+
 def store_microblog_post(request, path):
-    if request.method == 'POST':
-        if request.user.is_authenticated():
-            create_post(request.POST['microBlogText'], request.user)
-            return json_response({})
-        else:
-            return json_error_response('NotAuthenticated',"You need to be authenticated to store microblogging.")
-    else:
-        return json_error_response('Wrong method',"You must send a POST request to store microblogging.")
+    if not request.user.is_authenticated():
+        return json_error_response('NotAuthenticated')
+    if not 'microBlogText' in request.POST:
+        return json_error_response('MissingPOSTParameter', 'microBlogText')
+
+    create_post(request.POST['microBlogText'], request.user)
+    return json_response({'storeMicrobloggingResponse': {}})
