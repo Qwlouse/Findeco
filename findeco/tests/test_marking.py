@@ -253,7 +253,7 @@ class UnMarkSpamTest(TestCase):
         self.assertTrue(self.client.login(username="Permela", password="xxx"))
         response = self.client.post(
             reverse('unflag_node', kwargs=dict(path="Slot.1")))
-        assert_is_error_response(response, "NotAuthenticated")
+        assert_is_error_response(response, "PermissionDenied")
 
     def test_unmark_spam_root(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))

@@ -65,8 +65,7 @@ def load_index(request, path):
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response(ugettext('NonExistingNode'),
-                                   ugettext('Illegal Path: ') + path)
+        return json_error_response('UnknownNode', path)
     slot_list = backend.get_ordered_children_for(node)
     index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
     return json_response({'loadIndexResponse': index_nodes})
@@ -78,8 +77,7 @@ def load_argument_index(request, path):
     try:
         node = backend.get_node_for_path(prefix)
     except backend.IllegalPath:
-        return json_error_response(ugettext('NonExistingNode'),
-                                   ugettext('Illegal Path: ') + path)
+        return json_error_response('UnknownNode', path)
     data = [create_index_node_for_argument(a, node) for a in
             node.arguments.order_by('index')]
     return json_response({'loadIndexResponse': data})
@@ -95,10 +93,7 @@ def load_graph_data(request, path, graph_data_type):
         try:
             slot = backend.get_node_for_path(slot_path)
         except backend.IllegalPath:
-            return json_error_response(
-                ugettext('NonExistingNode'),
-                ugettext('Could not find slot %(slot_path)s for node %(path)s.')
-                % {'slot_path': slot_path, 'path': path})
+            return json_error_response('UnknownNode', path)
         nodes = backend.get_ordered_children_for(slot)
         sources = Q(derivates__in=nodes)
         derivates = Q(sources__in=nodes)
@@ -124,8 +119,7 @@ def load_text(request, path):
         try:
             node = backend.get_node_for_path(path)
         except backend.IllegalPath:
-            return json_error_response(ugettext('IllegalPath'),
-                                       ugettext('Illegal Path: ') + path)
+            return json_error_response('UnknownNode', path)
         paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
                        'path': path,
                        '_node_id': node.id,
@@ -162,8 +156,7 @@ def load_user_info(request, name):
     try:
         user = User.objects.get(username=name)
     except User.DoesNotExist:
-        return json_error_response(ugettext('UnknownUser'),
-                                   ugettext("User '%s' not found!") % name)
+        return json_error_response('UnknownUser', name)
     user_info = create_user_info(user)
     return json_response({
         'loadUserInfoResponse': {
@@ -173,9 +166,7 @@ def load_user_info(request, name):
 
 def load_user_settings(request):
     if not request.user.is_authenticated():
-        return json_error_response(
-            ugettext('NotAuthenticated'),
-            ugettext("You need to be logged in to load user settings."))
+        return json_error_response('NotAuthenticated')
     user = User.objects.get(id=request.user.id)
     return json_response({'loadUserSettingsResponse': {
         'userInfo': create_user_info(user),
@@ -196,11 +187,9 @@ def login(request):
                     'userSettings': create_user_settings(user)
                 }})
         else:
-            return json_error_response(ugettext('DisabledAccount'), ugettext(
-                "Account '%s' is deactivated") % username)
+            return json_error_response('DisabledAccount', username)
     else:
-        return json_error_response(ugettext('InvalidLogin'),
-                                   ugettext("Username or password wrong."))
+        return json_error_response('InvalidLogin')
 
 
 def logout(request):
@@ -219,17 +208,14 @@ def logout(request):
 @ValidPaths("StructureNode", "Argument")
 def flag_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response(ugettext('NotAuthenticated'), ugettext(
-            "You need to be authenticated to flag node."))
+        return json_error_response('NotAuthenticated')
     if not request.user.has_perm('node_storage.add_spamflag'):
-        return json_error_response(ugettext('PermissionDenied'), ugettext(
-            "You do not have the permission to flag ") + path + ".")
+        return json_error_response('PermissionDenied')
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response(ugettext('Illegal Path'),
-                                   ugettext('Illegal Path: ') + path)
+        return json_error_response('UnknownNode', path)
 
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 0:
@@ -244,17 +230,14 @@ def flag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def unflag_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response(ugettext('NotAuthenticated'), ugettext(
-            "You need to be authenticated to unflag node."))
+        return json_error_response('NotAuthenticated')
     if not request.user.has_perm('node_storage.delete_spamflag'):
-        return json_error_response(ugettext('PermissionDenied'), ugettext(
-            "You do not have the permission to unflag ") + path + ".")
+        return json_error_response('PermissionDenied', path)
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response(ugettext('Illegal Path'),
-                                   ugettext('Illegal Path: ') + path)
+        return json_error_response('UnknownNode', path)
 
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 1:
@@ -266,19 +249,16 @@ def unflag_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def follow_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response(ugettext('NotAuthenticated'), ugettext(
-            "You need to be authenticated to follow node."))
+        return json_error_response('NotAuthenticated')
     if not request.user.has_perm(
             'node_storage.add_vote') or not request.user.has_perm(
             'node_storage.change_vote'):
-        return json_error_response(ugettext('PermissionDenied'), ugettext(
-            "You do not have the permission to follow ") + path + ".")
+        return json_error_response('PermissionDenied')
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response(ugettext('Illegal Path'),
-                                   ugettext('Illegal Path: ') + path)
+        return json_error_response('UnknownNode', path)
 
     marks = node.votes.filter(user=user.id).all()
     if marks.count() >= 1:
@@ -314,17 +294,14 @@ def follow_node(request, path):
 @ValidPaths("StructureNode", "Argument")
 def unfollow_node(request, path):
     if not request.user.is_authenticated():
-        return json_error_response(ugettext('NotAuthenticated'), ugettext(
-            "You need to be authenticated to unfollow node."))
+        return json_error_response('NotAuthenticated')
     if not request.user.has_perm('node_storage.delete_vote'):
-        return json_error_response(ugettext('PermissionDenied'), ugettext(
-            "You do not have the permission to unfollow ") + path + ".")
+        return json_error_response('PermissionDenied', path)
     user = request.user
     try:
         node = backend.get_node_for_path(path)
     except backend.IllegalPath:
-        return json_error_response(ugettext('Illegal Path'),
-                                   ugettext('Illegal Path: ') + path)
+        return json_error_response('UnknownNode', path)
 
     marks = node.votes.filter(user=user.id).all()
     if marks.count() > 0:
@@ -344,24 +321,20 @@ def unfollow_node(request, path):
 
 def store_settings(request):
     if not request.user.is_authenticated():
-        return json_error_response(ugettext('NotAuthenticated'), ugettext(
-            "You need to be authenticated to store settings."))
+        return json_error_response('NotAuthenticated')
     user = User.objects.get(id=request.user.id)
 
     if not 'description' in request.POST:
-        return json_error_response(ugettext('MissingPOSTParameter'), ugettext(
-            "The 'description' POST parameter is missing."))
+        return json_error_response('MissingPOSTParameter', 'description')
     user.profile.description = request.POST['description']
     user.profile.save()
     if not 'displayName' in request.POST:
-        return json_error_response(ugettext('MissingPOSTParameter'), ugettext(
-            "The 'displayName' POST parameter is missing."))
+        return json_error_response('MissingPOSTParameter', 'displayName')
     display_name = request.POST['displayName']
     if display_name != user.username:
         is_available = User.objects.filter(username=display_name).count() == 0
         if not is_available:
-            return json_error_response(ugettext('NameNotAvailable'), ugettext(
-                "The name '%s' is already taken.") % display_name)
+            return json_error_response('UsernameNotAvailable', display_name)
         else:
             user.username = display_name
     user.save()
@@ -372,8 +345,7 @@ def store_settings(request):
 @ValidPaths("StructureNode")
 def store_text(request, path):
     if not request.user.is_authenticated():
-        return json_error_response(ugettext('NotAuthenticated'), ugettext(
-            "You need to be authenticated to store text."))
+        return json_error_response('NotAuthenticated')
     if not request.user.has_perm('node_storage.add_node') or \
             not request.user.has_perm('node_storage.add_argument') or \
             not request.user.has_perm('node_storage.add_vote') or \
@@ -381,21 +353,15 @@ def store_text(request, path):
             not request.user.has_perm('node_storage.add_derivation') or \
             not request.user.has_perm('node_storage.change_vote') or \
             not request.user.has_perm('node_storage.add_text'):
-        return json_error_response(ugettext('PermissionDenied'), ugettext(
-            "You do not have the permission to store text."))
+        return json_error_response('PermissionDenied')
     user = request.user
 
     if not 'wikiText' in request.POST:
-        return json_error_response(
-            ugettext('MissingPostParameter'),
-            ugettext("storeText is missing the 'wikiText' POST parameter!"))
+        return json_error_response('MissingPOSTParameter', 'wikiText')
 
     if not 'argumentType' in request.POST:
         if 'wikiTextAlternative' in request.POST:
-            return json_error_response(
-                ugettext('MissingPostParameter'),
-                ugettext('You cannot use storeText to save a '
-                         'wikiTextAlternative without an argumentType!'))
+            return json_error_response('MissingPOSTParameter', 'argumentType')
             # store new structure node
         _, new_path = store_structure_node(path, request.POST['wikiText'], user)
 
@@ -417,41 +383,28 @@ def store_text(request, path):
 
 #@csrf_exempt
 def account_registration(request):
-    if not 'displayName' in request.POST or \
-            not 'password' in request.POST or \
-            not 'emailAddress' in request.POST:
-        return json_error_response(ugettext('Missing Parameter'),
-                                   ugettext('Post Parameter is missing'))
+    if not 'displayName' in request.POST or not request.POST['displayName']:
+        return json_error_response('MissingPOSTParameter', 'displayName')
+    if not 'password' in request.POST or not request.POST['password']:
+        return json_error_response('MissingPOSTParameter', 'password')
+    if not 'emailAddress' in request.POST or not request.POST['emailAddress']:
+        return json_error_response('MissingPOSTParameter', 'emailAddress')
+
     emailAddress = request.POST['emailAddress']
     password = request.POST['password']
     displayName = request.POST['displayName']
-    #Check for not Filled Values 
-    if displayName == '' or password == '' or emailAddress == '':
-        return json_error_response(
-            ugettext('Missing Parameter'),
-            ugettext('You need to Provide displayName, '
-                     'Password and a valid E-Mail Address'))
     try:
         validate_email(emailAddress)
     except ValidationError:
-        return json_error_response(
-            ugettext('Invalid Email'),
-            ugettext('This E-Mailaddress seems to be invalid. '
-                     'Please choose another one '))
+        return json_error_response('InvalidEmailAddress', emailAddress)
 
-        #Check for already existing Username
+    #Check for already existing Username
     if User.objects.filter(username=displayName).count():
-        return json_error_response(
-            ugettext('Username unavailiable'),
-            ugettext('This Username is currently in use. '
-                     'Please choose another one '))
+        return json_error_response('UsernameNotAvailable', displayName)
 
     #Check for already existing Mail 
     if User.objects.filter(email=emailAddress).count():
-        return json_error_response(
-            ugettext('Email unavailiable'),
-            ugettext('This E-Mailaddress is currently in use. '
-                     'Please choose another one '))
+        return json_error_response('EmailAddressNotAvailiable', emailAddress)
     user = create_user(displayName,
                        description="",
                        mail=emailAddress,
@@ -471,25 +424,15 @@ def account_registration(request):
 
 #@csrf_exempt
 def account_activation(request):
-    if not 'activationKey' in request.POST:
-        return json_error_response(ugettext('No activationKey submitted'),
-                                   ugettext(
-                                       'You did not provide an activation key'))
+    if not 'activationKey' in request.POST or not request.POST['activationKey']:
+        return json_error_response("MissingPOSTParameter", 'activationKey')
     activationKey = request.POST['activationKey']
-    #Check for not Filled Values 
-    if activationKey == '':
-        return json_error_response(ugettext('No activationKey submitted'),
-                                   ugettext(
-                                       'You did not provide an activation key'))
 
-        #Check for already existing Username
+    #Check for already existing Username
     if not ((User.objects.filter(
             profile__activationKey__exact=activationKey).filter(
             is_active=False).count()) == 1):
-        return json_error_response(
-            ugettext('Activation Key is invalid'),
-            ugettext('The activation Key you are using is invalid or '
-                     'already used'))
+        return json_error_response('InvalidActivationKey')
     else:
         user = User.objects.get(profile__activationKey__exact=activationKey)
 
@@ -501,24 +444,15 @@ def account_activation(request):
 
 #@csrf_exempt
 def account_reset_request_by_name(request):
-    if not 'displayName' in request.POST:
-        return json_error_response(ugettext('No displayName submitted'),
-                                   ugettext('displayName is missing'))
+    if not 'displayName' in request.POST or not request.POST['displayName']:
+        return json_error_response('MissingPOSTParameter', 'displayName')
     displayName = request.POST['displayName']
-    #Check for not Filled Values 
-    if displayName == '':
-        return json_error_response(ugettext('Missing displayName'),
-                                   ugettext('You need to Provide displayName'))
 
     #Check for activated User with displayname
     if not ((User.objects.filter(username=displayName).filter(
             is_active=True).filter(
             profile__activationKey__exact='').count()) == 1):
-        return json_error_response(
-            ugettext('User not existing or not activated'),
-            ugettext('The Username is not assinged to an activated account or '
-                     'you have requested a Passwordeset to often. '
-                     'Please wait for Reset'))
+        return json_error_response('UnknownUser', displayName)
 
     user = User.objects.get(username=displayName)
     activationKey = random.getrandbits(256)
@@ -535,25 +469,15 @@ def account_reset_request_by_name(request):
 
 #@csrf_exempt
 def account_reset_request_by_mail(request):
-    if not 'emailAddress' in request.POST:
-        return json_error_response(ugettext('No emailAddress submitted'),
-                                   ugettext('emailAddress is missing'))
+    if not 'emailAddress' in request.POST or not request.POST['emailAddress']:
+        return json_error_response('MissingPOSTParameter', 'emailAddress')
     emailAddress = request.POST['emailAddress']
-    #Check for not Filled Values 
-    if emailAddress == '':
-        return json_error_response(
-            ugettext('Missing emailAddress'),
-            ugettext('You need to Provide an valid email address'))
 
     #Check for activated User with displayname
     if not ((User.objects.filter(email=emailAddress).filter(
             is_active=True).filter(
             profile__activationKey__exact='').count()) == 1):
-        return json_error_response(
-            ugettext('User not existing or not activated'),
-            ugettext('This email address is not assinged to an activated '
-                     'account or you have requested a Passwordreset to often. '
-                     'Please wait for Reset'))
+        return json_error_response('UnknownUser', emailAddress)
 
     user = User.objects.get(email=emailAddress)
     activationKey = random.getrandbits(256)
@@ -570,25 +494,15 @@ def account_reset_request_by_mail(request):
 
 #@csrf_exempt
 def account_reset_confirmation(request):
-    if not 'activationKey' in request.POST:
-        return json_error_response(ugettext('No activationKey submitted'),
-                                   ugettext(
-                                       'You did not provide an activation key'))
+    if not 'activationKey' in request.POST or not request.POST['activationKey']:
+        return json_error_response('MissingPOSTParameter', 'activationKey')
     activationKey = request.POST['activationKey']
-    #Check for not Filled Values 
-    if activationKey == '':
-        return json_error_response(ugettext('No activationKey submitted'),
-                                   ugettext(
-                                       'You did not provide an activation key'))
 
-        #Check for already existing Username
+    #Check for already existing Username
     if not ((User.objects.filter(
             profile__activationKey__exact=activationKey).filter(
             is_active=True).count()) == 1):
-        return json_error_response(
-            ugettext('Activation Key is invalid'),
-            ugettext('The activation Key you are using is invalid or '
-                     'already used'))
+        return json_error_response('InvalidActivationKey')
     else:
         user = User.objects.get(profile__activationKey__exact=activationKey)
         user.profile.activationKey = ''
@@ -603,6 +517,4 @@ def account_reset_confirmation(request):
 
 
 def error_404(request):
-    return json_error_response(
-        ugettext('Invalid URL'),
-        ugettext('The URL you requested is not specified in the Findeco-API.'))
+    return json_error_response('InvalidURL')

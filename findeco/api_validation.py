@@ -143,15 +143,16 @@ errorResponse_schema = {
 ERROR_LIST = [
     "UnknownNode",
     "UnknownUser",
+    "UnknownEmailAddress",
     "MissingPOSTParameter",
     "IllegalPath",
     "NotAuthenticated",
     "PermissionDenied",
     "DisabledAccount",
     "UsernameNotAvailable",
-    "EmailNotAvailable",
+    "EmailAddressNotAvailiable",
     "InvalidLogin",
-    "InvalidEmail",
+    "InvalidEmailAddress",
     "InvalidActivationKey",
     "InvalidURL"
 ]

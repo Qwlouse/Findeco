@@ -199,8 +199,7 @@ class LoadTextTest(TestCase):
 
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo',
-                         'Wahlprogramm.1/foo.1.pro',
-                         'Wahlprogramm.1/foo.1.pro.2']
+                         'Wahlprogramm.1/foo.1.pro']
         for p in illegal_paths:
             response = self.client.get(
                 reverse('load_text', kwargs=dict(path=p)))
