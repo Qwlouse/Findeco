@@ -291,13 +291,7 @@ def unfollow_node(request, path):
 def store_settings(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
-
-    if not 'description' in request.POST:
-        raise MissingPOSTParameter('description')
-    user.profile.description = request.POST['description']
-    user.profile.save()
-    if not 'displayName' in request.POST:
-        raise MissingPOSTParameter('displayName')
+    assert_post_parameters(request, ['description', 'displayName'])
     display_name = request.POST['displayName']
     if display_name != user.username:
         is_available = User.objects.filter(username=display_name).count() == 0
@@ -305,8 +299,9 @@ def store_settings(request):
             raise UsernameNotAvailable(display_name)
         else:
             user.username = display_name
-    user.save()
 
+    user.profile.description = request.POST['description']
+    user.save()
     return json_response({'storeSettingsResponse': {}})
 
 
@@ -320,9 +315,7 @@ def store_text(request, path):
                         'node_storage.add_derivation', 'node_storage.add_text',
                         'node_storage.change_vote'])
     user = request.user
-
-    if not 'wikiText' in request.POST:
-        raise MissingPOSTParameter('wikiText')
+    assert_post_parameters(request, ['wikiText'])
 
     if not 'argumentType' in request.POST:
         if 'wikiTextAlternative' in request.POST:
@@ -348,12 +341,7 @@ def store_text(request, path):
 
 @ViewErrorHandling
 def account_registration(request):
-    if not 'displayName' in request.POST or not request.POST['displayName']:
-        raise MissingPOSTParameter('displayName')
-    if not 'password' in request.POST or not request.POST['password']:
-        raise MissingPOSTParameter('password')
-    if not 'emailAddress' in request.POST or not request.POST['emailAddress']:
-        raise MissingPOSTParameter('emailAddress')
+    assert_post_parameters(request, ['displayName', 'password', 'emailAddress'])
 
     emailAddress = request.POST['emailAddress']
     password = request.POST['password']
@@ -389,8 +377,7 @@ def account_registration(request):
 
 @ViewErrorHandling
 def account_activation(request):
-    if not 'activationKey' in request.POST or not request.POST['activationKey']:
-        raise MissingPOSTParameter('activationKey')
+    assert_post_parameters(request, ['activationKey'])
     activationKey = request.POST['activationKey']
 
     #Check for already existing Username
@@ -409,8 +396,7 @@ def account_activation(request):
 
 @ViewErrorHandling
 def account_reset_request_by_name(request):
-    if not 'displayName' in request.POST or not request.POST['displayName']:
-        raise MissingPOSTParameter('displayName')
+    assert_post_parameters(request, ['displayName'])
     displayName = request.POST['displayName']
 
     assert_active_user(displayName)
@@ -430,8 +416,7 @@ def account_reset_request_by_name(request):
 
 @ViewErrorHandling
 def account_reset_request_by_mail(request):
-    if not 'emailAddress' in request.POST or not request.POST['emailAddress']:
-        raise MissingPOSTParameter('emailAddress')
+    assert_post_parameters(request, ['emailAddress'])
     emailAddress = request.POST['emailAddress']
 
     assert_active_user(emailAddress)
@@ -450,8 +435,7 @@ def account_reset_request_by_mail(request):
 
 @ViewErrorHandling
 def account_reset_confirmation(request):
-    if not 'activationKey' in request.POST or not request.POST['activationKey']:
-        raise MissingPOSTParameter('activationKey')
+    assert_post_parameters(request, ['activationKey'])
     activationKey = request.POST['activationKey']
 
     #Check for already existing Username

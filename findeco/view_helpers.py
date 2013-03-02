@@ -143,6 +143,12 @@ def assert_permissions(request, permissions):
             raise PermissionDenied()
 
 
+def assert_post_parameters(request, parameters):
+    for p in parameters:
+        if not p in request.POST:
+            raise MissingPOSTParameter(p)
+
+
 def create_user_info(user):
     user_info = dict(
         displayName=user.username,
