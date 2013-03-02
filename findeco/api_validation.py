@@ -32,108 +32,108 @@ integer = 1
 string = "string"
 boolean = True
 user_schema = {
-    'displayName':string
+    'displayName': string
 }
 userInfo_schema = {
-    'displayName':string,
-    'description':string,
-    'followers':[user_schema, None],
-    'followees':[user_schema, None]
+    'displayName': string,
+    'description': string,
+    'followers': [user_schema, None],
+    'followees': [user_schema, None]
 }
-userSettings_schema={
-    'blockedUsers':[user_schema, None],
-    'userRights':integer
+userSettings_schema = {
+    'blockedUsers': [user_schema, None],
+    'userRights': integer
 }
 authorGroup_schema = [userInfo_schema]
 originGroup_schema = ["path", None]
 graphDataNode_schema = {
-    'path':string,
+    'path': string,
     'authorGroup': authorGroup_schema,
-    'follows':integer,
-    'unFollows':integer,
-    'newFollows':integer,
-    'originGroup':originGroup_schema
+    'follows': integer,
+    'unFollows': integer,
+    'newFollows': integer,
+    'originGroup': originGroup_schema
 }
 indexNode_schema = {
-    'shortTitle': string+'?',
-    'argumentDenominator':string+'?',
-    'fullTitle':string,
-    'index':integer,
+    'shortTitle': string + '?',
+    'argumentDenominator': string + '?',
+    'fullTitle': string,
+    'index': integer,
     'authorGroup': authorGroup_schema
 }
 microblogNode_schema = {
-    'microblogText':string,
+    'microblogText': string,
     'authorGroup': ["user"],
-    'microblogTime':integer,
-    'microblogID':integer
+    'microblogTime': integer,
+    'microblogID': integer
 }
 textNode_schema = {
-    'wikiText':string,
-    'path':string,
-    'isFollowing':integer,
+    'wikiText': string,
+    'path': string,
+    'isFollowing': integer,
     'authorGroup': authorGroup_schema
 }
 loadGraphDataResponse_schema = {
-    'loadGraphDataResponse':{
-        'graphDataChildren':[graphDataNode_schema],
-        'graphDataRelated':[graphDataNode_schema, None]
+    'loadGraphDataResponse': {
+        'graphDataChildren': [graphDataNode_schema],
+        'graphDataRelated': [graphDataNode_schema, None]
     }
 }
 loadIndexResponse_schema = {
-    'loadIndexResponse':[indexNode_schema, None]
+    'loadIndexResponse': [indexNode_schema, None]
 }
 loadMicrobloggingResponse_schema = {
-    'loadMicrobloggingResponse':[microblogNode_schema, None]
+    'loadMicrobloggingResponse': [microblogNode_schema, None]
 }
 loadTextResponse_schema = {
-    'loadTextResponse':{
-        'paragraphs':[textNode_schema],
-        'isFollowing':integer,
-        }
+    'loadTextResponse': {
+        'paragraphs': [textNode_schema],
+        'isFollowing': integer,
+    }
 }
 loadUserInfoResponse_schema = {
-    'loadUserInfoResponse':{
-        'userInfo':userInfo_schema
+    'loadUserInfoResponse': {
+        'userInfo': userInfo_schema
     }
 }
 loadUserSettingsResponse_schema = {
-    'loadUserSettingsResponse':{
-        'userInfo':userInfo_schema,
-        'userSettings':userSettings_schema
+    'loadUserSettingsResponse': {
+        'userInfo': userInfo_schema,
+        'userSettings': userSettings_schema
     }
 }
 loginResponse_schema = {
-    'loginResponse':{
-        'userInfo':userInfo_schema,
-        'userSettings':userSettings_schema
+    'loginResponse': {
+        'userInfo': userInfo_schema,
+        'userSettings': userSettings_schema
     }
 }
 logoutResponse_schema = {
-    'logoutResponse':{
-        'farewellMessage':string
+    'logoutResponse': {
+        'farewellMessage': string
     }
 }
 markNodeResponse_schema = {
-    'markNodeResponse':{
+    'markNodeResponse': {
     }
 }
 storeMicroblogPostResponse_schema = {
-    'storeMicroblogPostResponse':{
+    'storeMicroblogPostResponse': {
     }
 }
 storeSettingsResponse_schema = {
-    'storeSettingsResponse':{
+    'storeSettingsResponse': {
     }
 }
 storeTextResponse_schema = {
-    'storeTextResponse':{
-        'path':"path"
+    'storeTextResponse': {
+        'path': "path"
     }
 }
 errorResponse_schema = {
-    'errorResponse':{
-        'errorTitle':string,
-        'errorMessage':string
+    'errorResponse': {
+        'errorTitle': string,
+        'errorMessage': string
     }
 }
 
@@ -145,37 +145,38 @@ indexNodeValidator = JSONValidator(indexNode_schema)
 
 loadGraphDataResponseValidator = JSONValidator(loadGraphDataResponse_schema)
 loadIndexResponseValidator = JSONValidator(loadIndexResponse_schema)
-loadMicrobloggingResponseValidator = JSONValidator(loadMicrobloggingResponse_schema)
+loadMicrobloggingResponseValidator = JSONValidator(
+    loadMicrobloggingResponse_schema)
 loadTextResponseValidator = JSONValidator(loadTextResponse_schema)
 loadUserInfoResponseValidator = JSONValidator(loadUserInfoResponse_schema)
-loadUserSettingsResponseValidator = JSONValidator(loadUserSettingsResponse_schema)
+loadUserSettingsResponseValidator = JSONValidator(
+    loadUserSettingsResponse_schema)
 loginResponseValidator = JSONValidator(loginResponse_schema)
 logoutResponseValidator = JSONValidator(logoutResponse_schema)
 markNodeResponseValidator = JSONValidator(markNodeResponse_schema)
-storeMicroblogPostResponseValidator = JSONValidator(storeMicroblogPostResponse_schema)
+storeMicroblogPostResponseValidator = JSONValidator(
+    storeMicroblogPostResponse_schema)
 storeSettingsResponseValidator = JSONValidator(storeSettingsResponse_schema)
 storeTextResponseValidator = JSONValidator(storeTextResponse_schema)
 errorResponseValidator = JSONValidator(errorResponse_schema)
 
-
-
 view_validators = {
-    'load_graph_data':loadGraphDataResponseValidator,
-    'load_index':loadIndexResponseValidator,
-    'load_argument_index':loadIndexResponseValidator,
-    'load_microblogging':loadMicrobloggingResponseValidator,
-    'load_text':loadTextResponseValidator,
-    'load_user_info':loadUserInfoResponseValidator,
-    'load_user_settings':loadUserSettingsResponseValidator,
-    'login':loginResponseValidator,
-    'logout':logoutResponseValidator,
-    'flag_node':markNodeResponseValidator,
-    'unflag_node':markNodeResponseValidator,
-    'follow_node':markNodeResponseValidator,
-    'unfollow_node':markNodeResponseValidator,
-    'store_microblog_post':storeMicroblogPostResponseValidator,
-    'store_settings':storeSettingsResponseValidator,
-    'store_text':storeTextResponseValidator
+    'load_graph_data': loadGraphDataResponseValidator,
+    'load_index': loadIndexResponseValidator,
+    'load_argument_index': loadIndexResponseValidator,
+    'load_microblogging': loadMicrobloggingResponseValidator,
+    'load_text': loadTextResponseValidator,
+    'load_user_info': loadUserInfoResponseValidator,
+    'load_user_settings': loadUserSettingsResponseValidator,
+    'login': loginResponseValidator,
+    'logout': logoutResponseValidator,
+    'flag_node': markNodeResponseValidator,
+    'unflag_node': markNodeResponseValidator,
+    'follow_node': markNodeResponseValidator,
+    'unfollow_node': markNodeResponseValidator,
+    'store_microblog_post': storeMicroblogPostResponseValidator,
+    'store_settings': storeSettingsResponseValidator,
+    'store_text': storeTextResponseValidator
 }
 
 
