@@ -27,8 +27,10 @@
 function ClassLogin() {}
 var Login = new ClassLogin();
 
+
 ClassLogin.prototype.form = {};
 ClassLogin.prototype.user = null;
+ClassLogin.prototype.rqhandler= RqHandler;
 
 ClassLogin.prototype.checkKey = function (e) {
     if ( e.which == 13 ) {
@@ -49,32 +51,14 @@ ClassLogin.prototype.isLoggedin = function() {
 
 ClassLogin.prototype.handleRequest = function(data) {
 
-    if ( typeof data['errorResponse'] !=  'undefined') {
-        alert(data['errorResponse']['errorTitle'] + "\n" + data['errorResponse']['errorMessage']);
-        return false;
-    }
-    //alert (JSON.stringify(data));
     if ( typeof data['loginResponse'] !=  'undefined') {
-    Login.user = new ClassUser();
-    Login.show();
-    Login.overlay
-        .hide()
-        .empty();
+	    Login.user = new ClassUser();
+	    Login.show();
+	    Login.overlay
+	        .hide()
+	        .empty();
     }
-    if ( typeof data['accountRegistrationResponse'] !=  'undefined') {
-    	alert('Die Registrierung war erfolgreich!! \n Du erhälst in den nächsten Minuten eine Aktivierungsemail.');
-    }
-    if ( typeof data['accountActivationResponse'] !=  'undefined') {
-    	alert('Dein Account wurde gerade freigeschaltet. Du kannst dich jetzt einloggen');
-    }
-    if ( (typeof data['accountResetRequestByNameResponse'] !=  'undefined')
-    	||(typeof data['accountResetRequestByMailResponse'] !=  'undefined')
-    ) {
-    	alert('Wir haben dir eine Wiederherstellungsmail an deine Emailadresse gesendet.');
-    }
-    if ( typeof data['accountResetConfirmationResponse'] !=  'undefined') {
-    	alert('Die Wiederherstellung war erfolgreich. Wir haben dir ein neues Passwort zugesendet.');
-    }    
+    
         
 }
 
@@ -286,17 +270,13 @@ ClassLogin.prototype.submitLogin = function() {
         alert('Bitte fülle alle Felder aus!');
         return false;
     }
-    
-    $.ajax({
-        type: 'POST',
+    alert('INIT');
+    Login.rqhandler.post({
         url: '.json_login',
         data: tmp,
-        success: Login.handleRequest,
-        dataType: 'json',
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
-        }
+        success: Login.handleRequest
     });
+   
 }
 
 ClassLogin.prototype.submitRecoveryByMail = function() {
@@ -308,20 +288,14 @@ ClassLogin.prototype.submitRecoveryByMail = function() {
         alert('Bitte fülle alle Felder aus!');
         return false;
     }
-    $.ajax({
-        type: 'POST',
+    Login.rqhandler.post({
         url: '.json_accountResetRequestByMail',
         data: tmp,
-        success: Login.handleRequest,
-        dataType: 'json',
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
-        }
     });
  }
  
+ 
 ClassLogin.prototype.submitRecoveryByName = function() {
-alert('name');
  	var tmp = {
         'displayName': Login.form['name'].val()
     };
@@ -330,18 +304,11 @@ alert('name');
         alert('Bitte fülle alle Felder aus!');
         return false;
     }
-    $.ajax({
-        type: 'POST',
+    Login.rqhandler.post({
         url: '.json_accountResetRequestByName',
-        data: tmp,
-        success: Login.handleRequest,
-        dataType: 'json',
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
-        }
+        data: tmp
     });
- }
- 
+ } 
  
 
 ClassLogin.prototype.submitRegister = function() {
@@ -362,46 +329,30 @@ ClassLogin.prototype.submitRegister = function() {
         alert('Die Passwörter stimmen nicht überein');
         return false;
     }
-    $.ajax({
-        type: 'POST',
+    Login.rqhandler.post({
         url: '.json_accountRegistration',
-        data: tmp,
-        success: Login.handleRequest,
-        dataType: 'json',
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
-        }
+        data: tmp
     });
- }
+}
  
  
- ClassLogin.prototype.submitActivation = function(activationKey) {
- 	var tmp = {
-        'activationKey': activationKey,
+ClassLogin.prototype.submitActivation = function(activationKey) {
+	var tmp = {
+    	'activationKey': activationKey,
     };
-    $.ajax({
-        type: 'POST',
+   	Login.rqhandler.post({
         url: '.json_accountActivation',
-        data: tmp,
-        success: Login.handleRequest,
-        dataType: 'json',
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
-        }
-    });
- }
-  ClassLogin.prototype.submitRecovery = function(activationKey) {
+        data: tmp
+    	});
+ 	}	
+ 
+
+ClassLogin.prototype.submitRecovery = function(activationKey) {
  	var tmp = {
         'activationKey': activationKey,
     };
-    $.ajax({
-        type: 'POST',
+   	Login.rqhandler.post({
         url: '.json_accountResetConfirmation',
-        data: tmp,
-        success: Login.handleRequest,
-        dataType: 'json',
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken());
-        }
+        data: tmp
     });
- }
+}

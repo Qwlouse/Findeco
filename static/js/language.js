@@ -14,7 +14,7 @@
  *                                                                                      *
  * You should have received a copy of the GNU General Public License along with         *
  * BasDeM. If not, see <http://www.gnu.org/licenses/>.                                  *
- ****************************************************************************************/
+ ****************************************************************************************/	
  
 /****************************************************************************************
  * This Source Code Form is subject to the terms of the Mozilla Public                  *
@@ -27,14 +27,65 @@ function ClassLanguage() {}
 
 var Language = new ClassLanguage();
 
-ClassLanguage.prototype.get = function (target, lang) {
-    switch (target) {
+ClassLanguage.prototype.get = function (target) {
+    switch (Settings.locales) {
         case 'de_DE':
-            switch (lang) {
+            switch (target) {
                 case 'lang_alertLoggedout':
                     return 'Du bist nicht mehr eingeloggt. Bitte lade die Seite neu.';
+                case 'InvalidLogin':
+                	return 'Dein Login ist leider ungültig.';
+                case 'UnknownEmailAddress':
+                	return 'Die Emailaddresse \'{0}\' ist dem System nicht bekannt';
+                case 'UnknownNode':
+                	return 'Der Pfad \'{0}\' ist dem System nicht bekannt';
+                case 'UnknownUser':
+                	return 'Der User \'{0}\' ist dem System nicht bekannt';
+                case 'UnknownNode':
+                	return 'Der Pfad \'{0}\' ist dem System nicht bekannt';
+                case 'MissingPOSTParameter':
+                	return 'Der Post Parameter \'{0}\' fehlt';
+                case 'IllegalPath':
+                	return 'Der Pfad Parameter \'{0}\' ist ungültig'; 
+                case 'NotAuthenticated':
+                	return 'Sie sind nich angemeldet';     
+      			case 'PermissionDenied':
+                	return 'Zugriff verweigert'; 
+				case 'DisabledAccount':
+                	return 'Der Account \'{0}\' ist deaktiviert';
+                case 'UsernameNotAvailable':
+                	return 'Der Benutzername \'{0}\' ist nicht verfügbar';  
+ 				case 'EmailAddressNotAvailiable':
+                	return 'Die Emailadresse \'{0}\' ist nicht verfügbar'; 
+                case 'InvalidLogin':
+                	return 'Die Loggindaten sind ungültig';
+                case 'InvalidEmailAddress':
+                	return 'Die Emailadresse \'{0}\' ist ungültig';
+                case 'InvalidActivationKey':
+                	return 'Der Aktivierungscode ist ungültig oder bereits verwendet';	
+                case 'InvalidURL':
+                	return 'Diese URL ist ungültig';
+
+
+
+                
+                
+                
+                // automatically called messages
+                case 'accountRegistrationResponseSuccess':
+                	return 'Die Registrierung war erfolgreich!! \n Du erhälst in den nächsten Minuten eine Aktivierungsemail.';
+                case 'accountActivationResponseSuccess':
+                	return 'Dein Account wurde gerade freigeschaltet. Du kannst dich jetzt einloggen';
+                case 'accountResetRequestByNameResponseSuccess':
+                	return 'Wir haben dir eine Wiederherstellungsmail an deine Emailadresse gesendet.';
+                case 'accountResetRequestByMailResponseSuccess':
+                	return 'Wir haben dir eine Wiederherstellungsmail an deine Emailadresse gesendet.';
+                case 'accountResetConfirmationResponseSuccess':
+                	return'Die Wiederherstellung war erfolgreich. Wir haben dir ein neues Passwort zugesendet.';
+                
+                
                 default:
-                    return 'undefined';
+                    return 'Es wurde keine Übersetzung für ' + target + ' definiert. ';
             }
             break;
         case 'en_GB':

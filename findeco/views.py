@@ -419,7 +419,12 @@ def account_reset_request_by_mail(request):
     assert_post_parameters(request, ['emailAddress'])
     emailAddress = request.POST['emailAddress']
 
-    assert_active_user(emailAddress)
+    #Check for activated User with displayname
+    if not ((User.objects.filter(email=emailAddress).filter(
+            is_active=True).filter(
+            profile__activationKey__exact='').count()) == 1):
+        return json_error_response('UnknownUser', emailAddress)
+
     user = User.objects.get(email=emailAddress)
     activationKey = random.getrandbits(256)
     user.profile.activationKey = activationKey
