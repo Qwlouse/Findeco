@@ -155,6 +155,7 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None,
         path=path,
         authorGroup=[create_user_info(a) for a in node.text.authors.all()],
         follows=node.votes.count(),
+        spamFlags=node.spam_flags.count(),
         unFollows=node.get_unfollows(),
         newFollows=node.get_newfollows(),
         originGroup=[o.rstrip('/') for o in origin_group]

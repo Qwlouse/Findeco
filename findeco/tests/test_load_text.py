@@ -125,11 +125,12 @@ class LoadTextTest(TestCase):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         expected_response = {
-            'loadTextResponse':{
-                'paragraphs':[{
+            'loadTextResponse': {
+                'paragraphs': [{
                     'wikiText':"=Dagegen=\n...denn ihr seid dafür",
                     'path':"Wahlprogramm.1/Datenschutz.1.con.1",
                     'isFollowing':0,
+                    'isFlagging':0,
                     'authorGroup': [{
                         'displayName':"hugo",
                         'description':"",
@@ -137,7 +138,8 @@ class LoadTextTest(TestCase):
                         'followees':[]
                     }]
                 }],
-                'isFollowing':0
+                'isFollowing': 0,
+                'isFlagging': 0
             }
         }
         self.assertEqual(data, expected_response)
