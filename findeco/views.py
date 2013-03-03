@@ -122,11 +122,9 @@ def load_text(request, path):
             # write to cache
         t = json.dumps(paragraphs)
         backend.TextCache.objects.create(path=path, paragraphs=t)
-
-    for p in paragraphs:
-        node = backend.Node.objects.get(id=p['_node_id'])
-        p['isFollowing'] = get_is_following(
-            request.user.id, node)
+    node_list = [p['_node_id'] for p in paragraphs]
+    for p, node in zip(paragraphs, backend.Node.objects.filter(id__in=node_list)):
+        p['isFollowing'] = get_is_following(request.user.id, node)
         p['isFlagging'] = node.spam_flags.filter(
             user_id=request.user.id).count()
         del p['_node_id']
