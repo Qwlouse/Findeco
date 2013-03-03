@@ -173,12 +173,20 @@ ClassData.prototype.loadTextResponse = function(data) {
         
         var div ='<div><div class="followContainer" style="float:right">';
         div += followContent;
-        div += spamContent;
+        div +='<div class="btndropdown"><ul> <li> &dArr; &dArr; &dArr; <ul><li>';
+        div += spamContent
+        div +='</li></ul></div>';
+        
         div +='</div>'+ parsed.innerHTML + '<div>';
+        	
         
-       output=$(div);
         
-        //<div><div style="float:right"><span class="FollowStar"><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span></div>' + parsed.innerHTML + '<div>'
+        output=$(div);
+        output.find(".btndropdown li:has(ul)").hover(function(){
+    		$(this).find("ul").slideDown();
+    	}, function(){
+    		$(this).find("ul").hide();
+    	});
         
         
         output.find("span.followStar").click(RqHandler.get({   
@@ -188,11 +196,7 @@ ClassData.prototype.loadTextResponse = function(data) {
        output.find("span.spamFlag").click(RqHandler.get({   
     		url: spamrqurl,
     		success:Controller.loadText
-    	}));
-    	//var container =$('<div><div class="followContainer" style="float:right"></div>'+ parsed.innerHTML + '<div>');
-    	//div = followContent.appendTo(container('.followContainer'))
-    	
-    	
+    	}));   	
       
         output.appendTo(this.html);
         
