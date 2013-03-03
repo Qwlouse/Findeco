@@ -141,40 +141,19 @@ class LoadTextTest(TestCase):
             reverse('load_text', kwargs=dict(path="Wahlprogramm.1")))
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'],
+        paragraphs = data['loadTextResponse']['paragraphs']
+        self.assertEqual(paragraphs[0]['wikiText'],
                          "= LangerWahlprogrammTitel =\nEinleitungstext")
-        self.assertEqual(data['loadTextResponse']['paragraphs'][0]['path'],
-                         "Wahlprogramm.1")
+        self.assertEqual(paragraphs[0]['path'], "Wahlprogramm.1")
+        self.assertEqual(paragraphs[1]['wikiText'], "== [[#/Wahlprogramm.1/Transparenz.1|Traaaansparenz]] ==\nTransparenz ist wichtig.")
+        self.assertEqual(paragraphs[2]['wikiText'], "=== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1|Eeeebeneee 3]] ===\n")
+        self.assertEqual(paragraphs[3]['wikiText'], "==== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1|Eeeebeneee 4]] ====\n")
+        self.assertEqual(paragraphs[4]['wikiText'], "===== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1|Eeeebeneee 5]] =====\n")
+        self.assertEqual(paragraphs[5]['wikiText'], "====== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1/Ebene_6.1|Eeeebeneee 6]] ======\n")
+        self.assertEqual(paragraphs[6]['wikiText'], "====== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1/Ebene_6.1/Ebene_7.1|Traaaansparenz]] ======\nAuf Ebene 7.")
+        self.assertEqual(paragraphs[7]['wikiText'], "== [[#/Wahlprogramm.1/Bildung.1|Biiildung]] ==\n")
+        self.assertEqual(paragraphs[8]['wikiText'], "== [[#/Wahlprogramm.1/Datenschutz.1|Daaatenschutz]] ==\nBlubb.")
 
-        expected_text = """== [[#/Wahlprogramm.1/Transparenz.1|Traaaansparenz]] ==
-Transparenz ist wichtig.
-
-=== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1|Eeeebeneee 3]] ===
-
-
-==== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1|Eeeebeneee 4]] ====
-
-
-===== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1|Eeeebeneee 5]] =====
-
-
-====== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1/Ebene_6.1|Eeeebeneee 6]] ======
-
-
-====== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1/Ebene_6.1/Ebene_7.1|Traaaansparenz]] ======
-Auf Ebene 7."""
-        self.assertEqual(data['loadTextResponse']['paragraphs'][1]['wikiText'],
-                         expected_text)
-        self.assertEqual(data['loadTextResponse']['paragraphs'][1]['path'],
-                         "Wahlprogramm.1/Transparenz.1")
-        self.assertEqual(data['loadTextResponse']['paragraphs'][2]['wikiText'],
-                         "== [[#/Wahlprogramm.1/Bildung.1|Biiildung]] ==\n")
-        self.assertEqual(data['loadTextResponse']['paragraphs'][2]['path'],
-                         "Wahlprogramm.1/Bildung.1")
-        self.assertEqual(data['loadTextResponse']['paragraphs'][3]['wikiText'],
-                         "== [[#/Wahlprogramm.1/Datenschutz.1|Daaatenschutz]] ==\nBlubb.")
-        self.assertEqual(data['loadTextResponse']['paragraphs'][3]['path'],
-                         "Wahlprogramm.1/Datenschutz.1")
 
     def test_load_text_on_argument_gives_argument_text(self):
         response = self.client.get(

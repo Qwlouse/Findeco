@@ -82,7 +82,9 @@ def get_good_path_for_structure_node(node, slot=None, slot_path=None):
     """
     if slot:
         index = node.get_index(slot)
-        return slot.get_a_path() + '.' + str(index)
+        if slot_path is None:
+            slot_path = slot.get_a_path()
+        return slot_path + '.' + str(index)
     elif slot_path:
         slot = get_node_for_path(slot_path)
         return slot_path + '.' + str(node.get_index(slot))

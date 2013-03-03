@@ -198,18 +198,37 @@ def create_index_node_for_argument(argument, node):
     return index_node
 
 
-def build_text(node, depth=2):
-    depth = min(depth, 6)
-    equal_signs = "=" * depth
-    text = "{equal_signs} [[#/{path}|{title}]] {equal_signs}\n{text}".format(
-        equal_signs=equal_signs,
+def create_paragraph_for_node(node, path, depth=1):
+    depth = max(min(depth, 6), 1)
+    markup = "=" * depth
+    if depth == 1:
+        text_pattern = "{markup} {title} {markup}\n{text}"
+    else:
+        text_pattern = "{markup} [[#/{path}|{title}]] {markup}\n{text}"
+
+    text = text_pattern.format(
+        markup=markup,
         path=node.get_a_path(),
         title=node.title,
         text=node.text.text
     )
-    for slot in node.children.all():
-        text += "\n\n" + build_text(slot.favorite, depth + 1)
-    return text
+    return {
+        'wikiText': text,
+        'path': path,
+        '_node_id': node.id,
+        'authorGroup': [create_user_info(a) for a in node.text.authors.all()]}
+
+
+def create_paragraph_list_for_node(node, path, depth=1):
+    paragraphs = [create_paragraph_for_node(node, path, depth=depth)]
+    for slot in backend.get_ordered_children_for(node):
+        favorite = slot.favorite
+        slot_path = path + "/" + slot.title
+        fav_path = get_good_path_for_structure_node(favorite, slot, slot_path)
+        paragraphs += create_paragraph_list_for_node(favorite,
+                                                     fav_path,
+                                                     depth=depth + 1)
+    return paragraphs
 
 
 def create_graph_data_node_for_structure_node(node, slot=None, path=None,

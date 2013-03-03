@@ -106,20 +106,8 @@ def load_text(request, path):
         paragraphs = json.loads(t.paragraphs)
     except backend.TextCache.DoesNotExist:
         node = assert_node_for_path(path)
-        paragraphs = [{'wikiText': "= " + node.title + " =\n" + node.text.text,
-                       'path': path,
-                       '_node_id': node.id,
-                       'authorGroup': [create_user_info(a) for a in
-                                       node.text.authors.all()]}]
-        for slot in backend.get_ordered_children_for(node):
-            favorite = slot.favorite
-            paragraphs.append({'wikiText': build_text(favorite, depth=2),
-                               'path': path + "/" + slot.title + "." + str(
-                                   favorite.get_index(slot)),
-                               '_node_id': favorite.id,
-                               'authorGroup': [create_user_info(a) for a in
-                                               favorite.text.authors.all()]})
-            # write to cache
+        paragraphs = create_paragraph_list_for_node(node, path)
+        # write to cache
         t = json.dumps(paragraphs)
         backend.TextCache.objects.create(path=path, paragraphs=t)
     node_list = [p['_node_id'] for p in paragraphs]
