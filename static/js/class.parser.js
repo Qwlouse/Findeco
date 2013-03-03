@@ -35,8 +35,14 @@ ClassParser.prototype.isErrorState = function() {
 }
 
 ClassParser.prototype.parse = function(text, shortTitle){
-    alert(text);
-
+    var wikiText = '';
+    try {
+        Parser.errorState = false;
+        wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
+    } catch (e) {
+        Parser.errorState = true;
+        wikiText = e;
+    }
     var textDiv = document.createElement("div");
     textDiv.innerHTML = "";
     var creole = new Parse.Simple.Creole( {
@@ -47,10 +53,16 @@ ClassParser.prototype.parse = function(text, shortTitle){
         },
         linkFormat: ''
     } );
-
-    creole.parse(textDiv,text);
+    creole.parse(textDiv,wikiText);
     var div = $('<div>' + textDiv.innerHTML + '<div>');
 
-
+    var img = div.find("img[src$='/static/images/gototext.png']");
+    img.click(function() {
+        Controller.loadIndex(
+            this.parentNode.href.substring(
+                this.parentNode.href.indexOf('#')+1
+            )
+        );
+    });
     return div;
 };
