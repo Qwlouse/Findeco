@@ -270,7 +270,6 @@ ClassLogin.prototype.submitLogin = function() {
         alert('Bitte fülle alle Felder aus!');
         return false;
     }
-    alert('INIT');
     Login.rqhandler.post({
         url: '.json_login',
         data: tmp,
