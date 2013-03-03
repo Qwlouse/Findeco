@@ -34,15 +34,20 @@ ClassParser.prototype.isErrorState = function() {
     return Parser.errorState;
 }
 
-ClassParser.prototype.parse = function(text, shortTitle){
+ClassParser.prototype.parse = function(text, shortTitle,disableValidation){
     var wikiText = '';
-    try {
-        Parser.errorState = false;
-        wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
-    } catch (e) {
-        Parser.errorState = true;
-        wikiText = e;
+    if (disableValidation != true  ){
+    	try {
+    		Parser.errorState = false;
+    		wikiText = convertSchemaToCreole(parseStructure(text, shortTitle));
+    	} catch (e) {
+    		Parser.errorState = true;
+    		wikiText = e;
+    	}
+    }else{
+    	wikiText=text;
     }
+    
     var textDiv = document.createElement("div");
     textDiv.innerHTML = "";
     var creole = new Parse.Simple.Creole( {

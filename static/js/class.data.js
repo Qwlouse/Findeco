@@ -138,7 +138,7 @@ ClassData.prototype.loadTextResponse = function(data) {
         wikiText += data['paragraphs'][p].wikiText + "\n\n[[#/" + data['paragraphs'][p].path + "|{{/static/images/gototext.png|go to this part ...}}]]\n\n";
     }
     var shortTitle = data['paragraphs'][0].path.replace(/(.*)\//g,'').replace(/.\d+$/,'');
-    Parser.parse(wikiText,shortTitle).appendTo(this.html);
+    Parser.parse(wikiText,shortTitle,true).appendTo(this.html);
 };
 
 ClassData.prototype.loadMicrobloggingResponse = function(data) {
