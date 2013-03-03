@@ -145,19 +145,34 @@ class LoadTextTest(TestCase):
                          "=LangerWahlprogrammTitel=\nEinleitungstext")
         self.assertEqual(data['loadTextResponse']['paragraphs'][0]['path'],
                          "Wahlprogramm.1")
+
+        expected_text = """== [[#/Wahlprogramm.1/Transparenz.1|Traaaansparenz]] ==
+Transparenz ist wichtig.
+
+=== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1|Eeeebeneee 3]] ===
+
+
+==== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1|Eeeebeneee 4]] ====
+
+
+===== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1|Eeeebeneee 5]] =====
+
+
+====== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1/Ebene_6.1|Eeeebeneee 6]] ======
+
+
+====== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1/Ebene_6.1/Ebene_7.1|Traaaansparenz]] ======
+Auf Ebene 7."""
         self.assertEqual(data['loadTextResponse']['paragraphs'][1]['wikiText'],
-                         "==Traaaansparenz==\nTransparenz ist wichtig.\n\n"
-                         "===Eeeebeneee 3===\n\n\n====Eeeebeneee 4====\n\n\n"
-                         "=====Eeeebeneee 5=====\n\n\n======Eeeebeneee 6======"
-                         "\n\n\n======Traaaansparenz======\nAuf Ebene 7.")
+                         expected_text)
         self.assertEqual(data['loadTextResponse']['paragraphs'][1]['path'],
                          "Wahlprogramm.1/Transparenz.1")
         self.assertEqual(data['loadTextResponse']['paragraphs'][2]['wikiText'],
-                         "==Biiildung==\n")
+                         "== [[#/Wahlprogramm.1/Bildung.1|Biiildung]] ==\n")
         self.assertEqual(data['loadTextResponse']['paragraphs'][2]['path'],
                          "Wahlprogramm.1/Bildung.1")
         self.assertEqual(data['loadTextResponse']['paragraphs'][3]['wikiText'],
-                         "==Daaatenschutz==\nBlubb.")
+                         "== [[#/Wahlprogramm.1/Datenschutz.1|Daaatenschutz]] ==\nBlubb.")
         self.assertEqual(data['loadTextResponse']['paragraphs'][3]['path'],
                          "Wahlprogramm.1/Datenschutz.1")
 

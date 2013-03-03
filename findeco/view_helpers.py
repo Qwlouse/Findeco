@@ -200,7 +200,13 @@ def create_index_node_for_argument(argument, node):
 
 def build_text(node, depth=2):
     depth = min(depth, 6)
-    text = "=" * depth + node.title + "=" * depth + "\n" + node.text.text
+    equal_signs = "=" * depth
+    text = "{equal_signs} [[#/{path}|{title}]] {equal_signs}\n{text}".format(
+        equal_signs=equal_signs,
+        path=node.get_a_path(),
+        title=node.title,
+        text=node.text.text
+    )
     for slot in node.children.all():
         text += "\n\n" + build_text(slot.favorite, depth + 1)
     return text
