@@ -26,7 +26,7 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 
-from models import Node, Vote, SpamFlag, Argument, Text, NodeOrder, TextCache
+from models import Node, Vote, SpamFlag, Argument, Text, NodeOrder, TextCache, IndexCache
 from path_helpers import get_node_for_path, get_favorite_if_slot
 from path_helpers import get_ordered_children_for
 from path_helpers import IllegalPath, get_root_node

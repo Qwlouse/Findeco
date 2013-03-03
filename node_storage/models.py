@@ -130,6 +130,7 @@ class Node(models.Model):
             for a in self.traverse_all_ancestors():
                 invalid_paths += [p.path for p in a.paths.all()]
             TextCache.objects.filter(path__in=invalid_paths).delete()
+            IndexCache.objects.filter(path__in=invalid_paths).delete()
 
     def update_favorite_for_all_parents(self):
         for p in self.parents.all():
@@ -295,6 +296,11 @@ class SpamFlag(models.Model):
 class TextCache(models.Model):
     path = models.CharField(max_length=250, primary_key=True)
     paragraphs = models.TextField()
+
+
+class IndexCache(models.Model):
+    path = models.CharField(max_length=250, primary_key=True)
+    index_nodes = models.TextField()
 
 
 class PathCache(models.Model):

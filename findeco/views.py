@@ -53,13 +53,19 @@ def home(request, path):
         return HttpResponse(index_html_file.read(), mimetype='text/html')
 
 
-
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def load_index(request, path):
-    node = assert_node_for_path(path)
-    slot_list = backend.get_ordered_children_for(node)
-    index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
+    try:  # to get from cache
+        index_cache = backend.IndexCache.objects.get(path=path.strip().strip('/'))
+        index_nodes = json.loads(index_cache.index_nodes)
+    except backend.IndexCache.DoesNotExist:
+        node = assert_node_for_path(path)
+        slot_list = backend.get_ordered_children_for(node)
+        index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
+        # write to cache
+        index_cache = json.dumps(index_nodes)
+        backend.IndexCache.objects.create(path=path, index_nodes=index_cache)
     return json_response({'loadIndexResponse': index_nodes})
 
 
@@ -106,27 +112,13 @@ def load_text(request, path):
         paragraphs = json.loads(t.paragraphs)
     except backend.TextCache.DoesNotExist:
         node = assert_node_for_path(path)
-        paragraphs = [{'wikiText': "= " + node.title + " =\n" + node.text.text,
-                       'path': path,
-                       '_node_id': node.id,
-                       'authorGroup': [create_user_info(a) for a in
-                                       node.text.authors.all()]}]
-        for slot in backend.get_ordered_children_for(node):
-            favorite = slot.favorite
-            paragraphs.append({'wikiText': build_text(favorite, depth=2),
-                               'path': path + "/" + slot.title + "." + str(
-                                   favorite.get_index(slot)),
-                               '_node_id': favorite.id,
-                               'authorGroup': [create_user_info(a) for a in
-                                               favorite.text.authors.all()]})
-            # write to cache
+        paragraphs = create_paragraph_list_for_node(node, path)
+        # write to cache
         t = json.dumps(paragraphs)
         backend.TextCache.objects.create(path=path, paragraphs=t)
-
-    for p in paragraphs:
-        node = backend.Node.objects.get(id=p['_node_id'])
-        p['isFollowing'] = get_is_following(
-            request.user.id, node)
+    node_list = [p['_node_id'] for p in paragraphs]
+    for p, node in zip(paragraphs, backend.Node.objects.filter(id__in=node_list)):
+        p['isFollowing'] = get_is_following(request.user.id, node)
         p['isFlagging'] = node.spam_flags.filter(
             user_id=request.user.id).count()
         del p['_node_id']
