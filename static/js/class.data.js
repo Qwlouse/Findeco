@@ -128,7 +128,7 @@ ClassData.prototype.loadIndexResponse = function(data) {
             DataRegister.setTitle(absolutepath,data[d].fullTitle);
             absolutepath = ' data-path="' + absolutepath + '"';
         }
-        $('<h2 data-shortTitle="' + data[d].shortTitle + '" data-index="' + data[d].index + '"' + absolutepath + '>' + data[d].fullTitle + '</h2>')
+        $('<h3 data-shortTitle="' + data[d].shortTitle + '" data-index="' + data[d].index + '"' + absolutepath + '>' + data[d].fullTitle + '</h3>')
             .appendTo(this.html)
             .click(Helper.titleClickHandler);
     }

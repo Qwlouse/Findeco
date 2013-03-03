@@ -93,11 +93,9 @@ def load_graph_data(request, path, graph_data_type):
         derivates = Q(sources__in=nodes)
         related_nodes = backend.Node.objects.filter(sources | derivates). \
             exclude(id__in=[n.id for n in nodes]).distinct().all()
-
-    graph_data_children = [create_graph_data_node_for_structure_node(n) for n in
-                           nodes]
-    graph_data_related = [create_graph_data_node_for_structure_node(n) for n in
-                          related_nodes]
+    graph_data_children = map(create_graph_data_node_for_structure_node, nodes)
+    graph_data_related = map(create_graph_data_node_for_structure_node,
+                             related_nodes)
     data = {'graphDataChildren': graph_data_children,
             'graphDataRelated': graph_data_related}
     return json_response({'loadGraphDataResponse': data})
