@@ -68,7 +68,7 @@ div.circle_active {
     line-height: 40px;
     margin: 0;
     border-radius: 40px;
-
+    box-shadow: 2px 2px 4px #858585;
 }
 
 div.circle {
@@ -84,10 +84,11 @@ div.circle {
     margin: 0;
     border-radius: 40px;
     cursor: pointer;
+    box-shadow: 2px 2px 4px #858585;
 }
 
 div.circle:hover {
-    box-shadow: 2px 2px 4px #858585;
+    box-shadow: 0px 0px 0px #858585;
 }
 
 
