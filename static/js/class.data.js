@@ -144,31 +144,31 @@ ClassData.prototype.loadTextResponse = function(data) {
         wikiText =  data['paragraphs'][p].wikiText + "\n";
         var parsed = Parser.parse(wikiText,shortTitle,true)
         if(data['paragraphs'][p].isFollowing==0){
-        	var div = $('<div><div style="float:right">Diesem Vorschlag folgen</div>' + parsed.innerHTML + '<div>');
+        	var div = $('<div><div style="float:right"><span>Diesem Vorschlag folgen<span></div>' + parsed.innerHTML + '<div>');
         	var action = 'follow';
         }
         if(data['paragraphs'][p].isFollowing==1){
-        	var div = $('<div><div style="float:right">'+data['isFollowing']+'</div>' + parsed.innerHTML + '<div>');
-        	var div2 = $('<div><div style="float:right">'+data['isFollowing']+'</div>' + parsed.innerHTML + '<div>');
-        	var action = 'follow';
-        	var action2 = 'unfollow';
-        	var rqurl2= String('.json_markNode/'+action2+'/'+data['paragraphs'][p].path) ;
-        	div2.find("div").click(RqHandler.get({   
-        		url: rqurl2,
+        	var div = $('<div><div style="float:right">Sie folgen deisem Vorschlag transitiv!<br><span>Diesem Vorschlag folgen</span><br><span>Diesen Vorschlag entfolgen<span></div>' + parsed.innerHTML + '<div>');
+        	
+        	
+        	var action = 'unfollow';
+        	var rqurl= String('.json_markNode/'+action+'/'+data['paragraphs'][p].path) ;
+        	div.find("span").eq(1).click(RqHandler.get({   
+        		url: rqurl,
         		success:Controller.loadText
         	}));
-        	div2.appendTo(div.html):
+        	var action = 'follow';
         	
         	
         }
         if(data['paragraphs'][p].isFollowing==2){
-        	var div = $('<div><div style="float:right">Diesen Vorschlag entfolgen</div>' + parsed.innerHTML + '<div>');
+        	var div = $('<div><div style="float:right"><span>Diesen Vorschlag entfolgen</span></div>' + parsed.innerHTML + '<div>');
         	var action = 'unfollow';
         }
         
         var rqurl= String('.json_markNode/'+action+'/'+data['paragraphs'][p].path) ;
         
-        div.find("div").click(RqHandler.get({   
+        div.find("span").click(RqHandler.get({   
     		url: rqurl,
     		success:Controller.loadText
     	}));
