@@ -173,7 +173,7 @@ ClassData.prototype.loadTextResponse = function(data) {
         
         var div ='<div><div class="followContainer" style="float:right">';
         div += followContent;
-        div +='<div class="btndropdown"><ul> <li> &dArr; &dArr; &dArr; <ul><li>';
+        div +='<div class="btndropdown"><ul> <li> <img src="static/images/dropdown.png" alt="S" title="Sp"> <ul><li>';
         div += spamContent
         div +='</li></ul></div>';
         
