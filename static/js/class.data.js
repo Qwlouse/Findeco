@@ -139,32 +139,63 @@ ClassData.prototype.loadTextResponse = function(data) {
     var wikiText = "";
     var shortTitle = data['paragraphs'][0].path.replace(/(.*)\//g,'').replace(/.\d+$/,'');
     
-//Adding View for Follow Unfollow
+
     for ( var p in data['paragraphs'] ) {
         wikiText =  data['paragraphs'][p].wikiText + "\n";
         var parsed = Parser.parse(wikiText,shortTitle,true)
+        
+        //Adding View for Follow Unfollow
+        
         if(data['paragraphs'][p].isFollowing==0){
-        	var div = $('<div><div style="float:right"><span><img src="static/images/star0.png" alt="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen" title="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen"></span></div>' + parsed.innerHTML + '<div>');
-        	var action = 'follow';
+        	var followContent = '<span class="followStar"><img src="static/images/star0.png" alt="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen" title="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen"></span>';
+        	var followAction = 'follow';
         }
         if(data['paragraphs'][p].isFollowing==1){
-        	var div = $('<div><div style="float:right"><span><img src="static/images/star1.png" alt="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen"></span></div>' + parsed.innerHTML + '<div>');
-        	var action = 'unfollow';
-        	
-        	
+        	var followContent = '<span class="followStar"><img src="static/images/star1.png" alt="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen"></span>';
+        	var followAction = 'unfollow';
+        		
         }
         if(data['paragraphs'][p].isFollowing==2){
-        	var div = $('<div><div style="float:right"><span><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span></div>' + parsed.innerHTML + '<div>');
-        	var action = 'unfollow';
+        	var followContent = '<span class="followStar"><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span>';
+        	var followAction = 'unfollow';
         }
+        var followrqurl= String('.json_markNode/'+followAction+'/'+data['paragraphs'][p].path) ;
         
-        var rqurl= String('.json_markNode/'+action+'/'+data['paragraphs'][p].path) ;
+        if(data['paragraphs'][p].isFlagging==0) {
+        	var spamContent = '<span class="spamFlag"><img src="static/images/star2.png" alt="Diesen Vorschlag als Spam markieren" title="Diesen Vorschlag als Spam markieren"></span>';
+        	var spamAction = 'spam';
+        }else{
+        	var spamContent = '<span class="spamFlag"><img src="static/images/star1.png" alt="Spammarkierung entfernen" title="Spammarkierung entfernen"></span>';
+        	var spamAction = 'notspam';
+        }
+        var spamrqurl= String('.json_markNode/'+spamAction+'/'+data['paragraphs'][p].path) ;
+      
         
-        div.find("span").click(RqHandler.get({   
-    		url: rqurl,
+        var div ='<div><div class="followContainer" style="float:right">';
+        div += followContent;
+        div += spamContent;
+        div +='</div>'+ parsed.innerHTML + '<div>';
+        
+       output=$(div);
+        
+        //<div><div style="float:right"><span class="FollowStar"><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span></div>' + parsed.innerHTML + '<div>'
+        
+        
+        output.find("span.followStar").click(RqHandler.get({   
+    		url: followrqurl,
     		success:Controller.loadText
     	}));
-        div.appendTo(this.html);	        
+       output.find("span.spamFlag").click(RqHandler.get({   
+    		url: spamrqurl,
+    		success:Controller.loadText
+    	}));
+    	//var container =$('<div><div class="followContainer" style="float:right"></div>'+ parsed.innerHTML + '<div>');
+    	//div = followContent.appendTo(container('.followContainer'))
+    	
+    	
+      
+        output.appendTo(this.html);
+        
     }
     
 };
