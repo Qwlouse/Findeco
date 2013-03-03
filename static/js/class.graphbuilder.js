@@ -59,13 +59,19 @@ ClassGraphbuilder.prototype.createCircleStructure = function (path, newFollows, 
     outerDIV.originGroup = originGroup;
 
     var data = [newFollows, follows-newFollows, unFollows];
-
+    var modifier=0;
+    if (Controller.position =="/"+path){
+    	 modifier=  5;
+    }
+    
     var r = 30,
         h = 2*r,
         w = 2*r,
         color = ["#FF9900","#0066CC", "#999999"],
         donut = d3.layout.pie().sort(null),
-        arc = d3.svg.arc().innerRadius(r - 20).outerRadius(r - 10);
+        arc = d3.svg.arc().innerRadius(r - 20 + modifier).outerRadius(r - 10 );
+       
+        
 
     var svg = d3.select(diagramDIV).append("svg:svg")
         .attr("width", w)
