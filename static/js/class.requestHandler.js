@@ -30,13 +30,27 @@ function ClassRequestHandler() {}
 var RqHandler = new ClassRequestHandler();
 
 ClassRequestHandler.prototype.post = function (e) {
+		callback=e.success;
+		e.type= 'POST';	
+		e.dataType = 'json';
+		e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
+		e.success = function(data) { RqHandler.callback(data, callback); }
+		$.ajax(e);
+	
+}
+ClassRequestHandler.prototype.get  = function (e) {
+	return function(){ 
 	callback=e.success;
-	e.type= 'POST';	
+	e.type= 'GET';	
 	e.dataType = 'json';
 	e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
 	e.success = function(data) { RqHandler.callback(data, callback); }
 	$.ajax(e);
+	}
 }
+
+
+
 
 ClassRequestHandler.prototype.callback = function (data,callback) {	
 	

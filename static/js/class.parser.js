@@ -59,15 +59,6 @@ ClassParser.prototype.parse = function(text, shortTitle,disableValidation){
         linkFormat: ''
     } );
     creole.parse(textDiv,wikiText);
-    var div = $('<div>' + textDiv.innerHTML + '<div>');
-
-    var img = div.find("img[src$='/static/images/gototext.png']");
-    img.click(function() {
-        Controller.loadIndex(
-            this.parentNode.href.substring(
-                this.parentNode.href.indexOf('#')+1
-            )
-        );
-    });
-    return div;
+  
+    return textDiv ;
 };

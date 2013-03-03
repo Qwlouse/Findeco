@@ -22,8 +22,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-function ClassData(json) {this.load(json);}
+function ClassData(json) {
+	this.load(json);
+}
 
+ClassData.prototype.rqhandler= RqHandler;
 ClassData.prototype.getInfo = function() {
     return this.info;
 };
@@ -134,12 +137,46 @@ ClassData.prototype.loadIndexResponse = function(data) {
 ClassData.prototype.loadTextResponse = function(data) {
     this.type = 'text';
     var wikiText = "";
-    for ( var p in data['paragraphs'] ) {
-        wikiText += data['paragraphs'][p].wikiText + "\n";
-    }
     var shortTitle = data['paragraphs'][0].path.replace(/(.*)\//g,'').replace(/.\d+$/,'');
-    Parser.parse(wikiText,shortTitle,true).appendTo(this.html);
+    
+//Adding View for Follow Unfollow
+    for ( var p in data['paragraphs'] ) {
+        wikiText =  data['paragraphs'][p].wikiText + "\n";
+        var parsed = Parser.parse(wikiText,shortTitle,true)
+        if(data['paragraphs'][p].isFollowing==0){
+        	var div = $('<div><div style="float:right">Diesem Vorschlag folgen</div>' + parsed.innerHTML + '<div>');
+        	var action = 'follow';
+        }
+        if(data['paragraphs'][p].isFollowing==1){
+        	var div = $('<div><div style="float:right">'+data['isFollowing']+'</div>' + parsed.innerHTML + '<div>');
+        	var div2 = $('<div><div style="float:right">'+data['isFollowing']+'</div>' + parsed.innerHTML + '<div>');
+        	var action = 'follow';
+        	var action2 = 'unfollow';
+        	var rqurl2= String('.json_markNode/'+action2+'/'+data['paragraphs'][p].path) ;
+        	div2.find("div").click(RqHandler.get({   
+        		url: rqurl2,
+        		success:Controller.loadText
+        	}));
+        	div2.appendTo(div.html):
+        	
+        	
+        }
+        if(data['paragraphs'][p].isFollowing==2){
+        	var div = $('<div><div style="float:right">Diesen Vorschlag entfolgen</div>' + parsed.innerHTML + '<div>');
+        	var action = 'unfollow';
+        }
+        
+        var rqurl= String('.json_markNode/'+action+'/'+data['paragraphs'][p].path) ;
+        
+        div.find("div").click(RqHandler.get({   
+    		url: rqurl,
+    		success:Controller.loadText
+    	}));
+        div.appendTo(this.html);	        
+    }
+    
 };
+
 
 ClassData.prototype.loadMicrobloggingResponse = function(data) {
     for ( p in data ) {
