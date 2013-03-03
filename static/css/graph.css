@@ -46,8 +46,8 @@ div#graph div.masspoint {
 }
 
 div.whitener {
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     border-radius: 40px;
     background: white;
     position: relative;
@@ -56,9 +56,9 @@ div.whitener {
 }
 
 div.circle_active {
-    position: absolute;
-    top: -15px;
+    position: relative;
     left: -15px;
+    top: -15px;
     border: 2px solid black;
     padding: 0px 3px;
     min-width: 33px;
@@ -68,13 +68,15 @@ div.circle_active {
     line-height: 40px;
     margin: 0;
     border-radius: 40px;
-    cursor: pointer;
+
 }
 
 div.circle {
-    border: 0px solid black;
-    min-width: 33px;
-    padding: 2px 5px;
+    position: relative;
+    left: -13px;
+    top: -13px;
+    border: 0;
+    min-width: 40px;
     height: 40px;
     font-weight: bold;
     text-align: center;
@@ -82,6 +84,10 @@ div.circle {
     margin: 0;
     border-radius: 40px;
     cursor: pointer;
+}
+
+div.circle:hover {
+    box-shadow: 2px 2px 4px #858585;
 }
 
 
@@ -92,14 +98,6 @@ div.diagram_container {
     position: relative;
     top: -23px;
     left: -23px;
-}
-
-div#graph div.circle {
-    position: relative;
-    left: -15px;
-    top: -15px;
-    display: inline-block;
-    overflow: visible;
 }
 
 div#newProposal {
