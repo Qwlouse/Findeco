@@ -134,7 +134,7 @@ class LoadTextTest(TestCase):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'],
-                         "=Daaatenschutz=\nBlubb.")
+                         "= Daaatenschutz =\nBlubb.")
 
     def test_structurenode_gives_correct_text(self):
         response = self.client.get(
@@ -142,7 +142,7 @@ class LoadTextTest(TestCase):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'],
-                         "=LangerWahlprogrammTitel=\nEinleitungstext")
+                         "= LangerWahlprogrammTitel =\nEinleitungstext")
         self.assertEqual(data['loadTextResponse']['paragraphs'][0]['path'],
                          "Wahlprogramm.1")
 
@@ -185,7 +185,7 @@ Auf Ebene 7."""
         expected_response = {
             'loadTextResponse': {
                 'paragraphs': [{
-                    'wikiText':"=Dagegen=\n...denn ihr seid dafür",
+                    'wikiText':"= Dagegen =\n...denn ihr seid dafür",
                     'path':"Wahlprogramm.1/Datenschutz.1.con.1",
                     'isFollowing':0,
                     'isFlagging':0,

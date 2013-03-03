@@ -106,7 +106,7 @@ def load_text(request, path):
         paragraphs = json.loads(t.paragraphs)
     except backend.TextCache.DoesNotExist:
         node = assert_node_for_path(path)
-        paragraphs = [{'wikiText': "=" + node.title + "=\n" + node.text.text,
+        paragraphs = [{'wikiText': "= " + node.title + " =\n" + node.text.text,
                        'path': path,
                        '_node_id': node.id,
                        'authorGroup': [create_user_info(a) for a in
