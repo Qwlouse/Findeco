@@ -55,10 +55,13 @@ div.whitener {
     left: -13px;
 }
 
-div.circle {
+div.circle_active {
+    position: absolute;
+    top: -15px;
+    left: -15px;
     border: 2px solid black;
+    padding: 0px 3px;
     min-width: 33px;
-    padding: 0 3px;
     height: 40px;
     font-weight: bold;
     text-align: center;
@@ -67,6 +70,20 @@ div.circle {
     border-radius: 40px;
     cursor: pointer;
 }
+
+div.circle {
+    border: 0px solid black;
+    min-width: 33px;
+    padding: 2px 5px;
+    height: 40px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 40px;
+    margin: 0;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
 
 div.diagram_container {
     width: 0;
