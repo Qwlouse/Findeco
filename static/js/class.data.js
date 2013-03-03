@@ -144,25 +144,17 @@ ClassData.prototype.loadTextResponse = function(data) {
         wikiText =  data['paragraphs'][p].wikiText + "\n";
         var parsed = Parser.parse(wikiText,shortTitle,true)
         if(data['paragraphs'][p].isFollowing==0){
-        	var div = $('<div><div style="float:right"><span>Diesem Vorschlag folgen<span></div>' + parsed.innerHTML + '<div>');
+        	var div = $('<div><div style="float:right"><span><img src="static/images/star0.png" alt="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen" title="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen"></span></div>' + parsed.innerHTML + '<div>');
         	var action = 'follow';
         }
         if(data['paragraphs'][p].isFollowing==1){
-        	var div = $('<div><div style="float:right">Sie folgen deisem Vorschlag transitiv!<br><span>Diesem Vorschlag folgen</span><br><span>Diesen Vorschlag entfolgen<span></div>' + parsed.innerHTML + '<div>');
-        	
-        	
+        	var div = $('<div><div style="float:right"><span><img src="static/images/star1.png" alt="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen"></span></div>' + parsed.innerHTML + '<div>');
         	var action = 'unfollow';
-        	var rqurl= String('.json_markNode/'+action+'/'+data['paragraphs'][p].path) ;
-        	div.find("span").eq(1).click(RqHandler.get({   
-        		url: rqurl,
-        		success:Controller.loadText
-        	}));
-        	var action = 'follow';
         	
         	
         }
         if(data['paragraphs'][p].isFollowing==2){
-        	var div = $('<div><div style="float:right"><span>Diesen Vorschlag entfolgen</span></div>' + parsed.innerHTML + '<div>');
+        	var div = $('<div><div style="float:right"><span><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span></div>' + parsed.innerHTML + '<div>');
         	var action = 'unfollow';
         }
         
