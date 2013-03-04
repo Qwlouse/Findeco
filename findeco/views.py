@@ -42,7 +42,9 @@ import random
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
 import node_storage as backend
-from node_storage.factory import create_user
+from node_storage.factory import create_user, create_structureNode, create_slot
+from node_storage.path_helpers import get_ordered_children_for
+from node_storage.structure_parser import parse, turn_into_valid_short_title, create_structure_from_structure_node_schema
 from .paths import parse_suffix
 from .view_helpers import *
 
@@ -307,26 +309,55 @@ def store_text(request, path):
                         'node_storage.add_derivation', 'node_storage.add_text',
                         'node_storage.change_vote'])
     user = request.user
-    assert_post_parameters(request, ['wikiText'])
+    p = request.POST
+    if 'wikiText' in p and not \
+            ('argumentType' in p or 'wikiTextAlternative' in p):
+        # fork for additional slot
+        source_node = assert_node_for_path(path)
+        title = source_node.title
+        text = source_node.text.text
+        authors = list(source_node.text.authors.all()) + [user]
+        parent_slot_path = path.rsplit('.', 1)[0]
+        parent_slot = get_node_for_path(parent_slot_path)
+        fork = create_structureNode(title, text, authors)
+        parent_slot.append_child(fork)
+        fork_path = parent_slot_path + '.' + str(fork.get_index(parent_slot))
+        short_titles = set()
+        for slot in get_ordered_children_for(source_node):
+            fork.append_child(slot)
+            short_titles.add(slot.title)
+        schema = parse(p['wikiText'], 'foo')
+        short_title = turn_into_valid_short_title(schema['title'], short_titles)
+        new_slot = create_slot(short_title)
+        fork.append_child(new_slot)
+        node = create_structure_from_structure_node_schema(schema, new_slot, [user])
+        new_path = get_good_path_for_structure_node(node, new_slot, fork_path + '/' + short_title)
 
-    if not 'argumentType' in request.POST:
-        if 'wikiTextAlternative' in request.POST:
-            raise MissingPOSTParameter('argumentType')
-            # store new structure node
-        _, new_path = store_structure_node(path, request.POST['wikiText'], user)
+        # TODO auto-follows
+        # TODO make fork a derivate
+        # TODO add auto derivate argument
 
-    elif 'wikiTextAlternative' not in request.POST:
-        # store Argument
-        new_path = store_argument(path, request.POST['wikiText'],
-                                  request.POST['argumentType'], user)
+    elif 'wikiText' in p and 'argumentType' in p and not \
+            'wikiTextAlternative' in p:
+        # store argument
+        new_path = store_argument(path, p['wikiText'], p['argumentType'], user)
 
-    else:
-        # store Argument and Derivate of structure Node
-        arg_text = request.POST['wikiText']
-        arg_type = request.POST['argumentType']
-        derivate_wiki_text = request.POST['wikiTextAlternative']
+    elif 'wikiTextAlternative' in p and not \
+            ('wikiText' in p or 'argumentType' in p):
+        # store alternative
+        _, new_path = store_structure_node(path, p['wikiTextAlternative'], user)
+
+    elif 'wikiTextAlternative' in p and 'wikiText' in p and 'argumentType' in p:
+        # store Argument and Derivate of structure Node as alternative
+        arg_text = p['wikiText']
+        arg_type = p['argumentType']
+        derivate_wiki_text = p['wikiTextAlternative']
         new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text,
                                   user)
+
+    else:
+        # wrong usage of API
+        raise MissingPOSTParameter('fooo')
 
     return json_response({'storeTextResponse': {'path': new_path}})
 

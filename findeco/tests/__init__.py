@@ -26,30 +26,30 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 
-from test_profile import UserProfileTest
-from test_path import PathRegExTest
-from test_url_resolution import UrlResolutionTest
-from test_views import ViewTest
-from test_view_helpers import CreateIndexNodeForSlotTest, CreateIndexNodeForArgumentTest
-from test_view_helpers import CreateUsersInfoTest, CreateUserSettingsTest, CreateGraphDataNodeForStructureNodeTest
-from test_view_helpers import StoreStructureNodeTest, StoreArgumentTest, StoreDerivateTest
-from test_view_helpers import GetIsFollowingTest
-from test_load_index import LoadIndexTest, LoadArgumentIndexTest
-from test_load_text import LoadTextTest
-from test_user_api import LoadUserInfoTest, LoadUserSettingsTest, StoreSettingsTest
+# from test_profile import UserProfileTest
+# from test_path import PathRegExTest
+# from test_url_resolution import UrlResolutionTest
+# from test_views import ViewTest
+# from test_view_helpers import CreateIndexNodeForSlotTest, CreateIndexNodeForArgumentTest
+# from test_view_helpers import CreateUsersInfoTest, CreateUserSettingsTest, CreateGraphDataNodeForStructureNodeTest
+# from test_view_helpers import StoreStructureNodeTest, StoreArgumentTest, StoreDerivateTest
+# from test_view_helpers import GetIsFollowingTest
+# from test_load_index import LoadIndexTest, LoadArgumentIndexTest
+# from test_load_text import LoadTextTest
+# from test_user_api import LoadUserInfoTest, LoadUserSettingsTest, StoreSettingsTest
 from test_store_text import StoreTextTest
-from test_load_graph_data import LoadGraphDataTest
-from test_marking import UnFollowTest, FollowTest, MarkSpamTest, UnMarkSpamTest
-
-try:
-    from microblogging.tests import *
-except ImportError:
-    pass
-
-try:
-    from node_storage.tests import *
-except ImportError:
-    pass
-
+# from test_load_graph_data import LoadGraphDataTest
+# from test_marking import UnFollowTest, FollowTest, MarkSpamTest, UnMarkSpamTest
+#
+# try:
+#     from microblogging.tests import *
+# except ImportError:
+#     pass
+#
+# try:
+#     from node_storage.tests import *
+# except ImportError:
+#     pass
+#
 
 

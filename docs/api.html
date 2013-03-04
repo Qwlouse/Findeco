@@ -136,6 +136,7 @@ In return you get a JSON response from the server.
     <tr><td>Return:</td><td><a href="#JSONstoreSettingsResponse">JSON::storeSettingsResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
+Store a new Textnode or Argument in the hierarchy attached to a StructureNode (see <a href="#ValuePath">Value::Path</a>).
 <br>
 <b><a name="FunctionStoreText">Function::storeText</a></b>
 <table><tbody>
@@ -144,7 +145,10 @@ In return you get a JSON response from the server.
     <tr><td>POST Parameters:</td><td><a href="#ValueWikiText">(String) wikiText</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueArgumentType">(String) argumentType</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueWikiTextAlternative">(String) wikiTextAlternative</a></td></tr>
-    <tr><td>Description:</td><td>Store a new Textnode or Argument in the hierarchy attached to a StructureNode (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+    <tr><td>Description:</td><td>If only wikiText is given, then add a slot(Title) to current node (actually this will create a copy of the current node with the additional slot) and add the new structure node from wikiText as a child.</td></tr>
+    <tr><td>&nbsp;</td><td>If only wikiTextAlternative is given, then create a new structure node from wikiTextAlternative and store it as an alternative to the current node (at path) </td></tr>
+    <tr><td>&nbsp;</td><td>If wikiText and argumentType are given, then store a new argument concerning path</td></tr>
+    <tr><td>&nbsp;</td><td>If wikiText, argumentType, and wikiTextAlternative are given, then store a new derivate of the source node (at path) as a sibling and add argument with wikiText as derivationArgument to source node</td></tr>
     <tr><td>Return:</td><td><a href="#JSONstoreTextResponse">JSON::storeTextResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 

@@ -27,9 +27,10 @@ from django.utils.translation import ugettext
 from django.test import TestCase
 import json
 from findeco.tests.helpers import assert_is_error_response
+from findeco.view_helpers import assert_node_for_path
 
 from node_storage import get_root_node, Node, Argument
-from node_storage.factory import create_user, create_slot
+from node_storage.factory import create_user, create_slot, create_textNode
 
 
 class StoreTextTest(TestCase):
@@ -41,6 +42,9 @@ class StoreTextTest(TestCase):
         create_user("Notpermitted", password="fghjfgh")
         self.slot = create_slot("Slot")
         self.root.append_child(self.slot)
+        self.text = create_textNode("Slotteria", "This is a textnode",
+                                    authors=[self.hugo])
+        self.slot.append_child(self.text)
         self.url = reverse('store_text', kwargs=dict(path="Slot.1"))
 
     def test_not_authenticated(self):
@@ -53,18 +57,6 @@ class StoreTextTest(TestCase):
         response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
         assert_is_error_response(response, "PermissionDenied")
 
-    def test_store_textNode(self):
-        self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            json.loads(response.content)['storeTextResponse']['path'], "Slot.1")
-        self.assertEqual(Node.objects.filter(parents=self.slot).count(), 1)
-        self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].title,
-                         "Bla")
-        self.assertEqual(
-            Node.objects.filter(parents=self.slot).all()[0].text.text, "Blubb.")
-
     def test_store_missing_text(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.post(self.url)
@@ -73,12 +65,32 @@ class StoreTextTest(TestCase):
     def test_store_missing_argument_type(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.post(self.url, dict(wikiText="= Hopp =\nGrumpf.",
-                                    wikiTextAlternative="= Bla =\nBlubb."))
+                                                   wikiTextAlternative="= Bla =\nBlubb."))
         assert_is_error_response(response, "MissingPOSTParameter")
+
+    def test_store_textNode(self):
+        self.assertTrue(self.client.login(username="Hugo", password="1234"))
+        response = self.client.post(self.url, dict(wikiTextAlternative="= Bla =\nBlubb."))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            json.loads(response.content)['storeTextResponse']['path'], "Slot.2")
+        node = assert_node_for_path("Slot.2")
+        self.assertEqual(node.title, "Bla")
+        self.assertEqual(node.text.text, "Blubb.")
+
+    def test_store_additionalSlot(self):
+        self.assertTrue(self.client.login(username="Hugo", password="1234"))
+        response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
+        self.assertEqual(response.status_code, 200)
+        parsed = json.loads(response.content)
+        self.assertEqual(parsed['storeTextResponse']['path'], "Slot.2/Bla.1")
+        node = assert_node_for_path("Slot.2/Bla.1")
+        self.assertEqual(node.title, "Bla")
+        self.assertEqual(node.text.text, "Blubb.")
+        self.assertEqual(node.parents.all()[0].title, "Bla")
 
     def test_store_with_argument_and_alternative(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
         response = self.client.post(
             self.url, dict(argumentType="con",
                            wikiText="= Argumenttitel =\nDas ist jetzt besser",
@@ -88,9 +100,9 @@ class StoreTextTest(TestCase):
             json.loads(response.content)['storeTextResponse']['path'], "Slot.2")
         self.assertEqual(Node.objects.filter(parents=self.slot).count(), 2)
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].title,
-                         "Bla")
+                         "Slotteria")
         self.assertEqual(
-            Node.objects.filter(parents=self.slot).all()[0].text.text, "Blubb.")
+            Node.objects.filter(parents=self.slot).all()[0].text.text, "This is a textnode")
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[1].title,
                          "Bla 2")
         self.assertEqual(
@@ -106,7 +118,6 @@ class StoreTextTest(TestCase):
 
     def test_store_with_argumente(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
-        self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
         response = self.client.post(
             self.url, dict(argumentType="con",
                            wikiText="= Argumenttitel =\nDas ist jetzt besser"))
@@ -114,11 +125,6 @@ class StoreTextTest(TestCase):
         self.assertEqual(
             json.loads(response.content)['storeTextResponse']['path'],
             "Slot.1.con.1")
-        self.assertEqual(Node.objects.filter(parents=self.slot).count(), 1)
-        self.assertEqual(Node.objects.filter(parents=self.slot).all()[0].title,
-                         "Bla")
-        self.assertEqual(
-            Node.objects.filter(parents=self.slot).all()[0].text.text, "Blubb.")
         self.assertEqual(Argument.objects.filter(concerns=Node.objects.filter(
             parents=self.slot).all()[0]).count(), 1)
         self.assertEqual(Argument.objects.filter(concerns=Node.objects.filter(
