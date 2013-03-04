@@ -31,10 +31,20 @@ var currentPosition = 0;
 var endPosition = 0;
 
 // window.onpopstate = Controller.stateHandler;
+/** **************************************** **/
+/** Here we should load all global instances **/
+/** **************************************** **/
+
+var Login = new ClassLogin();
+var User=new ClassUser();
+
+
 
 $(document).ready(load);
 
 function load(){
+	
+
     navigation = $('#location');
     $(document).ajaxStart(function() {
         $('#loading').show();
@@ -43,6 +53,8 @@ function load(){
         $('#loading').hide();
     });
     
+
+ 
     left.show('left');
     center.show('center');
     right.show('right');

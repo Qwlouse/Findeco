@@ -22,10 +22,46 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
  
- function ClassUser() {}
+/**
+ * Creates an instance of User.
+ *
+ * @constructor
+ * @this {User}
+ */
+function ClassUser() {
+	/** @private */ this.loggedIn = false;
+}
+
+/**
+ * Returns the current loginstatus of user
+ *
+ * @return {Boolean} The Loginstatus of the user
+ */
+ClassUser.prototype.isLoggedIn= function(){
+	/** TODO: We need to Drop isLoggedIn. This can be done either by getting Django Cookie or setting another one with the same properties**/
+	return this.loggedIn;
+}
+
+/**
+ * Handler for called on Logout
+ *
+ * @return {Boolean} success
+ */
+ClassUser.prototype.LogoutSuccess= function(){
+	this.loggedIn = false;
+	return true;
+}
+
+
+/**
+ * Handler for called on Login
+ *
+ * @return {Boolean} success
+ */
+ClassUser.prototype.LoginSuccess= function(){
+	this.loggedIn = true;
+	return true;
+}
  
- ClassUser.prototype.init = function() {
- 
- }
  
  

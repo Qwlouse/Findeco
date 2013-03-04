@@ -25,11 +25,10 @@
  
  // TODO: Error Handling
 function ClassLogin() {}
-var Login = new ClassLogin();
 
 
-ClassLogin.prototype.form = {};
-ClassLogin.prototype.user = null;
+
+ClassLogin.prototype.form = {}; 
 ClassLogin.prototype.rqhandler= RqHandler;
 
 ClassLogin.prototype.checkKey = function (e) {
@@ -44,15 +43,11 @@ ClassLogin.prototype.close = function () {
     }
 }
 
-ClassLogin.prototype.isLoggedin = function() {
-    // TODO: Decide what functions to allow for someone who is not loggedin.
-    return this.hasUser();
-}
-
 ClassLogin.prototype.handleRequest = function(data) {
 
     if ( typeof data['loginResponse'] !=  'undefined') {
-	    Login.user = new ClassUser();
+    	
+	    User.LoginSuccess();
 	    Login.show();
 	    Login.overlay
 	        .hide()
@@ -62,16 +57,9 @@ ClassLogin.prototype.handleRequest = function(data) {
         
 }
 
-ClassLogin.prototype.hasUser = function() {
-    if ( Login.user != null ) {
-        return true;
-    }
-    return false;
-}
-
 ClassLogin.prototype.logout = function() {
     $.get('.json_logout',function(data) {
-        Login.user = null;
+        User.LogoutSuccess();
         Login.show();
         alert(data['logoutResponse']['farewellMessage']);
     },'json');
@@ -84,7 +72,7 @@ ClassLogin.prototype.fieldClickHandler = function() {
 ClassLogin.prototype.show = function() {
     Login.root = $('#login')
         .empty();
-    if ( Login.hasUser() ) {
+    if ( User.isLoggedIn() ) {
         $('<div class="button">Ausloggen</div>')
             .attr('style','margin-bottom: 10px;')
             .click(Login.logout)
