@@ -58,9 +58,7 @@ function load(){
     left.show('left');
     center.show('center');
     right.show('right');
-    
     Login.setLoginButtonState();
-    
     $(window).bind('hashchange',Controller.stateHandler);
     
     if ( document.location.hash == '' ) {

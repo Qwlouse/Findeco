@@ -29,7 +29,7 @@
  * @this {User}
  */
 function ClassUser() {
-	/** @private */ this.loggedIn = false;
+	
 }
 
 /**
@@ -38,6 +38,13 @@ function ClassUser() {
  * @return {Boolean} The Loginstatus of the user
  */
 ClassUser.prototype.isLoggedIn= function(){
+	this.loggedIn = false;
+	if ($.cookie("Findecologin") ==  'true'){
+		/** @private */ this.loggedIn = true;
+	}
+	if ($.cookie("Findecologin") ==  'false'){
+		this.loggedIn = false;
+	}
 	/** TODO: We need to Drop isLoggedIn. This can be done either by getting Django Cookie or setting another one with the same properties**/
 	return this.loggedIn;
 }
@@ -48,6 +55,7 @@ ClassUser.prototype.isLoggedIn= function(){
  * @return {Boolean} success
  */
 ClassUser.prototype.LogoutSuccess= function(){
+	$.cookie("Findecologin", 'false');
 	this.loggedIn = false;
 	return true;
 }
@@ -59,6 +67,9 @@ ClassUser.prototype.LogoutSuccess= function(){
  * @return {Boolean} success
  */
 ClassUser.prototype.LoginSuccess= function(){
+	// This cookie can be Hijacked this doesn't Matter thus it got nothing to do with Django Auth
+	// TODO: Try to get this Value from Django Cookie
+	$.cookie('Findecologin', 'true', { expires: 10 });
 	this.loggedIn = true;
 	return true;
 }

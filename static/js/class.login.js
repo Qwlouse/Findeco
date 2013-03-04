@@ -87,13 +87,13 @@ ClassLogin.prototype.createTableFormField = function(name,input,targetTable,func
 ClassLogin.prototype.setLoginButtonState = function() { 
 	 Login.root = $('#login')
         .empty();
-    if ( User.isLoggedIn() ) {
+    if ( User.isLoggedIn() == true ) {
         $('<div class="button">Ausloggen</div>')
             .attr('style','margin-bottom: 10px;')
             .click(Login.logout)
             .appendTo(Login.root);
-        return;
-    }
+        
+    }else{
     // Show Login link.
     $('<div class="button">Einloggen</div>')
         .attr('style','margin-bottom: 10px;')
@@ -103,6 +103,7 @@ ClassLogin.prototype.setLoginButtonState = function() {
         .attr('style','margin-bottom: 10px;')
         .click(Login.showRegisterForm)
         .appendTo(Login.root);
+    }
 }
 
 ClassLogin.prototype.showRegisterForm = function() {
