@@ -317,20 +317,18 @@ def fork_node_and_add_slot(path, user, wikiText):
     for slot in get_ordered_children_for(source_node):
         fork.append_child(slot)
         short_titles.add(slot.title)
-        # create new slot plus node
+    # create new slot plus node
     schema = parse(wikiText, 'foo')
     short_title = turn_into_valid_short_title(schema['title'], short_titles)
     new_slot = create_slot(short_title)
     fork.append_child(new_slot)
     node = create_structure_from_structure_node_schema(schema, new_slot, [user])
     arg_title = "Abschnitt über '{0}' fehlt.".format(title)
-    source_node.add_derivate(fork, 'con', arg_title)
+    source_node.add_derivate(fork, 'con', arg_title, authors=[user])
     # auto follow
     create_vote(user, [fork])
     create_vote(user, [node])
-    new_path = get_good_path_for_structure_node(node, new_slot,
-                                                fork_path + '/' + short_title)
-    return new_path
+    return fork_path
 
 
 def traverse_derivates_subset(node, subset):
