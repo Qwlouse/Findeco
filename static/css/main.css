@@ -100,6 +100,10 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     background-color: #DDD;
     width: 100%;
     font-family: 'Exo',sans-serif;
+    -moz-border-bottom-left-radius: 15px;
+    -moz-border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 #logo {
     float: left;
@@ -158,6 +162,10 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     padding: 8px 0 0 40px;
     height: 25px;
     z-index: 300;
+    -moz-border-top-left-radius: 15px;
+    -moz-border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 #container {
     position: absolute;
@@ -273,7 +281,7 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 
 .contributeContainer {
     position: absolute;
-    top: 185px;
+    top: 155px;
     bottom: 75px;
     min-width: 200px;
     right: 20%;
