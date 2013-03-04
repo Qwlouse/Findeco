@@ -27,10 +27,13 @@ import functools
 import json
 
 import node_storage as backend
-from node_storage import get_node_for_path
+from node_storage import get_node_for_path, get_ordered_children_for, parse
+from node_storage import create_structure_from_structure_node_schema
 from node_storage.factory import create_argument, create_vote
+from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
+from node_storage.structure_parser import turn_into_valid_short_title
 from .paths import parse_suffix
 from .api_validation import validate_response
 
@@ -295,6 +298,38 @@ def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
                             text=arg_text, authors=[author])
     # add auto follow
     create_vote(author, [arg])
+    return new_path
+
+
+def fork_node_and_add_slot(path, user, wikiText):
+    source_node = assert_node_for_path(path)
+    authors = list(source_node.text.authors.all()) + [user]
+    title = source_node.title
+    # create fork
+    fork = create_structureNode(title,
+                                source_node.text.text,
+                                authors)
+    parent_slot_path = path.rsplit('.', 1)[0]
+    parent_slot = get_node_for_path(parent_slot_path)
+    parent_slot.append_child(fork)
+    fork_path = parent_slot_path + '.' + str(fork.get_index(parent_slot))
+    short_titles = set()
+    for slot in get_ordered_children_for(source_node):
+        fork.append_child(slot)
+        short_titles.add(slot.title)
+        # create new slot plus node
+    schema = parse(wikiText, 'foo')
+    short_title = turn_into_valid_short_title(schema['title'], short_titles)
+    new_slot = create_slot(short_title)
+    fork.append_child(new_slot)
+    node = create_structure_from_structure_node_schema(schema, new_slot, [user])
+    arg_title = "Abschnitt über '{0}' fehlt.".format(title)
+    source_node.add_derivate(fork, 'con', arg_title)
+    # auto follow
+    create_vote(user, [fork])
+    create_vote(user, [node])
+    new_path = get_good_path_for_structure_node(node, new_slot,
+                                                fork_path + '/' + short_title)
     return new_path
 
 

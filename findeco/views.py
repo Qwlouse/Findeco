@@ -42,9 +42,7 @@ import random
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
 import node_storage as backend
-from node_storage.factory import create_user, create_structureNode, create_slot
-from node_storage.path_helpers import get_ordered_children_for
-from node_storage.structure_parser import parse, turn_into_valid_short_title, create_structure_from_structure_node_schema
+from node_storage.factory import create_user
 from .paths import parse_suffix
 from .view_helpers import *
 
@@ -313,29 +311,7 @@ def store_text(request, path):
     if 'wikiText' in p and not \
             ('argumentType' in p or 'wikiTextAlternative' in p):
         # fork for additional slot
-        source_node = assert_node_for_path(path)
-        title = source_node.title
-        text = source_node.text.text
-        authors = list(source_node.text.authors.all()) + [user]
-        parent_slot_path = path.rsplit('.', 1)[0]
-        parent_slot = get_node_for_path(parent_slot_path)
-        fork = create_structureNode(title, text, authors)
-        parent_slot.append_child(fork)
-        fork_path = parent_slot_path + '.' + str(fork.get_index(parent_slot))
-        short_titles = set()
-        for slot in get_ordered_children_for(source_node):
-            fork.append_child(slot)
-            short_titles.add(slot.title)
-        schema = parse(p['wikiText'], 'foo')
-        short_title = turn_into_valid_short_title(schema['title'], short_titles)
-        new_slot = create_slot(short_title)
-        fork.append_child(new_slot)
-        node = create_structure_from_structure_node_schema(schema, new_slot, [user])
-        new_path = get_good_path_for_structure_node(node, new_slot, fork_path + '/' + short_title)
-
-        # TODO auto-follows
-        # TODO make fork a derivate
-        # TODO add auto derivate argument
+        new_path = fork_node_and_add_slot(path, user, p['wikiText'])
 
     elif 'wikiText' in p and 'argumentType' in p and not \
             'wikiTextAlternative' in p:
