@@ -59,7 +59,7 @@ function load(){
     center.show('center');
     right.show('right');
     
-    Login.show();
+    Login.setLoginButtonState();
     
     $(window).bind('hashchange',Controller.stateHandler);
     

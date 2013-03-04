@@ -48,7 +48,7 @@ ClassLogin.prototype.handleRequest = function(data) {
     if ( typeof data['loginResponse'] !=  'undefined') {
     	
 	    User.LoginSuccess();
-	    Login.show();
+	    Login.setLoginButtonState();
 	    Login.overlay
 	        .hide()
 	        .empty();
@@ -60,7 +60,7 @@ ClassLogin.prototype.handleRequest = function(data) {
 ClassLogin.prototype.logout = function() {
     $.get('.json_logout',function(data) {
         User.LogoutSuccess();
-        Login.show();
+        Login.setLoginButtonState();
         alert(data['logoutResponse']['farewellMessage']);
     },'json');
 }
@@ -69,8 +69,23 @@ ClassLogin.prototype.fieldClickHandler = function() {
     $(this).attr('id','');
 }
 
-ClassLogin.prototype.show = function() {
-    Login.root = $('#login')
+
+ClassLogin.prototype.createTableFormField = function(name,input,targetTable,func) {
+    var tr = $('<tr>')
+        .appendTo(targetTable);
+    $('<td>' + name + '</td>')
+        .appendTo(tr);
+    return $(input)
+        .keypress(func)
+        .appendTo(
+            $('<td>')
+                .appendTo(tr)
+            );
+    
+}
+
+ClassLogin.prototype.setLoginButtonState = function() { 
+	 Login.root = $('#login')
         .empty();
     if ( User.isLoggedIn() ) {
         $('<div class="button">Ausloggen</div>')
@@ -88,20 +103,6 @@ ClassLogin.prototype.show = function() {
         .attr('style','margin-bottom: 10px;')
         .click(Login.showRegisterForm)
         .appendTo(Login.root);
-};
-
-ClassLogin.prototype.createTableFormField = function(name,input,targetTable,func) {
-    var tr = $('<tr>')
-        .appendTo(targetTable);
-    $('<td>' + name + '</td>')
-        .appendTo(tr);
-    return $(input)
-        .keypress(func)
-        .appendTo(
-            $('<td>')
-                .appendTo(tr)
-            );
-    
 }
 
 ClassLogin.prototype.showRegisterForm = function() {
