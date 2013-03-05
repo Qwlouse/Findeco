@@ -84,7 +84,7 @@ ClassFormBuilder.prototype.createButton = function(id,description,style,divData,
  		.appendTo(td);
 };
 /**
- * Returns the Value of a Field stored by the F1orm Object.
+ * Returns the Value of a Field stored by the Form Object.
  *
  * @param {String} id A Human readable reference to the field
  * @return {String} Value of requested form Field

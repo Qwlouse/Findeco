@@ -65,12 +65,40 @@ ClassLanguage.prototype.get = function (target) {
                 	return 'Der Aktivierungscode ist ungültig oder bereits verwendet';	
                 case 'InvalidURL':
                 	return 'Diese URL ist ungültig';
-
-
-
-                
-                
-                
+				//Common form errors
+				
+				case 'formMissingField':
+                	return 'Bitte fülle alle Felder aus!';
+				//Common single Words
+				case 'doLogout':
+                	return 'Ausloggen';
+				case 'doLogin':
+                	return 'Einloggen';
+				case 'doRegistration':
+                	return 'Registrieren';
+                case 'username':
+                	return 'Benutzername';
+                case 'email':
+                	return 'E-Mail';
+				case 'password':
+                	return 'Passwort';
+				case 'passwordAgain':
+                	return 'Password wiederholen';
+				case 'submit':
+                	return 'Absenden';
+				case 'cancel':
+                	return 'Abbrechen';
+				//Login Forms and Registration
+				case 'qForgotPassword':
+                	return 'Passwort vergessen?';
+				case 'qForgotUserName':
+                	return 'Passwort vergessen?';
+				case 'recoverWUsername':
+                	return 'Wiederherstellung mit Username';
+                case 'recoverWEmail':
+                	return 'Wiederherstellung mit E-Mail';
+				case 'passwordMatch':
+					return 'Die Passwörter stimmen nicht überein';
                 // automatically called messages
                 case 'accountRegistrationResponseSuccess':
                 	return 'Die Registrierung war erfolgreich!! \n Du erhälst in den nächsten Minuten eine Aktivierungsemail.';
