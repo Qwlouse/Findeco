@@ -143,41 +143,39 @@ ClassData.prototype.loadTextResponse = function(data) {
     for ( var p in data['paragraphs'] ) {
         wikiText =  data['paragraphs'][p].wikiText + "\n";
         var parsed = Parser.parse(wikiText,shortTitle,true)
-        
+        var div ='<div>';
         //Adding View for Follow Unfollow
+        if (User.isLoggedIn()==true){
+        	if(data['paragraphs'][p].isFollowing==0){
+        		var followContent = '<span class="followStar"><img src="static/images/star0.png" alt="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen" title="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen"></span>';
+        		var followAction = 'follow';
+        	}
+        	if(data['paragraphs'][p].isFollowing==1){
+        		var followContent = '<span class="followStar"><img src="static/images/star1.png" alt="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen"></span>';
+        		var followAction = 'unfollow';
+        	}
+        	if(data['paragraphs'][p].isFollowing==2){
+        		var followContent = '<span class="followStar"><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span>';
+        		var followAction = 'unfollow';
+        	}
+        		var followrqurl= String('.json_markNode/'+followAction+'/'+data['paragraphs'][p].path) ;
+        	if(data['paragraphs'][p].isFlagging==0) {
+        		var spamContent = '<span class="spamFlag"><img src="static/images/star2.png" alt="Diesen Vorschlag als Spam markieren" title="Diesen Vorschlag als Spam markieren"></span>';
+        		var spamAction = 'spam';
+        	}else{
+        		var spamContent = '<span class="spamFlag"><img src="static/images/star1.png" alt="Spammarkierung entfernen" title="Spammarkierung entfernen"></span>';
+        		var spamAction = 'notspam';
+        	}
+        	var spamrqurl= String('.json_markNode/'+spamAction+'/'+data['paragraphs'][p].path) ;
+    	
         
-        if(data['paragraphs'][p].isFollowing==0){
-        	var followContent = '<span class="followStar"><img src="static/images/star0.png" alt="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen" title="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen"></span>';
-        	var followAction = 'follow';
-        }
-        if(data['paragraphs'][p].isFollowing==1){
-        	var followContent = '<span class="followStar"><img src="static/images/star1.png" alt="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen"></span>';
-        	var followAction = 'unfollow';
-        		
-        }
-        if(data['paragraphs'][p].isFollowing==2){
-        	var followContent = '<span class="followStar"><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span>';
-        	var followAction = 'unfollow';
-        }
-        var followrqurl= String('.json_markNode/'+followAction+'/'+data['paragraphs'][p].path) ;
-        
-        if(data['paragraphs'][p].isFlagging==0) {
-        	var spamContent = '<span class="spamFlag"><img src="static/images/star2.png" alt="Diesen Vorschlag als Spam markieren" title="Diesen Vorschlag als Spam markieren"></span>';
-        	var spamAction = 'spam';
-        }else{
-        	var spamContent = '<span class="spamFlag"><img src="static/images/star1.png" alt="Spammarkierung entfernen" title="Spammarkierung entfernen"></span>';
-        	var spamAction = 'notspam';
-        }
-        var spamrqurl= String('.json_markNode/'+spamAction+'/'+data['paragraphs'][p].path) ;
-      
-        
-        var div ='<div><div class="followContainer" style="float:right">';
+        div +='<div class="followContainer" style="float:right">';
         div += followContent;
         div +='<div class="btndropdown"><ul> <li> <img src="static/images/dropdown.png" alt="S" title="Sp"> <ul><li>';
         div += spamContent
-        div +='</li></ul></div>';
-        
-        div +='</div>'+ parsed.innerHTML + '<div>';
+        div +='</li></ul></div></div>';
+        }
+        div += parsed.innerHTML + '</div>';
         	
         
         
@@ -200,7 +198,7 @@ ClassData.prototype.loadTextResponse = function(data) {
       
         output.appendTo(this.html);
         
-    }
+    };
     
 };
 

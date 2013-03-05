@@ -56,6 +56,7 @@ ClassUser.prototype.isLoggedIn= function(){
  */
 ClassUser.prototype.LogoutSuccess= function(){
 	$.cookie("Findecologin", 'false');
+	Controller.loadText();
 	this.loggedIn = false;
 	return true;
 }
@@ -70,6 +71,7 @@ ClassUser.prototype.LoginSuccess= function(){
 	// This cookie can be Hijacked this doesn't Matter thus it got nothing to do with Django Auth
 	// TODO: Try to get this Value from Django Cookie
 	$.cookie('Findecologin', 'true', { expires: 10 });
+	Controller.loadText();
 	this.loggedIn = true;
 	return true;
 }
