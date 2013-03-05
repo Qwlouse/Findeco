@@ -25,12 +25,10 @@
  
  // TODO: Error Handling
 function ClassLogin() {}
-var Login = new ClassLogin();
 
 
-ClassLogin.prototype.form = {};
-ClassLogin.prototype.user = null;
-ClassLogin.prototype.rqhandler= RqHandler;
+
+ClassLogin.prototype.form = {}; 
 
 ClassLogin.prototype.checkKey = function (e) {
     if ( e.which == 13 ) {
@@ -44,16 +42,12 @@ ClassLogin.prototype.close = function () {
     }
 }
 
-ClassLogin.prototype.isLoggedin = function() {
-    // TODO: Decide what functions to allow for someone who is not loggedin.
-    return this.hasUser();
-}
-
 ClassLogin.prototype.handleRequest = function(data) {
 
     if ( typeof data['loginResponse'] !=  'undefined') {
-	    Login.user = new ClassUser();
-	    Login.show();
+    	
+	    User.LoginSuccess();
+	    Login.setLoginButtonState();
 	    Login.overlay
 	        .hide()
 	        .empty();
@@ -62,17 +56,10 @@ ClassLogin.prototype.handleRequest = function(data) {
         
 }
 
-ClassLogin.prototype.hasUser = function() {
-    if ( Login.user != null ) {
-        return true;
-    }
-    return false;
-}
-
 ClassLogin.prototype.logout = function() {
     $.get('.json_logout',function(data) {
-        Login.user = null;
-        Login.show();
+        User.LogoutSuccess();
+        Login.setLoginButtonState();
         alert(data['logoutResponse']['farewellMessage']);
     },'json');
 }
@@ -81,26 +68,6 @@ ClassLogin.prototype.fieldClickHandler = function() {
     $(this).attr('id','');
 }
 
-ClassLogin.prototype.show = function() {
-    Login.root = $('#login')
-        .empty();
-    if ( Login.hasUser() ) {
-        $('<div class="button">Ausloggen</div>')
-            .attr('style','margin-bottom: 10px;')
-            .click(Login.logout)
-            .appendTo(Login.root);
-        return;
-    }
-    // Show Login link.
-    $('<div class="button">Einloggen</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.showLoginForm)
-        .appendTo(Login.root);
-    $('<div class="button">Registrieren</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.showRegisterForm)
-        .appendTo(Login.root);
-};
 
 ClassLogin.prototype.createTableFormField = function(name,input,targetTable,func) {
     var tr = $('<tr>')
@@ -114,6 +81,29 @@ ClassLogin.prototype.createTableFormField = function(name,input,targetTable,func
                 .appendTo(tr)
             );
     
+}
+
+ClassLogin.prototype.setLoginButtonState = function() {  
+	Login.root = $('#login')
+        .empty();
+    if ( User.isLoggedIn() == true ) {
+    	//Show Logout Link
+        $('<div class="button">Ausloggen</div>')
+            .attr('style','margin-bottom: 10px;')
+            .click(Login.logout)
+            .appendTo(Login.root);
+        
+    }else{
+    	// Show Login link.
+    	$('<div class="button">Einloggen</div>')
+        	.attr('style','margin-bottom: 10px;')
+        	.click(Login.showLoginForm)
+        	.appendTo(Login.root);
+    	$('<div class="button">Registrieren</div>')
+        	.attr('style','margin-bottom: 10px;')
+        	.click(Login.showRegisterForm)
+        	.appendTo(Login.root);
+    }
 }
 
 ClassLogin.prototype.showRegisterForm = function() {
@@ -270,7 +260,7 @@ ClassLogin.prototype.submitLogin = function() {
         alert('Bitte fülle alle Felder aus!');
         return false;
     }
-    Login.rqhandler.post({
+    RqHandler.post({
         url: '.json_login',
         data: tmp,
         success: Login.handleRequest
@@ -287,7 +277,7 @@ ClassLogin.prototype.submitRecoveryByMail = function() {
         alert('Bitte fülle alle Felder aus!');
         return false;
     }
-    Login.rqhandler.post({
+    RqHandler.post({
         url: '.json_accountResetRequestByMail',
         data: tmp,
     });
@@ -303,7 +293,7 @@ ClassLogin.prototype.submitRecoveryByName = function() {
         alert('Bitte fülle alle Felder aus!');
         return false;
     }
-    Login.rqhandler.post({
+    RqHandler.post({
         url: '.json_accountResetRequestByName',
         data: tmp
     });
@@ -328,7 +318,7 @@ ClassLogin.prototype.submitRegister = function() {
         alert('Die Passwörter stimmen nicht überein');
         return false;
     }
-    Login.rqhandler.post({
+       RqHandler.post({
         url: '.json_accountRegistration',
         data: tmp
     });
@@ -339,7 +329,7 @@ ClassLogin.prototype.submitActivation = function(activationKey) {
 	var tmp = {
     	'activationKey': activationKey,
     };
-   	Login.rqhandler.post({
+	RqHandler.post({
         url: '.json_accountActivation',
         data: tmp
     	});
@@ -350,7 +340,7 @@ ClassLogin.prototype.submitRecovery = function(activationKey) {
  	var tmp = {
         'activationKey': activationKey,
     };
-   	Login.rqhandler.post({
+ 	RqHandler.post({
         url: '.json_accountResetConfirmation',
         data: tmp
     });

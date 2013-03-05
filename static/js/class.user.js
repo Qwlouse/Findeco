@@ -22,10 +22,57 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
  
- function ClassUser() {}
+/**
+ * Creates an instance of User.
+ *
+ * @constructor
+ * @this {User}
+ */
+function ClassUser() {
+	
+}
+
+/**
+ * Returns the current loginstatus of user
+ *
+ * @return {Boolean} The Loginstatus of the user
+ */
+ClassUser.prototype.isLoggedIn= function(){
+	this.loggedIn = false;
+	if ($.cookie("Findecologin") ==  'true'){
+		/** @private */ this.loggedIn = true;
+	}
+	if ($.cookie("Findecologin") ==  'false'){
+		this.loggedIn = false;
+	}
+	/** TODO: We need to Drop isLoggedIn. This can be done either by getting Django Cookie or setting another one with the same properties**/
+	return this.loggedIn;
+}
+
+/**
+ * Handler for called on Logout
+ *
+ * @return {Boolean} success
+ */
+ClassUser.prototype.LogoutSuccess= function(){
+	$.cookie("Findecologin", 'false');
+	this.loggedIn = false;
+	return true;
+}
+
+
+/**
+ * Handler for called on Login
+ *
+ * @return {Boolean} success
+ */
+ClassUser.prototype.LoginSuccess= function(){
+	// This cookie can be Hijacked this doesn't Matter thus it got nothing to do with Django Auth
+	// TODO: Try to get this Value from Django Cookie
+	$.cookie('Findecologin', 'true', { expires: 10 });
+	this.loggedIn = true;
+	return true;
+}
  
- ClassUser.prototype.init = function() {
- 
- }
  
  
