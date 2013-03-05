@@ -43,17 +43,13 @@ ClassLogin.prototype.close = function () {
 }
 
 ClassLogin.prototype.handleRequest = function(data) {
-
     if ( typeof data['loginResponse'] !=  'undefined') {
-    	
-	    User.LoginSuccess();
+    	User.LoginSuccess();
 	    Login.setLoginButtonState();
 	    Login.overlay
 	        .hide()
 	        .empty();
     }
-    
-        
 }
 
 ClassLogin.prototype.logout = function() {
@@ -69,19 +65,7 @@ ClassLogin.prototype.fieldClickHandler = function() {
 }
 
 
-ClassLogin.prototype.createTableFormField = function(name,input,targetTable,func) {
-    var tr = $('<tr>')
-        .appendTo(targetTable);
-    $('<td>' + name + '</td>')
-        .appendTo(tr);
-    return $(input)
-        .keypress(func)
-        .appendTo(
-            $('<td>')
-                .appendTo(tr)
-            );
-    
-}
+
 
 ClassLogin.prototype.setLoginButtonState = function() {  
 	Login.root = $('#login')
@@ -111,34 +95,20 @@ ClassLogin.prototype.showRegisterForm = function() {
         .click(Login.close)
         .show();
     Login.overlay.empty();
-    
     Login.container = $('<div>')
         .addClass('contributeContainer')
         .click(function () {return false;})
         .appendTo(Login.overlay);
     
-    var table = $('<table>')
-        .attr('style','margin: auto; width: 200px;')
-        .appendTo(Login.container);
-    
-    Login.form = {'type':'register'};
-    Login.form['name'] = Login.createTableFormField('Name','<input type="text">',table);
-    Login.form['email'] = Login.createTableFormField('E-Mail','<input type="text">',table);
-    Login.form['password'] = Login.createTableFormField('Passwort','<input type="password">',table);
-    Login.form['password2'] = Login.createTableFormField('Passwort wiederholen','<input type="password">',table);
-    tr = $('<tr>')
-        .appendTo(table);
-    td = $('<td colspan="2">')
-        .appendTo(tr);
-    Login.form['submit'] = $('<div id="inputsubmit" class="button">Registrieren</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.submit)
-        .appendTo(td);
-    Login.form['cancel'] = $('<div id="cancelbutton" class="button">Abbrechen</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.close)
-        .appendTo(td);
-   
+    Login.formType = {'type':'register'};
+    Login.formBuilder= new ClassFormBuilder();
+    Login.formBuilder.open(Login.container ,'margin: auto; width: 200px;' );
+    Login.formBuilder.createInputField('name','Name','','<input type="text">');
+    Login.formBuilder.createInputField('email','E-Mail','','<input type="text">');
+    Login.formBuilder.createInputField('password','Passwort','','<input type="password">');
+    Login.formBuilder.createInputField('password2','Passwort wiederholen','','<input type="password">');
+    Login.formBuilder.createButton('submit','Registrieren','margin-bottom: 10px;','id="inputsubmit" class="button"',Login.submit)
+    Login.formBuilder.createButton('cancel','Abbrechen','margin-bottom: 10px;','id="cancelbutton" class="button"',Login.close)
 }
 
 ClassLogin.prototype.showLoginForm = function() {
@@ -146,102 +116,52 @@ ClassLogin.prototype.showLoginForm = function() {
         .click(Login.close)
         .show();
     Login.overlay.empty();
-    
     Login.container = $('<div>')
         .addClass('contributeContainer')
         .click(function () {return false;})
         .appendTo(Login.overlay);
     
-    var table = $('<table>')
-        .attr('style','margin: auto; width: 200px;')
-        .appendTo(Login.container);
-    
-    Login.form = {'type':'login'};
-    Login.form['name'] = Login.createTableFormField('Name','<input type="text">',table,Login.checkKey);
-    Login.form['password'] = Login.createTableFormField('Passwort','<input type="password">',table,Login.checkKey);
-    tr = $('<tr>')
-        .appendTo(table);
-    td = $('<td colspan="2">')
-        .appendTo(tr);
-    Login.form['submit'] = $('<div id="inputsubmit" class="button">Einloggen</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.submit)
-        .appendTo(td);
-    Login.form['cancel'] = $('<div id="cancelbutton" class="button">Abbrechen</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.close)
-        .appendTo(td);
-     $('<br><div class="button">Passwort vergessen? </div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.showRecoveryFormByName)
-        .appendTo(td);
+    Login.formType = {'type':'login'};
+    Login.formBuilder= new ClassFormBuilder();
+    Login.formBuilder.open(Login.container ,'margin: auto; width: 200px;' );
+    Login.formBuilder.createInputField('name','Name','','<input type="text">',Login.checkKey);
+    Login.formBuilder.createInputField('password','Passwort','','<input type="password">',Login.checkKey);
+    Login.formBuilder.createButton('submit','Einloggen','margin-bottom: 10px;','id="inputsubmit" class="button"',Login.submit)
+    Login.formBuilder.createButton('cancel','Abbrechen','margin-bottom: 10px;','id="cancelbutton" class="button"',Login.close)
+    Login.formBuilder.createButton('showRecovery','Passwort vergessen?','margin-bottom: 10px;','id="cancelbutton" class="button"',Login.showRecoveryFormByName)
+
 };
 ClassLogin.prototype.showRecoveryFormByName = function() {
     Login.overlay = $('#overlay');
-    
     Login.container = $('<div>')
         .addClass('contributeContainer')
         .click(function () {return false;})
         .appendTo(Login.overlay);
-    
-    var table = $('<table>')
-        .attr('style','margin: auto; width: 200px;')
-        .appendTo(Login.container);
-        
-    Login.form = {'type':'recoverByName'};
-    Login.form['name'] = Login.createTableFormField('Benutzername:','<input type="text">',table,Login.checkKey);
-    tr = $('<tr>')
-        .appendTo(table);
-    td = $('<td colspan="2">')
-        .appendTo(tr);
-    Login.form['submit'] = $('<div id="inputsubmit" class="button">Wiederherstellung mit Benutzername</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.submit)
-        .appendTo(td);
-    Login.form['cancel'] = $('<div id="cancelbutton" class="button">Abbrechen</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.close)
-        .appendTo(td);
-    $('<br><div class="button">Nutzername Vergessen?</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.showRecoveryFormByMail)
-        .appendTo(td);
-
+    Login.formType = {'type':'recoverByName'};
+    Login.formBuilder= new ClassFormBuilder();
+    Login.formBuilder.open(Login.container ,'margin: auto; width: 200px;' );
+    Login.formBuilder.createInputField('name','Benutzername','','<input type="text">',Login.checkKey);
+    Login.formBuilder.createButton('submit','Wiederherstellung mit Benutzername','margin-bottom: 10px;','id="inputsubmit" class="button"',Login.submit)
+    Login.formBuilder.createButton('cancel','Abbrechen','margin-bottom: 10px;','id="cancelbutton" class="button"',Login.close)
+    Login.formBuilder.createButton('showRecovery','Nutzername Vergessen?','margin-bottom: 10px;','id="cancelbutton" class="button"',Login.showRecoveryFormByMail)
 };
 ClassLogin.prototype.showRecoveryFormByMail = function() {
     Login.overlay = $('#overlay');
-    
     Login.container = $('<div>')
         .addClass('contributeContainer')
         .click(function () {return false;})
         .appendTo(Login.overlay);
-    
-    var table = $('<table>')
-        .attr('style','margin: auto; width: 200px;')
-        .appendTo(Login.container);
-    Login.form = {'type':'recoverByMail'};
-    Login.form['mail'] = Login.createTableFormField('Email:','<input type="text">',table,Login.checkKey);
-    tr = $('<tr>')
-        .appendTo(table);
-    td = $('<td colspan="2">')
-        .appendTo(tr);
-    Login.form['submit'] = $('<div id="inputsubmit" class="button">Wiederherstellung mit Emailadresse</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.submit)
-        .appendTo(td);
-    Login.form['cancel'] = $('<div id="cancelbutton" class="button">Abbrechen</div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.close)
-        .appendTo(td);
-    $('<br><div class="button">Doch per Name? </div>')
-        .attr('style','margin-bottom: 10px;')
-        .click(Login.showRecoveryFormByName)
-        .appendTo(td);
-
+    Login.formType = {'type':'recoverByMail'};
+    Login.formBuilder= new ClassFormBuilder();
+    Login.formBuilder.open(Login.container ,'margin: auto; width: 200px;' );
+    Login.formBuilder.createInputField('mail','Email','','<input type="text">',Login.checkKey);
+    Login.formBuilder.createButton('submit','Wiederherstellung mit Emailadresse','margin-bottom: 10px;','id="inputsubmit" class="button"',Login.submit)
+    Login.formBuilder.createButton('cancel','Abbrechen','margin-bottom: 10px;','id="cancelbutton" class="button"',Login.close)
+    Login.formBuilder.createButton('showRecovery','Doch per Name?','margin-bottom: 10px;','id="cancelbutton" class="button"',Login.showRecoveryFormByName)
 };
 
 ClassLogin.prototype.submit = function() {
-    switch ( Login.form['type'] ) {
+    switch ( Login.formType['type'] ) {
         case 'login': return Login.submitLogin();
         case 'register': return Login.submitRegister();
         case 'recoverByName': return Login.submitRecoveryByName();
@@ -252,8 +172,8 @@ ClassLogin.prototype.submit = function() {
 
 ClassLogin.prototype.submitLogin = function() {
     var tmp = {
-        'username': Login.form['name'].val(),
-        'password': Login.form['password'].val()
+        'username': Login.formBuilder.get('name'),
+        'password': Login.formBuilder.get('password')
     };
     if ( tmp['name'] == '' 
         || tmp['password'] == '' ) {
@@ -270,7 +190,7 @@ ClassLogin.prototype.submitLogin = function() {
 
 ClassLogin.prototype.submitRecoveryByMail = function() {
  	var tmp = {
-       'emailAddress': Login.form['mail'].val()
+       'emailAddress': Login.formBuilder.get('mail')
     };
     if ( tmp['emailAddress'] == '') 
  	{
@@ -286,7 +206,7 @@ ClassLogin.prototype.submitRecoveryByMail = function() {
  
 ClassLogin.prototype.submitRecoveryByName = function() {
  	var tmp = {
-        'displayName': Login.form['name'].val()
+        'displayName': Login.formBuilder.get('name')
     };
     if ( tmp['displayName'] == '') 
  	{
@@ -302,10 +222,10 @@ ClassLogin.prototype.submitRecoveryByName = function() {
 
 ClassLogin.prototype.submitRegister = function() {
  	var tmp = {
-        'displayName': Login.form['name'].val(),
-        'emailAddress': Login.form['email'].val(),
-        'password': Login.form['password'].val(),
-        'password2': Login.form['password2'].val()
+        'displayName': Login.formBuilder.get('name'),
+        'emailAddress': Login.formBuilder.get('email'),
+        'password': Login.formBuilder.get('password'),
+        'password2': Login.formBuilder.get('password2')
     };
     if ( tmp['displayName'] == '' 
     	|| tmp['emailAddress'] == ''
