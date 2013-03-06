@@ -95,8 +95,13 @@
             .range([1, 2])
             .clamp(true);
 
+    for (i = 0; i < nodes.length; i++) {
+        nodes[i].cx = 150 * i;
+        nodes[i].cy = height/2;
+    }
     var force = d3.layout.force()
             .charge(-250)
+            .gravity(0)
             .size([width, height])
             .linkDistance(100)
             .nodes(nodes)
@@ -133,7 +138,8 @@
             .data(nodes)
             .enter().append("g")
             .attr("class", "node")
-            .attr("title", function (d) { return d.path; });
+            .attr("title", function (d) { return d.path; })
+            .call(force.drag);
 
     node.append("circle")
             .attr("fill", "white")
@@ -174,7 +180,15 @@
         }
     };
 
-    force.on("tick", function() {
+    force.on("tick", function(e) {
+        // Push different nodes in different directions for clustering.
+        var k = 0.2 * e.alpha;
+        nodes.forEach(function(o, i) {
+            o.y += (height/2 - o.y) * k;
+            o.x += (70*i + 100 - o.x) * k;
+        });
+
+
         link.attr("x1", function(d) { return d.source.x; })
                 .attr("y1", function(d) { return d.source.y;
                 })
