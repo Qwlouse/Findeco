@@ -35,8 +35,7 @@ var Contribute = new ClassContribute();
 
 ClassContribute.prototype.close = function () {
     if ( $(this).attr('id') == 'overlay' || $(this).attr('id') == 'cancelbutton' ) {
-        if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) != true 
-            || Contribute.isDefaultText(Contribute.form['wikiTextAlt'].val()) != true ) {
+        if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) != true ) {
             if ( confirm('Wollen sie wirklich das Formular verlassen? Nicht gespeicherte Zwischenstände gehen so verloren.') ) {
                 $('#overlay').hide();
             }
@@ -128,7 +127,7 @@ ClassContribute.prototype.handleClick = function (a,b,c) {
         Contribute.buttons['newAlt'] = $('<div>Alternativer Text</div>')
             .addClass('button')
             .attr('style','clear: both; margin-bottom: 10px;')
-            .click(Contribute.setAlt)
+            .click(Contribute.setViewEditAlternative)
             .appendTo(Contribute.container);
     }
     
@@ -183,8 +182,7 @@ ClassContribute.prototype.checkDone = function () {
         return true;
         case 'alt':
             Contribute.buttons['confirm'].removeClass('marked');
-            if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) 
-                || Contribute.isDefaultText(Contribute.form['wikiTextAlt'].val()) ) {
+            if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) ) {
                 Contribute.buttons['confirm'].addClass('marked');
                 return false;
             }
@@ -192,10 +190,10 @@ ClassContribute.prototype.checkDone = function () {
             if ( Parser.errorState == true ) {
                 return false;
             }
-            Parser.parse(Contribute.form['wikiTextAlt'].val());
+           /* Parser.parse(Contribute.form['wikiTextAlt'].val());
             if ( Parser.errorState == true ) {
                 return false;
-            }
+            }*/
         return true;
     }
 };
@@ -219,7 +217,7 @@ ClassContribute.prototype.createForm = function () {
         .addClass('formElement')
         .appendTo(Contribute.formContainer)
         .hide();
-    Contribute.form['wikiTextAlt'] = $('<textarea>')
+    /*Contribute.form['wikiTextAlt'] = $('<textarea>')
         .addClass('formElement')
         .attr('disabled','disabled')
         .appendTo(Contribute.formContainer)
@@ -236,7 +234,7 @@ ClassContribute.prototype.createForm = function () {
     Contribute.form['wikiTextAltDisplay'] = $('<div>')
         .addClass('formElement')
         .appendTo(Contribute.formContainer)
-        .hide();
+        .hide();*/
     Contribute.form['type'] = $('<input type="hidden">')
         .appendTo(Contribute.formContainer);
 };
@@ -250,7 +248,16 @@ ClassContribute.prototype.markButton = function (type) {
     }
 };
 
-ClassContribute.prototype.setAlt = function () {
+ClassContribute.prototype.setViewEditAlternative = function () {
+	Contribute.container.attr('style','width:100%; right:0px;margin-right:0px;bottom:50px;top:95px;')
+	Contribute.buttons['newPro'].hide();
+	Contribute.buttons['newCon'].hide();
+	Contribute.buttons['newNeut'].hide();
+	Contribute.buttons['newText'].hide();
+	Contribute.form['wikiText'].attr('style','width:46%; margin:2%;float:right;height:90%;')
+	Contribute.form['wikiTextDisplay'].attr('style','width:46%;margin:2%;')
+	
+	
     Contribute.formContainer.show();
     Contribute.markButton('newAlt');
     for ( f in Contribute.form ) {
@@ -326,6 +333,13 @@ ClassContribute.prototype.setPro = function () {
 };
 
 ClassContribute.prototype.setText = function () {
+	Contribute.container.attr('style','width:100%; right:0px;margin-right:0px;bottom:50px;top:95px;')
+	Contribute.buttons['newPro'].hide();
+	Contribute.buttons['newCon'].hide();
+	Contribute.buttons['newNeut'].hide();
+	Contribute.buttons['newText'].hide();
+	Contribute.form['wikiText'].attr('style','width:46%; margin:2%;float:right;height:90%;')
+	Contribute.form['wikiTextDisplay'].attr('style','width:46%;margin:2%;')
     Contribute.markButton('newText');
     Contribute.formContainer.show();
     for ( f in Contribute.form ) {
@@ -376,9 +390,7 @@ ClassContribute.prototype.submit = function () {
                 data['wikiText'] = Contribute.form['wikiText'].val();
             break;
             case 'alt':
-                data['wikiText'] = Contribute.form['wikiText'].val();
-                data['argumentType'] = 'con';
-                data['wikiTextAlternative'] = Contribute.form['wikiTextAlt'].val();
+                data['wikiTextAlternative'] = Contribute.form['wikiText'].val();
             break;
         }
         
