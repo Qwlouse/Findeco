@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+    <script type="text/javascript" src="lib/d3.v2.min.js"></script>
+<style>
+
+    .link {
+        stroke: #000;
+        stroke-width: 2px;
+    }
+    .node {
+        fill: #f00;
+    }
+
+    .nodelabel {
+        fill: #000000;
+    }
+
+</style>
+</head>
+
+<body>
+<script type="text/javascript">
+
+    var nodes = [
+        {
+            "path": "Wahlprogramm_BTW.1/Urheberrecht.1",
+            "follows": 345,
+            "newFollows": 40,
+            "unFollows": 3,
+            "spamFlags": 0,
+            "originGroup": ["Wahlprogramm_BTW.1/Urheberrecht.234"]
+        },
+        {
+
+            "path": "Wahlprogramm_BTW.1/Urheberrecht.234",
+            "follows": 10,
+            "newFollows": 2,
+            "unFollows": 0,
+            "spamFlags": 0,
+            "originGroup": []
+
+        },
+        {
+            "newFollows": 4,
+            "path": "Wahlprogramm_BTW.1/Urheberrecht.3",
+            "spamFlags": 0,
+            "follows": 5,
+            "originGroup": [],
+            "unFollows": 0
+        },
+        {
+            "newFollows": 1,
+            "path": "Wahlprogramm_BTW.1/Urheberrecht.4",
+            "spamFlags": 0,
+            "follows": 3,
+            "originGroup": ["Wahlprogramm_BTW.1/Urheberrecht.3"],
+            "unFollows": 0
+        },
+        {
+            "newFollows": 1,
+            "path": "Wahlprogramm_BTW.1/Urheberrecht.5",
+            "spamFlags": 1,
+            "follows": 2,
+            "originGroup": ["Wahlprogramm_BTW.1/Urheberrecht.4"],
+            "unFollows": 2
+        }];
+    var links = [];
+    // map paths to nodes
+    var node_map = d3.map({});
+    for (var i = 0; i < nodes.length; i++) {
+        node_map.set(nodes[i].path, nodes[i]);
+    }
+
+    // construct the links
+    for (i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        for (var j = 0; j < n.originGroup.length; j++) {
+            links.push({"source": node_map.get(n.originGroup[j]), "target": n});
+        }
+    }
+
+    var width = 960,
+        height = 500,
+        radius = 20,
+        color = ["#0f0", "#999", "#f00"];
+
+    var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+    var scale = d3.scale.log()
+            .domain([1, 1000])
+            .range([1, 2])
+            .clamp(true);
+
+    var force = d3.layout.force()
+            .charge(-250)
+            .size([width, height])
+            .linkDistance(100)
+            .nodes(nodes)
+            .links(links)
+            .start();
+
+    var pie = d3.layout.pie()
+            .sort(null);
+
+    var arc = d3.svg.arc()
+            .outerRadius(radius)
+            .innerRadius(13);
+
+    // define arrowhead
+    svg.append("svg:defs").append("svg:marker")
+        .attr("id", "ArrowHead")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("svg:path")
+        .attr("d", "M0,-5L10,0L0,5");
+
+
+    var link = svg.selectAll(".link")
+            .data(links)
+            .enter().append("line")
+            .attr("class", "link")
+            .attr("marker-end", "url(#ArrowHead)");
+
+
+    var node = svg.selectAll(".node")
+            .data(nodes)
+            .enter().append("g")
+            .attr("class", "node")
+            .attr("title", function (d) { return d.path; });
+
+    node.append("circle")
+            .attr("fill", "white")
+            .attr("r", radius);
+
+    node.append("text")
+            .attr("class", "nodelabel")
+            .attr("dy", ".35em")
+            .attr("text-anchor", "middle")
+            .text(function(d) {
+                var s = d.path.split(".");
+                return s[s.length - 1]; });
+
+    node.selectAll("path")
+            .data(function(d) {return pie([ d.newFollows, d.follows - d.newFollows, d.unFollows]); })
+            .enter().append("svg:path")
+            .attr("d", arc)
+            .attr("r", 100)
+            .style("fill", function(d, i) { return color[i];});
+
+    var endx = function(source, target, r) {
+        var ratio = Math.abs((source.y - target.y) / (source.x - target.x));
+        var b = r/Math.sqrt(ratio * ratio + 1);
+        if ((source.x - target.x) > 0) {
+            return target.x + b;
+        } else {
+            return target.x - b;
+        }
+
+    };
+    var endy = function(source, target, r) {
+        var ratio = Math.abs((source.y - target.y) / (source.x - target.x));
+        var b = r/Math.sqrt(ratio * ratio + 1);
+        if ((source.y - target.y) > 0) {
+            return target.y + ratio * b;
+        } else {
+            return target.y - ratio * b;
+        }
+    };
+
+    force.on("tick", function() {
+        link.attr("x1", function(d) { return d.source.x; })
+                .attr("y1", function(d) { return d.source.y;
+                })
+                .attr("x2", function(d) { return endx(d.source, d.target, radius * scale(d.target.follows) + 12)})
+                .attr("y2", function(d) { return endy(d.source, d.target, radius * scale(d.target.follows) + 12)})
+        ;
+
+        node.attr('transform', function(d) {  return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')'; });
+    });
+</script>
+</body>
+</html> 
