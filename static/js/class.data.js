@@ -92,18 +92,9 @@ ClassData.prototype.loadArgumentResponse = function(data) {
 
 ClassData.prototype.loadGraphDataResponse = function(data) {
     this.type = 'graphdata';
-    //alert(data['graphDataChildren'].length);
-    //alert(data['graphDataChildren'][0]['path']);
-    //alert(data['graphDataRelated'].length);
     var graphNode = document.createElement('div');
-    var text = document.createTextNode("Hallo Graph!");
-    graphNode.appendChild(text);
     graphNode.id = "graph";
-    graphNode.paddingTop = 30.0;
-    graphNode.paddingLeft = 30.0;
-    graphNode.paddingRight = 30.0;
-    graphNode.paddingBottom = 30.0;
-    Graphbuilder.buildAnchorGraph(data, graphNode);
+    buildAnchorGraph(data, graphNode);
     $(graphNode).appendTo(this.html);
 };
 

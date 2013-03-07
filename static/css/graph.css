@@ -7,108 +7,17 @@ div#graph {
     overflow: hidden;*/
 }
 
-div#graph div.fixpoint {
-    width: 0;
-    height: 0;
-    margin: auto;
-    padding: 0;
-    border: 0 solid black;
-    overflow: visible;
-    display: block;
-    text-align: left;
-    vertical-align: top;
-    position: relative;
+div#graph .link {
+    stroke: #000;
+    stroke-width: 2px;
 }
 
-div#graph div.arrow {
-    height: 0;
-    width: 120px;
-    top: 0;
-    left: 0;
-    display: block;
-    border-bottom: 4px solid black;
-    border-left: 5px solid red;
-    position: relative;
-    margin: 0;
+div#graph .nodelabel {
+    fill: #000000;
 }
 
-div#graph div.masspoint {
-    width: 0;
-    height: 0;
-    margin: auto;
-    padding: 0;
-    border: 0 solid black;
-    overflow: visible;
-    display: block;
-    text-align: left;
-    vertical-align: middle;
-    position: relative;
-}
-
-div.whitener {
-    height: 35px;
-    width: 35px;
-    border-radius: 40px;
-    background: white;
-    position: relative;
-    top: -13px;
-    left: -13px;
-}
-
-div.circle_active {
-    position: relative;
-    left: -15px;
-    top: -15px;
-    border: 2px solid black;
-    padding: 0px 3px;
-    min-width: 33px;
-    height: 40px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 40px;
-    margin: 0;
-    border-radius: 40px;
-    box-shadow: 2px 2px 4px #858585;
-}
-
-div.circle {
-    position: relative;
-    left: -13px;
-    top: -13px;
-    border: 0;
-    min-width: 40px;
-    height: 40px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 40px;
-    margin: 0;
-    border-radius: 40px;
-    cursor: pointer;
-    box-shadow: 2px 2px 4px #858585;
-}
-
-div.circle:hover {
-    box-shadow: 0px 0px 0px #858585;
-}
-
-
-div.diagram_container {
-    width: 0;
-    height: 0;
-    overflow: visible;
-    position: relative;
-    top: -23px;
-    left: -23px;
-}
-
-div#newProposal {
-    position: absolute;
-    right: 10px;
-    top: 33px;
-    overflow: visible;
-}
-
-div#rawgraph div {
-    margin: 1px 1px 1px 1em;
-    border: 1px solid #d3d3d3;
+div#graph .node {
+    fill: #f00;
+    stroke: #000;
+    stroke-width: 1px;
 }
