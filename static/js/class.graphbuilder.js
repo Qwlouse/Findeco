@@ -68,63 +68,24 @@ function buildAnchorGraph(data, graphNode) {
     // parameter
     var svg_width = 600,  // dimensions of the svg
         svg_height = 150;
-
     var node_radius = 20;
     var pie_chart_colors = ["#0f0", "#999", "#f00"];
-
-
-
-    // create svg container
-
-    var svg = d3.select(graphNode).append("svg")
-        .attr("svg_width", svg_width)
-        .attr("svg_height", svg_height);
-
-    var nodes = data['graphDataChildren'];
-    var links = [];
-    // map paths to nodes
-    var node_map = d3.map({});
-    for (var i = 0; i < nodes.length; i++) {
-        node_map.set(nodes[i].path, nodes[i]);
-    }
-
-    // construct the links
-    for (i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
-        for (var j = 0; j < n.originGroup.length; j++) {
-            links.push({"source": node_map.get(n.originGroup[j]), "target": n});
-        }
-    }
-
-
-
-    var scale = d3.scale.log()
+    var scale = d3.scale.log() // scaling of follows to node-size
         .domain([1, 1000])
         .range([1, 2])
         .clamp(true);
-
-    for (i = 0; i < nodes.length; i++) {
-        nodes[i].x = 100 + 70 * i;
-        nodes[i].y = svg_height - 50 + i;
-    }
-
-    var force = d3.layout.force()
-        .charge(-300)
-        .gravity(0)
-        .size([svg_width, svg_height])
-        .linkDistance(100)
-        .nodes(nodes)
-        .links(links)
-        .start();
-
-    var pie = d3.layout.pie()
+    var pie = d3.layout.pie() // the pie layout for the nodes
         .sort(null);
-
-    var arc = d3.svg.arc()
+    var arc = d3.svg.arc()    // the arc for the pie layout
         .outerRadius(node_radius)
         .innerRadius(13);
 
-    // define arrowhead
+    // create svg container
+    var svg = d3.select(graphNode).append("svg")
+        .attr("width", svg_width)
+        .attr("height", svg_height);
+
+    // add arrowhead
     svg.append("svg:defs").append("svg:marker")
         .attr("id", "ArrowHead")
         .attr("viewBox", "0 -5 10 10")
@@ -135,59 +96,89 @@ function buildAnchorGraph(data, graphNode) {
         .append("svg:path")
         .attr("d", "M0,-5L10,0L0,5");
 
+    // preprocess data
+    var nodes = data['graphDataChildren'];
+    var links = [];
+    // map paths to nodes
+    var node_map = d3.map({});
+    for (var i = 0; i < nodes.length; i++) {
+        node_map.set(nodes[i].path, nodes[i]);
+    }
+    // construct the links
+    for (i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        for (var j = 0; j < n.originGroup.length; j++) {
+            links.push({"source": node_map.get(n.originGroup[j]), "target": n});
+        }
+    }
+    // set initial position of nodes
+    for (i = 0; i < nodes.length; i++) {
+        nodes[i].x = 100 + 70 * i;
+        nodes[i].y = svg_height - 50 + i;
+    }
 
+    // start the force layout
+    var force = d3.layout.force()
+        .charge(-300)
+        .gravity(0)
+        .size([svg_width, svg_height])
+        .linkDistance(80)
+        .nodes(nodes)
+        .links(links)
+        .start();
+
+    // add the links first so they will be underneath the nodes
     var link = svg.selectAll(".link")
         .data(links)
         .enter().append("line")
         .attr("class", "link")
         .attr("marker-end", "url(#ArrowHead)");
 
-
+    // add a svg:group for all nodes
     var node = svg.selectAll(".node")
         .data(nodes)
         .enter().append("g")
-        .attr("class", "node")
+        .attr("class", "nodeGroup")
         .attr("title", function (d) { return d.path; })
         .call(force.drag);
 
     node.append("circle")
-        .attr("fill", "white")
+        .attr("class", "nodeBackgroundCircle")
         .attr("r", node_radius);
 
     node.append("text")
-        .attr("class", "nodelabel")
+        .attr("class", "nodeLabel")
         .attr("dy", ".35em")
         .attr("text-anchor", "middle")
-        .text(function(d) {
+        .text(function(d) {           // display only index as text
             var s = d.path.split(".");
             return s[s.length - 1]; });
 
     node.selectAll("path")
-        .data(function(d) {return pie([ d.newFollows, d.follows - d.newFollows, d.unFollows]); })
+        .data(function(d) {
+            return pie([ d.newFollows, d.follows - d.newFollows, d.unFollows]);
+        })
         .enter().append("svg:path")
         .attr("d", arc)
         .attr("r", 100)
         .style("fill", function(d, i) { return pie_chart_colors[i];});
 
+
     force.on("tick", function(e) {
-        // Push different nodes in different directions for clustering.
+        // push all nodes to a baseline position
         var k = 0.2 * e.alpha;
         nodes.forEach(function(o, i) {
             o.y += (svg_height - 80 - o.y) * k;
-            o.x += (70*i + 100 - o.x) * k;
+            o.x += (70*i + 80 - o.x) * k;
         });
 
-
+        // modify the links and the nodes
         link.attr("x1", function(d) { return d.source.x; })
             .attr("y1", function(d) { return d.source.y;
             })
             .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 12)})
-            .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 12)})
-        ;
+            .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 12)});
 
         node.attr('transform', function(d) {  return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')'; });
     });
 }
-
-
-

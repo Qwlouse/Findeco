@@ -12,12 +12,16 @@ div#graph .link {
     stroke-width: 2px;
 }
 
-div#graph .nodelabel {
+div#graph .nodeBackgroundCircle {
+    fill: #fff;
+    stroke: #000;
+    stroke-width: 2px;
+}
+
+
+div#graph .nodeLabel {
     fill: #000000;
 }
 
-div#graph .node {
-    fill: #f00;
-    stroke: #000;
-    stroke-width: 1px;
+div#graph .nodeGroup {
 }
