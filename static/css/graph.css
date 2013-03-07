@@ -12,15 +12,27 @@ div#graph .link {
     stroke-width: 2px;
 }
 
+div#graph .activeNodeBackgroundCircle {
+    fill: #ffffff;
+    stroke: #000;
+    stroke-width: 4px;
+}
+
 div#graph .nodeBackgroundCircle {
     fill: #fff;
     stroke: #000;
-    stroke-width: 2px;
+    stroke-width: 0px;
+    /*filter: url(#dropShadow)*/
 }
 
 
 div#graph .nodeLabel {
     fill: #000000;
+}
+
+div#graph .activeNodeLabel {
+    font-weight: bold;
+    fill: #000;
 }
 
 div#graph .nodeGroup {

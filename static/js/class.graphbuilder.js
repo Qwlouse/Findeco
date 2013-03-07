@@ -86,7 +86,8 @@ function buildAnchorGraph(data, graphNode) {
         .attr("height", svg_height);
 
     // add arrowhead
-    svg.append("svg:defs").append("svg:marker")
+    var defs = svg.append("svg:defs");
+    var marker = defs.append("svg:marker")
         .attr("id", "ArrowHead")
         .attr("viewBox", "0 -5 10 10")
         .attr("refX", 0)
@@ -103,7 +104,11 @@ function buildAnchorGraph(data, graphNode) {
     var node_map = d3.map({});
     for (var i = 0; i < nodes.length; i++) {
         node_map.set(nodes[i].path, nodes[i]);
+        nodes[i].active = false;
     }
+    // currently selected node is active
+    node_map.get(Controller.position.substring(1)).active = true;
+
     // construct the links
     for (i = 0; i < nodes.length; i++) {
         var n = nodes[i];
@@ -143,11 +148,15 @@ function buildAnchorGraph(data, graphNode) {
         .call(force.drag);
 
     node.append("circle")
-        .attr("class", "nodeBackgroundCircle")
+        .attr("class", function (d) { if (d.active) return "activeNodeBackgroundCircle";
+        else return "nodeBackgroundCircle";
+        })
         .attr("r", node_radius);
 
     node.append("text")
-        .attr("class", "nodeLabel")
+        .attr("class", function (d) { if (d.active) return "activeNodeLabel";
+        else return "nodeLabel";
+        })
         .attr("dy", ".35em")
         .attr("text-anchor", "middle")
         .text(function(d) {           // display only index as text
