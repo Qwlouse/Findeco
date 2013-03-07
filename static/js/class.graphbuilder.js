@@ -65,8 +65,9 @@ function endy(source, target, r) {
 /////////////////////// Build Graph ////////////////////////////////////////////
 
 function buildAnchorGraph(data, graphNode) {
+    var nodes = data['graphDataChildren'];
     // parameter
-    var svg_width = 600,  // dimensions of the svg
+    var svg_width = Math.max(nodes.length * 70 + 150, 600),  // dimensions of the svg
         svg_height = 150;
     var node_radius = 20;
     var pie_chart_colors = ["#0f0", "#999", "#f00"];
@@ -98,7 +99,7 @@ function buildAnchorGraph(data, graphNode) {
         .attr("d", "M0,-5L10,0L0,5");
 
     // preprocess data
-    var nodes = data['graphDataChildren'];
+
     var links = [];
     // map paths to nodes
     var node_map = d3.map({});
