@@ -145,7 +145,9 @@ function buildAnchorGraph(data, graphNode) {
         .enter().append("g")
         .attr("class", "nodeGroup")
         .attr("title", function (d) { return d.path; })
-        .call(force.drag);
+        .call(force.drag)
+        .append("svg:a")
+        .attr("xlink:href", function(d){return "#/" + d.path;});
 
     node.append("circle")
         .attr("class", function (d) { if (d.active) return "activeNodeBackgroundCircle";
