@@ -33,7 +33,7 @@ from node_storage.factory import create_argument, create_vote
 from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
-from node_storage.structure_parser import turn_into_valid_short_title
+from node_storage.structure_parser import turn_into_valid_short_title, InvalidWikiStructure
 from .paths import parse_suffix
 from .api_validation import validate_response
 
@@ -107,6 +107,9 @@ def ViewErrorHandling(f):
             return f(*args, **kwargs)
         except ViewError, e:
             return json_error_response(e.identifier, *e.additional_info)
+        except InvalidWikiStructure, e:
+            return json_error_response('InvalidWikiStructure', e.message)
+
     return wrapped
 
 
