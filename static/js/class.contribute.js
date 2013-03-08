@@ -202,6 +202,15 @@ ClassContribute.prototype.checkDone = function () {
             }
         return true;
         case 'derivateStepOne':
+            Contribute.buttons['confirm'].removeClass('marked');
+            if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) ) {
+                Contribute.buttons['confirm'].addClass('marked');
+                return false;
+            }
+            Parser.parse(Contribute.form['wikiText'].val());
+            if ( Parser.errorState == true ) {
+                return false;
+            }
         return true;
         case 'derivateFinished':
         	
@@ -214,10 +223,7 @@ ClassContribute.prototype.checkDone = function () {
             if ( Parser.errorState == true ) {
                 return false;
             }
-           /* Parser.parse(Contribute.form['wikiTextAlt'].val());
-            if ( Parser.errorState == true ) {
-                return false;
-            }*/
+        
         return true;
     }
 };
