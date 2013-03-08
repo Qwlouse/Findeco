@@ -127,6 +127,14 @@ ClassContribute.prototype.defaultText = {
         'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
                     + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
                     + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
+    },
+    'derivate': {
+        'wikiText':'= Ersetze dies hier durch den Titel deiner Weiterentwicklung =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!',
+        'wikiTextReason':'= Ersetze dies hier durch eine Begründung für deine Weiterentwicklung =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
     }
 };
 
@@ -315,7 +323,7 @@ ClassContribute.prototype.setViewDerivateText = function () {
 		.click(Contribute.close)
 		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
-    	.val('= Begruendung = Hier Text eingeben')
+		.val(Contribute.defaultText['derivate']['wikiTextReason'])
     	.trigger('keyup');
 	return false;
 };
@@ -336,7 +344,7 @@ ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
 		.click(Contribute.close)
 		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
-    	.val('= Begruendung = Hier Text eingeben')
+		.val(Contribute.defaultText['derivate']['wikiText'])
     	.trigger('keyup');
     return false;
 };
