@@ -369,10 +369,26 @@ ClassContribute.prototype.setViewDerivateText = function () {
 ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
 	Contribute.showEditor();
 	Contribute.editorTitle.html('Neue Weiterentwicklung');
-	Contribute.formType='derivateFinished';
+	Contribute.formType='derivateFinished';	
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['derivate']['wikiText'])
     	.trigger('keyup');
+	DataRegister.get(Contribute.CallbackDerivateTextStepTwo,'text',Controller.position,true);
+    return false;
+};
+
+/**
+ * handler for setting the formtext to the WikiText of the current node and all of his children 
+ */
+ClassContribute.prototype.CallbackDerivateTextStepTwo = function (data) {
+	var temp ="";
+	for (p in data['json']['loadTextResponse']['paragraphs']){
+			 temp +=" "+ data['json']['loadTextResponse']['paragraphs'][p].wikiText
+			
+	}
+	Contribute.form['wikiText']
+		.val(temp)
+		.trigger('keyup');
     return false;
 };
 
@@ -383,13 +399,13 @@ ClassContribute.prototype.setViewNewSection = function () {
 	Contribute.showEditor();
 	Contribute.editorTitle.html('Neuer Abschnitt');
 	Contribute.formType='text';
+	
 	Contribute.form['wikiText']
     	.val(Contribute.defaultText['text']['wikiText'])
     	.trigger('keyup');
-	
 	return false;
 
-    
+   
 };
 
 /**
