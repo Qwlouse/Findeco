@@ -1,5 +1,6 @@
 /** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert <justus_wingert@web.de>                            *
+ * Copyright (c) 2012 	Justus Wingert <justus_wingert@web.de>   
+ * 						Maik Nauheim 	<findeco@maik-nauheim.de>            
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -25,19 +26,22 @@
  /*
  * Workaround for JQueryObject.val() destroying carriage returns.
  */
- 
 $.valHooks.textarea = {
 	get: function( elem ) {
 		return elem.value.replace( /\r?\n/g, "\r\n" );
 	} 
 
 };
- 
+/**
+ * Constructor
+ */
 function ClassContribute() {}
 
 
 	
-
+/**
+ * Issues an confirmation request on editor leave and closes the Editor
+ */
 ClassContribute.prototype.close = function () {
     if ( $(this).attr('id') == 'overlay' || $(this).attr('id') == 'cancelbutton' ) {
         if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) != true ) {
@@ -50,6 +54,10 @@ ClassContribute.prototype.close = function () {
     }
 }
 
+/**
+ * Checks whether the editor is the default text or not
+ * @return bool returns true if the text equals the standard text
+ */
 ClassContribute.prototype.isDefaultText = function (text) {
     if ( text == '' ) {
         return true;
@@ -64,6 +72,10 @@ ClassContribute.prototype.isDefaultText = function (text) {
     return false;
 }
 
+/**
+ * generates dropdown menus for content creation
+ * @return JqueryObject representation of dropdown menues
+ */
 ClassContribute.prototype.generateButtons= function(){
 	 // Generate Dropdown menues for new content Creation
 	
@@ -107,6 +119,7 @@ ClassContribute.prototype.generateButtons= function(){
    return DropdownText.add(DropdownArguments);    
 }
 
+
 ClassContribute.prototype.defaultText = {
     'text': {
         'wikiText':'= Ersetze dies hier durch einen Titel für deinen Text =' + "\r\n" 
@@ -147,7 +160,10 @@ ClassContribute.prototype.defaultText = {
                     + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
     }
 };
-
+/**
+ * checks whether the current formcontents are Vaild and submittable
+ * @return bool returns true if the Form is submittable 
+ */
 ClassContribute.prototype.checkDone = function () {
     switch ( Contribute.formType ) {
         case 'pro':case 'neut':case 'con':
@@ -184,10 +200,6 @@ ClassContribute.prototype.checkDone = function () {
             if ( Parser.errorState == true ) {
                 return false;
             }
-           /* Parser.parse(Contribute.form['wikiTextAlt'].val());
-            if ( Parser.errorState == true ) {
-                return false;
-            }*/
         return true;
         case 'derivateStepOne':
         return true;
@@ -211,7 +223,9 @@ ClassContribute.prototype.checkDone = function () {
 };
 
 
-
+/**
+ * marks buttons depending on formstate
+ */
 ClassContribute.prototype.markButton = function (type) {
     for ( b in Contribute.buttons ) {
         Contribute.buttons[b].removeClass('marked');
@@ -224,7 +238,9 @@ ClassContribute.prototype.markButton = function (type) {
 
 
 
-//ClassContribute.prototype.setViewEditText
+/**
+ * shows the wikiText default editor in full width
+ */
 ClassContribute.prototype.showEditor = function () {
 	Contribute.form={};	
 	Contribute.overlay = $('#overlay')
@@ -284,7 +300,9 @@ ClassContribute.prototype.showEditor = function () {
 
 };
 
-
+/**
+ * set view and form for pro argument
+ */
 ClassContribute.prototype.setViewNewPro = function () {
 	Contribute.showEditor();
 	Contribute.formType='pro';
@@ -294,6 +312,9 @@ ClassContribute.prototype.setViewNewPro = function () {
 	return false;
 };
 
+/**
+ * set view and form for con argument
+ */
 ClassContribute.prototype.setViewNewCon = function () {
 	Contribute.showEditor();
 	Contribute.formType='con';
@@ -302,6 +323,10 @@ ClassContribute.prototype.setViewNewCon = function () {
     	.trigger('keyup');
 	return false;
 };
+
+/**
+ * set view and form for neutral argument
+ */
 ClassContribute.prototype.setViewNewNeut = function () {
 	Contribute.showEditor();
 	Contribute.formType='neut';
@@ -311,6 +336,9 @@ ClassContribute.prototype.setViewNewNeut = function () {
 	return false;
 };
 
+/**
+ * set view and form for text derivation
+ */
 ClassContribute.prototype.setViewDerivateText = function () {
 	Contribute.showEditor();
 	Contribute.formType='derivateStepOne';
@@ -321,6 +349,9 @@ ClassContribute.prototype.setViewDerivateText = function () {
 	return false;
 };
 
+/**
+ * set view and form for the second step of text derivation
+ */
 ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
 	Contribute.showEditor();
 	Contribute.formType='derivateFinished';
@@ -330,6 +361,9 @@ ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
     return false;
 };
 
+/**
+ * set view and form for new section
+ */
 ClassContribute.prototype.setViewNewSection = function () {
 	Contribute.showEditor();
 	Contribute.formType='text';
@@ -341,7 +375,10 @@ ClassContribute.prototype.setViewNewSection = function () {
 
     
 };
-//ClassContribute.prototype.setViewEditText
+
+/**
+ * set view and form for alternative Text
+ */
 ClassContribute.prototype.setViewAlternativeText = function () {
 	Contribute.showEditor();
 	Contribute.formType='alternative';
@@ -355,6 +392,9 @@ ClassContribute.prototype.setViewAlternativeText = function () {
     
 };
 
+/**
+ * submit handling logic
+ */
 ClassContribute.prototype.submit = function () {
 //TODO: Mehrfach senden verhindern
 	
@@ -407,9 +447,11 @@ ClassContribute.prototype.submit = function () {
             data: data,
             success: Contribute.callback,
         });
-        return false;
+        
 }
-
+/**
+ * callback for submit logic
+ */
 ClassContribute.prototype.callback = function(data) {
     if ( data['storeTextResponse'] == undefined
         || data['storeTextResponse']['path'] == undefined ) {
