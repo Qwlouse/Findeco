@@ -351,7 +351,7 @@ def account_registration(request):
         raise InvalidEmailAddress(emailAddress)
 
     #Check for already existing Username
-    if User.objects.filter(username=displayName).count():
+    if User.objects.filter(username__iexact=displayName).count():
         raise UsernameNotAvailable(displayName)
 
     #Check for already existing Mail 
