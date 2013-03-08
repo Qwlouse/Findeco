@@ -69,8 +69,8 @@ ClassContribute.prototype.isDefaultText = function (text) {
 ClassContribute.prototype.generateButtons= function(){
 	 // Generate Dropdown menues for new content Creation
 	
-    DropdownText =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul> <li> Textoptionen<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul>s</ul></li></ul></div></div>');
-    DropdownArguments =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul><li> Argumente<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul><li>ss</li></ul></li></ul></div></div><div style="clear:both"></div>');
+    DropdownText =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul> <li> Textoptionen<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul></ul></li></ul></div></div>');
+    DropdownArguments =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul><li> Argumente<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul></ul></li></ul></div></div><div style="clear:both"></div>');
     
     DropdownText.find(".btndropdown li:has(ul)").hover(function(){
 		$(this).find("ul").slideDown();
@@ -130,6 +130,21 @@ ClassContribute.prototype.defaultText = {
                     + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
                     + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!',
         'wikiTextReason':'= Ersetze dies hier durch eine Begründung für deine Weiterentwicklung =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
+    },
+    'pro': {
+        'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
+    },
+    'con': {
+        'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
+    },
+    'neut': {
+        'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
                     + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
                     + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
     }
@@ -319,7 +334,7 @@ ClassContribute.prototype.setViewNewPro = function () {
 		.click(Contribute.close)
 		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
-		.val(Contribute.defaultText['derivate']['wikiTextReason'])
+		.val(Contribute.defaultText['pro']['wikiText'])
     	.trigger('keyup');
 	return false;
 };
@@ -340,13 +355,13 @@ ClassContribute.prototype.setViewNewCon = function () {
 		.click(Contribute.close)
 		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
-		.val(Contribute.defaultText['derivate']['wikiTextReason'])
+		.val(Contribute.defaultText['con']['wikiText'])
     	.trigger('keyup');
 	return false;
 };
 ClassContribute.prototype.setViewNewNeut = function () {
 	Contribute.showEditor();
-	Contribute.formType='Neut';
+	Contribute.formType='neut';
 	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
 		.addClass('button')
 		.addClass('marked')
@@ -360,7 +375,7 @@ ClassContribute.prototype.setViewNewNeut = function () {
 		.click(Contribute.close)
 		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
-		.val(Contribute.defaultText['derivate']['wikiTextReason'])
+		.val(Contribute.defaultText['neut']['wikiText'])
     	.trigger('keyup');
 	return false;
 };
