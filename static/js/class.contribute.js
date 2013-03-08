@@ -68,17 +68,16 @@ ClassContribute.prototype.isDefaultText = function (text) {
 
 ClassContribute.prototype.generateButtons= function(){
 	 // Generate Dropdown menues for new content Creation
-    DropdownText ='<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul> <li> Textoptionen<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul>';
-    DropdownText  +='</ul></li></ul></div>';
-    DropdownArguments  ='<div class="btndropdown" style=" width: 135px;"><ul><li> Argumente<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul>';
-    DropdownArguments +='</ul></li></ul></div></div><div style="clear:both"></div>';
-    DropdownText=$(DropdownText);
+	
+    DropdownText =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul> <li> Textoptionen<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul>s</ul></li></ul></div></div>');
+    DropdownArguments =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul><li> Argumente<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul><li>ss</li></ul></li></ul></div></div><div style="clear:both"></div>');
+    
     DropdownText.find(".btndropdown li:has(ul)").hover(function(){
 		$(this).find("ul").slideDown();
 	}, function(){
 		$(this).find("ul").hide();
 	});
-    DropdownArguments=$(DropdownArguments);
+
     DropdownArguments.find(".btndropdown li:has(ul)").hover(function(){
 		$(this).find("ul").slideDown();
 	}, function(){
@@ -87,29 +86,27 @@ ClassContribute.prototype.generateButtons= function(){
     
     
    
-    $('<div>Pro Argument</div>')
-    	.click(Contribute.setPro)
+    $('<li><div>Pro Argument</div></li>')
+    	.click(Contribute.setViewNewPro)
     	.appendTo(DropdownArguments.find("ul ul"));
-    $('<div>Contra Argument</div>')
-    	.click(Contribute.setCon)
+    $('<li><div>Contra Argument</div></li>')
+    	.click(Contribute.setViewNewCon)
     	.appendTo(DropdownArguments.find("ul ul"));
-    $('<div>Neutrales Argument</div>')
-    	.click(Contribute.setNeut)
+    $('<li><div>Neutrales Argument</div></li>')
+    	.click(Contribute.setViewNewNeut)
     	.appendTo(DropdownArguments.find("ul ul"));
     
     
-    $('<div>Neuer Abschnitt</div>')
+    $('<li><div>Neuer Abschnitt</div></li>')
     	.click(Contribute.setViewNewSection )
     	.appendTo(DropdownText.find("ul ul"));
-    $('<div>Neue Alternative</div>')
+    $('<li><div>Neue Alternative</div></li>')
     	.click(Contribute.setViewAlternativeText )
     	.appendTo(DropdownText.find("ul ul"));
-    $('<div>Weiterentwickeln</div>')
+    $('<li><div>Weiterentwickeln</div></li>')
     	.click(Contribute.setViewDerivateText )
     	.appendTo(DropdownText.find("ul ul"));
-    
-    DropdownArguments.appendTo(DropdownText);
-    return DropdownText;    
+   return DropdownText.add(DropdownArguments);    
 }
 
 ClassContribute.prototype.defaultText = {
@@ -306,6 +303,67 @@ ClassContribute.prototype.showEditor = function () {
 };
 
 
+ClassContribute.prototype.setViewNewPro = function () {
+	Contribute.showEditor();
+	Contribute.formType='pro';
+	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
+		.addClass('button')
+		.addClass('marked')
+		.attr('style','margin-bottom: 10px;')
+		.click(Contribute.submit)
+		.appendTo(Contribute.container);
+	$('<div>Abbrechen</div>')
+		.addClass('button')
+		.attr('style','margin-bottom: 10px;')
+		.attr('id','cancelbutton')
+		.click(Contribute.close)
+		.appendTo(Contribute.container);
+	Contribute.form['wikiText']
+		.val(Contribute.defaultText['derivate']['wikiTextReason'])
+    	.trigger('keyup');
+	return false;
+};
+
+ClassContribute.prototype.setViewNewCon = function () {
+	Contribute.showEditor();
+	Contribute.formType='con';
+	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
+		.addClass('button')
+		.addClass('marked')
+		.attr('style','margin-bottom: 10px;')
+		.click(Contribute.submit)
+		.appendTo(Contribute.container);
+	$('<div>Abbrechen</div>')
+		.addClass('button')
+		.attr('style','margin-bottom: 10px;')
+		.attr('id','cancelbutton')
+		.click(Contribute.close)
+		.appendTo(Contribute.container);
+	Contribute.form['wikiText']
+		.val(Contribute.defaultText['derivate']['wikiTextReason'])
+    	.trigger('keyup');
+	return false;
+};
+ClassContribute.prototype.setViewNewNeut = function () {
+	Contribute.showEditor();
+	Contribute.formType='Neut';
+	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
+		.addClass('button')
+		.addClass('marked')
+		.attr('style','margin-bottom: 10px;')
+		.click(Contribute.submit)
+		.appendTo(Contribute.container);
+	$('<div>Abbrechen</div>')
+		.addClass('button')
+		.attr('style','margin-bottom: 10px;')
+		.attr('id','cancelbutton')
+		.click(Contribute.close)
+		.appendTo(Contribute.container);
+	Contribute.form['wikiText']
+		.val(Contribute.defaultText['derivate']['wikiTextReason'])
+    	.trigger('keyup');
+	return false;
+};
 
 ClassContribute.prototype.setViewDerivateText = function () {
 	Contribute.showEditor();
