@@ -161,8 +161,8 @@ ClassContribute.prototype.defaultText = {
     }
 };
 /**
- * checks whether the current formcontents are Vaild and submittable
- * @return bool returns true if the Form is submittable 
+ * checks whether the current formcontents are Vaild and submitable
+ * @return bool returns true if the Form is submitable 
  */
 ClassContribute.prototype.checkDone = function () {
     switch ( Contribute.formType ) {
