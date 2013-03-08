@@ -37,6 +37,7 @@ var endPosition = 0;
 
 var Login = new ClassLogin();
 var User=new ClassUser();
+var Contribute = new ClassContribute();
 
 
 

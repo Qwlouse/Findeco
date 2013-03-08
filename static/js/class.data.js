@@ -27,6 +27,7 @@ function ClassData(json) {
 }
 
 ClassData.prototype.rqhandler= RqHandler;
+
 ClassData.prototype.getInfo = function() {
     return this.info;
 };
@@ -93,7 +94,7 @@ ClassData.prototype.loadArgumentResponse = function(data) {
 ClassData.prototype.loadGraphDataResponse = function(data) {
     this.type = 'graphdata';
     var graphNode = document.createElement('div');
-    graphNode.id = "graph";
+    graphNode.id = "graph";    
     buildAnchorGraph(data, graphNode);
     $(graphNode).appendTo(this.html);
 };
@@ -129,8 +130,8 @@ ClassData.prototype.loadTextResponse = function(data) {
     this.type = 'text';
     var wikiText = "";
     var shortTitle = data['paragraphs'][0].path.replace(/(.*)\//g,'').replace(/.\d+$/,'');
-    
-
+	Contribute.generateButtons();	
+   	Contribute.generateButtons().appendTo(this.html);
     for ( var p in data['paragraphs'] ) {
         wikiText =  data['paragraphs'][p].wikiText + "\n";
         var parsed = Parser.parse(wikiText,shortTitle,true)
@@ -164,9 +165,11 @@ ClassData.prototype.loadTextResponse = function(data) {
         div += followContent;
         div +='<div class="btndropdown"><ul> <li> <img src="static/images/dropdown.png" alt="S" title="Sp"> <ul><li>';
         div += spamContent
-        div +='</li></ul></div></div>';
+        div +='</li></ul></li></ul></div></div>';
         }
         div += parsed.innerHTML + '</div>';
+        
+       this.fullWikiText=data['paragraphs'][p].wikiText;
         	
         
         
@@ -186,7 +189,7 @@ ClassData.prototype.loadTextResponse = function(data) {
     		url: spamrqurl,
     		success:Controller.loadText
     	}));   	
-      
+       
         output.appendTo(this.html);
         
     };

@@ -33,7 +33,7 @@ ClassBox.prototype.getWidth = function() {
 ClassBox.prototype.addButtons = function() {
     var arguments = this.element.children('div.arguments');
     var text = this.element.children('div.text');
-    var buttons = this.element.children('div.buttons');
+    this.buttons = this.element.children('div.buttons');
     
     /*$('<div style="margin-bottom: 10px;">Zeige Argumente</div>')
         .addClass('button')
@@ -47,11 +47,8 @@ ClassBox.prototype.addButtons = function() {
             Controller.loadText();
         })
         .appendTo(text);
-    
-    $('<div style="margin-bottom: 10px;">Mitwirken oder Diskutieren</div>')
-        .addClass('button')
-        .click(Contribute.handleClick)
-        .appendTo(buttons);
+  
+   
 };
 
 ClassBox.prototype.printData = function(data) {
