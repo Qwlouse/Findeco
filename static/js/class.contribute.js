@@ -33,9 +33,7 @@ $.valHooks.textarea = {
 
 };
  
-function ClassContribute() {
-	this.temp={};
-}
+function ClassContribute() {}
 
 
 	
@@ -225,50 +223,7 @@ ClassContribute.prototype.markButton = function (type) {
 
 
 
-ClassContribute.prototype.setArg = function (type) {
-    Contribute.formContainer.show();
-    for ( f in Contribute.form ) {
-        Contribute.form[f].show();
-        if ( f == 'wikiText' ) {
-            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
-                Contribute.form[f]
-                    .val(Contribute.defaultText['arg'][f])
-                    .trigger('keyup');
-            }
-        }
-        if ( f == 'wikiTextAlt' ) {
-            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
-                Contribute.form[f]
-                    .val(Contribute.defaultText['arg'][f])
-                    .trigger('keyup');
-            }
-            Contribute.form[f]
-                .attr('disabled',true);
-        }
-        if ( f == 'type' ) {
-            Contribute.form[f].attr('value',type);
-        }
-    }
-    return false;
-};
 
-ClassContribute.prototype.setCon = function () {
-    Contribute.markButton('newCon');
-    Contribute.setArg('con');
-    return false;
-};
-
-ClassContribute.prototype.setNeut = function () {
-    Contribute.markButton('newNeut');	
-    Contribute.setArg('neut');
-    return false;
-};
-
-ClassContribute.prototype.setPro = function () {
-    Contribute.markButton('newPro');
-    Contribute.setArg('pro');
-    return false;
-};
 //ClassContribute.prototype.setViewEditText
 ClassContribute.prototype.showEditor = function () {
 	Contribute.form={};	
@@ -313,14 +268,6 @@ ClassContribute.prototype.showEditor = function () {
     Contribute.markButton('newText');
 	Contribute.form['wikiText'].show();
     Contribute.formContainer.show();
-
-
-};
-
-
-ClassContribute.prototype.setViewNewPro = function () {
-	Contribute.showEditor();
-	Contribute.formType='pro';
 	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
 		.addClass('button')
 		.addClass('marked')
@@ -333,6 +280,14 @@ ClassContribute.prototype.setViewNewPro = function () {
 		.attr('id','cancelbutton')
 		.click(Contribute.close)
 		.appendTo(Contribute.container);
+
+
+};
+
+
+ClassContribute.prototype.setViewNewPro = function () {
+	Contribute.showEditor();
+	Contribute.formType='pro';
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['pro']['wikiText'])
     	.trigger('keyup');
@@ -342,18 +297,6 @@ ClassContribute.prototype.setViewNewPro = function () {
 ClassContribute.prototype.setViewNewCon = function () {
 	Contribute.showEditor();
 	Contribute.formType='con';
-	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
-		.addClass('button')
-		.addClass('marked')
-		.attr('style','margin-bottom: 10px;')
-		.click(Contribute.submit)
-		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
-		.addClass('button')
-		.attr('style','margin-bottom: 10px;')
-		.attr('id','cancelbutton')
-		.click(Contribute.close)
-		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['con']['wikiText'])
     	.trigger('keyup');
@@ -362,18 +305,6 @@ ClassContribute.prototype.setViewNewCon = function () {
 ClassContribute.prototype.setViewNewNeut = function () {
 	Contribute.showEditor();
 	Contribute.formType='neut';
-	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
-		.addClass('button')
-		.addClass('marked')
-		.attr('style','margin-bottom: 10px;')
-		.click(Contribute.submit)
-		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
-		.addClass('button')
-		.attr('style','margin-bottom: 10px;')
-		.attr('id','cancelbutton')
-		.click(Contribute.close)
-		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['neut']['wikiText'])
     	.trigger('keyup');
@@ -383,18 +314,7 @@ ClassContribute.prototype.setViewNewNeut = function () {
 ClassContribute.prototype.setViewDerivateText = function () {
 	Contribute.showEditor();
 	Contribute.formType='derivateStepOne';
-	Contribute.buttons['confirm']=$('<div>Weiter</div>')
-		.addClass('button')
-		.addClass('marked')
-		.attr('style','margin-bottom: 10px;')
-		.click(Contribute.submit)
-		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
-		.addClass('button')
-		.attr('style','margin-bottom: 10px;')
-		.attr('id','cancelbutton')
-		.click(Contribute.close)
-		.appendTo(Contribute.container);
+	Contribute.buttons['confirm'].html("weiter");
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['derivate']['wikiTextReason'])
     	.trigger('keyup');
@@ -404,18 +324,6 @@ ClassContribute.prototype.setViewDerivateText = function () {
 ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
 	Contribute.showEditor();
 	Contribute.formType='derivateFinished';
-	Contribute.buttons['confirm']=$('<div>Absenden</div>')
-		.addClass('button')
-		.addClass('marked')
-		.attr('style','margin-bottom: 10px;')
-		.click(Contribute.submit)
-		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
-		.addClass('button')
-		.attr('style','margin-bottom: 10px;')
-		.attr('id','cancelbutton')
-		.click(Contribute.close)
-		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['derivate']['wikiText'])
     	.trigger('keyup');
@@ -425,18 +333,6 @@ ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
 ClassContribute.prototype.setViewNewSection = function () {
 	Contribute.showEditor();
 	Contribute.formType='text';
-	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
-		.addClass('button')
-		.addClass('marked')
-		.attr('style','margin-bottom: 10px;')
-		.click(Contribute.submit)
-		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
-		.addClass('button')
-		.attr('style','margin-bottom: 10px;')
-		.attr('id','cancelbutton')
-		.click(Contribute.close)
-		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
     	.val(Contribute.defaultText['text']['wikiText'])
     	.trigger('keyup');
@@ -449,18 +345,6 @@ ClassContribute.prototype.setViewNewSection = function () {
 ClassContribute.prototype.setViewAlternativeText = function () {
 	Contribute.showEditor();
 	Contribute.formType='alternative';
-	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
-		.addClass('button')
-		.addClass('marked')
-		.attr('style','margin-bottom: 10px;')
-		.click(Contribute.submit)
-		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
-		.addClass('button')
-		.attr('style','margin-bottom: 10px;')
-		.attr('id','cancelbutton')
-		.click(Contribute.close)
-		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
     	.val(Contribute.defaultText['alternative']['wikiText'])
     	.trigger('keyup');
