@@ -251,6 +251,10 @@ ClassContribute.prototype.showEditor = function () {
     	.addClass('contributeContainer')
     	.click(function () {return false;})
     	.appendTo(Contribute.overlay);
+	Contribute.editorTitle = $('<h1>wikiText-Editor</h2>')
+		.appendTo(Contribute.container)
+		.addClass('contributeHeadline');
+		
 	Contribute.formContainer = $('<div>')
     	.addClass('formContainer')	
     	.hide()
@@ -305,6 +309,7 @@ ClassContribute.prototype.showEditor = function () {
  */
 ClassContribute.prototype.setViewNewPro = function () {
 	Contribute.showEditor();
+	Contribute.editorTitle.html('Neues Pro-Argument');
 	Contribute.formType='pro';
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['pro']['wikiText'])
@@ -317,6 +322,7 @@ ClassContribute.prototype.setViewNewPro = function () {
  */
 ClassContribute.prototype.setViewNewCon = function () {
 	Contribute.showEditor();
+	Contribute.editorTitle.html('Neues Contra-Argument');
 	Contribute.formType='con';
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['con']['wikiText'])
@@ -329,6 +335,7 @@ ClassContribute.prototype.setViewNewCon = function () {
  */
 ClassContribute.prototype.setViewNewNeut = function () {
 	Contribute.showEditor();
+	Contribute.editorTitle.html('Neues Neutrales-Argument');
 	Contribute.formType='neut';
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['neut']['wikiText'])
@@ -341,6 +348,7 @@ ClassContribute.prototype.setViewNewNeut = function () {
  */
 ClassContribute.prototype.setViewDerivateText = function () {
 	Contribute.showEditor();
+	Contribute.editorTitle.html('Neue Weiterentwicklung (Beschreibung)');
 	Contribute.formType='derivateStepOne';
 	Contribute.buttons['confirm'].html("weiter");
 	Contribute.form['wikiText']
@@ -354,6 +362,7 @@ ClassContribute.prototype.setViewDerivateText = function () {
  */
 ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
 	Contribute.showEditor();
+	Contribute.editorTitle.html('Neue Weiterentwicklung');
 	Contribute.formType='derivateFinished';
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['derivate']['wikiText'])
@@ -366,6 +375,7 @@ ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
  */
 ClassContribute.prototype.setViewNewSection = function () {
 	Contribute.showEditor();
+	Contribute.editorTitle.html('Neuer Abschnitt');
 	Contribute.formType='text';
 	Contribute.form['wikiText']
     	.val(Contribute.defaultText['text']['wikiText'])
@@ -381,6 +391,7 @@ ClassContribute.prototype.setViewNewSection = function () {
  */
 ClassContribute.prototype.setViewAlternativeText = function () {
 	Contribute.showEditor();
+	Contribute.editorTitle.html('Neuer Alternativtext');
 	Contribute.formType='alternative';
 	Contribute.form['wikiText']
     	.val(Contribute.defaultText['alternative']['wikiText'])
