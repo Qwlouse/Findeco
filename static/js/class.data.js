@@ -130,8 +130,10 @@ ClassData.prototype.loadTextResponse = function(data) {
     this.type = 'text';
     var wikiText = "";
     var shortTitle = data['paragraphs'][0].path.replace(/(.*)\//g,'').replace(/.\d+$/,'');
-	Contribute.generateButtons();	
-   	Contribute.generateButtons().appendTo(this.html);
+    if (User.isLoggedIn()==true){
+    	Contribute.generateButtons();	
+    	Contribute.generateButtons().appendTo(this.html);
+    }
     for ( var p in data['paragraphs'] ) {
         wikiText =  data['paragraphs'][p].wikiText + "\n";
         var parsed = Parser.parse(wikiText,shortTitle,true)
