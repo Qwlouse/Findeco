@@ -30,8 +30,8 @@ import re
 import unicodedata
 from factory import create_structureNode, create_slot
 
-h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*\s*$", flags=re.MULTILINE)
-general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*$",
+h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*[ \t]*")
+general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*",
                        flags=re.MULTILINE)
 invalid_symbols = re.compile(r"[^\w\-_\s]+")
 
@@ -50,7 +50,7 @@ REPLACEMENTS = {
     ord('Ä'): 'Ae',
     ord('Ö'): 'Oe',
     ord('Ü'): 'Ue',
-    ord('ẞ'): 'SS',
+    ord('ẞ'): 'SS'
 }
 
 

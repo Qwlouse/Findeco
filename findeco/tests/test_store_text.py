@@ -83,7 +83,7 @@ class StoreTextTest(TestCase):
         response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
         self.assertEqual(response.status_code, 200)
         parsed = json.loads(response.content)
-        self.assertEqual(parsed['storeTextResponse']['path'], "Slot.2/Bla.1")
+        self.assertEqual(parsed['storeTextResponse']['path'], "Slot.2")
         node = assert_node_for_path("Slot.2/Bla.1")
         self.assertEqual(node.title, "Bla")
         self.assertEqual(node.text.text, "Blubb.")
