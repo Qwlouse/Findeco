@@ -246,11 +246,11 @@ def follow_node(request, path):
         mark.user_id = request.user.id
         mark.save()
         mark.nodes.add(node)
-        for n in traverse_derivates(node):
+        for n in traverse_derivates_while(node, lambda n: n.votes.filter(user=request.user.id).all().count() == 0):
             mark.nodes.add(n)
         mark.save()
         node.update_favorite_for_all_parents()
-        for n in traverse_derivates(node):
+        for n in traverse_derivates_while(node, lambda n: n.votes.filter(user=request.user.id).all().count() == 0):
             n.update_favorite_for_all_parents()
     return json_response({'markNodeResponse': {}})
 

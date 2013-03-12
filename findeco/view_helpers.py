@@ -350,6 +350,15 @@ def traverse_derivates(node):
         yield derivate
 
 
+def traverse_derivates_while(node, condition=lambda n: True):
+    der_list = list(node.derivates.all())
+    while len(der_list) > 0:
+        derivate = der_list.pop()
+        if condition(derivate):
+            der_list += list(derivate.derivates.all())
+            yield derivate
+
+
 def get_permission(name):
     a, _, n = name.partition('.')
     return Permission.objects.get(content_type__app_label=a, codename=n)
