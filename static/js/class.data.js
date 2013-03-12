@@ -171,10 +171,8 @@ ClassData.prototype.loadTextResponse = function(data) {
         }
         div += parsed.innerHTML + '</div>';
         
-       this.fullWikiText=data['paragraphs'][p].wikiText;
-        	
-        
-        
+        this.fullWikiText=data['paragraphs'][p].wikiText;
+       
         output=$(div);
         output.find(".btndropdown li:has(ul)").hover(function(){
     		$(this).find("ul").slideDown();
@@ -183,15 +181,19 @@ ClassData.prototype.loadTextResponse = function(data) {
     	});
         
         
-        output.find("span.followStar").click(RqHandler.get({   
-    		url: followrqurl,
-    		success:Controller.loadText
-    	}));
-       output.find("span.spamFlag").click(RqHandler.get({   
-    		url: spamrqurl,
-    		success:Controller.loadText
-    	}));   	
-       
+        output.find("span.followStar").click(function () {
+                RqHandler.get({   
+                    url: followrqurl,
+                    success:Controller.loadText
+                });
+            });
+        output.find("span.spamFlag").click(function () {
+                RqHandler.get({   
+                    url: spamrqurl,
+                    success:Controller.loadText
+                });
+            });   	
+        
         output.appendTo(this.html);
         
     };

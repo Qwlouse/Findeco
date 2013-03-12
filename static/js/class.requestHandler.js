@@ -30,52 +30,46 @@ function ClassRequestHandler() {}
 var RqHandler = new ClassRequestHandler();
 
 ClassRequestHandler.prototype.post = function (e) {
-		callback=e.success;
-		e.type= 'POST';	
-		e.dataType = 'json';
-		e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
-		e.success = function(data) { RqHandler.callback(data, callback); }
-		$.ajax(e);
-	
+    e.callback = e.success;
+    e.type = 'POST';    
+    e.dataType = 'json';
+    e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
+    e.success = function(data) { RqHandler.callback(data, this.callback); }
+    $.ajax(e);
+    
 }
 ClassRequestHandler.prototype.get  = function (e) {
-	return function(){ 
-	callback=e.success;
-	e.type= 'GET';	
-	e.dataType = 'json';
-	e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
-	e.success = function(data) { RqHandler.callback(data, callback); }
-	$.ajax(e);
-	}
+    e.callback = e.success;
+    e.type = 'GET';    
+    e.dataType = 'json';
+    e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
+    e.success = function(data) { RqHandler.callback(data, this.callback); }
+    $.ajax(e);
 }
 
 
 
 
-ClassRequestHandler.prototype.callback = function (data,callback) {	
-	
-	if ( typeof data['errorResponse'] !=  'undefined') {
-		var inserts=	data['errorResponse']['additionalInfo'];
-		var text = Language.get(data['errorResponse']['errorID']); 
-		alert(text.format(inserts));
-		return false;  	    
+ClassRequestHandler.prototype.callback = function (data, callback) {
+    if ( typeof data['errorResponse'] !=  'undefined' ) {
+        var inserts = data['errorResponse']['additionalInfo'];
+        var text = Language.get(data['errorResponse']['errorID']); 
+        alert(text.format(inserts));
+        return false;          
         
     }
-    if (callback == 'none'){
-    	return false;
+    if ( callback == 'none' ){
+        return false;
     }
     
-    if (typeof callback != 'undefined'){ 
-		callback(data);
-	}else
-	{
-		for (var SuccessID in data) {
-   			break;    // or do something with it and break
-    	}
-    	
-		alert(Language.get(SuccessID +'Success'));
-	
-	}
+    if ( typeof callback != 'undefined' ){ 
+        callback(data);
+    } else {
+        for ( var SuccessID in data ) {
+               break;    // or do something with it and break
+        }
+        alert(Language.get(SuccessID +'Success'));
+    }
 
 }
 
