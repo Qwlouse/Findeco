@@ -114,7 +114,7 @@ class StoreTextTest(TestCase):
             parents=self.slot).all()[0]).all()[0].title, "Argumenttitel")
         self.assertEqual(Argument.objects.filter(concerns=Node.objects.filter(
             parents=self.slot).all()[0]).all()[0].text.text,
-            "= Argumenttitel =\nDas ist jetzt besser")
+            "Das ist jetzt besser")
 
     def test_store_with_argumente(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
@@ -131,4 +131,4 @@ class StoreTextTest(TestCase):
             parents=self.slot).all()[0]).all()[0].title, "Argumenttitel")
         self.assertEqual(Argument.objects.filter(concerns=Node.objects.filter(
             parents=self.slot).all()[0]).all()[0].text.text,
-            "= Argumenttitel =\nDas ist jetzt besser")
+            "Das ist jetzt besser")

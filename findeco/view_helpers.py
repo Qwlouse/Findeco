@@ -281,7 +281,7 @@ def store_structure_node(path, wiki_text, author):
 
 def store_argument(path, arg_text, arg_type, author):
     node = get_node_for_path(path)
-    title = backend.get_title_from_text(arg_text)
+    title, arg_text = backend.split_title_from_text(arg_text)
     original_argument = create_argument(node, arg_type, title, arg_text,
                                         [author])
     # add auto follow
@@ -296,8 +296,9 @@ def store_argument(path, arg_text, arg_type, author):
 def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     new_node, new_path = store_structure_node(path, derivate_wiki_text, author)
     node = get_node_for_path(path)
+    arg_title, arg_text = backend.split_title_from_text(arg_text)
     arg = node.add_derivate(new_node, arg_type=arg_type,
-                            title=backend.get_title_from_text(arg_text),
+                            title=arg_title,
                             text=arg_text, authors=[author])
     # add auto follow
     create_vote(author, [arg])
@@ -348,6 +349,15 @@ def traverse_derivates(node):
         derivate = der_list.pop()
         der_list += list(derivate.derivates.all())
         yield derivate
+
+
+def traverse_derivates_while(node, condition=lambda n: True):
+    der_list = list(node.derivates.all())
+    while len(der_list) > 0:
+        derivate = der_list.pop()
+        if condition(derivate):
+            der_list += list(derivate.derivates.all())
+            yield derivate
 
 
 def get_permission(name):

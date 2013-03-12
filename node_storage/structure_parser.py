@@ -208,6 +208,18 @@ def parse(s, short_title):
     return node
 
 
+def split_title_from_text(text):
+    m = h1_start.match(text)
+    if m:
+        title = m.groups("title")[0]
+        # silently remove attempt to set short_title in H1
+        title = title.partition("§")[0].strip()
+        text = re.sub(h1_start, "", text).strip()
+        return title, text
+    else:
+        raise InvalidWikiStructure('Must start with H1 heading to set title')
+
+
 def get_title_from_text(text):
     #make sure we start with a heading 1
     m = h1_start.match(text)
