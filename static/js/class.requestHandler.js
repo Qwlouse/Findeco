@@ -35,7 +35,8 @@ ClassRequestHandler.prototype.post = function (e) {
     e.dataType = 'json';
     e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
     e.success = function(data) { RqHandler.callback(data, this); }
-    $.ajax(e);
+    e.error = RqHandler.httpErrorCheck;
+    $.ajax(e)   ;
     
 }
 
@@ -44,7 +45,8 @@ ClassRequestHandler.prototype.get  = function (e) {
     e.type = 'GET';    
     e.dataType = 'json';
     e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
-    e.success = function(data) { RqHandler.callback(data, this); }
+    e.success = function(data) { RqHandler.callback(data, this); }        
+    e.error = RqHandler.httpErrorCheck;
     $.ajax(e);
 }
 
@@ -67,8 +69,22 @@ ClassRequestHandler.prototype.callback = function (data, event) {
            break; // or do something with it and break
         }
     }
-
 }
+
+ClassRequestHandler.prototype.httpErrorCheck = function (xhr, textStatus, errorThrown) {
+    switch (xhr.status) {
+        case 404:
+            alert(Language.get('httpProposalNotFound'));
+        break;
+        case 500:
+            alert(Language.get('httpInternalServerError'));
+        break;
+        default:
+            alert(Language.get('httpUnhandledResponse /n') + textStatus + ' ' + errorThrown);
+        break;
+    }
+}
+
 
 
 

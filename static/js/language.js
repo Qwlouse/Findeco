@@ -119,7 +119,16 @@ ClassLanguage.prototype.get = function (target) {
                 case 'accountResetRequestByMailResponseSuccess':
                 	return 'Wir haben dir eine Wiederherstellungsmail an deine Emailadresse gesendet.';
                 case 'accountResetConfirmationResponseSuccess':
-                	return'Die Wiederherstellung war erfolgreich. Wir haben dir ein neues Passwort zugesendet.';
+                	return 'Die Wiederherstellung war erfolgreich. Wir haben dir ein neues Passwort zugesendet.';
+                
+                	
+                // handling for Serverside faults
+                case 'httpUnhandledResponse':
+                    return 'Ein unbehandelter HTTP fehler ist aufgetreten.' 
+                case 'httpProposalNotFound':
+                    return 'Diese URL ist ungültig oder der Vorschlag existiert nicht.';
+                case 'httpInternalServerError':
+                    return 'Ein Serverfehler ist aufgetreten. Bitte laden sie die Seite erneut';
                 
                 
                 default:
