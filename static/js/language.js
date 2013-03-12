@@ -83,7 +83,7 @@ ClassLanguage.prototype.get = function (target) {
 				case 'password':
                 	return 'Passwort';
 				case 'passwordAgain':
-                	return 'Password wiederholen';
+                	return 'Passwort wiederholen';
 				case 'submit':
                 	return 'Absenden';
 				case 'cancel':

@@ -1,5 +1,6 @@
 /** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert <justus_wingert@web.de>                            *
+ * Copyright (c) 2012 	Justus Wingert <justus_wingert@web.de>   
+ * 						Maik Nauheim 	<findeco@maik-nauheim.de>            
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -25,21 +26,22 @@
  /*
  * Workaround for JQueryObject.val() destroying carriage returns.
  */
- 
 $.valHooks.textarea = {
 	get: function( elem ) {
 		return elem.value.replace( /\r?\n/g, "\r\n" );
 	} 
 
 };
- 
-function ClassContribute() {
-	this.temp={};
-}
+/**
+ * Constructor
+ */
+function ClassContribute() {}
 
 
 	
-
+/**
+ * Issues an confirmation request on editor leave and closes the Editor
+ */
 ClassContribute.prototype.close = function () {
     if ( $(this).attr('id') == 'overlay' || $(this).attr('id') == 'cancelbutton' ) {
         if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) != true ) {
@@ -52,6 +54,10 @@ ClassContribute.prototype.close = function () {
     }
 }
 
+/**
+ * Checks whether the editor is the default text or not
+ * @return bool returns true if the text equals the standard text
+ */
 ClassContribute.prototype.isDefaultText = function (text) {
     if ( text == '' ) {
         return true;
@@ -66,19 +72,22 @@ ClassContribute.prototype.isDefaultText = function (text) {
     return false;
 }
 
+/**
+ * generates dropdown menus for content creation
+ * @return JqueryObject representation of dropdown menues
+ */
 ClassContribute.prototype.generateButtons= function(){
 	 // Generate Dropdown menues for new content Creation
-    DropdownText ='<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul> <li> Textoptionen<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul>';
-    DropdownText  +='</ul></li></ul></div>';
-    DropdownArguments  ='<div class="btndropdown" style=" width: 135px;"><ul><li> Argumente<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul>';
-    DropdownArguments +='</ul></li></ul></div></div><div style="clear:both"></div>';
-    DropdownText=$(DropdownText);
+	
+    DropdownText =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul> <li> Textoptionen<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul></ul></li></ul></div></div>');
+    DropdownArguments =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul><li> Argumente<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul></ul></li></ul></div></div><div style="clear:both"></div>');
+    
     DropdownText.find(".btndropdown li:has(ul)").hover(function(){
 		$(this).find("ul").slideDown();
 	}, function(){
 		$(this).find("ul").hide();
 	});
-    DropdownArguments=$(DropdownArguments);
+
     DropdownArguments.find(".btndropdown li:has(ul)").hover(function(){
 		$(this).find("ul").slideDown();
 	}, function(){
@@ -87,30 +96,29 @@ ClassContribute.prototype.generateButtons= function(){
     
     
    
-    $('<div>Pro Argument</div>')
-    	.click(Contribute.setPro)
+    $('<li><div>Pro Argument</div></li>')
+    	.click(Contribute.setViewNewPro)
     	.appendTo(DropdownArguments.find("ul ul"));
-    $('<div>Contra Argument</div>')
-    	.click(Contribute.setCon)
+    $('<li><div>Contra Argument</div></li>')
+    	.click(Contribute.setViewNewCon)
     	.appendTo(DropdownArguments.find("ul ul"));
-    $('<div>Neutrales Argument</div>')
-    	.click(Contribute.setNeut)
+    $('<li><div>Neutrales Argument</div></li>')
+    	.click(Contribute.setViewNewNeut)
     	.appendTo(DropdownArguments.find("ul ul"));
     
     
-    $('<div>Neuer Abschnitt</div>')
+    $('<li><div>Neuer Abschnitt</div></li>')
     	.click(Contribute.setViewNewSection )
     	.appendTo(DropdownText.find("ul ul"));
-    $('<div>Neue Alternative</div>')
+    $('<li><div>Neue Alternative</div></li>')
     	.click(Contribute.setViewAlternativeText )
     	.appendTo(DropdownText.find("ul ul"));
-    $('<div>Weiterentwickeln</div>')
+    $('<li><div>Weiterentwickeln</div></li>')
     	.click(Contribute.setViewDerivateText )
     	.appendTo(DropdownText.find("ul ul"));
-    
-    DropdownArguments.appendTo(DropdownText);
-    return DropdownText;    
+   return DropdownText.add(DropdownArguments);    
 }
+
 
 ClassContribute.prototype.defaultText = {
     'text': {
@@ -127,9 +135,35 @@ ClassContribute.prototype.defaultText = {
         'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
                     + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
                     + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
+    },
+    'derivate': {
+        'wikiText':'= Ersetze dies hier durch den Titel deiner Weiterentwicklung =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!',
+        'wikiTextReason':'= Ersetze dies hier durch eine Begründung für deine Weiterentwicklung =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
+    },
+    'pro': {
+        'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
+    },
+    'con': {
+        'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
+    },
+    'neut': {
+        'wikiText':'= Ersetze dies hier durch einen Titel oder eine Kurzbeschreibung deines Arguments für einen Alternativtext =' + "\r\n" 
+                    + 'Der Titel beziehungsweise die Kurzbeschreibung ist in der Übersicht der Argumente sichtbar. Dieser Text hier unten ist erst sichtbar wenn jemand auf den verlinkten Titel geklickt hat!' + "\r\n"  + "\r\n" 
+                    + 'Der eingegebene Text wird automatisch umgewandelt, du siehst also sofort ob deine Formatierung stimmt!'
     }
 };
-
+/**
+ * checks whether the current formcontents are Vaild and submitable
+ * @return bool returns true if the Form is submitable 
+ */
 ClassContribute.prototype.checkDone = function () {
     switch ( Contribute.formType ) {
         case 'pro':case 'neut':case 'con':
@@ -166,12 +200,17 @@ ClassContribute.prototype.checkDone = function () {
             if ( Parser.errorState == true ) {
                 return false;
             }
-           /* Parser.parse(Contribute.form['wikiTextAlt'].val());
-            if ( Parser.errorState == true ) {
-                return false;
-            }*/
         return true;
         case 'derivateStepOne':
+            Contribute.buttons['confirm'].removeClass('marked');
+            if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) ) {
+                Contribute.buttons['confirm'].addClass('marked');
+                return false;
+            }
+            Parser.parse(Contribute.form['wikiText'].val());
+            if ( Parser.errorState == true ) {
+                return false;
+            }
         return true;
         case 'derivateFinished':
         	
@@ -184,16 +223,15 @@ ClassContribute.prototype.checkDone = function () {
             if ( Parser.errorState == true ) {
                 return false;
             }
-           /* Parser.parse(Contribute.form['wikiTextAlt'].val());
-            if ( Parser.errorState == true ) {
-                return false;
-            }*/
+        
         return true;
     }
 };
 
 
-
+/**
+ * marks buttons depending on formstate
+ */
 ClassContribute.prototype.markButton = function (type) {
     for ( b in Contribute.buttons ) {
         Contribute.buttons[b].removeClass('marked');
@@ -205,51 +243,10 @@ ClassContribute.prototype.markButton = function (type) {
 
 
 
-ClassContribute.prototype.setArg = function (type) {
-    Contribute.formContainer.show();
-    for ( f in Contribute.form ) {
-        Contribute.form[f].show();
-        if ( f == 'wikiText' ) {
-            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
-                Contribute.form[f]
-                    .val(Contribute.defaultText['arg'][f])
-                    .trigger('keyup');
-            }
-        }
-        if ( f == 'wikiTextAlt' ) {
-            if ( Contribute.isDefaultText(Contribute.form[f].val()) ) {
-                Contribute.form[f]
-                    .val(Contribute.defaultText['arg'][f])
-                    .trigger('keyup');
-            }
-            Contribute.form[f]
-                .attr('disabled',true);
-        }
-        if ( f == 'type' ) {
-            Contribute.form[f].attr('value',type);
-        }
-    }
-    return false;
-};
 
-ClassContribute.prototype.setCon = function () {
-    Contribute.markButton('newCon');
-    Contribute.setArg('con');
-    return false;
-};
-
-ClassContribute.prototype.setNeut = function () {
-    Contribute.markButton('newNeut');	
-    Contribute.setArg('neut');
-    return false;
-};
-
-ClassContribute.prototype.setPro = function () {
-    Contribute.markButton('newPro');
-    Contribute.setArg('pro');
-    return false;
-};
-//ClassContribute.prototype.setViewEditText
+/**
+ * shows the wikiText default editor in full width
+ */
 ClassContribute.prototype.showEditor = function () {
 	Contribute.form={};	
 	Contribute.overlay = $('#overlay')
@@ -260,6 +257,10 @@ ClassContribute.prototype.showEditor = function () {
     	.addClass('contributeContainer')
     	.click(function () {return false;})
     	.appendTo(Contribute.overlay);
+	Contribute.editorTitle = $('<h1>wikiText-Editor</h2>')
+		.appendTo(Contribute.container)
+		.addClass('contributeHeadline');
+		
 	Contribute.formContainer = $('<div>')
     	.addClass('formContainer')	
     	.hide()
@@ -293,16 +294,7 @@ ClassContribute.prototype.showEditor = function () {
     Contribute.markButton('newText');
 	Contribute.form['wikiText'].show();
     Contribute.formContainer.show();
-
-
-};
-
-
-
-ClassContribute.prototype.setViewDerivateText = function () {
-	Contribute.showEditor();
-	Contribute.formType='derivateStepOne';
-	Contribute.buttons['confirm']=$('<div>Weiter</div>')
+	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
 		.addClass('button')
 		.addClass('marked')
 		.attr('style','margin-bottom: 10px;')
@@ -314,72 +306,115 @@ ClassContribute.prototype.setViewDerivateText = function () {
 		.attr('id','cancelbutton')
 		.click(Contribute.close)
 		.appendTo(Contribute.container);
+
+
+};
+
+/**
+ * set view and form for pro argument
+ */
+ClassContribute.prototype.setViewNewPro = function () {
+	Contribute.showEditor();
+	Contribute.editorTitle.html('Neues Pro-Argument');
+	Contribute.formType='pro';
 	Contribute.form['wikiText']
-    	.val('= Begruendung = Hier Text eingeben')
+		.val(Contribute.defaultText['pro']['wikiText'])
     	.trigger('keyup');
 	return false;
 };
 
+/**
+ * set view and form for con argument
+ */
+ClassContribute.prototype.setViewNewCon = function () {
+	Contribute.showEditor();
+	Contribute.editorTitle.html('Neues Contra-Argument');
+	Contribute.formType='con';
+	Contribute.form['wikiText']
+		.val(Contribute.defaultText['con']['wikiText'])
+    	.trigger('keyup');
+	return false;
+};
+
+/**
+ * set view and form for neutral argument
+ */
+ClassContribute.prototype.setViewNewNeut = function () {
+	Contribute.showEditor();
+	Contribute.editorTitle.html('Neues Neutrales-Argument');
+	Contribute.formType='neut';
+	Contribute.form['wikiText']
+		.val(Contribute.defaultText['neut']['wikiText'])
+    	.trigger('keyup');
+	return false;
+};
+
+/**
+ * set view and form for text derivation
+ */
+ClassContribute.prototype.setViewDerivateText = function () {
+	Contribute.showEditor();
+	Contribute.editorTitle.html('Neue Weiterentwicklung (Beschreibung)');
+	Contribute.formType='derivateStepOne';
+	Contribute.buttons['confirm'].html("weiter");
+	Contribute.form['wikiText']
+		.val(Contribute.defaultText['derivate']['wikiTextReason'])
+    	.trigger('keyup');
+	return false;
+};
+
+/**
+ * set view and form for the second step of text derivation
+ */
 ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
 	Contribute.showEditor();
-	Contribute.formType='derivateFinished';
-	Contribute.buttons['confirm']=$('<div>Absenden</div>')
-		.addClass('button')
-		.addClass('marked')
-		.attr('style','margin-bottom: 10px;')
-		.click(Contribute.submit)
-		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
-		.addClass('button')
-		.attr('style','margin-bottom: 10px;')
-		.attr('id','cancelbutton')
-		.click(Contribute.close)
-		.appendTo(Contribute.container);
+	Contribute.editorTitle.html('Neue Weiterentwicklung');
+	Contribute.formType='derivateFinished';	
 	Contribute.form['wikiText']
-    	.val('= Begruendung = Hier Text eingeben')
+		.val(Contribute.defaultText['derivate']['wikiText'])
     	.trigger('keyup');
+	DataRegister.get(Contribute.CallbackDerivateTextStepTwo,'text',Controller.position,true);
     return false;
 };
 
+/**
+ * handler for setting the formtext to the WikiText of the current node and all of his children 
+ */
+ClassContribute.prototype.CallbackDerivateTextStepTwo = function (data) {
+	var temp ="";
+	for (p in data['json']['loadTextResponse']['paragraphs']){
+			 temp +=" "+ data['json']['loadTextResponse']['paragraphs'][p].wikiText
+			
+	}
+	Contribute.form['wikiText']
+		.val(temp)
+		.trigger('keyup');
+    return false;
+};
+
+/**
+ * set view and form for new section
+ */
 ClassContribute.prototype.setViewNewSection = function () {
 	Contribute.showEditor();
+	Contribute.editorTitle.html('Neuer Abschnitt');
 	Contribute.formType='text';
-	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
-		.addClass('button')
-		.addClass('marked')
-		.attr('style','margin-bottom: 10px;')
-		.click(Contribute.submit)
-		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
-		.addClass('button')
-		.attr('style','margin-bottom: 10px;')
-		.attr('id','cancelbutton')
-		.click(Contribute.close)
-		.appendTo(Contribute.container);
+	
 	Contribute.form['wikiText']
     	.val(Contribute.defaultText['text']['wikiText'])
     	.trigger('keyup');
-	
 	return false;
 
-    
+   
 };
-//ClassContribute.prototype.setViewEditText
+
+/**
+ * set view and form for alternative Text
+ */
 ClassContribute.prototype.setViewAlternativeText = function () {
 	Contribute.showEditor();
+	Contribute.editorTitle.html('Neuer Alternativtext');
 	Contribute.formType='alternative';
-	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
-		.addClass('button')
-		.addClass('marked')
-		.attr('style','margin-bottom: 10px;')
-		.click(Contribute.submit)
-		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
-		.addClass('button')
-		.attr('style','margin-bottom: 10px;')
-		.attr('id','cancelbutton')
-		.click(Contribute.close)
-		.appendTo(Contribute.container);
 	Contribute.form['wikiText']
     	.val(Contribute.defaultText['alternative']['wikiText'])
     	.trigger('keyup');
@@ -390,6 +425,9 @@ ClassContribute.prototype.setViewAlternativeText = function () {
     
 };
 
+/**
+ * submit handling logic
+ */
 ClassContribute.prototype.submit = function () {
 //TODO: Mehrfach senden verhindern
 	
@@ -442,9 +480,11 @@ ClassContribute.prototype.submit = function () {
             data: data,
             success: Contribute.callback,
         });
-        return false;
+        
 }
-
+/**
+ * callback for submit logic
+ */
 ClassContribute.prototype.callback = function(data) {
     if ( data['storeTextResponse'] == undefined
         || data['storeTextResponse']['path'] == undefined ) {
