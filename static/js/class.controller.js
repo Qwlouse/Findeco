@@ -108,5 +108,11 @@ ClassController.prototype.stateHandler = function(event) {
     }
     Microblogging.load(Controller.position);
     Navigation.load(Controller.position);
-    Main.load(Controller.position);
+    // nsuring that there is an point in the url. If not it can not be an Proposal and is probably an Username
+    // this prevents an 404. 
+    // Later on we should redirect to user profiles or similar. 
+    if (Controller.position.search(/\./) != -1){
+        Main.load(Controller.position);
+    }
+    
 };
