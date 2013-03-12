@@ -95,6 +95,7 @@ DisabledAccount = functools.partial(ViewError, 'DisabledAccount')
 UsernameNotAvailable = functools.partial(ViewError, 'UsernameNotAvailable')
 EmailAddressNotAvailiable = functools.partial(ViewError,
                                               'EmailAddressNotAvailiable')
+InvalidUsername = functools.partial(ViewError, 'InvalidUsername')
 InvalidLogin = functools.partial(ViewError, 'InvalidLogin')
 InvalidEmailAddress = functools.partial(ViewError, 'InvalidEmailAddress')
 InvalidActivationKey = functools.partial(ViewError, 'InvalidActivationKey')

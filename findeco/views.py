@@ -26,6 +26,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
+import re
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
@@ -39,6 +40,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 import json
 import random
+from findeco.api_validation import USERNAME
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
 import node_storage as backend
@@ -349,6 +351,10 @@ def account_registration(request):
         validate_email(emailAddress)
     except ValidationError:
         raise InvalidEmailAddress(emailAddress)
+
+    # validate username
+    if not re.match(USERNAME, displayName):
+        raise InvalidUsername(displayName)
 
     #Check for already existing Username
     if User.objects.filter(username__iexact=displayName).count():

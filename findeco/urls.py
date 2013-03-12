@@ -26,6 +26,7 @@
 ################################################################################
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from findeco.api_validation import USERNAME
 
 from findeco.paths import PATH, RESTRICTED_PATH, ID
 
@@ -34,7 +35,6 @@ admin.autodiscover()
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
 BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
-USERNAME = r'(?P<name>[a-zA-Z][a-zA-Z0-9-_]{0,19})'
 
 urlpatterns = patterns(
     '',
