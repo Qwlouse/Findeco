@@ -33,6 +33,16 @@ ClassLanguage.prototype.get = function (target) {
             switch (target) {
                 case 'lang_alertLoggedout':
                     return 'Du bist nicht mehr eingeloggt. Bitte lade die Seite neu.';
+                case 'lang_follow0':
+                    return 'Sie folgen dem Vorschlag nicht. Klicken sie zum folgen.';
+                case 'lang_follow1':
+                    return 'Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen.';
+                case 'lang_follow2':
+                    return 'Sie folgen dem Vorschlag. Klicken sie zum entfolgen.';
+                case 'lang_spam0':
+                    return 'Diesen Vorschlag als Spam markieren.';
+                case 'lang_spam1':
+                    return 'Spammarkierung entfernen.';
                 case 'InvalidLogin':
                 	return 'Dein Login ist leider ungültig.';
                 case 'UnknownEmailAddress':
