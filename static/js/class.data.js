@@ -182,13 +182,13 @@ ClassData.prototype.loadTextResponse = function(data) {
         
         
         output.find("span.followStar").click(function () {
-                RqHandler.get({   
+                RqHandler.get({
                     url: followrqurl,
                     success:Controller.loadText
                 });
             });
         output.find("span.spamFlag").click(function () {
-                RqHandler.get({   
+                RqHandler.get({
                     url: spamrqurl,
                     success:Controller.loadText
                 });

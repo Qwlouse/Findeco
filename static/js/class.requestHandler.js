@@ -34,41 +34,38 @@ ClassRequestHandler.prototype.post = function (e) {
     e.type = 'POST';    
     e.dataType = 'json';
     e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
-    e.success = function(data) { RqHandler.callback(data, this.callback); }
+    e.success = function(data) { RqHandler.callback(data, this); }
     $.ajax(e);
     
 }
+
 ClassRequestHandler.prototype.get  = function (e) {
     e.callback = e.success;
     e.type = 'GET';    
     e.dataType = 'json';
     e.beforeSend = function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", Helper.getCSRFToken()); }
-    e.success = function(data) { RqHandler.callback(data, this.callback); }
+    e.success = function(data) { RqHandler.callback(data, this); }
     $.ajax(e);
 }
 
-
-
-
-ClassRequestHandler.prototype.callback = function (data, callback) {
+ClassRequestHandler.prototype.callback = function (data, event) {
     if ( typeof data['errorResponse'] !=  'undefined' ) {
         var inserts = data['errorResponse']['additionalInfo'];
         var text = Language.get(data['errorResponse']['errorID']); 
         alert(text.format(inserts));
-        return false;          
-        
+        return false;
     }
-    if ( callback == 'none' ){
+    if ( event.callback == 'none' ){
         return false;
     }
     
-    if ( typeof callback != 'undefined' ){ 
-        callback(data);
+    if ( typeof event.callback != 'undefined' ){ 
+        event.callback(data, event);
     } else {
         for ( var SuccessID in data ) {
-               break;    // or do something with it and break
+           alert(Language.get(SuccessID +'Success'));
+           break; // or do something with it and break
         }
-        alert(Language.get(SuccessID +'Success'));
     }
 
 }

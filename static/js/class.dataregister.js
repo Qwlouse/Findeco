@@ -46,9 +46,9 @@ ClassDataRegister.prototype.getTitle = function(path) {
     return this.title[path];
 };
 
-ClassDataRegister.prototype.handleAjax = function(json) {
-    var action = Helper.getActionFromUrl(this.url);
-    var position = Helper.getTargetPathFromUrl(this.url);
+ClassDataRegister.prototype.handleAjax = function(json, e) {
+    var action = Helper.getActionFromUrl(e.url);
+    var position = Helper.getTargetPathFromUrl(e.url);
     
     var type = '';
     
@@ -111,14 +111,16 @@ ClassDataRegister.prototype.load = function(callback,type,position) {
     
     // console.log('ClassDataRegister','load','switch');
     switch ( type ) {
+        case 'graphdata': loadType = '.json_loadGraphData/default'; break;
+        case 'microblogging': loadType = '.json_loadMicroblogging/newer'; break;
+        case 'argument': loadType = '.json_loadIndex/True'; break;
         case 'index': loadType = '.json_loadIndex'; break;
-        case 'graphdata': $.get('.json_loadGraphData/default' + position,DataRegister.handleAjax,'json'); return;
-        case 'microblogging': $.get('.json_loadMicroblogging/newer' + position,DataRegister.handleAjax,'json'); return;
-        case 'argument': $.get('.json_loadIndex/True' + position,DataRegister.handleAjax,'json'); return;
         case 'text': loadType = '.json_loadText'; break;
     }
-    
-    $.get(loadType + position,DataRegister.handleAjax,'json');
+    RqHandler.get({
+        url: loadType + position,
+        success: DataRegister.handleAjax
+    });
 };
 
 ClassDataRegister.prototype.setTitle = function(path,title) {
