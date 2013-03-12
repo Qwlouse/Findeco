@@ -141,26 +141,19 @@ ClassData.prototype.loadTextResponse = function(data) {
         //Adding View for Follow Unfollow
         if (User.isLoggedIn()==true){
         	if(data['paragraphs'][p].isFollowing==0){
-        		var followContent = '<span class="followStar"><img src="static/images/star0.png" alt="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen" title="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen"></span>';
-        		var followAction = 'follow';
+        		var followContent = '<span class="followStar" data-action="follow" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star0.png" alt="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen" title="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen"></span>';
         	}
         	if(data['paragraphs'][p].isFollowing==1){
-        		var followContent = '<span class="followStar"><img src="static/images/star1.png" alt="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen"></span>';
-        		var followAction = 'unfollow';
+        		var followContent = '<span class="followStar" data-action="unfollow" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star1.png" alt="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen"></span>';
         	}
         	if(data['paragraphs'][p].isFollowing==2){
-        		var followContent = '<span class="followStar"><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span>';
-        		var followAction = 'unfollow';
+        		var followContent = '<span class="followStar" data-action="unfollow" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span>';
         	}
-        		var followrqurl= String('.json_markNode/'+followAction+'/'+data['paragraphs'][p].path) ;
         	if(data['paragraphs'][p].isFlagging==0) {
-        		var spamContent = '<span class="spamFlag"><img src="static/images/star2.png" alt="Diesen Vorschlag als Spam markieren" title="Diesen Vorschlag als Spam markieren"></span>';
-        		var spamAction = 'spam';
+        		var spamContent = '<span class="spamFlag" data-action="spam" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star2.png" alt="Diesen Vorschlag als Spam markieren" title="Diesen Vorschlag als Spam markieren"></span>';
         	}else{
-        		var spamContent = '<span class="spamFlag"><img src="static/images/star1.png" alt="Spammarkierung entfernen" title="Spammarkierung entfernen"></span>';
-        		var spamAction = 'notspam';
+        		var spamContent = '<span class="spamFlag" data-action="notspam" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star1.png" alt="Spammarkierung entfernen" title="Spammarkierung entfernen"></span>';
         	}
-        	var spamrqurl= String('.json_markNode/'+spamAction+'/'+data['paragraphs'][p].path) ;
     	
         
         div +='<div class="followContainer" style="float:right">';
@@ -182,17 +175,17 @@ ClassData.prototype.loadTextResponse = function(data) {
         
         
         output.find("span.followStar").click(function () {
-                RqHandler.get({
-                    url: followrqurl,
-                    success:Controller.loadText
-                });
+            RqHandler.get({
+                url: '.json_markNode/' + $(this).attr('data-action') + '/' + $(this).attr('data-path'),
+                success: Controller.loadText
             });
+        });
         output.find("span.spamFlag").click(function () {
-                RqHandler.get({
-                    url: spamrqurl,
-                    success:Controller.loadText
-                });
-            });   	
+            RqHandler.get({
+                url: '.json_markNode/' + $(this).attr('data-action') + '/' + $(this).attr('data-path'),
+                success: Controller.loadText
+            });
+        });
         
         output.appendTo(this.html);
         
