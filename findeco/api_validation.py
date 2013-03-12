@@ -154,7 +154,8 @@ ERROR_LIST = [
     "InvalidLogin",
     "InvalidEmailAddress",
     "InvalidActivationKey",
-    "InvalidURL"
+    "InvalidURL",
+    "ServerError"
 ]
 
 

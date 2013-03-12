@@ -357,19 +357,24 @@ def account_registration(request):
     #Check for already existing Mail 
     if User.objects.filter(email=emailAddress).count():
         raise EmailAddressNotAvailiable(emailAddress)
+
+    activationKey = random.getrandbits(256)
+
+    # this might raise SMTPException which is handled by the @ViewErrorHandling
+    send_mail(settings.REGISTRATION_TITLE,
+              settings.REGISTRATION_BODY + ' ' + settings.FINDECO_BASE_URL +
+              '/#activate/' + str(activationKey),
+              settings.EMAIL_HOST_USER,
+              [emailAddress],
+              fail_silently=False)
     user = create_user(displayName,
                        description="",
                        mail=emailAddress,
                        password=password,
                        groups=['texters', 'voters', 'bloggers'])
     user.is_active = False
-    activationKey = random.getrandbits(256)
     user.profile.activationKey = activationKey
     user.save()
-    send_mail(settings.REGISTRATION_TITLE,
-              settings.REGISTRATION_BODY + ' ' + settings.FINDECO_BASE_URL +
-              '/#activate/' + str(activationKey), settings.EMAIL_HOST_USER,
-              [emailAddress])
 
     return json_response({'accountRegistrationResponse': {}})
 

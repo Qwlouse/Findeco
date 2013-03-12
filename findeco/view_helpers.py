@@ -21,6 +21,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
+from smtplib import SMTPException
 from django.contrib.auth.models import Permission, User
 from django.http import HttpResponse
 import functools
@@ -109,6 +110,8 @@ def ViewErrorHandling(f):
             return json_error_response(e.identifier, *e.additional_info)
         except InvalidWikiStructure, e:
             return json_error_response('InvalidWikiStructure', e.message)
+        except SMTPException, e:
+            return json_error_response('ServerError', 'SMTPError', e.message)
 
     return wrapped
 
