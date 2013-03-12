@@ -108,7 +108,10 @@ function buildAnchorGraph(data, graphNode) {
         nodes[i].active = false;
     }
     // currently selected node is active
-    node_map.get(Controller.position.substring(1)).active = true;
+    if (node_map.has(Controller.position.substring(1))) {
+        node_map.get(Controller.position.substring(1)).active = true;
+    }
+
 
     // construct the links
     for (i = 0; i < nodes.length; i++) {
