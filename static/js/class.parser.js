@@ -60,5 +60,5 @@ ClassParser.prototype.parse = function(text, shortTitle,disableValidation){
     } );
     creole.parse(textDiv,wikiText);
   
-    return textDiv ;
+    return $(textDiv);
 };

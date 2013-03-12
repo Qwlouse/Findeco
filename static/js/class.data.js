@@ -94,7 +94,7 @@ ClassData.prototype.loadArgumentResponse = function(data) {
 ClassData.prototype.loadGraphDataResponse = function(data) {
     this.type = 'graphdata';
     var graphNode = document.createElement('div');
-    graphNode.id = "graph";    
+    graphNode.id = "graph";
     buildAnchorGraph(data, graphNode);
     $(graphNode).appendTo(this.html);
 };
@@ -136,58 +136,47 @@ ClassData.prototype.loadTextResponse = function(data) {
     }
     for ( var p in data['paragraphs'] ) {
         wikiText =  data['paragraphs'][p].wikiText + "\n";
-        var parsed = Parser.parse(wikiText,shortTitle,true)
-        var div ='<div>';
+        var parsed = Parser.parse(wikiText,shortTitle,true);
+        
         //Adding View for Follow Unfollow
         if (User.isLoggedIn()==true){
-        	if(data['paragraphs'][p].isFollowing==0){
-        		var followContent = '<span class="followStar" data-action="follow" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star0.png" alt="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen" title="Sie folgen dem Vorschlag nicht. Klicken sie zum folgen"></span>';
-        	}
-        	if(data['paragraphs'][p].isFollowing==1){
-        		var followContent = '<span class="followStar" data-action="unfollow" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star1.png" alt="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag transitiv. Klicken sie zum entfolgen"></span>';
-        	}
-        	if(data['paragraphs'][p].isFollowing==2){
-        		var followContent = '<span class="followStar" data-action="unfollow" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star2.png" alt="Sie folgen dem Vorschlag. Klicken sie zum entfolgen" title="Sie folgen dem Vorschlag. Klicken sie zum entfolgen"></span>';
-        	}
-        	if(data['paragraphs'][p].isFlagging==0) {
-        		var spamContent = '<span class="spamFlag" data-action="spam" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star2.png" alt="Diesen Vorschlag als Spam markieren" title="Diesen Vorschlag als Spam markieren"></span>';
-        	}else{
-        		var spamContent = '<span class="spamFlag" data-action="notspam" data-path="' + data['paragraphs'][p].path + '"><img src="static/images/star1.png" alt="Spammarkierung entfernen" title="Spammarkierung entfernen"></span>';
-        	}
-    	
-        
-        div +='<div class="followContainer" style="float:right">';
-        div += followContent;
-        div +='<div class="btndropdown"><ul> <li> <img src="static/images/dropdown.png" alt="S" title="Sp"> <ul><li>';
-        div += spamContent
-        div +='</li></ul></li></ul></div></div>';
+            var localAction = function () {
+                RqHandler.get({
+                    url: '.json_markNode/' + $(this).attr('data-action') + '/' + $(this).attr('data-path'),
+                    success: Controller.loadText
+                });
+            };
+            var container = $('<div>')
+                .addClass('followContainer')
+                .attr('style','float:right;');
+            
+            var follow = $('<span>')
+                .attr('data-action',['follow','follow','unfollow'][data['paragraphs'][p].isFollowing])
+                .attr('data-path',data['paragraphs'][p].path)
+                .appendTo(container)
+                .click(localAction);
+            
+            var img = $('<img>')
+                .attr('src','static/images/star' + data['paragraphs'][p].isFollowing + '.png')
+                .attr('alt', Language.get('lang_follow' + data['paragraphs'][p].isFollowing))
+                .attr('title', Language.get('lang_follow' + data['paragraphs'][p].isFollowing))
+                .appendTo(follow);
+            
+            var spam = $('<span>')
+                .attr('data-action',['spam','notspam'][data['paragraphs'][p].isFlagging])
+                .attr('data-path',data['paragraphs'][p].path)
+                .appendTo(container)
+                .click(localAction);
+            
+            img = $('<img>')
+                .attr('src','static/images/star' + ( 1 + data['paragraphs'][p].isFlagging ) + '.png')
+                .attr('alt', Language.get('lang_spam' + data['paragraphs'][p].isFlagging))
+                .attr('title', Language.get('lang_spam' + data['paragraphs'][p].isFlagging))
+                .appendTo(spam);
         }
-        div += parsed.innerHTML + '</div>';
         
-        this.fullWikiText=data['paragraphs'][p].wikiText;
-       
-        output=$(div);
-        output.find(".btndropdown li:has(ul)").hover(function(){
-    		$(this).find("ul").slideDown();
-    	}, function(){
-    		$(this).find("ul").hide();
-    	});
-        
-        
-        output.find("span.followStar").click(function () {
-            RqHandler.get({
-                url: '.json_markNode/' + $(this).attr('data-action') + '/' + $(this).attr('data-path'),
-                success: Controller.loadText
-            });
-        });
-        output.find("span.spamFlag").click(function () {
-            RqHandler.get({
-                url: '.json_markNode/' + $(this).attr('data-action') + '/' + $(this).attr('data-path'),
-                success: Controller.loadText
-            });
-        });
-        
-        output.appendTo(this.html);
+        $(container).appendTo(this.html);
+        $(parsed).appendTo(this.html);
         
     };
     
