@@ -156,7 +156,29 @@ class Node(models.Model):
         """
         Returns a path which needn't be the only valid path to the node.
         """
-        return PathCache.objects.filter(node=self)[0].path
+        try:
+            return PathCache.objects.filter(node=self)[0].path
+        except PathCache.DoesNotExist:
+            # Note: This should NEVER happen
+            # but since it did we have a backup plan here
+            # TODO Remove if we are absolutely sure that every node is in PathCache
+
+            if self.parents.count() == 0:
+                return ""
+            if self.node_type == Node.ARGUMENT:
+                self_as_arg = Argument.objects.filter(argument_id=self.id).all()[0]
+                npath = self_as_arg.concerns.get_a_path().strip('/')
+                return '%s.%s.%d' % (npath, self_as_arg.arg_type, self_as_arg.index)
+            parent = self.parents.all()[0]
+            if self.node_type == Node.SLOT:
+                suffix = self.title
+            else:
+                suffix = "." + str(self.get_index(parent)) + "/"
+            path = parent.get_a_path() + suffix
+            # write to path
+            PathCache.objects.create(node=self, path=path)
+            return path
+
 
     def get_follows(self):
         return self.votes.count()
