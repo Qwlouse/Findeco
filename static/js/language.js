@@ -109,7 +109,30 @@ ClassLanguage.prototype.get = function (target) {
                 	return 'Wiederherstellung mit E-Mail';
 				case 'passwordMatch':
 					return 'Die Passwörter stimmen nicht überein';
-                // automatically called messages
+                // Contribute.js
+				case 'cont_leaveForm':
+					return 'Wollen sie wirklich das Formular verlassen? Nicht gespeicherte Zwischenstände gehen so verloren.'
+				case 'cont_textOptions':
+                    return 'Textoptionen';
+				case 'cont_arguments':
+                    return 'Argumente';
+				case 'cont_proArgument':
+                    return 'Pro Argument';
+				case 'cont_conArgument':
+                    return 'Contra Argument';
+				case 'cont_neutArgument':
+                    return 'Neutrales Argument';
+				case 'cont_newNode':
+                    return 'Neuer Abschnitt';
+				case 'cont_newAlternative':
+                    return 'Neue Alternative';
+				case 'cont_newDerivate':
+                    return 'Neue Weiterentwicklung';
+				case 'cont_titleEditor':
+				    return 'wikiText-Editor';
+				case 'cont_derivateDesc':
+				    return 'Neue Weiterentwicklung (Beschreibung)';
+				// automatically called messages
                 case 'accountRegistrationResponseSuccess':
                 	return 'Die Registrierung war erfolgreich!! \n Du erhälst in den nächsten Minuten eine Aktivierungsemail.';
                 case 'accountActivationResponseSuccess':
@@ -133,6 +156,8 @@ ClassLanguage.prototype.get = function (target) {
                 
                 default:
                     return 'Es wurde keine Übersetzung für ' + target + ' definiert. ';
+                
+               
             }
             break;
         case 'en_GB':

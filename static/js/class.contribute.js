@@ -45,7 +45,7 @@ function ClassContribute() {}
 ClassContribute.prototype.close = function () {
     if ( $(this).attr('id') == 'overlay' || $(this).attr('id') == 'cancelbutton' ) {
         if ( Contribute.isDefaultText(Contribute.form['wikiText'].val()) != true ) {
-            if ( confirm('Wollen sie wirklich das Formular verlassen? Nicht gespeicherte Zwischenstände gehen so verloren.') ) {
+            if ( confirm(Language.get('cont_leaveForm')) ) {
                 $('#overlay').hide();
             }
             return false;
@@ -79,8 +79,8 @@ ClassContribute.prototype.isDefaultText = function (text) {
 ClassContribute.prototype.generateButtons= function(){
 	 // Generate Dropdown menues for new content Creation
 	
-    DropdownText =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul> <li> Textoptionen<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul></ul></li></ul></div></div>');
-    DropdownArguments =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul><li> Argumente<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul></ul></li></ul></div></div><div style="clear:both"></div>');
+    DropdownText =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul> <li> '+Language.get('cont_textOptions')+'<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul></ul></li></ul></div></div>');
+    DropdownArguments =$('<div style=" margin: 0 auto; width: 280px;"><div class="btndropdown" style=" width: 135px;"><ul><li> '+Language.get('cont_arguments')+'<img src="static/images/dropdown.png" alt="S" title="Sp"> <ul></ul></li></ul></div></div><div style="clear:both"></div>');
     
     DropdownText.find(".btndropdown li:has(ul)").hover(function(){
 		$(this).find("ul").slideDown();
@@ -96,24 +96,24 @@ ClassContribute.prototype.generateButtons= function(){
     
     
    
-    $('<li><div>Pro Argument</div></li>')
+    $('<li><div>'+Language.get('cont_proArgument')+'</div></li>')
     	.click(Contribute.setViewNewPro)
     	.appendTo(DropdownArguments.find("ul ul"));
-    $('<li><div>Contra Argument</div></li>')
+    $('<li><div>'+Language.get('cont_conArgument')+'</div></li>')
     	.click(Contribute.setViewNewCon)
     	.appendTo(DropdownArguments.find("ul ul"));
-    $('<li><div>Neutrales Argument</div></li>')
+    $('<li><div>'+Language.get('cont_neutArgument')+'</div></li>')
     	.click(Contribute.setViewNewNeut)
     	.appendTo(DropdownArguments.find("ul ul"));
     
     
-    $('<li><div>Neuer Abschnitt</div></li>')
+    $('<li><div>'+Language.get('cont_newNode')+'</div></li>')
     	.click(Contribute.setViewNewSection )
     	.appendTo(DropdownText.find("ul ul"));
-    $('<li><div>Neue Alternative</div></li>')
+    $('<li><div>'+Language.get('cont_newAlternative')+'</div></li>')
     	.click(Contribute.setViewAlternativeText )
     	.appendTo(DropdownText.find("ul ul"));
-    $('<li><div>Weiterentwickeln</div></li>')
+    $('<li><div>'+Language.get('cont_derivate')+'</div></li>')
     	.click(Contribute.setViewDerivateText )
     	.appendTo(DropdownText.find("ul ul"));
    return DropdownText.add(DropdownArguments);    
@@ -257,7 +257,7 @@ ClassContribute.prototype.showEditor = function () {
     	.addClass('contributeContainer')
     	.click(function () {return false;})
     	.appendTo(Contribute.overlay);
-	Contribute.editorTitle = $('<h1>wikiText-Editor</h2>')
+	Contribute.editorTitle = $('<h1>'+Language.get('cont_titleEditor')+'</h2>')
 		.appendTo(Contribute.container)
 		.addClass('contributeHeadline');
 		
@@ -294,13 +294,13 @@ ClassContribute.prototype.showEditor = function () {
     Contribute.markButton('newText');
 	Contribute.form['wikiText'].show();
     Contribute.formContainer.show();
-	Contribute.buttons['confirm']=$('<div>Abschicken</div>')
+	Contribute.buttons['confirm']=$('<div>'+Language.get('submit')+'</div>')
 		.addClass('button')
 		.addClass('marked')
 		.attr('style','margin-bottom: 10px;')
 		.click(Contribute.submit)
 		.appendTo(Contribute.container);
-	$('<div>Abbrechen</div>')
+	$('<div>'+Language.get('cancel')+'</div>')
 		.addClass('button')
 		.attr('style','margin-bottom: 10px;')
 		.attr('id','cancelbutton')
@@ -315,7 +315,7 @@ ClassContribute.prototype.showEditor = function () {
  */
 ClassContribute.prototype.setViewNewPro = function () {
 	Contribute.showEditor();
-	Contribute.editorTitle.html('Neues Pro-Argument');
+	Contribute.editorTitle.html(Language.get('cont_proArgument'));
 	Contribute.formType='pro';
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['pro']['wikiText'])
@@ -328,7 +328,7 @@ ClassContribute.prototype.setViewNewPro = function () {
  */
 ClassContribute.prototype.setViewNewCon = function () {
 	Contribute.showEditor();
-	Contribute.editorTitle.html('Neues Contra-Argument');
+	Contribute.editorTitle.html(Language.get('cont_conArgument'));
 	Contribute.formType='con';
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['con']['wikiText'])
@@ -341,7 +341,7 @@ ClassContribute.prototype.setViewNewCon = function () {
  */
 ClassContribute.prototype.setViewNewNeut = function () {
 	Contribute.showEditor();
-	Contribute.editorTitle.html('Neues Neutrales-Argument');
+	Contribute.editorTitle.html(Language.get('cont_neutArgument'));
 	Contribute.formType='neut';
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['neut']['wikiText'])
@@ -354,7 +354,7 @@ ClassContribute.prototype.setViewNewNeut = function () {
  */
 ClassContribute.prototype.setViewDerivateText = function () {
 	Contribute.showEditor();
-	Contribute.editorTitle.html('Neue Weiterentwicklung (Beschreibung)');
+	Contribute.editorTitle.html(Language.get('cont_derivateDesc'));
 	Contribute.formType='derivateStepOne';
 	Contribute.buttons['confirm'].html("weiter");
 	Contribute.form['wikiText']
@@ -368,7 +368,7 @@ ClassContribute.prototype.setViewDerivateText = function () {
  */
 ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
 	Contribute.showEditor();
-	Contribute.editorTitle.html('Neue Weiterentwicklung');
+	Contribute.editorTitle.html(Language.get('cont_newDerivate'));
 	Contribute.formType='derivateFinished';	
 	Contribute.form['wikiText']
 		.val(Contribute.defaultText['derivate']['wikiText'])
@@ -397,7 +397,7 @@ ClassContribute.prototype.CallbackDerivateTextStepTwo = function (data) {
  */
 ClassContribute.prototype.setViewNewSection = function () {
 	Contribute.showEditor();
-	Contribute.editorTitle.html('Neuer Abschnitt');
+	Contribute.editorTitle.html(Language.get('cont_newNode'));
 	Contribute.formType='text';
 	
 	Contribute.form['wikiText']
@@ -413,7 +413,7 @@ ClassContribute.prototype.setViewNewSection = function () {
  */
 ClassContribute.prototype.setViewAlternativeText = function () {
 	Contribute.showEditor();
-	Contribute.editorTitle.html('Neuer Alternativtext');
+	Contribute.editorTitle.html(Language.get('cont_newAlternative'));
 	Contribute.formType='alternative';
 	Contribute.form['wikiText']
     	.val(Contribute.defaultText['alternative']['wikiText'])
