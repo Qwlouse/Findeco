@@ -37,6 +37,7 @@ tag_pattern = re.compile(r"(?:(?<=\s)|\A)#(?P<tagname>\w+)\b")
 internal_link_pattern = re.compile(r"(?:(?<=\s)|\A)(?P<path>/(?:[a-zA-Z0-9-_]+\.\d+/)*[a-zA-Z0-9-_]+(?:\.\d+)?/?)\b")
 url_pattern = re.compile(r"(?:(?<=\s)|\A)((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)\b")
 
+
 class Post(models.Model):
     node_references = models.ManyToManyField(
         backend.Node,
@@ -62,9 +63,14 @@ class Post(models.Model):
     def __unicode__(self):
         if self.is_reference_to:
             return u'%s references "%s" by %s on %s' % (
-                self.author.username, self.text, self.is_reference_to.author.username, self.time)
+                self.author.username,
+                self.text,
+                self.is_reference_to.author.username,
+                self.time)
         else:
-            return u'%s says "%s" on %s' % (self.author.username, self.text, self.time)
+            return u'%s says "%s" on %s' % (self.author.username,
+                                            self.text,
+                                            self.time)
 
 
 def create_post(text, author):
@@ -77,7 +83,7 @@ def create_post(text, author):
             split_text[i] = '<a href="/.users/{0}">@{0}</a>'.format(username)
             mentions.append(u)
         except User.DoesNotExist:
-            split_text[i] = '@'+username
+            split_text[i] = '@' + username
     text = "".join(split_text)
 
     split_text = tag_pattern.split(text)
@@ -95,9 +101,11 @@ def create_post(text, author):
             if n.node_type == backend.Node.SLOT:
                 slot = n
                 n = backend.get_favorite_if_slot(n)
-                position = backend.NodeOrder.objects.filter(child=n).filter(parent=slot).all()[0].position
-                path += "."+str(position)
-            split_text[i] = '<a href="{0}">{1}</a>'.format('/#' + path, path.rsplit('/',1)[1])
+                position = backend.NodeOrder.objects.filter(child=n).filter(
+                    parent=slot).all()[0].position
+                path += "." + str(position)
+            split_text[i] = '<a href="{0}">{1}</a>'.format(
+                '/#' + path, path.rsplit('/', 1)[1])
             nodes.append(n)
         except backend.IllegalPath:
             pass

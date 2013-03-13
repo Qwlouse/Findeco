@@ -43,6 +43,7 @@ import random
 from findeco.api_validation import USERNAME
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
+from microblogging.system_messages import post_node_was_flagged_message, post_new_derivate_for_node_message, post_new_argument_for_node_message
 import node_storage as backend
 from node_storage.factory import create_user
 from .paths import parse_suffix
@@ -199,6 +200,9 @@ def flag_node(request, path):
         new_mark.user_id = request.user.id
         new_mark.save()
         node.update_favorite_for_all_parents()
+
+    # microblog alert
+    post_node_was_flagged_message(path, user)
     return json_response({'markNodeResponse': {}})
 
 
@@ -214,6 +218,9 @@ def unflag_node(request, path):
     if marks.count() == 1:
         marks[0].delete()
         node.update_favorite_for_all_parents()
+
+    # microblog alert
+    post_node_was_flagged_message(path, user)
     return json_response({'markNodeResponse': {}})
 
 
@@ -273,11 +280,16 @@ def store_text(request, path):
             ('argumentType' in p or 'wikiTextAlternative' in p):
         # fork for additional slot
         new_path = fork_node_and_add_slot(path, user, p['wikiText'])
+        # microblog alert
+        post_new_derivate_for_node_message(user, path, new_path)
 
     elif 'wikiText' in p and 'argumentType' in p and not \
             'wikiTextAlternative' in p:
         # store argument
         new_path = store_argument(path, p['wikiText'], p['argumentType'], user)
+        # microblog alert
+        post_new_argument_for_node_message(user, path, p['argumentType'],
+                                           new_path)
 
     elif 'wikiTextAlternative' in p and not \
             ('wikiText' in p or 'argumentType' in p):
@@ -291,6 +303,8 @@ def store_text(request, path):
         derivate_wiki_text = p['wikiTextAlternative']
         new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text,
                                   user)
+        # microblog alert
+        post_new_derivate_for_node_message(user, path, new_path)
 
     else:
         # wrong usage of API
