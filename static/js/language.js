@@ -43,12 +43,8 @@ ClassLanguage.prototype.get = function (target) {
                     return 'Diesen Vorschlag als Spam markieren.';
                 case 'lang_spam1':
                     return 'Spammarkierung entfernen.';
-                case 'InvalidLogin':
-                	return 'Dein Login ist leider ungültig.';
                 case 'UnknownEmailAddress':
                 	return 'Die Emailaddresse \'{0}\' ist dem System nicht bekannt';
-                case 'UnknownNode':
-                	return 'Der Pfad \'{0}\' ist dem System nicht bekannt';
                 case 'UnknownUser':
                 	return 'Der User \'{0}\' ist dem System nicht bekannt';
                 case 'UnknownNode':
@@ -68,7 +64,7 @@ ClassLanguage.prototype.get = function (target) {
  				case 'EmailAddressNotAvailiable':
                 	return 'Die Emailadresse \'{0}\' ist nicht verfügbar'; 
                 case 'InvalidLogin':
-                	return 'Die Loggindaten sind ungültig';
+                	return 'Die Loggindaten sind leider ungültig';
                 case 'InvalidEmailAddress':
                 	return 'Die Emailadresse \'{0}\' ist ungültig';
                 case 'InvalidActivationKey':
@@ -76,7 +72,6 @@ ClassLanguage.prototype.get = function (target) {
                 case 'InvalidURL':
                 	return 'Diese URL ist ungültig';
 				//Common form errors
-				
 				case 'formMissingField':
                 	return 'Bitte fülle alle Felder aus!';
 				//Common single Words
@@ -111,7 +106,7 @@ ClassLanguage.prototype.get = function (target) {
 					return 'Die Passwörter stimmen nicht überein';
                 // Contribute.js
 				case 'cont_leaveForm':
-					return 'Wollen sie wirklich das Formular verlassen? Nicht gespeicherte Zwischenstände gehen so verloren.'
+					return 'Wollen sie wirklich das Formular verlassen? Nicht gespeicherte Zwischenstände gehen so verloren.';
 				case 'cont_textOptions':
                     return 'Textoptionen';
 				case 'cont_arguments':
@@ -147,7 +142,7 @@ ClassLanguage.prototype.get = function (target) {
                 	
                 // handling for Serverside faults
                 case 'httpUnhandledResponse':
-                    return 'Ein unbehandelter HTTP fehler ist aufgetreten.' 
+                    return 'Ein unbehandelter HTTP fehler ist aufgetreten.' ;
                 case 'httpProposalNotFound':
                     return 'Diese URL ist ungültig oder der Vorschlag existiert nicht.';
                 case 'httpInternalServerError':

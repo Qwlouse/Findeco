@@ -113,7 +113,7 @@ ClassContribute.prototype.generateButtons= function(){
     $('<li><div>'+Language.get('cont_newAlternative')+'</div></li>')
     	.click(Contribute.setViewAlternativeText )
     	.appendTo(DropdownText.find("ul ul"));
-    $('<li><div>'+Language.get('cont_derivate')+'</div></li>')
+    $('<li><div>'+Language.get('cont_newDerivate')+'</div></li>')
     	.click(Contribute.setViewDerivateText )
     	.appendTo(DropdownText.find("ul ul"));
    return DropdownText.add(DropdownArguments);    

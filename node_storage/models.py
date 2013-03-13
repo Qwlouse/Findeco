@@ -179,7 +179,6 @@ class Node(models.Model):
             PathCache.objects.create(node=self, path=path)
             return path
 
-
     def get_follows(self):
         return self.votes.count()
 
