@@ -28,8 +28,15 @@
 
 function ClassRequestHandler() {}
 var RqHandler = new ClassRequestHandler();
-
+ClassRequestHandler.prototype.count =0;
 ClassRequestHandler.prototype.post = function (e) {
+    // Blocking the UI on post requests as default 
+    if (typeof e.blocking ==  'undefined'){
+        e.blocking = true;
+    }
+    if (e.blocking == true){ 
+        this.block();
+    }
     e.callback = e.success;
     e.type = 'POST';    
     e.dataType = 'json';
@@ -41,6 +48,12 @@ ClassRequestHandler.prototype.post = function (e) {
 }
 
 ClassRequestHandler.prototype.get  = function (e) {
+    if (typeof e.blocking ==  'undefined'){
+        e.blocking = false;
+    }
+    if (e.blocking == true){ 
+        this.block();
+    }
     e.callback = e.success;
     e.type = 'GET';    
     e.dataType = 'json';
@@ -51,6 +64,10 @@ ClassRequestHandler.prototype.get  = function (e) {
 }
 
 ClassRequestHandler.prototype.callback = function (data, event) {
+    if (event.blocking == true){ 
+        this.count=this.count-1;
+        this.unblock();
+    }
     if ( typeof data['errorResponse'] !=  'undefined' ) {
         var inserts = data['errorResponse']['additionalInfo'];
         var text = Language.get(data['errorResponse']['errorID']); 
@@ -72,6 +89,10 @@ ClassRequestHandler.prototype.callback = function (data, event) {
 }
 
 ClassRequestHandler.prototype.httpErrorCheck = function (xhr, textStatus, errorThrown) {
+    // Unblock on Error
+    this.count=0;
+    this.unblock();
+        
     switch (xhr.status) {
         case 404:
             alert(Language.get('httpProposalNotFound'));
@@ -85,6 +106,17 @@ ClassRequestHandler.prototype.httpErrorCheck = function (xhr, textStatus, errorT
     }
 }
 
+ClassRequestHandler.prototype.block = function () {
+    this.count=this.count+1;
+    $('#loading').show();
+    
+}
+
+ClassRequestHandler.prototype.unblock = function () {
+    if (this.count==0){
+        $('#loading').hide();
+    }
+}
 
 
 

@@ -47,12 +47,12 @@ function load(){
 	
 
     navigation = $('#location');
-    $(document).ajaxStart(function() {
-        $('#loading').show();
-    });
-    $(document).ajaxStop(function() {
-        $('#loading').hide();
-    });
+    //$(document).ajaxStart(function() {
+      //  $('#loading').show();
+    //});
+    //$(document).ajaxStop(function() {
+     //   $('#loading').hide();
+   // });
     
 
  

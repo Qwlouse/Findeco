@@ -3,6 +3,7 @@
 ################################################################################
 # Copyright (c) 2012 Justus Wingert <justus_wingert@web.de>,
 # Johannes Merkert <jonny@pinae.net>
+# Maik Nauheim <findeco@maik-nauheim.de>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -191,10 +192,11 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     position: fixed;
     top: 0px;
     left: 0px;
-    z-index: 1000;
+    z-index: 1100;
     background-image: url('../images/pbar-ani.gif');
     background-repeat: no-repeat;
     background-position: center center;
+    background-color:#eeeeee;
 
     /* Theoretically for IE 8 & 9 (more valid) */
     /* ...but not required as filter works too */
