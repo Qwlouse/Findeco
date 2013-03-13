@@ -156,9 +156,10 @@ class Node(models.Model):
         """
         Returns a path which needn't be the only valid path to the node.
         """
-        try:
-            return PathCache.objects.filter(node=self)[0].path
-        except PathCache.DoesNotExist:
+        paths = PathCache.objects.get(node=self)
+        if paths.count() > 0:
+            return paths[0].path
+        else:
             # Note: This should NEVER happen
             # but since it did we have a backup plan here
             # TODO Remove if we are absolutely sure that every node is in PathCache
