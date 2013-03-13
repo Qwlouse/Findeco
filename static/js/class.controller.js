@@ -111,7 +111,7 @@ ClassController.prototype.stateHandler = function(event) {
     // nsuring that there is an point in the url. If not it can not be an Proposal and is probably an Username
     // this prevents an 404. 
     // Later on we should redirect to user profiles or similar. 
-    if (Controller.position.search(/\./) != -1){
+    if ((Controller.position.search(/\./) != -1) || (Controller.position =="/") ){
         Main.load(Controller.position);
     }
     
