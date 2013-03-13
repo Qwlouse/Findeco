@@ -219,65 +219,24 @@ def unflag_node(request, path):
 
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
-def follow_node(request, path):
+def mark_node_follow(request, path):
     assert_authentication(request)
     assert_permissions(request, ['node_storage.add_vote',
                                  'node_storage.change_vote'])
-    user = request.user
     node = assert_node_for_path(path)
 
-    marks = node.votes.filter(user=user.id).all()
-    if marks.count() >= 1:
-        mark = marks[0]
-        if mark.head() != node:
-            mark.nodes.remove(node)
-            new_mark = backend.Vote()
-            new_mark.user_id = request.user.id
-            new_mark.save()
-            new_mark.nodes.add(node)
-            for n in traverse_derivates_subset(node, mark.nodes.all()):
-                mark.nodes.remove(n)
-                new_mark.nodes.add(n)
-            mark.save()
-            new_mark.save()
-            node.update_favorite_for_all_parents()
-            for n in traverse_derivates_subset(node, mark.nodes.all()):
-                n.update_favorite_for_all_parents()
-    else:
-        mark = backend.Vote()
-        mark.user_id = request.user.id
-        mark.save()
-        mark.nodes.add(node)
-        for n in traverse_derivates_while(node, lambda n: n.votes.filter(user=request.user.id).all().count() == 0):
-            mark.nodes.add(n)
-        mark.save()
-        node.update_favorite_for_all_parents()
-        for n in traverse_derivates_while(node, lambda n: n.votes.filter(user=request.user.id).all().count() == 0):
-            n.update_favorite_for_all_parents()
+    follow_node(node, request.user.id)
     return json_response({'markNodeResponse': {}})
 
 
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
-def unfollow_node(request, path):
+def mark_node_unfollow(request, path):
     assert_authentication(request)
     assert_permissions(request, ['node_storage.delete_vote'])
-    user = request.user
     node = assert_node_for_path(path)
 
-    marks = node.votes.filter(user=user.id).all()
-    if marks.count() > 0:
-        mark = marks[0]
-        if mark.nodes.count() == 1:
-            mark.delete()
-            node.update_favorite_for_all_parents()
-        else:
-            mark.nodes.remove(node)
-            for n in traverse_derivates_subset(node, mark.nodes.all()):
-                mark.nodes.remove(n)
-                n.update_favorite_for_all_parents()
-            if mark.nodes.count() == 0:
-                mark.delete()
+    unfollow_node(node, request.user.id)
     return json_response({'markNodeResponse': {}})
 
 

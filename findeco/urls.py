@@ -94,12 +94,12 @@ urlpatterns = patterns(
         name='logout'),
 
     url(r'^\.json_markNode/follow/' + PATH + '$',
-        'findeco.views.follow_node',
-        name='follow_node'),
+        'findeco.views.mark_node_follow',
+        name='mark_node_follow'),
 
     url(r'^\.json_markNode/unfollow/' + PATH + '$',
-        'findeco.views.unfollow_node',
-        name='unfollow_node'),
+        'findeco.views.mark_node_unfollow',
+        name='mark_node_unfollow'),
 
     url(r'^\.json_markNode/spam/' + PATH + '$',
         'findeco.views.flag_node',

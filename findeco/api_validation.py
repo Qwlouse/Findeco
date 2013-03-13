@@ -208,8 +208,8 @@ view_validators = {
     'logout': logoutResponseValidator,
     'flag_node': markNodeResponseValidator,
     'unflag_node': markNodeResponseValidator,
-    'follow_node': markNodeResponseValidator,
-    'unfollow_node': markNodeResponseValidator,
+    'mark_node_follow': markNodeResponseValidator,
+    'mark_node_unfollow': markNodeResponseValidator,
     'store_microblog_post': storeMicroblogPostResponseValidator,
     'store_settings': storeSettingsResponseValidator,
     'store_text': storeTextResponseValidator

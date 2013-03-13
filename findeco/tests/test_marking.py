@@ -58,19 +58,19 @@ class UnFollowTest(TestCase):
 
     def test_not_authenticated(self):
         response = self.client.post(
-            reverse('unfollow_node', kwargs=dict(path="Slot.1")))
+            reverse('mark_node_unfollow', kwargs=dict(path="Slot.1")))
         assert_is_error_response(response, "NotAuthenticated")
 
     def test_not_permitted(self):
         self.assertTrue(self.client.login(username="Permela", password="xxx"))
         response = self.client.post(
-            reverse('unfollow_node', kwargs=dict(path="Slot.1")))
+            reverse('mark_node_unfollow', kwargs=dict(path="Slot.1")))
         assert_is_error_response(response, "PermissionDenied")
 
     def test_unfollow_leaf_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.get(
-            reverse('unfollow_node', kwargs=dict(path="Slot.3")))
+            reverse('mark_node_unfollow', kwargs=dict(path="Slot.3")))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 1)
@@ -81,7 +81,7 @@ class UnFollowTest(TestCase):
     def test_unfollow_root_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.get(
-            reverse('unfollow_node', kwargs=dict(path="Slot.1")))
+            reverse('mark_node_unfollow', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 0)
@@ -89,7 +89,7 @@ class UnFollowTest(TestCase):
     def test_unfollow_middle_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.get(
-            reverse('unfollow_node', kwargs=dict(path="Slot.2")))
+            reverse('mark_node_unfollow', kwargs=dict(path="Slot.2")))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 1)
@@ -128,19 +128,19 @@ class FollowTest(TestCase):
 
     def test_not_authenticated(self):
         response = self.client.post(
-            reverse('follow_node', kwargs=dict(path="Slot.1")))
+            reverse('mark_node_follow', kwargs=dict(path="Slot.1")))
         assert_is_error_response(response, 'NotAuthenticated')
 
     def test_not_permitted(self):
         self.assertTrue(self.client.login(username="Permela", password="xxx"))
         response = self.client.post(
-            reverse('follow_node', kwargs=dict(path="Slot.1")))
+            reverse('mark_node_follow', kwargs=dict(path="Slot.1")))
         assert_is_error_response(response, 'PermissionDenied')
 
     def test_follow_leaf_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Ulf", password="abcde"))
         response = self.client.get(
-            reverse('follow_node', kwargs=dict(path="Slot.3")))
+            reverse('mark_node_follow', kwargs=dict(path="Slot.3")))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 2)
@@ -153,7 +153,7 @@ class FollowTest(TestCase):
     def test_follow_root_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Ulf", password="abcde"))
         response = self.client.get(
-            reverse('follow_node', kwargs=dict(path="Slot.1")))
+            reverse('mark_node_follow', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 2)
@@ -164,7 +164,7 @@ class FollowTest(TestCase):
     def test_follow_middle_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Ulf", password="abcde"))
         response = self.client.get(
-            reverse('follow_node', kwargs=dict(path="Slot.2")))
+            reverse('mark_node_follow', kwargs=dict(path="Slot.2")))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 2)

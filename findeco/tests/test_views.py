@@ -49,8 +49,8 @@ views = [('load_index', dict(path='')),
          ('logout', dict()),
          ('flag_node', dict(path='')),
          ('unflag_node', dict(path='')),
-         ('follow_node', dict(path='')),
-         ('unfollow_node', dict(path='')),
+         ('mark_node_follow', dict(path='')),
+         ('mark_node_unfollow', dict(path='')),
          ('store_microblog_post', dict(path='')),
          ('store_settings', dict()),
          ('store_text', dict(path=''))]
@@ -113,7 +113,7 @@ class ViewTest(TestCase):
 
     def test_mark_node_response_is_valid(self):
         paths = structure_node_paths + argument_paths
-        view = ['flag_node', 'unflag_node', 'follow_node', 'unfollow_node']
+        view = ['flag_node', 'unflag_node', 'mark_node_follow', 'mark_node_unfollow']
         for p, v in itertools.product(paths, view):
             response = self.client.get(reverse(v, kwargs=dict(path=p)))
             validate_response(response.content, v)

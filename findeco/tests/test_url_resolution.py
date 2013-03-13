@@ -33,7 +33,7 @@ from microblogging.views import load_microblogging, store_microblog_post
 from ..views import load_user_settings, load_index, load_graph_data, load_text
 from ..views import load_user_info, load_argument_index
 from ..views import login, logout, flag_node, unflag_node, store_text
-from ..views import follow_node, unfollow_node, store_settings
+from ..views import mark_node_follow, mark_node_unfollow, store_settings
 
 
 ########################### Test the API calls #################################
@@ -173,13 +173,13 @@ valid_routes = [
          kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/follow/some.1/path.2',
-         func=follow_node,
-         url_name='follow_node',
+         func=mark_node_follow,
+         url_name='mark_node_follow',
          kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2',
-         func=unfollow_node,
-         url_name='unfollow_node',
+         func=mark_node_unfollow,
+         url_name='mark_node_unfollow',
          kwargs=dict(path='some.1/path.2')),
 
     dict(url='/.json_markNode/spam/some.1/path.2.pro.1',
@@ -193,13 +193,13 @@ valid_routes = [
          kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/follow/some.1/path.2.pro.1',
-         func=follow_node,
-         url_name='follow_node',
+         func=mark_node_follow,
+         url_name='mark_node_follow',
          kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2.pro.1',
-         func=unfollow_node,
-         url_name='unfollow_node',
+         func=mark_node_unfollow,
+         url_name='mark_node_unfollow',
          kwargs=dict(path='some.1/path.2.pro.1')),
 
     dict(url='/.json_markNode/spam/some.1/path.2.con.003',
@@ -213,13 +213,13 @@ valid_routes = [
          kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/follow/some.1/path.2.con.003',
-         func=follow_node,
-         url_name='follow_node',
+         func=mark_node_follow,
+         url_name='mark_node_follow',
          kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2.con.003',
-         func=unfollow_node,
-         url_name='unfollow_node',
+         func=mark_node_unfollow,
+         url_name='mark_node_unfollow',
          kwargs=dict(path='some.1/path.2.con.003')),
 
     dict(url='/.json_markNode/spam/some.1/path.2.neut.8437569384',
@@ -233,13 +233,13 @@ valid_routes = [
          kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     dict(url='/.json_markNode/follow/some.1/path.2.neut.8437569384',
-         func=follow_node,
-         url_name='follow_node',
+         func=mark_node_follow,
+         url_name='mark_node_follow',
          kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     dict(url='/.json_markNode/unfollow/some.1/path.2.neut.8437569384',
-         func=unfollow_node,
-         url_name='unfollow_node',
+         func=mark_node_unfollow,
+         url_name='mark_node_unfollow',
          kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
     #### storeMicroBlogPost

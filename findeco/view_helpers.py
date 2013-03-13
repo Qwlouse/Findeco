@@ -378,3 +378,50 @@ def get_is_following(user_id, node):
         if v.nodes.order_by('id')[0] == node:
             isFollowing = 2  # explicit follow
     return isFollowing
+
+
+def follow_node(node, user_id):
+    marks = node.votes.filter(user=user_id).all()
+    if marks.count() >= 1:
+        mark = marks[0]
+        if mark.head() != node:
+            mark.nodes.remove(node)
+            new_mark = backend.Vote()
+            new_mark.user_id = user_id
+            new_mark.save()
+            new_mark.nodes.add(node)
+            for n in traverse_derivates_subset(node, mark.nodes.all()):
+                mark.nodes.remove(n)
+                new_mark.nodes.add(n)
+            mark.save()
+            new_mark.save()
+            node.update_favorite_for_all_parents()
+            for n in traverse_derivates_subset(node, mark.nodes.all()):
+                n.update_favorite_for_all_parents()
+    else:
+        mark = backend.Vote()
+        mark.user_id = user_id
+        mark.save()
+        mark.nodes.add(node)
+        for n in traverse_derivates_while(node, lambda n: n.votes.filter(user=user_id).all().count() == 0):
+            mark.nodes.add(n)
+        mark.save()
+        node.update_favorite_for_all_parents()
+        for n in traverse_derivates_while(node, lambda n: n.votes.filter(user=user_id).all().count() == 0):
+            n.update_favorite_for_all_parents()
+
+
+def unfollow_node(node, user_id):
+    marks = node.votes.filter(user=user_id).all()
+    if marks.count() > 0:
+        mark = marks[0]
+        if mark.nodes.count() == 1:
+            mark.delete()
+            node.update_favorite_for_all_parents()
+        else:
+            mark.nodes.remove(node)
+            for n in traverse_derivates_subset(node, mark.nodes.all()):
+                mark.nodes.remove(n)
+                n.update_favorite_for_all_parents()
+            if mark.nodes.count() == 0:
+                mark.delete()
