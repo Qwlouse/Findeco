@@ -454,7 +454,7 @@ ClassContribute.prototype.submit = function () {
                 data['wikiText'] = Contribute.form['wikiText'].val();
             break;
             case 'alternative':
-            	data['wikiText'] = Contribute.form['wikiText'].val();
+            	data['wikiTextAlternative'] = Contribute.form['wikiText'].val();
             break;
             case 'derivateStepOne':
             
