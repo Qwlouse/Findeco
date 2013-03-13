@@ -334,8 +334,8 @@ def fork_node_and_add_slot(path, user, wikiText):
     arg_title = "Abschnitt über '{0}' fehlt.".format(title)
     source_node.add_derivate(fork, 'con', arg_title, authors=[user])
     # auto follow
-    create_vote(user, [fork])
-    create_vote(user, [node])
+    follow_node(fork, user.id)
+    follow_node(node, user.id)
     return fork_path
 
 
