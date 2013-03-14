@@ -28,10 +28,35 @@ var Microblogging = new ClassMicroblogging();
 ClassMicroblogging.prototype.load = function (position) {
     // console.log('ClassMicroblogging','load');
     DataRegister.get(this.show,'microblogging',position,true);
+   
 };
 
 ClassMicroblogging.prototype.show = function (data) {
+    //This is not really proper... Maybe we need some refactoring
+    Microblogging.Container=$('#'+right.getCssID());
     // console.log('ClassMicroblogging','show');
     right.empty();
     right.printData(data);
+    Microblogging.formContainer= $('<div>')
+        .appendTo(Microblogging.Container)
+        .attr('style','position:absolute;bottom:20px;')
+    Microblogging.form={};
+    Microblogging.form['input'] = $('<textarea>')
+        .appendTo(Microblogging.formContainer)
+    Microblogging.form['button'] = $('<button>Absenden</button>')
+        .attr('title','Hallo')
+        .click(function(){Microblogging.submitForm()})
+        .appendTo(Microblogging.formContainer);
+        
+};
+
+ClassMicroblogging.prototype.submitForm = function () {
+    data ={};
+    data['microBlogText'] = Microblogging.form['input'].val();
+    alert('subm'+data['microblogText']);  
+    RqHandler.post({
+            url: '.json_storeMicroblogPost' + Controller.getPosition(),
+            data: data,
+            //success: Microblogging.callback,
+    });
 };

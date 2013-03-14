@@ -432,9 +432,6 @@ ClassContribute.prototype.setViewAlternativeText = function () {
  * submit handling logic
  */
 ClassContribute.prototype.submit = function () {
-//TODO: Mehrfach senden verhindern
-	
-
         if ( Contribute.checkDone() != true ) {
             alert("not done!");
             return false;

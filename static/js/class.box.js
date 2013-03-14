@@ -29,6 +29,9 @@ function ClassBox() { this.id = ++boxCount; this.element = $('<div id="box' + th
 ClassBox.prototype.getWidth = function() {
     return this.element.width();
 }
+ClassBox.prototype.getCssID = function() {
+    return 'box' + this.id;
+}
 
 ClassBox.prototype.addButtons = function() {
     var arguments = this.element.children('div.arguments');
@@ -50,6 +53,9 @@ ClassBox.prototype.addButtons = function() {
   
    
 };
+
+
+
 
 ClassBox.prototype.printData = function(data) {
     var target = this.element;
