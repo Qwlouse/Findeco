@@ -383,8 +383,10 @@ ClassContribute.prototype.setViewDerivateTextStepTwo = function () {
 ClassContribute.prototype.CallbackDerivateTextStepTwo = function (data) {
 	var temp ="";
 	for (p in data['json']['loadTextResponse']['paragraphs']){
-			 temp +=" "+ data['json']['loadTextResponse']['paragraphs'][p].wikiText
-			
+	    var wikiText=data['json']['loadTextResponse']['paragraphs'][p].wikiText;
+	    wikiText = wikiText.replace(/={2}[ ]\[{2}.*\|/,"== ");
+	    wikiText = wikiText.replace(/]{2}[ ]={2}/," ==");
+	    temp +=" "+  wikiText
 	}
 	Contribute.form['wikiText']
 		.val(temp)
@@ -412,6 +414,7 @@ ClassContribute.prototype.setViewNewSection = function () {
  * set view and form for alternative Text
  */
 ClassContribute.prototype.setViewAlternativeText = function () {
+    
 	Contribute.showEditor();
 	Contribute.editorTitle.html(Language.get('cont_newAlternative'));
 	Contribute.formType='alternative';

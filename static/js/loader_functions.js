@@ -48,12 +48,6 @@ function load(){
 
     navigation = $('#location');
     $('#logo').click(function(){ Controller.loadIndex('/'); } );
-    //$(document).ajaxStart(function() {
-      //  $('#loading').show();
-    //});
-    //$(document).ajaxStop(function() {
-     //   $('#loading').hide();
-   // });
     
 
  
