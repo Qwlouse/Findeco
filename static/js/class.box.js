@@ -83,8 +83,13 @@ ClassBox.prototype.printData = function(data) {
 };
 
 ClassBox.prototype.empty = function() {
+   
     if ( this.type == 'center' ) {
+        if(Main.doNotUpdateGraph==true){
+            this.element.children().not('#graphContainer').empty();
+        }else{
         this.element.children().empty();
+        }
         this.addButtons();
     } else {
         this.element.empty();
@@ -105,7 +110,7 @@ ClassBox.prototype.show = function(position,container) {
     }
     
     if ( position == 'center' ) {
-        $('<div>')
+        $('<div id="graphContainer">')
             .addClass('graphdata')
             .appendTo(this.element);
         $('<div>')

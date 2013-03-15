@@ -53,7 +53,7 @@ ClassMicroblogging.prototype.show = function (data) {
 ClassMicroblogging.prototype.submitForm = function () {
     data ={};
     data['microBlogText'] = Microblogging.form['input'].val();
-    alert('subm'+data['microblogText']);  
+    
     RqHandler.post({
             url: '.json_storeMicroblogPost' + Controller.getPosition(),
             data: data,

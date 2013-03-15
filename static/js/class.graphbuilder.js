@@ -151,8 +151,8 @@ function buildAnchorGraph(data, graphNode) {
         .attr("title", function (d) { return d.path; })
         .call(force.drag)
         .append("svg:a")
-        .attr("xlink:href", function(d){return "#/" + d.path;});
-
+        .on('click', function(d) {Controller.loadIndex(d.path,true)});
+    
     node.append("circle")
         .attr("class", function (d) { if (d.active) return "activeNodeBackgroundCircle";
         else return "nodeBackgroundCircle";

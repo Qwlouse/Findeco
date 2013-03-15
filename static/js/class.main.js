@@ -69,8 +69,12 @@ ClassMain.prototype.show = function (data) {
     // console.log('ClassMain','show');
     Main.reset();
     center.empty();
+
     Main.append(data);
-    Main.loadGraphData();
+    if (Main.doNotUpdateGraph!=true){
+        Main.loadGraphData();
+    }
+    Main.doNotUpdateGraph=false;
 };
 
 ClassMain.prototype.append = function (data) {
