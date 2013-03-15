@@ -50,7 +50,10 @@ ClassController.prototype.loadText = function() {
     Main.loadText(Controller.position);
 };
 
-ClassController.prototype.loadIndex = function(target) {
+ClassController.prototype.loadIndex = function(target, doNotUpdateGraph) {
+    if (doNotUpdateGraph == true){
+        Main.doNotUpdateGraph=true;
+    }
     Controller.position = target;
     if ( document.location.hash.substring(1) == Controller.position ) {
         Controller.stateHandler();

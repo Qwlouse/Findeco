@@ -25,6 +25,7 @@
 var left = BoxRegister.newBox();
 var center = BoxRegister.newBox();
 var right = BoxRegister.newBox();
+var swap = BoxRegister.newBox();
 var navigation = null;
 
 var currentPosition = 0;
