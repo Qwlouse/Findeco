@@ -73,7 +73,7 @@ class Post(models.Model):
                                             self.time)
 
 
-def create_post(text, author):
+def create_post(text, author, path = None):
     split_text = user_ref_pattern.split(text)
     mentions = []
     for i in range(1, len(split_text), 2):
@@ -94,6 +94,8 @@ def create_post(text, author):
 
     split_text = internal_link_pattern.split(text)
     nodes = []
+    if path is not None:
+        nodes.append(backend.get_node_for_path(path))
     for i in range(1, len(split_text), 2):
         path = split_text[i]
         try:

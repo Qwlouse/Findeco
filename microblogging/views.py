@@ -103,5 +103,5 @@ def load_timeline(request, name, select_id, microblogging_load_type):
 def store_microblog_post(request, path):
     assert_authentication(request)
     assert_post_parameters(request, ['microBlogText'])
-    create_post(request.POST['microBlogText'], request.user)
+    create_post(request.POST['microBlogText'], request.user, path)
     return json_response({'storeMicrobloggingResponse': {}})
