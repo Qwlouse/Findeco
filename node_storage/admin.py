@@ -22,7 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.contrib import admin
-from models import Node, Argument, Text, Vote, NodeOrder, Derivation
+from models import Node, Argument, Text, Vote, NodeOrder, Derivation, PathCache, IndexCache, TextCache
 
 
 class TextInline(admin.StackedInline):
@@ -71,3 +71,23 @@ class VoteAdmin(admin.ModelAdmin):
 admin.site.register(Node, NodeAdmin)
 admin.site.register(Argument, ArgumentAdmin)
 admin.site.register(Vote, VoteAdmin)
+
+
+class PathCacheAdmin(admin.ModelAdmin):
+    model = PathCache
+    list_display = ('path', 'node')
+
+
+class IndexCacheAdmin(admin.ModelAdmin):
+    model = IndexCache
+    list_display = ('path',)
+
+
+class TextCacheAdmin(admin.ModelAdmin):
+    model = TextCache
+    list_display = ('path',)
+
+admin.site.register(PathCache, PathCacheAdmin)
+admin.site.register(IndexCache, IndexCacheAdmin)
+admin.site.register(TextCache, TextCacheAdmin)
+
