@@ -302,8 +302,17 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     -moz-border-radius: 15px;
     border-radius: 15px;
     z-index: 100;
-    overflow: auto;
+  
 }
+.right .innerContent {
+	position:absolute;
+	top:20px;
+	bottom:100px;
+    padding: 15px;
+    overflow:auto;
+}
+
+
 .left {
     left: 0;
     width: 100%;
