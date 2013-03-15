@@ -80,7 +80,7 @@ def create_post(text, author, path = None):
         username = split_text[i]
         try:
             u = User.objects.get(username=username)
-            split_text[i] = '<a href="/.users/{0}">@{0}</a>'.format(username)
+            split_text[i] = '<a href="/#/{0}">@{0}</a>'.format(username)
             mentions.append(u)
         except User.DoesNotExist:
             split_text[i] = '@' + username
