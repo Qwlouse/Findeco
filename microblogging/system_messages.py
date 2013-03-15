@@ -34,7 +34,7 @@ def post_node_was_flagged_message(path, user):
     return create_post(text, system)
 
 
-def create_node_was_unflagged_message(path, user):
+def post_node_was_unflagged_message(path, user):
     text = "@{user} hat die Spam Markierung von /{path} zurückgezogen.".format(
         user=user.username,
         path=path.strip('/'))

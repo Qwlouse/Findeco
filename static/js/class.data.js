@@ -169,7 +169,7 @@ ClassData.prototype.loadTextResponse = function(data) {
                 .click(localAction);
             
             img = $('<img>')
-                .attr('src','static/images/star' + ( 1 + data['paragraphs'][p].isFlagging ) + '.png')
+                .attr('src','static/images/spam' + ( data['paragraphs'][p].isFlagging ) + '.png')
                 .attr('alt', Language.get('lang_spam' + data['paragraphs'][p].isFlagging))
                 .attr('title', Language.get('lang_spam' + data['paragraphs'][p].isFlagging))
                 .appendTo(spam);

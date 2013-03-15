@@ -43,7 +43,7 @@ import random
 from findeco.api_validation import USERNAME
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
-from microblogging.system_messages import post_node_was_flagged_message, post_new_derivate_for_node_message, post_new_argument_for_node_message
+from microblogging.system_messages import post_node_was_flagged_message, post_new_derivate_for_node_message, post_new_argument_for_node_message, post_node_was_unflagged_message
 import node_storage as backend
 from node_storage.factory import create_user
 from .paths import parse_suffix
@@ -220,7 +220,7 @@ def unflag_node(request, path):
         node.update_favorite_for_all_parents()
 
     # microblog alert
-    post_node_was_flagged_message(path, user)
+    post_node_was_unflagged_message(path, user)
     return json_response({'markNodeResponse': {}})
 
 
