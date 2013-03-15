@@ -57,6 +57,10 @@ ClassMicroblogging.prototype.submitForm = function () {
     RqHandler.post({
             url: '.json_storeMicroblogPost' + Controller.getPosition(),
             data: data,
-            //success: Microblogging.callback,
+            success: Microblogging.callback,
     });
+};
+
+ClassMicroblogging.prototype.callback = function (data) {
+    Microblogging.load(Controller.position);
 };
