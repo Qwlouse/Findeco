@@ -57,8 +57,11 @@ def post_new_derivate_for_node_message(user, original_path, derivate_path):
 
 def post_new_argument_for_node_message(user, path, arg_type, arg_path):
     argument = {'c': "Gegenargument",
+                'con': "Gegenargment",
                 'n': "Argument",
-                'p': "Proargument"}
+                'neut': "Argument",
+                'p': "Proargument",
+                'pro': "Proargument"}
     text = "@{user} hat das {argument} /{arg_path} zum Vorschlag /{path} " \
            "hinzugefügt.".format(
            user=user.username,
