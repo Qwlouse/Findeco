@@ -38,12 +38,6 @@ ClassBox.prototype.addButtons = function() {
     var text = this.element.children('div.text');
     this.buttons = this.element.children('div.buttons');
     
-    /*$('<div style="margin-bottom: 10px;">Zeige Argumente</div>')
-        .addClass('button')
-        .click(function () {
-            Controller.loadArguments();
-        })
-        .appendTo(arguments);*/
     $('<div style="margin-bottom: 10px;">Zeige Text</div>')
         .addClass('button')
         .click(function () {
