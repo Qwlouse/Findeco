@@ -28,14 +28,22 @@
 
 from django.db import models
 import re
+from findeco.api_validation import USERNAME
 import node_storage as backend
 from django.contrib.auth.models import User
 
+WORDSTART = r"(?:(?<=\s)|\A)"
+WORDEND = r"\b"
 
-user_ref_pattern = re.compile(r"(?:(?<=\s)|\A)@(?P<username>\w+)\b")
-tag_pattern = re.compile(r"(?:(?<=\s)|\A)#(?P<tagname>\w+)\b")
-internal_link_pattern = re.compile(r"(?:(?<=\s)|\A)(?P<path>/(?:[a-zA-Z0-9-_]+\.\d+/)*[a-zA-Z0-9-_]+(?:\.\d+)?/?)\b")
-url_pattern = re.compile(r"(?:(?<=\s)|\A)((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)\b")
+
+def keyword(pattern):
+    return re.compile(WORDSTART + pattern + WORDEND)
+
+user_ref_pattern = keyword("@" + USERNAME)
+tag_pattern = keyword("#(?P<tagname>\w+)")
+internal_link_pattern = keyword(r"(?P<path>/(?:[a-zA-Z0-9-_]+\.\d+/)*[a-zA-Z0-9-_]+(?:\.\d+)?/?)")
+
+url_pattern = keyword(r"((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)")
 
 
 class Post(models.Model):
