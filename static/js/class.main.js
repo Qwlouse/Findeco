@@ -80,10 +80,10 @@ ClassMain.prototype.show = function (data) {
 ClassMain.prototype.append = function (data) {
     // console.log('ClassMain','append',data);
     Main.loaded[data.getType()] = true;
-    
+ 
     if ( data.getType() == 'index'
-        && data.json.loadIndexResponse != undefined 
-        && Helper.objectLength(data.json.loadIndexResponse) == 0 ) {
+        && data.json.loadIndexResponse != undefined ) 
+    {
         Controller.loadArguments();
         Controller.loadText();
     } else {
