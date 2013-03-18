@@ -1,5 +1,5 @@
 /*Clear smoe margins and paddings */
-body, ul, h1 {
+body, ul, h1, form, button, input{
     margin: 0 0 0 0;
     padding: 0 0 0 0;
 }
@@ -8,16 +8,15 @@ body {
     background: #ecb40d url("../images/bgmid.jpg") repeat-x center 50px;
     font-family: 'Exo',sans-serif;
 }
-
+/* general style for links */
 a {
     color: #ecb40d;
     text-decoration: none;
-    font-weight: bold;
 }
 
 /* Fixed size container to center main part of website*/
 .centeringContainer {
-    width: 1260px;
+    width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -62,45 +61,42 @@ a {
     font-size: 0; /* get rid of the single space in inline*/
     position: absolute;
     bottom: 0;
-    overflow: visible;
 }
 
 #headerContent ul li{
-    font-size: 16pt;
     list-style: none;
     display: inline-block;
     padding: 5px 15px 5px 15px;
 }
 
-#headerContent ul li form{
+#headerContent form{
     display:inline-block;
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
 }
 
-#headerContent ul li form div.searchBox{
+div.searchBox {
     position: relative;
+    top: 2px;
     border: 2px solid #ecb40d;
+    -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
+    border-radius: 11px;
 
-    padding: 0 0 0 0;
+    padding: 0 6px 0 6px;
     background: #333333;
+    overflow: hidden; /* I don't know why exactly, but this removes the gap between the ul li elements and the bottom of the header */
 }
 
 .searchButton {
-    display: inline-block;
-    position: relative;
     border: 0;
-    height: 24px;
-    width: 24px;
+    height: 18px;
+    width: 18px;
     background: url("../images/search.png");
 }
 
-#headerContent ul li form input{
+#headerContent input{
     position: relative;
-    display: inline-block;
-    height: 24px;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
+    top: 2px;
+    height: 18px;
     color: #cccccc;
     background: #333333;
     border: 0;
@@ -110,7 +106,7 @@ a {
     color: inherit;
     font-weight: bold;
     font-family: 'Exo', sans-serif;
-    font-size: 16pt;
+    font-size: 14pt;
     text-decoration: none;
 }
 
@@ -143,13 +139,14 @@ a {
 #navigationBar ul li {
     padding-top: 5px;
     display: inline-block;
+    font-size: 12pt;
 }
 /* insert slashes between navigation items */
 #navigationBar li:before{
     color: #cccccc;
     font-weight: bold;
     content: " / ";
-    padding: 0 10px;
+    padding: 0 2px 0 5px;
 }
 
 /*===================== Main Container Columns Line ==========================*/
@@ -176,7 +173,7 @@ a {
     margin-left: 30px;
     margin-right: 30px;
     float: left;
-    width: 700px;
+    width: 640px;
     min-height: 100px;
 }
 
