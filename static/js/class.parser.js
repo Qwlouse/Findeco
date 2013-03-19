@@ -35,6 +35,7 @@ ClassParser.prototype.isErrorState = function() {
 }
 
 ClassParser.prototype.parse = function(text, shortTitle,disableValidation){
+    console.log(text,shortTitle,disableValidation);
     var wikiText = '';
     if (disableValidation != true  ){
     	try {
@@ -60,5 +61,5 @@ ClassParser.prototype.parse = function(text, shortTitle,disableValidation){
     } );
     creole.parse(textDiv,wikiText);
   
-    return $(textDiv);
+    return textDiv.innerHTML;
 };
