@@ -219,6 +219,8 @@ REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco' \
 REGISTRATION_RECOVERY_TITLE_SUCCESS = 'Your new Findeco Password'
 REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
 
+APPEND_SLASH=False
+
 # try to import secret_settings and overwrite some of the default values
 try:
     from local_settings import *

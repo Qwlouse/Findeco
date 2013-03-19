@@ -14,6 +14,7 @@
     <script type="text/javascript" src="static/js/lib/angular.min.js"></script>
     <script type="text/javascript" src="static/js/lib/angular-resource.min.js"></script>
     <script type="text/javascript" src="static/js/lib/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="static/js/findeco.theLocator.js"></script>
     <script type="text/javascript" src="static/js/findeco.app.js"></script>
     <script type="text/javascript" src="static/js/findeco.service.js"></script>
     <script type="text/javascript" src="static/js/findeco.userService.js"></script>
@@ -43,7 +44,8 @@
                         </div>
                     </li>
                     <li ng-show="data.isLoggedIn">
-                        Hier stehen Userinfos!
+                        Loggedin as {{data.content.userInfo.displayName}}
+                        <a ng-click="logout()">logout</a>
                     </li>
                     <li ng-show="!data.isLoggedIn"><a href="#/login">login</a></li>
                 </ul>
@@ -62,7 +64,9 @@
     </div>
 </div>
 
-<div  ng-view></div>
+<div ng-view></div>
+
+<div ng-controller="FindecoUserCtrl" ng-show="false"></div>
 
 </body>
 </html>
