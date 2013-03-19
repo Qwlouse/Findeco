@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<head >
+    <!--Metadaten fehlen noch-->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Content-Style-Type" content="text/css"/>
+    <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+    <link rel="stylesheet" href="static/css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="static/css/graph.css" type="text/css"/>
+    <script type="text/javascript" src="static/js/language.js"></script>
+    <script type="text/javascript" src="static/js/lib/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="static/js/jquery.socialshareprivacy.js"></script>-->
+    <script type="text/javascript" src="static/js/class.requestHandler.js"></script>
+    <script type="text/javascript" src="static/js/lib/codeholicsCreole.js"></script>
+    <script type="text/javascript" src="static/js/lib/d3.v2.min.js"></script>
+    <script type="text/javascript" src="static/js/class.box.js"></script>
+    <script type="text/javascript" src="static/js/lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="static/js/class.boxregister.js"></script>
+    <script type="text/javascript" src="static/js/class.contribute.js"></script>
+    <script type="text/javascript" src="static/js/class.controller.js"></script>
+    <script type="text/javascript" src="static/js/class.data.js"></script>
+    <script type="text/javascript" src="static/js/class.dataregister.js"></script>
+    <script type="text/javascript" src="static/js/class.formbuilder.js"></script>
+    <script type="text/javascript" src="static/js/class.graphbuilder.js"></script>
+    <script type="text/javascript" src="static/js/class.helper.js"></script>
+    <script type="text/javascript" src="static/js/class.login.js"></script>
+    <script type="text/javascript" src="static/js/class.main.js"></script>
+    <script type="text/javascript" src="static/js/class.microblogging.js"></script>
+    <script type="text/javascript" src="static/js/class.navigation.js"></script>
+    <script type="text/javascript" src="static/js/class.particle.js"></script>
+    <script type="text/javascript" src="static/js/class.parser.js"></script>
+    <script type="text/javascript" src="static/js/class.user.js"></script>
+    <script type="text/javascript" src="static/js/function.structureParser.js"></script>
+    <script type="text/javascript" src="static/js/loader_functions.js"></script>
+    <noscript>
+        <p style="color:red;">Du hast Skripte in deinem Browser deaktiviert. Findeco benötigt für korrekte
+            Funktionalität jedoch JavaScript und Cookies.
+            <br/>Bitte aktiviere JavaScript und lade die Seite neu.</p>
+    </noscript>
+
+    <title>Findeco</title>
+</head>
+<body>
+<div id="login"></div>
+<div id="header">
+    <div id="logo">Findeco</div>
+    <ul id="navigation">
+        <li id="home" class="button" onclick="Controller.load(this)">Home</li>
+        <li id="content" class="button" onclick="Controller.load(this)">Content</li>
+        <li id="imprint" class="button" onclick="Controller.load(this)">Imprint</li>
+    </ul>
+</div>
+<!--<div id="debug">{{ path }}</div>!-->
+<div id="container">
+    <ul id="location"></ul>
+</div>
+<div id="bottom">Findeco means: Findeco, investigate, debate, consent. Findeco is free and opensource.</div>
+<div id="loading"></div>
+<div id="overlay"></div>
+</body>
+</html>
