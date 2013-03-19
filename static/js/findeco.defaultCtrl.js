@@ -2,7 +2,7 @@
 /* Controllers */
 
 function FindecoDefaultCtrl($scope, $location, FindecoService) {
-    $scope.path = TheLocator.getPath();
+    $scope.path = TheLocator.getSanitizedPath();
 
     $scope.isTextLoaded = false;
 
@@ -18,7 +18,7 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
         if ( $scope.path == '/' ) {
             path = '';
         }
-        $location.path(path + '/' + shortTitle + '.' + index);
+        $location.path(TheLocator.getSanitizedPath(shortTitle + '.' + index));
     };
 
     $scope.updateParagraphList = function(params) {

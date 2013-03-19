@@ -11,7 +11,8 @@ function theLocator() {}
 var TheLocator = new theLocator();
 
 theLocator.prototype.getPath = function () {
-    var path = document.location.hash.match(/([_A-z]+\.\d+(\.(pro|con|neut)\.\d+)?\/?)+/g);
+    // We're going to hell for this. Sorry folks.
+    var path = (document.location.hash + '/').match(/([_A-z]+\.\d+(\.(pro|con|neut)\.\d+)?\/+)+/g);
     if (path == null || path.length == 0) {
         path = '/';
     } else {
@@ -23,4 +24,35 @@ theLocator.prototype.getPath = function () {
 theLocator.prototype.getPathParts = function () {
     var pathParts = this.getPath().split("/");
     return pathParts;
+}
+
+theLocator.prototype.getSanitizedPath = function (target) {
+    if ( target == undefined ) {
+        target = '';
+    } else {
+        target = target.replace(/\//g,'');
+    }
+
+    var parts = this.getPathParts();
+    var tmp = [];
+    for ( p in parts ) {
+        if ( parts[p] == "" ) {
+            continue;
+        }
+        //console.log(parts[p]);
+        tmp.push(parts[p]);
+    }
+
+    var sanePath = this.saneSlashAppending(tmp.join('/')) + target;
+
+    //console.log(sanePath,tmp);
+
+    return sanePath;
+}
+
+theLocator.prototype.saneSlashAppending = function (string) {
+    if ( string.substr(string.length) != '/' ) {
+        string += '/';
+    }
+    return string;
 }
