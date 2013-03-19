@@ -14,12 +14,47 @@
     <script type="text/javascript" src="static/js/lib/angular-cookies.min.js"></script>
     <script type="text/javascript" src="static/js/findeco.app.js"></script>
     <script type="text/javascript" src="static/js/findeco.service.js"></script>
+    <script type="text/javascript" src="static/js/findeco.userService.js"></script>
     <script type="text/javascript" src="static/js/findeco.defaultCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.microblogCtrl.js"></script>
+    <script type="text/javascript" src="static/js/findeco.userCtrl.js"></script>
 
     <title>Findeco new Style</title>
 </head>
 <body>
+<div id="topMenu">
+    <div id="header">
+        <div id="headerContainer" class="centeringContainer">
+            <div id="headerContent">
+                <h1>Findeco</h1>
+                <ul>
+                    <li class="activeTab"><a href="#">Start</a></li>
+                    <li><a href="#">Aktuelles</a></li>
+                    <li><a class="activeTab" href="#">Inhalte</a></li>
+                    <li>
+                        <div class="searchBox">
+                            <form>
+                                <input type="" name="searchField"/>
+                                <button class="searchButton" value=""></button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="navigationBar">
+        <div class="centeringContainer">
+            <img src="static/images/home.png" alt="Home"/>
+            <ul>
+                <li><a href="#">Grundsatzprogramm.1</a></li>
+                <li><a href="#">Urheberrecht.4</a></li>
+                <li><a href="#">Freies_Kopieren_und.7</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div ng-app="Findeco" ng-view></div>
 
 </body>
