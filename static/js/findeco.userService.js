@@ -9,6 +9,9 @@ angular.module('FindecoUserService', [])
             get: function() {
                 return data;
             },
-            set: function(d){data = d;}
+            set: function(d){data = d;},
+            isLoggedIn: function() {
+                return !angular.Object.equals({},data);
+            }
         };
     });

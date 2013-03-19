@@ -58,7 +58,7 @@ a {
 }
 
 #headerContent ul {
-    font-size: 0; /* get rid of the single space in inline*/
+    font-size: 12pt; /* get rid of the single space in inline*/
     position: absolute;
     bottom: 0;
 }

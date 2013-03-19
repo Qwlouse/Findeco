@@ -18,14 +18,15 @@
     <script type="text/javascript" src="static/js/findeco.defaultCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.microblogCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.userCtrl.js"></script>
+    <script type="text/javascript" src="static/js/findeco.menuCtrl.js"></script>
 
     <title>Findeco new Style</title>
 </head>
-<body>
+<body ng-app="Findeco">
 <div id="topMenu">
     <div id="header">
         <div id="headerContainer" class="centeringContainer">
-            <div id="headerContent">
+            <div id="headerContent" ng-controller="FindecoMenuCtrl">
                 <h1>Findeco</h1>
                 <ul>
                     <li class="activeTab"><a href="#">Start</a></li>
@@ -39,6 +40,8 @@
                             </form>
                         </div>
                     </li>
+                    <li ng-show="isLoggedIn">true</li>
+                    <li ng-show="!isLoggedIn"><a href="#/login">login</a></li>
                 </ul>
             </div>
         </div>
@@ -55,7 +58,7 @@
     </div>
 </div>
 
-<div ng-app="Findeco" ng-view></div>
+<div  ng-view></div>
 
 </body>
 </html>
