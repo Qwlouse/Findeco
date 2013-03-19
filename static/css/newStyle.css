@@ -179,6 +179,24 @@ div.searchBox {
 
 #rightColumn {
     float: left;
-    width: 250px;
+    width: 230px;
     min-height: 100px;
+    padding: 10px 10px 10px 10px;
 }
+
+/*===================== Main Container Columns Line ==========================*/
+ul.microblogList li {
+    display: block;
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+a.microblogAuthor {
+    font-weight: bold;
+}
+
+span.microblogDate {
+    font-size: 11pt;
+    color: #999999;
+}
+

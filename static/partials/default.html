@@ -38,11 +38,11 @@
 
     </div>
     <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl">
-        <ul>
+        <ul class="microblogList">
             <li ng-repeat="microblogNode in microbloggingList.loadMicrobloggingResponse">
-                {{microblogNode.microblogID}}
-                {{microblogNode.microblogTime}}
-                {{microblogNode.microblogText}}
+                <a class="microblogAuthor" href="#">{{ microblogNode.authorGroup[0].displayName }}</a>
+                <span class="microblogDate">{{microblogNode.microblogTime*1000 | date}}</span><br/>
+                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
             <li>
                 <form ng-submit="submit()">
