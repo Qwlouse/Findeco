@@ -2,8 +2,8 @@
 /* Services */
 
 
-angular.module('FindecoService', ['ngResource']).
-    factory('FindecoService', function ($resource) {
+angular.module('FindecoService', ['ngResource'])
+    .factory('FindecoService', function ($resource) {
         return $resource('/:action/:arg2/:arg3/:arg4/:arg5', {
             action: '@action',
             arg2: '@arg2',

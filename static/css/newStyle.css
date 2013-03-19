@@ -6,7 +6,7 @@ body, ul, h1, form, button, input{
 /* Background image and basic font */
 body {
     background: #ecb40d url("../images/bgmid.jpg") repeat-x center 50px;
-    font-family: 'Exo',sans-serif;
+    font-family: sans-serif;
 }
 /* general style for links */
 a {

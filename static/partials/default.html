@@ -37,12 +37,18 @@
     <div id="centerColumn" class="contentBox">
 
     </div>
-    <div id="rightColumn" class="contentBox">
+    <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl">
         <ul>
             <li ng-repeat="microblogNode in microbloggingList.loadMicrobloggingResponse">
                 {{microblogNode.microblogID}}
                 {{microblogNode.microblogTime}}
                 {{microblogNode.microblogText}}
+            </li>
+            <li>
+                <form ng-submit="submit()">
+                    <input type="text" placeholder="add new microblogging entry here" size="50" ng-model="testinput"><br/>
+                    <input class="btn-primary" type="submit" value="add">
+                </form>
             </li>
         </ul>
     </div>
