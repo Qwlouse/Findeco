@@ -39,17 +39,17 @@
     </div>
     <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl">
         <ul class="microblogList">
+            <li>
+                <form ng-submit="submit()">
+                    <input type="text" placeholder="add new microblogging entry here" size="20" ng-model="testinput"><br/>
+                </form>
+            </li>
             <li ng-repeat="microblogNode in microbloggingList.loadMicrobloggingResponse">
                 <a class="microblogAuthor" href="#">{{ microblogNode.authorGroup[0].displayName }}</a>
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | date}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
-            <li>
-                <form ng-submit="submit()">
-                    <input type="text" placeholder="add new microblogging entry here" size="50" ng-model="testinput"><br/>
-                    <input class="btn-primary" type="submit" value="add">
-                </form>
-            </li>
+
         </ul>
     </div>
 </div>
