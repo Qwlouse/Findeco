@@ -127,7 +127,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
-CSRF_COOKIE_NAME = "XSRF-TOKEN"
+CSRF_COOKIE_NAME = str("XSRF-TOKEN")
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
