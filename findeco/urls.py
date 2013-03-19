@@ -29,6 +29,7 @@ from django.contrib import admin
 from findeco.api_validation import USERNAME
 
 from findeco.paths import PATH, RESTRICTED_PATH, ID
+from findeco.views import is_logged_in
 
 admin.autodiscover()
 
@@ -39,6 +40,8 @@ BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
 urlpatterns = patterns(
     '',
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
+
+    url(r'^\.json_isLoggedIn/?$', "findeco.views.is_logged_in", name='is_logged_in'),
 
     url(r'^\.json_loadUserSettings/?$',
         'findeco.views.load_user_settings',

@@ -55,6 +55,11 @@ def home(request, path):
     with open("static/index.html", 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), mimetype='text/html')
 
+@ViewErrorHandling
+def is_logged_in(request):
+    assert_authentication(request)
+    return json_response({'isLoggedInResponse': {'displayName': request.user.username}})
+
 
 @ValidPaths("StructureNode")
 @ViewErrorHandling
