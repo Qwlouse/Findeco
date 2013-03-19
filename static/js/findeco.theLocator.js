@@ -6,7 +6,8 @@
  * Yes, I'm fucking serious.
  */
 
-function theLocator() {}
+function theLocator() {
+}
 
 var TheLocator = new theLocator();
 
@@ -27,16 +28,16 @@ theLocator.prototype.getPathParts = function () {
 }
 
 theLocator.prototype.getSanitizedPath = function (target) {
-    if ( target == undefined ) {
+    if (target == undefined) {
         target = '';
     } else {
-        target = target.replace(/\//g,'');
+        target = target.replace(/\//g, '');
     }
 
     var parts = this.getPathParts();
     var tmp = [];
-    for ( p in parts ) {
-        if ( parts[p] == "" ) {
+    for (p in parts) {
+        if (parts[p] == "") {
             continue;
         }
         //console.log(parts[p]);
@@ -44,14 +45,23 @@ theLocator.prototype.getSanitizedPath = function (target) {
     }
 
     var sanePath = this.saneSlashAppending(tmp.join('/')) + target;
-
-    //console.log(sanePath,tmp);
+    if (sanePath != '/') {
+        sanePath = this.removeTrailingSlashes(sanePath);
+    }
+    console.log(sanePath, tmp);
 
     return sanePath;
 }
 
+theLocator.prototype.removeTrailingSlashes = function (string) {
+    if (string.substr(string.length-1) == '/') {
+        string = string.substr(0, string.length - 1);
+    }
+    return string;
+}
+
 theLocator.prototype.saneSlashAppending = function (string) {
-    if ( string.substr(string.length) != '/' ) {
+    if (string.substr(string.length-1) != '/') {
         string += '/';
     }
     return string;
