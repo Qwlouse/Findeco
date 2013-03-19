@@ -1,0 +1,184 @@
+/*Clear smoe margins and paddings */
+body, ul, h1, form, button, input{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+/* Background image and basic font */
+body {
+    background: #ecb40d url("../images/bgmid.jpg") repeat-x center 50px;
+    font-family: 'Exo',sans-serif;
+}
+/* general style for links */
+a {
+    color: #ecb40d;
+    text-decoration: none;
+}
+
+/* Fixed size container to center main part of website*/
+.centeringContainer {
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/*============================ Top Menu Line =================================*/
+#topMenu {
+    width: 100%;
+    display: block;
+    color: #ecb40d;
+}
+/* Header with logo and main navigation */
+#header {
+    height: 90px;
+    width: 100%;
+    background: linear-gradient(top, #414141 0%, #000000 100%);
+    background: -moz-linear-gradient(top, #414141 0%, #000000 100%);
+    background: -webkit-linear-gradient(top, #414141 0%, #000000 100%);
+}
+
+#headerContainer {
+    background: url("../images/logo.png") no-repeat 0 5px;
+    background-size:80px;
+    position: relative;
+    height: 100%;
+}
+
+#headerContent {
+    position: relative;
+    margin-left: 90px;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#headerContent h1 {
+    font-style: italic;
+    font-size: 40px;
+    margin-left: 15px;
+    color: #b3b3b3;
+}
+
+#headerContent ul {
+    font-size: 0; /* get rid of the single space in inline*/
+    position: absolute;
+    bottom: 0;
+}
+
+#headerContent ul li{
+    list-style: none;
+    display: inline-block;
+    padding: 5px 15px 5px 15px;
+}
+
+#headerContent form{
+    display:inline-block;
+}
+
+div.searchBox {
+    position: relative;
+    top: 2px;
+    border: 2px solid #ecb40d;
+    -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
+    border-radius: 11px;
+
+    padding: 0 6px 0 6px;
+    background: #333333;
+    overflow: hidden; /* I don't know why exactly, but this removes the gap between the ul li elements and the bottom of the header */
+}
+
+.searchButton {
+    border: 0;
+    height: 18px;
+    width: 18px;
+    background: url("../images/search.png");
+}
+
+#headerContent input{
+    position: relative;
+    top: 2px;
+    height: 18px;
+    color: #cccccc;
+    background: #333333;
+    border: 0;
+}
+
+#headerContent ul li a{
+    color: inherit;
+    font-weight: bold;
+    font-family: 'Exo', sans-serif;
+    font-size: 14pt;
+    text-decoration: none;
+}
+
+#headerContent ul li.activeTab {
+    color:  #2d7cc4;
+    background: #333333;
+}
+
+/* Rootline */
+#navigationBar {
+    position: relative;
+    height: 35px;
+    background: linear-gradient(top, #333333 0%, #212121 100%);
+    background: -moz-linear-gradient(top, #333333 0%, #212121 100%);
+    background: -webkit-linear-gradient(top, #333333 0%, #212121 100%);
+
+}
+
+#navigationBar img {
+    display: inline;
+    margin-left: 5px; /*optical margin to make rootline appear lined up*/
+}
+#navigationBar ul{
+
+    display: inline;
+    list-style: circle;
+    margin: auto 0;
+}
+
+#navigationBar ul li {
+    padding-top: 5px;
+    display: inline-block;
+    font-size: 12pt;
+}
+/* insert slashes between navigation items */
+#navigationBar li:before{
+    color: #cccccc;
+    font-weight: bold;
+    content: " / ";
+    padding: 0 2px 0 5px;
+}
+
+/*===================== Main Container Columns Line ==========================*/
+#contentContainer {
+    min-height: 100px;
+    margin-top: 65px;
+}
+
+.contentBox {
+    background: #e6e6e6;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    box-shadow: 8px 8px 10px #947109;
+}
+
+#leftColumn {
+    float: left;
+    width: 250px;
+    min-height: 100px;
+}
+
+#centerColumn {
+    margin-left: 30px;
+    margin-right: 30px;
+    float: left;
+    width: 640px;
+    min-height: 100px;
+}
+
+#rightColumn {
+    float: left;
+    width: 250px;
+    min-height: 100px;
+}
