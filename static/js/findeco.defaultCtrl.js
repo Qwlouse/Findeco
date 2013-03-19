@@ -4,11 +4,12 @@
 function FindecoDefaultCtrl($scope, $location, FindecoService) {
     $scope.path = TheLocator.getPath();
 
+    $scope.isTextLoaded = false;
+
     $scope.indexList = {};
     $scope.paragraphList = {};
 
     $scope.parse = function(text,shortTitle) {
-        console.log("test");
         return Parser.parse(text,shortTitle,true);
     }
 
@@ -26,6 +27,7 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
             params = {action: '.json_loadText', arg2: $scope.path};
         }
         FindecoService.get(params, function (data) {
+            $scope.isTextLoaded = true;
             $scope.paragraphList = data.loadTextResponse.paragraphs;
         });
     };
@@ -35,6 +37,9 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
             params = {action: '.json_loadIndex', arg2: $scope.path};
         }
         FindecoService.get(params, function (data) {
+            if ( angular.equals(data.loadIndexResponse,[]) ) {
+                $scope.updateParagraphList();
+            }
             $scope.indexList = data.loadIndexResponse;
         });
     }

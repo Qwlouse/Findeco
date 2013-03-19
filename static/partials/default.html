@@ -10,10 +10,9 @@
             </li>
         </ul>
         <ul>
-            <li ng-click="updateParagraphList()">load text</li>
+            <li ng-show="!isTextLoaded" ng-click="updateParagraphList()">load text</li>
             <li ng-repeat="paragraph in paragraphList">
-                {{paragraph.path}}<br>
-                {{parse(paragraph.wikiText,paragraph.path)}}
+                <p ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
             </li>
         </ul>
     </div>
