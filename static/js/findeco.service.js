@@ -93,6 +93,21 @@ angular.module('FindecoService', ['ngResource'])
                 });
                 addSuccessAndError(paragraphList, promise);
                 return paragraphList;
+            },
+
+            loadIndex: function(path) {
+                var url = ['/.json_loadIndex', path].join('/');
+                var indexNodes = [];
+                var promise = $http.get(url);
+                promise.success(function(d) {
+                    indexNodes.length = 0;
+                    angular.forEach(d.loadIndexResponse, function(item) {
+                        indexNodes.push(item);
+                    });
+                });
+                addSuccessAndError(indexNodes, promise);
+                return indexNodes;
+
             }
         };
 

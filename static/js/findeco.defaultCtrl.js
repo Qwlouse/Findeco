@@ -27,15 +27,11 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
         });
     };
 
-    $scope.updateIndex = function (params) {
-        if ( params == undefined ) {
-            params = {action: '.json_loadIndex', arg2: $scope.path};
-        }
-        FindecoService.get(params, function (data) {
-            if ( angular.equals(data.loadIndexResponse,[]) ) {
+    $scope.updateIndex = function () {
+        $scope.indexList = FindecoService.loadIndex($scope.path).success(function (data) {
+            if ( angular.equals(data.loadIndexResponse, []) ) {
                 $scope.updateParagraphList();
             }
-            $scope.indexList = data.loadIndexResponse;
         });
     };
 
