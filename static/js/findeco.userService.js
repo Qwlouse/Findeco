@@ -17,7 +17,7 @@ angular.module('FindecoUserService', ['FindecoService'])
             data: localData,
             setContent: localSetContent,
             initialize: function(){
-                FindecoService.get({action: '.json_loadUserSettings'}, function (data) {
+                FindecoService.loadUserSettings().success( function (data) {
                     if ( data.errorResponse != undefined ) {
                         return;
                     }

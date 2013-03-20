@@ -23,23 +23,7 @@ angular.module('FindecoService', ['ngResource'])
                 return value;
             };
         }
-
-        var r = $resource('/:action/:arg2/:arg3/:arg4/:arg5', {
-            action: '@action',
-            arg2: '@arg2',
-            arg3: '@arg3',
-            arg4: '@arg4',
-            arg5: '@arg5'
-        }, {
-            get: {method: 'GET', isArray: false},
-            post: {method: 'POST', isArray: false},
-            query: {method: 'GET', isArray: true}
-        });
-
         return {
-            get: r.get,
-            post: r.post,
-
             login: function(username, password) {
                 var userInfo = {};
                 var promise = $http.post('/.json_login/', {username: username, password:password});
@@ -51,6 +35,16 @@ angular.module('FindecoService', ['ngResource'])
             },
             logout: function() {
                 return $http.get('/.json_logout/');
+            },
+
+            loadUserSettings: function() {
+                var userInfo = {};
+                var promise = $http.get('.json_loadUserSettings');
+                promise.success(function (d) {
+                    angular.copy(d.loadUserSettingsResponse, userInfo);
+                });
+                addSuccessAndError(userInfo, promise);
+                return userInfo;
             },
 
             loadMicroblogging: function(path, type, id) {
