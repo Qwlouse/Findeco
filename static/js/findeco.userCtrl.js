@@ -3,7 +3,7 @@
 
 function FindecoUserCtrl($scope, $location, FindecoService, FindecoUserService) {
     $scope.login = function () {
-        FindecoService.post({action: '.json_login/', 'username': $scope.username, 'password': $scope.password}, function (data) {
+        FindecoService.login($scope.username, $scope.password).success(function (data) {
             FindecoUserService.data.isLoggedIn = true;
             FindecoUserService.data.content = data.loginResponse;
             $location.path('/');
@@ -11,7 +11,7 @@ function FindecoUserCtrl($scope, $location, FindecoService, FindecoUserService) 
     };
 
     $scope.$on('logout', function () {
-        FindecoService.get({action: '.json_logout/'}, function (data) {
+        FindecoService.logout().success(function() {
             FindecoUserService.data.isLoggedIn = false;
             FindecoUserService.data.content = {};
             $location.path('/');
