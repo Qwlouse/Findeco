@@ -18,9 +18,6 @@ angular.module('FindecoUserService', ['FindecoService'])
             setContent: localSetContent,
             initialize: function(){
                 FindecoService.loadUserSettings().success( function (data) {
-                    if ( data.errorResponse != undefined ) {
-                        return;
-                    }
                     localSetContent(data.loadUserSettingsResponse);
                 });
             }

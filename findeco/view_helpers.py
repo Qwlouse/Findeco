@@ -40,7 +40,8 @@ from .api_validation import validate_response
 
 
 def json_response(data):
-    return HttpResponse(json.dumps(data), mimetype='application/json')
+    return HttpResponse(json.dumps(data),
+                        mimetype='application/json')
 
 
 def json_error_response(identifier, *args):
@@ -48,7 +49,9 @@ def json_error_response(identifier, *args):
         'errorID': identifier,
         'additionalInfo': args,
     }}
-    return json_response(response)
+    return HttpResponse(json.dumps(response),
+                        mimetype='application/json',
+                        status=406)
 
 
 def ValidPaths(*allowed_path_types):
