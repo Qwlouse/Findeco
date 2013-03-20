@@ -3,9 +3,8 @@
 
 function FindecoUserCtrl($scope, $location, FindecoService, FindecoUserService) {
     $scope.login = function () {
-        FindecoService.login($scope.username, $scope.password).success(function (data) {
+        FindecoUserService.data.content = FindecoService.login($scope.username, $scope.password).success(function (data) {
             FindecoUserService.data.isLoggedIn = true;
-            FindecoUserService.data.content = data.loginResponse;
             $location.path('/');
         });
     };

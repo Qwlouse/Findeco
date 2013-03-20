@@ -13,6 +13,17 @@ angular.module('FindecoService', ['ngResource'])
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     })
     .factory('FindecoService', function ($resource, $http, $q) {
+        function addSuccessAndError(value, promise) {
+            value.success = function(fn) {
+                promise.success(fn);
+                return value;
+            };
+            value.error = function(fn) {
+                promise.error(fn);
+                return value;
+            };
+        }
+
         var r = $resource('/:action/:arg2/:arg3/:arg4/:arg5', {
             action: '@action',
             arg2: '@arg2',
@@ -30,7 +41,13 @@ angular.module('FindecoService', ['ngResource'])
             post: r.post,
 
             login: function(username, password) {
-                return $http.post('/.json_login/', {username: username, password:password});
+                var userInfo = {};
+                var promise = $http.post('/.json_login/', {username: username, password:password});
+                promise.success(function (d) {
+                    angular.copy(d.loginResponse, userInfo);
+                });
+                addSuccessAndError(userInfo, promise);
+                return userInfo;
             },
             logout: function() {
                 return $http.get('/.json_logout/');
@@ -54,15 +71,7 @@ angular.module('FindecoService', ['ngResource'])
                         value.push(item);
                     });
                 });
-
-                value.success = function(fn) {
-                    promise.success(fn);
-                    return value;
-                };
-                value.error = function(fn) {
-                    promise.error(fn);
-                    return value;
-                };
+                addSuccessAndError(value, promise);
                 return value;
             }
         };
