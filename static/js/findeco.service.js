@@ -73,6 +73,13 @@ angular.module('FindecoService', ['ngResource'])
                 });
                 addSuccessAndError(value, promise);
                 return value;
+            },
+
+            storeMicroblogPost: function(path, microblogText) {
+                //{action: '.json_storeMicroblogPost', arg2: TheLocator.getSanitizedPath(), 'microblogText': $scope.microblogText}
+                var pathComponents = ['/.json_storeMicroblogPost', path];
+                var url = pathComponents.join('/');
+                return $http.post(url, {microblogText: microblogText});
             }
         };
 

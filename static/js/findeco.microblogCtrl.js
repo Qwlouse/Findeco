@@ -8,7 +8,7 @@ function FindecoMicroblogCtrl($scope, FindecoService) {
     };
 
     $scope.submit = function () {
-        FindecoService.post({action: '.json_storeMicroblogPost', arg2: TheLocator.getSanitizedPath(), 'microblogText': $scope.microblogText}, function () {
+        FindecoService.storeMicroblogPost(TheLocator.getSanitizedPath(), $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });
