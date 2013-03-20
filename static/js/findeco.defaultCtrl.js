@@ -11,7 +11,7 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
 
     $scope.parse = function(text,shortTitle) {
         return Parser.parse(text,shortTitle,true);
-    }
+    };
 
     $scope.relocateRelativeTo = function(shortTitle,index) {
         var path = $scope.path;
@@ -21,14 +21,9 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
         $location.path(TheLocator.getSanitizedPath(shortTitle + '.' + index));
     };
 
-    $scope.updateParagraphList = function(params) {
-
-        if ( params == undefined ) {
-            params = {action: '.json_loadText', arg2: $scope.path};
-        }
-        FindecoService.get(params, function (data) {
+    $scope.updateParagraphList = function() {
+        $scope.paragraphList = FindecoService.loadText($scope.path).success( function () {
             $scope.isTextLoaded = true;
-            $scope.paragraphList = data.loadTextResponse.paragraphs;
         });
     };
 
@@ -42,7 +37,7 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
             }
             $scope.indexList = data.loadIndexResponse;
         });
-    }
+    };
 
     $scope.updateIndex();
 }
