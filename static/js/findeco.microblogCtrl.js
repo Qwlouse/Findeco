@@ -2,14 +2,12 @@
 /* Controllers */
 
 function FindecoMicroblogCtrl($scope, FindecoService) {
-    $scope.updateMicrobloggingList = function (params) {
-        if ( params == undefined ) {
-            params = {action: '.json_loadMicroblogging', arg2: '0', arg3: 'newer', arg4: TheLocator.getSanitizedPath()};
-        }
-        FindecoService.get(params, function (data) {
-            $scope.microbloggingList = data;
+    $scope.microbloggingList = [];
+    $scope.updateMicrobloggingList = function () {
+        $scope.microbloggingList = FindecoService.loadMicroblogging(TheLocator.getSanitizedPath()).success(function() {
+            alert('HA!')
         });
-    }
+    };
 
     $scope.submit = function () {
         FindecoService.post({action: '.json_storeMicroblogPost', arg2: TheLocator.getSanitizedPath(), 'microblogText': $scope.microblogText}, function () {

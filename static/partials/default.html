@@ -24,7 +24,7 @@
                     <input type="text" placeholder="add new microblogging entry here" style="width: 100%;" ng-model="microblogText"><br/>
                 </form>
             </li>
-            <li ng-repeat="microblogNode in microbloggingList.loadMicrobloggingResponse">
+            <li ng-repeat="microblogNode in microbloggingList">
                 <a class="microblogAuthor" href="#">{{ microblogNode.authorGroup[0].displayName }}</a>
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | date}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
