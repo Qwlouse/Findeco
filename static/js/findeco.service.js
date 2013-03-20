@@ -23,6 +23,19 @@ angular.module('FindecoService', ['ngResource'])
                 return value;
             };
         }
+
+        function fillArray(array, attributes) {
+            return function (data) {
+                for (var i = 0; i < attributes.length; ++i) {
+                    data = data[attributes[i]];
+                }
+                array.length = 0;
+                angular.forEach(data, function(item) {
+                    array.push(item);
+                });
+            }
+        }
+
         return {
             login: function(username, password) {
                 var userInfo = {};
@@ -59,12 +72,7 @@ angular.module('FindecoService', ['ngResource'])
                 pathComponents.push(path);
                 var url = pathComponents.join('/');
                 var microblogList = [];
-                var promise = $http.get(url).success(function(d) {
-                    microblogList.length = 0;
-                    angular.forEach(d.loadMicrobloggingResponse, function(item) {
-                        microblogList.push(item);
-                    });
-                });
+                var promise = $http.get(url).success(fillArray(microblogList, ['loadMicrobloggingResponse']));
                 addSuccessAndError(microblogList, promise);
                 return microblogList;
             },
@@ -79,12 +87,7 @@ angular.module('FindecoService', ['ngResource'])
                 var url = ['/.json_loadText', path].join('/');
                 var paragraphList = [];
                 var promise = $http.get(url);
-                promise.success(function(d) {
-                    paragraphList.length = 0;
-                    angular.forEach(d.loadTextResponse.paragraphs, function(item) {
-                        paragraphList.push(item);
-                    });
-                });
+                promise.success(fillArray(paragraphList, ['loadTextResponse', 'paragraphs']));
                 addSuccessAndError(paragraphList, promise);
                 return paragraphList;
             },
@@ -93,12 +96,7 @@ angular.module('FindecoService', ['ngResource'])
                 var url = ['/.json_loadIndex', path].join('/');
                 var indexNodes = [];
                 var promise = $http.get(url);
-                promise.success(function(d) {
-                    indexNodes.length = 0;
-                    angular.forEach(d.loadIndexResponse, function(item) {
-                        indexNodes.push(item);
-                    });
-                });
+                promise.success(fillArray(indexNodes, ['loadIndexResponse']));
                 addSuccessAndError(indexNodes, promise);
                 return indexNodes;
 

@@ -4,17 +4,14 @@
     </div>
 
     <div id="centerColumn" class="contentBox">
-        <ul>
+        <ul class="indexList">
             <li ng-repeat="index in indexList">
                 <a ng-click="relocateRelativeTo(index.shortTitle,index.index)">{{index.fullTitle}}</a>
             </li>
-        </ul>
-        <ul>
             <li ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_">load text</li>
-            <li ng-repeat="paragraph in paragraphList">
-                <p ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
-            </li>
         </ul>
+        <p ng-repeat="paragraph in paragraphList" ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
+
     </div>
 
     <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl">
