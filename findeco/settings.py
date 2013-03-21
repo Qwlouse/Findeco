@@ -127,6 +127,8 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
+CSRF_COOKIE_NAME = str("XSRF-TOKEN")
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -216,6 +218,8 @@ REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco' \
                              ' to ignore this Mail '
 REGISTRATION_RECOVERY_TITLE_SUCCESS = 'Your new Findeco Password'
 REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
+
+APPEND_SLASH=False
 
 # try to import secret_settings and overwrite some of the default values
 try:

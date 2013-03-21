@@ -55,12 +55,18 @@ def home(request, path):
     with open("static/index.html", 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), mimetype='text/html')
 
+@ViewErrorHandling
+def is_logged_in(request):
+    assert_authentication(request)
+    return json_response({'isLoggedInResponse': {'displayName': request.user.username}})
+
 
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def load_index(request, path):
+    path = path.strip().strip('/')
     try:  # to get from cache
-        index_cache = backend.IndexCache.objects.get(path=path.strip().strip('/'))
+        index_cache = backend.IndexCache.objects.get(path=path)
         index_nodes = json.loads(index_cache.index_nodes)
     except backend.IndexCache.DoesNotExist:
         node = assert_node_for_path(path)
@@ -107,9 +113,10 @@ def load_graph_data(request, path, graph_data_type):
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
 def load_text(request, path):
+    path = path.strip().strip('/')
     try:
         # try to load from cache
-        t = backend.TextCache.objects.get(path=path.strip().strip('/'))
+        t = backend.TextCache.objects.get(path=path)
         paragraphs = json.loads(t.paragraphs)
     except backend.TextCache.DoesNotExist:
         node = assert_node_for_path(path)

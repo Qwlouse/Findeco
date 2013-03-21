@@ -1,12 +1,12 @@
 /*Clear smoe margins and paddings */
-body, ul, h1, form, button, input{
+body, h1, form, button, input{
     margin: 0 0 0 0;
     padding: 0 0 0 0;
 }
 /* Background image and basic font */
 body {
     background: #ecb40d url("../images/bgmid.jpg") repeat-x center 50px;
-    font-family: 'Exo',sans-serif;
+    font-family: sans-serif;
 }
 /* general style for links */
 a {
@@ -58,9 +58,11 @@ a {
 }
 
 #headerContent ul {
-    font-size: 0; /* get rid of the single space in inline*/
+    font-size: 12pt; /* get rid of the single space in inline*/
     position: absolute;
     bottom: 0;
+    margin: 0;
+    padding: 0;
 }
 
 #headerContent ul li{
@@ -130,7 +132,7 @@ div.searchBox {
     margin-left: 5px; /*optical margin to make rootline appear lined up*/
 }
 #navigationBar ul{
-
+    padding: 0;
     display: inline;
     list-style: circle;
     margin: auto 0;
@@ -153,6 +155,8 @@ div.searchBox {
 #contentContainer {
     min-height: 100px;
     margin-top: 65px;
+    font-size: 10pt;
+    font-family: sans-serif;
 }
 
 .contentBox {
@@ -165,20 +169,56 @@ div.searchBox {
 
 #leftColumn {
     float: left;
-    width: 250px;
+    width: 230px;
     min-height: 100px;
+    padding: 10px;
 }
 
 #centerColumn {
     margin-left: 30px;
     margin-right: 30px;
     float: left;
-    width: 640px;
+    width: 590px;
     min-height: 100px;
+    padding: 25px;
 }
 
 #rightColumn {
     float: left;
-    width: 250px;
+    width: 230px;
     min-height: 100px;
+    padding: 10px 10px 10px 10px;
 }
+
+/*===================== Main Container Columns Line ==========================*/
+ul.microblogList {
+    margin: 0 0 0 0;
+    padding: 0;
+}
+
+ul.microblogList li {
+    display: block;
+    list-style: none;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+a.microblogAuthor {
+    font-weight: bold;
+}
+
+span.microblogDate {
+    font-size: 11pt;
+    color: #999999;
+}
+
+ul.indexList {
+    margin: 0 0 0 0;
+    padding: 10px;
+}
+
+ul.indexList li {
+    display: block;
+    list-style: none;
+}
+

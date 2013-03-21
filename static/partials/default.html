@@ -1,0 +1,44 @@
+<div id="contentContainer" class="centeringContainer">
+    <div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
+        <ul class="argumentList">
+            <li><h3>Pro Argumente</h3></li>
+            <li ng-repeat="argument in argumentList" ng-show="argument.shortTitle == 'pro'">
+                <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
+            </li>
+            <li><h3>Neutrale Argumente</h3></li>
+            <li ng-repeat="argument in argumentList" ng-show="argument.shortTitle == 'neut'">
+                <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
+            </li>
+            <li><h3>Contra Argumente</h3></li>
+            <li ng-repeat="argument in argumentList" ng-show="argument.shortTitle == 'con'">
+                <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="centerColumn" class="contentBox">
+        <ul class="indexList">
+            <li ng-repeat="index in indexList">
+                <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
+            </li>
+        </ul>
+        <div findeco-graph data="graphData" class="graph"></div>
+        <div ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_"><b>load text</b></div>
+        <p ng-repeat="paragraph in paragraphList" ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
+    </div>
+
+    <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl">
+        <ul class="microblogList">
+            <li>
+                <form ng-submit="submit()">
+                    <input type="text" placeholder="{{'_MicroblogPlaceholder_'|i18n}}" style="width: 100%;" ng-model="microblogText"><br/>
+                </form>
+            </li>
+            <li ng-repeat="microblogNode in microbloggingList">
+                <a class="microblogAuthor" href="#">{{ microblogNode.authorGroup[0].displayName }}</a>
+                <span class="microblogDate">{{microblogNode.microblogTime*1000 | date}}</span><br/>
+                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
+            </li>
+        </ul>
+    </div>
+</div>
