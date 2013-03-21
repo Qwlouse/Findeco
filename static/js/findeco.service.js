@@ -10,6 +10,9 @@ angular.module('FindecoService', ['ngResource'])
             }
             return $.param(data);
         };
+        // using this https://github.com/angular/angular.js/commit/8155c3a29ea0eb14806913b8ac08ba7727e1969c
+        // to rename X-XSRFToken to X-CSRFToken because Django expects it that way
+        $httpProvider.defaults.xsrfHeaderName = "X-CSRFToken";
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     })
     .factory('FindecoService', function ($resource, $http) {
