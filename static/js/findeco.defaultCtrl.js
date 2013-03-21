@@ -13,20 +13,20 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
         return TheLocator.getSanitizedPath(p);
     };
 
-    $scope.parse = function(text,shortTitle) {
-        return Parser.parse(text,shortTitle,true);
+    $scope.parse = function (text, shortTitle) {
+        return Parser.parse(text, shortTitle, true);
     };
 
-    $scope.relocateRelativeTo = function(shortTitle,index) {
+    $scope.relocateRelativeTo = function (shortTitle, index) {
         var path = $scope.path;
-        if ( $scope.path == '/' ) {
+        if ($scope.path == '/') {
             path = '';
         }
         $location.path(TheLocator.getSanitizedPath(shortTitle + '.' + index));
     };
 
-    $scope.updateParagraphList = function() {
-        FindecoService.loadText($scope.paragraphList, $scope.path).success( function () {
+    $scope.updateParagraphList = function () {
+        FindecoService.loadText($scope.paragraphList, $scope.path).success(function () {
             $scope.isTextLoaded = true;
         });
     };
@@ -41,11 +41,8 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
     $scope.updateGraph = function () {
         FindecoService.loadGraphData($scope.graphData, $scope.path).success(function(data) {
             $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
-        }
-
-        );
+        });
     };
-
 
     $scope.initialize = function() {
         if ( TheLocator.isArgumentPath() ) {
