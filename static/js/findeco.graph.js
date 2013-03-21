@@ -46,7 +46,8 @@ findecoApp.directive('findecoGraph', function( ) {
     var svg_width = 580,
         svg_height = 150;
     var node_radius = 20;
-    var pie_chart_colors = ["#0f0", "#999", "#f00"];
+
+    var pie_chart_colors = ["#fff", "#999", "#000"];
     var scale = d3.scale.log() // scaling of follows to node-size
         .domain([1, 1000])
         .range([1, 2])
@@ -135,8 +136,8 @@ findecoApp.directive('findecoGraph', function( ) {
                     .attr("class", "nodeGroup")
                     .attr("title", function (d) { return d.path; })
                     .call(force.drag)
-                    .append("svg:a");
-                    //.on('click', function(d) {Controller.loadIndex(d.path,true)});
+                    .append("svg:a")
+                    .attr("xlink:href", function (d) {return '/#/' + d.path; });
 
                 node.append("circle")
                     .attr("class", function (d) { if (d.active) return "activeNodeBackgroundCircle";
