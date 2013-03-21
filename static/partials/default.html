@@ -1,13 +1,17 @@
 <div id="contentContainer" class="centeringContainer">
     <div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
         <ul class="argumentList">
-            <li ng-repeat="detail in argumentList">
-                <ul class="argumentDetailList">
-                    <li><h3>{{type.name}}</h3></li>
-                    <li ng-repeat="argument in detail.list">
-                        <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
-                    </li>
-                </ul>
+            <li><h3>Pro Argumente</h3></li>
+            <li ng-repeat="argument in argumentList" ng-show="argument.shortTitle == 'pro'">
+                <a href="/#/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
+            </li>
+            <li><h3>Neutrale Argumente</h3></li>
+            <li ng-repeat="argument in argumentList" ng-show="argument.shortTitle == 'neut'">
+                <a href="/#/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
+            </li>
+            <li><h3>Contra Argumente</h3></li>
+            <li ng-repeat="argument in argumentList" ng-show="argument.shortTitle == 'con'">
+                <a href="/#/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
         </ul>
     </div>

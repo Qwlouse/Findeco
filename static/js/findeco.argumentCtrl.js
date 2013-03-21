@@ -2,14 +2,14 @@
 /* Controllers */
 
 function FindecoArgumentCtrl($scope, $location, FindecoService) {
-    $scope.path = TheLocator.getSanitizedPath();
+    $scope.path = TheLocator.getSanitizedArgumentFreePath();
 
     $scope.isTextLoaded = false;
 
 
     $scope.argumentList = [];
-    $scope.getPath = function (p) {
-        return TheLocator.getSanitizedPath(p);
+    $scope.getPath = function () {
+        return TheLocator.getSanitizedArgumentFreePath();
     };
 
     $scope.parse = function(text,shortTitle) {
@@ -25,6 +25,9 @@ function FindecoArgumentCtrl($scope, $location, FindecoService) {
     };
 
     $scope.updateArgument = function () {
+        if ( TheLocator.isArgumentPath() ) {
+
+        }
         FindecoService.loadArgument($scope.argumentList, $scope.path).success(function (data) {});
     };
 
