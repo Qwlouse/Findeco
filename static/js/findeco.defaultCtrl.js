@@ -2,6 +2,9 @@
 /* Controllers */
 
 function FindecoDefaultCtrl($scope, $location, FindecoService) {
+
+    console.log("FindecoDefaultCtrl");
+
     $scope.path = TheLocator.getSanitizedPath();
 
     $scope.isTextLoaded = false;
@@ -38,7 +41,15 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
         });
     };
 
-    $scope.updateIndex();
+
+    $scope.initialize = function() {
+        if ( TheLocator.isArgumentPath() ) {
+            $scope.updateParagraphList();
+        } else {
+            $scope.updateIndex();
+        }
+    }
+    $scope.initialize();
 }
 
 FindecoDefaultCtrl.$inject = ['$scope', '$location', 'FindecoService'];
