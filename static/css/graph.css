@@ -1,19 +1,19 @@
-div#graph {
+div.graph {
     overflow: auto;
 }
 
-div#graph .link {
+div.graph .link {
     stroke: #000;
     stroke-width: 2px;
 }
 
-div#graph .activeNodeBackgroundCircle {
+div.graph .activeNodeBackgroundCircle {
     fill: #ffffff;
     stroke: #000;
     stroke-width: 4px;
 }
 
-div#graph .nodeBackgroundCircle {
+div.graph .nodeBackgroundCircle {
     fill: #fff;
     stroke: #000;
     stroke-width: 0px;
@@ -21,14 +21,14 @@ div#graph .nodeBackgroundCircle {
 }
 
 
-div#graph .nodeLabel {
+div.graph .nodeLabel {
     fill: #000000;
 }
 
-div#graph .activeNodeLabel {
+div.graph .activeNodeLabel {
     font-weight: bold;
     fill: #000;
 }
 
-div#graph .nodeGroup {
+div.graph .nodeGroup {
 }
