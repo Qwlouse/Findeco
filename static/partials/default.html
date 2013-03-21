@@ -6,7 +6,7 @@
     <div id="centerColumn" class="contentBox">
         <ul class="indexList">
             <li ng-repeat="index in indexList">
-                <a ng-click="relocateRelativeTo(index.shortTitle,index.index)">{{index.fullTitle}}</a>
+                <a href="#/{{ path }}/{{ index.shortTitle }}.{{ index.index }}">{{index.fullTitle}}</a>
             </li>
             <li ng-show="!isTextLoaded" ng-click="updateParagraphList()">load text</li>
         </ul>

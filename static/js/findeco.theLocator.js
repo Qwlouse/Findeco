@@ -22,10 +22,17 @@ theLocator.prototype.getPath = function () {
     return path;
 }
 
-theLocator.prototype.getPathParts = function () {
-    var pathParts = this.getPath().split("/");
-    return pathParts;
+function isNonEmpty(element, index, array) {
+    return (element != "");
 }
+
+theLocator.prototype.getPathParts = function () {
+    var path = this.getPath();
+    var pathParts = this.getPath().split("/").filter(isNonEmpty);
+    console.log(path);
+    console.log(pathParts);
+    return pathParts;
+};
 
 theLocator.prototype.getSanitizedPath = function (target) {
     if (target == undefined) {
@@ -51,18 +58,18 @@ theLocator.prototype.getSanitizedPath = function (target) {
     console.log(sanePath, tmp);
 
     return sanePath;
-}
+};
 
 theLocator.prototype.removeTrailingSlashes = function (string) {
     if (string.substr(string.length-1) == '/') {
         string = string.substr(0, string.length - 1);
     }
     return string;
-}
+};
 
 theLocator.prototype.saneSlashAppending = function (string) {
     if (string.substr(string.length-1) != '/') {
         string += '/';
     }
     return string;
-}
+};
