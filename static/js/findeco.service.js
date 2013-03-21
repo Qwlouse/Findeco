@@ -74,7 +74,6 @@ angular.module('FindecoService', ['ngResource'])
                 pathComponents.push(type);
                 pathComponents.push(path);
                 var url = pathComponents.join('/');
-                // var microblogList = [];
                 var promise = $http.get(url).success(fillArray(microblogList, ['loadMicrobloggingResponse']));
                 addSuccessAndError(microblogList, promise);
                 return microblogList;
@@ -88,7 +87,6 @@ angular.module('FindecoService', ['ngResource'])
 
             loadArgument: function(indexNodes, path) {
                 var url = ['/.json_loadIndex', 'true', path].join('/');
-                // var indexNodes = [];
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes, ['loadIndexResponse']));
                 addSuccessAndError(indexNodes, promise);
@@ -97,7 +95,6 @@ angular.module('FindecoService', ['ngResource'])
 
             loadText: function(paragraphList, path) {
                 var url = ['/.json_loadText', path].join('/');
-                // var paragraphList = [];
                 var promise = $http.get(url);
                 promise.success(fillArray(paragraphList, ['loadTextResponse', 'paragraphs']));
                 addSuccessAndError(paragraphList, promise);
@@ -106,11 +103,20 @@ angular.module('FindecoService', ['ngResource'])
 
             loadIndex: function(indexNodes, path) {
                 var url = ['/.json_loadIndex', path].join('/');
-                // var indexNodes = [];
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes, ['loadIndexResponse']));
                 addSuccessAndError(indexNodes, promise);
                 return indexNodes;
+            },
+
+            loadGraphData: function(graphData, path, graphType) {
+                if (graphType == undefined) {
+                    graphType = "full";
+                }
+                var url = ['/.json_loadIndex', graphType, path].join('/');
+                var promise = $http.get(url);
+
+                promise.success(fillArray(graphData, ['loadGraphDataResponse', 'graphDataChildren']));
 
             }
         };
