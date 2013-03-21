@@ -8,6 +8,7 @@ function FindecoMicroblogCtrl($scope, FindecoService) {
     };
 
     $scope.submit = function () {
+        // TODO: Cross-site-scripting protection!
         FindecoService.storeMicroblogPost(TheLocator.getSanitizedPath(), $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
