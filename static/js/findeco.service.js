@@ -60,7 +60,7 @@ angular.module('FindecoService', ['ngResource'])
                 return userInfo;
             },
 
-            loadMicroblogging: function(path, type, id) {
+            loadMicroblogging: function(microblogList, path, type, id) {
                 var pathComponents = ['/.json_loadMicroblogging'];
                 if (id != undefined) {
                     pathComponents.push(id);
@@ -71,7 +71,7 @@ angular.module('FindecoService', ['ngResource'])
                 pathComponents.push(type);
                 pathComponents.push(path);
                 var url = pathComponents.join('/');
-                var microblogList = [];
+                // var microblogList = [];
                 var promise = $http.get(url).success(fillArray(microblogList, ['loadMicrobloggingResponse']));
                 addSuccessAndError(microblogList, promise);
                 return microblogList;
@@ -83,18 +83,27 @@ angular.module('FindecoService', ['ngResource'])
                 return $http.post(url, {microblogText: microblogText});
             },
 
-            loadText: function(path) {
+            loadArgument: function(indexNodes, path) {
+                var url = ['/.json_loadIndex', 'true', path].join('/');
+                // var indexNodes = [];
+                var promise = $http.get(url);
+                promise.success(fillArray(indexNodes, ['loadIndexResponse']));
+                addSuccessAndError(indexNodes, promise);
+                return indexNodes;
+            },
+
+            loadText: function(paragraphList, path) {
                 var url = ['/.json_loadText', path].join('/');
-                var paragraphList = [];
+                // var paragraphList = [];
                 var promise = $http.get(url);
                 promise.success(fillArray(paragraphList, ['loadTextResponse', 'paragraphs']));
                 addSuccessAndError(paragraphList, promise);
                 return paragraphList;
             },
 
-            loadIndex: function(path) {
+            loadIndex: function(indexNodes, path) {
                 var url = ['/.json_loadIndex', path].join('/');
-                var indexNodes = [];
+                // var indexNodes = [];
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes, ['loadIndexResponse']));
                 addSuccessAndError(indexNodes, promise);

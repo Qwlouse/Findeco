@@ -2,11 +2,10 @@
 /* Controllers */
 
 function FindecoNavigationCtrl($scope) {
-    function get_navigation_entries() {
+    $scope.calculateNavigationEntries = function () {
         var pathParts = TheLocator.getPathParts();
         var navEntries = [];
         var pathSoFar = "/#/";
-        console.log(pathParts);
 
         for (var i = 0; i < pathParts.length; ++i) {
             pathSoFar += pathParts[i] + '/';
@@ -15,10 +14,10 @@ function FindecoNavigationCtrl($scope) {
         return navEntries;
     }
 
-    $scope.navigationEntries = get_navigation_entries();
+    $scope.navigationEntries = $scope.calculateNavigationEntries();
 
     $scope.$on('$locationChangeSuccess', function (event, newLoc, oldLoc){
-        $scope.navigationEntries = get_navigation_entries();
+        $scope.navigationEntries = $scope.calculateNavigationEntries();
     });
 }
 

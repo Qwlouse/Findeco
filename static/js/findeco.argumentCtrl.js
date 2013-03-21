@@ -1,13 +1,13 @@
 'use strict';
 /* Controllers */
 
-function FindecoDefaultCtrl($scope, $location, FindecoService) {
+function FindecoArgumentCtrl($scope, $location, FindecoService) {
     $scope.path = TheLocator.getSanitizedPath();
 
     $scope.isTextLoaded = false;
 
-    $scope.indexList = [];
-    $scope.paragraphList = [];
+
+    $scope.argumentList = [];
     $scope.getPath = function (p) {
         return TheLocator.getSanitizedPath(p);
     };
@@ -24,21 +24,11 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
         $location.path(TheLocator.getSanitizedPath(shortTitle + '.' + index));
     };
 
-    $scope.updateParagraphList = function() {
-        FindecoService.loadText($scope.paragraphList, $scope.path).success( function () {
-            $scope.isTextLoaded = true;
-        });
+    $scope.updateArgument = function () {
+        FindecoService.loadArgument($scope.argumentList, $scope.path).success(function (data) {});
     };
 
-    $scope.updateIndex = function () {
-        FindecoService.loadIndex($scope.indexList, $scope.path).success(function (data) {
-            if ( angular.equals(data.loadIndexResponse, []) ) {
-                $scope.updateParagraphList();
-            }
-        });
-    };
-
-    $scope.updateIndex();
+    $scope.updateArgument();
 }
 
 FindecoDefaultCtrl.$inject = ['$scope', '$location', 'FindecoService'];

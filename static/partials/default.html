@@ -1,12 +1,21 @@
 <div id="contentContainer" class="centeringContainer">
-    <div id="leftColumn" class="contentBox">
-
+    <div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
+        <ul class="argumentList">
+            <li ng-repeat="detail in argumentList">
+                <ul class="argumentDetailList">
+                    <li><h3>{{type.name}}</h3></li>
+                    <li ng-repeat="argument in detail.list">
+                        <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
     <div id="centerColumn" class="contentBox">
         <ul class="indexList">
             <li ng-repeat="index in indexList">
-                <a href="/#{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
+                <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
             </li>
             <li ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_">load text</li>
         </ul>

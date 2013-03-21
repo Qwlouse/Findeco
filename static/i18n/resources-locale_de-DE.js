@@ -23,5 +23,20 @@
         "key":"_MicroblogPlaceholder_",
         "value":"Hier kannst du microbloggen !!!",
         "description":"Microblogging Placeholder Text"
+    },
+    {
+        "key":"_argumentPro_",
+        "value":"Argument dafür",
+        "description":"Argument type name"
+    },
+    {
+        "key":"_argumentNeutral_",
+        "value":"Neutrale Anmerkung",
+        "description":"Argument type name"
+    },
+    {
+        "key":"_argumentCon_",
+        "value":"Argument dagegen",
+        "description":"Argument type name"
     }
 ]

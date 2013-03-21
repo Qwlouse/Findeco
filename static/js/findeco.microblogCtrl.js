@@ -4,7 +4,7 @@
 function FindecoMicroblogCtrl($scope, FindecoService) {
     $scope.microbloggingList = [];
     $scope.updateMicrobloggingList = function () {
-        $scope.microbloggingList = FindecoService.loadMicroblogging(TheLocator.getSanitizedPath());
+        FindecoService.loadMicroblogging($scope.microbloggingList, TheLocator.getSanitizedPath());
     };
 
     $scope.submit = function () {
