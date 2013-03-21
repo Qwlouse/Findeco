@@ -2,7 +2,7 @@
 /* Controllers */
 
 function FindecoDefaultCtrl($scope, $location, FindecoService) {
-    console.log("FindecoDefaultCtrl");
+    console.log("FindecoDefaultCtrl", FindecoService);
     $scope.path = TheLocator.getSanitizedPath();
 
     $scope.isTextLoaded = false;
@@ -13,41 +13,33 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
         return TheLocator.getSanitizedPath(p);
     };
 
-    $scope.parse = function(text,shortTitle) {
-        return Parser.parse(text,shortTitle,true);
+    $scope.parse = function (text, shortTitle) {
+        return Parser.parse(text, shortTitle, true);
     };
 
-    $scope.relocateRelativeTo = function(shortTitle,index) {
+    $scope.relocateRelativeTo = function (shortTitle, index) {
         var path = $scope.path;
-        if ( $scope.path == '/' ) {
+        if ($scope.path == '/') {
             path = '';
         }
         $location.path(TheLocator.getSanitizedPath(shortTitle + '.' + index));
     };
 
-    $scope.updateParagraphList = function() {
-        FindecoService.loadText($scope.paragraphList, $scope.path).success( function () {
+    $scope.updateParagraphList = function () {
+        FindecoService.loadText($scope.paragraphList, $scope.path).success(function () {
             $scope.isTextLoaded = true;
         });
     };
 
     $scope.updateIndex = function () {
-        FindecoService.loadIndex($scope.indexList, $scope.path).success(function (data) {
-            if ( angular.equals(data.loadIndexResponse, []) ) {
+        /*FindecoService.loadIndex($scope.indexList, $scope.path).success(function (data) {
+            if (angular.equals(data.loadIndexResponse, [])) {
                 $scope.updateParagraphList();
             }
-        });
+        });*/
     };
 
-
-    $scope.initialize = function() {
-        if ( TheLocator.isArgumentPath() ) {
-            //$scope.updateParagraphList();
-        } else {
-            $scope.updateIndex();
-        }
-    }
-    $scope.initialize();
+    $scope.updateIndex();
 }
 
 FindecoDefaultCtrl.$inject = ['$scope', '$location', 'FindecoService'];

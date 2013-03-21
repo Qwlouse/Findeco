@@ -1,13 +1,16 @@
 'use strict';
 /* Controllers */
 
-function FindecoArgumentCtrl($scope, $location, FindecoService) {
+function FindecoArgumentCtrl($scope, $location, $routeParams, FindecoService) {
+    console.log("FindecoArgumentCtrl", FindecoService);
     $scope.path = TheLocator.getSanitizedArgumentFreePath();
+    $scope.argumentPath = TheLocator.getSanitizedPath();
 
     $scope.isTextLoaded = false;
-
-
+    $scope.paragraphList = [];
     $scope.argumentList = [];
+
+
     $scope.getPath = function () {
         return TheLocator.getSanitizedArgumentFreePath();
     };
@@ -24,14 +27,24 @@ function FindecoArgumentCtrl($scope, $location, FindecoService) {
         $location.path(TheLocator.getSanitizedPath(shortTitle + '.' + index));
     };
 
-    $scope.updateArgument = function () {
-        if ( TheLocator.isArgumentPath() ) {
+    $scope.updateParagraphList = function() {
 
-        }
-        FindecoService.loadArgument($scope.argumentList, $scope.path).success(function (data) {});
     };
 
-    $scope.updateArgument();
+    $scope.updateArgument = function () {
+        FindecoService.loadText($scope.paragraphList, $scope.argumentPath).success( function () {
+            $scope.isTextLoaded = true;
+        });
+    };
+
+    $scope.updateArgumentList = function () {
+        FindecoService.loadArgument($scope.argumentList , $scope.path);
+    };
+
+    $scope.updateArgumentList();
+    if ( TheLocator.isArgumentPath() ) {
+        $scope.updateArgument();
+    }
 }
 
-FindecoDefaultCtrl.$inject = ['$scope', '$location', 'FindecoService'];
+FindecoDefaultCtrl.$inject = ['$scope', '$location', '$routeParams', 'FindecoService'];

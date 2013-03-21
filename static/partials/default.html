@@ -3,15 +3,15 @@
         <ul class="argumentList">
             <li><h3>Pro Argumente</h3></li>
             <li ng-repeat="argument in argumentList" ng-show="argument.shortTitle == 'pro'">
-                <a href="/#/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
+                <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
             <li><h3>Neutrale Argumente</h3></li>
             <li ng-repeat="argument in argumentList" ng-show="argument.shortTitle == 'neut'">
-                <a href="/#/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
+                <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
             <li><h3>Contra Argumente</h3></li>
             <li ng-repeat="argument in argumentList" ng-show="argument.shortTitle == 'con'">
-                <a href="/#/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
+                <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
         </ul>
     </div>
