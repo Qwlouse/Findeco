@@ -6,6 +6,8 @@ function FindecoNavigationCtrl($scope) {
         var pathParts = TheLocator.getPathParts();
         var navEntries = [];
         var pathSoFar = "/#/";
+        console.log(pathParts);
+
         for (var i = 0; i < pathParts.length; ++i) {
             pathSoFar += pathParts[i] + '/';
             navEntries.push({name:pathParts[i], path:pathSoFar});

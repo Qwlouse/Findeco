@@ -8,6 +8,9 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
 
     $scope.indexList = {};
     $scope.paragraphList = {};
+    $scope.getPath = function (p) {
+        return TheLocator.getSanitizedPath(p);
+    };
 
     $scope.parse = function(text,shortTitle) {
         return Parser.parse(text,shortTitle,true);

@@ -6,7 +6,7 @@
     <div id="centerColumn" class="contentBox">
         <ul class="indexList">
             <li ng-repeat="index in indexList">
-                <a href="#/{{ path }}/{{ index.shortTitle }}.{{ index.index }}">{{index.fullTitle}}</a>
+                <a href="/#{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
             </li>
             <li ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_">load text</li>
         </ul>

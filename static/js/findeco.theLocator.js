@@ -29,12 +29,11 @@ function isNonEmpty(element, index, array) {
 theLocator.prototype.getPathParts = function () {
     var path = this.getPath();
     var pathParts = this.getPath().split("/").filter(isNonEmpty);
-    console.log(path);
-    console.log(pathParts);
     return pathParts;
 };
 
 theLocator.prototype.getSanitizedPath = function (target) {
+
     if (target == undefined) {
         target = '';
     } else {
@@ -55,8 +54,6 @@ theLocator.prototype.getSanitizedPath = function (target) {
     if (sanePath != '/') {
         sanePath = this.removeTrailingSlashes(sanePath);
     }
-    console.log(sanePath, tmp);
-
     return sanePath;
 };
 
