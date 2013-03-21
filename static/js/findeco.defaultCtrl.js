@@ -6,6 +6,7 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
 
     $scope.isTextLoaded = false;
 
+    $scope.graphData = [{newFollows: 2, authorGroup: [{followers: [], displayName: "Beschlossenes Programm", followees: [], description: ""}], path: "Wahlprogramm_BTW.1/Urheberrecht.1", spamFlags: 0, follows: 2, originGroup: [], unFollows: 0}, {newFollows: 2, authorGroup: [{followers: [], displayName: "ulf", followees: [], description: ""}], path: "Wahlprogramm_BTW.1/Urheberrecht.2", spamFlags: 0, follows: 2, originGroup: [], unFollows: 0}, {newFollows: 1, authorGroup: [{followers: [], displayName: "ulf", followees: [], description: ""}], path: "Wahlprogramm_BTW.1/Urheberrecht.3", spamFlags: 0, follows: 1, originGroup: [], unFollows: 0}, {newFollows: 1, authorGroup: [{followers: [], displayName: "ulf", followees: [], description: ""}], path: "Wahlprogramm_BTW.1/Urheberrecht.4", spamFlags: 0, follows: 2, originGroup: ["Wahlprogramm_BTW.1/Urheberrecht.3"], unFollows: 0}, {newFollows: 1, authorGroup: [{followers: [], displayName: "timo", followees: [], description: ""}], path: "Wahlprogramm_BTW.1/Urheberrecht.5", spamFlags: 1, follows: 1, originGroup: ["Wahlprogramm_BTW.1/Urheberrecht.4"], unFollows: 2}];
     $scope.indexList = [];
     $scope.paragraphList = [];
     $scope.getPath = function (p) {

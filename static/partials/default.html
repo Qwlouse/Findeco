@@ -17,10 +17,10 @@
             <li ng-repeat="index in indexList">
                 <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
             </li>
-            <li ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_">load text</li>
         </ul>
+        <div findeco-graph data="graphData" class="graph"></div>
+        <div ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_"><b>load text</b></div>
         <p ng-repeat="paragraph in paragraphList" ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
-
     </div>
 
     <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl">
