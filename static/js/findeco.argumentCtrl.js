@@ -47,4 +47,4 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, FindecoService) {
     }
 }
 
-FindecoDefaultCtrl.$inject = ['$scope', '$location', '$routeParams', 'FindecoService'];
+FindecoArgumentCtrl.$inject = ['$scope', '$location', '$routeParams', 'FindecoService'];
