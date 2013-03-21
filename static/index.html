@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/js/lib/codeholicsCreole.js"></script>
     <script type="text/javascript" src="static/js/findeco.parser.js"></script>
     <script type="text/javascript" src="static/js/findeco.structureParser.js"></script>
-
+	<script type="text/javascript" src="static/js/lib/localize.js"></script>
     <title>Findeco new Style</title>
 </head>
 <body ng-app="Findeco">
@@ -47,10 +47,10 @@
                         </div>
                     </li>
                     <li ng-show="data.isLoggedIn">
-                        Loggedin as {{data.content.userInfo.displayName}}
-                        <a ng-click="logout()">logout</a>
+                        {{'_loggedInAs_'|i18n}} {{data.content.userInfo.displayName}}
+                        <a ng-click="logout()" data-i18n="_logout_"></a>
                     </li>
-                    <li ng-show="!data.isLoggedIn"><a href="#/login">login</a></li>
+                    <li ng-show="!data.isLoggedIn"><a href="#/login" data-i18n="_login_"></a></li>
                 </ul>
             </div>
         </div>

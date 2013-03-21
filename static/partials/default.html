@@ -8,7 +8,7 @@
             <li ng-repeat="index in indexList">
                 <a href="#/{{ path }}/{{ index.shortTitle }}.{{ index.index }}">{{index.fullTitle}}</a>
             </li>
-            <li ng-show="!isTextLoaded" ng-click="updateParagraphList()">load text</li>
+            <li ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_">load text</li>
         </ul>
         <p ng-repeat="paragraph in paragraphList" ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
 
@@ -18,7 +18,7 @@
         <ul class="microblogList">
             <li>
                 <form ng-submit="submit()">
-                    <input type="text" placeholder="add new microblogging entry here" style="width: 100%;" ng-model="microblogText"><br/>
+                    <input type="text" placeholder="{{'_MicroblogPlaceholder_'|i18n}}" style="width: 100%;" ng-model="microblogText"><br/>
                 </form>
             </li>
             <li ng-repeat="microblogNode in microbloggingList">
