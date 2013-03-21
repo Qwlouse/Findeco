@@ -46,7 +46,6 @@ theLocator.prototype.getSanitizedPath = function (target) {
         if (parts[p] == "") {
             continue;
         }
-        //console.log(parts[p]);
         tmp.push(parts[p]);
     }
 

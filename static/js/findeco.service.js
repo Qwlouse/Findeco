@@ -113,11 +113,11 @@ angular.module('FindecoService', ['ngResource'])
                 if (graphType == undefined) {
                     graphType = "full";
                 }
-                var url = ['/.json_loadIndex', graphType, path].join('/');
+                var url = ['/.json_loadGraphData', graphType, path].join('/');
                 var promise = $http.get(url);
 
                 promise.success(fillArray(graphData, ['loadGraphDataResponse', 'graphDataChildren']));
-
+                return promise;
             }
         };
 

@@ -43,7 +43,7 @@ function endy(source, target, r) {
 
 findecoApp.directive('findecoGraph', function( ) {
     // Parameters
-    var svg_width = 600,
+    var svg_width = 580,
         svg_height = 150;
     var node_radius = 20;
     var pie_chart_colors = ["#0f0", "#999", "#f00"];
@@ -100,7 +100,6 @@ findecoApp.directive('findecoGraph', function( ) {
                 // construct the links
                 for (i = 0; i < nodes.length; i++) {
                     var n = nodes[i];
-                    console.log(n);
                     for (var j = 0; j < n.originGroup.length; j++) {
                         links.push({"source": node_map.get(n.originGroup[j]), "target": n});
                     }
