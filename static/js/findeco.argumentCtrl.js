@@ -2,9 +2,6 @@
 /* Controllers */
 
 function FindecoArgumentCtrl($scope, $location, FindecoService) {
-
-    console.log("FindecoArgumentCtrl");
-
     $scope.path = TheLocator.getSanitizedArgumentFreePath();
 
     $scope.isTextLoaded = false;
