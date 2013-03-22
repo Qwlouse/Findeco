@@ -1,14 +1,14 @@
 /** It's all Svens fault!!1!11 **********************************************************
  * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
  *                                                                                      *
- * This file is part of BasDeM.                                                         *
+ * This file is part of Findeco.                                                        *
  *                                                                                      *
- * BasDeM is free software; you can redistribute it and/or modify it under              *
+ * Findeco is free software; you can redistribute it and/or modify it under             *
  * the terms of the GNU General Public License as published by the Free Software        *
  * Foundation; either version 3 of the License, or (at your option) any later           *
  * version.                                                                             *
  *                                                                                      *
- * BasDeM is distributed in the hope that it will be useful, but WITHOUT ANY            *
+ * Findeco is distributed in the hope that it will be useful, but WITHOUT ANY           *
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
  * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
  *                                                                                      *
