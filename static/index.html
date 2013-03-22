@@ -3,17 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 
 <head>
+    <!-- TODO: Add metadata -->
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="Content-Style-Type" content="text/css"/>
     <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+    <!-- CSS files -->
     <link rel="stylesheet" href="static/css/newStyle.css" type="text/css"/>
     <link rel="stylesheet" href="static/css/graph.css" type="text/css"/>
-    <link href='http://fonts.googleapis.com/css?family=Exo' rel='stylesheet' type='text/css'>
+
+    <!-- Google Web Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Monda:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Javascript libraries -->
     <script type="text/javascript" src="static/js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="static/js/lib/angular.min.js"></script>
     <script type="text/javascript" src="static/js/lib/d3.v2.min.js"></script>
     <script type="text/javascript" src="static/js/lib/angular-resource.min.js"></script>
     <script type="text/javascript" src="static/js/lib/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="static/js/lib/codeholicsCreole.js"></script>
+
+    <!-- Javascript files -->
     <script type="text/javascript" src="static/js/findeco.THELocatoooooooor.js"></script>
     <script type="text/javascript" src="static/js/findeco.app.js"></script>
     <script type="text/javascript" src="static/js/findeco.graph.js"></script>
@@ -24,10 +34,10 @@
     <script type="text/javascript" src="static/js/findeco.navigationCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.userCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.argumentCtrl.js"></script>
-    <script type="text/javascript" src="static/js/lib/codeholicsCreole.js"></script>
     <script type="text/javascript" src="static/js/findeco.parser.js"></script>
     <script type="text/javascript" src="static/js/findeco.structureParser.js"></script>
 	<script type="text/javascript" src="static/js/lib/localize.js"></script>
+
     <title>Findeco new Style</title>
 </head>
 <body ng-app="Findeco">
@@ -37,9 +47,9 @@
             <div id="headerContent" ng-controller="FindecoUserCtrl">
                 <h1>Findeco</h1>
                 <ul>
-                    <li class="activeTab"><a href="#">Start</a></li>
-                    <li><a href="#">Aktuelles</a></li>
-                    <li><a class="activeTab" href="#">Inhalte</a></li>
+                    <li class="activeTab"><h3><a href="#">Start</a></h3></li>
+                    <li><h3><a href="#">Aktuelles</a></h3></li>
+                    <li><h3><a href="#">Inhalte</a></h3></li>
                     <li>
                         <div class="searchBox">
                             <form>
@@ -59,8 +69,8 @@
     </div>
     <div id="navigationBar" ng-controller="FindecoNavigationCtrl">
         <div class="centeringContainer">
-            <a href="/#"><img src="static/images/home.png" alt="Home"/></a>
-            <ul>
+
+            <ul><li><a href="/#"><img src="static/images/home.png" alt="Home"/></a></li>
                 <li ng-repeat="nav in navigationEntries"><a ng-href="{{ nav.path }}">{{ nav.name }}</a></li>
             </ul>
         </div>

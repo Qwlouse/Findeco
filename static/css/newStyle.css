@@ -1,17 +1,22 @@
 /*Clear smoe margins and paddings */
-body, h1, form, button, input{
+body, h1, h2, h3, h4, h5, h6, form, button, input{
     margin: 0 0 0 0;
     padding: 0 0 0 0;
 }
 /* Background image and basic font */
 body {
     background: #ecb40d url("../images/bgmid.jpg") repeat-x center 50px;
-    font-family: sans-serif;
+    font-family: "Verdana", sans-serif;
 }
 /* general style for links */
 a {
     color: #ecb40d;
     text-decoration: none;
+}
+
+/* Font for all the headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Monda", sans-serif;
 }
 
 /* Fixed size container to center main part of website*/
@@ -51,14 +56,15 @@ a {
 }
 
 #headerContent h1 {
-    font-style: italic;
-    font-size: 40px;
+    /*font-style: italic;*/
+    font-weight: bold;
+    font-size: 36px;
     margin-left: 15px;
     color: #b3b3b3;
 }
 
 #headerContent ul {
-    font-size: 12pt; /* get rid of the single space in inline*/
+    font-size: 10pt; /* get rid of the single space in inline*/
     position: absolute;
     bottom: 0;
     margin: 0;
@@ -66,9 +72,10 @@ a {
 }
 
 #headerContent ul li{
+    float: left;
     list-style: none;
     display: inline-block;
-    padding: 5px 15px 5px 15px;
+    padding: 0 15px 0 15px;
 }
 
 #headerContent form{
@@ -82,7 +89,7 @@ div.searchBox {
     -moz-border-radius: 11px;
     -webkit-border-radius: 11px;
     border-radius: 11px;
-
+    height: 23px;
     padding: 0 6px 0 6px;
     background: #333333;
     overflow: hidden; /* I don't know why exactly, but this removes the gap between the ul li elements and the bottom of the header */
@@ -107,7 +114,7 @@ div.searchBox {
 #headerContent ul li a{
     color: inherit;
     font-weight: bold;
-    font-family: 'Exo', sans-serif;
+    /*font-family: 'Exo', sans-serif;*/
     font-size: 14pt;
     text-decoration: none;
 }
@@ -144,7 +151,7 @@ div.searchBox {
     font-size: 12pt;
 }
 /* insert slashes between navigation items */
-#navigationBar li:before{
+#navigationBar li + li:before{
     color: #cccccc;
     font-weight: bold;
     content: " / ";
@@ -156,7 +163,7 @@ div.searchBox {
     min-height: 100px;
     margin-top: 65px;
     font-size: 10pt;
-    font-family: sans-serif;
+    /*font-family: sans-serif;*/
 }
 
 .contentBox {
@@ -169,9 +176,9 @@ div.searchBox {
 
 #leftColumn {
     float: left;
-    width: 230px;
+    width: 200px;
     min-height: 100px;
-    padding: 10px;
+    padding: 25px;
 }
 
 #centerColumn {
@@ -185,9 +192,9 @@ div.searchBox {
 
 #rightColumn {
     float: left;
-    width: 230px;
+    width: 200px;
     min-height: 100px;
-    padding: 10px 10px 10px 10px;
+    padding: 25px;
 }
 
 /*===================== Main Container Columns Line ==========================*/
@@ -221,4 +228,16 @@ ul.indexList li {
     display: block;
     list-style: none;
 }
+/*===================== Arguments ==========================*/
+ul.argumentList {
+    list-style: disc;
+    color: #999999;
+    padding-left: 20px;
+}
 
+.argumentHeading {
+    font-family: "Monda" sans-serif;
+    font-size: 20px;
+    font-weight: bolder;
+    color: gray;
+}
