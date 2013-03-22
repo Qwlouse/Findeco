@@ -52,7 +52,7 @@
                     <li class="activeTab"><h3><a href="#">Start</a></h3></li>
                     <li><h3><a href="#">Aktuelles</a></h3></li>
                     <li><h3><a href="#">Inhalte</a></h3></li>
-                    <li>
+                    <li style="margin-left: 200px">
                         <div class="searchBox">
                             <form>
                                 <input type="" name="searchField"/>
@@ -60,11 +60,15 @@
                             </form>
                         </div>
                     </li>
+                </ul>
+                <ul style="position: absolute; right: 0;">
                     <li ng-show="data.isLoggedIn">
-                        {{'_loggedInAs_'|i18n}} {{data.content.userInfo.displayName}}
-                        <a ng-click="logout()" data-i18n="_logout_"></a>
+                        <h3><a ng-href="#/user/{{data.content.userInfo.displayName}}">{{data.content.userInfo.displayName}}</a></h3>
                     </li>
-                    <li ng-show="!data.isLoggedIn"><a href="#/login" data-i18n="_login_"></a></li>
+                    <li ng-show="data.isLoggedIn">
+                        <a ng-click="logout()" style="cursor:pointer;"><img src="static/images/logout.png" alt="Logout"></a>
+                    </li>
+                    <li ng-show="!data.isLoggedIn" style="float:right"><h3><a href="#/login" data-i18n="_login_"></a></h3></li>
                 </ul>
             </div>
         </div>
