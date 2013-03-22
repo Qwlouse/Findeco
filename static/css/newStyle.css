@@ -25,6 +25,73 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: auto;
     margin-right: auto;
 }
+
+/*============================ Sticky footer =================================*/
+/* see http://www.cssstickyfooter.com/using-sticky-footer-code.html */
+html, body {
+    height: 100%;
+}
+
+#wrap {
+    min-height: 100%;
+}
+
+#main {
+    overflow:auto;
+	padding-bottom: 110px;
+}  /* must be same height as the footer */
+
+#footerWrap {
+
+    position: relative;
+	height: 110px;
+	clear:both;
+    margin: -110px 0 0 0;/* negative value of footer height */
+}
+
+#footer {
+    position: absolute;
+    width: 100%;
+	margin: 30px 0 0 0; /* negative value of footer height */
+	height: 50px;
+    background: #414141;
+    padding: 30px 0 0 0;
+}
+
+#footer ul {
+    list-style: none;
+    display: table;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+
+#footer ul li {
+
+    display: table-cell;
+    text-align: center;
+    width: 150px;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+#footer ul li a {
+    font-family: "Monda" sans-serif; /* TODO why does firefox ignore this? */
+    display: block;
+    font-weight: bold;
+}
+
+/*Opera Fix*/
+body:before {
+	content:"";
+	height:100%;
+	float:left;
+	width:0;
+	margin-top:-32767px;/
+}
+
+
 /*============================ Top Menu Line =================================*/
 #topMenu {
     width: 100%;
