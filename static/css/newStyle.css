@@ -14,6 +14,10 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    color: #2d7cc4;
+}
+
 /* Font for all the headings */
 h1, h2, h3, h4, h5, h6 {
     font-family: "Monda", sans-serif;
@@ -184,9 +188,12 @@ div.searchBox {
 #headerContent ul li a{
     color: inherit;
     font-weight: bold;
-    /*font-family: 'Exo', sans-serif;*/
     font-size: 14pt;
     text-decoration: none;
+}
+
+#headerContent ul li a:hover{
+    color: #2d7cc4;
 }
 
 #headerContent ul li.activeTab {
