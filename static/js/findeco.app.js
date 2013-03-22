@@ -30,6 +30,10 @@ var findecoApp = angular.module('Findeco', ['FindecoService','FindecoUserService
         $routeProvider.
             when('/home', {templateUrl: 'static/partials/home.html', controller: FindecoDefaultCtrl}).
             when('/login', {templateUrl: 'static/partials/user_login.html', controller: FindecoUserCtrl}).
+            when('/impressum', {templateUrl: 'static/partials/impressum.html', controller: FindecoDefaultCtrl}).
+            when('/kontakt', {templateUrl: 'static/partials/kontakt.html', controller: FindecoDefaultCtrl}).
+            when('/credits', {templateUrl: 'static/partials/credits.html', controller: FindecoDefaultCtrl}).
+            when('/datenschutz', {templateUrl: 'static/partials/datenschutz.html', controller: FindecoDefaultCtrl}).
             when('/argument*param', {templateUrl: 'static/partials/default.html', controller: FindecoArgumentCtrl}).
             otherwise({templateUrl: 'static/partials/default.html', controller: FindecoDefaultCtrl});
     }]);
