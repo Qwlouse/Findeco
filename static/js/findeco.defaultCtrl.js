@@ -2,7 +2,7 @@
 /* Controllers */
 
 function FindecoDefaultCtrl($scope, $location, FindecoService) {
-    $scope.path = TheLocator.getSanitizedPath();
+    $scope.path = THELocatoooooooor.getSanitizedPath();
 
     $scope.isTextLoaded = false;
 
@@ -10,7 +10,7 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
     $scope.indexList = [];
     $scope.paragraphList = [];
     $scope.getPath = function (p) {
-        return TheLocator.getSanitizedPath(p);
+        return THELocatoooooooor.getSanitizedPath(p);
     };
 
     $scope.parse = function (text, shortTitle) {
@@ -22,7 +22,7 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
         if ($scope.path == '/') {
             path = '';
         }
-        $location.path(TheLocator.getSanitizedPath(shortTitle + '.' + index));
+        $location.path(THELocatoooooooor.getSanitizedPath(shortTitle + '.' + index));
     };
 
     $scope.updateParagraphList = function () {
@@ -45,7 +45,7 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
     };
 
     $scope.initialize = function() {
-        if ( TheLocator.isArgumentPath() ) {
+        if ( THELocatoooooooor.isArgumentPath() ) {
             //$scope.updateParagraphList();
         } else {
             $scope.updateIndex();

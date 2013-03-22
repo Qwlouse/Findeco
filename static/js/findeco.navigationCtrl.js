@@ -3,7 +3,7 @@
 
 function FindecoNavigationCtrl($scope) {
     $scope.calculateNavigationEntries = function () {
-        var pathParts = TheLocator.getPathParts();
+        var pathParts = THELocatoooooooor.getPathParts();
         var navEntries = [];
         var pathSoFar = "/#";
 
@@ -13,7 +13,7 @@ function FindecoNavigationCtrl($scope) {
             pathSoFar += '/' + tmp[0] + '.' + tmp[1];
             navEntries.push({name: tmp[0] + '.' + tmp[1], path: pathSoFar});
         }
-        if (TheLocator.isArgumentPath()) {
+        if (THELocatoooooooor.isArgumentPath()) {
             pathSoFar += '.' + tmp[2] + '.' + tmp[3];
             navEntries.push({name: tmp[0] + '.' + tmp[1] + '.' + tmp[2] + '.' + tmp[3], path: '/#/argument' + pathSoFar.substr(2)});
         }

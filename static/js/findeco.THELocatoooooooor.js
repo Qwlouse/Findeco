@@ -6,12 +6,12 @@
  * Yes, I'm fucking serious.
  */
 
-function theLocator() {
+function theLocatoooooooor() {
 }
 
-var TheLocator = new theLocator();
+var THELocatoooooooor = new theLocatoooooooor();
 
-theLocator.prototype.getPath = function () {
+theLocatoooooooor.prototype.getPath = function () {
     // We're going to hell for this. Sorry folks.
     var path = (document.location.hash + '/').match(/([_A-z]+\.\d+(\.(pro|con|neut)\.\d+)?\/)+/g);
     if (path == null || path.length == 0) {
@@ -26,13 +26,13 @@ function isNonEmpty(element, index, array) {
     return (element != "");
 }
 
-theLocator.prototype.getPathParts = function () {
+theLocatoooooooor.prototype.getPathParts = function () {
     var path = this.getPath();
     var pathParts = this.getPath().split("/").filter(isNonEmpty);
     return pathParts;
 };
 
-theLocator.prototype.getSanitizedPath = function (target) {
+theLocatoooooooor.prototype.getSanitizedPath = function (target) {
 
     if (target == undefined) {
         target = '';
@@ -56,7 +56,7 @@ theLocator.prototype.getSanitizedPath = function (target) {
     return sanePath;
 };
 
-theLocator.prototype.getSanitizedArgumentFreePath = function () {
+theLocatoooooooor.prototype.getSanitizedArgumentFreePath = function () {
     var tmp = this.getSanitizedPath();
     if ( !this.isArgumentPath(tmp) ) {
         return tmp;
@@ -65,14 +65,14 @@ theLocator.prototype.getSanitizedArgumentFreePath = function () {
     return tmp;
 }
 
-theLocator.prototype.removeTrailingSlashes = function (string) {
+theLocatoooooooor.prototype.removeTrailingSlashes = function (string) {
     if (string.substr(string.length-1) == '/') {
         string = string.substr(0, string.length - 1);
     }
     return string;
 };
 
-theLocator.prototype.isArgumentPath = function (path) {
+theLocatoooooooor.prototype.isArgumentPath = function (path) {
     var pP;
     if ( path == undefined ) {
         pP = this.getSanitizedPath().split(".");
@@ -88,7 +88,7 @@ theLocator.prototype.isArgumentPath = function (path) {
     return false;
 }
 
-theLocator.prototype.saneSlashAppending = function (string) {
+theLocatoooooooor.prototype.saneSlashAppending = function (string) {
     if (string.substr(string.length-1) != '/') {
         string += '/';
     }

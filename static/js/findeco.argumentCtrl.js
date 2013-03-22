@@ -2,8 +2,8 @@
 /* Controllers */
 
 function FindecoArgumentCtrl($scope, $location, $routeParams, FindecoService) {
-    $scope.path = TheLocator.getSanitizedArgumentFreePath();
-    $scope.argumentPath = TheLocator.getSanitizedPath();
+    $scope.path = THELocatoooooooor.getSanitizedArgumentFreePath();
+    $scope.argumentPath = THELocatoooooooor.getSanitizedPath();
 
     $scope.isTextLoaded = false;
     $scope.paragraphList = [];
@@ -11,7 +11,7 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, FindecoService) {
 
 
     $scope.getPath = function () {
-        return TheLocator.getSanitizedArgumentFreePath();
+        return THELocatoooooooor.getSanitizedArgumentFreePath();
     };
 
     $scope.parse = function(text,shortTitle) {
@@ -23,7 +23,7 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, FindecoService) {
         if ( $scope.path == '/' ) {
             path = '';
         }
-        $location.path(TheLocator.getSanitizedPath(shortTitle + '.' + index));
+        $location.path(THELocatoooooooor.getSanitizedPath(shortTitle + '.' + index));
     };
 
     $scope.updateParagraphList = function() {
@@ -41,7 +41,7 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, FindecoService) {
     };
 
     $scope.updateArgumentList();
-    if ( TheLocator.isArgumentPath() ) {
+    if ( THELocatoooooooor.isArgumentPath() ) {
         $scope.updateArgument();
     }
 }
