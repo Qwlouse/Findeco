@@ -38,24 +38,26 @@ html, body {
 
 #main {
     overflow:auto;
-	padding-bottom: 110px;
+	padding-bottom: 40px;
 }  /* must be same height as the footer */
 
 #footerWrap {
 
     position: relative;
-	height: 110px;
+	height: 40px;
 	clear:both;
-    margin: -110px 0 0 0;/* negative value of footer height */
+    margin: -40px 0 0 0;/* negative value of footer height */
 }
 
 #footer {
     position: absolute;
     width: 100%;
-	margin: 30px 0 0 0; /* negative value of footer height */
-	height: 50px;
-    background: #414141;
-    padding: 30px 0 0 0;
+	margin: 10px 0 0 0; /* negative value of footer height */
+	height: 23px;
+    background: linear-gradient(top, #333333 0%, #212121 100%);
+    background: -moz-linear-gradient(top, #333333 0%, #212121 100%);
+    background: -webkit-linear-gradient(top, #333333 0%, #212121 100%);
+    padding: 7px 0 0 0;
 }
 
 #footer ul {
@@ -78,6 +80,7 @@ html, body {
 
 #footer ul li a {
     font-family: "Monda" sans-serif; /* TODO why does firefox ignore this? */
+    font-size: 12px;
     display: block;
     font-weight: bold;
 }
