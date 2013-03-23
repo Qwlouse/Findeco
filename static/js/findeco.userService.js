@@ -31,17 +31,14 @@ angular.module('FindecoUserService', ['FindecoService'])
         var localData = {};
         var localSetContent = function(data) {
             localData.content = data;
-            if ( angular.equals(localData.content,{}) ) {
-                localData.isLoggedIn = false;
-            } else {
-                localData.isLoggedIn = true;
-            }
+            localData.isLoggedIn = !angular.equals(localData.content, {});
         };
         return {
             data: localData,
             setContent: localSetContent,
+            // todo: refactor this
             initialize: function(){
-                FindecoService.loadUserSettings().success( function (data) {
+                FindecoService.loadUserSettings({}).success( function (data) {
                     localSetContent(data.loadUserSettingsResponse);
                 });
             }

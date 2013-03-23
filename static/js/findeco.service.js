@@ -23,11 +23,35 @@
  ****************************************************************************************/
 
 'use strict';
-/* Services */
 
 
-angular.module('FindecoService', ['ngResource'])
+/**
+ *  FindecoService wraps the the JSON API to the backend.
+ *  It provides easy to use functions like logout() or
+ *  loadText(paragraphList, path).
+ *
+ *  Those functions return a $http promise object, on which you can add
+ *  callbacks for success and failure like this:
+ *
+ *  FindecoService.logout().success( function (data, status, headers, config) {
+ *      alert("goodbye");
+ *  }).error( function (data, status, headers, config) {
+ *      alert("logout failed");
+ *  });
+ *
+ *  Those get called once the request finished.
+ *
+ *  When there is data to be returned, the first parameter to the function
+ *  (typically suffixed with _out) is the object/array the function writes its
+ *  results to.
+ *
+ *  This service is stateless.
+ *
+ **/
+angular.module('FindecoService', [])
     .config(function ($httpProvider) {
+        // This tells the httpProvider to not send JSON in POST requests but
+        // return the entries as post parameters instead
         $httpProvider.defaults.transformRequest = function(data){
             if (data === undefined) {
                 return data;
@@ -39,18 +63,7 @@ angular.module('FindecoService', ['ngResource'])
         $httpProvider.defaults.xsrfHeaderName = "X-CSRFToken";
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     })
-    .factory('FindecoService', function ($resource, $http) {
-        function addSuccessAndError(value, promise) {
-            value.success = function(fn) {
-                promise.success(fn);
-                return value;
-            };
-            value.error = function(fn) {
-                promise.error(fn);
-                return value;
-            };
-        }
-
+    .factory('FindecoService', function ($http) {
         function fillArray(array, attributes) {
             return function (data) {
                 for (var i = 0; i < attributes.length; ++i) {
@@ -64,30 +77,26 @@ angular.module('FindecoService', ['ngResource'])
         }
 
         return {
-            login: function(username, password) {
-                var userInfo = {};
+            login: function(userInfo_out, username, password) {
                 var promise = $http.post('/.json_login/', {username: username, password:password});
                 promise.success(function (d) {
-                    angular.copy(d.loginResponse, userInfo);
+                    angular.copy(d.loginResponse, userInfo_out);
                 });
-                addSuccessAndError(userInfo, promise);
-                return userInfo;
+                return promise;
             },
             logout: function() {
                 return $http.get('/.json_logout/');
             },
 
-            loadUserSettings: function() {
-                var userInfo = {};
+            loadUserSettings: function(userInfo_out) {
                 var promise = $http.get('.json_loadUserSettings');
                 promise.success(function (d) {
-                    angular.copy(d.loadUserSettingsResponse, userInfo);
+                    angular.copy(d.loadUserSettingsResponse, userInfo_out);
                 });
-                addSuccessAndError(userInfo, promise);
-                return userInfo;
+                return promise;
             },
 
-            loadMicroblogging: function(microblogList, path, type, id) {
+            loadMicroblogging: function(microblogList_out, path, type, id) {
                 var pathComponents = ['/.json_loadMicroblogging'];
                 if (id != undefined) {
                     pathComponents.push(id);
@@ -98,9 +107,10 @@ angular.module('FindecoService', ['ngResource'])
                 pathComponents.push(type);
                 pathComponents.push(path);
                 var url = pathComponents.join('/');
-                var promise = $http.get(url).success(fillArray(microblogList, ['loadMicrobloggingResponse']));
-                addSuccessAndError(microblogList, promise);
-                return microblogList;
+                var promise = $http.get(url);
+                promise.success(fillArray(microblogList_out,
+                                          ['loadMicrobloggingResponse']));
+                return promise;
             },
 
             storeMicroblogPost: function(path, microblogText) {
@@ -109,38 +119,37 @@ angular.module('FindecoService', ['ngResource'])
                 return $http.post(url, {microblogText: microblogText});
             },
 
-            loadArgument: function(indexNodes, path) {
+            loadArgument: function(indexNodes_out, path) {
                 var url = ['/.json_loadIndex', 'true', path].join('/');
                 var promise = $http.get(url);
-                promise.success(fillArray(indexNodes, ['loadIndexResponse']));
-                addSuccessAndError(indexNodes, promise);
-                return indexNodes;
+                promise.success(fillArray(indexNodes_out,
+                                          ['loadIndexResponse']));
+                return promise;
             },
 
-            loadText: function(paragraphList, path) {
+            loadText: function(paragraphList_out, path) {
                 var url = ['/.json_loadText', path].join('/');
                 var promise = $http.get(url);
-                promise.success(fillArray(paragraphList, ['loadTextResponse', 'paragraphs']));
-                addSuccessAndError(paragraphList, promise);
-                return paragraphList;
+                promise.success(fillArray(paragraphList_out,
+                                          ['loadTextResponse', 'paragraphs']));
+                return promise;
             },
 
-            loadIndex: function(indexNodes, path) {
+            loadIndex: function(indexNodes_out, path) {
                 var url = ['/.json_loadIndex', path].join('/');
                 var promise = $http.get(url);
-                promise.success(fillArray(indexNodes, ['loadIndexResponse']));
-                addSuccessAndError(indexNodes, promise);
-                return indexNodes;
+                promise.success(fillArray(indexNodes_out, ['loadIndexResponse']));
+                return promise;
             },
 
-            loadGraphData: function(graphData, path, graphType) {
+            loadGraphData: function(graphData_out, path, graphType) {
                 if (graphType == undefined) {
                     graphType = "full";
                 }
                 var url = ['/.json_loadGraphData', graphType, path].join('/');
                 var promise = $http.get(url);
 
-                promise.success(fillArray(graphData, ['loadGraphDataResponse', 'graphDataChildren']));
+                promise.success(fillArray(graphData_out, ['loadGraphDataResponse', 'graphDataChildren']));
                 return promise;
             }
         };

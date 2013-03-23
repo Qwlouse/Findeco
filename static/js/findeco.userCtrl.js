@@ -29,7 +29,7 @@ function FindecoUserCtrl($scope, $location, FindecoService, FindecoUserService) 
     $scope.data = FindecoUserService.data;
 
     $scope.login = function () {
-        FindecoUserService.data.content = FindecoService.login($scope.username, $scope.password).success(function (data) {
+        FindecoService.login(FindecoUserService.data.content, $scope.username, $scope.password).success(function (data) {
             FindecoUserService.data.isLoggedIn = true;
             $location.path('/');
         });
