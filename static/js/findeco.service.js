@@ -26,14 +26,14 @@
 
 
 /**
- *  FindecoService wraps the the JSON API to the backend.
+ *  Backend wraps the the JSON API to the backend.
  *  It provides easy to use functions like logout() or
  *  loadText(paragraphList, path).
  *
  *  Those functions return a $http promise object, on which you can add
  *  callbacks for success and failure like this:
  *
- *  FindecoService.logout().success( function (data, status, headers, config) {
+ *  Backend.logout().success( function (data, status, headers, config) {
  *      alert("goodbye");
  *  }).error( function (data, status, headers, config) {
  *      alert("logout failed");
@@ -48,7 +48,7 @@
  *  This service is stateless.
  *
  **/
-angular.module('FindecoService', [])
+angular.module('FindecoServices', [])
     .config(function ($httpProvider) {
         // This tells the httpProvider to not send JSON in POST requests but
         // return the entries as post parameters instead
@@ -63,7 +63,7 @@ angular.module('FindecoService', [])
         $httpProvider.defaults.xsrfHeaderName = "X-CSRFToken";
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     })
-    .factory('FindecoService', function ($http) {
+    .factory('Backend', function ($http) {
         function fillArray(array, attributes) {
             return function (data) {
                 for (var i = 0; i < attributes.length; ++i) {

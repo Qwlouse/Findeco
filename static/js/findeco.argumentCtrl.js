@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoArgumentCtrl($scope, $location, $routeParams, FindecoService) {
+function FindecoArgumentCtrl($scope, $location, $routeParams, Backend) {
     $scope.path = THELocatoooooooor.getSanitizedArgumentFreePath();
     $scope.argumentPath = THELocatoooooooor.getSanitizedPath();
 
@@ -55,13 +55,13 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, FindecoService) {
     };
 
     $scope.updateArgument = function () {
-        FindecoService.loadText($scope.paragraphList, $scope.argumentPath).success( function () {
+        Backend.loadText($scope.paragraphList, $scope.argumentPath).success( function () {
             $scope.isTextLoaded = true;
         });
     };
 
     $scope.updateArgumentList = function () {
-        FindecoService.loadArgument($scope.argumentList , $scope.path);
+        Backend.loadArgument($scope.argumentList , $scope.path);
     };
 
     $scope.updateArgumentList();
@@ -70,4 +70,4 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, FindecoService) {
     }
 }
 
-FindecoArgumentCtrl.$inject = ['$scope', '$location', '$routeParams', 'FindecoService'];
+FindecoArgumentCtrl.$inject = ['$scope', '$location', '$routeParams', 'Backend'];

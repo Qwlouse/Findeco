@@ -26,8 +26,8 @@
 /* Services */
 
 
-angular.module('FindecoUserService', ['FindecoService'])
-    .factory('FindecoUserService', function (FindecoService) {
+angular.module('FindecoUserService', ['FindecoServices'])
+    .factory('FindecoUserService', function (Backend) {
         var localData = {};
         var localSetContent = function(data) {
             localData.content = data;
@@ -38,7 +38,7 @@ angular.module('FindecoUserService', ['FindecoService'])
             setContent: localSetContent,
             // todo: refactor this
             initialize: function(){
-                FindecoService.loadUserSettings({}).success( function (data) {
+                Backend.loadUserSettings({}).success( function (data) {
                     localSetContent(data.loadUserSettingsResponse);
                 });
             }

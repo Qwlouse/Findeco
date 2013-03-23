@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoDefaultCtrl($scope, $location, FindecoService) {
+function FindecoDefaultCtrl($scope, $location, Backend) {
     $scope.path = THELocatoooooooor.getSanitizedPath();
 
     $scope.isTextLoaded = false;
@@ -50,20 +50,20 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
     };
 
     $scope.updateParagraphList = function () {
-        FindecoService.loadText($scope.paragraphList, $scope.path).success(function () {
+        Backend.loadText($scope.paragraphList, $scope.path).success(function () {
             $scope.isTextLoaded = true;
         });
     };
 
     $scope.updateIndex = function () {
-        FindecoService.loadIndex($scope.indexList, $scope.path).success(function (data) {
+        Backend.loadIndex($scope.indexList, $scope.path).success(function (data) {
             if ( angular.equals(data.loadIndexResponse, []) ) {
                 $scope.updateParagraphList();
             }
         });
     };
     $scope.updateGraph = function () {
-        FindecoService.loadGraphData($scope.graphData, $scope.path).success(function(data) {
+        Backend.loadGraphData($scope.graphData, $scope.path).success(function(data) {
             $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
         });
     };
@@ -79,4 +79,4 @@ function FindecoDefaultCtrl($scope, $location, FindecoService) {
     $scope.initialize();
 }
 
-FindecoDefaultCtrl.$inject = ['$scope', '$location', 'FindecoService'];
+FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend'];

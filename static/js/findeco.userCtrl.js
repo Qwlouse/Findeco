@@ -25,18 +25,18 @@
 'use strict';
 /* Controllers */
 
-function FindecoUserCtrl($scope, $location, FindecoService, FindecoUserService) {
+function FindecoUserCtrl($scope, $location, Backend, FindecoUserService) {
     $scope.data = FindecoUserService.data;
 
     $scope.login = function () {
-        FindecoService.login(FindecoUserService.data.content, $scope.username, $scope.password).success(function (data) {
+        Backend.login(FindecoUserService.data.content, $scope.username, $scope.password).success(function (data) {
             FindecoUserService.data.isLoggedIn = true;
             $location.path('/');
         });
     };
 
     $scope.logout = function() {
-        FindecoService.logout().success(function() {
+        Backend.logout().success(function() {
             FindecoUserService.data.isLoggedIn = false;
             FindecoUserService.data.content = {};
             $location.path('/');
@@ -46,4 +46,4 @@ function FindecoUserCtrl($scope, $location, FindecoService, FindecoUserService) 
     FindecoUserService.initialize();
 }
 
-FindecoUserCtrl.$inject = ['$scope', '$location', 'FindecoService', 'FindecoUserService'];
+FindecoUserCtrl.$inject = ['$scope', '$location', 'Backend', 'FindecoUserService'];

@@ -25,16 +25,16 @@
 'use strict';
 /* Controllers */
 
-function FindecoMicroblogCtrl($scope, FindecoService, FindecoUserService) {
+function FindecoMicroblogCtrl($scope, Backend, FindecoUserService) {
     $scope.microbloggingList = [];
     $scope.user = FindecoUserService.data;
     $scope.updateMicrobloggingList = function () {
-        FindecoService.loadMicroblogging($scope.microbloggingList, THELocatoooooooor.getSanitizedPath());
+        Backend.loadMicroblogging($scope.microbloggingList, THELocatoooooooor.getSanitizedPath());
     };
 
     $scope.submit = function () {
         // TODO: Cross-site-scripting protection!
-        FindecoService.storeMicroblogPost(THELocatoooooooor.getSanitizedPath(), $scope.microblogText).success(function () {
+        Backend.storeMicroblogPost(THELocatoooooooor.getSanitizedPath(), $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });
@@ -43,4 +43,4 @@ function FindecoMicroblogCtrl($scope, FindecoService, FindecoUserService) {
     $scope.updateMicrobloggingList();
 }
 
-FindecoMicroblogCtrl.$inject = ['$scope', 'FindecoService', 'FindecoUserService'];
+FindecoMicroblogCtrl.$inject = ['$scope', 'Backend', 'FindecoUserService'];
