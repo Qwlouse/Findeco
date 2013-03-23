@@ -238,6 +238,10 @@ div.searchBox {
     padding: 0 2px 0 5px;
 }
 
+#navigationBar li:last-child a {
+    color: #2d7cc4;
+}
+
 /*===================== Main Container Columns Line ==========================*/
 #contentContainer {
     min-height: 100px;
