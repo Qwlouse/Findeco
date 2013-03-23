@@ -295,7 +295,8 @@ a.microblogAuthor {
 }
 
 span.microblogDate {
-    font-size: 11pt;
+    float: right;
+    font-size: 9pt;
     color: #999999;
 }
 

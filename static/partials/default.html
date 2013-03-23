@@ -40,7 +40,7 @@
             </li>
             <li ng-repeat="microblogNode in microbloggingList">
                 <a class="microblogAuthor" href="#">{{ microblogNode.authorGroup[0].displayName }}</a>
-                <span class="microblogDate">{{microblogNode.microblogTime*1000 | date}}</span><br/>
+                <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
         </ul>
