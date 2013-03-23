@@ -31,7 +31,8 @@
         <p ng-repeat="paragraph in paragraphList" ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
     </div>
 
-    <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl">
+    <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl" style="position: relative;">
+        <div style="position: absolute; top: 5px; right: 25px; color: #999;" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
         <ul class="microblogList">
             <li>
                 <form ng-submit="submit()">
