@@ -210,10 +210,16 @@ div.searchBox {
     background: -webkit-linear-gradient(top, #333333 0%, #212121 100%);
 
 }
+
 #navigationBar a {
     color: #ecb40d;
     text-decoration: none;
 }
+
+#navigationBar a:hover {
+    color: #2d7cc4;
+}
+
 #navigationBar img {
     display: inline;
     margin-left: 5px; /*optical margin to make rootline appear lined up*/
