@@ -13,14 +13,10 @@ div.graph .arrowHead {
 
 div.graph .activeNodeBackgroundCircle {
     fill: #2d7cc4;
-    stroke: #000;
-    stroke-width: 2px;
 }
 
 div.graph .nodeBackgroundCircle {
     fill: #DDD;
-    stroke: #aaa;
-    stroke-width: 1px;
 }
 
 

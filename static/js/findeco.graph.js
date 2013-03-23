@@ -112,6 +112,12 @@ findecoApp.directive('findecoGraph', function( ) {
                 .append("svg:path")
                 .attr("d", "M0,-5L10,0L0,5");
 
+            var filter = svg.append("svg:defs")
+                .append("svg:filter")
+                .attr("id", "blur")
+                .append("svg:feGaussianBlur")
+                .attr("stdDeviation", 2);
+
             scope.$watch('data', function (nodes) {
                 if (nodes == undefined) {
                     return;
@@ -169,10 +175,18 @@ findecoApp.directive('findecoGraph', function( ) {
                     .attr("xlink:href", function (d) {return '/#/' + d.path; });
 
                 node.append("circle")
+                    .attr("r", node_radius)
+                    .attr("fill", "#999")
+                    .attr("filter", "url(#blur)")
+                    .attr('transform', "translate(2, 2)");
+
+
+                node.append("circle")
                     .attr("class", function (d) { if (d.active) return "activeNodeBackgroundCircle";
                     else return "nodeBackgroundCircle";
                     })
                     .attr("r", node_radius);
+
 
                 node.append("text")
                     .attr("class", function (d) { if (d.active) return "activeNodeLabel";
