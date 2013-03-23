@@ -71,7 +71,10 @@ findecoApp.directive('findecoGraph', function( ) {
         svg_height = 150;
     var node_radius = 20;
 
-    var pie_chart_colors = ["#fff", "#999", "#000"];
+    // colors are like this [active.newFollow, active.follow, active.unfollow,
+    //                   inactive.newFollow, inactive.follow, inactive.unfollow]
+    var pie_chart_colors = ["#ffffff", "#999999", "#000000",
+                            "#eeeeee", "#BCBCBC", "#898989"];
     var scale = d3.scale.log() // scaling of follows to node-size
         .domain([1, 1000])
         .range([1, 2])
@@ -80,12 +83,13 @@ findecoApp.directive('findecoGraph', function( ) {
         .sort(null);
     var arc = d3.svg.arc()    // the arc for the pie layout
         .outerRadius(node_radius)
-        .innerRadius(13);
+        .innerRadius(14);
 
     return {
         restrict : 'A',
         scope: {
-            data: '='
+            data: '=',
+            path: '='
         },
 
         link : function (scope, element, attrs) {
@@ -100,10 +104,11 @@ findecoApp.directive('findecoGraph', function( ) {
             var marker = defs.append("svg:marker")
                 .attr("id", "ArrowHead")
                 .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 0)
-                .attr("markerWidth", 6)
-                .attr("markerHeight", 6)
+                .attr("refX", 5)
+                .attr("markerWidth", 5)
+                .attr("markerHeight", 5)
                 .attr("orient", "auto")
+                .attr("class", "arrowHead")
                 .append("svg:path")
                 .attr("d", "M0,-5L10,0L0,5");
 
@@ -119,9 +124,9 @@ findecoApp.directive('findecoGraph', function( ) {
                     nodes[i].active = false;
                 }
                 // currently selected node is active
-//                if (node_map.has(Controller.position.substring(1))) {
-//                    node_map.get(Controller.position.substring(1)).active = true;
-//                }
+                if (node_map.has(scope.path)) {
+                    node_map.get(scope.path).active = true;
+                }
                 // construct the links
                 for (i = 0; i < nodes.length; i++) {
                     var n = nodes[i];
@@ -181,12 +186,16 @@ findecoApp.directive('findecoGraph', function( ) {
 
                 node.selectAll("path")
                     .data(function(d) {
-                        return pie([ d.newFollows, d.follows - d.newFollows, d.unFollows]);
+                        if (d.active) {
+                            return pie([ d.newFollows, d.follows - d.newFollows, d.unFollows, 0, 0, 0]);
+                        } else {
+                            return pie([ 0, 0, 0, d.newFollows, d.follows - d.newFollows, d.unFollows]);
+                        }
                     })
                     .enter().append("svg:path")
                     .attr("d", arc)
                     .attr("r", 100)
-                    .style("fill", function(d, i) { return pie_chart_colors[i];});
+                    .style("fill", function(d, i) {return pie_chart_colors[i];});
 
 
                 force.on("tick", function(e) {
@@ -201,8 +210,8 @@ findecoApp.directive('findecoGraph', function( ) {
                     link.attr("x1", function(d) { return d.source.x; })
                         .attr("y1", function(d) { return d.source.y;
                         })
-                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 12)})
-                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 12)});
+                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 5)})
+                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 5)});
 
                     node.attr('transform', function(d) {  return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')'; });
                 });

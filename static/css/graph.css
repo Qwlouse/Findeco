@@ -3,31 +3,39 @@ div.graph {
 }
 
 div.graph .link {
+    stroke: #6d6d6d;
+    stroke-width: 2px;
+}
+
+div.graph .arrowHead {
+    fill: #6d6d6d;
+}
+
+div.graph .activeNodeBackgroundCircle {
+    fill: #2d7cc4;
     stroke: #000;
     stroke-width: 2px;
 }
 
-div.graph .activeNodeBackgroundCircle {
-    fill: #ffffff;
-    stroke: #000;
-    stroke-width: 4px;
-}
-
 div.graph .nodeBackgroundCircle {
-    fill: #E6E6E6;
-    stroke: #000;
-    stroke-width: 0px;
-    /*filter: url(#dropShadow)*/
+    fill: #DDD;
+    stroke: #aaa;
+    stroke-width: 1px;
 }
 
 
 div.graph .nodeLabel {
-    fill: #000000;
+    fill: #e07b01;
+    font-weight: bold;
+}
+
+div.graph .nodeGroup:hover .nodeLabel {
+    fill: #2d7cc4;
 }
 
 div.graph .activeNodeLabel {
     font-weight: bold;
-    fill: #000;
+    fill: #fff;
 }
 
 div.graph .nodeGroup {

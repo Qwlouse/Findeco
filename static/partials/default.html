@@ -21,7 +21,7 @@
     </div>
 
     <div id="centerColumn" class="contentBox">
-        <div findeco-graph data="graphData" class="graph"></div>
+        <div findeco-graph data="graphData" path="path" class="graph"></div>
         <ul class="indexList">
             <li ng-repeat="index in indexList">
                 <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>

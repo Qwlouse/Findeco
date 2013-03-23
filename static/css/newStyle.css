@@ -10,7 +10,7 @@ body {
 }
 /* general style for links */
 a {
-    color: #ecb40d;
+    color: #e07b01;
     text-decoration: none;
 }
 
@@ -210,7 +210,10 @@ div.searchBox {
     background: -webkit-linear-gradient(top, #333333 0%, #212121 100%);
 
 }
-
+#navigationBar a {
+    color: #ecb40d;
+    text-decoration: none;
+}
 #navigationBar img {
     display: inline;
     margin-left: 5px; /*optical margin to make rootline appear lined up*/
