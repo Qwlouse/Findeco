@@ -77,25 +77,6 @@ angular.module('FindecoServices', [])
         }
 
         return {
-            login: function(userInfo_out, username, password) {
-                var promise = $http.post('/.json_login/', {username: username, password:password});
-                promise.success(function (d) {
-                    angular.copy(d.loginResponse, userInfo_out);
-                });
-                return promise;
-            },
-            logout: function() {
-                return $http.get('/.json_logout/');
-            },
-
-            loadUserSettings: function(userInfo_out) {
-                var promise = $http.get('.json_loadUserSettings');
-                promise.success(function (d) {
-                    angular.copy(d.loadUserSettingsResponse, userInfo_out);
-                });
-                return promise;
-            },
-
             loadMicroblogging: function(microblogList_out, path, type, id) {
                 var pathComponents = ['/.json_loadMicroblogging'];
                 if (id != undefined) {
@@ -154,4 +135,47 @@ angular.module('FindecoServices', [])
             }
         };
 
-    });
+    })
+    .factory('User', function($http) {
+        var userInfo = {
+            isLoggedIn : false,
+            displayName : "",
+            description : ""
+        };
+
+        userInfo.login = function (username, password) {
+            var promise = $http.post('/.json_login/', {username: username, password:password});
+            promise.success(function (d) {
+                var data = d.loginResponse.userInfo;
+                userInfo.isLoggedIn = true;
+                userInfo.displayName = data.displayName;
+                userInfo.description = data.description;
+
+            });
+            return promise;
+        };
+
+        userInfo.logout = function() {
+            return $http.get('/.json_logout/').success(function () {
+                userInfo.isLoggedIn = false;
+                userInfo.description = "";
+                userInfo.displayName = "";
+            });
+        };
+
+        userInfo.loadUserSettings = function() {
+            var promise = $http.get('.json_loadUserSettings');
+            promise.success(function (d) {
+                var data = d.loadUserSettingsResponse.userInfo;
+                userInfo.isLoggedIn = true;
+                userInfo.displayName = data.displayName;
+                userInfo.description = data.description;
+            });
+            return promise;
+        };
+
+        userInfo.loadUserSettings();
+
+        return userInfo;
+    })
+;

@@ -25,7 +25,7 @@
 'use strict';
 /* App Module */
 
-var findecoApp = angular.module('Findeco', ['FindecoServices','FindecoUserService','localization'])
+var findecoApp = angular.module('Findeco', ['FindecoServices','localization'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when('/home', {templateUrl: 'static/partials/home.html', controller: FindecoDefaultCtrl}).

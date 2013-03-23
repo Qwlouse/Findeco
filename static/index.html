@@ -29,7 +29,6 @@
     <script type="text/javascript" src="static/js/findeco.filters.js"></script>
     <script type="text/javascript" src="static/js/findeco.graph.js"></script>
     <script type="text/javascript" src="static/js/findeco.service.js"></script>
-    <script type="text/javascript" src="static/js/findeco.userService.js"></script>
     <script type="text/javascript" src="static/js/findeco.defaultCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.microblogCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.navigationCtrl.js"></script>
@@ -63,13 +62,13 @@
                     </li>
                 </ul>
                 <ul style="position: absolute; right: 0;">
-                    <li ng-show="data.isLoggedIn">
-                        <h3><a ng-href="#/user/{{data.content.userInfo.displayName}}">{{data.content.userInfo.displayName}}</a></h3>
+                    <li ng-show="user.isLoggedIn">
+                        <h3><a ng-href="#/user/{{user.displayName}}">{{user.displayName}}</a></h3>
                     </li>
-                    <li ng-show="data.isLoggedIn">
+                    <li ng-show="user.isLoggedIn">
                         <a ng-click="logout()" style="cursor:pointer;"><img src="static/images/logout.png" alt="Logout"></a>
                     </li>
-                    <li ng-show="!data.isLoggedIn" style="float:right"><h3><a href="#/login" data-i18n="_login_"></a></h3></li>
+                    <li ng-show="!user.isLoggedIn" style="float:right"><h3><a href="#/login" data-i18n="_login_"></a></h3></li>
                 </ul>
             </div>
         </div>
