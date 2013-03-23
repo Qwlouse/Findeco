@@ -73,8 +73,8 @@ findecoApp.directive('findecoGraph', function( ) {
 
     // colors are like this [active.newFollow, active.follow, active.unfollow,
     //                   inactive.newFollow, inactive.follow, inactive.unfollow]
-    var pie_chart_colors = ["#ffffff", "#999999", "#000000",
-                            "#eeeeee", "#BCBCBC", "#898989"];
+    var pie_chart_colors = ["#ffffff", "#999999", "#333333",
+                            "#eeeeee", "#BBBBBB", "#555555"];
     var scale = d3.scale.log() // scaling of follows to node-size
         .domain([1, 1000])
         .range([1, 2])
@@ -144,7 +144,7 @@ findecoApp.directive('findecoGraph', function( ) {
                 // set initial position of nodes
                 for (i = 0; i < nodes.length; i++) {
                     nodes[i].x = 100 + 70 * i;
-                    nodes[i].y = svg_height - 50 + i;
+                    nodes[i].y = svg_height - 80 + i;
                 }
 
                 // start the force layout
