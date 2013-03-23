@@ -25,8 +25,9 @@
 'use strict';
 /* Controllers */
 
-function FindecoMicroblogCtrl($scope, FindecoService) {
+function FindecoMicroblogCtrl($scope, FindecoService, FindecoUserService) {
     $scope.microbloggingList = [];
+    $scope.user = FindecoUserService.data;
     $scope.updateMicrobloggingList = function () {
         FindecoService.loadMicroblogging($scope.microbloggingList, THELocatoooooooor.getSanitizedPath());
     };
@@ -42,4 +43,4 @@ function FindecoMicroblogCtrl($scope, FindecoService) {
     $scope.updateMicrobloggingList();
 }
 
-FindecoMicroblogCtrl.$inject = ['$scope', 'FindecoService'];
+FindecoMicroblogCtrl.$inject = ['$scope', 'FindecoService', 'FindecoUserService'];

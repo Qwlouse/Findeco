@@ -34,7 +34,7 @@
     <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl" style="position: relative;">
         <div style="position: absolute; top: 5px; right: 25px; color: #999;" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
         <ul class="microblogList">
-            <li>
+            <li ng-show="user.isLoggedIn">
                 <form ng-submit="submit()">
                     <input type="text" placeholder="{{'_MicroblogPlaceholder_'|i18n}}" style="width: 100%;" ng-model="microblogText"><br/>
                 </form>
