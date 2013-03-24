@@ -11,12 +11,16 @@ div.graph .arrowHead {
     fill: #6d6d6d;
 }
 
-div.graph .activeNodeBackgroundCircle {
+div.graph .active.nodeBackgroundCircle {
     fill: #2d7cc4;
 }
 
 div.graph .nodeBackgroundCircle {
     fill: #DDD;
+}
+
+div.graph .nodeShadow {
+    fill: #999;
 }
 
 
@@ -29,7 +33,7 @@ div.graph .nodeGroup:hover .nodeLabel {
     fill: #2d7cc4;
 }
 
-div.graph .activeNodeLabel {
+div.graph .active.nodeLabel {
     font-weight: bold;
     fill: #fff;
 }

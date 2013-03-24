@@ -174,23 +174,25 @@ findecoApp.directive('findecoGraph', function( ) {
                     .append("svg:a")
                     .attr("xlink:href", function (d) {return '/#/' + d.path; });
 
-                node.append("circle")
+                node.append("circle")  // shadow
                     .attr("r", node_radius)
-                    .attr("fill", "#999")
+                    .attr("class", "nodeShadow")
                     .attr("filter", "url(#blur)")
                     .attr('transform', "translate(2, 2)");
 
 
                 node.append("circle")
-                    .attr("class", function (d) { if (d.active) return "activeNodeBackgroundCircle";
-                    else return "nodeBackgroundCircle";
+                    .attr("class", function (d) {
+                        if (d.active) return "active nodeBackgroundCircle";
+                        else return "nodeBackgroundCircle";
                     })
                     .attr("r", node_radius);
 
 
                 node.append("text")
-                    .attr("class", function (d) { if (d.active) return "activeNodeLabel";
-                    else return "nodeLabel";
+                    .attr("class", function (d) {
+                        if (d.active) return "active nodeLabel";
+                        else return "nodeLabel";
                     })
                     .attr("dy", ".35em")
                     .attr("text-anchor", "middle")
