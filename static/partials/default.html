@@ -6,7 +6,7 @@
                 <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
             <li ng-show="user.isLoggedIn">
-                <a href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Pro'">Neues Pro Argument</a>
+                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Pro'">Neues Pro Argument</a>
             </li>
         </ul>
         <h3 class="argumentHeading">Neutrale Argumente</h3>
@@ -15,7 +15,7 @@
                 <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
             <li ng-show="user.isLoggedIn">
-                <a href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Neutral'">Neues Neutrales Argument</a>
+                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Neutral'">Neues Neutrales Argument</a>
             </li>
         </ul>
         <h3 class="argumentHeading">Contra Argumente</h3>
@@ -24,7 +24,7 @@
                 <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
             <li ng-show="user.isLoggedIn">
-                <a href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Contra'">Neues Contra Argument</a>
+                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Contra'">Neues Contra Argument</a>
             </li>
         </ul>
     </div>
@@ -36,9 +36,10 @@
                 <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
             </li>
         </ul>
-        <div ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_"><b>load text</b></div>
+        <div class="btn btn-primary" ng-click="relocate('createNewText')" data-i18n="_createNewText_"><b>create new text</b></div>
+        <div class="btn btn-primary" ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_"><b>load text</b></div>
         <p class="mainText" ng-repeat="paragraph in paragraphList" ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
-        <div ng-show="isTextLoaded" ng-click="relocate('createNewText')" data-i18n="_createNewText_"><b>create new text</b></div>
+        <div class="btn btn-primary" ng-show="isTextLoaded" ng-click="relocate('createAlternativeText')" data-i18n="_createAlternativeText_"><b>create alternative text</b></div>
     </div>
 
     <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl" style="position: relative;">
