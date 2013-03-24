@@ -22,50 +22,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
- /* Rootline */
-#navigationBar {
-    position: relative;
-    height: 35px;
-    background: linear-gradient(top, #333333 0%, #212121 100%);
-    background: -moz-linear-gradient(top, #333333 0%, #212121 100%);
-    background: -webkit-linear-gradient(top, #333333 0%, #212121 100%);
+'use strict';
+/* Controllers */
 
-}
+function FindecoMessageCtrl($scope, Backend, Message) {
+    $scope.service = Message;
 
-#navigationBar a {
-    color: #ecb40d;
-    text-decoration: none;
-    font-size: 10pt;
+    $scope.closeMessage = function (index) {
+        $scope.service.messageList.splice(index, 1);
+    }
 }
 
-#navigationBar a:hover {
-    color: #2d7cc4;
-}
-
-#navigationBar img {
-    display: inline;
-    margin-left: 5px; /*optical margin to make rootline appear lined up*/
-}
-#navigationBar ul{
-    padding: 0;
-    display: inline;
-    list-style: circle;
-    margin: auto 0;
-}
-
-#navigationBar ul li {
-    padding-top: 5px;
-    display: inline-block;
-    font-size: 12pt;
-}
-/* insert slashes between navigation items */
-#navigationBar li + li:before{
-    color: #cccccc;
-    font-weight: bold;
-    content: " / ";
-    padding: 0 2px 0 5px;
-}
-
-#navigationBar li:last-child a {
-    color: #2d7cc4;
-}
+FindecoMessageCtrl.$inject = ['$scope', 'Backend', 'Message'];

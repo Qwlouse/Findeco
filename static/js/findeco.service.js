@@ -100,6 +100,13 @@ angular.module('FindecoServices', [])
                 return $http.post(url, {microblogText: microblogText});
             },
 
+            storeText: function(path, params) {
+                var pathComponents = ['/.json_storeText', path];
+                var url = pathComponents.join('/');
+                console.log(path,params);
+                return $http.post(url, params);
+            },
+
             loadArgument: function(indexNodes_out, path) {
                 var url = ['/.json_loadIndex', 'true', path].join('/');
                 var promise = $http.get(url);
@@ -181,5 +188,18 @@ angular.module('FindecoServices', [])
         userInfo.loadSettings();
 
         return userInfo;
+    })
+    .factory('TMP', function() {
+        var tmp = {};
+        return tmp;
+    })
+    .factory('Message', function() {
+        var tmp = {messageList:[]};
+
+        tmp.send = function (type,message) {
+            this.messageList.push({type: type, msg: message});
+        }
+
+        return tmp;
     })
 ;

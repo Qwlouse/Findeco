@@ -22,50 +22,53 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
- /* Rootline */
-#navigationBar {
-    position: relative;
-    height: 35px;
-    background: linear-gradient(top, #333333 0%, #212121 100%);
-    background: -moz-linear-gradient(top, #333333 0%, #212121 100%);
-    background: -webkit-linear-gradient(top, #333333 0%, #212121 100%);
+'use strict';
+/* Controllers */
 
+function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
+    $scope.radioModel = '';
+
+    $scope.relocate = function (target) {
+        $location.path(target + '/' + THELocatoooooooor.getSanitizedArgumentFreePath());
+    }
+
+    $scope.parse = function (text) {
+        if ( text != undefined && text.length > 0 )
+            return Parser.parse(text, null, true);
+        return "";
+    };
+
+    $scope.submit = function (type) {
+        //TODO: input validation
+        var params = {};
+        if ( type == 'argument' ) {
+            params['wikiText'] = $scope.tmp.text;
+            params['argumentType'] = $scope.tmp.argumentType;
+        }
+        if ( type == 'alternative' ) {
+            params['wikiText'] = $scope.tmp.text;
+            params['wikiTextAlternative'] = $scope.tmp.textAlternative;
+            params['argumentType'] = $scope.tmp.argumentType;
+        }
+        if ( type == 'new' ) {
+            params['wikiText'] = $scope.tmp.text;
+        }
+        Backend.storeText(THELocatoooooooor.getSanitizedArgumentFreePath(),params)
+            .success(function (data) {
+                if ( data.storeTextResponse != undefined ) {
+                    $scope.tmp.text = '';
+                    $scope.tmp.textAlternative = '';
+                    $scope.tmp.argumentType = '';
+
+                    $location.path(data.storeTextResponse.path);
+                }
+                if ( data.errorResponse != undefined ) {
+                    Message.send('error',data.errorResponse.errorMessage);
+                }
+            });
+    }
+
+    $scope.tmp = TMP;
 }
 
-#navigationBar a {
-    color: #ecb40d;
-    text-decoration: none;
-    font-size: 10pt;
-}
-
-#navigationBar a:hover {
-    color: #2d7cc4;
-}
-
-#navigationBar img {
-    display: inline;
-    margin-left: 5px; /*optical margin to make rootline appear lined up*/
-}
-#navigationBar ul{
-    padding: 0;
-    display: inline;
-    list-style: circle;
-    margin: auto 0;
-}
-
-#navigationBar ul li {
-    padding-top: 5px;
-    display: inline-block;
-    font-size: 12pt;
-}
-/* insert slashes between navigation items */
-#navigationBar li + li:before{
-    color: #cccccc;
-    font-weight: bold;
-    content: " / ";
-    padding: 0 2px 0 5px;
-}
-
-#navigationBar li:last-child a {
-    color: #2d7cc4;
-}
+FindecoCreateCtrl.$inject = ['$scope', '$location', 'Backend', 'TMP', 'Message'];

@@ -9,6 +9,7 @@
     <meta http-equiv="Content-Script-Type" content="text/javascript"/>
 
     <!-- CSS files -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="static/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="static/css/topMenu.css" type="text/css"/>
     <link rel="stylesheet" href="static/css/navigationBar.css" type="text/css"/>
@@ -16,7 +17,9 @@
     <link rel="stylesheet" href="static/css/graph.css" type="text/css"/>
     <link rel="stylesheet" href="static/css/arguments.css" type="text/css"/>
     <link rel="stylesheet" href="static/css/microblogging.css" type="text/css"/>
+    <link rel="stylesheet" href="static/css/message.css" type="text/css"/>
     <link rel="stylesheet" href="static/css/footer.css" type="text/css"/>
+    <link rel="stylesheet" href="static/css/create.css" type="text/css"/>
 
     <!-- Javascript libraries -->
     <script type="text/javascript" src="static/js/lib/jquery.min.js"></script>
@@ -25,21 +28,24 @@
     <script type="text/javascript" src="static/js/lib/angular-cookies.min.js"></script>
     <script type="text/javascript" src="static/js/lib/codeholicsCreole.js"></script>
     <script type="text/javascript" src="static/js/lib/moment.min.js"></script>
+    <script type="text/javascript" src="static/js/lib/ui-bootstrap-tpls-0.2.0.min.js"></script>
 
     <!-- Javascript files -->
     <script type="text/javascript" src="static/js/findeco.THELocatoooooooor.js"></script>
     <script type="text/javascript" src="static/js/findeco.app.js"></script>
+    <script type="text/javascript" src="static/js/findeco.argumentCtrl.js"></script>
+    <script type="text/javascript" src="static/js/findeco.createCtrl.js"></script>
+    <script type="text/javascript" src="static/js/findeco.defaultCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.filters.js"></script>
     <script type="text/javascript" src="static/js/findeco.graph.js"></script>
-    <script type="text/javascript" src="static/js/findeco.service.js"></script>
-    <script type="text/javascript" src="static/js/findeco.defaultCtrl.js"></script>
+    <script type="text/javascript" src="static/js/findeco.messageCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.microblogCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.navigationCtrl.js"></script>
-    <script type="text/javascript" src="static/js/findeco.userCtrl.js"></script>
-    <script type="text/javascript" src="static/js/findeco.argumentCtrl.js"></script>
     <script type="text/javascript" src="static/js/findeco.parser.js"></script>
+    <script type="text/javascript" src="static/js/findeco.service.js"></script>
     <script type="text/javascript" src="static/js/findeco.structureParser.js"></script>
-	<script type="text/javascript" src="static/js/lib/localize.js"></script>
+    <script type="text/javascript" src="static/js/findeco.userCtrl.js"></script>
+    <script type="text/javascript" src="static/js/lib/localize.js"></script>
 
     <title>Findeco new Style</title>
 </head>
@@ -74,23 +80,31 @@
                     <li ng-show="!user.isLoggedIn" style="float:right"><a href="#/login" data-i18n="_login_"></a></li>
                 </ul>
             </div>
+            <div id="navigationBar" ng-controller="FindecoNavigationCtrl">
+                <div class="centeringContainer">
+
+                    <ul>
+                        <li><a href="/#"><img ng-show="navigationEntries" src="static/images/home.png" alt="Home"/><img
+                                ng-show="navigationEntries.length == 0" src="static/images/home_blue.png"
+                                alt="Home"/></a></li>
+
+                        <li ng-repeat="nav in navigationEntries"><a ng-href="{{ nav.path }}">{{ nav.name }}</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
+        <div ng-view></div>
+
+        <div ng-controller="FindecoUserCtrl" ng-show="false"></div>
     </div>
-    <div id="navigationBar" ng-controller="FindecoNavigationCtrl">
-        <div class="centeringContainer">
 
-            <ul><li><a href="/#"><img ng-show="navigationEntries" src="static/images/home.png" alt="Home"/><img ng-show="navigationEntries.length == 0" src="static/images/home_blue.png" alt="Home"/></a></li>
-
-                <li ng-repeat="nav in navigationEntries"><a ng-href="{{ nav.path }}">{{ nav.name }}</a></li>
-            </ul>
-        </div>
+    <div id="messageBox" ng-controller="FindecoMessageCtrl" ng-show="service.messageList.length > 0">
+        <alert ng-repeat="message in service.messageList" type="message.type" close="closeMessage($index)">
+            {{message.msg}}
+        </alert>
     </div>
-</div>
 
-<div ng-view></div>
-
-<div ng-controller="FindecoUserCtrl" ng-show="false"></div>
-</div>
 </div>
 <div id="footerWrap">
     <div id="footer">

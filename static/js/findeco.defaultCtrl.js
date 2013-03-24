@@ -37,6 +37,10 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
         return THELocatoooooooor.getSanitizedPath(p);
     };
 
+    $scope.relocate = function (target) {
+        $location.path(target + '/' + THELocatoooooooor.getSanitizedArgumentFreePath());
+    }
+
     $scope.parse = function (text, shortTitle) {
         return Parser.parse(text, shortTitle, true);
     };

@@ -25,14 +25,15 @@
 'use strict';
 /* Controllers */
 
-function FindecoArgumentCtrl($scope, $location, $routeParams, Backend) {
+function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, TMP) {
+    $scope.tmp = TMP;
+
     $scope.path = THELocatoooooooor.getSanitizedArgumentFreePath();
     $scope.argumentPath = THELocatoooooooor.getSanitizedPath();
 
     $scope.isTextLoaded = false;
     $scope.paragraphList = [];
     $scope.argumentList = [];
-
 
     $scope.getPath = function () {
         return THELocatoooooooor.getSanitizedArgumentFreePath();
@@ -70,4 +71,4 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend) {
     }
 }
 
-FindecoArgumentCtrl.$inject = ['$scope', '$location', '$routeParams', 'Backend'];
+FindecoArgumentCtrl.$inject = ['$scope', '$location', '$routeParams', 'Backend', 'TMP'];

@@ -35,7 +35,13 @@ function theLocatoooooooor() {
 
 var THELocatoooooooor = new theLocatoooooooor();
 
+theLocatoooooooor.prototype.p = {};
+
 theLocatoooooooor.prototype.getPath = function () {
+    if ( this.p[document.location.hash] != undefined ) {
+        return this.p[document.location.hash];
+    }
+
     // We're going to hell for this. Sorry folks.
     var path = (document.location.hash + '/').match(/([_A-z]+\.\d+(\.(pro|con|neut)\.\d+)?\/)+/g);
     if (path == null || path.length == 0) {
@@ -43,6 +49,9 @@ theLocatoooooooor.prototype.getPath = function () {
     } else {
         path = path[0];
     }
+
+    this.p[document.location.hash] = path;
+
     return path;
 }
 
