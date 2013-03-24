@@ -32,5 +32,21 @@
 */
 
 .createNav {
-    width: 27%;
+    width: 155px;
+    margin-left: -5px;
+    padding: 5px 5px 5px;
+}
+
+#leftWideColumn {
+    float: left;
+    width: 500px;
+    min-height: 100px;
+    padding: 25px;
+}
+
+#rightWideColumn {
+    float: right;
+    width: 500px;
+    min-height: 100px;
+    padding: 25px;
 }
