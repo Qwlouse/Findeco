@@ -14,7 +14,10 @@
    id="svg3812"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 6">
+   sodipodi:docname="home.svg"
+   inkscape:export-filename="/home/greff/Programming/Findeco/static/images/home.png"
+   inkscape:export-xdpi="127.5983"
+   inkscape:export-ydpi="127.5983">
   <defs
      id="defs3814" />
   <sodipodi:namedview
@@ -25,8 +28,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.839192"
-     inkscape:cx="3.8919083"
-     inkscape:cy="3.1257456"
+     inkscape:cx="-4.3787156"
+     inkscape:cy="2.3681312"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -34,11 +37,11 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1863"
-     inkscape:window-height="1176"
-     inkscape:window-x="57"
-     inkscape:window-y="24"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="898"
+     inkscape:window-height="716"
+     inkscape:window-x="335"
+     inkscape:window-y="275"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata3817">
     <rdf:RDF>
@@ -62,5 +65,14 @@
        id="path4267"
        d="m 233.0537,409.5719 0,-6.69793 -0.84821,0 4.93737,-4.84217 4.93737,4.84217 -0.75893,0 0,6.69793 -2.77526,0 0,-3.95765 -2.82471,0 0,3.95765 z"
        style="fill:#ecb40d;fill-opacity:1;stroke:none;display:inline" />
+    <path
+       style="fill:#2d7ccd;fill-opacity:1;stroke:none;display:inline"
+       d="m 220.42679,409.5719 0,-6.69793 -0.84821,0 4.93737,-4.84217 4.93737,4.84217 -0.75893,0 0,6.69793 -2.77526,0 0,-3.95765 -2.82471,0 0,3.95765 z"
+       id="path3753"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccc"
+       inkscape:export-filename="/home/greff/Programming/Findeco/static/images/home_blue.png"
+       inkscape:export-xdpi="127.59829"
+       inkscape:export-ydpi="127.59829" />
   </g>
 </svg>

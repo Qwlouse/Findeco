@@ -1,0 +1,37 @@
+<div id="contentContainer" class="centeringContainer">
+    <div id="leftColumn" class="contentBoxInvisible">
+    </div>
+
+    <div id="centerColumn" class="contentBox">
+        <h1> {{ user.displayName }} </h1>
+        Beschreibung:
+        <form ng-submit="storeUserSettings()">
+            <textarea ng-model="user.description" placeholder="Beschreibung" style="width: 100%; resize: vertical;" rows="5">  </textarea>
+            <input type="submit" value="speichern">
+        </form>
+        TODO Hier sollte noch hin:
+        <ul>
+            <li>email</li>
+            <li>passwort</li>
+            <li>followees</li>
+            <li>usernamen ändern(?)</li>
+            <li>account löschen(?)</li>
+        </ul>
+    </div>
+
+    <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl" style="position: relative;">
+        <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
+        <ul class="microblogList">
+            <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0;">
+                <form ng-submit="submit()">
+                    <input type="text" placeholder="{{'_MicroblogPlaceholder_'|i18n}}" style="width: 100%;" ng-model="microblogText"><br/>
+                </form>
+            </li>
+            <li ng-repeat="microblogNode in microbloggingList">
+                <a class="microblogAuthor" href="#">{{ microblogNode.authorGroup[0].displayName }}</a>
+                <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
+                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
+            </li>
+        </ul>
+    </div>
+</div>

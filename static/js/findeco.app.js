@@ -29,6 +29,7 @@ var findecoApp = angular.module('Findeco', ['FindecoServices','localization'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when('/home', {templateUrl: 'static/partials/home.html', controller: FindecoDefaultCtrl}).
+            when('/profile', {templateUrl: 'static/partials/profile.html', controller: FindecoUserCtrl}).
             when('/login', {templateUrl: 'static/partials/user_login.html', controller: FindecoUserCtrl}).
             when('/nutzungsbedingungen', {templateUrl: 'static/partials/nutzungsbedingungen.html', controller: FindecoDefaultCtrl}).
             when('/impressum', {templateUrl: 'static/partials/impressum.html', controller: FindecoDefaultCtrl}).

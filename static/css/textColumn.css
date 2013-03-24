@@ -11,3 +11,7 @@ ul.indexList li {
 p.mainText {
     color: #333;
 }
+
+#centerColumn h1 {
+    color: #2d7cc4;
+}

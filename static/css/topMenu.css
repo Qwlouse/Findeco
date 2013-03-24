@@ -82,6 +82,7 @@ div.searchBox {
     color: #ecb40d;
     font-weight: bold;
     font-size: 12pt;
+    font-family: 'Monda', sans-serif;
     text-decoration: none;
 }
 
@@ -90,6 +91,9 @@ div.searchBox {
 }
 
 #headerContent ul li.activeTab {
-    color:  #2d7cc4;
     background: #333333;
+}
+
+#headerContent ul li.activeTab a{
+    color:  #2d7cc4;
 }

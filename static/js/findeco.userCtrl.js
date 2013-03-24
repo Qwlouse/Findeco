@@ -39,6 +39,18 @@ function FindecoUserCtrl($scope, $location, User) {
             $location.path('/');
         });
     };
+
+    $scope.getActiveClass = function(path) {
+        if ($location.path().substr(0, path.length) == path) {
+            return "activeTab";
+        } else {
+            return "";
+        }
+    };
+
+    $scope.storeUserSettings = function() {
+        User.storeUserSettings();
+    };
 }
 
 FindecoUserCtrl.$inject = ['$scope', '$location', 'User'];

@@ -52,9 +52,9 @@
             <div id="headerContent" ng-controller="FindecoUserCtrl">
                 <h1>Findeco</h1>
                 <ul>
-                    <li class="activeTab"><h3><a href="#">Start</a></h3></li>
-                    <li><h3><a href="#">Aktuelles</a></h3></li>
-                    <li><h3><a href="#">Inhalte</a></h3></li>
+                    <li class="{{getActiveClass('/start')}}"><a href="#/start">Start</a></li>
+                    <li class="{{getActiveClass('/aktuell')}}"><a href="#">Aktuelles</a></li>
+                    <li class="{{getActiveClass('/content')}}"><a href="#">Inhalte</a></li>
                     <li style="margin-left: 200px">
                         <div class="searchBox">
                             <form>
@@ -65,13 +65,13 @@
                     </li>
                 </ul>
                 <ul style="position: absolute; right: 0;">
-                    <li ng-show="user.isLoggedIn">
-                        <h3><a ng-href="#/user/{{user.displayName}}">{{user.displayName}}</a></h3>
+                    <li  class="{{getActiveClass('/profile')}}" ng-show="user.isLoggedIn">
+                        <a ng-href="#/profile">{{user.displayName}}</a>
                     </li>
                     <li ng-show="user.isLoggedIn">
-                        <a ng-click="logout()" style="cursor:pointer;"><img src="static/images/logout.png" alt="Logout"></a>
+                        <a ng-click="logout()" style="cursor:pointer; padding: 0;"><img src="static/images/logout.png" alt="Logout" height="18" style="position: relative; top: 3px; margin: 0 0 0 0;"></a>
                     </li>
-                    <li ng-show="!user.isLoggedIn" style="float:right"><h3><a href="#/login" data-i18n="_login_"></a></h3></li>
+                    <li ng-show="!user.isLoggedIn" style="float:right"><a href="#/login" data-i18n="_login_"></a></li>
                 </ul>
             </div>
         </div>

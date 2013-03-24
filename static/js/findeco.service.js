@@ -163,8 +163,8 @@ angular.module('FindecoServices', [])
             });
         };
 
-        userInfo.loadUserSettings = function() {
-            var promise = $http.get('.json_loadUserSettings');
+        userInfo.loadSettings = function() {
+            var promise = $http.get('.json_loadUserSettings/');
             promise.success(function (d) {
                 var data = d.loadUserSettingsResponse.userInfo;
                 userInfo.isLoggedIn = true;
@@ -174,7 +174,11 @@ angular.module('FindecoServices', [])
             return promise;
         };
 
-        userInfo.loadUserSettings();
+        userInfo.storeSettings = function() {
+            return $http.post('.json_storeSettings/', {displayName: userInfo.displayName, description: userInfo.description});
+        };
+
+        userInfo.loadSettings();
 
         return userInfo;
     })
