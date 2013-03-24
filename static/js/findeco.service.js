@@ -100,6 +100,13 @@ angular.module('FindecoServices', [])
                 return $http.post(url, {microblogText: microblogText});
             },
 
+            storeText: function(path, params) {
+                var pathComponents = ['/.json_storeText', path];
+                var url = pathComponents.join('/');
+                console.log(path,params);
+                return $http.post(url, params);
+            },
+
             loadArgument: function(indexNodes_out, path) {
                 var url = ['/.json_loadIndex', 'true', path].join('/');
                 var promise = $http.get(url);

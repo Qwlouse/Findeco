@@ -39,10 +39,32 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
     };
 
     $scope.submit = function (type) {
-        Message.send('danger','Blubb!' + type);
-        Message.send('alert','Blubb!' + type);
-        Message.send('error','Blubb!' + type);
-        Message.send('success','Blubb!' + type);
+        var params = {};
+        if ( type == 'argument' ) {
+            params['wikiText'] = $scope.tmp.text;
+            params['argumentType'] = $scope.tmp.argumentType;
+        }
+        if ( type == 'alternative' ) {
+            params['wikiText'] = $scope.tmp.text;
+            params['wikiTextAlternative'] = $scope.tmp.textAlternative;
+            params['argumentType'] = $scope.tmp.argumentType;
+        }
+        if ( type == 'new' ) {
+            params['wikiText'] = $scope.tmp.text;
+        }
+        Backend.storeText(THELocatoooooooor.getSanitizedArgumentFreePath(),params)
+            .success(function (data) {
+                if ( data.storeTextResponse != undefined ) {
+                    $scope.tmp.text = '';
+                    $scope.tmp.textAlternative = '';
+                    $scope.tmp.argumentType = '';
+
+                    $location.path(data.storeTextResponse.path);
+                }
+                if ( data.errorResponse != undefined ) {
+                    Message.send('error',data.errorResponse.errorMessage);
+                }
+            });
     }
 
     $scope.tmp = TMP;
