@@ -1,0 +1,15 @@
+<div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
+    <div id="centerColumn" class="contentBox">
+        <form ng-submit="submit('argument')">
+            <textarea style="width: 100%; height: 400px; " placeholder="Your Argument Text goes here!" ng-model="tmp.text"></textarea><br>
+            <pre>{{radioModel}}</pre>
+            <div class="btn-group" data-toggle="buttons-checkbox">
+                <button type="button" class="btn btn-primary" ng-model="radioModel" btn-radio="'Left'">Left</button>
+                <button type="button" class="btn btn-primary" ng-model="radioModel" btn-radio="'Middle'">Middle</button>
+                <button type="button" class="btn btn-primary" ng-model="radioModel" btn-radio="'Right'">Right</button>
+            </div>
+            <input type="submit" value="postArgument">
+        </form>
+        <div ng-bind-html-unsafe="parse(tmp.text)"></div>
+    </div>
+</div>

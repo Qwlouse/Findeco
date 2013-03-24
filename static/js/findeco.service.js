@@ -178,4 +178,8 @@ angular.module('FindecoServices', [])
 
         return userInfo;
     })
+    .factory('TMP', function() {
+        var tmp = {};
+        return tmp;
+    })
 ;

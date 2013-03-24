@@ -14,8 +14,8 @@
  *                                                                                      *
  * You should have received a copy of the GNU General Public License along with         *
  * BasDeM. If not, see <http://www.gnu.org/licenses/>.                                  *
- ****************************************************************************************/	
- 
+ ****************************************************************************************/
+
 /****************************************************************************************
  * This Source Code Form is subject to the terms of the Mozilla Public                  *
  * License, v. 2.0. If a copy of the MPL was not distributed with this                  *
@@ -23,21 +23,21 @@
  ****************************************************************************************/
 
 'use strict';
-/* App Module */
+/* Controllers */
 
-var findecoApp = angular.module('Findeco', ['FindecoServices','localization'])
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.
-            when('/home', {templateUrl: 'static/partials/home.html', controller: FindecoDefaultCtrl}).
-            when('/login', {templateUrl: 'static/partials/user_login.html', controller: FindecoUserCtrl}).
-            when('/nutzungsbedingungen', {templateUrl: 'static/partials/nutzungsbedingungen.html', controller: FindecoDefaultCtrl}).
-            when('/impressum', {templateUrl: 'static/partials/impressum.html', controller: FindecoDefaultCtrl}).
-            when('/kontakt', {templateUrl: 'static/partials/kontakt.html', controller: FindecoDefaultCtrl}).
-            when('/credits', {templateUrl: 'static/partials/credits.html', controller: FindecoDefaultCtrl}).
-            when('/datenschutz', {templateUrl: 'static/partials/datenschutz.html', controller: FindecoDefaultCtrl}).
-            when('/argument*param', {templateUrl: 'static/partials/default.html', controller: FindecoArgumentCtrl}).
-            when('/createArgument*param', {templateUrl: 'static/partials/createArgument.html', controller: FindecoCreateCtrl}).
-            when('/createAlternativeText*param', {templateUrl: 'static/partials/default.html', controller: FindecoCreateCtrl}).
-            when('/createNewText*param', {templateUrl: 'static/partials/default.html', controller: FindecoCreateCtrl}).
-            otherwise({templateUrl: 'static/partials/default.html', controller: FindecoDefaultCtrl});
-    }]);
+function FindecoCreateCtrl($scope, $location, Backend, TMP) {
+
+    $scope.radioModel = 'Middle';
+
+    $scope.parse = function (text) {
+        return Parser.parse(text, null, true);
+    };
+
+    $scope.submit = function(type) {
+        console.log(type);
+    }
+
+    $scope.tmp = TMP;
+}
+
+FindecoCreateCtrl.$inject = ['$scope', '$location', 'Backend', 'TMP'];
