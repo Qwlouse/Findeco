@@ -2,13 +2,15 @@
     <div id="centerColumn" class="contentBox">
         <span class="btn btn-primary createNav" ng-click="relocate('createArgument')">Argument anlegen</span>
         <span class="btn btn-primary createNav" ng-click="relocate('createNewText')">Neuen Text anlegen</span>
-        <span class="btn btn-primary createNav" ng-click="relocate('createAlternativeText')">Alternativtext anlegen</span>
+        <span class="btn btn-primary createNav"
+              ng-click="relocate('createAlternativeText')">Alternativtext anlegen</span>
         <br><br>
+
         <form ng-submit="submit('new')">
             <textarea style="width: 100%; height: 400px; " placeholder="Your new Text goes here!"
                       ng-model="tmp.text"></textarea><br>
-            <input class="btn btn-primary" type="submit" value="postArgument">
+            <div ng-bind-html-unsafe="parse(tmp.text)"></div>
+            <input class="btn btn-primary" type="submit" value="postNewText">
         </form>
-        <div ng-show="tmp.text.length > 0" ng-bind-html-unsafe="parse(tmp.text)"></div>
     </div>
 </div>
