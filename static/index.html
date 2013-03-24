@@ -51,34 +51,36 @@
 </head>
 <body ng-app="Findeco">
 <div id="wrap">
-<div id="main">
-<div id="topMenu">
-    <div id="header">
-        <div id="headerContainer" class="centeringContainer">
-            <div id="headerContent" ng-controller="FindecoUserCtrl">
-                <h1>Findeco</h1>
-                <ul>
-                    <li class="{{getActiveClass('/start')}}"><a href="#/start">Start</a></li>
-                    <li class="{{getActiveClass('/aktuell')}}"><a href="#">Aktuelles</a></li>
-                    <li class="{{getActiveClass('/content')}}"><a href="#">Inhalte</a></li>
-                    <li style="margin-left: 200px">
-                        <div class="searchBox">
-                            <form>
-                                <input type="" name="searchField"/>
-                                <button class="searchButton" value=""></button>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-                <ul style="position: absolute; right: 0;">
-                    <li  class="{{getActiveClass('/profile')}}" ng-show="user.isLoggedIn">
-                        <a ng-href="#/profile">{{user.displayName}}</a>
-                    </li>
-                    <li ng-show="user.isLoggedIn">
-                        <a ng-click="logout()" style="cursor:pointer; padding: 0;"><img src="static/images/logout.png" alt="Logout" height="18" style="position: relative; top: 3px; margin: 0 0 0 0;"></a>
-                    </li>
-                    <li ng-show="!user.isLoggedIn" style="float:right"><a href="#/login" data-i18n="_login_"></a></li>
-                </ul>
+    <div id="main">
+        <div id="topMenu">
+            <div id="header">
+                <div id="headerContainer" class="centeringContainer">
+                    <div id="headerContent" ng-controller="FindecoUserCtrl">
+                        <h1>Findeco</h1>
+                        <ul>
+                            <li class="{{getActiveClass('/start')}}"><a href="#/start">Start</a></li>
+                            <li class="{{getActiveClass('/aktuell')}}"><a href="#">Aktuelles</a></li>
+                            <li class="{{getActiveClass('/content')}}"><a href="#">Inhalte</a></li>
+                            <li style="margin-left: 200px">
+                                <div class="searchBox">
+                                    <form>
+                                        <input type="" name="searchField"/>
+                                        <button class="searchButton" value=""></button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul style="position: absolute; right: 0;">
+                            <li  class="{{getActiveClass('/profile')}}" ng-show="user.isLoggedIn">
+                                <a ng-href="#/profile">{{user.displayName}}</a>
+                            </li>
+                            <li ng-show="user.isLoggedIn">
+                                <a ng-click="logout()" style="cursor:pointer; padding: 0;"><img src="static/images/logout.png" alt="Logout" height="18" style="position: relative; top: 3px; margin: 0 0 0 0;"></a>
+                            </li>
+                            <li ng-show="!user.isLoggedIn" style="float:right"><a href="#/login" data-i18n="_login_"></a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div id="navigationBar" ng-controller="FindecoNavigationCtrl">
                 <div class="centeringContainer">
