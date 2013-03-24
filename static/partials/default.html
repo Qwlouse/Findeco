@@ -5,7 +5,7 @@
             <li ng-repeat="argument in argumentList | filter: {shortTitle:'pro'}">
                 <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
-            <li>
+            <li ng-show="user.isLoggedIn">
                 <a href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Pro'">Neues Pro Argument</a>
             </li>
         </ul>
@@ -14,7 +14,7 @@
             <li ng-repeat="argument in argumentList | filter: {shortTitle:'neut'}">
                 <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
-            <li>
+            <li ng-show="user.isLoggedIn">
                 <a href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Neutral'">Neues Neutrales Argument</a>
             </li>
         </ul>
@@ -23,7 +23,7 @@
             <li ng-repeat="argument in argumentList | filter: {shortTitle:'con'}">
                 <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
-            <li>
+            <li ng-show="user.isLoggedIn">
                 <a href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Contra'">Neues Contra Argument</a>
             </li>
         </ul>
