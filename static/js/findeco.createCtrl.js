@@ -39,6 +39,7 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
     };
 
     $scope.submit = function (type) {
+        //TODO: input validation
         var params = {};
         if ( type == 'argument' ) {
             params['wikiText'] = $scope.tmp.text;
