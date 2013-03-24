@@ -38,6 +38,7 @@
         </ul>
         <div ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_"><b>load text</b></div>
         <p class="mainText" ng-repeat="paragraph in paragraphList" ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
+        <div ng-show="isTextLoaded" ng-click="relocate('createNewText')" data-i18n="_createNewText_"><b>create new text</b></div>
     </div>
 
     <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl" style="position: relative;">

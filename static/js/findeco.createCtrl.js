@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoCreateCtrl($scope, $location, Backend, TMP) {
+function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
     $scope.radioModel = '';
 
     $scope.relocate = function (target) {
@@ -39,10 +39,13 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP) {
     };
 
     $scope.submit = function (type) {
-        console.log(type);
+        Message.send('danger','Blubb!' + type);
+        Message.send('alert','Blubb!' + type);
+        Message.send('error','Blubb!' + type);
+        Message.send('success','Blubb!' + type);
     }
 
     $scope.tmp = TMP;
 }
 
-FindecoCreateCtrl.$inject = ['$scope', '$location', 'Backend', 'TMP'];
+FindecoCreateCtrl.$inject = ['$scope', '$location', 'Backend', 'TMP', 'Message'];

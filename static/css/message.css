@@ -1,0 +1,17 @@
+
+#messageBox {
+    min-height: 50px;
+    width: 600px;
+    position: fixed;
+    left: 50%;
+    top: 400px;
+    margin-left: -300px;
+    z-index: 500;
+}
+
+button.close {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+}

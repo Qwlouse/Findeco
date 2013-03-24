@@ -182,4 +182,13 @@ angular.module('FindecoServices', [])
         var tmp = {};
         return tmp;
     })
+    .factory('Message', function() {
+        var tmp = {messageList:[]};
+
+        tmp.send = function (type,message) {
+            this.messageList.push({type: type, msg: message});
+        }
+
+        return tmp;
+    })
 ;
