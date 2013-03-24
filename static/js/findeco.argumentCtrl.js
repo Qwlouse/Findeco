@@ -25,8 +25,9 @@
 'use strict';
 /* Controllers */
 
-function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, TMP) {
+function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP) {
     $scope.tmp = TMP;
+    $scope.user = User;
 
     $scope.path = THELocatoooooooor.getSanitizedArgumentFreePath();
     $scope.argumentPath = THELocatoooooooor.getSanitizedPath();
@@ -71,4 +72,4 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, TMP) {
     }
 }
 
-FindecoArgumentCtrl.$inject = ['$scope', '$location', '$routeParams', 'Backend', 'TMP'];
+FindecoArgumentCtrl.$inject = ['$scope', '$location', '$routeParams', 'Backend', 'User', 'TMP'];
