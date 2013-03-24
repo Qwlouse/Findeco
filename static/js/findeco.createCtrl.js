@@ -26,14 +26,19 @@
 /* Controllers */
 
 function FindecoCreateCtrl($scope, $location, Backend, TMP) {
+    $scope.radioModel = '';
 
-    $scope.radioModel = 'Middle';
+    $scope.relocate = function (target) {
+        $location.path(target + '/' + THELocatoooooooor.getSanitizedArgumentFreePath());
+    }
 
     $scope.parse = function (text) {
-        return Parser.parse(text, null, true);
+        if ( text != undefined && text.length > 0 )
+            return Parser.parse(text, null, true);
+        return "";
     };
 
-    $scope.submit = function(type) {
+    $scope.submit = function (type) {
         console.log(type);
     }
 

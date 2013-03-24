@@ -25,7 +25,7 @@
 'use strict';
 /* App Module */
 
-var findecoApp = angular.module('Findeco', ['FindecoServices','localization'])
+var findecoApp = angular.module('Findeco', ['FindecoServices','localization', 'ui.bootstrap'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when('/home', {templateUrl: 'static/partials/home.html', controller: FindecoDefaultCtrl}).
@@ -37,7 +37,7 @@ var findecoApp = angular.module('Findeco', ['FindecoServices','localization'])
             when('/datenschutz', {templateUrl: 'static/partials/datenschutz.html', controller: FindecoDefaultCtrl}).
             when('/argument*param', {templateUrl: 'static/partials/default.html', controller: FindecoArgumentCtrl}).
             when('/createArgument*param', {templateUrl: 'static/partials/createArgument.html', controller: FindecoCreateCtrl}).
-            when('/createAlternativeText*param', {templateUrl: 'static/partials/default.html', controller: FindecoCreateCtrl}).
-            when('/createNewText*param', {templateUrl: 'static/partials/default.html', controller: FindecoCreateCtrl}).
+            when('/createAlternativeText*param', {templateUrl: 'static/partials/createAlternativeText.html', controller: FindecoCreateCtrl}).
+            when('/createNewText*param', {templateUrl: 'static/partials/createNewText.html', controller: FindecoCreateCtrl}).
             otherwise({templateUrl: 'static/partials/default.html', controller: FindecoDefaultCtrl});
     }]);
