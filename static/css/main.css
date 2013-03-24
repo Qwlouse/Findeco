@@ -26,377 +26,124 @@
 ################################################################################
 
 ################################################################################
-# Stay within the color scheme! blue (#0066CC), green (#336633),
-# orange (#FF9900) and shades of grey are acceptable!
+# Stay within the color scheme! blue (#2d7cc4), green (#336633),
+# orange (#e07b01) and shades of grey are acceptable!
 ################################################################################
 */
 
-@import url(http://fonts.googleapis.com/css?family=Exo:400,700);
-@import url(http://fonts.googleapis.com/css?family=Electrolize:400,700);
+@import url(http://fonts.googleapis.com/css?family=Monda:400,700);
 
-html,body {
-    font-size: 14px;
-    font-family: sans-serif;
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-}
-br,.clear {
-    clear: both;
-}
-h1,h2,h3,h4,h5,h6,.arguments  li {
-    font-family: 'Exo',sans-serif;
-    font-weight: bold;
-    color: #FF9900;
-    margin: 0;
+/*Clear some margins and paddings */
+body, h1, h2, h3, h4, h5, h6, form, button, input{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
 }
 
-h1:hover,h2:hover,h3:hover,h4:hover,h5:hover,h6:hover,.arguments  li:hover {
-    color: #999;
-    cursor: pointer;
-    text-shadow: #FF9900 0 0 5px; 
+/* Background image and basic font */
+body {
+    background: #ecb40d url("../images/bgmid.jpg") repeat-x center 50px;
+    font-family: "Verdana", sans-serif;
 }
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-    color: #0066cc;
+/* Font for all the headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Monda", sans-serif;
+}
+
+/* general style for links */
+a {
+    color: #e07b01;
     text-decoration: none;
 }
 
-#login {
-    position: absolute;
-    top: 10px;
-    z-index: 500;
-    right: 40px;
-}
-.argumentButton {
-    text-align: center;
-    float: left;
-    width: 45%;
-    margin-bottom: 10px !important;
-}
-.button,#back, #forward {
-    font-family: 'Exo',sans-serif;
-    font-weight: bold;
-    padding: 0 10px 0 10px;
-    margin: 0 2px 0 2px;
-    background: #FF9900;
-    color: #FFF;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
+a:hover {
+    color: #2d7cc4;
 }
 
-.button:hover,#back:hover, #forward:hover {
-    background: #999;
-    cursor: pointer;
-    text-shadow: #FF9900 0 0 5px; 
+/* Fixed size container to center main part of website*/
+.centeringContainer {
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
-.smallbutton {
-    float: left;
-}
-#header {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background-color: #DDD;
+/* =================== Space for the top menu ================================*/
+#topMenu {
     width: 100%;
-    font-family: 'Exo',sans-serif;
-    -moz-border-bottom-left-radius: 15px;
-    -moz-border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-}
-#logo {
-    float: left;
-    margin: 5px 0px 0px 5px;
-    background-image: url("../images/logo.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    background-size: contain;
-    padding-left: 100px;
-    font-size: 40px;
-    color: #fff;
-    width: 100px;
-    height: 60px;
+    display: block;
+    color: #ecb40d;
 }
 
-#logo:hover {
-    text-shadow: #FF9900 0 0 10px;
-    cursor: default;
-}
+/* =================== Sticky Footer =========================================*/
+/* see http://www.cssstickyfooter.com/using-sticky-footer-code.html */
 
-#navigation {
-    clear: both;
-    float: left;
-    list-style: none;
-    margin: 0;
-    padding: 0 0 5px 25px;
-    min-width: 200px;
-}
-
-#navigation li {
-    position: relative;
-    float: left;
-    z-index: 200;
-}
-
-#location {
-    position: absolute;
-    top: -30px;
-    left: 0;
-    list-style: none;
-    z-index: 300;
-}
-
-#location li {
-    margin-top: 5px;
-    float: left;
-}
-
-#bottom {
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    background-color: #999;
-    color: #fff;
-    padding: 8px 0 0 40px;
-    height: 25px;
-    z-index: 300;
-    -moz-border-top-left-radius: 15px;
-    -moz-border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-}
-#container {
-    position: absolute;
-    top: 110px;
-    bottom: 50px;
-    left: 0px;
-    background-color: white;
-    width: 100%;
-}
-#debug {
-    position: absolute;
-    top: 300px;
-    left: 50px;
-    color: black;
-    background-color: white;
-    width: 100%;
-    z-index: 99999;
-}
-#loading {
-    display: none;
-    width: 100%;
+html, body {
     height: 100%;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 1100;
-    background-image: url('../images/pbar-ani.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-color:#eeeeee;
-
-    /* Theoretically for IE 8 & 9 (more valid) */
-    /* ...but not required as filter works too */
-    /* should come BEFORE filter */
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-
-    /* This works in IE 8 & 9 too */
-    /* ... but also 5, 6, 7 */
-    filter: alpha(opacity=80);
-
-    /* Older than Firefox 0.9 */
-    -moz-opacity:0.8;
-
-    /* Safari 1.x (pre WebKit!) */
-    -khtml-opacity: 0.8;
-
-    /* Modern!
-    /* Firefox 0.9+, Safari 2?, Chrome any?
-    /* Opera 9+, IE 9+ */
-    opacity: 0.8;
 }
 
-#overlay {
-    display: none;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 1000;
-    margin-bottom: 100px;
-    
+#wrap {
+    min-height: 100%;
 }
 
-.argprocontra {
-    width: 100%;
-}
-
-.argpro {
-    width: 50%;
-    overflow: auto;
-    float: left;
-    list-style-image: url('../images/button.plus.png');
-    list-style-position: inside;
-    padding: 0;
-}
-
-.argneutral {
-    width: 100%;
-    list-style-image: url('../images/button.circle.png');
-    list-style-position: inside;
-    padding: 0;
-}
-
-.argcontra {
-    width: 50%;
-    overflow: auto;
-    float: left;
-    list-style-image: url('../images/button.minus.png');
-    list-style-position: inside;
-    padding: 0;
-}
-
-.box {
-    position: absolute;
-    top: 25px;
-    bottom: 25px;
-    width: 25%;
-    min-width: 200px;
-}
-.center {
-    right: 20%;
-    margin-right: 90px;
-    background: #f7f7f7;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    width: 55%;
-    z-index: 100;
-    overflow: auto;
-}
-.argumentContainer {
-    width: 100%;
-}
-
-.contributeContainer {
-    position: absolute;
-    top: 155px;
-    bottom: 75px;
-    min-width: 200px;
-    right: 20%;
-    margin-right: 90px;
-    background: #f7f7f7;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    width: 55%;
-    z-index: 200;
-    overflow: auto;
-}
-.right {
-    right: 0;
-    max-width: 300px;
-    background: #f7f7f7;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    z-index: 100;
-  
-}
-.right .innerContent {
-	position:absolute;
-	top:20px;
-	bottom:100px;
-    padding: 15px;
+#main {
     overflow:auto;
+    padding-bottom: 40px; /* must be same height as the footer */
 }
 
-
-.left {
-    left: 0;
-    width: 100%;
-}
-.swap {
+#footerWrap {
     position: relative;
-    max-width: 300px;
-    margin-left: 5px;
-    width: 25%;
-    height: 100%;
+    height: 40px;
+    clear:both;
+    margin: -40px 0 0 0;/* negative value of footer height */
+}
+
+/*Opera Fix*/
+body:before {
+    content:"";
+    height:100%;
+    float:left;
+    width:0;
+    margin-top:-32767px;/
+}
+
+
+/*========================= Main Container Columns ===========================*/
+#contentContainer {
+    min-height: 100px;
+    margin-top: 65px;
+    font-size: 10pt;
+    /*font-family: sans-serif;*/
+}
+
+.contentBox {
+    background: #e6e6e6;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    box-shadow: 8px 8px 10px #947109;
+}
+
+.contentBoxInvisible {
+    background: transparent;
+}
+#leftColumn {
     float: left;
-    overflow: hidden;
-    border-top: 0px solid #FF9900;
-    border-left: 15px solid #FF9900;
-    border-right: 15px solid #FF9900;
-    border-bottom: 0px solid #FF9900;
-    background: #f7f7f7;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    z-index:500;
+    width: 200px;
+    min-height: 100px;
+    padding: 25px;
 }
-.blind {
-    position: relative;
+
+#centerColumn {
+    margin-left: 30px;
+    margin-right: 30px;
     float: left;
-    width: 20px;
-    height: 100%;
-    background: #FF9900;
-    margin-left: 5px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    z-index:500;
-}
-.blind:hover {
-    background: #999;
-    cursor: pointer;
-}
-.innerContent {
-    padding: 15px;
+    width: 590px;
+    min-height: 100px;
+    padding: 25px;
 }
 
-.microBlogPost {
-    font-size: 14px;
-    border-bottom: 1px solid #0066CC;
+#rightColumn {
+    float: left;
+    width: 200px;
+    min-height: 100px;
+    padding: 25px;
 }
-
-.time {
-    font-size: 12px;
-}
-.marked {
-    background: #999;
-}
-.formContainer {
-    width: 100%;
-    height:75%;
-    overflow: auto;
-}
-.formElement {
-    width: 96%;
-    min-height:24%;
-}
-
-#inputname input, #inputpass input {
-    z-index: 100;
-}
-
-#inputname:before {
-    z-index: 50;
-    content: "Name";
-    position: absolute;
-    padding: 5px;
-}
-
-#inputpass:before {
-    z-index: 50;
-    content: "Passwort";
-    position: absolute;
-    padding: 5px;
-}
-.btndropdown {float:right;}
-.btndropdown ul{ list-style-type: none; list-style-image: none; margin:0; padding:0; }
-.btndropdown li { Background-color:#F7F7F7;float:left; padding:0; margin:0;}
-.btndropdown li a { width:150px; display:block; text-align:center; color:#000; margin-right:5px; height:35px; line-height:35px; text-decoration:none; font-size:80%; border:1px solid #ccc; }
-.btndropdown li a:hover { color:#f00; }
-.btndropdown ul ul { display:none; position:absolute; z-index:999; }
-.btndropdown li li { float:none; }
-
-* html li li { display:inline; } 

@@ -1,0 +1,96 @@
+
+/* Header with logo and main navigation */
+#header {
+    height: 90px;
+    width: 100%;
+    background: linear-gradient(top, #414141 0%, #000000 100%);
+    background: -moz-linear-gradient(top, #414141 0%, #000000 100%);
+    background: -webkit-linear-gradient(top, #414141 0%, #000000 100%);
+}
+
+#headerContainer {
+    background: url("../images/logo.png") no-repeat 0 5px;
+    background-size:80px;
+    position: relative;
+    height: 100%;
+}
+
+#headerContent {
+    position: relative;
+    margin-left: 90px;
+    display: block;
+    width: 1110px;
+    height: 100%;
+}
+
+#headerContent h1 {
+    /*font-style: italic;*/
+    font-weight: bold;
+    font-size: 36px;
+    margin-left: 15px;
+    color: #b3b3b3;
+}
+
+#headerContent ul {
+    font-size: 10pt; /* get rid of the single space in inline*/
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#headerContent ul li{
+    float: left;
+    list-style: none;
+    display: inline-block;
+    padding: 0 15px 0 15px;
+}
+
+#headerContent form{
+    display:inline-block;
+}
+
+div.searchBox {
+    position: relative;
+    top: 2px;
+    border: 2px solid #ecb40d;
+    -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
+    border-radius: 11px;
+    height: 23px;
+    padding: 0 6px 0 6px;
+    background: #333333;
+    overflow: hidden; /* I don't know why exactly, but this removes the gap between the ul li elements and the bottom of the header */
+}
+
+.searchButton {
+    border: 0;
+    height: 18px;
+    width: 18px;
+    background: url("../images/search.png");
+}
+
+#headerContent input{
+    position: relative;
+    top: 2px;
+    height: 18px;
+    color: #cccccc;
+    background: #333333;
+    border: 0;
+}
+
+#headerContent ul li a{
+    color: inherit;
+    font-weight: bold;
+    font-size: 14pt;
+    text-decoration: none;
+}
+
+#headerContent ul li a:hover{
+    color: #2d7cc4;
+}
+
+#headerContent ul li.activeTab {
+    color:  #2d7cc4;
+    background: #333333;
+}

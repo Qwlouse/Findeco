@@ -1,0 +1,21 @@
+ul.microblogList {
+    margin: 0 0 0 0;
+    padding: 0;
+}
+
+ul.microblogList li {
+    display: block;
+    list-style: none;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+a.microblogAuthor {
+    font-weight: bold;
+}
+
+span.microblogDate {
+    float: right;
+    font-size: 9pt;
+    color: #999999;
+}

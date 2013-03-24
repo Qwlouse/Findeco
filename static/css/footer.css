@@ -1,0 +1,35 @@
+#footer {
+    position: absolute;
+    width: 100%;
+    margin: 10px 0 0 0; /* negative value of footer height */
+    height: 23px;
+    background: linear-gradient(top, #333333 0%, #212121 100%);
+    background: -moz-linear-gradient(top, #333333 0%, #212121 100%);
+    background: -webkit-linear-gradient(top, #333333 0%, #212121 100%);
+    padding: 7px 0 0 0;
+}
+
+#footer ul {
+    list-style: none;
+    display: table;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+
+#footer ul li {
+
+    display: table-cell;
+    text-align: center;
+    width: 150px;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+#footer ul li a {
+    font-family: "Monda" sans-serif; /* TODO why does firefox ignore this? */
+    font-size: 12px;
+    display: block;
+    font-weight: bold;
+}
