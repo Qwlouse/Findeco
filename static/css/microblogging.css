@@ -1,13 +1,20 @@
 ul.microblogList {
     margin: 0 0 0 0;
     padding: 0;
+    color: #333;
 }
 
 ul.microblogList li {
     display: block;
     list-style: none;
-    margin: 0 0 10px 0;
-    padding: 0;
+    margin: 10px 0 0 0;
+    padding: 10px 0 0 0;
+
+}
+
+ul.microblogList li + li + li{
+    border-top: 1px solid;
+    border-color: #CCC;
 }
 
 a.microblogAuthor {
@@ -17,5 +24,13 @@ a.microblogAuthor {
 span.microblogDate {
     float: right;
     font-size: 9pt;
-    color: #999999;
+    color: #999;
+}
+
+.characterCountdown {
+    font-size: 9pt;
+    position: absolute;
+    top: 5px;
+    right: 25px;
+    color: #999;
 }

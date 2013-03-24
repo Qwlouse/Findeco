@@ -27,7 +27,7 @@
 
 ################################################################################
 # Stay within the color scheme! blue (#2d7cc4), green (#336633),
-# orange (#e07b01) and shades of grey are acceptable!
+# orange (#e07b01, ecb40d) and shades of grey are acceptable!
 ################################################################################
 */
 
@@ -70,7 +70,6 @@ a:hover {
 #topMenu {
     width: 100%;
     display: block;
-    color: #ecb40d;
 }
 
 /* =================== Sticky Footer =========================================*/

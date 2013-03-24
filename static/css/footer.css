@@ -19,7 +19,6 @@
 }
 
 #footer ul li {
-
     display: table-cell;
     text-align: center;
     width: 150px;
@@ -30,6 +29,11 @@
 #footer ul li a {
     font-family: "Monda" sans-serif; /* TODO why does firefox ignore this? */
     font-size: 12px;
+    color: #ecb40d;
     display: block;
     font-weight: bold;
+}
+
+#footer ul li a:hover {
+    color: #2d7cc4;
 }

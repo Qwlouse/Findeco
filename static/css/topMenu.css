@@ -32,7 +32,7 @@
 }
 
 #headerContent ul {
-    font-size: 10pt; /* get rid of the single space in inline*/
+    font-size: 0; /* get rid of the single space in inline*/
     position: absolute;
     bottom: 0;
     margin: 0;
@@ -52,8 +52,7 @@
 
 div.searchBox {
     position: relative;
-    top: 2px;
-    border: 2px solid #ecb40d;
+    border: 1px solid #ecb40d;
     -moz-border-radius: 11px;
     -webkit-border-radius: 11px;
     border-radius: 11px;
@@ -80,9 +79,9 @@ div.searchBox {
 }
 
 #headerContent ul li a{
-    color: inherit;
+    color: #ecb40d;
     font-weight: bold;
-    font-size: 14pt;
+    font-size: 12pt;
     text-decoration: none;
 }
 
