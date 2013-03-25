@@ -47,6 +47,7 @@ angular.module('localization', []).
 
             getLocalizedString: function(value) {
                 // default the result to an empty string
+            	
                 var result = '';
 
                 // make sure the dictionary has valid data
@@ -57,9 +58,14 @@ angular.module('localization', []).
                             return element.key === value;
                         }
                     )[0];
-
+                    
+                    if (entry == undefined){
+                    	console.log("Nicht lokalisierter String:" + value)
+                    	return value;
+                    }
                     // set the result
                     result = entry.value;
+                    
                 }
                 // return the value to the call
                 return result;
