@@ -7,9 +7,11 @@
             </form>
         </li>!-->
         <ul class="microblogList">
-            <li></li><a class="btn btn-primary" ng-click="updateFollowedUsers()">Update</a></li>
+            <li></li>
+            <a class="btn btn-primary" ng-click="updateFollowedUsers()">Update</a></li>
             <li ng-repeat="microblogNode in followedUsersList">
-                <a class="microblogAuthor" href="#">{{ microblogNode.authorGroup[0].displayName }}</a>
+                <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+                    microblogNode.authorGroup[0].displayName }}</a>
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
@@ -17,20 +19,26 @@
     </div>
     <div class="contentBox startColumn">
         <ul class="microblogList">
-            <li></li><a class="btn btn-primary" ng-click="updateFollowedNodes()">Update</a></li>
+            <li></li>
+            <a class="btn btn-primary" ng-click="updateFollowedNodes()">Update</a></li>
             <li ng-repeat="microblogNode in followedNodesList">
-                <a class="microblogAuthor" href="#">{{ microblogNode.authorGroup[0].displayName }}</a>
+                <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+                    microblogNode.authorGroup[0].displayName }}</a>
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
-        </ul></div>
+        </ul>
+    </div>
     <div class="contentBox startColumn">
         <ul class="microblogList">
-            <li></li><a class="btn btn-primary" ng-click="updateOwnNodes()">Update</a></li>
+            <li></li>
+            <a class="btn btn-primary" ng-click="updateOwnNodes()">Update</a></li>
             <li ng-repeat="microblogNode in ownNodesList">
-                <a class="microblogAuthor" href="#">{{ microblogNode.authorGroup[0].displayName }}</a>
+                <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+                    microblogNode.authorGroup[0].displayName }}</a>
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
-        </ul></div>
+        </ul>
+    </div>
 </div>

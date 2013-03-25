@@ -123,6 +123,12 @@ angular.module('FindecoServices', [])
                 return promise;
             },
 
+            loadUserInfo: function(user) {
+                var url = ['/.json_loadUserInfo', user].join('/');
+                var promise = $http.get(url);
+                return promise;
+            },
+
             loadIndex: function(indexNodes_out, path) {
                 var url = ['/.json_loadIndex', path].join('/');
                 var promise = $http.get(url);

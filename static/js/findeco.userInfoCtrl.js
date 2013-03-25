@@ -25,32 +25,18 @@
 'use strict';
 /* Controllers */
 
-function FindecoUserCtrl($scope, $location, User) {
-    $scope.user = User;
+function FindecoUserInfoCtrl($scope, Backend, $routeParams) {
+    $scope.displayName = $routeParams.name.replace(/\//,'');
 
-    $scope.login = function () {
-        User.login($scope.username, $scope.password).success(function () {
-            $location.path('/');
-        });
-    };
-
-    $scope.logout = function() {
-        User.logout().success(function() {
-            $location.path('/');
-        });
-    };
-
-    $scope.getActiveClass = function(path) {
-        if ($location.path().substr(0, path.length) == path) {
-            return "activeTab";
-        } else {
-            return "";
+    $scope.user = Backend.loadUserInfo($scope.displayName).success(function (data) {
+        if ( data.loadUserInfoResponse != undefined ) {
+            $scope.displayName = data.loadUserInfoResponse.userInfo.displayName;
+            $scope.description = data.loadUserInfoResponse.userInfo.description;
+            $scope.followees = data.loadUserInfoResponse.userInfo.followees;
+            $scope.followers = data.loadUserInfoResponse.userInfo.followers;
         }
-    };
+    });
 
-    $scope.storeUserSettings = function() {
-        User.storeSettings();
-    };
 }
 
-FindecoUserCtrl.$inject = ['$scope', '$location', 'User'];
+FindecoUserInfoCtrl.$inject = ['$scope', 'Backend', '$routeParams'];
