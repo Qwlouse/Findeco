@@ -39,13 +39,45 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
     };
 
     $scope.submit = function (type) {
-        //TODO: input validation
+        if ( $scope.tmp['text'] == undefined
+            || $scope.tmp['text'] == '' ) {
+            console.log( $scope.tmp);
+            Message.send('error','You have to put in a wikiText!');
+            return;
+        }
+        Parser.parse($scope.tmp['text']);
+        if ( Parser.isErrorState() ) {
+            Message.send('error','Your wikiText seems to be erroneous. Have you set a title like this? = A title minding the spaces! =');
+            return;
+        }
+
         var params = {};
         if ( type == 'argument' ) {
+            if ( $scope.tmp['argumentType'] == undefined
+                || $scope.tmp['argumentType'] == '' ) {
+                Message.send('error','You have to set an argumentType');
+                return;
+            }
             params['wikiText'] = $scope.tmp.text;
             params['argumentType'] = $scope.tmp.argumentType;
         }
         if ( type == 'alternative' ) {
+            if ( $scope.tmp['argumentType'] == undefined
+                || $scope.tmp['argumentType'] == '' ) {
+                Message.send('error','You have to set an argumentType');
+                return;
+            }
+            if ( $scope.tmp['textAlternative'] == undefined
+                || $scope.tmp['textAlternative'] == '' ) {
+                Message.send('error','You have to put in a wikiTextAlternative!');
+                return;
+            }
+
+            Parser.parse($scope.tmp['textAlternative']);
+            if ( Parser.isErrorState() ) {
+                Message.send('error','Your wikiTextAlternative seems to be erroneous. Have you set a title like this? = A title minding the spaces! =');
+                return;
+            }
             params['wikiText'] = $scope.tmp.text;
             params['wikiTextAlternative'] = $scope.tmp.textAlternative;
             params['argumentType'] = $scope.tmp.argumentType;
