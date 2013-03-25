@@ -57,6 +57,10 @@ div.graph .nodeGroup:hover .nodeLabel {
     fill: #2d7cc4;
 }
 
+div.graph .nodeGroup:hover .nodeLabel.active {
+    fill: #fff;
+}
+
 div.graph .active.nodeLabel {
     font-weight: bold;
     fill: #fff;
