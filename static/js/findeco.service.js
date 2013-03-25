@@ -155,8 +155,11 @@ angular.module('FindecoServices', [])
         };
 
     })
-    .factory('User', function ($http) {
-        var userInfo = {
+    .factory('User', function ($http, localize) {
+    	
+    	localize.setLanguage('de-DE');
+        
+    	var userInfo = {
             isLoggedIn: false,
             displayName: "",
             description: ""
