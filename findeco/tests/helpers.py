@@ -26,8 +26,8 @@ import json
 
 
 def assert_is_error_response(response, identifier):
-    assert response.status_code == 200, \
-        "Expected status code OK (200) but was %d" % response.status
+    assert response.status_code == 406, \
+        "Expected status code OK (200) but was %d" % response.status_code
     e = json.loads(response.content)
     errorResponseValidator.validate(e)
     assert e['errorResponse']['errorID'] == identifier, \

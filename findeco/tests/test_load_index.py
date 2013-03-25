@@ -142,8 +142,8 @@ class LoadArgumentIndexTest(TestCase):
         response = self.client.get(
             reverse('load_argument_index', kwargs=dict(path='foo.1')))
         parsed = json.loads(response.content)
-        self.assertIn('loadIndexResponse', parsed)
-        indexNodes = parsed['loadIndexResponse']
+        self.assertIn('loadArgumentIndexResponse', parsed)
+        indexNodes = parsed['loadArgumentIndexResponse']
         for indexNode, argument in zip(indexNodes, self.foo_arguments):
             self.assertEqual(indexNode,
                              create_index_node_for_argument(argument,
