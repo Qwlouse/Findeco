@@ -1,42 +1,75 @@
 [
     {
-        "key":"_logout_",
+        "key":"_accountLogout_",
         "value":"Abmelden",
-        "description":"logout "
+        "description":""
     },
     {
-        "key":"_login_",
+        "key":"_accountLogin_",
         "value":"Anmelden",
         "description":""
     },
     {
-        "key":"_loggedInAs_",
+        "key":"_accountLoggedInAs_",
         "value":"Eingeloggt als",
         "description":""
     },
     {
-        "key":"_loadText_",
-        "value":"Text Laden",
+        "key":"_accountUsernameBtn_",
+        "value":"Benutzerkennung",
         "description":""
     },
     {
-        "key":"_MicroblogPlaceholder_",
-        "value":"Hier kannst du microbloggen !!!",
-        "description":"Microblogging Placeholder Text"
+        "key":"_accountPasswordBtn_",
+        "value":"Passwort",
+        "description":""
     },
     {
-        "key":"_argumentPro_",
-        "value":"Argument dafür",
-        "description":"Argument type name"
+        "key":"_accountLoginBtn_",
+        "value":"Login",
+        "description":""
     },
     {
-        "key":"_argumentNeutral_",
-        "value":"Neutrale Anmerkung",
-        "description":"Argument type name"
+        "key":"_startScreenUpdateBtn_",
+        "value":"Update",
+        "description":""
     },
     {
-        "key":"_argumentCon_",
-        "value":"Argument dagegen",
-        "description":"Argument type name"
+        "key":"_textLoad_",
+        "value":"Text Laden",
+        "description":""
+    },
+    
+    {
+        "key":"_argumentsPro_",
+        "value":"Pro Argumente",
+        "description":""
+    },
+    {
+        "key":"_argumentsNeut_",
+        "value":"Neutrale Argumente",
+        "description":""
+    },
+    {
+        "key":"_argumentsCon_",
+        "value":"Contra Argumente",
+        "description":""
+    },
+    
+    {
+        "key":"_argumentsNewPro_",
+        "value":"Neues Pro Argument",
+        "description":""
+    },
+    {
+        "key":"_argumentsNewNeut_",
+        "value":"Neues Neutrales Argument",
+        "description":""
+    },
+    {
+        "key":"_argumentsNewCon_",
+        "value":"Neues Contra Argument",
+        "description":""
     }
+    
 ]

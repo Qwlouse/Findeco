@@ -5,7 +5,7 @@
             <form ng-submit="submit()">
                 <input type="text" placeholder="{{'_MicroblogPlaceholder_'|i18n}}" style="width: 100%;"
                        ng-model="microblogText" />
-                <input class="btn btn-primary" type="submit" value="Schreiben..." style="float: right;" />
+                <input class="btn btn-primary" type="submit" data-i18n="_microblogWrite_" style="float: right;" />
             </form>
         </li>
         <li ng-repeat="microblogNode in microbloggingList">
