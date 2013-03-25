@@ -98,10 +98,10 @@ In return you get a JSON response from the server.
 <b><a name="FunctionSearch">Function::search</a></b>
 <table><tbody>
 <tr><td>Call Structure:</td><td>.json_search/searchField/searchString</td></tr>
-<tr><td>GET Parameters:</td><td><a href="#ValueSearchField">(String) searchField</a></td></tr>
+<tr><td>GET Parameters:</td><td><a href="#ValueSearchField">(String) searchFields</a></td></tr>
 <tr><td>&nbsp;</td><td>(String) searchString</td></tr>
 <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-<tr><td>Description:</td><td>Search for occurances of searchString in <a href="#ValueSearchField">searchField</a>.</td></tr>
+<tr><td>Description:</td><td>Search for occurances of searchString in <a href="#ValueSearchField">searchFields</a>. searchFields can be a singe <a href="#ValueSearchField">searchField</a> or up to all three sparated by "_".</td></tr>
 <tr><td>Return:</td><td><a href="#JSONsearchResponse">JSON::searchResponse</a></td></tr>
 </tbody></table>
 
@@ -606,7 +606,7 @@ available. </td></tr>
 <b><a name="JSONsearchResponseList">JSON::searchResponseList</a></b>
 <table><tbody>
 <tr><td>Content:</td><td><a href="#ValueSearchField">Value::searchField</a></td></tr>
-<tr><td>&nbsp;</td><td><a href="#JSONsearchEntry">JSON::searchEntry</a></td></tr>
+<tr><td>&nbsp;</td><td><a href="#JSONsearchEntry">JSON::searchEntries</a></td></tr>
 <tr><td>Comment:</td><td>Contains a list of search entries for the <a href="#>ValueSearchField">searchField</a>.</td></tr>
 </tbody></table>
 

@@ -279,6 +279,11 @@ def mark_user_unfollow(request, name):
 
 
 @ViewErrorHandling
+def search(request, search_fields, search_string):
+    return json_response({'searchResponse': [{'searchField': "user", 'searchEntries': []}]})
+
+
+@ViewErrorHandling
 def store_settings(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
