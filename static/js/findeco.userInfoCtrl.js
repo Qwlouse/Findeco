@@ -25,17 +25,34 @@
 'use strict';
 /* Controllers */
 
-function FindecoUserInfoCtrl($scope, Backend, $routeParams) {
-    $scope.displayName = $routeParams.name.replace(/\//,'');
+function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
+    $scope.displayName = $routeParams.name.replace(/\//, '');
 
-    Backend.loadUserInfo($scope.displayName).success(function (data) {
-        if ( data.loadUserInfoResponse != undefined ) {
-            for ( var l in data.loadUserInfoResponse.userInfo ) {
-                $scope[l] = data.loadUserInfoResponse.userInfo[l];
+    $scope.follow = function (name, type) {
+        Backend.storeMarkUser(name, type).success(function (data) {
+            if (data.storeMarkUserResponse != undefined) {
+                $scope.loadUserInfo();
             }
-        }
-    });
+        });
+    };
 
+    $scope.loadUserInfo = function () {
+        Backend.loadUserInfo($scope.displayName).success(function (data) {
+            if (data.loadUserInfoResponse != undefined) {
+                for (var l in data.loadUserInfoResponse.userInfo) {
+                    $scope[l] = data.loadUserInfoResponse.userInfo[l];
+                }
+                $scope.following = false;
+                for (var f in $scope.followees) {
+                    if ($scope.followees[f].displayName == User.displayName) {
+                        $scope.following = true;
+                    }
+                }
+            }
+        });
+    }
+
+    $scope.loadUserInfo();
 }
 
 FindecoUserInfoCtrl.$inject = ['$scope', 'Backend', '$routeParams'];

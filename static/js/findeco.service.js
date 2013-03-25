@@ -94,6 +94,12 @@ angular.module('FindecoServices', [])
                 return promise;
             },
 
+            storeMarkUser: function(displayName, markType) {
+                var pathComponents = ['/.json_storeMarkUser', markType, displayName];
+                var url = pathComponents.join('/');
+                return $http.post(url, {});
+            },
+
             storeMicroblogPost: function(path, microblogText) {
                 var pathComponents = ['/.json_storeMicroblogPost', path];
                 var url = pathComponents.join('/');

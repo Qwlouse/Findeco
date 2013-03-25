@@ -5,6 +5,8 @@
     <div id="centerColumn" class="contentBox">
         <h1>{{displayName}}</h1>
         <ul>
+            <li ng-show="!following" ng-click="follow(displayName, 'follow')">Follow</li>
+            <li ng-show="following" ng-click="follow(displayName, 'unfollow')">Unfollow</li>
             <li>{{description}}</li>
             <li>{{followees}}</li>
             <li>{{followers}}</li>
