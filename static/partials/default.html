@@ -32,7 +32,7 @@
     <div id="centerColumn" class="contentBox">
         <h1>{{ nodeInfo.fullTitle }}</h1>
         <div findeco-graph data="graphData" path="path" class="graph"></div>
-        <p ng-bind-html-unsafe="parse(nodeInfo.text, path)"></p>
+        <p ng-bind-html-unsafe="parse(nodeInfo.text, 'ignored')"></p>
         <ul class="indexList">
             <li ng-repeat="index in nodeInfo.index">
                 <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
