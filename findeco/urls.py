@@ -84,6 +84,10 @@ urlpatterns = patterns(
         'findeco.views.load_text',
         name='load_text'),
 
+    url(r'^\.json_loadNode/' + RESTRICTED_PATH + '$',
+        'findeco.views.load_node',
+        name='load_node'),
+
     url(r'^\.json_loadUserInfo/' + USERNAME + '/?$',
         'findeco.views.load_user_info',
         name='load_user_info'),

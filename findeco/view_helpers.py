@@ -398,6 +398,10 @@ def get_is_following(user_id, node):
     return isFollowing
 
 
+def get_is_flagging(user_id, node):
+    return node.spam_flags.filter(user_id=user_id).count()
+
+
 def follow_node(node, user_id):
     marks = node.votes.filter(user=user_id).all()
     if marks.count() >= 1:

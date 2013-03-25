@@ -86,6 +86,16 @@ loadGraphDataResponse_schema = {
 loadIndexResponse_schema = {
     'loadIndexResponse': [indexNode_schema, None]
 }
+loadNodeResponse_schema = {
+    'loadNodeResponse': {
+        'fullTitle': string,
+        'isFollowing': integer,
+        'isFlagging': integer,
+        'text': string,
+        'index': [indexNode_schema, None]
+    }}
+
+
 loadArgumentIndexResponse_schema = {
     'loadArgumentIndexResponse': [indexNode_schema, None]
 }
@@ -173,6 +183,7 @@ indexNodeValidator = JSONValidator(indexNode_schema)
 
 loadGraphDataResponseValidator = JSONValidator(loadGraphDataResponse_schema)
 loadIndexResponseValidator = JSONValidator(loadIndexResponse_schema)
+loadNodeResponseValidator = JSONValidator(loadNodeResponse_schema)
 loadArgumentIndexResponseValidator = JSONValidator(loadArgumentIndexResponse_schema)
 loadMicrobloggingResponseValidator = JSONValidator(
     loadMicrobloggingResponse_schema)
@@ -206,6 +217,7 @@ view_validators = {
     'load_argument_index': loadArgumentIndexResponseValidator,
     'load_microblogging': loadMicrobloggingResponseValidator,
     'load_text': loadTextResponseValidator,
+    'load_node': loadNodeResponseValidator,
     'load_user_info': loadUserInfoResponseValidator,
     'load_user_settings': loadUserSettingsResponseValidator,
     'login': loginResponseValidator,

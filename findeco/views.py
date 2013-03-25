@@ -84,6 +84,21 @@ def load_argument_index(request, path):
 
 @ValidPaths("StructureNode")
 @ViewErrorHandling
+def load_node(request, path):
+    node = get_node_for_path(path)
+    index_nodes = get_index_nodes_for_path(path)
+
+    return json_response({'loadNodeResponse': {
+        'fullTitle': node.title,
+        'isFollowing': get_is_following(request.user.id, node),
+        'isFlagging': get_is_flagging(request.user.id, node),
+        'text': node.text.text,
+        'index': index_nodes
+    }})
+
+
+@ValidPaths("StructureNode")
+@ViewErrorHandling
 def load_graph_data(request, path, graph_data_type):
     if not path.strip('/'):  # root node!
         nodes = [backend.get_root_node()]
@@ -121,10 +136,8 @@ def load_text(request, path):
 
     for p in paragraphs:
         node = backend.Node.objects.get(id=p['_node_id'])
-        p['isFollowing'] = get_is_following(
-            request.user.id, node)
-        p['isFlagging'] = node.spam_flags.filter(
-            user_id=request.user.id).count()
+        p['isFollowing'] = get_is_following(request.user.id, node)
+        p['isFlagging'] = get_is_flagging(request.user.id, node)
         del p['_node_id']
 
     return json_response({
