@@ -100,6 +100,12 @@ angular.module('FindecoServices', [])
                 return $http.post(url, {});
             },
 
+            markNode: function (nodePath, markType) {
+                var pathComponents = ['/.json_markNode', markType, nodePath];
+                var url = pathComponents.join('/');
+                return $http.get(url);
+            },
+
             storeMicroblogPost: function (path, microblogText) {
                 var pathComponents = ['/.json_storeMicroblogPost', path];
                 var url = pathComponents.join('/');

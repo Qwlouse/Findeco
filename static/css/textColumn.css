@@ -39,3 +39,8 @@ p.mainText {
 #centerColumn h1 {
     color: #2d7cc4;
 }
+
+a.follow-star {
+    float: right;
+    cursor: pointer;
+}

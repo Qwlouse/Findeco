@@ -1,23 +1,23 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
     <div id="leftWideColumn" class="contentBox">
-        <span class="btn btn-primary createNav" ng-click="relocate('createNewText')">Neuen Text anlegen</span>
+        <span class="btn btn-primary createNav" ng-click="relocate('createNewText')" data-i18n="_newText_"></span>
         <span class="btn btn-primary createNav"
-              ng-click="relocate('createAlternativeText')">Alternativtext anlegen</span>
-        <span class="btn btn-primary createNav" ng-click="relocate('createArgument')">Argument anlegen</span>
+              ng-click="relocate('createAlternativeText')" data-i18n="_newTextAlternative_"></span>
+        <span class="btn btn-primary createNav" ng-click="relocate('createArgument')" data-i18n="_newArgument"></span>
         <br><br>
 
         <form ng-submit="submit('alternative')">
             <div class="btn-group" data-toggle="buttons-checkbox">
-                <button type="button" class="btn btn-primary" ng-model="tmp.argumentType" btn-radio="'neut'">Neutral
+                <button type="button" class="btn btn-primary" ng-model="tmp.argumentType" btn-radio="'neut'" data-i18n="_neut_" >
                 </button>
-                <button type="button" class="btn btn-primary" ng-model="tmp.argumentType" btn-radio="'con'">Contra
+                <button type="button" class="btn btn-primary" ng-model="tmp.argumentType" btn-radio="'con'" data-i18n="_con_" >
                 </button>
             </div>
             <textarea style="width: 100%; height: 250px; "
-                      placeholder="Your argument for an alternative Text goes here!"
+                      placeholder="{{'_alternativesNewHere_'|i18n}}"
                       ng-model="tmp.text"></textarea><br>
 
-            <textarea style="width: 100%; height: 250px; " placeholder="Your alternative Text goes here!"
+            <textarea style="width: 100%; height: 250px; " placeholder="{{'_alternativesNewHere_'|i18n}}"
                       ng-model="tmp.textAlternative"></textarea><br>
             <input class="btn btn-primary" type="submit" value="postAlternativeText">
         </form>

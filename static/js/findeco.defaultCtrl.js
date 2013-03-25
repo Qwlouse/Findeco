@@ -45,6 +45,22 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
         return Parser.parse(text, shortTitle, true);
     };
 
+    $scope.markNode = function (nodePath, markTypeInteger) {
+        var markType = "follow";
+        if (markTypeInteger == 2) {markType = "unfollow";}
+        Backend.markNode(nodePath, markType).success(function () {
+            for (var i = 0; i < $scope.paragraphList.length; i++) {
+                if ($scope.paragraphList[i].path == nodePath) {
+                    if (markTypeInteger == 2) {
+                        $scope.paragraphList[i].isFollowing = 0;
+                    } else {
+                        $scope.paragraphList[i].isFollowing = 2;
+                    }
+                }
+            }
+        });
+    };
+
     $scope.relocateRelativeTo = function (shortTitle, index) {
         var path = $scope.path;
         if ($scope.path == '/') {

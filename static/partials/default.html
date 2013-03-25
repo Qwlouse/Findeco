@@ -1,30 +1,30 @@
 <div id="contentContainer" class="centeringContainer">
     <div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
-        <h3 class="argumentHeading">Pro Argumente</h3>
+        <h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
         <ul class="argumentList">
             <li ng-repeat="argument in argumentList | filter: {shortTitle:'pro'}">
                 <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
             <li ng-show="user.isLoggedIn">
-                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Pro'">Neues Pro Argument</a>
+                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNewPro_"></a>
             </li>
         </ul>
-        <h3 class="argumentHeading">Neutrale Argumente</h3>
+        <h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
         <ul class="argumentList">
             <li ng-repeat="argument in argumentList | filter: {shortTitle:'neut'}">
                 <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
             <li ng-show="user.isLoggedIn">
-                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Neutral'">Neues Neutrales Argument</a>
+                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Neutral'" data-i18n="_argumentsNewNeut_"></a>
             </li>
         </ul>
-        <h3 class="argumentHeading">Contra Argumente</h3>
+        <h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
         <ul class="argumentList">
             <li ng-repeat="argument in argumentList | filter: {shortTitle:'con'}">
                 <a href="/#/argument/{{ getPath(true) + '.' + argument.shortTitle + '.' + argument.index }}">{{argument.fullTitle}}</a>
             </li>
             <li ng-show="user.isLoggedIn">
-                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Contra'">Neues Contra Argument</a>
+                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Contra'" data-i18n="_argumentsNewCon_"></a>
             </li>
         </ul>
     </div>
@@ -38,7 +38,14 @@
         </ul>
         <div class="btn btn-primary" ng-click="relocate('createNewText')" data-i18n="_createNewText_"><b>create new text</b></div>
         <div class="btn btn-primary" ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_"><b>load text</b></div>
-        <p class="mainText" ng-repeat="paragraph in paragraphList" ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
+        <div class="mainText" ng-repeat="paragraph in paragraphList">
+            <a ng-click="markNode(paragraph.path, paragraph.isFollowing)" class="follow-star" ng-switch on="paragraph.isFollowing">
+                <img ng-switch-when="1" src="static/images/star1.png" alt="transitive following" />
+                <img ng-switch-when="2" src="static/images/star2.png" alt="direct following" />
+                <img ng-switch-default src="static/images/star0.png" alt="no following" />
+            </a>
+            <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
+        </div>
         <div class="btn btn-primary" ng-show="isTextLoaded" ng-click="relocate('createAlternativeText')" data-i18n="_createAlternativeText_"><b>create alternative text</b></div>
     </div>
 
