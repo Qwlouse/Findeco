@@ -7,8 +7,7 @@
             </form>
         </li>!-->
         <ul class="microblogList">
-            <li></li>
-            <a class="btn btn-primary" ng-click="updateFollowedUsers()">Update</a></li>
+            <li><a class="btn btn-primary" ng-click="updateFollowedUsers()">Update</a></li>
             <li ng-repeat="microblogNode in followedUsersList">
                 <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
                     microblogNode.authorGroup[0].displayName }}</a>
@@ -19,8 +18,7 @@
     </div>
     <div class="contentBox startColumn">
         <ul class="microblogList">
-            <li></li>
-            <a class="btn btn-primary" ng-click="updateFollowedNodes()">Update</a></li>
+            <li><a class="btn btn-primary" ng-click="updateFollowedNodes()">Update</a></li>
             <li ng-repeat="microblogNode in followedNodesList">
                 <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
                     microblogNode.authorGroup[0].displayName }}</a>
@@ -31,8 +29,7 @@
     </div>
     <div class="contentBox startColumn">
         <ul class="microblogList">
-            <li></li>
-            <a class="btn btn-primary" ng-click="updateOwnNodes()">Update</a></li>
+            <li><a class="btn btn-primary" ng-click="updateOwnNodes()">Update</a></li>
             <li ng-repeat="microblogNode in ownNodesList">
                 <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
                     microblogNode.authorGroup[0].displayName }}</a>

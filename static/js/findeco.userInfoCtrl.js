@@ -55,4 +55,4 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
     $scope.loadUserInfo();
 }
 
-FindecoUserInfoCtrl.$inject = ['$scope', 'Backend', '$routeParams'];
+FindecoUserInfoCtrl.$inject = ['$scope', 'Backend', '$routeParams', 'User'];

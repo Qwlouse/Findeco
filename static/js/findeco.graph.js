@@ -68,7 +68,7 @@ function endy(source, target, r) {
 findecoApp.directive('findecoGraph', function( ) {
     // Parameters
     var svg_width = 580,
-        svg_height = 150;
+        svg_height = 300;
     var node_radius = 20;
 
     // colors are like this [active.newFollow, active.follow, active.unfollow,
@@ -141,16 +141,11 @@ findecoApp.directive('findecoGraph', function( ) {
                     }
                 }
 
-                // set initial position of nodes
-                for (i = 0; i < nodes.length; i++) {
-                    nodes[i].x = 100 + 70 * i;
-                    nodes[i].y = svg_height - 80 + i;
-                }
+
 
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
-                    .gravity(0)
                     .size([svg_width, svg_height])
                     .linkDistance(80)
                     .nodes(nodes)
@@ -215,13 +210,6 @@ findecoApp.directive('findecoGraph', function( ) {
 
 
                 force.on("tick", function(e) {
-                    // push all nodes to a baseline position
-                    var k = 0.2 * e.alpha;
-                    nodes.forEach(function(o, i) {
-                        o.y += (svg_height - 80 - o.y) * k;
-                        o.x += (70*i + 80 - o.x) * k;
-                    });
-
                     // modify the links and the nodes
                     link.attr("x1", function(d) { return d.source.x; })
                         .attr("y1", function(d) { return d.source.y;
