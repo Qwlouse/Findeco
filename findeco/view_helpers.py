@@ -162,6 +162,21 @@ def assert_post_parameters(request, parameters):
             raise MissingPOSTParameter(p)
 
 
+def get_index_nodes_for_path(path):
+    path = path.strip().strip('/')
+    try:  # to get from cache
+        index_cache = backend.IndexCache.objects.get(path=path)
+        index_nodes = json.loads(index_cache.index_nodes)
+    except backend.IndexCache.DoesNotExist:
+        node = assert_node_for_path(path)
+        slot_list = backend.get_ordered_children_for(node)
+        index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
+        # write to cache
+        index_cache = json.dumps(index_nodes)
+        backend.IndexCache.objects.create(path=path, index_nodes=index_cache)
+    return index_nodes
+
+
 def create_user_info(user):
     user_info = dict(
         displayName=user.username,
