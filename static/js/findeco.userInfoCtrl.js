@@ -28,12 +28,11 @@
 function FindecoUserInfoCtrl($scope, Backend, $routeParams) {
     $scope.displayName = $routeParams.name.replace(/\//,'');
 
-    $scope.user = Backend.loadUserInfo($scope.displayName).success(function (data) {
+    Backend.loadUserInfo($scope.displayName).success(function (data) {
         if ( data.loadUserInfoResponse != undefined ) {
-            $scope.displayName = data.loadUserInfoResponse.userInfo.displayName;
-            $scope.description = data.loadUserInfoResponse.userInfo.description;
-            $scope.followees = data.loadUserInfoResponse.userInfo.followees;
-            $scope.followers = data.loadUserInfoResponse.userInfo.followers;
+            for ( var l in data.loadUserInfoResponse.userInfo ) {
+                $scope[l] = data.loadUserInfoResponse.userInfo[l];
+            }
         }
     });
 
