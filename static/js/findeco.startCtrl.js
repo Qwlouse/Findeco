@@ -23,23 +23,36 @@
  ****************************************************************************************/
 
 'use strict';
-/* App Module */
+/* Controllers */
 
-var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', 'ui.bootstrap'])
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.
-            when('/argument*param', {templateUrl: 'static/partials/default.html', controller: FindecoArgumentCtrl}).
-            when('/createArgument*param', {templateUrl: 'static/partials/createArgument.html', controller: FindecoCreateCtrl}).
-            when('/createAlternativeText*param', {templateUrl: 'static/partials/createAlternativeText.html', controller: FindecoCreateCtrl}).
-            when('/createNewText*param', {templateUrl: 'static/partials/createNewText.html', controller: FindecoCreateCtrl}).
-            when('/credits', {templateUrl: 'static/partials/credits.html', controller: FindecoDefaultCtrl}).
-            when('/datenschutz', {templateUrl: 'static/partials/datenschutz.html', controller: FindecoDefaultCtrl}).
-            when('/home', {templateUrl: 'static/partials/home.html', controller: FindecoDefaultCtrl}).
-            when('/impressum', {templateUrl: 'static/partials/impressum.html', controller: FindecoDefaultCtrl}).
-            when('/kontakt', {templateUrl: 'static/partials/kontakt.html', controller: FindecoDefaultCtrl}).
-            when('/login', {templateUrl: 'static/partials/user_login.html', controller: FindecoUserCtrl}).
-            when('/nutzungsbedingungen', {templateUrl: 'static/partials/nutzungsbedingungen.html', controller: FindecoDefaultCtrl}).
-            when('/profile*param', {templateUrl: 'static/partials/profile.html', controller: FindecoUserCtrl}).
-            when('/start', {templateUrl: 'static/partials/start.html', controller: FindecoStartCtrl}).
-            otherwise({templateUrl: 'static/partials/default.html', controller: FindecoDefaultCtrl});
-    }]);
+function FindecoStartCtrl($scope, Backend, User) {
+    $scope.followedUsersList = [];
+    $scope.followedNodesList = [];
+    $scope.ownNodesList = [];
+
+    $scope.user = User;
+
+    $scope.updateFollowedUsers = function () {
+        Backend.loadMicroblogging($scope.followedUsersList , THELocatoooooooor.getSanitizedPath());
+    };
+    $scope.updateFollowedNodes = function () {
+        Backend.loadMicroblogging($scope.followedNodesList, THELocatoooooooor.getSanitizedPath());
+    };
+    $scope.updateOwnNodes = function () {
+        Backend.loadMicroblogging($scope.ownNodesList, THELocatoooooooor.getSanitizedPath());
+    };
+
+    $scope.submit = function () {
+        // TODO: Cross-site-scripting protection!
+        Backend.storeMicroblogPost(THELocatoooooooor.getSanitizedPath(), $scope.microblogText).success(function () {
+            $scope.updateMicrobloggingList();
+            $scope.microblogText = '';
+        });
+    };
+
+    $scope.updateFollowedUsers();
+    $scope.updateFollowedNodes();
+    $scope.updateOwnNodes();
+}
+
+FindecoStartCtrl.$inject = ['$scope', 'Backend', 'User'];

@@ -24,6 +24,7 @@
 
 /*===================== Arguments ==========================*/
 ul.argumentList {
+    font-size: 12pt;
     list-style: none;
     color: #999999;
     padding: 5px 0 5px 0;
@@ -33,6 +34,10 @@ ul.argumentList {
 ul.argumentList li a {
     padding: 5px 0;
     width: 200px;
+}
+
+ul.argumentList li {
+    margin-bottom: 10px;
 }
 
 .argumentHeading {
