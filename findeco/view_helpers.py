@@ -21,7 +21,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from smtplib import SMTPException
 from django.contrib.auth.models import Permission, User
 from django.http import HttpResponse
 import functools
@@ -34,24 +33,15 @@ from node_storage.factory import create_argument, create_vote
 from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
-from node_storage.structure_parser import turn_into_valid_short_title, InvalidWikiStructure
+from node_storage.structure_parser import turn_into_valid_short_title
 from .paths import parse_suffix
 from .api_validation import validate_response
+from error_handling import *
 
 
 def json_response(data):
     return HttpResponse(json.dumps(data),
                         mimetype='application/json')
-
-
-def json_error_response(identifier, *args):
-    response = {'errorResponse': {
-        'errorID': identifier,
-        'additionalInfo': args,
-    }}
-    return HttpResponse(json.dumps(response),
-                        mimetype='application/json',
-                        status=406)
 
 
 def ValidPaths(*allowed_path_types):
@@ -78,46 +68,6 @@ def ValidPaths(*allowed_path_types):
         return wrapped
 
     return wrapper
-
-
-class ViewError(Exception):
-    def __init__(self, identifier, *args):
-        super(Exception, self).__init__(identifier)
-        self.identifier = identifier
-        self.additional_info = args
-
-
-UnknownNode = functools.partial(ViewError, 'UnknownNode')
-UnknownUser = functools.partial(ViewError, 'UnknownUser')
-UnknownEmailAddress = functools.partial(ViewError, 'UnknownEmailAddress')
-MissingPOSTParameter = functools.partial(ViewError, 'MissingPOSTParameter')
-IllegalPath = functools.partial(ViewError, 'IllegalPath')
-NotAuthenticated = functools.partial(ViewError, 'NotAuthenticated')
-PermissionDenied = functools.partial(ViewError, 'PermissionDenied')
-DisabledAccount = functools.partial(ViewError, 'DisabledAccount')
-UsernameNotAvailable = functools.partial(ViewError, 'UsernameNotAvailable')
-EmailAddressNotAvailiable = functools.partial(ViewError,
-                                              'EmailAddressNotAvailiable')
-InvalidUsername = functools.partial(ViewError, 'InvalidUsername')
-InvalidLogin = functools.partial(ViewError, 'InvalidLogin')
-InvalidEmailAddress = functools.partial(ViewError, 'InvalidEmailAddress')
-InvalidActivationKey = functools.partial(ViewError, 'InvalidActivationKey')
-InvalidURL = functools.partial(ViewError, 'InvalidURL')
-
-
-def ViewErrorHandling(f):
-    @functools.wraps(f)
-    def wrapped(*args, **kwargs):
-        try:
-            return f(*args, **kwargs)
-        except ViewError, e:
-            return json_error_response(e.identifier, *e.additional_info)
-        except InvalidWikiStructure, e:
-            return json_error_response('InvalidWikiStructure', e.message)
-        except SMTPException, e:
-            return json_error_response('ServerError', 'SMTPError', e.message)
-
-    return wrapped
 
 
 def assert_node_for_path(path):
@@ -160,6 +110,21 @@ def assert_post_parameters(request, parameters):
     for p in parameters:
         if not p in request.POST:
             raise MissingPOSTParameter(p)
+
+
+def get_index_nodes_for_path(path):
+    path = path.strip().strip('/')
+    try:  # to get from cache
+        index_cache = backend.IndexCache.objects.get(path=path)
+        index_nodes = json.loads(index_cache.index_nodes)
+    except backend.IndexCache.DoesNotExist:
+        node = assert_node_for_path(path)
+        slot_list = backend.get_ordered_children_for(node)
+        index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
+        # write to cache
+        index_cache = json.dumps(index_nodes)
+        backend.IndexCache.objects.create(path=path, index_nodes=index_cache)
+    return index_nodes
 
 
 def create_user_info(user):
@@ -381,6 +346,10 @@ def get_is_following(user_id, node):
         if v.nodes.order_by('id')[0] == node:
             isFollowing = 2  # explicit follow
     return isFollowing
+
+
+def get_is_flagging(user_id, node):
+    return node.spam_flags.filter(user_id=user_id).count()
 
 
 def follow_node(node, user_id):

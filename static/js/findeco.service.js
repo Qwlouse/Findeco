@@ -120,10 +120,10 @@ angular.module('FindecoServices', [])
             },
 
             loadArgument: function (indexNodes_out, path) {
-                var url = ['/.json_loadIndex', 'true', path].join('/');
+                var url = ['/.json_loadArgumentIndex', path].join('/');
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out,
-                    ['loadIndexResponse']));
+                    ['loadArgmumentIndexResponse']));
                 return promise;
             },
 

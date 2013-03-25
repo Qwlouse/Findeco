@@ -21,6 +21,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
+
+from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 import json
@@ -29,12 +31,10 @@ from findeco.tests.helpers import assert_is_error_response
 from node_storage import get_root_node
 from node_storage.factory import create_slot, create_user, create_textNode
 from node_storage.factory import create_vote, create_structureNode
-from node_storage.factory import create_argument
 from ..view_helpers import create_index_node_for_slot
-from ..view_helpers import create_index_node_for_argument
 
 
-class LoadIndexTest(TestCase):
+class LoadNodeTest(TestCase):
     def setUp(self):
         self.hans = create_user('hans')
         self.hugo = create_user('hugo')
@@ -84,20 +84,26 @@ class LoadIndexTest(TestCase):
         self.authors = [[self.hans], [self.hugo], [self.hans, self.hugo]]
 
     def test_on_root_node_yields_top_level_slots(self):
-        response = self.client.get(reverse('load_index', kwargs=dict(path='')))
+        response = self.client.get(reverse('load_node', kwargs=dict(path='')))
         parsed = json.loads(response.content)
-        self.assertIn('loadIndexResponse', parsed)
-        indexNodes = parsed['loadIndexResponse']
+        self.assertIn('loadNodeResponse', parsed)
+        indexNodes = parsed['loadNodeResponse']['index']
         self.assertEqual(len(indexNodes), len(self.top_slots))
         for indexNode, slot in zip(indexNodes, self.top_slots):
             self.assertEqual(indexNode, create_index_node_for_slot(slot))
 
+    def test_on_root_node_yields_correct_text_title(self):
+        response = self.client.get(reverse('load_node', kwargs=dict(path='')))
+        parsed = json.loads(response.content)
+        self.assertEqual(parsed['loadNodeResponse']['fullTitle'], "ROOT")
+        self.assertEqual(parsed['loadNodeResponse']['text'], "This is the root node")
+
     def test_on_structure_node_yields_child_slots(self):
         response = self.client.get(
-            reverse('load_index', kwargs=dict(path='Wahlprogramm.1')))
+            reverse('load_node', kwargs=dict(path='Wahlprogramm.1')))
         parsed = json.loads(response.content)
-        self.assertIn('loadIndexResponse', parsed)
-        index_nodes = parsed['loadIndexResponse']
+        self.assertIn('loadNodeResponse', parsed)
+        index_nodes = parsed['loadNodeResponse']['index']
         self.assertEqual(len(index_nodes), len(self.child_slots))
         for index_node, slot in zip(index_nodes, self.child_slots):
             n = create_index_node_for_slot(slot)
@@ -105,51 +111,12 @@ class LoadIndexTest(TestCase):
 
     def test_on_non_existing_node_gives_error_response(self):
         response = self.client.get(
-            reverse('load_index', kwargs=dict(path='doesnotexist.1')))
+            reverse('load_node', kwargs=dict(path='doesnotexist.1')))
         assert_is_error_response(response, "UnknownNode")
 
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo.1.pro.2']
         for p in illegal_paths:
             response = self.client.get(
-                reverse('load_index', kwargs=dict(path=p)))
+                reverse('load_node', kwargs=dict(path=p)))
             assert_is_error_response(response, "IllegalPath")
-
-
-class LoadArgumentIndexTest(TestCase):
-    def setUp(self):
-        self.hugo = create_user('hugo')
-        # create nodes
-        self.root = get_root_node()
-        self.foo = create_slot('foo')
-        self.root.append_child(self.foo)
-        self.foo1 = create_structureNode('FooooBar')
-        self.foo.append_child(self.foo1)
-        # add arguments
-        self.foo_pro = create_argument(self.foo, arg_type='pro',
-                                       text="weils geil ist",
-                                       authors=[self.hugo])
-        self.foo_neut = create_argument(self.foo, arg_type='neut',
-                                        text="kann noch geiler werden",
-                                        authors=[self.hugo])
-        self.foo_con = create_argument(self.foo, arg_type='con',
-                                       text="is aber leider root",
-                                       authors=[self.hugo])
-        # summary variables
-        self.foo_arguments = [self.foo_pro, self.foo_neut, self.foo_con]
-
-    def test_on_foo_returns_foo_arguments(self):
-        response = self.client.get(
-            reverse('load_argument_index', kwargs=dict(path='foo.1')))
-        parsed = json.loads(response.content)
-        self.assertIn('loadArgumentIndexResponse', parsed)
-        indexNodes = parsed['loadArgumentIndexResponse']
-        for indexNode, argument in zip(indexNodes, self.foo_arguments):
-            self.assertEqual(indexNode,
-                             create_index_node_for_argument(argument,
-                                                            self.foo1))
-
-    def test_on_non_existing_node_gives_error_response(self):
-        response = self.client.get(
-            reverse('load_argument_index', kwargs=dict(path='doesnotexist.1')))
-        assert_is_error_response(response, "UnknownNode")

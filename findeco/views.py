@@ -43,7 +43,10 @@ import random
 from findeco.api_validation import USERNAME
 
 from findeco.view_helpers import create_graph_data_node_for_structure_node
-from microblogging.system_messages import post_node_was_flagged_message, post_new_derivate_for_node_message, post_new_argument_for_node_message, post_node_was_unflagged_message
+from microblogging.system_messages import post_node_was_flagged_message
+from microblogging.system_messages import post_new_derivate_for_node_message
+from microblogging.system_messages import post_new_argument_for_node_message
+from microblogging.system_messages import post_node_was_unflagged_message
 import node_storage as backend
 from node_storage.factory import create_user
 from .paths import parse_suffix
@@ -53,29 +56,20 @@ from .view_helpers import *
 @ensure_csrf_cookie
 def home(request, path):
     with open("static/index.html", 'r') as index_html_file:
-        return HttpResponse(index_html_file.read(), mimetype = 'text/html')
+        return HttpResponse(index_html_file.read(), mimetype='text/html')
+
 
 @ViewErrorHandling
 def is_logged_in(request):
     assert_authentication(request)
-    return json_response({'isLoggedInResponse': {'displayName': request.user.username}})
+    return json_response({'isLoggedInResponse': {
+        'displayName': request.user.username}})
 
 
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def load_index(request, path):
-    path = path.strip().strip('/')
-    try:  # to get from cache
-        index_cache = backend.IndexCache.objects.get(path = path)
-        index_nodes = json.loads(index_cache.index_nodes)
-    except backend.IndexCache.DoesNotExist:
-        node = assert_node_for_path(path)
-        slot_list = backend.get_ordered_children_for(node)
-        index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
-        # write to cache
-        index_cache = json.dumps(index_nodes)
-        backend.IndexCache.objects.create(path = path, index_nodes = index_cache)
-    return json_response({'loadIndexResponse': index_nodes})
+    return json_response({'loadIndexResponse': get_index_nodes_for_path(path)})
 
 
 @ValidPaths("StructureNode")
@@ -85,7 +79,22 @@ def load_argument_index(request, path):
     node = assert_node_for_path(prefix)
     data = [create_index_node_for_argument(a, node) for a in
             node.arguments.order_by('index')]
-    return json_response({'loadIndexResponse': data})
+    return json_response({'loadArgumentIndexResponse': data})
+
+
+@ValidPaths("StructureNode")
+@ViewErrorHandling
+def load_node(request, path):
+    node = assert_node_for_path(path)
+    index_nodes = get_index_nodes_for_path(path)
+
+    return json_response({'loadNodeResponse': {
+        'fullTitle': node.title,
+        'isFollowing': get_is_following(request.user.id, node),
+        'isFlagging': get_is_flagging(request.user.id, node),
+        'text': node.text.text,
+        'index': index_nodes
+    }})
 
 
 @ValidPaths("StructureNode")
@@ -98,10 +107,10 @@ def load_graph_data(request, path, graph_data_type):
         slot_path = path.rsplit('.', 1)[0]
         slot = assert_node_for_path(slot_path)
         nodes = backend.get_ordered_children_for(slot)
-        sources = Q(derivates__in = nodes)
-        derivates = Q(sources__in = nodes)
+        sources = Q(derivates__in=nodes)
+        derivates = Q(sources__in=nodes)
         related_nodes = backend.Node.objects.filter(sources | derivates). \
-            exclude(id__in = [n.id for n in nodes]).distinct().all()
+            exclude(id__in=[n.id for n in nodes]).distinct().all()
     graph_data_children = map(create_graph_data_node_for_structure_node, nodes)
     graph_data_related = map(create_graph_data_node_for_structure_node,
                              related_nodes)
@@ -116,21 +125,19 @@ def load_text(request, path):
     path = path.strip().strip('/')
     try:
         # try to load from cache
-        t = backend.TextCache.objects.get(path = path)
+        t = backend.TextCache.objects.get(path=path)
         paragraphs = json.loads(t.paragraphs)
     except backend.TextCache.DoesNotExist:
         node = assert_node_for_path(path)
         paragraphs = create_paragraph_list_for_node(node, path)
         # write to cache
         t = json.dumps(paragraphs)
-        backend.TextCache.objects.create(path = path, paragraphs = t)
+        backend.TextCache.objects.create(path=path, paragraphs=t)
 
     for p in paragraphs:
-        node = backend.Node.objects.get(id = p['_node_id'])
-        p['isFollowing'] = get_is_following(
-            request.user.id, node)
-        p['isFlagging'] = node.spam_flags.filter(
-            user_id = request.user.id).count()
+        node = backend.Node.objects.get(id=p['_node_id'])
+        p['isFollowing'] = get_is_following(request.user.id, node)
+        p['isFlagging'] = get_is_flagging(request.user.id, node)
         del p['_node_id']
 
     return json_response({
@@ -153,7 +160,7 @@ def load_user_info(request, name):
 @ViewErrorHandling
 def load_user_settings(request):
     assert_authentication(request)
-    user = User.objects.get(id = request.user.id)
+    user = User.objects.get(id=request.user.id)
     return json_response({'loadUserSettingsResponse': {
         'userInfo': create_user_info(user),
         'userSettings': create_user_settings(user)
@@ -164,7 +171,7 @@ def load_user_settings(request):
 def login(request):
     username = request.POST['username']
     password = request.POST['password']
-    user = authenticate(username = username, password = password)
+    user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
             django_login(request, user)
@@ -200,7 +207,7 @@ def flag_node(request, path):
     user = request.user
     node = assert_node_for_path(path)
 
-    marks = node.spam_flags.filter(user = user.id).all()
+    marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 0:
         new_mark = backend.SpamFlag()
         new_mark.node = node
@@ -221,7 +228,7 @@ def unflag_node(request, path):
     user = request.user
     node = assert_node_for_path(path)
 
-    marks = node.spam_flags.filter(user = user.id).all()
+    marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 1:
         marks[0].delete()
         node.update_favorite_for_all_parents()
@@ -253,17 +260,19 @@ def mark_node_unfollow(request, path):
     unfollow_node(node, request.user.id)
     return json_response({'markNodeResponse': {}})
 
+
 @ViewErrorHandling
 def mark_user_follow(request, name):
     assert_authentication(request)
     user = request.user
-    followee = assert_active_user(username = name)
+    followee = assert_active_user(username=name)
     user.profile.followees.add(followee.profile)
     return json_response({'markUserResponse': {}})
 
+
 @ViewErrorHandling
 def mark_user_unfollow(request, name):
-    followee = assert_active_user(username = name)
+    followee = assert_active_user(username=name)
     user = request.user
     user.profile.followees.remove(followee.profile)
     return json_response({'markUserResponse': {}})
@@ -272,11 +281,11 @@ def mark_user_unfollow(request, name):
 @ViewErrorHandling
 def store_settings(request):
     assert_authentication(request)
-    user = User.objects.get(id = request.user.id)
+    user = User.objects.get(id=request.user.id)
     assert_post_parameters(request, ['description', 'displayName'])
     display_name = request.POST['displayName']
     if display_name != user.username:
-        is_available = User.objects.filter(username = display_name).count() == 0
+        is_available = User.objects.filter(username=display_name).count() == 0
         if not is_available:
             raise UsernameNotAvailable(display_name)
         else:
@@ -352,11 +361,11 @@ def account_registration(request):
         raise InvalidUsername(displayName)
 
     # Check for already existing Username
-    if User.objects.filter(username__iexact = displayName).count():
+    if User.objects.filter(username__iexact=displayName).count():
         raise UsernameNotAvailable(displayName)
 
     # Check for already existing Mail
-    if User.objects.filter(email = emailAddress).count():
+    if User.objects.filter(email=emailAddress).count():
         raise EmailAddressNotAvailiable(emailAddress)
 
     activationKey = random.getrandbits(256)
@@ -367,12 +376,12 @@ def account_registration(request):
               '/#activate/' + str(activationKey),
               settings.EMAIL_HOST_USER,
               [emailAddress],
-              fail_silently = False)
+              fail_silently=False)
     user = create_user(displayName,
-                       description = "",
-                       mail = emailAddress,
-                       password = password,
-                       groups = ['texters', 'voters', 'bloggers'])
+                       description="",
+                       mail=emailAddress,
+                       password=password,
+                       groups=['texters', 'voters', 'bloggers'])
     user.is_active = False
     user.profile.activationKey = activationKey
     user.save()
@@ -387,11 +396,11 @@ def account_activation(request):
 
     # Check for already existing Username
     if not ((User.objects.filter(
-            profile__activationKey__exact = activationKey).filter(
-            is_active = False).count()) == 1):
+            profile__activationKey__exact=activationKey).filter(
+            is_active=False).count()) == 1):
         raise InvalidActivationKey()
     else:
-        user = User.objects.get(profile__activationKey__exact = activationKey)
+        user = User.objects.get(profile__activationKey__exact=activationKey)
 
         user.profile.activationKey = ''
         user.is_active = True
@@ -406,7 +415,7 @@ def account_reset_request_by_name(request):
 
     assert_active_user(displayName)
 
-    user = User.objects.get(username = displayName)
+    user = User.objects.get(username=displayName)
     activationKey = random.getrandbits(256)
     user.profile.activationKey = activationKey
     user.save()
@@ -425,7 +434,7 @@ def account_reset_request_by_mail(request):
     emailAddress = request.POST['emailAddress']
     assert_active_user(emailAddress)
 
-    user = User.objects.get(email = emailAddress)
+    user = User.objects.get(email=emailAddress)
     activationKey = random.getrandbits(256)
     user.profile.activationKey = activationKey
     user.save()
@@ -445,11 +454,11 @@ def account_reset_confirmation(request):
 
     # Check for already existing Username
     if not ((User.objects.filter(
-            profile__activationKey__exact = activationKey).filter(
-            is_active = True).count()) == 1):
+            profile__activationKey__exact=activationKey).filter(
+            is_active=True).count()) == 1):
         raise InvalidActivationKey()
     else:
-        user = User.objects.get(profile__activationKey__exact = activationKey)
+        user = User.objects.get(profile__activationKey__exact=activationKey)
         user.profile.activationKey = ''
         password = User.objects.make_random_password()
         user.set_password(password)

@@ -51,11 +51,11 @@ urlpatterns = patterns(
         'findeco.views.load_graph_data',
         name='load_graph_data'),
 
-    url(r'^\.json_loadIndex/([Ff]alse/)?' + RESTRICTED_PATH + '$',
+    url(r'^\.json_loadIndex/' + RESTRICTED_PATH + '$',
         'findeco.views.load_index',
         name='load_index'),
 
-    url(r'^\.json_loadIndex/[Tt]rue/' + RESTRICTED_PATH + '$',
+    url(r'^\.json_loadArgumentIndex/' + RESTRICTED_PATH + '$',
         'findeco.views.load_argument_index',
         name='load_argument_index'),
 
@@ -83,6 +83,10 @@ urlpatterns = patterns(
     url(r'^\.json_loadText/' + PATH + '$',
         'findeco.views.load_text',
         name='load_text'),
+
+    url(r'^\.json_loadNode/' + RESTRICTED_PATH + '$',
+        'findeco.views.load_node',
+        name='load_node'),
 
     url(r'^\.json_loadUserInfo/' + USERNAME + '/?$',
         'findeco.views.load_user_info',

@@ -60,12 +60,7 @@ valid_routes = [
          url_name='load_index',
          kwargs=dict(path='some.1/path.2')),
 
-    dict(url='/.json_loadIndex/False/some.1/path.2',
-         func=load_index,
-         url_name='load_index',
-         kwargs=dict(path='some.1/path.2')),
-
-    dict(url='/.json_loadIndex/True/some.1/path.2',
+    dict(url='/.json_loadArgumentIndex/some.1/path.2',
          func=load_argument_index,
          url_name='load_argument_index',
          kwargs=dict(path='some.1/path.2')),

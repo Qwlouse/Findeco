@@ -35,6 +35,7 @@ from test_view_helpers import CreateUsersInfoTest, CreateUserSettingsTest, Creat
 from test_view_helpers import StoreStructureNodeTest, StoreArgumentTest, StoreDerivateTest
 from test_view_helpers import GetIsFollowingTest
 from test_load_index import LoadIndexTest, LoadArgumentIndexTest
+from test_load_node import LoadNodeTest
 from test_load_text import LoadTextTest
 from test_user_api import LoadUserInfoTest, LoadUserSettingsTest, StoreSettingsTest
 from test_store_text import StoreTextTest
