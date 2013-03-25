@@ -137,8 +137,15 @@ angular.module('FindecoServices', [])
 
             loadUserInfo: function (user) {
                 var url = ['/.json_loadUserInfo', user].join('/');
+                return $http.get(url);
+            },
+
+            loadNode: function (nodeInfo, path) {
+                var url = ['/.json_loadNode', path].join('/');
                 var promise = $http.get(url);
-                return promise;
+                promise.success( function (d) {
+                    angular.copy(d.loadNodeResponse, nodeInfo);
+                })
             },
 
             loadIndex: function (indexNodes_out, path) {

@@ -33,6 +33,8 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
     $scope.graphData = [];
     $scope.indexList = [];
     $scope.paragraphList = [];
+    $scope.nodeInfo = [];
+
     $scope.getPath = function (p) {
         return THELocatoooooooor.getSanitizedPath(p);
     };
@@ -75,24 +77,21 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
         });
     };
 
-    $scope.updateIndex = function () {
-        Backend.loadIndex($scope.indexList, $scope.path).success(function (data) {
-            if ( angular.equals(data.loadIndexResponse, []) ) {
-                $scope.updateParagraphList();
-            }
-        });
-    };
     $scope.updateGraph = function () {
         Backend.loadGraphData($scope.graphData, $scope.path).success(function(data) {
             $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
         });
     };
 
+    $scope.updateNode = function () {
+        Backend.loadNode($scope.nodeInfo, $scope.path)
+    };
+
     $scope.initialize = function() {
         if ( THELocatoooooooor.isArgumentPath() ) {
             //$scope.updateParagraphList();
         } else {
-            $scope.updateIndex();
+            $scope.updateNode();
             $scope.updateGraph();
         }
     };
