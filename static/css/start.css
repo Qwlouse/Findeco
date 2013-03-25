@@ -22,35 +22,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-'use strict';
-/* Controllers */
-
-function FindecoUserCtrl($scope, $location, User) {
-    $scope.user = User;
-
-    $scope.login = function () {
-        User.login($scope.username, $scope.password).success(function () {
-            $location.path('/');
-        });
-    };
-
-    $scope.logout = function() {
-        User.logout().success(function() {
-            $location.path('/');
-        });
-    };
-
-    $scope.getActiveClass = function(path) {
-        if ($location.path().substr(0, path.length) == path) {
-            return "activeTab";
-        } else {
-            return "";
-        }
-    };
-
-    $scope.storeUserSettings = function() {
-        User.storeSettings();
-    };
+.startColumn {
+    min-height: 50px;
+    width: 280px;
+    padding: 10px 25px 10px 10px;
+    float: left;
+    margin-left: 50px;
 }
-
-FindecoUserCtrl.$inject = ['$scope', '$location', 'User'];

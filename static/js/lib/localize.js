@@ -11,8 +11,9 @@
 angular.module('localization', []).
     factory('localize', ['$http', '$rootScope', '$window', '$filter', function ($http, $rootScope, $window, $filter) {
         var localize = {
+            // TODO: Make the language config work in a non insane way.
             // use the $window service to get the language of the user's browser
-            language:$window.navigator.userLanguage || $window.navigator.language,
+            language:'de-DE',//$window.navigator.userLanguage || $window.navigator.language,
             // array to hold the localized resource string entries
             dictionary:[],
             // flag to indicate if the service hs loaded the resource file

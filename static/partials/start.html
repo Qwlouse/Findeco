@@ -1,0 +1,44 @@
+<div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
+    <div class="contentBox startColumn">
+        <!--<div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
+        <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0;">
+            <form ng-submit="submit()">
+                <input type="text" placeholder="{{'_MicroblogPlaceholder_'|i18n}}" style="width: 100%;" ng-model="microblogText"><br/>
+            </form>
+        </li>!-->
+        <ul class="microblogList">
+            <li></li>
+            <a class="btn btn-primary" ng-click="updateFollowedUsers()">Update</a></li>
+            <li ng-repeat="microblogNode in followedUsersList">
+                <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+                    microblogNode.authorGroup[0].displayName }}</a>
+                <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
+                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="contentBox startColumn">
+        <ul class="microblogList">
+            <li></li>
+            <a class="btn btn-primary" ng-click="updateFollowedNodes()">Update</a></li>
+            <li ng-repeat="microblogNode in followedNodesList">
+                <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+                    microblogNode.authorGroup[0].displayName }}</a>
+                <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
+                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="contentBox startColumn">
+        <ul class="microblogList">
+            <li></li>
+            <a class="btn btn-primary" ng-click="updateOwnNodes()">Update</a></li>
+            <li ng-repeat="microblogNode in ownNodesList">
+                <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+                    microblogNode.authorGroup[0].displayName }}</a>
+                <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
+                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
+            </li>
+        </ul>
+    </div>
+</div>

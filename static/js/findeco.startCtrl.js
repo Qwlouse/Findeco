@@ -25,32 +25,34 @@
 'use strict';
 /* Controllers */
 
-function FindecoUserCtrl($scope, $location, User) {
+function FindecoStartCtrl($scope, Backend, User) {
+    $scope.followedUsersList = [];
+    $scope.followedNodesList = [];
+    $scope.ownNodesList = [];
+
     $scope.user = User;
 
-    $scope.login = function () {
-        User.login($scope.username, $scope.password).success(function () {
-            $location.path('/');
+    $scope.updateFollowedUsers = function () {
+        Backend.loadMicroblogging($scope.followedUsersList , THELocatoooooooor.getSanitizedPath());
+    };
+    $scope.updateFollowedNodes = function () {
+        Backend.loadMicroblogging($scope.followedNodesList, THELocatoooooooor.getSanitizedPath());
+    };
+    $scope.updateOwnNodes = function () {
+        Backend.loadMicroblogging($scope.ownNodesList, THELocatoooooooor.getSanitizedPath());
+    };
+
+    $scope.submit = function () {
+        // TODO: Cross-site-scripting protection!
+        Backend.storeMicroblogPost(THELocatoooooooor.getSanitizedPath(), $scope.microblogText).success(function () {
+            $scope.updateMicrobloggingList();
+            $scope.microblogText = '';
         });
     };
 
-    $scope.logout = function() {
-        User.logout().success(function() {
-            $location.path('/');
-        });
-    };
-
-    $scope.getActiveClass = function(path) {
-        if ($location.path().substr(0, path.length) == path) {
-            return "activeTab";
-        } else {
-            return "";
-        }
-    };
-
-    $scope.storeUserSettings = function() {
-        User.storeSettings();
-    };
+    $scope.updateFollowedUsers();
+    $scope.updateFollowedNodes();
+    $scope.updateOwnNodes();
 }
 
-FindecoUserCtrl.$inject = ['$scope', '$location', 'User'];
+FindecoStartCtrl.$inject = ['$scope', 'Backend', 'User'];

@@ -25,32 +25,34 @@
 'use strict';
 /* Controllers */
 
-function FindecoUserCtrl($scope, $location, User) {
-    $scope.user = User;
+function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
+    $scope.displayName = $routeParams.name.replace(/\//, '');
 
-    $scope.login = function () {
-        User.login($scope.username, $scope.password).success(function () {
-            $location.path('/');
+    $scope.follow = function (name, type) {
+        Backend.markUser(name, type).success(function (data) {
+            if (data.markUserResponse != undefined) {
+                $scope.loadUserInfo();
+            }
         });
     };
 
-    $scope.logout = function() {
-        User.logout().success(function() {
-            $location.path('/');
+    $scope.loadUserInfo = function () {
+        Backend.loadUserInfo($scope.displayName).success(function (data) {
+            if (data.loadUserInfoResponse != undefined) {
+                for (var l in data.loadUserInfoResponse.userInfo) {
+                    $scope[l] = data.loadUserInfoResponse.userInfo[l];
+                }
+                $scope.following = false;
+                for (var f in $scope.followees) {
+                    if ($scope.followees[f].displayName == User.displayName) {
+                        $scope.following = true;
+                    }
+                }
+            }
         });
-    };
+    }
 
-    $scope.getActiveClass = function(path) {
-        if ($location.path().substr(0, path.length) == path) {
-            return "activeTab";
-        } else {
-            return "";
-        }
-    };
-
-    $scope.storeUserSettings = function() {
-        User.storeSettings();
-    };
+    $scope.loadUserInfo();
 }
 
-FindecoUserCtrl.$inject = ['$scope', '$location', 'User'];
+FindecoUserInfoCtrl.$inject = ['$scope', 'Backend', '$routeParams', 'User'];
