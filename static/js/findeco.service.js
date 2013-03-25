@@ -52,7 +52,7 @@ angular.module('FindecoServices', [])
     .config(function ($httpProvider) {
         // This tells the httpProvider to not send JSON in POST requests but
         // return the entries as post parameters instead
-        $httpProvider.defaults.transformRequest = function(data){
+        $httpProvider.defaults.transformRequest = function (data) {
             if (data === undefined) {
                 return data;
             }
@@ -70,14 +70,14 @@ angular.module('FindecoServices', [])
                     data = data[attributes[i]];
                 }
                 array.length = 0;
-                angular.forEach(data, function(item) {
+                angular.forEach(data, function (item) {
                     array.push(item);
                 });
             }
         }
 
         return {
-            loadMicroblogging: function(microblogList_out, path, type, id) {
+            loadMicroblogging: function (microblogList_out, path, type, id) {
                 var pathComponents = ['/.json_loadMicroblogging'];
                 if (id != undefined) {
                     pathComponents.push(id);
@@ -90,59 +90,59 @@ angular.module('FindecoServices', [])
                 var url = pathComponents.join('/');
                 var promise = $http.get(url);
                 promise.success(fillArray(microblogList_out,
-                                          ['loadMicrobloggingResponse']));
+                    ['loadMicrobloggingResponse']));
                 return promise;
             },
 
-            storeMarkUser: function(displayName, markType) {
+            storeMarkUser: function (displayName, markType) {
                 var pathComponents = ['/.json_storeMarkUser', markType, displayName];
                 var url = pathComponents.join('/');
                 return $http.post(url, {});
             },
 
-            storeMicroblogPost: function(path, microblogText) {
+            storeMicroblogPost: function (path, microblogText) {
                 var pathComponents = ['/.json_storeMicroblogPost', path];
                 var url = pathComponents.join('/');
                 return $http.post(url, {microblogText: microblogText});
             },
 
-            storeText: function(path, params) {
+            storeText: function (path, params) {
                 var pathComponents = ['/.json_storeText', path];
                 var url = pathComponents.join('/');
-                console.log(path,params);
+                console.log(path, params);
                 return $http.post(url, params);
             },
 
-            loadArgument: function(indexNodes_out, path) {
+            loadArgument: function (indexNodes_out, path) {
                 var url = ['/.json_loadIndex', 'true', path].join('/');
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out,
-                                          ['loadIndexResponse']));
+                    ['loadIndexResponse']));
                 return promise;
             },
 
-            loadText: function(paragraphList_out, path) {
+            loadText: function (paragraphList_out, path) {
                 var url = ['/.json_loadText', path].join('/');
                 var promise = $http.get(url);
                 promise.success(fillArray(paragraphList_out,
-                                          ['loadTextResponse', 'paragraphs']));
+                    ['loadTextResponse', 'paragraphs']));
                 return promise;
             },
 
-            loadUserInfo: function(user) {
+            loadUserInfo: function (user) {
                 var url = ['/.json_loadUserInfo', user].join('/');
                 var promise = $http.get(url);
                 return promise;
             },
 
-            loadIndex: function(indexNodes_out, path) {
+            loadIndex: function (indexNodes_out, path) {
                 var url = ['/.json_loadIndex', path].join('/');
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out, ['loadIndexResponse']));
                 return promise;
             },
 
-            loadGraphData: function(graphData_out, path, graphType) {
+            loadGraphData: function (graphData_out, path, graphType) {
                 if (graphType == undefined) {
                     graphType = "full";
                 }
@@ -155,15 +155,15 @@ angular.module('FindecoServices', [])
         };
 
     })
-    .factory('User', function($http) {
+    .factory('User', function ($http) {
         var userInfo = {
-            isLoggedIn : false,
-            displayName : "",
-            description : ""
+            isLoggedIn: false,
+            displayName: "",
+            description: ""
         };
 
         userInfo.login = function (username, password) {
-            var promise = $http.post('/.json_login/', {username: username, password:password});
+            var promise = $http.post('/.json_login/', {username: username, password: password});
             promise.success(function (d) {
                 var data = d.loginResponse.userInfo;
                 userInfo.isLoggedIn = true;
@@ -174,7 +174,7 @@ angular.module('FindecoServices', [])
             return promise;
         };
 
-        userInfo.logout = function() {
+        userInfo.logout = function () {
             return $http.get('/.json_logout/').success(function () {
                 userInfo.isLoggedIn = false;
                 userInfo.description = "";
@@ -182,7 +182,7 @@ angular.module('FindecoServices', [])
             });
         };
 
-        userInfo.loadSettings = function() {
+        userInfo.loadSettings = function () {
             var promise = $http.get('.json_loadUserSettings/');
             promise.success(function (d) {
                 var data = d.loadUserSettingsResponse.userInfo;
@@ -193,7 +193,7 @@ angular.module('FindecoServices', [])
             return promise;
         };
 
-        userInfo.storeSettings = function() {
+        userInfo.storeSettings = function () {
             return $http.post('.json_storeSettings/', {displayName: userInfo.displayName, description: userInfo.description});
         };
 
@@ -201,14 +201,14 @@ angular.module('FindecoServices', [])
 
         return userInfo;
     })
-    .factory('TMP', function() {
+    .factory('TMP', function () {
         var tmp = {};
         return tmp;
     })
-    .factory('Message', function() {
-        var tmp = {messageList:[]};
+    .factory('Message', function () {
+        var tmp = {messageList: []};
 
-        tmp.send = function (type,message) {
+        tmp.send = function (type, message) {
             this.messageList.push({type: type, msg: message});
         }
 
