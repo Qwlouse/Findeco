@@ -74,7 +74,7 @@ In return you get a JSON response from the server.
 </tbody></table>
 
 <br>
-<b><a name="FunctionSearch">Function::login</a></b>
+<b><a name="FunctionLogin">Function::login</a></b>
 <table><tbody>
     <tr><td>Call Structure:</td><td>.json_login</td></tr>
     <tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
@@ -92,6 +92,17 @@ In return you get a JSON response from the server.
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>Description:</td><td>Logout function.</td></tr>
     <tr><td>Return:</td><td><a href="#JSONlogoutResponse">JSON::logoutResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionSearch">Function::search</a></b>
+<table><tbody>
+<tr><td>Call Structure:</td><td>.json_search/searchField/searchString</td></tr>
+<tr><td>GET Parameters:</td><td><a href="#ValueSearchField">(String) searchField</a></td></tr>
+<tr><td>&nbsp;</td><td>(String) searchString</td></tr>
+<tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+<tr><td>Description:</td><td>Search for occurances of searchString in <a href="#ValueSearchField">searchField</a>.</td></tr>
+<tr><td>Return:</td><td><a href="#JSONsearchResponse">JSON::searchResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -291,6 +302,15 @@ Store a new Textnode or Argument in the hierarchy attached to a StructureNode (s
     <tr><td>Type:</td><td>String</td></tr>
     <tr><td>Description:</td><td>The type of marking to associate with the given Node. </td></tr>
     <tr><td>Supported Values:</td><td>[spam|notspam|follow|unfollow]</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="ValueSearchField">Value::searchField</a></b>
+<table><tbody>
+<tr><td>Parametername:</td><td>searchField</td></tr>
+<tr><td>Type:</td><td>String</td></tr>
+<tr><td>Description:</td><td>The list of fields where to search. This can be related to users (names, descriptions, etc), content (proposals, arguments) and/or microblogging.</td></tr>
+<tr><td>Supported Values:</td><td>[user|content|microblogging]</td></tr>
 </tbody></table>
 
 <br>
@@ -573,6 +593,29 @@ available. </td></tr>
 <b><a name="JSONmarkNodeResponse">JSON::markNodeResponse</a></b>
 <table><tbody>
     <tr><td>Comment:</td><td>The markNodeResponse is always empty. </td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONsearchResponse">JSON::searchResponse</a></b>
+<table><tbody>
+    <tr><td>Content:</td><td><a href="#JSONsearchResponseList">JSON::searchResponseList</a></td></tr>
+    <tr><td>Comment:</td><td>Contains one or more lists of search results (format of ).</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONsearchResponseList">JSON::searchResponseList</a></b>
+<table><tbody>
+<tr><td>Content:</td><td><a href="#ValueSearchField">Value::searchField</a></td></tr>
+<tr><td>&nbsp;</td><td><a href="#JSONsearchEntry">JSON::searchEntry</a></td></tr>
+<tr><td>Comment:</td><td>Contains a list of search entries for the <a href="#>ValueSearchField">searchField</a>.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONsearchEntry">JSON::searchEntry</a></b>
+<table><tbody>
+<tr><td>Content:</td><td>Value::url</td></tr>
+<tr><td>&nbsp;</td><td>Value::snippet</td></tr>
+<tr><td>Comment:</td><td>Contains a url and a snippet.</td></tr>
 </tbody></table>
 
 <br>
