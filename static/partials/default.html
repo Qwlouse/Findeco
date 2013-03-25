@@ -38,7 +38,14 @@
         </ul>
         <div class="btn btn-primary" ng-click="relocate('createNewText')" data-i18n="_createNewText_"><b>create new text</b></div>
         <div class="btn btn-primary" ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_loadText_"><b>load text</b></div>
-        <p class="mainText" ng-repeat="paragraph in paragraphList" ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></p>
+        <div class="mainText" ng-repeat="paragraph in paragraphList">
+            <a ng-click="markNode(paragraph.path, paragraph.isFollowing)" class="follow-star" ng-switch on="paragraph.isFollowing">
+                <img ng-switch-when="1" src="static/images/star1.png" alt="transitive following" />
+                <img ng-switch-when="2" src="static/images/star2.png" alt="direct following" />
+                <img ng-switch-default src="static/images/star0.png" alt="no following" />
+            </a>
+            <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
+        </div>
         <div class="btn btn-primary" ng-show="isTextLoaded" ng-click="relocate('createAlternativeText')" data-i18n="_createAlternativeText_"><b>create alternative text</b></div>
     </div>
 
