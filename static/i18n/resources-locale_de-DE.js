@@ -70,6 +70,79 @@
         "key":"_argumentsNewCon_",
         "value":"Neues Contra Argument",
         "description":""
+    },
+    {
+        "key":"_argumentsNew_",
+        "value":"Neues Argument",
+        "description":""
+    },
+    {
+        "key":"_argumentsNewTextHere_",
+        "value":"Hier können sie ihr neues Argument eingeben....",
+        "description":""
+    },
+    {
+        "key":"_argumentsCreateSendBtn_",
+        "value":"Absenden",
+        "description":""
+    },
+    {
+        "key":"_textNew_",
+        "value":"Neuer Abschnitt",
+        "description":""
+    },
+    {
+        "key":"_alternativeTextNew_",
+        "value":"Neuer Alternativer Text",
+        "description":""
+    },
+    {
+        "key":"_alternativesNewTextHere_",
+        "value":"Hier können sie ihren neuen Text eingeben....",
+        "description":""
+    },
+    {
+        "key":"_textNewTextHere_",
+        "value":"Hier können sie ihren neuen Text eingeben....",
+        "description":""
+    },
+    {
+        "key":"_textCreateSendBtn_",
+        "value":"Absenden",
+        "description":""
+    },
+    {
+        "key":"_alternativesCreateSendBtn_",
+        "value":"Absenden",
+        "description":""
+    },
+    
+    
+    {
+        "key":"_pro_",
+        "value":"Pro",
+        "description":""
+    },
+    {
+        "key":"_con_",
+        "value":"Contra",
+        "description":""
+    },
+    {
+        "key":"_neut_",
+        "value":"Neutral",
+        "description":""
+    },
+    {
+        "key":"_microblogPlaceholder_",
+        "value":"Hier Microblogtext eingeben",
+        "description":""
+    },
+    {
+        "key":"_microblogSendBtn_",
+        "value":"Senden",
+        "description":""
     }
+    
     
 ]
