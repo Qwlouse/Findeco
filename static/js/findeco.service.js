@@ -88,6 +88,7 @@ angular.module('FindecoServices', [])
                 pathComponents.push(type);
                 pathComponents.push(path);
                 var url = pathComponents.join('/');
+                url = url.replace("//","/");
                 var promise = $http.get(url);
                 promise.success(fillArray(microblogList_out,
                     ['loadMicrobloggingResponse']));
@@ -97,23 +98,27 @@ angular.module('FindecoServices', [])
             markUser: function (displayName, markType) {
                 var pathComponents = ['/.json_markUser', markType, displayName];
                 var url = pathComponents.join('/');
+                url = url.replace("//","/");
                 return $http.post(url, {});
             },
 
             markNode: function (nodePath, markType) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
                 var url = pathComponents.join('/');
+                url = url.replace("//","/");
                 return $http.get(url);
             },
 
             storeMicroblogPost: function (path, microblogText) {
                 var pathComponents = ['/.json_storeMicroblogPost', path];
+                url = url.replace("//","/");
                 var url = pathComponents.join('/');
                 return $http.post(url, {microblogText: microblogText});
             },
 
             storeText: function (path, params) {
                 var pathComponents = ['/.json_storeText', path];
+                url = url.replace("//","/");
                 var url = pathComponents.join('/');
                 console.log(path, params);
                 return $http.post(url, params);
@@ -121,6 +126,7 @@ angular.module('FindecoServices', [])
 
             loadArgument: function (indexNodes_out, path) {
                 var url = ['/.json_loadArgumentIndex', path].join('/');
+                url = url.replace("//","/");
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out,
                     ['loadArgmumentIndexResponse']));
@@ -129,6 +135,7 @@ angular.module('FindecoServices', [])
 
             loadText: function (paragraphList_out, path) {
                 var url = ['/.json_loadText', path].join('/');
+                url = url.replace("//","/");
                 var promise = $http.get(url);
                 promise.success(fillArray(paragraphList_out,
                     ['loadTextResponse', 'paragraphs']));
@@ -137,12 +144,14 @@ angular.module('FindecoServices', [])
 
             loadUserInfo: function (user) {
                 var url = ['/.json_loadUserInfo', user].join('/');
+                url = url.replace("//","/");
                 var promise = $http.get(url);
                 return promise;
             },
 
             loadIndex: function (indexNodes_out, path) {
                 var url = ['/.json_loadIndex', path].join('/');
+                url = url.replace("//","/");
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out, ['loadIndexResponse']));
                 return promise;
@@ -153,6 +162,7 @@ angular.module('FindecoServices', [])
                     graphType = "full";
                 }
                 var url = ['/.json_loadGraphData', graphType, path].join('/');
+                url = url.replace("//","/");
                 var promise = $http.get(url);
 
                 promise.success(fillArray(graphData_out, ['loadGraphDataResponse', 'graphDataChildren']));
