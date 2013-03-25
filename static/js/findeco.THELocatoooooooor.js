@@ -43,7 +43,7 @@ theLocatoooooooor.prototype.getPath = function () {
     }
 
     // We're going to hell for this. Sorry folks.
-    var path = (document.location.hash + '/').match(/([_A-z]+\.\d+(\.(pro|con|neut)\.\d+)?\/)+/g);
+    var path = (document.location.hash + '/').match(/([-_A-z0-9]+\.\d+(\.(pro|con|neut)\.\d+)?\/)+/g);
     if (path == null || path.length == 0) {
         path = '/';
     } else {

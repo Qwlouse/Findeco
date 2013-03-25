@@ -112,6 +112,13 @@ urlpatterns = patterns(
         'findeco.views.unflag_node',
         name='unflag_node'),
 
+    url(r'^\.json_markUser/follow/' + USERNAME + '$',
+        'findeco.views.mark_user_follow',
+        name = 'mark_user_follow'),
+
+    url(r'^\.json_markUser/unfollow/' + USERNAME + '$',
+        'findeco.views.mark_user_unfollow',
+        name = 'mark_user_unfollow'),
 
     url(r'^\.json_storeMicroblogPost/' + PATH + '$',
         'microblogging.views.store_microblog_post',
