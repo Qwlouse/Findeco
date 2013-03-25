@@ -85,7 +85,7 @@ def load_argument_index(request, path):
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def load_node(request, path):
-    node = get_node_for_path(path)
+    node = assert_node_for_path(path)
     index_nodes = get_index_nodes_for_path(path)
 
     return json_response({'loadNodeResponse': {
