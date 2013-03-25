@@ -94,8 +94,8 @@ angular.module('FindecoServices', [])
                 return promise;
             },
 
-            storeMarkUser: function (displayName, markType) {
-                var pathComponents = ['/.json_storeMarkUser', markType, displayName];
+            markUser: function (displayName, markType) {
+                var pathComponents = ['/.json_markUser', markType, displayName];
                 var url = pathComponents.join('/');
                 return $http.post(url, {});
             },
@@ -156,9 +156,6 @@ angular.module('FindecoServices', [])
 
     })
     .factory('User', function ($http, localize) {
-    	
-    	localize.setLanguage('de-DE');
-        
     	var userInfo = {
             isLoggedIn: false,
             displayName: "",

@@ -29,8 +29,8 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
     $scope.displayName = $routeParams.name.replace(/\//, '');
 
     $scope.follow = function (name, type) {
-        Backend.storeMarkUser(name, type).success(function (data) {
-            if (data.storeMarkUserResponse != undefined) {
+        Backend.markUser(name, type).success(function (data) {
+            if (data.markUserResponse != undefined) {
                 $scope.loadUserInfo();
             }
         });
