@@ -84,6 +84,10 @@ function FindecoUserCtrl($scope, $location, User, $routeParams) {
         }
     };
 
+    $scope.searchSubmit = function() {
+        $location.path('search/'+$scope.searchString);
+    };
+
     $scope.storeUserSettings = function() {
         User.storeSettings();
     };

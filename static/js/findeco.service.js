@@ -179,7 +179,6 @@ angular.module('FindecoServices', [])
             search: function (searchResults, search_string) {
                 var searchFields = "user_content_microblogging";
                 var promise = $http.get('.json_search/'+searchFields+'/'+search_string);
-                console.log("search in service called. Search string was "+search_string);
 
                 promise.success(function (d) {
                     angular.copy(d.searchResponse, searchResults);

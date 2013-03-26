@@ -67,8 +67,8 @@
                             <li class="{{getActiveClass('/content')}}"><a href="#">Inhalte</a></li>
                             <li style="margin-left: 200px">
                                 <div class="searchBox">
-                                    <form action="/search/">
-                                        <input type="" name="searchField"/>
+                                    <form ng-submit="searchSubmit()">
+                                        <input type="" name="searchField" ng-model="searchString" />
                                         <button class="searchButton" value=""></button>
                                     </form>
                                 </div>

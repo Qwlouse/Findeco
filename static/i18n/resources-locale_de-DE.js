@@ -162,7 +162,7 @@
     },
     {
         "key":"_searchMicrobloggingResults_",
-        "value":"Suchergebnisse zu Usern",
+        "value":"Suchergebnisse aus dem Microblogging",
         "description":""
     }
     
