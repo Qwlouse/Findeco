@@ -44,7 +44,11 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
     };
 
     $scope.parse = function (text, shortTitle) {
-        return Parser.parse(text, shortTitle, true);
+        if (text != undefined) {
+            return Parser.parse(text, shortTitle, true);
+        } else {
+            return "";
+        }
     };
 
     $scope.markNode = function (nodePath, markTypeInteger) {

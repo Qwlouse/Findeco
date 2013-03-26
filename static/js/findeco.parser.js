@@ -32,7 +32,7 @@ ClassParser.prototype.errorState = false;
 
 ClassParser.prototype.isErrorState = function() {
     return Parser.errorState;
-}
+};
 
 ClassParser.prototype.parse = function(text, shortTitle,disableValidation){
     var wikiText = '';

@@ -32,12 +32,12 @@
     <div id="centerColumn" class="contentBox">
         <h1>{{ nodeInfo.fullTitle }}</h1>
         <div findeco-graph data="graphData" path="path" class="graph"></div>
-        <p ng-bind-html-unsafe="parse(nodeInfo.text, path)"></p>
-        <ul class="indexList">
-            <li ng-repeat="index in nodeInfo.index">
+        <p ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
+        <div ng-repeat="index in nodeInfo.index">
+            <h2>
                 <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
-            </li>
-        </ul>
+            </h2>
+        </div>
         <div class="btn btn-primary" ng-click="relocate('createNewText')" data-i18n="_textNew_"><b>create new text</b></div>
         <div class="btn btn-primary" ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_textLoad_"><b>load text</b></div>
         <div class="mainText" ng-repeat="paragraph in paragraphList">

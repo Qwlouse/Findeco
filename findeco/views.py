@@ -92,7 +92,7 @@ def load_node(request, path):
         'fullTitle': node.title,
         'isFollowing': get_is_following(request.user.id, node),
         'isFlagging': get_is_flagging(request.user.id, node),
-        'text': node.text.text,
+        'wikiText': node.text.text,
         'index': index_nodes
     }})
 
@@ -276,6 +276,17 @@ def mark_user_unfollow(request, name):
     user = request.user
     user.profile.followees.remove(followee.profile)
     return json_response({'markUserResponse': {}})
+
+
+@ViewErrorHandling
+def search(request, search_fields, search_string):
+    node_query = get_query(search_string, ['text', ])
+    found_texts = backend.Text.objects.filter(node_query).order_by("-id")
+    search_results = []
+    for text_node in found_texts:
+        search_results.append({"url": text_node.node.get_a_path(),
+                               "snippet": text_node.text[:min(len(text_node.text), 140)]})
+    return json_response({'searchResponse': [{'searchField': "content", 'searchEntries': search_results}]})
 
 
 @ViewErrorHandling
