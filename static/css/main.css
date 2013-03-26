@@ -50,6 +50,14 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Monda", sans-serif;
 }
 
+h1 {
+    font-size: 30pt;
+}
+
+h2 {
+    font-size: 20pt;
+}
+
 /* general style for links */
 a {
     color: #e07b01;

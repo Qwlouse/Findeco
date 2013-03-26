@@ -96,7 +96,7 @@ class LoadNodeTest(TestCase):
         response = self.client.get(reverse('load_node', kwargs=dict(path='')))
         parsed = json.loads(response.content)
         self.assertEqual(parsed['loadNodeResponse']['fullTitle'], "ROOT")
-        self.assertEqual(parsed['loadNodeResponse']['text'], "This is the root node")
+        self.assertEqual(parsed['loadNodeResponse']['wikiText'], "This is the root node.")
 
     def test_on_structure_node_yields_child_slots(self):
         response = self.client.get(

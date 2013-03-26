@@ -91,7 +91,7 @@ loadNodeResponse_schema = {
         'fullTitle': string,
         'isFollowing': integer,
         'isFlagging': integer,
-        'text': string,
+        'wikiText': string,
         'index': [indexNode_schema, None]
     }}
 

@@ -22,12 +22,31 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadIndex">Function::loadIndex</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadIndex/[loadArgument/]path</td></tr>
+    <tr><td>Call Structure:</td><td>.json_loadIndex/path</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
-    <tr><td>&nbsp;</td><td><a href="#ValueLoadArgument">(Boolean) loadArgument</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
-    <tr><td>Description:</td><td>Loads the index of the given path to a StructureNode (see <a href="#ValuePath">Value::Path</a>). loadArgument is optional, the default is false.</td></tr>
+    <tr><td>Description:</td><td>Loads the index of the given path to a StructureNode (see <a href="#ValuePath">Value::Path</a>). </td></tr>
     <tr><td>Return:</td><td><a href="#JSONloadIndexResponse">JSON::loadIndexResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionLoadArgumentIndex">Function::loadArgumentIndex</a></b>
+<table><tbody>
+    <tr><td>Call Structure:</td><td>.json_loadIndex/path</td></tr>
+    <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+    <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+    <tr><td>Description:</td><td>Loads the argument index for the given path to a StructureNode (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+    <tr><td>Return:</td><td><a href="#JSONloadIndexResponse">JSON::loadArgumentIndexResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
+</tbody></table>
+
+<br>
+<b><a name="FunctionLoadNode">Function::loadNode</a></b>
+<table><tbody>
+    <tr><td>Call Structure:</td><td>.json_loadNode/path</td></tr>
+    <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+    <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
+    <tr><td>Description:</td><td>Loads the fullTitle, index, and some additional information of the given path to a StructureNode (see <a href="#ValuePath">Value::Path</a>)</td></tr>
+    <tr><td>Return:</td><td><a href="#JSONloadNodeResponse">JSON::loadNodeResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
 <br>
@@ -522,6 +541,13 @@ available. </td></tr>
 </tbody></table>
 
 <br>
+<b><a name="JSONindexList">JSON::indexList</a></b>
+<table><tbody>
+    <tr><td>Content:</td><td><a href="#JSONindexNode">JSON::indexNode</a></td></tr>
+    <tr><td>Comment:</td><td>May contain multiple or no nodes.</td></tr>
+</tbody></table>
+
+<br>
 <b><a name="JSONindexNode">JSON::indexNode</a></b>
 <table><tbody>
     <tr><td>Content:</td><td><a href="#ValueShortTitle">Value::shortTitle</a></td></tr>
@@ -546,6 +572,25 @@ available. </td></tr>
     <tr><td>Comment:</td><td>May contain multiple nodes.</td></tr>
     <tr><td>Example:</td><td>{"loadIndexResponse":[{"shortTitle":"subsubtopic","index":1,"fullTitle":"This is a subsubtopic!","authorGroup":["author1","author2"]},{"shortTitle":"subsubtopic2","index":1,"fullTitle":"This is a second subsubtopic!","authorGroup":["author1","author3"]}]}</td></tr>
 </tbody></table>
+
+<br>
+<b><a name="JSONloadArgumentIndexResponse">JSON::loadArgumentIndexResponse</a></b>
+<table><tbody>
+    <tr><td>Content:</td><td><a href="#JSONindexNode">JSON::indexNode</a></td></tr>
+    <tr><td>Comment:</td><td>May contain multiple nodes.</td></tr>
+</tbody></table>
+
+<br>
+<b><a name="JSONloadNodeResponse">JSON::JSONloadNodeResponse</a></b>
+<table><tbody>
+    <tr><td>Content:</td><td><a href="#JSONindexList">JSON::indexList</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueFullTitle">Value::fullTitle</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueWikiText">Value::wikiText</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueIsFollowing">Value::isFollowing</a></td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValueIsFlagging">Value::isFlagging</a></td></tr>
+    <tr><td>Comment: Contains only the wikiText for this node, and it is without heading.</td><td></td></tr>
+</tbody></table>
+
 
 <br>
 <b><a name="JSONloadMicrobloggingResponse">JSON::loadMicrobloggingResponse</a></b>

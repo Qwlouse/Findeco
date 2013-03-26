@@ -92,7 +92,7 @@ def load_node(request, path):
         'fullTitle': node.title,
         'isFollowing': get_is_following(request.user.id, node),
         'isFlagging': get_is_flagging(request.user.id, node),
-        'text': node.text.text,
+        'wikiText': node.text.text,
         'index': index_nodes
     }})
 
