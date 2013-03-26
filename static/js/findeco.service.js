@@ -184,7 +184,15 @@ angular.module('FindecoServices', [])
             displayName: "",
             description: ""
         };
-
+    	
+        userInfo.register = function (displayName, password, emailAddress) {
+            var promise = $http.post('/.json_accountRegistration/', {displayName: displayName, password: password, emailAddress:emailAddress});
+            promise.success(function (d) {
+            	console.log ('Please Check Mails');
+            });
+            return promise;
+        };
+        
         userInfo.login = function (username, password) {
             var promise = $http.post('/.json_login/', {username: username, password: password});
             promise.success(function (d) {

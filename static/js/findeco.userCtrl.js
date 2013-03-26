@@ -39,6 +39,31 @@ function FindecoUserCtrl($scope, $location, User) {
             $location.path('/');
         });
     };
+    
+    $scope.register = function() {
+    	console.log($scope.TOS)
+    	if (($scope.password == undefined) || ($scope.mail ==  undefined) || ($scope.username ==  undefined)) {
+    		console.log("Missing Fields");
+    		return "";
+    	}
+    	if ($scope.password != $scope.password2) {
+    		console.log("Not matching Passwords");
+    		return "";
+    	}
+    	
+    	if ($scope.TOS != true) {
+    		console.log("TOS not checked");
+    		return "";
+    	}
+    	if ($scope.DPR != true) {
+    		console.log("DPR not checked");
+    		return "";
+    	}
+     	
+    	User.register($scope.username, $scope.password, $scope.mail).success(function () {
+            $location.path('/');
+        });
+    };
 
     $scope.getActiveClass = function(path) {
         if ($location.path().substr(0, path.length) == path) {
