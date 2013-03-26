@@ -34,6 +34,7 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
     $scope.indexList = [];
     $scope.paragraphList = [];
     $scope.nodeInfo = [];
+    $scope.sections = [];
 
     $scope.getPath = function (p) {
         return THELocatoooooooor.getSanitizedPath(p);
@@ -51,18 +52,14 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
         }
     };
 
-    $scope.markNode = function (nodePath, markTypeInteger) {
+    $scope.markNode = function (paragraph) {
         var markType = "follow";
-        if (markTypeInteger == 2) {markType = "unfollow";}
-        Backend.markNode(nodePath, markType).success(function () {
-            for (var i = 0; i < $scope.paragraphList.length; i++) {
-                if ($scope.paragraphList[i].path == nodePath) {
-                    if (markTypeInteger == 2) {
-                        $scope.paragraphList[i].isFollowing = 0;
-                    } else {
-                        $scope.paragraphList[i].isFollowing = 2;
-                    }
-                }
+        if (paragraph.isFollowing == 2) {markType = "unfollow";}
+        Backend.markNode(paragraph.path, markType).success(function () {
+            if (paragraph.isFollowing == 2) {
+                paragraph.isFollowing = 0;
+            } else {
+                paragraph.isFollowing = 2;
             }
         });
     };
@@ -88,7 +85,29 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
     };
 
     $scope.updateNode = function () {
-        Backend.loadNode($scope.nodeInfo, $scope.path)
+        Backend.loadNode($scope.nodeInfo, $scope.path).success(function (d) {
+            $scope.sections.length=0;
+            for (var i = 0; i < $scope.nodeInfo.indexList.length; ++i) {
+                var section = angular.copy($scope.nodeInfo.indexList[i]);
+                section.paragraphs = [];
+                section.isLoaded = false;
+                section.path = THELocatoooooooor.getPathForIndex(section.shortTitle, section.index);
+                $scope.sections.push(section);
+                console.log(section);
+            }
+        });
+    };
+
+    $scope.loadSection = function (section) {
+        if (!section.isLoaded ) {
+            Backend.loadText(section.paragraphs, section.path).success(function (d) {
+                console.log(section.paragraphs);
+                section.isFollowing = d.loadTextResponse.isFollowing;
+                section.isFlagging = d.loadTextResponse.isFlagging;
+                section.isLoaded = true;
+            });
+
+        }
     };
 
     $scope.initialize = function() {

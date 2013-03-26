@@ -88,6 +88,12 @@ theLocatoooooooor.prototype.getSanitizedPath = function (target) {
     }
     return sanePath;
 };
+theLocatoooooooor.prototype.getPathForIndex = function (shortTitle, index) {
+    var parts = this.getPathParts();
+    parts.push(shortTitle + '.' + index);
+    return parts.join('/');
+};
+
 
 theLocatoooooooor.prototype.getSanitizedArgumentFreePath = function () {
     var tmp = this.getSanitizedPath();

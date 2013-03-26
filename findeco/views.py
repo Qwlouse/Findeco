@@ -129,7 +129,7 @@ def load_text(request, path):
         paragraphs = json.loads(t.paragraphs)
     except backend.TextCache.DoesNotExist:
         node = assert_node_for_path(path)
-        paragraphs = create_paragraph_list_for_node(node, path)
+        paragraphs = create_paragraph_list_for_node(node, path, depth=2)
         # write to cache
         t = json.dumps(paragraphs)
         backend.TextCache.objects.create(path=path, paragraphs=t)
