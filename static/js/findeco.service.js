@@ -120,7 +120,6 @@ angular.module('FindecoServices', [])
                 var pathComponents = ['/.json_storeText', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//","/");
-                console.log(path, params);
                 return $http.post(url, params);
             },
 
@@ -153,7 +152,8 @@ angular.module('FindecoServices', [])
                 var promise = $http.get(url);
                 promise.success( function (d) {
                     angular.copy(d.loadNodeResponse, nodeInfo);
-                })
+                });
+                return promise;
             },
 
             loadIndex: function (indexNodes_out, path) {

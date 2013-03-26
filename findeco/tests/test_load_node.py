@@ -87,7 +87,7 @@ class LoadNodeTest(TestCase):
         response = self.client.get(reverse('load_node', kwargs=dict(path='')))
         parsed = json.loads(response.content)
         self.assertIn('loadNodeResponse', parsed)
-        indexNodes = parsed['loadNodeResponse']['index']
+        indexNodes = parsed['loadNodeResponse']['indexList']
         self.assertEqual(len(indexNodes), len(self.top_slots))
         for indexNode, slot in zip(indexNodes, self.top_slots):
             self.assertEqual(indexNode, create_index_node_for_slot(slot))
@@ -103,7 +103,7 @@ class LoadNodeTest(TestCase):
             reverse('load_node', kwargs=dict(path='Wahlprogramm.1')))
         parsed = json.loads(response.content)
         self.assertIn('loadNodeResponse', parsed)
-        index_nodes = parsed['loadNodeResponse']['index']
+        index_nodes = parsed['loadNodeResponse']['indexList']
         self.assertEqual(len(index_nodes), len(self.child_slots))
         for index_node, slot in zip(index_nodes, self.child_slots):
             n = create_index_node_for_slot(slot)

@@ -25,4 +25,5 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 
-# This empty file tells Python that this directory is a package
+from models import Post
+from views import convert_response_list

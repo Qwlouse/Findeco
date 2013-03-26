@@ -41,7 +41,6 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
     $scope.submit = function (type) {
         if ( $scope.tmp['text'] == undefined
             || $scope.tmp['text'] == '' ) {
-            console.log( $scope.tmp);
             Message.send('error','You have to put in a wikiText!');
             return;
         }

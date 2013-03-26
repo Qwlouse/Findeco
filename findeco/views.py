@@ -48,9 +48,11 @@ from microblogging.system_messages import post_new_derivate_for_node_message
 from microblogging.system_messages import post_new_argument_for_node_message
 from microblogging.system_messages import post_node_was_unflagged_message
 import node_storage as backend
+import microblogging
 from node_storage.factory import create_user
 from .paths import parse_suffix
 from .view_helpers import *
+from models import UserProfile
 
 
 @ensure_csrf_cookie
@@ -93,7 +95,7 @@ def load_node(request, path):
         'isFollowing': get_is_following(request.user.id, node),
         'isFlagging': get_is_flagging(request.user.id, node),
         'wikiText': node.text.text,
-        'index': index_nodes
+        'indexList': index_nodes
     }})
 
 
@@ -129,7 +131,7 @@ def load_text(request, path):
         paragraphs = json.loads(t.paragraphs)
     except backend.TextCache.DoesNotExist:
         node = assert_node_for_path(path)
-        paragraphs = create_paragraph_list_for_node(node, path)
+        paragraphs = create_paragraph_list_for_node(node, path, depth=2)
         # write to cache
         t = json.dumps(paragraphs)
         backend.TextCache.objects.create(path=path, paragraphs=t)
@@ -280,13 +282,47 @@ def mark_user_unfollow(request, name):
 
 @ViewErrorHandling
 def search(request, search_fields, search_string):
-    node_query = get_query(search_string, ['text', ])
-    found_texts = backend.Text.objects.filter(node_query).order_by("-id")
-    search_results = []
-    for text_node in found_texts:
-        search_results.append({"url": text_node.node.get_a_path(),
-                               "snippet": text_node.text[:min(len(text_node.text), 140)]})
-    return json_response({'searchResponse': [{'searchField': "content", 'searchEntries': search_results}]})
+    user_results = []
+    if 'user' in search_fields.split('_'):
+        exact_username_matches = User.objects.filter(username__iexact = search_string.strip())
+        for user in exact_username_matches:
+            user_results.append({"url": "profile/"+user.username,
+                                 "title": user.username,
+                                 "snippet": "Profil von "+user.username})
+        user_query = get_query(search_string, ['first_name', 'last_name', ])
+        found_users = User.objects.filter(user_query)
+        for user in found_users:
+            user_results.append({"url": "profile/"+user.username,
+                                 "title": user.username,
+                                 "snippet": "Profil von "+user.username})
+        user_query = get_query(search_string, ['description', ])
+        found_profiles = UserProfile.objects.filter(user_query)
+        for profile in found_profiles:
+            user_results.append({"url": "profile/"+profile.user.username,
+                                 "title": profile.user.username,
+                                 "snippet": profile.description[:min(len(profile.description), 140)]})
+    content_results = []
+    if 'content' in search_fields.split('_'):
+        node_query = get_query(search_string, ['title', ])
+        found_titles = backend.Node.objects.filter(node_query).order_by("-id")
+        for node in found_titles:
+            content_results.append({"url": node.get_a_path(),
+                                    "title": node.title,
+                                    "snippet": node.text.text[:min(len(node.text.text), 140)]})
+        text_query = get_query(search_string, ['text', ])
+        found_texts = backend.Text.objects.filter(text_query).order_by("-id")
+        for text_node in found_texts:
+            content_results.append({"url": text_node.node.get_a_path(),
+                                    "title": text_node.node.title,
+                                    "snippet": text_node.text[:min(len(text_node.text), 140)]})
+    microblogging_results = []
+    if 'microblogging' in search_fields.split('_'):
+        microblogging_query = get_query(search_string, ['text', ])
+        found_posts = microblogging.Post.objects.filter(microblogging_query).order_by("-id")
+        microblogging_results = microblogging.convert_response_list(found_posts)
+    return json_response({'searchResponse': {'userResults': user_results,
+                                             'contentResults': content_results,
+                                             'microbloggingResults': microblogging_results}})
 
 
 @ViewErrorHandling
