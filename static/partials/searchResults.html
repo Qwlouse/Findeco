@@ -3,7 +3,7 @@
         <h1 data-i18n="_searchUserResults_">Suchergebnisse zu Usern</h1>
         <ul class="searchResults">
             <li ng-repeat="result in searchResults.userResults">
-                <h4><a href="{{ result.url }}">{{result.title}}</a></h4>
+                <h4><a href="#/{{ result.url }}">{{result.title}}</a></h4>
                 <p>{{ result.snippet }}</p>
             </li>
         </ul>
@@ -13,7 +13,7 @@
         <h1 data-i18n="_searchContentResults_">Suchergebnisse</h1>
         <ul class="searchResults">
             <li ng-repeat="result in searchResults.contentResults">
-                <h4><a href="{{ result.url }}">{{result.title}}</a></h4>
+                <h4><a href="#/{{ result.url }}">{{result.title}}</a></h4>
                 <p>{{ result.snippet }}</p>
             </li>
         </ul>
