@@ -30,7 +30,7 @@ from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
 from models import create_post, Post
-from findeco.views import json_response
+from findeco.view_helpers import json_response
 from time import mktime
 
 

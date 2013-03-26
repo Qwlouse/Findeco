@@ -304,7 +304,7 @@ def search(request, search_fields, search_string):
     content_results = []
     if 'content' in search_fields.split('_'):
         node_query = get_query(search_string, ['title', ])
-        found_titles = backend.Node.objects.filter(node_query).order_by("-id")
+        found_titles = backend.Node.objects.filter(node_query).exclude(node_type=backend.Node.SLOT).order_by("-id")
         for node in found_titles:
             content_results.append({"url": node.get_a_path(),
                                     "title": node.title,
