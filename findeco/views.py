@@ -93,7 +93,7 @@ def load_node(request, path):
         'isFollowing': get_is_following(request.user.id, node),
         'isFlagging': get_is_flagging(request.user.id, node),
         'wikiText': node.text.text,
-        'index': index_nodes
+        'indexList': index_nodes
     }})
 
 

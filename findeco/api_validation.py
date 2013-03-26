@@ -92,7 +92,7 @@ loadNodeResponse_schema = {
         'isFollowing': integer,
         'isFlagging': integer,
         'wikiText': string,
-        'index': [indexNode_schema, None]
+        'indexList': [indexNode_schema, None]
     }}
 
 

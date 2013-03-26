@@ -33,7 +33,7 @@
         <h1>{{ nodeInfo.fullTitle }}</h1>
         <div findeco-graph data="graphData" path="path" class="graph"></div>
         <p ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
-        <div ng-repeat="index in nodeInfo.index">
+        <div ng-repeat="index in nodeInfo.indexList">
             <h2>
                 <a href="/#/{{ getPath(index.shortTitle + '.' + index.index) }}">{{index.fullTitle}}</a>
             </h2>
