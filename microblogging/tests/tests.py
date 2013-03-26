@@ -81,7 +81,8 @@ class MicrobloggingTests(TestCase):
 
         response = self.client.post(
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
-            dict(microBlogText="Bla bla bla. I had to say it."))
+            dict(microblogText="Bla bla bla. I had to say it."))
+        print(response.content)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(
             Post.objects.filter(text="Bla bla bla. I had to say it.").all()), 1)
@@ -89,7 +90,7 @@ class MicrobloggingTests(TestCase):
     def test_store_microblog_post_not_authenticated(self):
         response = self.client.post(
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
-            dict(microBlogText="Bla bla bla. I had to say it."))
+            dict(microblogText="Bla bla bla. I had to say it."))
         assert_is_error_response(response, 'NotAuthenticated')
 
     def test_load_microblogging_illegal_path(self):
