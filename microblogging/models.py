@@ -99,7 +99,7 @@ def create_post(text, author, path=None):
     split_text = tag_pattern.split(text)
     for i in range(1, len(split_text), 2):
         tagname = split_text[i]
-        split_text[i] = '<a href="/.search?search_string=%23{0}">#{0}</a>'.format(tagname)
+        split_text[i] = '<a href="/#/search/{0}">#{0}</a>'.format(tagname)
     text = "".join(split_text)
 
     split_text = internal_link_pattern.split(text)
