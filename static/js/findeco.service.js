@@ -192,6 +192,13 @@ angular.module('FindecoServices', [])
             });
             return promise;
         };
+        userInfo.activate = function (activationKey) {
+            var promise = $http.post('/.json_accountActivation/', {activationKey: activationKey});
+            promise.success(function (d) {
+            	console.log ('Activated!!!');
+            });
+            return promise;
+        };
         
         userInfo.login = function (username, password) {
             var promise = $http.post('/.json_login/', {username: username, password: password});

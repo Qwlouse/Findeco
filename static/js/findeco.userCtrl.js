@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoUserCtrl($scope, $location, User) {
+function FindecoUserCtrl($scope, $location, User, $routeParams) {
     $scope.user = User;
 
     $scope.login = function () {
@@ -64,6 +64,17 @@ function FindecoUserCtrl($scope, $location, User) {
             $location.path('/');
         });
     };
+    
+    $scope.activate = function() {
+    //	$scope.accountActivationKey = $routeParams.accountActivationKey
+    	//accountActivationKey
+    
+    	User.activate($routeParams.param).success(function () {
+            $location.path('/');
+        });
+    
+     	
+    };
 
     $scope.getActiveClass = function(path) {
         if ($location.path().substr(0, path.length) == path) {
@@ -76,6 +87,9 @@ function FindecoUserCtrl($scope, $location, User) {
     $scope.storeUserSettings = function() {
         User.storeSettings();
     };
+    
+
+    $scope.activate();
 }
 
-FindecoUserCtrl.$inject = ['$scope', '$location', 'User'];
+FindecoUserCtrl.$inject = ['$scope', '$location', 'User', '$routeParams'];
