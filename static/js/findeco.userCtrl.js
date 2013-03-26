@@ -39,6 +39,12 @@ function FindecoUserCtrl($scope, $location, User) {
             $location.path('/');
         });
     };
+    
+    $scope.register = function() {
+    	User.register($scope.username, $scope.password, $scope.mail).success(function () {
+            $location.path('/');
+        });
+    };
 
     $scope.getActiveClass = function(path) {
         if ($location.path().substr(0, path.length) == path) {
