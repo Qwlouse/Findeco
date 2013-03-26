@@ -111,15 +111,15 @@ angular.module('FindecoServices', [])
 
             storeMicroblogPost: function (path, microblogText) {
                 var pathComponents = ['/.json_storeMicroblogPost', path];
-                url = url.replace("//","/");
                 var url = pathComponents.join('/');
+                //url = url.replace("//","/");
                 return $http.post(url, {microblogText: microblogText});
             },
 
             storeText: function (path, params) {
                 var pathComponents = ['/.json_storeText', path];
-                url = url.replace("//","/");
                 var url = pathComponents.join('/');
+                url = url.replace("//","/");
                 console.log(path, params);
                 return $http.post(url, params);
             },

@@ -28,6 +28,7 @@
 function FindecoMicroblogCtrl($scope, Backend, User) {
     $scope.microbloggingList = [];
     $scope.user = User;
+    console.log("test");
     $scope.updateMicrobloggingList = function () {
         Backend.loadMicroblogging($scope.microbloggingList, THELocatoooooooor.getSanitizedPath());
     };

@@ -31,6 +31,7 @@ import re
 from findeco.api_validation import USERNAME
 import node_storage as backend
 from django.contrib.auth.models import User
+from django.utils.html import escape
 
 WORDSTART = r"(?:(?<=\s)|\A)"
 WORDEND = r"\b"
@@ -81,7 +82,8 @@ class Post(models.Model):
                                             self.time)
 
 
-def create_post(text, author, path = None):
+def create_post(text, author, path=None):
+    text = escape(text)
     split_text = user_ref_pattern.split(text)
     mentions = []
     for i in range(1, len(split_text), 2):
