@@ -147,6 +147,23 @@
         "key":"_accountLoginFormTitle_",
         "value":"Login",
         "description":""
+    },
+
+
+    {
+        "key":"_searchUserResults_",
+        "value":"Suchergebnisse zu Usern",
+        "description":""
+    },
+    {
+        "key":"_searchContentResults_",
+        "value":"Suchergebnisse",
+        "description":""
+    },
+    {
+        "key":"_searchMicrobloggingResults_",
+        "value":"Suchergebnisse zu Usern",
+        "description":""
     }
     
     

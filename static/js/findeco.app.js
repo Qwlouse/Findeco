@@ -44,5 +44,6 @@ var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', '
             when('/nutzungsbedingungen', {templateUrl: 'static/partials/nutzungsbedingungen.html', controller: FindecoDefaultCtrl}).
             when('/profile', {templateUrl: 'static/partials/profile.html', controller: FindecoUserCtrl}).
             when('/start', {templateUrl: 'static/partials/start.html', controller: FindecoStartCtrl}).
+            when('/search/*searchString', {templateUrl: 'static/partials/searchResults.html', controller: FindecoSearchCtrl}).
             otherwise({templateUrl: 'static/partials/default.html', controller: FindecoDefaultCtrl});
     }]);
