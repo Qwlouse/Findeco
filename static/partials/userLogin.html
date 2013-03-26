@@ -1,9 +1,12 @@
 <div id="contentContainer" class="centeringContainer">
     <div id="centerColumn" class="contentBox">
+    <h1> {{'_accountLoginFormTitle_'|i18n}} </h1>
         <form ng-submit="login()">
             <input type="text" placeholder="{{'_accountUsernameBtn_'|i18n}}" ng-model="username"><br>
             <input type="password" placeholder="{{'_accountPasswordBtn_'|i18n}}" ng-model="password"><br>
             <input type="submit" value="{{'_accountLoginBtn_'|i18n}}">
         </form>
+        <a href="/#/register">{{'_accountRegistrationFormLink_'|i18n}}</a>
+        
     </div>
 </div>

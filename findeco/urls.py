@@ -36,7 +36,7 @@ admin.autodiscover()
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
 BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
-SEARCH_FIELDS = r'(?P<search_field>((user|content|microblogging)(_(user|content|microblogging))*))'
+SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)(_(user|content|microblogging))*))'
 
 urlpatterns = patterns(
     '',
