@@ -35,8 +35,8 @@
 
 /*Clear some margins and paddings */
 body, h1, h2, h3, h4, h5, h6, form, button, input{
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
+    margin: 0;
+    padding: 0;
 }
 
 /* Background image and basic font */
@@ -48,15 +48,23 @@ body {
 /* Font for all the headings */
 h1, h2, h3, h4, h5, h6 {
     font-family: "Monda", sans-serif;
-    padding-bottom:15px;
+    padding-bottom:15pt;
 }
 
 h1 {
     font-size: 30pt;
 }
 
+#leftColumn h1, #rightColumn h1 {
+    font-size: 18pt;
+}
+
 h2 {
-    font-size: 20pt;
+    font-size: 22pt;
+}
+
+h3 {
+    font-size: 18pt;
 }
 
 /* general style for links */
