@@ -280,7 +280,13 @@ def mark_user_unfollow(request, name):
 
 @ViewErrorHandling
 def search(request, search_fields, search_string):
-    return json_response({'searchResponse': [{'searchField': "user", 'searchEntries': []}]})
+    node_query = get_query(search_string, ['text', ])
+    found_texts = backend.Text.objects.filter(node_query).order_by("-id")
+    search_results = []
+    for text_node in found_texts:
+        search_results.append({"url": text_node.node.get_a_path(),
+                               "snippet": text_node.text[:min(len(text_node.text), 140)]})
+    return json_response({'searchResponse': [{'searchField': "content", 'searchEntries': search_results}]})
 
 
 @ViewErrorHandling
