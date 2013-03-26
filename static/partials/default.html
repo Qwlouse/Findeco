@@ -34,11 +34,12 @@
         <div findeco-graph data="graphData" path="path" class="graph"></div>
         <p ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
         <div ng-repeat="section in sections">
-            <a ng-show="!section.isLoaded" ng-click="loadSection(section)" style="float:left;"><img src="static/images/dropdown.png"></a>
-            <h2 ng-show="!section.isLoaded">
+            <a ng-show="!section.isExpanded" ng-click="expandSection(section)" style="float:left;position: relative; top:  14px; margin-right: 5px;"><img src="static/images/expand.png"></a>
+            <a ng-show="section.isExpanded" ng-click="collapseSection(section)" style="float:left;position: relative; top:  14px; margin-right: 5px;"><img src="static/images/collapse.png"></a>
+            <h2 ng-show="!section.isExpanded">
                 <a href="/#/{{ getPath(section.shortTitle + '.' + section.index) }}">{{section.fullTitle}}</a>
             </h2>
-            <div class="sectionText" ng-show="section.isLoaded" ng-repeat="paragraph in section.paragraphs">
+            <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
                 <a ng-click="markNode(paragraph)" class="follow-star" ng-switch on="paragraph.isFollowing">
                     <img ng-switch-when="1" src="static/images/star1.png" alt="transitive following" />
                     <img ng-switch-when="2" src="static/images/star2.png" alt="direct following" />
@@ -48,16 +49,8 @@
             </div>
         </div>
         <div class="btn btn-primary" ng-click="relocate('createNewText')" data-i18n="_textNew_"><b>create new text</b></div>
-        <div class="btn btn-primary" ng-show="!isTextLoaded" ng-click="updateParagraphList()" data-i18n="_textLoad_"><b>load text</b></div>
-        <div class="mainText" ng-repeat="paragraph in paragraphList">
-            <a ng-click="markNode(paragraph)" class="follow-star" ng-switch on="paragraph.isFollowing">
-                <img ng-switch-when="1" src="static/images/star1.png" alt="transitive following" />
-                <img ng-switch-when="2" src="static/images/star2.png" alt="direct following" />
-                <img ng-switch-default src="static/images/star0.png" alt="no following" />
-            </a>
-            <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
-        </div>
-        <div class="btn btn-primary" ng-show="isTextLoaded" ng-click="relocate('createAlternativeText')" data-i18n="_alternativeTextNew_"></div>
+
+        <div class="btn btn-primary" ng-click="relocate('createAlternativeText')" data-i18n="_alternativeTextNew_"></div>
     </div>
 
     <div ng-include src="'static/partials/microblogging.html'"></div>

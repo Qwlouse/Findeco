@@ -91,6 +91,7 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
                 var section = angular.copy($scope.nodeInfo.indexList[i]);
                 section.paragraphs = [];
                 section.isLoaded = false;
+                section.isExpanded = false;
                 section.path = THELocatoooooooor.getPathForIndex(section.shortTitle, section.index);
                 $scope.sections.push(section);
                 console.log(section);
@@ -98,16 +99,23 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
         });
     };
 
-    $scope.loadSection = function (section) {
+    $scope.expandSection = function (section) {
         if (!section.isLoaded ) {
             Backend.loadText(section.paragraphs, section.path).success(function (d) {
                 console.log(section.paragraphs);
                 section.isFollowing = d.loadTextResponse.isFollowing;
                 section.isFlagging = d.loadTextResponse.isFlagging;
                 section.isLoaded = true;
+                section.isExpanded = true;
             });
-
+        } else {
+            section.isExpanded = true;
         }
+
+    };
+
+    $scope.collapseSection = function (section) {
+        section.isExpanded = false;
     };
 
     $scope.initialize = function() {
