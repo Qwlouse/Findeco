@@ -23,8 +23,10 @@
 from __future__ import division, print_function, unicode_literals
 from django.contrib.auth.models import Permission, User
 from django.http import HttpResponse
+from django.db.models import Q
 import functools
 import json
+import re
 
 import node_storage as backend
 from node_storage import get_node_for_path, get_ordered_children_for, parse
@@ -397,3 +399,35 @@ def unfollow_node(node, user_id):
                 n.update_favorite_for_all_parents()
             if mark.nodes.count() == 0:
                 mark.delete()
+
+
+def normalize_query(query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').findall, normspace=re.compile(r'\s{2,}').sub):
+    """
+    Splits the query string in invidual keywords, getting rid of unecessary spaces and grouping quoted words together.
+    Example:
+    >>> normalize_query('  some random  words "with   quotes  " and   spaces')
+    ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
+    """
+    return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)]
+
+
+def get_query(query_string, search_fields):
+    """
+    Returns a query, that is a combination of Q objects. That combination aims to search keywords within a model by
+    testing the given search fields.
+    """
+    query = None # Query to search for every search term
+    terms = normalize_query(query_string)
+    for term in terms:
+        or_query = None # Query to search for a given term in each field
+        for field_name in search_fields:
+            q = Q(**{"%s__icontains" % field_name: term})
+            if or_query is None:
+                or_query = q
+            else:
+                or_query = or_query | q
+        if query is None:
+            query = or_query
+        else:
+            query &= or_query
+    return query
