@@ -152,7 +152,7 @@
 
     {
         "key":"_searchUserResults_",
-        "value":"Suchergebnisse zu Usern",
+        "value":"Benutzer",
         "description":""
     },
     {
@@ -162,7 +162,7 @@
     },
     {
         "key":"_searchMicrobloggingResults_",
-        "value":"Suchergebnisse aus dem Microblogging",
+        "value":"Microblogging",
         "description":""
     }
     
