@@ -94,7 +94,6 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
                 section.isExpanded = false;
                 section.path = THELocatoooooooor.getPathForIndex(section.shortTitle, section.index);
                 $scope.sections.push(section);
-                console.log(section);
             }
         });
     };
@@ -102,7 +101,6 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
     $scope.expandSection = function (section) {
         if (!section.isLoaded ) {
             Backend.loadText(section.paragraphs, section.path).success(function (d) {
-                console.log(section.paragraphs);
                 section.isFollowing = d.loadTextResponse.isFollowing;
                 section.isFlagging = d.loadTextResponse.isFlagging;
                 section.isLoaded = true;

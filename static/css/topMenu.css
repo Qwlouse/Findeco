@@ -81,7 +81,7 @@ div.searchBox {
     border-radius: 11px;
     height: 23px;
     padding: 0 6px 0 6px;
-    background: #333333;
+    background: #000;
     overflow: hidden; /* I don't know why exactly, but this removes the gap between the ul li elements and the bottom of the header */
 }
 
@@ -97,7 +97,7 @@ div.searchBox {
     top: 2px;
     height: 18px;
     color: #cccccc;
-    background: #333333;
+    background: #000;
     border: 0;
 }
 
