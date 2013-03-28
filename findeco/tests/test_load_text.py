@@ -134,7 +134,7 @@ class LoadTextTest(TestCase):
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'],
-                         "= Daaatenschutz =\nBlubb.")
+                         "== [[#/Wahlprogramm.1/Datenschutz.1|Daaatenschutz]] ==\nBlubb.")
 
     def test_structurenode_gives_correct_text(self):
         response = self.client.get(
@@ -143,16 +143,16 @@ class LoadTextTest(TestCase):
         data = json.loads(response.content)
         paragraphs = data['loadTextResponse']['paragraphs']
         self.assertEqual(paragraphs[0]['wikiText'],
-                         "= LangerWahlprogrammTitel =\nEinleitungstext")
+                         "== [[#/Wahlprogramm.1|LangerWahlprogrammTitel]] ==\nEinleitungstext")
         self.assertEqual(paragraphs[0]['path'], "Wahlprogramm.1")
-        self.assertEqual(paragraphs[1]['wikiText'], "== [[#/Wahlprogramm.1/Transparenz.1|Traaaansparenz]] ==\nTransparenz ist wichtig.")
-        self.assertEqual(paragraphs[2]['wikiText'], "=== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1|Eeeebeneee 3]] ===\n")
-        self.assertEqual(paragraphs[3]['wikiText'], "==== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1|Eeeebeneee 4]] ====\n")
-        self.assertEqual(paragraphs[4]['wikiText'], "===== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1|Eeeebeneee 5]] =====\n")
+        self.assertEqual(paragraphs[1]['wikiText'], "=== [[#/Wahlprogramm.1/Transparenz.1|Traaaansparenz]] ===\nTransparenz ist wichtig.")
+        self.assertEqual(paragraphs[2]['wikiText'], "==== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1|Eeeebeneee 3]] ====\n")
+        self.assertEqual(paragraphs[3]['wikiText'], "===== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1|Eeeebeneee 4]] =====\n")
+        self.assertEqual(paragraphs[4]['wikiText'], "====== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1|Eeeebeneee 5]] ======\n")
         self.assertEqual(paragraphs[5]['wikiText'], "====== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1/Ebene_6.1|Eeeebeneee 6]] ======\n")
         self.assertEqual(paragraphs[6]['wikiText'], "====== [[#/Wahlprogramm.1/Transparenz.1/Ebene_3.1/Ebene_4.1/Ebene_5.1/Ebene_6.1/Ebene_7.1|Traaaansparenz]] ======\nAuf Ebene 7.")
-        self.assertEqual(paragraphs[7]['wikiText'], "== [[#/Wahlprogramm.1/Bildung.1|Biiildung]] ==\n")
-        self.assertEqual(paragraphs[8]['wikiText'], "== [[#/Wahlprogramm.1/Datenschutz.1|Daaatenschutz]] ==\nBlubb.")
+        self.assertEqual(paragraphs[7]['wikiText'], "=== [[#/Wahlprogramm.1/Bildung.1|Biiildung]] ===\n")
+        self.assertEqual(paragraphs[8]['wikiText'], "=== [[#/Wahlprogramm.1/Datenschutz.1|Daaatenschutz]] ===\nBlubb.")
 
 
     def test_load_text_on_argument_gives_argument_text(self):
@@ -164,15 +164,13 @@ class LoadTextTest(TestCase):
         expected_response = {
             'loadTextResponse': {
                 'paragraphs': [{
-                    'wikiText':"= Dagegen =\n...denn ihr seid dafür",
+                    'wikiText':"== [[#/Wahlprogramm.1/Datenschutz.1.con.1|Dagegen]] ==\n...denn ihr seid dafür",
                     'path':"Wahlprogramm.1/Datenschutz.1.con.1",
                     'isFollowing':0,
                     'isFlagging':0,
                     'authorGroup': [{
                         'displayName':"hugo",
-                        'description':"",
-                        'followers':[],
-                        'followees':[]
+                        'description':""
                     }]
                 }],
                 'isFollowing': 0,

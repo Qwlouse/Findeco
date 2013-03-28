@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -113,13 +113,6 @@ angular.module('FindecoServices', [])
                 return promise;
             },
 
-            markUser: function (displayName, markType) {
-                var pathComponents = ['/.json_markUser', markType, displayName];
-                var url = pathComponents.join('/');
-                url = url.replace("//", "/");
-                return $http.post(url, {});
-            },
-
             markNode: function (nodePath, markType) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
                 var url = pathComponents.join('/');
@@ -205,11 +198,12 @@ angular.module('FindecoServices', [])
         };
 
     })
-    .factory('User', function ($http, localize) {
+    .factory('User', function ($http) {
         var userInfo = {
             isLoggedIn: false,
             displayName: "",
-            description: ""
+            description: "",
+            followees: []
         };
 
         userInfo.register = function (displayName, password, emailAddress) {
@@ -230,11 +224,11 @@ angular.module('FindecoServices', [])
         userInfo.login = function (username, password) {
             var promise = $http.post('/.json_login/', {username: username, password: password});
             promise.success(function (d) {
-                var data = d.loginResponse.userInfo;
+                var data = d.loginResponse;
                 userInfo.isLoggedIn = true;
-                userInfo.displayName = data.displayName;
-                userInfo.description = data.description;
-
+                userInfo.displayName = data.userInfo.displayName;
+                userInfo.description = data.userInfo.description;
+                userInfo.followees = data.userSettings.followees;
             });
             return promise;
         };
@@ -244,22 +238,42 @@ angular.module('FindecoServices', [])
                 userInfo.isLoggedIn = false;
                 userInfo.description = "";
                 userInfo.displayName = "";
+                userInfo.followees = [];
+            });
+        };
+
+        userInfo.markUser = function (displayName, markType) {
+            var pathComponents = ['/.json_markUser', markType, displayName];
+            var url = pathComponents.join('/');
+            url = url.replace("//", "/");
+            return $http.post(url, {}).success(function (d) {
+                userInfo.followees = d.markUserResponse.followees;
             });
         };
 
         userInfo.loadSettings = function () {
             var promise = $http.get('.json_loadUserSettings/');
             promise.success(function (d) {
-                var data = d.loadUserSettingsResponse.userInfo;
+                var data = d.loadUserSettingsResponse;
                 userInfo.isLoggedIn = true;
-                userInfo.displayName = data.displayName;
-                userInfo.description = data.description;
+                userInfo.displayName = data.userInfo.displayName;
+                userInfo.description = data.userInfo.description;
+                userInfo.followees = data.userSettings.followees;
             });
             return promise;
         };
 
         userInfo.storeSettings = function () {
             return $http.post('.json_storeSettings/', {displayName: userInfo.displayName, description: userInfo.description});
+        };
+
+        userInfo.follows = function(name) {
+            for (var i = 0; i < userInfo.followees.length; i++) {
+                if (userInfo.followees[i].displayName == name) {
+                    return 2;
+                }
+            }
+            return 0;
         };
 
         userInfo.loadSettings();
@@ -286,12 +300,12 @@ angular.module('FindecoServices', [])
             } else {
                 this.messageList.push({type: type, msg: message});
             }
-        }
+        };
 
         tmp.catch = function (message) {
             this.catchList[message] = [];
             return this.catchList[message];
-        }
+        };
 
         return tmp;
     })

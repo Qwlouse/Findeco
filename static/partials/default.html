@@ -41,7 +41,7 @@
                 <a href="/#/{{ getPath(section.shortTitle + '.' + section.index) }}">{{section.fullTitle}}</a>
             </h2>
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
-                <div follow-star show-if="user.isLoggedIn" entity="section" mark-func="markNode"></div>
+                <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>

@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -26,16 +26,30 @@
 /* Controllers */
 
 function FindecoMicroblogCtrl($scope, Backend, User) {
+    function setAuthorForAllBlogs() {
+        for (var i = 0; i < $scope.microbloggingList.length; ++i ) {
+            var blog = $scope.microbloggingList[i];
+            blog.author = blog.authorGroup[0];
+            blog.author.isFollowing = User.follows(blog.author.displayName);
+            blog.author.path = blog.author.displayName;
+        }
+    }
+
     $scope.microbloggingList = [];
     $scope.user = User;
+
+    $scope.followUser = function (path, type) {
+        return User.markUser(path, type).success(setAuthorForAllBlogs);
+    };
+
     $scope.updateMicrobloggingList = function () {
-        Backend.loadMicroblogging($scope.microbloggingList, THELocatoooooooor.getSanitizedPath());
+        Backend.loadMicroblogging($scope.microbloggingList, locator.getSanitizedPath()).success(setAuthorForAllBlogs);
     };
 
     $scope.submit = function () {
         // TODO: Cross-site-scripting protection!
         if ($scope.microblogText.length <= 0) return;
-        Backend.storeMicroblogPost(THELocatoooooooor.getSanitizedPath(), $scope.microblogText).success(function () {
+        Backend.storeMicroblogPost(locator.getSanitizedPath(), $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });

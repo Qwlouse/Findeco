@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -33,18 +33,18 @@ function FindecoStartCtrl($scope, Backend, User) {
     $scope.user = User;
 
     $scope.updateFollowedUsers = function () {
-        Backend.loadMicroblogging($scope.followedUsersList , THELocatoooooooor.getSanitizedPath());
+        Backend.loadMicroblogging($scope.followedUsersList , locator.getSanitizedPath());
     };
     $scope.updateFollowedNodes = function () {
-        Backend.loadMicroblogging($scope.followedNodesList, THELocatoooooooor.getSanitizedPath());
+        Backend.loadMicroblogging($scope.followedNodesList, locator.getSanitizedPath());
     };
     $scope.updateOwnNodes = function () {
-        Backend.loadMicroblogging($scope.ownNodesList, THELocatoooooooor.getSanitizedPath());
+        Backend.loadMicroblogging($scope.ownNodesList, locator.getSanitizedPath());
     };
 
     $scope.submit = function () {
         // TODO: Cross-site-scripting protection!
-        Backend.storeMicroblogPost(THELocatoooooooor.getSanitizedPath(), $scope.microblogText).success(function () {
+        Backend.storeMicroblogPost(locator.getSanitizedPath(), $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });

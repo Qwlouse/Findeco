@@ -61,50 +61,17 @@ class CreateUsersInfoTest(TestCase):
             user_info = create_user_info(user)
             self.assertEqual(user_info['description'], user.profile.description)
 
-    def test_create_user_info_contains_correct_followers(self):
-        user_info = create_user_info(self.hans)
-        self.assertIn('followers', user_info)
-        followers = user_info['followers']
-        self.assertEqual(len(followers), 2)
-        self.assertIn({'displayName': 'hugo'}, followers)
-        self.assertIn({'displayName': 'hein'}, followers)
-
-        user_info = create_user_info(self.hugo)
-        self.assertIn('followers', user_info)
-        followers = user_info['followers']
-        self.assertEqual(len(followers), 0)
-
-        user_info = create_user_info(self.hein)
-        self.assertIn('followers', user_info)
-        followers = user_info['followers']
-        self.assertEqual(len(followers), 0)
-
-    def test_create_user_info_contains_correct_followees(self):
-        user_info = create_user_info(self.hans)
-        self.assertIn('followees', user_info)
-        followees = user_info['followees']
-        self.assertEqual(len(followees), 0)
-
-        user_info = create_user_info(self.hugo)
-        self.assertIn('followees', user_info)
-        followees = user_info['followees']
-        self.assertEqual(len(followees), 1)
-        self.assertIn({'displayName': 'hans'}, followees)
-
-        user_info = create_user_info(self.hein)
-        self.assertIn('followees', user_info)
-        followees = user_info['followees']
-        self.assertEqual(len(followees), 1)
-        self.assertIn({'displayName': 'hans'}, followees)
-
 
 class CreateUserSettingsTest(TestCase):
     def setUp(self):
         self.hans = create_user('hans')
         self.herbert = create_user('herbert')
         self.hein = create_user('hein')
+        self.hugo = create_user('hugo', "nodescription")
         self.hans.profile.blocked.add(self.herbert.profile)
         self.hein.profile.blocked.add(self.herbert.profile)
+        self.hugo.profile.followees.add(self.hans.profile)
+        self.hein.profile.followees.add(self.hans.profile)
         self.users = [self.hans, self.herbert, self.hein]
 
     def test_return_value_validates(self):
@@ -129,6 +96,42 @@ class CreateUserSettingsTest(TestCase):
         blocked = user_settings['blockedUsers']
         self.assertEqual(len(blocked), 1)
         self.assertIn({'displayName': 'herbert'}, blocked)
+
+    def test_create_user_info_contains_correct_followers(self):
+        user_settings = create_user_settings(self.hans)
+        self.assertIn('followers', user_settings)
+        followers = user_settings['followers']
+        self.assertEqual(len(followers), 2)
+        self.assertIn({'displayName': 'hugo'}, followers)
+        self.assertIn({'displayName': 'hein'}, followers)
+
+        user_settings = create_user_settings(self.hugo)
+        self.assertIn('followers', user_settings)
+        followers = user_settings['followers']
+        self.assertEqual(len(followers), 0)
+
+        user_settings = create_user_settings(self.hein)
+        self.assertIn('followers', user_settings)
+        followers = user_settings['followers']
+        self.assertEqual(len(followers), 0)
+
+    def test_create_user_info_contains_correct_followees(self):
+        user_settings = create_user_settings(self.hans)
+        self.assertIn('followees', user_settings)
+        followees = user_settings['followees']
+        self.assertEqual(len(followees), 0)
+
+        user_settings = create_user_settings(self.hugo)
+        self.assertIn('followees', user_settings)
+        followees = user_settings['followees']
+        self.assertEqual(len(followees), 1)
+        self.assertIn({'displayName': 'hans'}, followees)
+
+        user_settings = create_user_settings(self.hein)
+        self.assertIn('followees', user_settings)
+        followees = user_settings['followees']
+        self.assertEqual(len(followees), 1)
+        self.assertIn({'displayName': 'hans'}, followees)
 
 
 class CreateIndexNodeForSlotTest(TestCase):

@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -22,22 +22,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-/**
- * Created with JetBrains PhpStorm.
- * User: justus
- * Date: 19.03.13
- * Time: 16:01
- * Yes, I'm fucking serious.
- */
-
-function theLocatoooooooor() {
+function Locator() {
 }
 
-var THELocatoooooooor = new theLocatoooooooor();
+var locator = new Locator();
 
-theLocatoooooooor.prototype.p = {};
+Locator.prototype.p = {};
 
-theLocatoooooooor.prototype.getPath = function () {
+Locator.prototype.getPath = function () {
     if ( this.p[document.location.hash] != undefined ) {
         return this.p[document.location.hash];
     }
@@ -53,19 +45,19 @@ theLocatoooooooor.prototype.getPath = function () {
     this.p[document.location.hash] = path;
 
     return path;
-}
+};
 
 function isNonEmpty(element, index, array) {
     return (element != "");
 }
 
-theLocatoooooooor.prototype.getPathParts = function () {
+Locator.prototype.getPathParts = function () {
     var path = this.getPath();
     var pathParts = this.getPath().split("/").filter(isNonEmpty);
     return pathParts;
 };
 
-theLocatoooooooor.prototype.getSanitizedPath = function (target) {
+Locator.prototype.getSanitizedPath = function (target) {
 
     if (target == undefined) {
         target = '';
@@ -88,30 +80,30 @@ theLocatoooooooor.prototype.getSanitizedPath = function (target) {
     }
     return sanePath;
 };
-theLocatoooooooor.prototype.getPathForIndex = function (shortTitle, index) {
+
+Locator.prototype.getPathForIndex = function (shortTitle, index) {
     var parts = this.getPathParts();
     parts.push(shortTitle + '.' + index);
     return parts.join('/');
 };
 
-
-theLocatoooooooor.prototype.getSanitizedArgumentFreePath = function () {
+Locator.prototype.getSanitizedArgumentFreePath = function () {
     var tmp = this.getSanitizedPath();
     if ( !this.isArgumentPath(tmp) ) {
         return tmp;
     }
     tmp = tmp.replace(/\.(pro|con|neut)\.\d+$/,'');
     return tmp;
-}
+};
 
-theLocatoooooooor.prototype.removeTrailingSlashes = function (string) {
+Locator.prototype.removeTrailingSlashes = function (string) {
     if (string.substr(string.length-1) == '/') {
         string = string.substr(0, string.length - 1);
     }
     return string;
 };
 
-theLocatoooooooor.prototype.isArgumentPath = function (path) {
+Locator.prototype.isArgumentPath = function (path) {
     var pP;
     if ( path == undefined ) {
         pP = this.getSanitizedPath().split(".");
@@ -125,9 +117,9 @@ theLocatoooooooor.prototype.isArgumentPath = function (path) {
         return true;
     }
     return false;
-}
+};
 
-theLocatoooooooor.prototype.saneSlashAppending = function (string) {
+Locator.prototype.saneSlashAppending = function (string) {
     if (string.substr(string.length-1) != '/') {
         string += '/';
     }

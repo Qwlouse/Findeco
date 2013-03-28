@@ -133,10 +133,6 @@ def create_user_info(user):
     user_info = dict(
         displayName=user.username,
         description=user.profile.description,
-        followers=[{'displayName': u.user.username} for u in
-                   user.profile.followers.all()],
-        followees=[{'displayName': u.user.username} for u in
-                   user.profile.followees.all()]
     )
     return user_info
 
@@ -150,6 +146,10 @@ def create_user_settings(user):
     if user.is_superuser:
         rights += 4
     user_settings = dict(
+        followers=[{'displayName': u.user.username} for u in
+                   user.profile.followers.all()],
+        followees=[{'displayName': u.user.username} for u in
+                   user.profile.followees.all()],
         blockedUsers=[{'displayName': u.user.username} for u in
                       user.profile.blocked.all()],
         userRights=rights

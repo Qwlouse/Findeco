@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -27,7 +27,7 @@
 
 function FindecoNavigationCtrl($scope) {
     $scope.calculateNavigationEntries = function () {
-        var pathParts = THELocatoooooooor.getPathParts();
+        var pathParts = locator.getPathParts();
         var navEntries = [];
         var pathSoFar = "/#";
 
@@ -37,12 +37,12 @@ function FindecoNavigationCtrl($scope) {
             pathSoFar += '/' + tmp[0] + '.' + tmp[1];
             navEntries.push({name: tmp[0] + '.' + tmp[1], path: pathSoFar});
         }
-        if (THELocatoooooooor.isArgumentPath()) {
+        if (locator.isArgumentPath()) {
             pathSoFar += '.' + tmp[2] + '.' + tmp[3];
             navEntries.push({name: tmp[0] + '.' + tmp[1] + '.' + tmp[2] + '.' + tmp[3], path: '/#/argument' + pathSoFar.substr(2)});
         }
         return navEntries;
-    }
+    };
 
     $scope.navigationEntries = $scope.calculateNavigationEntries();
 

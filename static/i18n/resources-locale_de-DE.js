@@ -164,7 +164,33 @@
         "key":"_searchMicrobloggingResults_",
         "value":"Microblogging",
         "description":""
-    } ,
+    },
+    {
+        "key":"_follow_",
+        "value":"Folgen",
+        "description":""
+    },
+    {
+        "key":"_unfollow_",
+        "value":"Entfolgen",
+        "description":""
+    },
+
+    {
+        "key":"_follow_",
+        "value":"Folgen",
+        "description":""
+    },
+    {
+        "key":"_unfollow_",
+        "value":"Entfolgen",
+        "description":""
+    },
+    {
+        "key":"_description_",
+        "value":"Beschreibung",
+        "description":""
+    },
     {
         "key":"_InvalidLogin",
         "value":"Login Ungültig",
@@ -175,6 +201,4 @@
         "value":"Du bist nicht angemeldet!",
         "description":""
     }
-   
-    
 ]

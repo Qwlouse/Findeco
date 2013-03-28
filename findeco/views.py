@@ -38,6 +38,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.core.mail import send_mail
+from django.utils.html import escape
 import json
 import random
 from findeco.api_validation import USERNAME
@@ -269,7 +270,9 @@ def mark_user_follow(request, name):
     user = request.user
     followee = assert_active_user(username=name)
     user.profile.followees.add(followee.profile)
-    return json_response({'markUserResponse': {}})
+    return json_response({'markUserResponse': {
+        'followees': [{'displayName': u.user.username}
+                      for u in user.profile.followees.all()]}})
 
 
 @ViewErrorHandling
@@ -277,7 +280,9 @@ def mark_user_unfollow(request, name):
     followee = assert_active_user(username=name)
     user = request.user
     user.profile.followees.remove(followee.profile)
-    return json_response({'markUserResponse': {}})
+    return json_response({'markUserResponse': {
+        'followees': [{'displayName': u.user.username}
+                      for u in user.profile.followees.all()]}})
 
 
 @ViewErrorHandling
@@ -338,7 +343,7 @@ def store_settings(request):
         else:
             user.username = display_name
 
-    user.profile.description = request.POST['description']
+    user.profile.description = escape(request.POST['description'])
     user.save()
     return json_response({'storeSettingsResponse': {}})
 
