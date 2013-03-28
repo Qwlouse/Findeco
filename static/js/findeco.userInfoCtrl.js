@@ -37,8 +37,10 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
     };
 
     $scope.loadUserInfo = function () {
+        $scope.userExists = false;
         Backend.loadUserInfo($scope.displayName).success(function (data) {
             if (data.loadUserInfoResponse != undefined) {
+                $scope.userExists = true;
                 for (var l in data.loadUserInfoResponse.userInfo) {
                     $scope[l] = data.loadUserInfoResponse.userInfo[l];
                 }
@@ -49,8 +51,10 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
                     }
                 }
             }
+        }).error(function () {
+            $scope.displayName = 'User "' + $scope.displayName + '" existiert nicht.';
         });
-    }
+    };
 
     $scope.loadUserInfo();
 }

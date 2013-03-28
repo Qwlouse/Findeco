@@ -76,7 +76,7 @@ angular.module('FindecoServices', [])
                         Message.send("error", response.data.errorResponse.errorID);
                         delete response.data.errorResponse;
                     }
-                    return $q.reject();
+                    return $q.reject(response);
                 }
             );
         }
@@ -276,10 +276,22 @@ angular.module('FindecoServices', [])
         return tmp;
     })
     .factory('Message', function () {
-        var tmp = {messageList: []};
+        var tmp = {
+            messageList: [],
+            catchList: {}
+        };
 
         tmp.send = function (type, message) {
-            this.messageList.push({type: type, msg: message});
+            if ( this.catchList[message] != undefined ) {
+                this.catchList[message].push({type: type, msg: message});
+            } else {
+                this.messageList.push({type: type, msg: message});
+            }
+        }
+
+        tmp.catch = function (message) {
+            this.catchList[message] = [];
+            return this.catchList[message];
         }
 
         return tmp;

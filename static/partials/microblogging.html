@@ -10,7 +10,7 @@
         </li>
         <li ng-repeat="microblogNode in microbloggingList">
             <div follow-star show-if="user.isLoggedIn" entity="microblogNode.authorGroup[0]" mark-func="followUser" style="float:left;"></div>
-            <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+            <a class="microblogAuthor" href="#/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                 microblogNode.authorGroup[0].displayName }}</a>
             <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
             <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>

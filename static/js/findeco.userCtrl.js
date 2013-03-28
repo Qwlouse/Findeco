@@ -68,7 +68,10 @@ function FindecoUserCtrl($scope, $location, User, $routeParams) {
     $scope.activate = function() {
     //	$scope.accountActivationKey = $routeParams.accountActivationKey
     	//accountActivationKey
-    
+    	if(!($location.path().substr(1, 8) == "activate")){
+    		return "";
+    	}
+    	// /activate/
     	User.activate($routeParams.param).success(function () {
             $location.path('/');
         });
