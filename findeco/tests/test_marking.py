@@ -59,13 +59,13 @@ class UnFollowTest(TestCase):
     def test_not_authenticated(self):
         response = self.client.post(
             reverse('mark_node_unfollow', kwargs=dict(path="Slot.1")))
-        assert_is_error_response(response, "NotAuthenticated")
+        assert_is_error_response(response, "_NotAuthenticated")
 
     def test_not_permitted(self):
         self.assertTrue(self.client.login(username="Permela", password="xxx"))
         response = self.client.post(
             reverse('mark_node_unfollow', kwargs=dict(path="Slot.1")))
-        assert_is_error_response(response, "PermissionDenied")
+        assert_is_error_response(response, "_PermissionDenied")
 
     def test_unfollow_leaf_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
@@ -129,13 +129,13 @@ class FollowTest(TestCase):
     def test_not_authenticated(self):
         response = self.client.post(
             reverse('mark_node_follow', kwargs=dict(path="Slot.1")))
-        assert_is_error_response(response, 'NotAuthenticated')
+        assert_is_error_response(response, '_NotAuthenticated')
 
     def test_not_permitted(self):
         self.assertTrue(self.client.login(username="Permela", password="xxx"))
         response = self.client.post(
             reverse('mark_node_follow', kwargs=dict(path="Slot.1")))
-        assert_is_error_response(response, 'PermissionDenied')
+        assert_is_error_response(response, '_PermissionDenied')
 
     def test_follow_leaf_of_derivate_tree(self):
         self.assertTrue(self.client.login(username="Ulf", password="abcde"))
@@ -194,13 +194,13 @@ class MarkSpamTest(TestCase):
     def test_not_authenticated(self):
         response = self.client.post(
             reverse('flag_node', kwargs=dict(path="Slot.1")))
-        assert_is_error_response(response, "NotAuthenticated")
+        assert_is_error_response(response, "_NotAuthenticated")
 
     def test_not_permitted(self):
         self.assertTrue(self.client.login(username="Permela", password="xxx"))
         response = self.client.post(
             reverse('flag_node', kwargs=dict(path="Slot.1")))
-        assert_is_error_response(response, "PermissionDenied")
+        assert_is_error_response(response, "_PermissionDenied")
 
     def test_mark_spam_root(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
@@ -247,13 +247,13 @@ class UnMarkSpamTest(TestCase):
     def test_not_authenticated(self):
         response = self.client.post(
             reverse('unflag_node', kwargs=dict(path="Slot.1")))
-        assert_is_error_response(response, "NotAuthenticated")
+        assert_is_error_response(response, "_NotAuthenticated")
 
     def test_not_permitted(self):
         self.assertTrue(self.client.login(username="Permela", password="xxx"))
         response = self.client.post(
             reverse('unflag_node', kwargs=dict(path="Slot.1")))
-        assert_is_error_response(response, "PermissionDenied")
+        assert_is_error_response(response, "_PermissionDenied")
 
     def test_unmark_spam_root(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))

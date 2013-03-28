@@ -195,4 +195,4 @@ class LoadTextTest(TestCase):
         for p in illegal_paths:
             response = self.client.get(
                 reverse('load_text', kwargs=dict(path=p)))
-            assert_is_error_response(response, "IllegalPath")
+            assert_is_error_response(response, "_IllegalPath")

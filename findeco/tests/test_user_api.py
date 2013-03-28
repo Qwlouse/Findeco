@@ -57,7 +57,7 @@ class LoadUserInfoTest(TestCase):
         for n in ['hannes', 'harbart', 'nieh']:
             response = self.client.get(
                 reverse('load_user_info', kwargs=dict(name=n)))
-            assert_is_error_response(response, "UnknownUser")
+            assert_is_error_response(response, "_UnknownUser")
 
 
 class LoadUserSettingsTest(TestCase):
@@ -95,7 +95,7 @@ class LoadUserSettingsTest(TestCase):
 
     def test_not_logged_in_returns_error_response(self):
         response = self.client.get(reverse('load_user_settings'))
-        assert_is_error_response(response, "NotAuthenticated")
+        assert_is_error_response(response, "_NotAuthenticated")
 
 
 class StoreSettingsTest(TestCase):
@@ -114,20 +114,20 @@ class StoreSettingsTest(TestCase):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         response = self.client.post(reverse('store_settings'),
                                     dict(displayName='hans'))
-        assert_is_error_response(response, "MissingPOSTParameter")
+        assert_is_error_response(response, "_MissingPOSTParameter")
 
     def test_missing_displayname_parameter_returns_error(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         response = self.client.post(reverse('store_settings'),
                                     dict(description=''))
-        assert_is_error_response(response, "MissingPOSTParameter")
+        assert_is_error_response(response, "_MissingPOSTParameter")
 
     def test_unavailable_displayname_returns_error(self):
         self.hugo = create_user('hugo', description='notHulk', password="1234")
         self.assertTrue(self.client.login(username="hans", password='1234'))
         response = self.client.post(reverse('store_settings'),
                                     dict(displayName='hugo', description=''))
-        assert_is_error_response(response, "UsernameNotAvailable")
+        assert_is_error_response(response, "_UsernameNotAvailable")
 
     def test_change_description_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))

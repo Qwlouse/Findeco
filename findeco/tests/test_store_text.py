@@ -49,24 +49,24 @@ class StoreTextTest(TestCase):
 
     def test_not_authenticated(self):
         response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
-        assert_is_error_response(response, "NotAuthenticated")
+        assert_is_error_response(response, "_NotAuthenticated")
 
     def test_not_permitted(self):
         self.assertTrue(
             self.client.login(username="Notpermitted", password="fghjfgh"))
         response = self.client.post(self.url, dict(wikiText="= Bla =\nBlubb."))
-        assert_is_error_response(response, "PermissionDenied")
+        assert_is_error_response(response, "_PermissionDenied")
 
     def test_store_missing_text(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.post(self.url)
-        assert_is_error_response(response, "MissingPOSTParameter")
+        assert_is_error_response(response, "_MissingPOSTParameter")
 
     def test_store_missing_argument_type(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         response = self.client.post(self.url, dict(wikiText="= Hopp =\nGrumpf.",
                                                    wikiTextAlternative="= Bla =\nBlubb."))
-        assert_is_error_response(response, "MissingPOSTParameter")
+        assert_is_error_response(response, "_MissingPOSTParameter")
 
     def test_store_textNode(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))

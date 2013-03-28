@@ -112,11 +112,11 @@ class LoadNodeTest(TestCase):
     def test_on_non_existing_node_gives_error_response(self):
         response = self.client.get(
             reverse('load_node', kwargs=dict(path='doesnotexist.1')))
-        assert_is_error_response(response, "UnknownNode")
+        assert_is_error_response(response, "_UnknownNode")
 
     def test_on_illegal_path_gives_error_response(self):
         illegal_paths = ['Wahlprogramm.1/foo.1.pro.2']
         for p in illegal_paths:
             response = self.client.get(
                 reverse('load_node', kwargs=dict(path=p)))
-            assert_is_error_response(response, "IllegalPath")
+            assert_is_error_response(response, "_IllegalPath")

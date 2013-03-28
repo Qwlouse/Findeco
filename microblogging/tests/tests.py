@@ -91,7 +91,7 @@ class MicrobloggingTests(TestCase):
         response = self.client.post(
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
             dict(microblogText="Bla bla bla. I had to say it."))
-        assert_is_error_response(response, 'NotAuthenticated')
+        assert_is_error_response(response, '_NotAuthenticated')
 
     def test_load_microblogging_illegal_path(self):
         self.assertTrue(self.client.login(username="max", password="1234"))
@@ -101,7 +101,7 @@ class MicrobloggingTests(TestCase):
                     kwargs=dict(path="Slot_4.1/SubSlot_1.1",
                                 select_id=0,
                                 microblogging_load_type="newer")))
-        assert_is_error_response(response, 'UnknownNode')
+        assert_is_error_response(response, '_UnknownNode')
 
     def test_load_microblogging_0_newer(self):
         self.assertTrue(self.client.login(username="max", password="1234"))

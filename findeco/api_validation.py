@@ -156,22 +156,22 @@ errorResponse_schema = {
 }
 
 ERROR_LIST = [
-    "UnknownNode",
-    "UnknownUser",
-    "UnknownEmailAddress",
-    "MissingPOSTParameter",
-    "IllegalPath",
-    "NotAuthenticated",
-    "PermissionDenied",
-    "DisabledAccount",
-    "UsernameNotAvailable",
-    "EmailAddressNotAvailiable",
-    "InvalidUsername",
-    "InvalidLogin",
-    "InvalidEmailAddress",
-    "InvalidActivationKey",
-    "InvalidURL",
-    "ServerError"
+    "_UnknownNode",
+    "_UnknownUser",
+    "_UnknownEmailAddress",
+    "_MissingPOSTParameter",
+    "_IllegalPath",
+    "_NotAuthenticated",
+    "_PermissionDenied",
+    "_DisabledAccount",
+    "_UsernameNotAvailable",
+    "_EmailAddressNotAvailiable",
+    "_InvalidUsername",
+    "_InvalidLogin",
+    "_InvalidEmailAddress",
+    "_InvalidActivationKey",
+    "_InvalidURL",
+    "_ServerError"
 ]
 
 
