@@ -56,6 +56,12 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
         });
     };
 
+    $scope.parse = function (text) {
+        if ( text != undefined && text.length > 0 )
+            return Parser.parse(text, null, true);
+        return "";
+    };
+
     $scope.loadUserInfo();
 }
 

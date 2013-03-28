@@ -1,13 +1,10 @@
-<div id="contentContainer" class="centeringContainer">
-    <div id="leftColumn" class="contentBoxInvisible">
-    </div>
-
-    <div id="centerColumn" class="contentBox">
+<div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
+    <div id="leftWideColumn" class="contentBox">
         <h1> {{ user.displayName }} </h1>
         Beschreibung:
         <form ng-submit="storeUserSettings()">
             <textarea ng-model="user.description" placeholder="Beschreibung" style="width: 100%; resize: vertical;" rows="5">  </textarea>
-            <input type="submit" value="speichern">
+            <input class="btn btn-primary" type="submit" value="speichern">
         </form>
         TODO Hier sollte noch hin:
         <ul>
@@ -18,6 +15,12 @@
             <li>account löschen(?)</li>
         </ul>
     </div>
-
-    <div ng-include src="'static/partials/microblogging.html'"></div>
+    <div id="rightWideColumn" class="contentBox">
+        <h2 style="color: gray; border-bottom: 1px dotted gray;" data-i18n="_previewHeading_">Vorschau:</h2>
+        <h1>{{user.displayName}}</h1>
+        <div>
+            <h2 data-i18n="_description_">Description</h2>
+            <div ng-bind-html-unsafe="parse(user.description)"></div>
+        </div>
+    </div>
 </div>

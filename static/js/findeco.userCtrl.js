@@ -100,7 +100,12 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     $scope.storeUserSettings = function() {
         User.storeSettings();
     };
-    
+
+    $scope.parse = function (text) {
+        if ( text != undefined && text.length > 0 )
+            return Parser.parse(text, null, true);
+        return "";
+    };
 
     $scope.activate();
    
