@@ -48,12 +48,10 @@ findecoApp.directive('followStar', function( ) {
             });
             link.bind('click', toggle);
             function toggle() {
-                console.log('toggle', scope.entity.isFollowing);
                 var markType = "follow";
                 if (scope.entity.isFollowing == 2) {markType = "unfollow";}
                 scope.markFunc(scope.entity.path, markType).success(function () {
-
-                    if (scope.entity.isFollowing == 2) {
+                    if (markType == 'unfollow') {
                         scope.entity.isFollowing = 0;
                     } else {
                         scope.entity.isFollowing = 2;

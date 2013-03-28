@@ -26,8 +26,32 @@
 /* Controllers */
 
 function FindecoMicroblogCtrl($scope, Backend, User) {
+
+    function containsUser(a, obj) {
+        for (var i = 0; i < a.length; i++) {
+            if (a[i].displayName === obj.displayName) {
+                return 2;
+            }
+        }
+        return 0;
+    }
+
+    function setAuthorForAllBlogs() {
+        for (var i = 0; i < $scope.microbloggingList.length; ++i ) {
+            var blog = $scope.microbloggingList[i];
+            blog.author = blog.authorGroup[0];
+            blog.author.isFollowing = containsUser(User.followees, blog.author);
+            blog.author.path = blog.author.displayName;
+        }
+    }
+
     $scope.microbloggingList = [];
     $scope.user = User;
+
+    $scope.followUser = function (path, type) {
+        return User.markUser(path, type).success(setAuthorForAllBlogs);
+    };
+
     $scope.updateMicrobloggingList = function () {
         Backend.loadMicroblogging($scope.microbloggingList, locator.getSanitizedPath());
     };
