@@ -284,13 +284,17 @@ angular.module('FindecoServices', [])
         var tmp = {};
         return tmp;
     })
-    .factory('Message', function () {
+    .factory('Message', function ($injector) {
         var tmp = {
             messageList: [],
             catchList: {}
         };
-
+        var localize;
         tmp.send = function (type, message) {
+        	localize = localize || $injector.get('localize');
+        	if (message.substr(0, 1) == "_"){
+        		message=localize.getLocalizedString(message);
+        	}
             if ( this.catchList[message] != undefined ) {
                 this.catchList[message].push({type: type, msg: message});
             } else {

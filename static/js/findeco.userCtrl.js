@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoUserCtrl($scope, $location, User, $routeParams) {
+function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     $scope.user = User;
 
     $scope.login = function () {
@@ -41,6 +41,7 @@ function FindecoUserCtrl($scope, $location, User, $routeParams) {
     };
     
     $scope.register = function() {
+    	Message.send("error", "_textCreateSendBtn_");
     	console.log($scope.TOS)
     	if (($scope.password == undefined) || ($scope.mail ==  undefined) || ($scope.username ==  undefined)) {
     		console.log("Missing Fields");
@@ -56,16 +57,20 @@ function FindecoUserCtrl($scope, $location, User, $routeParams) {
     		return "";
     	}
     	if ($scope.DPR != true) {
+    		
+    		Message.send("error", "_textCreateSendBtn_");
     		console.log("DPR not checked");
     		return "";
     	}
-     	
+    	Message.send("error", "foo");
     	User.register($scope.username, $scope.password, $scope.mail).success(function () {
             $location.path('/');
         });
     };
     
     $scope.activate = function() {
+    	 //$scope.alerts.push({type: 'success', msg: "Bitte Emails checken"});
+    	//Message.send("error", "foo");
     //	$scope.accountActivationKey = $routeParams.accountActivationKey
     	//accountActivationKey
     	if(!($location.path().substr(1, 8) == "activate")){
@@ -74,6 +79,7 @@ function FindecoUserCtrl($scope, $location, User, $routeParams) {
     	// /activate/
     	User.activate($routeParams.param).success(function () {
             $location.path('/');
+       
         });
     
      	
@@ -102,6 +108,7 @@ function FindecoUserCtrl($scope, $location, User, $routeParams) {
     };
 
     $scope.activate();
+   
 }
 
-FindecoUserCtrl.$inject = ['$scope', '$location', 'User', '$routeParams'];
+FindecoUserCtrl.$inject = ['$scope', '$location', 'User', '$routeParams' , 'Message'];

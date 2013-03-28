@@ -165,7 +165,6 @@
         "value":"Microblogging",
         "description":""
     },
-    
     {
         "key":"_follow_",
         "value":"Folgen",
@@ -178,8 +177,28 @@
     },
 
     {
+        "key":"_follow_",
+        "value":"Folgen",
+        "description":""
+    },
+    {
+        "key":"_unfollow_",
+        "value":"Entfolgen",
+        "description":""
+    },
+    {
         "key":"_description_",
         "value":"Beschreibung",
+        "description":""
+    },
+    {
+        "key":"_InvalidLogin",
+        "value":"Login Ungültig",
+        "description":""
+    } ,
+    {
+        "key":"_NotAuthenticated",
+        "value":"Du bist nicht angemeldet!",
         "description":""
     },
     {
