@@ -30,6 +30,7 @@
     </div>
 
     <div id="centerColumn" class="contentBox">
+        <div  follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
         <h1>{{ nodeInfo.fullTitle }}</h1>
         <div findeco-graph data="graphData" path="path" class="graph"></div>
         <p ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
@@ -40,7 +41,7 @@
                 <a href="/#/{{ getPath(section.shortTitle + '.' + section.index) }}">{{section.fullTitle}}</a>
             </h2>
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
-                <div follow-star entity="section" mark-func="markNode"></div>
+                <div follow-star show-if="user.isLoggedIn" entity="section" mark-func="markNode"></div>
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>

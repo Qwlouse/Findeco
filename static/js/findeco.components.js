@@ -33,15 +33,19 @@ findecoApp.directive('followStar', function( ) {
         restrict : 'A',
         scope: {
             entity: '=',
-            markFunc: '='
+            markFunc: '=',
+            showIf: '='
         },
         replace: true,
         template: '<a class="follow-star">' +
                     '<img src="static/images/star{{entity.isFollowing}}.png" alt=""/>' +
                   '</a>',
         link : function (scope, element, attrs) {
-            console.log(scope.entity);
+
             var link = angular.element(element[0]);
+            scope.$watch(scope.showIf, function(value){
+                link.css('display', scope.showIf ? '' : 'none');
+            });
             link.bind('click', toggle);
             function toggle() {
                 console.log('toggle', scope.entity.isFollowing);

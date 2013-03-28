@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoDefaultCtrl($scope, $location, Backend) {
+function FindecoDefaultCtrl($scope, $location, Backend, User) {
     $scope.path = THELocatoooooooor.getSanitizedPath();
 
     $scope.isTextLoaded = false;
@@ -35,6 +35,8 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
     $scope.paragraphList = [];
     $scope.nodeInfo = [];
     $scope.sections = [];
+    $scope.user = User;
+
 
     $scope.getPath = function (p) {
         return THELocatoooooooor.getSanitizedPath(p);
@@ -85,6 +87,7 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
                 section.path = THELocatoooooooor.getPathForIndex(section.shortTitle, section.index);
                 $scope.sections.push(section);
             }
+            $scope.nodeInfo.path = $scope.path;
         });
     };
 
@@ -117,4 +120,4 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
     $scope.initialize();
 }
 
-FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend'];
+FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend', 'User'];
