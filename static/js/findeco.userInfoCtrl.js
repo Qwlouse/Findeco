@@ -49,8 +49,10 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
                     }
                 }
             }
+        }).error(function () {
+            $scope.displayName = "User " + $scope.displayName + " existiert nicht.";
         });
-    }
+    };
 
     $scope.loadUserInfo();
 }
