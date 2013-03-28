@@ -224,11 +224,11 @@ angular.module('FindecoServices', [])
         userInfo.login = function (username, password) {
             var promise = $http.post('/.json_login/', {username: username, password: password});
             promise.success(function (d) {
-                var data = d.loginResponse.userInfo;
+                var data = d.loginResponse;
                 userInfo.isLoggedIn = true;
-                userInfo.displayName = data.displayName;
-                userInfo.description = data.description;
-                userInfo.followees = data.followees;
+                userInfo.displayName = data.userInfo.displayName;
+                userInfo.description = data.userInfo.description;
+                userInfo.followees = data.userSettings.followees;
             });
             return promise;
         };
@@ -247,18 +247,18 @@ angular.module('FindecoServices', [])
             var url = pathComponents.join('/');
             url = url.replace("//", "/");
             return $http.post(url, {}).success(function (d) {
-                userInfo.followees = d.markUserResponse.followees
+                userInfo.followees = d.markUserResponse.followees;
             });
         };
 
         userInfo.loadSettings = function () {
             var promise = $http.get('.json_loadUserSettings/');
             promise.success(function (d) {
-                var data = d.loadUserSettingsResponse.userInfo;
+                var data = d.loadUserSettingsResponse;
                 userInfo.isLoggedIn = true;
-                userInfo.displayName = data.displayName;
-                userInfo.description = data.description;
-                userInfo.followees = data.followees;
+                userInfo.displayName = data.userInfo.displayName;
+                userInfo.description = data.userInfo.description;
+                userInfo.followees = data.userSettings.followees;
             });
             return promise;
         };

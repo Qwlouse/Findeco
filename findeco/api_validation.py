@@ -39,12 +39,12 @@ user_schema = {
 userInfo_schema = {
     'displayName': string,
     'description': string,
-    'followers': [user_schema, None],
-    'followees': [user_schema, None]
 }
 userSettings_schema = {
     'blockedUsers': [user_schema, None],
-    'userRights': integer
+    'userRights': integer,
+    'followers': [user_schema, None],
+    'followees': [user_schema, None]
 }
 authorGroup_schema = [userInfo_schema]
 originGroup_schema = ["path", None]
