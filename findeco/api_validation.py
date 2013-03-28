@@ -44,7 +44,8 @@ userSettings_schema = {
     'blockedUsers': [user_schema, None],
     'userRights': integer,
     'followers': [user_schema, None],
-    'followees': [user_schema, None]
+    'followees': [user_schema, None],
+    'email': string
 }
 authorGroup_schema = [userInfo_schema]
 originGroup_schema = ["path", None]

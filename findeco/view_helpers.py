@@ -152,7 +152,8 @@ def create_user_settings(user):
                    user.profile.followees.all()],
         blockedUsers=[{'displayName': u.user.username} for u in
                       user.profile.blocked.all()],
-        userRights=rights
+        userRights=rights,
+        email=user.email
     )
     return user_settings
 
