@@ -76,7 +76,7 @@ angular.module('FindecoServices', [])
                         Message.send("error", response.data.errorResponse.errorID);
                         delete response.data.errorResponse;
                     }
-                    return $q.reject();
+                    return $q.reject(response);
                 }
             );
         }
