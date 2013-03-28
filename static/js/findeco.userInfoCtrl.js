@@ -26,33 +26,26 @@
 /* Controllers */
 
 function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
-    $scope.displayName = $routeParams.name.replace(/\//, '');
-
-    $scope.follow = function (name, type) {
-        Backend.markUser(name, type).success(function (data) {
-            if (data.markUserResponse != undefined) {
-                $scope.loadUserInfo();
-            }
-        });
+    $scope.user = User;
+    var name = $routeParams.name.replace(/\//, '');
+    $scope.displayUser = {
+        name: name,
+        path: name,
+        exists: false,
+        isFollowing: User.follows(name)
     };
+
+    $scope.followUser = User.markUser;
 
     $scope.loadUserInfo = function () {
         $scope.userExists = false;
-        Backend.loadUserInfo($scope.displayName).success(function (data) {
-            if (data.loadUserInfoResponse != undefined) {
-                $scope.userExists = true;
-                for (var l in data.loadUserInfoResponse.userInfo) {
-                    $scope[l] = data.loadUserInfoResponse.userInfo[l];
-                }
-                $scope.following = false;
-                for (var f in $scope.followees) {
-                    if ($scope.followees[f].displayName == User.displayName) {
-                        $scope.following = true;
-                    }
-                }
-            }
+        Backend.loadUserInfo(name).success(function (data) {
+            $scope.displayUser.exists = true;
+            $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
+
         }).error(function () {
-            $scope.displayName = 'User "' + $scope.displayName + '" existiert nicht.';
+            $scope.displayUser.exists = false;
+            $scope.displayUser.name = 'User "' + name + '" existiert nicht.';
         });
     };
 

@@ -41,45 +41,38 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     };
     
     $scope.register = function() {
-    	Message.send("error", "_textCreateSendBtn_");
-    	console.log($scope.TOS)
     	if (($scope.password == undefined) || ($scope.mail ==  undefined) || ($scope.username ==  undefined)) {
-    		console.log("Missing Fields");
+    		Message.send("error", "_accountFieldsMissing_");
     		return "";
     	}
     	if ($scope.password != $scope.password2) {
-    		console.log("Not matching Passwords");
+    		Message.send("error", "_accountPasswordsNotMatching_");
     		return "";
     	}
     	
     	if ($scope.TOS != true) {
-    		console.log("TOS not checked");
+    		Message.send("error", "_accountTosNotChecked_");
     		return "";
     	}
     	if ($scope.DPR != true) {
     		
-    		Message.send("error", "_textCreateSendBtn_");
-    		console.log("DPR not checked");
+    		Message.send("error", "_accountDprNotChecked_");
     		return "";
     	}
-    	Message.send("error", "foo");
     	User.register($scope.username, $scope.password, $scope.mail).success(function () {
             $location.path('/');
+            Message.send("success", "_accountCheckEmails_");
         });
     };
     
     $scope.activate = function() {
-    	 //$scope.alerts.push({type: 'success', msg: "Bitte Emails checken"});
-    	//Message.send("error", "foo");
-    //	$scope.accountActivationKey = $routeParams.accountActivationKey
-    	//accountActivationKey
-    	if(!($location.path().substr(1, 8) == "activate")){
+       	if(!($location.path().substr(1, 8) == "activate")){
     		return "";
     	}
     	// /activate/
     	User.activate($routeParams.param).success(function () {
             $location.path('/');
-       
+            Message.send("success", "_accountActivationFinished_");
         });
     
      	

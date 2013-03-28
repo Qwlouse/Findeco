@@ -205,5 +205,37 @@
         "key":"_previewHeading_",
         "value":"Vorschau:",
         "description":""
+    },
+    {
+        "key":"_accountDprNotChecked_",
+        "value":"Du musst die Datenschutzbestimmung annehmen!",
+        "description":""
+    },
+    {
+        "key":"_accountTosNotChecked_",
+        "value":"Du musst die Nutzungsbedingungen annehmen!",
+        "description":""
+    },
+    {
+        "key":"_accountPasswordsNotMatching_",
+        "value":"Die eingegebenen Passwörter stimmen nicht überein",
+        "description":""
+    },
+    {
+        "key":"_accountFieldsMissing_",
+        "value":"Es müssen alle Felder ausgefüllt sein",
+        "description":""
+    },
+    {
+        "key":"_accountCheckEmails_",
+        "value":"Die Registrierung ist abgeschlossen. Bitte prüfe deinen Emailaccount um den Zugang zu aktivieren.",
+        "description":""
+    },
+    {
+        "key":"_accountActivationFinished_",
+        "value":"Dein Account wurde aktiviert. Viel Spaß mit Findeco!!! ",
+        "description":""
     }
+    
+    
 ]
