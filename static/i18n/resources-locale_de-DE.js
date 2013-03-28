@@ -164,7 +164,17 @@
         "key":"_searchMicrobloggingResults_",
         "value":"Microblogging",
         "description":""
+    } ,
+    {
+        "key":"_InvalidLogin",
+        "value":"Login Ungültig",
+        "description":""
+    } ,
+    {
+        "key":"_NotAuthenticated",
+        "value":"Du bist nicht angemeldet!",
+        "description":""
     }
-    
+   
     
 ]

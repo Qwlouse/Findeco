@@ -45,22 +45,22 @@ class ViewError(Exception):
         self.additional_info = args
 
 
-UnknownNode = functools.partial(ViewError, 'UnknownNode')
-UnknownUser = functools.partial(ViewError, 'UnknownUser')
-UnknownEmailAddress = functools.partial(ViewError, 'UnknownEmailAddress')
-MissingPOSTParameter = functools.partial(ViewError, 'MissingPOSTParameter')
-IllegalPath = functools.partial(ViewError, 'IllegalPath')
-NotAuthenticated = functools.partial(ViewError, 'NotAuthenticated')
-PermissionDenied = functools.partial(ViewError, 'PermissionDenied')
-DisabledAccount = functools.partial(ViewError, 'DisabledAccount')
-UsernameNotAvailable = functools.partial(ViewError, 'UsernameNotAvailable')
+UnknownNode = functools.partial(ViewError, '_UnknownNode')
+UnknownUser = functools.partial(ViewError, '_UnknownUser')
+UnknownEmailAddress = functools.partial(ViewError, '_UnknownEmailAddress')
+MissingPOSTParameter = functools.partial(ViewError, '_MissingPOSTParameter')
+IllegalPath = functools.partial(ViewError, '_IllegalPath')
+NotAuthenticated = functools.partial(ViewError, '_NotAuthenticated')
+PermissionDenied = functools.partial(ViewError, '_PermissionDenied')
+DisabledAccount = functools.partial(ViewError, '_DisabledAccount')
+UsernameNotAvailable = functools.partial(ViewError, '_UsernameNotAvailable')
 EmailAddressNotAvailiable = functools.partial(ViewError,
-                                              'EmailAddressNotAvailiable')
-InvalidUsername = functools.partial(ViewError, 'InvalidUsername')
-InvalidLogin = functools.partial(ViewError, 'InvalidLogin')
-InvalidEmailAddress = functools.partial(ViewError, 'InvalidEmailAddress')
-InvalidActivationKey = functools.partial(ViewError, 'InvalidActivationKey')
-InvalidURL = functools.partial(ViewError, 'InvalidURL')
+                                              '_EmailAddressNotAvailiable')
+InvalidUsername = functools.partial(ViewError, '_InvalidUsername')
+InvalidLogin = functools.partial(ViewError, '_InvalidLogin')
+InvalidEmailAddress = functools.partial(ViewError, '_InvalidEmailAddress')
+InvalidActivationKey = functools.partial(ViewError, '_InvalidActivationKey')
+InvalidURL = functools.partial(ViewError, '_InvalidURL')
 
 
 def ViewErrorHandling(f):
@@ -71,8 +71,8 @@ def ViewErrorHandling(f):
         except ViewError, e:
             return json_error_response(e.identifier, *e.additional_info)
         except InvalidWikiStructure, e:
-            return json_error_response('InvalidWikiStructure', e.message)
+            return json_error_response('_InvalidWikiStructure', e.message)
         except SMTPException, e:
-            return json_error_response('ServerError', 'SMTPError', e.message)
+            return json_error_response('_ServerError', 'SMTPError', e.message)
 
     return wrapped
