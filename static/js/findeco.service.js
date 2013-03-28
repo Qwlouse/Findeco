@@ -209,14 +209,14 @@ angular.module('FindecoServices', [])
         userInfo.register = function (displayName, password, emailAddress) {
             var promise = $http.post('/.json_accountRegistration/', {displayName: displayName, password: password, emailAddress: emailAddress});
             promise.success(function (d) {
-                console.log('Please Check Mails');
+                
             });
             return promise;
         };
         userInfo.activate = function (activationKey) {
             var promise = $http.post('/.json_accountActivation/', {activationKey: activationKey});
             promise.success(function (d) {
-                console.log('Activated!!!');
+               
             });
             return promise;
         };
