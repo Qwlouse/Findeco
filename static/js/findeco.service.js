@@ -62,6 +62,24 @@ angular.module('FindecoServices', [])
         // to rename X-XSRFToken to X-CSRFToken because Django expects it that way
         $httpProvider.defaults.xsrfHeaderName = "X-CSRFToken";
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+
+        $httpProvider.responseInterceptors.push('errorHandler');
+    })
+    .factory('errorHandler', function ($q, Message) {
+        return function (promise) {
+            return promise.then(
+                function (response) {
+                    return response;
+                },
+                function(response) {
+                    if (response.data.errorResponse != undefined) {
+                        Message.send("error", response.data.errorResponse.errorID);
+                        delete response.data.errorResponse;
+                    }
+                    return $q.reject();
+                }
+            );
+        }
     })
     .factory('Backend', function ($http) {
         function fillArray(array, attributes) {
@@ -88,7 +106,7 @@ angular.module('FindecoServices', [])
                 pathComponents.push(type);
                 pathComponents.push(path);
                 var url = pathComponents.join('/');
-                url = url.replace("//","/");
+                url = url.replace("//", "/");
                 var promise = $http.get(url);
                 promise.success(fillArray(microblogList_out,
                     ['loadMicrobloggingResponse']));
@@ -98,14 +116,14 @@ angular.module('FindecoServices', [])
             markUser: function (displayName, markType) {
                 var pathComponents = ['/.json_markUser', markType, displayName];
                 var url = pathComponents.join('/');
-                url = url.replace("//","/");
+                url = url.replace("//", "/");
                 return $http.post(url, {});
             },
 
             markNode: function (nodePath, markType) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
                 var url = pathComponents.join('/');
-                url = url.replace("//","/");
+                url = url.replace("//", "/");
                 return $http.get(url);
             },
 
@@ -119,13 +137,13 @@ angular.module('FindecoServices', [])
             storeText: function (path, params) {
                 var pathComponents = ['/.json_storeText', path];
                 var url = pathComponents.join('/');
-                url = url.replace("//","/");
+                url = url.replace("//", "/");
                 return $http.post(url, params);
             },
 
             loadArgument: function (indexNodes_out, path) {
                 var url = ['/.json_loadArgumentIndex', path].join('/');
-                url = url.replace("//","/");
+                url = url.replace("//", "/");
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out,
                     ['loadArgmumentIndexResponse']));
@@ -134,7 +152,7 @@ angular.module('FindecoServices', [])
 
             loadText: function (paragraphList_out, path) {
                 var url = ['/.json_loadText', path].join('/');
-                url = url.replace("//","/");
+                url = url.replace("//", "/");
                 var promise = $http.get(url);
                 promise.success(fillArray(paragraphList_out,
                     ['loadTextResponse', 'paragraphs']));
@@ -143,14 +161,14 @@ angular.module('FindecoServices', [])
 
             loadUserInfo: function (user) {
                 var url = ['/.json_loadUserInfo', user].join('/');
-                url = url.replace("//","/");
+                url = url.replace("//", "/");
                 return $http.get(url);
             },
 
             loadNode: function (nodeInfo, path) {
                 var url = ['/.json_loadNode', path].join('/');
                 var promise = $http.get(url);
-                promise.success( function (d) {
+                promise.success(function (d) {
                     angular.copy(d.loadNodeResponse, nodeInfo);
                 });
                 return promise;
@@ -158,7 +176,7 @@ angular.module('FindecoServices', [])
 
             loadIndex: function (indexNodes_out, path) {
                 var url = ['/.json_loadIndex', path].join('/');
-                url = url.replace("//","/");
+                url = url.replace("//", "/");
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out, ['loadIndexResponse']));
                 return promise;
@@ -169,7 +187,7 @@ angular.module('FindecoServices', [])
                     graphType = "full";
                 }
                 var url = ['/.json_loadGraphData', graphType, path].join('/');
-                url = url.replace("//","/");
+                url = url.replace("//", "/");
                 var promise = $http.get(url);
 
                 promise.success(fillArray(graphData_out, ['loadGraphDataResponse', 'graphDataChildren']));
@@ -178,7 +196,7 @@ angular.module('FindecoServices', [])
 
             search: function (searchResults, search_string) {
                 var searchFields = "user_content_microblogging";
-                var promise = $http.get('.json_search/'+searchFields+'/'+search_string);
+                var promise = $http.get('.json_search/' + searchFields + '/' + search_string);
 
                 promise.success(function (d) {
                     angular.copy(d.searchResponse, searchResults);
@@ -188,27 +206,27 @@ angular.module('FindecoServices', [])
 
     })
     .factory('User', function ($http, localize) {
-    	var userInfo = {
+        var userInfo = {
             isLoggedIn: false,
             displayName: "",
             description: ""
         };
-    	
+
         userInfo.register = function (displayName, password, emailAddress) {
-            var promise = $http.post('/.json_accountRegistration/', {displayName: displayName, password: password, emailAddress:emailAddress});
+            var promise = $http.post('/.json_accountRegistration/', {displayName: displayName, password: password, emailAddress: emailAddress});
             promise.success(function (d) {
-            	console.log ('Please Check Mails');
+                console.log('Please Check Mails');
             });
             return promise;
         };
         userInfo.activate = function (activationKey) {
             var promise = $http.post('/.json_accountActivation/', {activationKey: activationKey});
             promise.success(function (d) {
-            	console.log ('Activated!!!');
+                console.log('Activated!!!');
             });
             return promise;
         };
-        
+
         userInfo.login = function (username, password) {
             var promise = $http.post('/.json_login/', {username: username, password: password});
             promise.success(function (d) {
