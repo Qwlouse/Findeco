@@ -22,27 +22,45 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-ul.indexList {
-    margin: 0 0 0 0;
-    padding: 10px;
-}
+//////////////////// findeco-graph Directive ///////////////////////////////////
+/*
+ <div follow-star entity="data" markFunc="markNode"/>
+ */
 
-ul.indexList li {
-    display: block;
-    list-style: none;
-}
 
-p.mainText {
-    color: #333;
-}
+findecoApp.directive('followStar', function( ) {
+    return {
+        restrict : 'A',
+        scope: {
+            entity: '=',
+            markFunc: '=',
+            showIf: '='
+        },
+        replace: true,
+        template: '<a class="follow-star">' +
+                    '<img src="static/images/star{{entity.isFollowing}}.png" alt=""/>' +
+                  '</a>',
+        link : function (scope, element, attrs) {
 
-#centerColumn h1 {
-    color: #2d7cc4;
-}
+            var link = angular.element(element[0]);
+            scope.$watch(scope.showIf, function(value){
+                link.css('display', scope.showIf ? '' : 'none');
+            });
+            link.bind('click', toggle);
+            function toggle() {
+                console.log('toggle', scope.entity.isFollowing);
+                var markType = "follow";
+                if (scope.entity.isFollowing == 2) {markType = "unfollow";}
+                scope.markFunc(scope.entity.path, markType).success(function () {
 
-a.follow-star {
-    position: relative;
-    top: 10px;
-    float: right;
-    cursor: pointer;
-}
+                    if (scope.entity.isFollowing == 2) {
+                        scope.entity.isFollowing = 0;
+                    } else {
+                        scope.entity.isFollowing = 2;
+                    }
+                });
+            }
+
+        }
+    }
+});
