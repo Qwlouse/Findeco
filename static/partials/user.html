@@ -3,14 +3,11 @@
     </div>
 
     <div id="centerColumn" class="contentBox">
-        <div style="float: right;">
-            <input ng-show="!following" ng-click="follow(displayName, 'follow')" class="btn btn-primary" type="button" value="Folgen" data-i18n="_follow_" />
-            <input ng-show="following" ng-click="follow(displayName, 'unfollow')" class="btn btn-primary" type="button" value="Entfolgen" data-i18n="_unfollow_" />
-        </div>
-        <h1>{{displayName}}</h1>
-        <div ng-show="userExists">
+        <div follow-star show-if="user.isLoggedIn" entity="displayUser" mark-func="followUser"></div>
+        <h1>{{displayUser.name}}</h1>
+        <div ng-show="displayUser.exists">
             <h2 data-i18n="_description_">Description</h2>
-            <div ng-bind-html-unsafe="parse(description)"></div>
+            <div ng-bind-html-unsafe="parse(displayUser.description)"></div>
         </div>
     </div>
 
