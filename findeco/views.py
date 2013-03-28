@@ -38,6 +38,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.core.mail import send_mail
+from django.utils.html import escape
 import json
 import random
 from findeco.api_validation import USERNAME
@@ -342,7 +343,7 @@ def store_settings(request):
         else:
             user.username = display_name
 
-    user.profile.description = request.POST['description']
+    user.profile.description = escape(request.POST['description'])
     user.save()
     return json_response({'storeSettingsResponse': {}})
 
