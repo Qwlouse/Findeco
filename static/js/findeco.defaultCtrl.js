@@ -52,17 +52,7 @@ function FindecoDefaultCtrl($scope, $location, Backend) {
         }
     };
 
-    $scope.markNode = function (paragraph) {
-        var markType = "follow";
-        if (paragraph.isFollowing == 2) {markType = "unfollow";}
-        Backend.markNode(paragraph.path, markType).success(function () {
-            if (paragraph.isFollowing == 2) {
-                paragraph.isFollowing = 0;
-            } else {
-                paragraph.isFollowing = 2;
-            }
-        });
-    };
+    $scope.markNode = Backend.markNode;
 
     $scope.relocateRelativeTo = function (shortTitle, index) {
         var path = $scope.path;

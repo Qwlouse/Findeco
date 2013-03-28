@@ -40,11 +40,7 @@
                 <a href="/#/{{ getPath(section.shortTitle + '.' + section.index) }}">{{section.fullTitle}}</a>
             </h2>
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
-                <a ng-click="markNode(paragraph)" class="follow-star" ng-switch on="paragraph.isFollowing">
-                    <img ng-switch-when="1" src="static/images/star1.png" alt="transitive following" />
-                    <img ng-switch-when="2" src="static/images/star2.png" alt="direct following" />
-                    <img ng-switch-default src="static/images/star0.png" alt="no following" />
-                </a>
+                <div follow-star entity="section" mark-func="markNode"></div>
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>
