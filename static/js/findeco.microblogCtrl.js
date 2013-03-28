@@ -26,21 +26,11 @@
 /* Controllers */
 
 function FindecoMicroblogCtrl($scope, Backend, User) {
-
-    function containsUser(a, obj) {
-        for (var i = 0; i < a.length; i++) {
-            if (a[i].displayName === obj.displayName) {
-                return 2;
-            }
-        }
-        return 0;
-    }
-
     function setAuthorForAllBlogs() {
         for (var i = 0; i < $scope.microbloggingList.length; ++i ) {
             var blog = $scope.microbloggingList[i];
             blog.author = blog.authorGroup[0];
-            blog.author.isFollowing = containsUser(User.followees, blog.author);
+            blog.author.isFollowing = User.follows(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
     }
@@ -53,7 +43,7 @@ function FindecoMicroblogCtrl($scope, Backend, User) {
     };
 
     $scope.updateMicrobloggingList = function () {
-        Backend.loadMicroblogging($scope.microbloggingList, locator.getSanitizedPath());
+        Backend.loadMicroblogging($scope.microbloggingList, locator.getSanitizedPath()).success(setAuthorForAllBlogs);
     };
 
     $scope.submit = function () {

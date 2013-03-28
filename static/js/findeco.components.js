@@ -43,7 +43,7 @@ findecoApp.directive('followStar', function( ) {
         link : function (scope, element, attrs) {
 
             var link = angular.element(element[0]);
-            scope.$watch(scope.showIf, function(value){
+            scope.$watch('showIf', function(value){
                 link.css('display', scope.showIf ? '' : 'none');
             });
             link.bind('click', toggle);
