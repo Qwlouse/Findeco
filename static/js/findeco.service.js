@@ -113,13 +113,6 @@ angular.module('FindecoServices', [])
                 return promise;
             },
 
-            markUser: function (displayName, markType) {
-                var pathComponents = ['/.json_markUser', markType, displayName];
-                var url = pathComponents.join('/');
-                url = url.replace("//", "/");
-                return $http.post(url, {});
-            },
-
             markNode: function (nodePath, markType) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
                 var url = pathComponents.join('/');
@@ -209,7 +202,8 @@ angular.module('FindecoServices', [])
         var userInfo = {
             isLoggedIn: false,
             displayName: "",
-            description: ""
+            description: "",
+            followees: []
         };
 
         userInfo.register = function (displayName, password, emailAddress) {
@@ -234,7 +228,7 @@ angular.module('FindecoServices', [])
                 userInfo.isLoggedIn = true;
                 userInfo.displayName = data.displayName;
                 userInfo.description = data.description;
-
+                userInfo.followees = data.followees;
             });
             return promise;
         };
@@ -244,6 +238,16 @@ angular.module('FindecoServices', [])
                 userInfo.isLoggedIn = false;
                 userInfo.description = "";
                 userInfo.displayName = "";
+                userInfo.followees = [];
+            });
+        };
+
+        userInfo.markUser = function (displayName, markType) {
+            var pathComponents = ['/.json_markUser', markType, displayName];
+            var url = pathComponents.join('/');
+            url = url.replace("//", "/");
+            return $http.post(url, {}).success(function (d) {
+                userInfo.followees = d.markUserResponse.followees
             });
         };
 
@@ -254,6 +258,7 @@ angular.module('FindecoServices', [])
                 userInfo.isLoggedIn = true;
                 userInfo.displayName = data.displayName;
                 userInfo.description = data.description;
+                userInfo.followees = data.followees;
             });
             return promise;
         };

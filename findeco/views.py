@@ -269,7 +269,9 @@ def mark_user_follow(request, name):
     user = request.user
     followee = assert_active_user(username=name)
     user.profile.followees.add(followee.profile)
-    return json_response({'markUserResponse': {}})
+    return json_response({'markUserResponse': {
+        'followees': [{'displayName': u.user.username}
+                      for u in user.profile.followees.all()]}})
 
 
 @ViewErrorHandling
@@ -277,7 +279,9 @@ def mark_user_unfollow(request, name):
     followee = assert_active_user(username=name)
     user = request.user
     user.profile.followees.remove(followee.profile)
-    return json_response({'markUserResponse': {}})
+    return json_response({'markUserResponse': {
+        'followees': [{'displayName': u.user.username}
+                      for u in user.profile.followees.all()]}})
 
 
 @ViewErrorHandling
