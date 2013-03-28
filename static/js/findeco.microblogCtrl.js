@@ -32,7 +32,6 @@ function FindecoMicroblogCtrl($scope, Backend, User) {
             blog.author = blog.authorGroup[0];
             blog.author.isFollowing = User.follows(blog.author.displayName);
             blog.author.path = blog.author.displayName;
-            console.log(blog);
         }
     }
 
