@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -26,7 +26,7 @@
 /* Controllers */
 
 function FindecoDefaultCtrl($scope, $location, Backend, User) {
-    $scope.path = THELocatoooooooor.getSanitizedPath();
+    $scope.path = locator.getSanitizedPath();
 
     $scope.isTextLoaded = false;
 
@@ -39,11 +39,11 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
 
 
     $scope.getPath = function (p) {
-        return THELocatoooooooor.getSanitizedPath(p);
+        return locator.getSanitizedPath(p);
     };
 
     $scope.relocate = function (target) {
-        $location.path(target + '/' + THELocatoooooooor.getSanitizedArgumentFreePath());
+        $location.path(target + '/' + locator.getSanitizedArgumentFreePath());
     };
 
     $scope.parse = function (text, shortTitle) {
@@ -61,7 +61,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
         if ($scope.path == '/') {
             path = '';
         }
-        $location.path(THELocatoooooooor.getSanitizedPath(shortTitle + '.' + index));
+        $location.path(locator.getSanitizedPath(shortTitle + '.' + index));
     };
 
     $scope.updateParagraphList = function () {
@@ -84,7 +84,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
                 section.paragraphs = [];
                 section.isLoaded = false;
                 section.isExpanded = false;
-                section.path = THELocatoooooooor.getPathForIndex(section.shortTitle, section.index);
+                section.path = locator.getPathForIndex(section.shortTitle, section.index);
                 $scope.sections.push(section);
             }
             $scope.nodeInfo.path = $scope.path;
@@ -110,7 +110,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
     };
 
     $scope.initialize = function() {
-        if ( THELocatoooooooor.isArgumentPath() ) {
+        if ( locator.isArgumentPath() ) {
             //$scope.updateParagraphList();
         } else {
             $scope.updateNode();

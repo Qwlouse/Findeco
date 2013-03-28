@@ -29,13 +29,13 @@ function FindecoMicroblogCtrl($scope, Backend, User) {
     $scope.microbloggingList = [];
     $scope.user = User;
     $scope.updateMicrobloggingList = function () {
-        Backend.loadMicroblogging($scope.microbloggingList, THELocatoooooooor.getSanitizedPath());
+        Backend.loadMicroblogging($scope.microbloggingList, locator.getSanitizedPath());
     };
 
     $scope.submit = function () {
         // TODO: Cross-site-scripting protection!
         if ($scope.microblogText.length <= 0) return;
-        Backend.storeMicroblogPost(THELocatoooooooor.getSanitizedPath(), $scope.microblogText).success(function () {
+        Backend.storeMicroblogPost(locator.getSanitizedPath(), $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });

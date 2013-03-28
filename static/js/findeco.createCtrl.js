@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -29,8 +29,8 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
     $scope.radioModel = '';
 
     $scope.relocate = function (target) {
-        $location.path(target + '/' + THELocatoooooooor.getSanitizedArgumentFreePath());
-    }
+        $location.path(target + '/' + Locator.getSanitizedArgumentFreePath());
+    };
 
     $scope.parse = function (text) {
         if ( text != undefined && text.length > 0 )
@@ -84,7 +84,7 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
         if ( type == 'new' ) {
             params['wikiText'] = $scope.tmp.text;
         }
-        Backend.storeText(THELocatoooooooor.getSanitizedArgumentFreePath(),params)
+        Backend.storeText(Locator.getSanitizedArgumentFreePath(),params)
             .success(function (data) {
                 if ( data.storeTextResponse != undefined ) {
                     $scope.tmp.text = '';
@@ -97,7 +97,7 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
                     Message.send('error',data.errorResponse.errorMessage);
                 }
             });
-    }
+    };
 
     $scope.tmp = TMP;
 }

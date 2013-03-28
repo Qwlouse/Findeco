@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -282,12 +282,12 @@ angular.module('FindecoServices', [])
             } else {
                 this.messageList.push({type: type, msg: message});
             }
-        }
+        };
 
         tmp.catch = function (message) {
             this.catchList[message] = [];
             return this.catchList[message];
-        }
+        };
 
         return tmp;
     })

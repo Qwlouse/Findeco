@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -29,15 +29,15 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
     $scope.tmp = TMP;
     $scope.user = User;
 
-    $scope.path = THELocatoooooooor.getSanitizedArgumentFreePath();
-    $scope.argumentPath = THELocatoooooooor.getSanitizedPath();
+    $scope.path = locator.getSanitizedArgumentFreePath();
+    $scope.argumentPath = locator.getSanitizedPath();
 
     $scope.isTextLoaded = false;
     $scope.paragraphList = [];
     $scope.argumentList = [];
 
     $scope.getPath = function () {
-        return THELocatoooooooor.getSanitizedArgumentFreePath();
+        return locator.getSanitizedArgumentFreePath();
     };
 
     $scope.parse = function(text,shortTitle) {
@@ -49,7 +49,7 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
         if ( $scope.path == '/' ) {
             path = '';
         }
-        $location.path(THELocatoooooooor.getSanitizedPath(shortTitle + '.' + index));
+        $location.path(locator.getSanitizedPath(shortTitle + '.' + index));
     };
 
     $scope.updateParagraphList = function() {
@@ -67,7 +67,7 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
     };
 
     $scope.updateArgumentList();
-    if ( THELocatoooooooor.isArgumentPath() ) {
+    if ( locator.isArgumentPath() ) {
         $scope.updateArgument();
     }
 }

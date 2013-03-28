@@ -1,5 +1,5 @@
-/** It's all Svens fault!!1!11 **********************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+/****************************************************************************************
+ * Copyright (c) 2012 Klaus Greff, Johannes Merkert, Maik Nauheim, Justus Wingert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
