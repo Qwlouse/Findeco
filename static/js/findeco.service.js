@@ -198,7 +198,7 @@ angular.module('FindecoServices', [])
         };
 
     })
-    .factory('User', function ($http, localize) {
+    .factory('User', function ($http) {
         var userInfo = {
             isLoggedIn: false,
             displayName: "",
@@ -265,6 +265,15 @@ angular.module('FindecoServices', [])
 
         userInfo.storeSettings = function () {
             return $http.post('.json_storeSettings/', {displayName: userInfo.displayName, description: userInfo.description});
+        };
+
+        userInfo.follows = function(name) {
+            for (var i = 0; i < userInfo.followees.length; i++) {
+                if (userInfo.followees[i].displayName == name) {
+                    return 2;
+                }
+            }
+            return 0;
         };
 
         userInfo.loadSettings();
