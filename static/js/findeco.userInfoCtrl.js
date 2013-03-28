@@ -41,7 +41,6 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
         $scope.userExists = false;
         Backend.loadUserInfo(name).success(function (data) {
             $scope.displayUser.exists = true;
-            console.log(data);
             $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
 
         }).error(function () {
