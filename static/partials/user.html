@@ -10,7 +10,7 @@
         <h1>{{displayName}}</h1>
         <div ng-show="userExists">
             <h2 data-i18n="_description_">Description</h2>
-            <p>{{ description }}</p>
+            <div ng-bind-html-unsafe="parse(description)"></div>
         </div>
     </div>
 

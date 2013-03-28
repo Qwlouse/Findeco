@@ -181,5 +181,10 @@
         "key":"_description_",
         "value":"Beschreibung",
         "description":""
+    },
+    {
+        "key":"_previewHeading_",
+        "value":"Vorschau:",
+        "description":""
     }
 ]
