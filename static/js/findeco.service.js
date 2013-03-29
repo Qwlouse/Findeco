@@ -291,7 +291,7 @@ angular.module('FindecoServices', [])
         };
         var localize;
         tmp.send = function (type, message) {
-        	if (message="_NotAuthenticated"){
+        	if (message=="_NotAuthenticated"){
         		return "";
         	}
         	localize = localize || $injector.get('localize');
