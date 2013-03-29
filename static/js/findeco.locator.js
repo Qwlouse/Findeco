@@ -87,6 +87,12 @@ Locator.prototype.getPathForIndex = function (shortTitle, index) {
     return parts.join('/');
 };
 
+Locator.prototype.getPathForArgument = function (arg_type, index) {
+    var parts = this.getPathParts();
+    parts[parts.length - 1] += '.' + arg_type + '.' + index;
+    return parts.join('/');
+};
+
 Locator.prototype.getSanitizedArgumentFreePath = function () {
     var tmp = this.getSanitizedPath();
     if ( !this.isArgumentPath(tmp) ) {

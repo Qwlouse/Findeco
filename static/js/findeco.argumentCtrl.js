@@ -53,8 +53,14 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
     };
 
     $scope.updateParagraphList = function() {
-
     };
+
+    function amendArguments() {
+        for (var i = 0; i < $scope.argumentList.length; ++i) {
+            var arg = $scope.argumentList[i];
+            arg.path = locator.getPathForArgument(arg.shortTitle, arg.index);
+        }
+    }
 
     $scope.updateArgument = function () {
         Backend.loadText($scope.paragraphList, $scope.argumentPath).success( function () {
@@ -63,7 +69,7 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
     };
 
     $scope.updateArgumentList = function () {
-        Backend.loadArgument($scope.argumentList , $scope.path);
+        Backend.loadArgument($scope.argumentList , $scope.path).success(amendArguments);
     };
 
     $scope.updateArgumentList();
