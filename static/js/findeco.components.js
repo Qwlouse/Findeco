@@ -38,10 +38,9 @@ findecoApp.directive('followStar', function( ) {
         },
         replace: true,
         template: '<a class="follow-star">' +
-                    '<img src="static/images/star{{entity.isFollowing}}.png" alt=""/>' +
+                    '<img ng-src="static/images/star{{entity.isFollowing}}.png" alt=""/>' +
                   '</a>',
         link : function (scope, element, attrs) {
-
             var link = angular.element(element[0]);
             scope.$watch('showIf', function(value){
                 link.css('display', scope.showIf ? '' : 'none');
