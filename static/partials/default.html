@@ -2,7 +2,8 @@
     <div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
         <h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
         <ul class="argumentList">
-            <li ng-repeat="argument in argumentList | filter: {shortTitle:'pro'}">
+            <li ng-repeat="argument in argumentList | filter: {argType:'pro'}">
+                <div  follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode"></div>
                 <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
             </li>
             <li ng-show="user.isLoggedIn">
@@ -11,7 +12,8 @@
         </ul>
         <h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
         <ul class="argumentList">
-            <li ng-repeat="argument in argumentList | filter: {shortTitle:'neut'}">
+            <li ng-repeat="argument in argumentList | filter: {argType:'neut'}">
+                <div  follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode"></div>
                 <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
             </li>
             <li ng-show="user.isLoggedIn">
@@ -20,7 +22,8 @@
         </ul>
         <h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
         <ul class="argumentList">
-            <li ng-repeat="argument in argumentList | filter: {shortTitle:'con'}">
+            <li ng-repeat="argument in argumentList | filter: {argType:'con'}">
+                <div  follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode"></div>
                 <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
             </li>
             <li ng-show="user.isLoggedIn">

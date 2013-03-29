@@ -59,10 +59,17 @@ graphDataNode_schema = {
     'originGroup': originGroup_schema
 }
 indexNode_schema = {
-    'shortTitle': string + '?',
-    'argumentDenominator': string + '?',
+    'shortTitle': string,
     'fullTitle': string,
     'index': integer,
+    'authorGroup': authorGroup_schema
+}
+argumentIndexNode_schema = {
+    'argType': string,
+    'fullTitle': string,
+    'index': integer,
+    'isFollowing': integer,
+    'isFlagging': integer,
     'authorGroup': authorGroup_schema
 }
 microblogNode_schema = {
@@ -98,7 +105,7 @@ loadNodeResponse_schema = {
 
 
 loadArgumentIndexResponse_schema = {
-    'loadArgumentIndexResponse': [indexNode_schema, None]
+    'loadArgumentIndexResponse': [argumentIndexNode_schema, None]
 }
 loadMicrobloggingResponse_schema = {
     'loadMicrobloggingResponse': [microblogNode_schema, None]

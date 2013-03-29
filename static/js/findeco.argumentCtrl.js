@@ -58,8 +58,9 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
             var arg = $scope.argumentList[i];
-            arg.path = locator.getPathForArgument(arg.shortTitle, arg.index);
+            arg.path = locator.getPathForArgument(arg.argType, arg.index);
         }
+        console.log($scope.argumentList);
     }
 
     $scope.updateArgument = function () {

@@ -80,7 +80,7 @@ def load_index(request, path):
 def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     node = assert_node_for_path(prefix)
-    data = [create_index_node_for_argument(a, node) for a in
+    data = [create_index_node_for_argument(a, node, request.user.id) for a in
             node.arguments.order_by('index')]
     return json_response({'loadArgumentIndexResponse': data})
 
