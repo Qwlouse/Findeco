@@ -28,6 +28,8 @@
 function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     $scope.user = User;
 
+    $scope.followUser = User.markUser;
+
     $scope.login = function () {
         User.login($scope.username, $scope.password).success(function () {
             $location.path('/');

@@ -263,6 +263,10 @@ angular.module('FindecoServices', [])
             url = url.replace("//", "/");
             return $http.post(url, {}).success(function (d) {
                 userInfo.followees = d.markUserResponse.followees;
+                for (var i=0; i<userInfo.followees.length; i++) {
+                    userInfo.followees[i].isFollowing = 2;
+                    userInfo.followees[i].path = userInfo.followees[i].displayName;
+                }
             });
         };
 
@@ -274,6 +278,11 @@ angular.module('FindecoServices', [])
                 userInfo.displayName = data.userInfo.displayName;
                 userInfo.description = data.userInfo.description;
                 userInfo.followees = data.userSettings.followees;
+                for (var i=0; i<userInfo.followees.length; i++) {
+                    userInfo.followees[i].isFollowing = 2;
+                    userInfo.followees[i].path = userInfo.followees[i].displayName;
+                }
+                userInfo.email = data.userSettings.email;
             });
             return promise;
         };

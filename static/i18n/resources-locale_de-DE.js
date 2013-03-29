@@ -233,7 +233,22 @@
     },
     {
         "key":"_accountActivationFinished_",
-        "value":"Dein Account wurde aktiviert. Viel Spaß mit Findeco!!! ",
+        "value":"Dein Account wurde aktiviert. Viel Spaß mit Findeco! ",
+        "description":""
+    },
+    {
+        "key":"_settings_",
+        "value":"Einstellungen",
+        "description":""
+    },
+    {
+        "key":"_email_",
+        "value":"E-Mail",
+        "description":""
+    },
+    {
+        "key":"_followees_",
+        "value":"Ich folge ...",
         "description":""
     },
     {
