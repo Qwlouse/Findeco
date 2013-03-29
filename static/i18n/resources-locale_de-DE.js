@@ -250,6 +250,11 @@
         "key":"_followees_",
         "value":"Ich folge ...",
         "description":""
+    },
+    {
+        "key":"_accountRecoveryFinished_",
+        "value":"Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
+        "description":""
     }
     
     

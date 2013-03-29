@@ -139,7 +139,7 @@ angular.module('FindecoServices', [])
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out,
-                    ['loadArgmumentIndexResponse']));
+                    ['loadArgumentIndexResponse']));
                 return promise;
             },
 
@@ -215,6 +215,21 @@ angular.module('FindecoServices', [])
         };
         userInfo.activate = function (activationKey) {
             var promise = $http.post('/.json_accountActivation/', {activationKey: activationKey});
+            promise.success(function (d) {
+               
+            });
+            return promise;
+        };
+        userInfo.recoverByMail = function (emailAddress) {
+            var promise = $http.post('/.json_accountResetRequestByMail/', {emailAddress: emailAddress});
+            promise.success(function (d) {
+               
+            });
+            return promise;
+        };
+        
+        userInfo.recoverByUsername = function (displayName) {
+            var promise = $http.post('/.json_accountResetRequestByName/', {displayName: displayName});
             promise.success(function (d) {
                
             });
@@ -300,7 +315,7 @@ angular.module('FindecoServices', [])
         };
         var localize;
         tmp.send = function (type, message) {
-        	if (message="_NotAuthenticated"){
+        	if (message=="_NotAuthenticated"){
         		return "";
         	}
         	localize = localize || $injector.get('localize');
