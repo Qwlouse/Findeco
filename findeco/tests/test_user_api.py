@@ -106,7 +106,7 @@ class StoreSettingsTest(TestCase):
     def test_response_validates(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         response = self.client.post(reverse('store_settings'),
-                                    dict(description="", displayName='hans'))
+                                    dict(description="", displayName='hans', email='a@bc.de'))
         parsed = json.loads(response.content)
         self.assertTrue(storeSettingsResponseValidator.validate(parsed))
 
@@ -132,13 +132,20 @@ class StoreSettingsTest(TestCase):
     def test_change_description_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans'))
+                             dict(description="foo", displayName='hans', email='a@bc.de'))
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.profile.description, "foo")
 
     def test_change_username_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans2'))
+                             dict(description="foo", displayName='hans2', email='a@bc.de'))
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.username, "hans2")
+
+    def test_change_email_works(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        _ = self.client.post(reverse('store_settings'),
+                             dict(description="foo", displayName='hans2', email='holla@email.de'))
+        hans = User.objects.get(id=self.hans.id)
+        self.assertEqual(hans.email, "holla@email.de")
