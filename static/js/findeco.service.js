@@ -220,6 +220,21 @@ angular.module('FindecoServices', [])
             });
             return promise;
         };
+        userInfo.recoverByMail = function (emailAddress) {
+            var promise = $http.post('/.json_accountResetRequestByMail/', {emailAddress: emailAddress});
+            promise.success(function (d) {
+               
+            });
+            return promise;
+        };
+        
+        userInfo.recoverByUsername = function (displayName) {
+            var promise = $http.post('/.json_accountResetRequestByName/', {displayName: displayName});
+            promise.success(function (d) {
+               
+            });
+            return promise;
+        };
 
         userInfo.login = function (username, password) {
             var promise = $http.post('/.json_login/', {username: username, password: password});

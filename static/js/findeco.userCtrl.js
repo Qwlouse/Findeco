@@ -69,14 +69,25 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
        	if(!($location.path().substr(1, 8) == "activate")){
     		return "";
     	}
-    	// /activate/
     	User.activate($routeParams.param).success(function () {
             $location.path('/');
             Message.send("success", "_accountActivationFinished_");
         });
-    
-     	
     };
+    $scope.recoverByMail = function() {
+        User.recoverByMail($scope.mail).success(function () {
+            $location.path('/');
+            Message.send("success", "_accountRecoveryFinished_");
+        });
+    };
+    
+    $scope.recoverByUsername = function() {
+        User.recoverByUsername($scope.username).success(function () {
+            $location.path('/');
+            Message.send("success", "_accountRecoveryFinished_");
+        });
+    };
+    
 
     $scope.getActiveClass = function(path) {
         if ($location.path().substr(0, path.length) == path) {

@@ -235,6 +235,11 @@
         "key":"_accountActivationFinished_",
         "value":"Dein Account wurde aktiviert. Viel Spaß mit Findeco!!! ",
         "description":""
+    },
+    {
+        "key":"_accountRecoveryFinished_",
+        "value":"Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
+        "description":""
     }
     
     
