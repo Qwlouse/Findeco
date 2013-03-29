@@ -344,6 +344,7 @@ def store_settings(request):
             user.username = display_name
 
     user.profile.description = escape(request.POST['description'])
+    user.email = request.POST['email']
     user.save()
     return json_response({'storeSettingsResponse': {}})
 
