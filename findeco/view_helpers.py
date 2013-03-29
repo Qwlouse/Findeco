@@ -61,7 +61,7 @@ def ValidPaths(*allowed_path_types):
             else:
                 path_type = 'StructureNode'
             if path_type not in allowed_path_types:
-                return json_error_response('IllegalPath', path)
+                return json_error_response('_IllegalPath', path)
                 #noinspection PyCallingNonCallable
             response = f(request, path, *args, **kwargs)
             validate_response(response.content, f.__name__)
@@ -152,7 +152,8 @@ def create_user_settings(user):
                    user.profile.followees.all()],
         blockedUsers=[{'displayName': u.user.username} for u in
                       user.profile.blocked.all()],
-        userRights=rights
+        userRights=rights,
+        email=user.email
     )
     return user_settings
 

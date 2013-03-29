@@ -1,11 +1,12 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
     <div id="leftWideColumn" class="contentBox">
         <h1> {{ user.displayName }} </h1>
-        Beschreibung:
+        <h2 data-i18n="_description_">Beschreibung:</h2>
         <form ng-submit="storeUserSettings()">
             <textarea ng-model="user.description" placeholder="Beschreibung" style="width: 100%; resize: vertical;" rows="5">  </textarea>
             <input class="btn btn-primary" type="submit" value="speichern">
         </form>
+
         TODO Hier sollte noch hin:
         <ul>
             <li>email</li>
