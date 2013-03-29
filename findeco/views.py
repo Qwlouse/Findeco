@@ -337,7 +337,7 @@ def store_settings(request):
     assert_post_parameters(request, ['description', 'displayName'])
     display_name = request.POST['displayName']
     if display_name != user.username:
-        is_available = User.objects.filter(username=display_name).count() == 0
+        is_available = User.objects.filter(username__iexact=display_name).count() == 0
         if not is_available:
             raise UsernameNotAvailable(display_name)
         else:
