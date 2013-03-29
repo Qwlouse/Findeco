@@ -34,11 +34,13 @@ findecoApp.directive('followStar', function( ) {
         scope: {
             entity: '=',
             markFunc: '=',
-            showIf: '='
+            showIf: '=',
+            width: '@',
+            height: '@'
         },
         replace: true,
         template: '<a class="follow-star">' +
-                    '<img ng-src="static/images/star{{entity.isFollowing}}.png" alt=""/>' +
+                    '<img ng-src="static/images/star{{entity.isFollowing}}.png" alt="" width="{{width}}" height="{{height}}"/>' +
                   '</a>',
         link : function (scope, element, attrs) {
             var link = angular.element(element[0]);
