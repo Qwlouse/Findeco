@@ -139,7 +139,7 @@ angular.module('FindecoServices', [])
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out,
-                    ['loadArgmumentIndexResponse']));
+                    ['loadArgumentIndexResponse']));
                 return promise;
             },
 
