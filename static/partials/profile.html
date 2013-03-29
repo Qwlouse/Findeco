@@ -8,6 +8,14 @@
         </form>
         <h2 data-i18n="_settings_">Einstellungen</h2>
         <p><span data-i18n="_email_">E-Mail</span>: {{ user.email }}</p>
+        <form ng-submit="storeUserSettings()">
+            <input type="text" ng-model="user.email" />
+            <input class="btn btn-primary" type="submit" value="speichern">
+        </form>
+        <form ng-submit="storeUserSettings()">
+            <input type="text" ng-model="user.displayName" />
+            <input class="btn btn-primary" type="submit" value="speichern">
+        </form>
         <h5 data-i18n="_followees_" style="padding-bottom: 0;">Ich folge:</h5>
         <ul>
             <li ng-repeat="followee in user.followees">
@@ -19,7 +27,6 @@
         <ul>
             <li>email</li>
             <li>passwort</li>
-            <li>followees</li>
             <li>usernamen ändern(?)</li>
             <li>account löschen(?)</li>
         </ul>

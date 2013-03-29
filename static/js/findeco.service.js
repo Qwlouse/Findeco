@@ -288,7 +288,8 @@ angular.module('FindecoServices', [])
         };
 
         userInfo.storeSettings = function () {
-            return $http.post('.json_storeSettings/', {displayName: userInfo.displayName, description: userInfo.description});
+            return $http.post('.json_storeSettings/', {displayName: userInfo.displayName,
+                description: userInfo.description, email: userInfo.email});
         };
 
         userInfo.follows = function(name) {
