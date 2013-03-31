@@ -280,6 +280,11 @@
         "key":"_changePasswordDescription_",
         "value":"Bitte gib dein gewünschtes Passwort zweimal ein, um Tippfehler zu vermeiden:",
         "description":""
+    },
+    {
+        "key":"_passwordsDidNotMatch_",
+        "value":"Die angegebenen Passwörter stimmen nicht überein. Das Passwort wurde nicht geändert. Du kannst es nochmal versuchen.",
+        "description":""
     }
     
 ]

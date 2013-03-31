@@ -292,6 +292,10 @@ angular.module('FindecoServices', [])
                 description: userInfo.description, email: userInfo.email});
         };
 
+        userInfo.changePassword = function (newPassword) {
+            return $http.post('/.json_changePassword/', {password: newPassword});
+        };
+
         userInfo.follows = function(name) {
             for (var i = 0; i < userInfo.followees.length; i++) {
                 if (userInfo.followees[i].displayName == name) {

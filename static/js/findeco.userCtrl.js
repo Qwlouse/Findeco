@@ -121,6 +121,14 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
         User.storeSettings().error(User.loadSettings());
     };
 
+    $scope.changePassword = function() {
+        if ($scope.password1 == $scope.password2) {
+            User.changePassword($scope.password1);
+        } else {
+            Message.send("error", "_passwordsDidNotMatch_");
+        }
+    };
+
     $scope.parse = function (text) {
         if ( text != undefined && text.length > 0 )
             return Parser.parse(text, null, true);
