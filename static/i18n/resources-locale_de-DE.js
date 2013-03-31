@@ -255,7 +255,31 @@
         "key":"_accountRecoveryFinished_",
         "value":"Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
         "description":""
+    },
+    {
+        "key":"_currentAdress_",
+        "value":"aktuelle Adresse",
+        "description":""
+    },
+    {
+        "key":"_username_",
+        "value":"Benutzername",
+        "description":""
+    },
+    {
+        "key":"_currentUsername_",
+        "value":"aktueller Benutzername",
+        "description":""
+    },
+    {
+        "key":"_changePassword_",
+        "value":"Passwort ändern",
+        "description":""
+    },
+    {
+        "key":"_changePasswordDescription_",
+        "value":"Bitte gib dein gewünschtes Passwort zweimal ein, um Tippfehler zu vermeiden:",
+        "description":""
     }
-    
     
 ]

@@ -27,7 +27,8 @@
 
 function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     $scope.user = User;
-
+    $scope.userEmail = User.email;
+    $scope.newDisplayName = User.displayName;
     $scope.followUser = User.markUser;
 
     $scope.login = function () {
@@ -76,6 +77,7 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
             Message.send("success", "_accountActivationFinished_");
         });
     };
+
     $scope.recoverByMail = function() {
         User.recoverByMail($scope.mail).success(function () {
             $location.path('/');
@@ -103,8 +105,20 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
         $location.path('search/'+$scope.searchString);
     };
 
+    $scope.storeUserEMail = function() {
+        $scope.user.email = $scope.userEmail;
+        $scope.storeUserSettings();
+        $scope.userEmail = User.email;
+    };
+
+    $scope.storeNewDisplayName = function() {
+        $scope.user.displayName = $scope.newDisplayName;
+        $scope.storeUserSettings();
+        $scope.newDisplayName = User.displayName;
+    };
+
     $scope.storeUserSettings = function() {
-        User.storeSettings();
+        User.storeSettings().error(User.loadSettings());
     };
 
     $scope.parse = function (text) {
