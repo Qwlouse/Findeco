@@ -139,6 +139,10 @@ logoutResponse_schema = {
         'farewellMessage': string
     }
 }
+changePassword_schema = {
+    'changePasswordResponse': {
+    }
+}
 markNodeResponse_schema = {
     'markNodeResponse': {
     }
@@ -201,6 +205,7 @@ loadUserSettingsResponseValidator = JSONValidator(
     loadUserSettingsResponse_schema)
 loginResponseValidator = JSONValidator(loginResponse_schema)
 logoutResponseValidator = JSONValidator(logoutResponse_schema)
+changePasswordValidator = JSONValidator(changePassword_schema)
 markNodeResponseValidator = JSONValidator(markNodeResponse_schema)
 storeMicroblogPostResponseValidator = JSONValidator(
     storeMicroblogPostResponse_schema)
@@ -230,6 +235,7 @@ view_validators = {
     'load_user_settings': loadUserSettingsResponseValidator,
     'login': loginResponseValidator,
     'logout': logoutResponseValidator,
+    'change_password': changePasswordValidator,
     'flag_node': markNodeResponseValidator,
     'unflag_node': markNodeResponseValidator,
     'mark_node_follow': markNodeResponseValidator,

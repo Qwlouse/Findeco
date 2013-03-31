@@ -349,6 +349,15 @@ def store_settings(request):
     return json_response({'storeSettingsResponse': {}})
 
 
+@ViewErrorHandling
+def change_password(request):
+    assert_authentication(request)
+    user = User.objects.get(id=request.user.id)
+    user.set_password(request.POST['password'])
+    user.save()
+    return json_response({'changePasswordResponse': {}})
+
+
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def store_text(request, path):

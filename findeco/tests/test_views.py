@@ -132,3 +132,7 @@ class ViewTest(TestCase):
     def test_logout_response_is_valid(self):
         response = self.client.get(reverse('logout'))
         validate_response(response.content, 'logout')
+
+    def test_changePassword_response_is_valid(self):
+        response = self.client.post(reverse('change_password'), {'password': "testpassword"})
+        validate_response(response.content, 'change_password')
