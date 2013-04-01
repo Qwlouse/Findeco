@@ -220,6 +220,13 @@ angular.module('FindecoServices', [])
             });
             return promise;
         };
+        userInfo.confirm = function (activationKey) {
+            var promise = $http.post('/.json_accountResetConfirmation/', {activationKey: activationKey});
+            promise.success(function (d) {
+               
+            });
+            return promise;
+        };
         userInfo.recoverByMail = function (emailAddress) {
             var promise = $http.post('/.json_accountResetRequestByMail/', {emailAddress: emailAddress});
             promise.success(function (d) {

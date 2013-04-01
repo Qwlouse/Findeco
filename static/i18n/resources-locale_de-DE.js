@@ -237,6 +237,76 @@
         "description":""
     },
     {
+        "key":"_accountLoginText_",
+        "value":"Mit dem Login erkennst du die Nutzungs- und Datenschutzbestimmungen an. Bitte beachte das Findeco Cookies und Javascript benötigt um zu funktionieren.",
+        "description":""
+    },
+    {
+        "key":"_accountRegistrationFormLink_",
+        "value":"Noch kein Account? Hier registrieren!!!",
+        "description":""
+    },
+    {
+        "key":"_accountRecoverPasswordByMailLink_",
+        "value":"Passwort vergessen? Hier kannst du es mit deiner Emailadresse wiederherstellen!",
+        "description":""
+    },
+    {
+        "key":"_accountRecoverPasswordByUsernameLink_",
+        "value":"Passwort vergessen? Hier kannst du es mit deinem Usernamen wiederherstellen!",
+        "description":""
+    },
+    {
+        "key":"_accountRegistrationFormTitle_",
+        "value":"Accountregistrierung",
+        "description":""
+    },
+    {
+        "key":"_accountRegistrationText_",
+        "value":"ACHTUNG!!!!!!! Zur Zeit ist KEINE Registrierung möglich!!!!!!! Die Accountregistrierung steht im Rahmen der nutzungs und Datenschutzbestimmungen jedem offen. Bitte beachte das es sich um eine Demoinstanz handelt und wir die Inhalte und Accounts bei Bedarf ohne weiteren Hinweis löschen werden, wenn es für Updates oder den Systembetrieb notwendig wird.",
+        "description":""
+    },
+    {
+        "key":"_accountUsername_",
+        "value":"Username",
+        "description":""
+    },
+    {
+        "key":"_accountPassword_",
+        "value":"Passwort",
+        "description":""
+    },
+    {
+        "key":"_accountPasswordRepeat_",
+        "value":"Passwortwiederholung",
+        "description":""
+    },
+    {
+        "key":"_accountEmail_",
+        "value":"EMail Adresse",
+        "description":""
+    },
+    {
+        "key":"_accountReadTOS_",
+        "value":"Ich habe die Nutzungsbedingungen gelesen und erkenne diese an",
+        "description":""
+    },
+    {
+        "key":"_accountReadDPR_",
+        "value":"Ich habe die Datenschutzrichtlinien gelesen und erkenne diese an",
+        "description":""
+    },
+    {
+        "key":"_accountRecoverByMailTitle_",
+        "value":"Accountwiederherstellung (per Email)",
+        "description":""
+    },
+    {
+        "key":"_accountRecoverByUsernameTitle_",
+        "value":"Accountwiederherstellung (per Username)",
+        "description":""
+    },
+    {
         "key":"_settings_",
         "value":"Einstellungen",
         "description":""
@@ -255,6 +325,11 @@
         "key":"_accountRecoveryFinished_",
         "value":"Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
         "description":""
+    },
+    {
+        "key":"_accountRecoveryConfirmed_",
+            "value":"Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
+            "description":""
     },
     {
         "key":"_currentAdress_",
