@@ -26,6 +26,11 @@
             <input type="password" ng-model="password2" /><br />
             <input class="btn btn-primary" type="submit" value="speichern">
         </form>
+        <h3 data-i18n="_deleteAccount_">delete Account</h3>
+        <p data-i18n="_deleteAccountExplanation_"></p>
+        <form ng-submit="deleteAccount()">
+            <input class="btn btn-primary" type="submit" value="Account löschen">
+        </form>
         <h2 data-i18n="_followees_" style="padding-bottom: 0;">Ich folge:</h2>
         <ul>
             <li ng-repeat="followee in user.followees">

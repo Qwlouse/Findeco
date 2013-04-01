@@ -129,6 +129,16 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
         }
     };
 
+    $scope.deleteAccount = function() {
+        // TODO: localize the confirm. Key: _deleteAccountQuestion_
+        if (confirm("Willst du deinen Account wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.")) {
+            User.deleteAccount().success(function() {
+                User.logout();
+                $location.path('/');
+            });
+        }
+    };
+
     $scope.parse = function (text) {
         if ( text != undefined && text.length > 0 )
             return Parser.parse(text, null, true);

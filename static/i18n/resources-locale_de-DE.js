@@ -285,6 +285,21 @@
         "key":"_passwordsDidNotMatch_",
         "value":"Die angegebenen Passwörter stimmen nicht überein. Das Passwort wurde nicht geändert. Du kannst es nochmal versuchen.",
         "description":""
+    },
+    {
+        "key":"_deleteAccount_",
+        "value":"Account löschen",
+        "description":""
+    },
+    {
+        "key":"_deleteAccountExplanation_",
+        "value":"Wenn du deinen Account löschst, werden deine Beiträge nicht gelöscht. Alles was du geschrieben hast, wird anonymisiert, sodass keine Rückschlüsse auf deine Person möglich sind. Deine Follows und Spam-Markierungen werden gelöscht. Bitte beachte, dass das Löschen des Accounts nicht rückgängig gemacht werden kann. Dein Benutzername wird durch die Löschung zwar wieder frei, deine Beiträge können dir nach der Anonymisierung aber nicht wieder zugeordnet werden.",
+        "description":""
+    },
+    {
+        "key":"_deleteAccountQuestion_",
+        "value":"Willst du deinen Account wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "description":""
     }
     
 ]
