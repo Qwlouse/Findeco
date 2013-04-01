@@ -257,6 +257,11 @@
         "description":""
     },
     {
+        "key":"_accountRecoveryConfirmed_",
+            "value":"Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
+            "description":""
+    },
+    {
         "key":"_currentAdress_",
         "value":"aktuelle Adresse",
         "description":""
