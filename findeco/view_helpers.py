@@ -434,3 +434,20 @@ def get_query(query_string, search_fields):
         else:
             query &= or_query
     return query
+
+
+def change_authorship_to(old_user, new_user):
+    """
+    Queries all content and removes old_user from author lists. If new_user is not already in the author list he will
+    be added. This will be used mostly with new_user being the anonymous user.
+    """
+    # Changing authorship in texts
+    for text in old_user.author_in.all():
+        text.authors.remove(old_user)
+        if not new_user in text.authors.all():
+            text.authors.add(new_user)
+        text.save()
+    # Changing authorship in microblogging
+    for post in old_user.microblogging_posts.all():
+        post.author = new_user
+        post.save()

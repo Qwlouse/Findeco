@@ -29,7 +29,8 @@ import json
 from findeco.api_validation import storeSettingsResponseValidator
 from findeco.tests.helpers import assert_is_error_response
 
-from node_storage.factory import create_user
+from node_storage.factory import create_user, create_slot, create_textNode, create_argument, create_vote
+from microblogging.models import create_post, Post
 from ..api_validation import errorResponseValidator
 from ..api_validation import loadUserInfoResponseValidator
 from ..api_validation import loadUserSettingsResponseValidator
@@ -162,3 +163,48 @@ class ChangePasswordTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.client.logout()
         self.assertTrue(self.client.login(username="hans", password='foo'))
+
+
+class DeleteUserTest(TestCase):
+    def setUp(self):
+        self.hans = create_user('hans', description='noneSoFar',
+                                password="1234")
+        self.karl = create_user('karl', description='none',
+                                password="blubb")
+        self.anon = User.objects.filter(username='anonymous').all()[0]
+        self.slot = create_slot("test")
+        self.text1 = create_textNode("Hans Text", "Ich werde anonymisiert", [self.hans])
+        self.text2 = create_textNode("Karls Text", "Ich werde nicht anonymisiert", [self.karl])
+        self.text3 = create_textNode("Gemeinsamer Text", "Anonymous wird dabei geholfen haben diesen Text zu erstellen",
+                                     [self.hans, self.karl])
+        self.text4 = create_textNode("Gemeinsamer Text mit anonymous",
+                                     "Anonymous wird dabei geholfen haben diesen Text zu erstellen",
+                                     [self.hans, self.karl, self.anon])
+        self.post1 = create_post("Bla", self.hans)
+        self.post2 = create_post("Blubb", self.karl)
+
+    def test_delete_works(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        response = self.client.post(reverse('delete_user'))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(self.client.login(username="hans", password='1234'))
+
+    def test_delete_sets_author_to_anonymous(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        response = self.client.post(reverse('delete_user'))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(self.client.login(username="hans", password='1234'))
+        self.assertEqual(len(Post.objects.filter(author=self.hans).all()), 0)
+        self.assertEqual(len(Post.objects.filter(author=self.anon).all()), 1)
+        self.assertEqual(Post.objects.filter(author=self.anon).all()[0].text, "Bla")
+        self.assertEqual(len(Post.objects.filter(author=self.karl).all()), 1)
+        self.assertNotIn(self.hans, self.text1.text.authors.all())
+        self.assertNotIn(self.hans, self.text2.text.authors.all())
+        self.assertNotIn(self.hans, self.text3.text.authors.all())
+        self.assertNotIn(self.hans, self.text4.text.authors.all())
+        self.assertIn(self.anon, self.text1.text.authors.all())
+        self.assertIn(self.anon, self.text3.text.authors.all())
+        self.assertIn(self.anon, self.text4.text.authors.all())
+        self.assertIn(self.karl, self.text3.text.authors.all())
+        self.assertIn(self.karl, self.text4.text.authors.all())
+        self.assertEqual(len(self.text4.text.authors.all()),2)

@@ -143,6 +143,10 @@ changePassword_schema = {
     'changePasswordResponse': {
     }
 }
+deleteUser_schema = {
+    'deleteUserResponse': {
+    }
+}
 markNodeResponse_schema = {
     'markNodeResponse': {
     }
@@ -206,6 +210,7 @@ loadUserSettingsResponseValidator = JSONValidator(
 loginResponseValidator = JSONValidator(loginResponse_schema)
 logoutResponseValidator = JSONValidator(logoutResponse_schema)
 changePasswordValidator = JSONValidator(changePassword_schema)
+deleteUserValidator = JSONValidator(deleteUser_schema)
 markNodeResponseValidator = JSONValidator(markNodeResponse_schema)
 storeMicroblogPostResponseValidator = JSONValidator(
     storeMicroblogPostResponse_schema)
@@ -236,6 +241,7 @@ view_validators = {
     'login': loginResponseValidator,
     'logout': logoutResponseValidator,
     'change_password': changePasswordValidator,
+    'delete_user': deleteUserValidator,
     'flag_node': markNodeResponseValidator,
     'unflag_node': markNodeResponseValidator,
     'mark_node_follow': markNodeResponseValidator,

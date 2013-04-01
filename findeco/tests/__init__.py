@@ -37,7 +37,7 @@ from test_view_helpers import GetIsFollowingTest
 from test_load_index import LoadIndexTest, LoadArgumentIndexTest
 from test_load_node import LoadNodeTest
 from test_load_text import LoadTextTest
-from test_user_api import LoadUserInfoTest, LoadUserSettingsTest, StoreSettingsTest, ChangePasswordTest
+from test_user_api import LoadUserInfoTest, LoadUserSettingsTest, StoreSettingsTest, ChangePasswordTest, DeleteUserTest
 from test_store_text import StoreTextTest
 from test_load_graph_data import LoadGraphDataTest
 from test_marking import UnFollowTest, FollowTest, MarkSpamTest, UnMarkSpamTest

@@ -160,6 +160,18 @@ def create_system_user():
         print('system user already exists.')
 
 
+def create_anonymous_user():
+    try:
+        auth_models.User.objects.get(username='anonymous')
+    except auth_models.User.DoesNotExist:
+        print('*' * 80)
+        print('Creating anonymous user without login.')
+        print('*' * 80)
+        User.objects.create(username='anonymous')
+    else:
+        print('anonymous user already exists.')
+
+
 def create_groups():
     if Group.objects.filter(
             name__in=["texters", "voters", "bloggers"]).count() > 0:
@@ -196,6 +208,7 @@ def create_groups():
 def initialize_database(sender, **kwargs):
     create_admin()
     create_system_user()
+    create_anonymous_user()
     create_groups()
     if Node.objects.all().count() > 0:
         print('Root node already present. Skipping initialization.')

@@ -358,6 +358,18 @@ def change_password(request):
     return json_response({'changePasswordResponse': {}})
 
 
+@ViewErrorHandling
+def delete_user(request):
+    assert_authentication(request)
+    user = User.objects.get(id=request.user.id)
+    anonymous = User.objects.filter(username='anonymous').all()[0]
+    # prevent cascading deletion of objects with foreign key to this user by changing this foreign key to anonymous
+    change_authorship_to(user, anonymous)
+    # delete the user
+    user.delete()
+    return json_response({'deleteUserResponse': {}})
+
+
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def store_text(request, path):

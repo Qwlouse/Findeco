@@ -105,6 +105,10 @@ urlpatterns = patterns(
         'findeco.views.change_password',
         name='change_password'),
 
+    url(r'^\.json_deleteUser/?$',
+        'findeco.views.delete_user',
+        name='delete_user'),
+
     url(r'^\.json_markNode/follow/' + PATH + '$',
         'findeco.views.mark_node_follow',
         name='mark_node_follow'),
