@@ -375,6 +375,11 @@
         "key":"_deleteAccountQuestion_",
         "value":"Willst du deinen Account wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
         "description":""
+    },
+    {
+        "key":"_save_",
+        "value":"Speichern",
+        "description":""
     }
     
 ]
