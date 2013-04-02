@@ -37,65 +37,65 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
         });
     };
 
-    $scope.logout = function() {
-        User.logout().success(function() {
+    $scope.logout = function () {
+        User.logout().success(function () {
             $location.path('/');
         });
     };
-    
-    $scope.register = function() {
-    	if (($scope.password == undefined) || ($scope.mail ==  undefined) || ($scope.username ==  undefined)) {
-    		Message.send("error", "_accountFieldsMissing_");
-    		return "";
-    	}
-    	if ($scope.password != $scope.password2) {
-    		Message.send("error", "_accountPasswordsNotMatching_");
-    		return "";
-    	}
-    	
-    	if ($scope.TOS != true) {
-    		Message.send("error", "_accountTosNotChecked_");
-    		return "";
-    	}
-    	if ($scope.DPR != true) {
-    		
-    		Message.send("error", "_accountDprNotChecked_");
-    		return "";
-    	}
-    	User.register($scope.username, $scope.password, $scope.mail).success(function () {
+
+    $scope.register = function () {
+        if (($scope.password == undefined) || ($scope.mail == undefined) || ($scope.username == undefined)) {
+            Message.send("error", "_accountFieldsMissing_");
+            return "";
+        }
+        if ($scope.password != $scope.password2) {
+            Message.send("error", "_accountPasswordsNotMatching_");
+            return "";
+        }
+
+        if ($scope.TOS != true) {
+            Message.send("error", "_accountTosNotChecked_");
+            return "";
+        }
+        if ($scope.DPR != true) {
+
+            Message.send("error", "_accountDprNotChecked_");
+            return "";
+        }
+        User.register($scope.username, $scope.password, $scope.mail).success(function () {
             $location.path('/');
             Message.send("success", "_accountCheckEmails_");
         });
     };
-    
-    $scope.activate = function() {
-       	if(!($location.path().substr(1, 8) == "activate")){
-    		return "";
-    	}
-    	User.activate($routeParams.param).success(function () {
+
+    $scope.activate = function () {
+        if (!($location.path().substr(1, 8) == "activate")) {
+            return "";
+        }
+        User.activate($routeParams.param).success(function () {
             $location.path('/');
             Message.send("success", "_accountActivationFinished_");
         });
     };
-    $scope.confirm = function() {
-       	if(!($location.path().substr(1, 7) == "confirm")){
-    		return "";
-    	}
-    	User.confirm($routeParams.param).success(function () {
+    $scope.confirm = function () {
+        if (!($location.path().substr(1, 7) == "confirm")) {
+            return "";
+        }
+        User.confirm($routeParams.param).success(function () {
             $location.path('/');
             Message.send("success", "_accountRecoveryConfirmed_");
         });
     };
 
 
-    $scope.recoverByMail = function() {
+    $scope.recoverByMail = function () {
         User.recoverByMail($scope.mail).success(function () {
             $location.path('/');
             Message.send("success", "_accountRecoveryFinished_");
         });
     };
-    
-    $scope.recoverByUsername = function() {
+
+    $scope.recoverByUsername = function () {
         User.recoverByUsername($scope.username).success(function () {
             $location.path('/');
             Message.send("success", "_accountRecoveryFinished_");
@@ -103,8 +103,7 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     };
 
 
-
-    $scope.getActiveClass = function(path) {
+    $scope.getActiveClass = function (path) {
         if ($location.path().substr(0, path.length) == path) {
             return "activeTab";
         } else {
@@ -112,27 +111,27 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
         }
     };
 
-    $scope.searchSubmit = function() {
-        $location.path('search/'+$scope.searchString);
+    $scope.searchSubmit = function () {
+        $location.path('search/' + $scope.searchString);
     };
 
-    $scope.storeUserEMail = function() {
+    $scope.storeUserEMail = function () {
         $scope.user.email = $scope.userEmail;
         $scope.storeUserSettings();
         $scope.userEmail = User.email;
     };
 
-    $scope.storeNewDisplayName = function() {
+    $scope.storeNewDisplayName = function () {
         $scope.user.displayName = $scope.newDisplayName;
         $scope.storeUserSettings();
         $scope.newDisplayName = User.displayName;
     };
 
-    $scope.storeUserSettings = function() {
+    $scope.storeUserSettings = function () {
         User.storeSettings().error(User.loadSettings());
     };
 
-    $scope.changePassword = function() {
+    $scope.changePassword = function () {
         if ($scope.password1 == $scope.password2) {
             User.changePassword($scope.password1);
         } else {
@@ -140,10 +139,11 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
         }
     };
 
-    $scope.deleteAccount = function() {
+    $scope.deleteAccount = function () {
+
         // TODO: localize the confirm. Key: _deleteAccountQuestion_
-        if (confirm("Willst du deinen Account wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.")) {
-            User.deleteAccount().success(function() {
+        if (confirm(Message.localize('_deleteAccountQuestion_'))) {
+            User.deleteAccount().success(function () {
                 User.logout();
                 $location.path('/');
             });
@@ -151,14 +151,14 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     };
 
     $scope.parse = function (text) {
-        if ( text != undefined && text.length > 0 )
+        if (text != undefined && text.length > 0)
             return Parser.parse(text, null, true);
         return "";
     };
 
     $scope.activate();
     $scope.confirm();
-   
+
 }
 
 FindecoUserCtrl.$inject = ['$scope', '$location', 'User', '$routeParams' , 'Message'];

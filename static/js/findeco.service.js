@@ -329,14 +329,18 @@ angular.module('FindecoServices', [])
             messageList: [],
             catchList: {}
         };
-        var localize;
+
+        tmp.localize = function (string) {
+            this.localizer = this.localizer || $injector.get('localize');
+            return this.localizer.getLocalizedString(string);
+        }
+
         tmp.send = function (type, message) {
         	if (message=="_NotAuthenticated"){
         		return "";
         	}
-        	localize = localize || $injector.get('localize');
         	if (message.substr(0, 1) == "_"){
-        		message=localize.getLocalizedString(message);
+        		message=this.localize(message);
         	}
             if ( this.catchList[message] != undefined ) {
                 this.catchList[message].push({type: type, msg: message});
