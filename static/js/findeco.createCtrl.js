@@ -84,7 +84,7 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
         if ( type == 'new' ) {
             params['wikiText'] = $scope.tmp.text;
         }
-        Backend.storeText(Locator.getSanitizedArgumentFreePath(),params)
+        Backend.storeText(locator.getSanitizedArgumentFreePath(),params)
             .success(function (data) {
                 if ( data.storeTextResponse != undefined ) {
                     $scope.tmp.text = '';
