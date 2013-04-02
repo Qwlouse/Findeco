@@ -179,6 +179,7 @@ Store a new Textnode or Argument in the hierarchy attached to a StructureNode (s
     <tr><td>&nbsp;</td><td>If only wikiTextAlternative is given, then create a new structure node from wikiTextAlternative and store it as an alternative to the current node (at path) </td></tr>
     <tr><td>&nbsp;</td><td>If wikiText and argumentType are given, then store a new argument concerning path</td></tr>
     <tr><td>&nbsp;</td><td>If wikiText, argumentType, and wikiTextAlternative are given, then store a new derivate of the source node (at path) as a sibling and add argument with wikiText as derivationArgument to source node</td></tr>
+    <tr><td>&nbsp;</td><td>If only wikiTextAlternative is given, then store a new non derivate node (at path) as alternative to source node.</td></tr>
     <tr><td>Return:</td><td><a href="#JSONstoreTextResponse">JSON::storeTextResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
