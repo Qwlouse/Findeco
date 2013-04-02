@@ -81,6 +81,15 @@ urlpatterns = patterns(
         name='load_timeline',
         kwargs={'select_id': None}),
 
+    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collection$',
+        'microblogging.views.load_collection',
+        name='load_collection'),
+
+    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/:collection$',
+        'microblogging.views.load_collection',
+        name='load_collection',
+        kwargs={'select_id': None}),
+
     url(r'^\.json_loadText/' + PATH + '$',
         'findeco.views.load_text',
         name='load_text'),

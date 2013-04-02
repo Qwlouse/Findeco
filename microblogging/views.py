@@ -30,6 +30,7 @@ from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
 from models import create_post, Post
+import node_storage as backend
 from findeco.view_helpers import json_response
 from time import mktime
 
@@ -98,6 +99,28 @@ def load_timeline(request, name, select_id, microblogging_load_type):
         feed = feed.prefetch_related('author', 'is_reference_to')[:20]
         return json_response({
             'loadMicrobloggingResponse': convert_response_list(reversed(feed))})
+
+
+@ViewErrorHandling
+def load_collection(request, select_id, microblogging_load_type):
+    """
+    Use this function to get a collection of blogposts regarding nodes
+    which are followed by the user.
+    """
+    if not select_id:  # Get latest posts
+        feed = Post.objects.filter(node_references__votes__user=request.user).order_by('-time')
+        feed = feed.prefetch_related('author', 'is_reference_to')[:20]
+        return json_response({'loadMicrobloggingResponse': convert_response_list(feed)})
+    else:
+        if microblogging_load_type == "newer":
+            startpoint = Q(id__gt=select_id)
+            print("newer, select-id=" + str(select_id))
+        else:  # older
+            startpoint = Q(id__lt=select_id)
+            print("older, select-id=" + str(select_id))
+        feed = Post.objects.filter(node_references__votes__user=request.user).filter(startpoint)
+        feed = feed.order_by('time').prefetch_related('author', 'is_reference_to')[:20]
+        return json_response({'loadMicrobloggingResponse': convert_response_list(reversed(feed))})
 
 
 @ViewErrorHandling
