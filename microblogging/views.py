@@ -102,13 +102,15 @@ def load_timeline(request, name, select_id, microblogging_load_type):
 
 
 @ViewErrorHandling
-def load_collection(request, select_id, microblogging_load_type):
+def load_collection(request, select_id, microblogging_load_type, only_author=False):
     """
     Use this function to get a collection of blogposts regarding nodes
     which are followed by the user.
     """
     if not select_id:  # Get latest posts
         feed = Post.objects.filter(node_references__votes__user=request.user).order_by('-time')
+        if only_author:
+            feed = feed.filter(node_references__text__authors=request.user)
         feed = feed.prefetch_related('author', 'is_reference_to')[:20]
         return json_response({'loadMicrobloggingResponse': convert_response_list(feed)})
     else:
@@ -119,6 +121,8 @@ def load_collection(request, select_id, microblogging_load_type):
             startpoint = Q(id__lt=select_id)
             print("older, select-id=" + str(select_id))
         feed = Post.objects.filter(node_references__votes__user=request.user).filter(startpoint)
+        if only_author:
+            feed = feed.filter(node_references__text__authors=request.user)
         feed = feed.order_by('time').prefetch_related('author', 'is_reference_to')[:20]
         return json_response({'loadMicrobloggingResponse': convert_response_list(reversed(feed))})
 

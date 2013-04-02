@@ -90,6 +90,16 @@ urlpatterns = patterns(
         name='load_collection',
         kwargs={'select_id': None}),
 
+    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collectionAuthor$',
+        'microblogging.views.load_collection',
+        name='load_collection',
+        kwargs={'only_author': True}),
+
+    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/:collectionAuthor$',
+        'microblogging.views.load_collection',
+        name='load_collection',
+        kwargs={'select_id': None, 'only_author': True}),
+
     url(r'^\.json_loadText/' + PATH + '$',
         'findeco.views.load_text',
         name='load_text'),
