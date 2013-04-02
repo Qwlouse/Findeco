@@ -87,13 +87,18 @@
         "description":""
     },
     {
-        "key":"_textNew_",
+        "key":"_createNewText_",
         "value":"Neuer Abschnitt",
         "description":""
     },
     {
-        "key":"_alternativeTextNew_",
-        "value":"Neuer Alternativer Text",
+        "key":"_createDerivativeText_",
+        "value":"Neue Verbesserung",
+        "description":""
+    },
+    {
+        "key":"_createOpposingText_",
+        "value":"Neuer Gegenvorschlag",
         "description":""
     },
     {

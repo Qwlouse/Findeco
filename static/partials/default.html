@@ -48,9 +48,11 @@
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>
-        <div class="btn btn-primary" ng-click="relocate('createNewText')" data-i18n="_textNew_"><b>create new text</b></div>
+        <div class="btn btn-primary" ng-click="relocate('createNewText')" data-i18n="_createNewText_"></div>
 
-        <div class="btn btn-primary" ng-click="relocate('createAlternativeText')" data-i18n="_alternativeTextNew_"></div>
+        <div class="btn btn-primary" ng-click="relocate('createDerivativeText')" data-i18n="_createDerivativeText_"></div>
+
+        <div class="btn btn-primary" ng-click="relocate('createOpposingText')" data-i18n="_createOpposingText_"></div>
     </div>
 
     <div ng-include src="'static/partials/microblogging.html'"></div>

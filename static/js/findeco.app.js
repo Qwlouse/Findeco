@@ -29,9 +29,7 @@ var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', '
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when('/argument*param', {templateUrl: 'static/partials/default.html', controller: FindecoArgumentCtrl}).
-            when('/createArgument*param', {templateUrl: 'static/partials/createArgument.html', controller: FindecoCreateCtrl}).
-            when('/createAlternativeText*param', {templateUrl: 'static/partials/createAlternativeText.html', controller: FindecoCreateCtrl}).
-            when('/createNewText*param', {templateUrl: 'static/partials/createNewText.html', controller: FindecoCreateCtrl}).
+            when('/create/:type*param', {templateUrl: 'static/partials/create.html', controller: FindecoCreateCtrl}).
             when('/credits', {templateUrl: 'static/partials/credits.html', controller: FindecoDefaultCtrl}).
             when('/datenschutz', {templateUrl: 'static/partials/datenschutz.html', controller: FindecoDefaultCtrl}).
             when('/home', {templateUrl: 'static/partials/home.html', controller: FindecoDefaultCtrl}).
