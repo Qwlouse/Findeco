@@ -36,7 +36,7 @@ function FindecoStartCtrl($scope, Backend, User) {
         Backend.loadMicroblogging($scope.followedUsersList , locator.getSanitizedPath());
     };
     $scope.updateFollowedNodes = function () {
-        Backend.loadMicroblogging($scope.followedNodesList, locator.getSanitizedPath());
+        Backend.loadMicroblogging($scope.followedNodesList, ':collection');
     };
     $scope.updateOwnNodes = function () {
         Backend.loadMicroblogging($scope.ownNodesList, locator.getSanitizedPath());
