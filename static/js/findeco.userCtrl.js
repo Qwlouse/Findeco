@@ -140,8 +140,6 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     };
 
     $scope.deleteAccount = function () {
-
-        // TODO: localize the confirm. Key: _deleteAccountQuestion_
         if (confirm(Message.localize('_deleteAccountQuestion_'))) {
             User.deleteAccount().success(function () {
                 User.logout();
