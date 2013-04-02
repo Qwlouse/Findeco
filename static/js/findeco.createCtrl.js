@@ -29,7 +29,7 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
     $scope.radioModel = '';
 
     $scope.relocate = function (target) {
-        $location.path(target + '/' + Locator.getSanitizedArgumentFreePath());
+        $location.path(target + '/' + locator.getSanitizedArgumentFreePath());
     };
 
     $scope.parse = function (text) {
