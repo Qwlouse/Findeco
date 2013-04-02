@@ -380,6 +380,26 @@
         "key":"_save_",
         "value":"Speichern",
         "description":""
+    },
+    {
+        "key":"_createTextExplanation_",
+        "value":"Du kannst in dieses Eingabefeld deinen neuen Text in Creole-Markup eingeben. Der Text muss mite einer Überschrift beginnen, die mit einem einzelnen '=' eingeleitet wird. Zur Strukturierung können Überschriften ab Heading2, also mit zwei oder mehr '=' verwendet werden.",
+        "description":""
+    },
+    {
+        "key":"_previewNotice_",
+        "value":"Eine Vorschau des von dir verfassten Texts erscheint in der rechten Spalte während der Eingabe.",
+        "description":""
+    },
+    {
+        "key":"_appendNewParagraphExplanation_",
+        "value":"Der hier eingegebene Text wird als neuer Abschnitt auf gleicher Ebene hinten angehängt.",
+        "description":""
+    },
+    {
+        "key":"_newTextExplanation_",
+        "value":"Der hier eingegebene Text wird eine neue Alternative zum bestehenden Text. Wird dieser Text angezeigt, ersetzt er den bestehenden Text komplett. ",
+        "description":""
     }
     
 ]
