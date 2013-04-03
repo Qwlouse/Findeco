@@ -126,6 +126,11 @@
         "value":"Absenden",
         "description":""
     },
+    {
+        "key":"_expandAllSections_",
+        "value":"Alle Unterpunkte ausklappen",
+        "description":""
+    },
     
     
     {

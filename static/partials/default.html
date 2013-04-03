@@ -37,7 +37,8 @@
         <h1>{{ nodeInfo.fullTitle }}</h1>
         <div findeco-graph data="graphData" path="path" class="graph"></div>
         <p ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
-        <div ng-repeat="section in sections">
+        <div ng-show="!allExpanded" class="btn btn-primary" ng-click="expandAll()" data-i18n="_expandAllSections_"></div>
+        <div ng-repeat="section in nodeInfo.indexList">
             <a ng-show="!section.isExpanded" ng-click="expandSection(section)" style="float:left;position: relative; top:  14px; margin-right: 5px;"><img src="static/images/expand.png"></a>
             <a ng-show="section.isExpanded" ng-click="collapseSection(section)" style="float:left;position: relative; top:  14px; margin-right: 5px;"><img src="static/images/collapse.png"></a>
             <h2 ng-show="!section.isExpanded">
