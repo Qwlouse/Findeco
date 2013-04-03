@@ -91,7 +91,10 @@ function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Messag
                 params['wikiText'] = $scope.tmp.text;
             break;
             case 'derivate':
-                // TODO: Allow argumentType selection.
+                if ( $scope.tmp.argumentType != 'con' && $scope.tmp.argumentType != 'neut' ) {
+                    Message.send('error','_derivateArgumentMissing_');
+                    break;
+                }
                 var test = $scope.checkWikiCompatibility($scope.tmp.text);
                 if ( test != true ) {
                     Message.send('error','_derivateText' + test + '_');
@@ -104,7 +107,7 @@ function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Messag
                 }
                 // Past watchdog
 
-                params['argumentType'] = 'con';
+                params['argumentType'] = $scope.tmp.argumentType;
                 params['wikiText'] = $scope.tmp.text;
                 params['wikiTextAlternative'] = $scope.tmp.textAlternative;
             break;
