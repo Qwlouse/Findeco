@@ -28,38 +28,73 @@
  */
 
 
-findecoApp.directive('followStar', function( ) {
-    return {
-        restrict : 'A',
-        scope: {
-            entity: '=',
-            markFunc: '=',
-            showIf: '=',
-            width: '@',
-            height: '@'
-        },
-        replace: true,
-        template: '<a class="follow-star">' +
-                    '<img ng-src="static/images/star{{entity.isFollowing}}.png" alt="" width="{{width}}" height="{{height}}"/>' +
-                  '</a>',
-        link : function (scope, element, attrs) {
-            var link = angular.element(element[0]);
-            scope.$watch('showIf', function(value){
-                link.css('display', scope.showIf ? '' : 'none');
-            });
-            link.bind('click', toggle);
-            function toggle() {
-                var markType = "follow";
-                if (scope.entity.isFollowing == 2) {markType = "unfollow";}
-                scope.markFunc(scope.entity.path, markType).success(function () {
-                    if (markType == 'unfollow') {
-                        scope.entity.isFollowing = 0;
-                    } else {
-                        scope.entity.isFollowing = 2;
-                    }
+findecoApp
+    .directive('followStar', function( ) {
+        return {
+            restrict : 'A',
+            scope: {
+                entity: '=',
+                markFunc: '=',
+                showIf: '=',
+                width: '@',
+                height: '@'
+            },
+            replace: true,
+            template: '<a class="follow-star">' +
+                        '<img ng-src="static/images/star{{entity.isFollowing}}.png" alt="" width="{{width}}" height="{{height}}"/>' +
+                      '</a>',
+            link : function (scope, element, attrs) {
+                var link = angular.element(element[0]);
+                scope.$watch('showIf', function(value){
+                    link.css('display', scope.showIf ? '' : 'none');
                 });
-            }
+                link.bind('click', toggle);
+                function toggle() {
+                    var markType = "follow";
+                    if (scope.entity.isFollowing == 2) {markType = "unfollow";}
+                    scope.markFunc(scope.entity.path, markType).success(function () {
+                        if (markType == 'unfollow') {
+                            scope.entity.isFollowing = 0;
+                        } else {
+                            scope.entity.isFollowing = 2;
+                        }
+                    });
+                }
 
+            }
         }
-    }
-});
+    })
+    .directive('spamMark', function( ) {
+        return {
+            restrict : 'A',
+            scope: {
+                entity: '=',
+                markFunc: '=',
+                showIf: '=',
+                width: '@',
+                height: '@'
+            },
+            replace: true,
+            template: '<a class="spam-mark">' +
+                        '<img ng-src="static/images/spam{{entity.isFlagging}}.png" alt="" width="{{width}}" height="{{height}}"/>' +
+                      '</a>',
+            link : function (scope, element, attrs) {
+                var link = angular.element(element[0]);
+                scope.$watch('showIf', function(value){
+                    link.css('display', scope.showIf ? '' : 'none');
+                });
+                link.bind('click', toggle);
+                function toggle() {
+                    var markType = "spam";
+                    if (scope.entity.isFlagging == 1) {markType = "notspam";}
+                    scope.markFunc(scope.entity.path, markType).success(function () {
+                        if (markType == 'notspam') {
+                            scope.entity.isFlagging = 0;
+                        } else {
+                            scope.entity.isFlagging = 1;
+                        }
+                    });
+                }
+            }
+        }
+    });

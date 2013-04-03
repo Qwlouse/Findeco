@@ -27,7 +27,6 @@
 
 function FindecoDefaultCtrl($scope, $location, Backend, User) {
     $scope.path = locator.getSanitizedPath();
-
     $scope.isArgument = false;
 
     $scope.allExpanded = false;
@@ -35,9 +34,11 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
     $scope.isTextLoaded = false;
 
     $scope.graphData = [];
+
     $scope.paragraphList = [];
     $scope.nodeInfo = [];
     $scope.nodeInfo.indexList = [];
+    $scope.nodeInfo.path = $scope.path;
     $scope.sections = [];
     $scope.user = User;
 
@@ -69,13 +70,13 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
     };
 
     /*$scope.updateParagraphList = function () {
-        Backend.loadText($scope.paragraphList, $scope.path).success(function () {
-            $scope.isTextLoaded = true;
-        });
-    };*/
+     Backend.loadText($scope.paragraphList, $scope.path).success(function () {
+     $scope.isTextLoaded = true;
+     });
+     };*/
 
     $scope.updateGraph = function () {
-        Backend.loadGraphData($scope.graphData, $scope.path).success(function(data) {
+        Backend.loadGraphData($scope.graphData, $scope.path).success(function (data) {
             $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
         });
     };
@@ -83,9 +84,11 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
     $scope.updateNode = function () {
         Backend.loadNode($scope.nodeInfo, $scope.path).success(function (d) {
             $scope.allExpanded = true;
-            for ( var i in $scope.nodeInfo.indexList ) {
+
+            for (var i in $scope.nodeInfo.indexList) {
                 $scope.allExpanded = false;
                 $scope.nodeInfo.indexList[i].paragraphs = [];
+                $scope.nodeInfo.indexList[i].path = locator.getPathForIndex($scope.nodeInfo.indexList[i].shortTitle, $scope.nodeInfo.indexList[i].index);
                 $scope.nodeInfo.indexList[i].isLoaded = false;
                 $scope.nodeInfo.indexList[i].isExpanded = false;
             }
@@ -95,7 +98,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
     $scope.expandAll = function () {
         var tmp = [];
         Backend.loadText(tmp, locator.getSanitizedPath()).success(function (d) {
-            if ( d.loadTextResponse == undefined || d.loadTextResponse.paragraphs == undefined ) {
+            if (d.loadTextResponse == undefined || d.loadTextResponse.paragraphs == undefined) {
                 // TODO: Something went terribly wrong.
                 return;
             }
@@ -103,14 +106,15 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
             var paragraphs = d.loadTextResponse.paragraphs;
 
             // TODO: O(n*n) I certainly don't like it but don't see another way...
-            for ( var p in paragraphs ) {
-                for ( var i in $scope.nodeInfo.indexList ) {
+            for (var p in paragraphs) {
+                for (var i in $scope.nodeInfo.indexList) {
                     var section = $scope.nodeInfo.indexList[i];
                     var path = locator.getPathForIndex(section.shortTitle, section.index);
-                    if ( paragraphs[p].path == path ) {
+                    if (paragraphs[p].path == path) {
                         section.paragraphs.push(paragraphs[p]);
                         section.isLoaded = true;
                         section.isExpanded = true;
+                        section.path = path;
                         break;
                     }
                 }
@@ -120,13 +124,12 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
     };
 
     $scope.expandSection = function (section) {
-        if (!section.isLoaded ) {
-            Backend.loadText(section.paragraphs, locator.getPathForIndex(section.shortTitle, section.index)).success(function (d) {
+        if (!section.isLoaded) {
+            Backend.loadText(section.paragraphs, section.path).success(function (d) {
                 section.isFollowing = d.loadTextResponse.isFollowing;
                 section.isFlagging = d.loadTextResponse.isFlagging;
                 section.isLoaded = true;
                 section.isExpanded = true;
-                console.log(section.paragraphs);
             });
         } else {
             section.isExpanded = true;
@@ -138,8 +141,8 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
         section.isExpanded = false;
     };
 
-    $scope.initialize = function() {
-        if ( locator.isArgumentPath() ) {
+    $scope.initialize = function () {
+        if (locator.isArgumentPath()) {
             //$scope.updateParagraphList();
         } else {
             $scope.updateNode();
