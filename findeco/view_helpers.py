@@ -23,6 +23,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.contrib.auth.models import Permission, User
 from django.http import HttpResponse
+from findeco.api_validation import USERNAME
 from django.db.models import Q
 import functools
 import json
@@ -451,3 +452,10 @@ def change_authorship_to(old_user, new_user):
     for post in old_user.microblogging_posts.all():
         post.author = new_user
         post.save()
+
+
+def check_username_sanity(username):
+    if re.match(USERNAME + "$", username):
+        return True
+    else:
+        return False
