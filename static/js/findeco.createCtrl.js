@@ -25,8 +25,20 @@
 'use strict';
 /* Controllers */
 
-function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
+function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Message) {
+    $scope.settings = {
+        type: $routeParams.type
+    };
     $scope.radioModel = '';
+
+    $scope.showIf = function(matchArray) {
+        for ( var m in matchArray ) {
+            if ( matchArray[m] == $scope.settings.type ) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     $scope.relocate = function (target) {
         $location.path(target + '/' + locator.getSanitizedArgumentFreePath());
@@ -102,4 +114,4 @@ function FindecoCreateCtrl($scope, $location, Backend, TMP, Message) {
     $scope.tmp = TMP;
 }
 
-FindecoCreateCtrl.$inject = ['$scope', '$location', 'Backend', 'TMP', 'Message'];
+FindecoCreateCtrl.$inject = ['$scope', '$location', '$routeParams', 'Backend', 'TMP', 'Message'];

@@ -112,12 +112,17 @@
         "description":""
     },
     {
-        "key":"_textCreateSendBtn_",
+        "key":"_topicCreateSendBtn_",
         "value":"Absenden",
         "description":""
     },
     {
-        "key":"_alternativesCreateSendBtn_",
+        "key":"_derivateCreateSendBtn_",
+        "value":"Absenden",
+        "description":""
+    },
+    {
+        "key":"_opposingCreateSendBtn_",
         "value":"Absenden",
         "description":""
     },
