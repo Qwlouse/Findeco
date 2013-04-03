@@ -40,7 +40,7 @@ p.mainText {
     color: #2d7cc4;
 }
 
-a.follow-star {
+a.follow-star, a.spam-mark {
     position: relative;
     top: 10px;
     float: right;

@@ -2,8 +2,8 @@
     <div ng-include src="'static/partials/argument.html'"></div>
 
     <div id="centerColumn" class="contentBox">
-        <div follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
         <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
+        <div follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
         <h1>{{ nodeInfo.fullTitle }}</h1>
 
         <div ng-show="!isArgument">
@@ -26,8 +26,8 @@
             </h2>
 
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
-                <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
                 <div spam-mark show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
+                <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>
