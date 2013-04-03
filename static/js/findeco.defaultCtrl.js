@@ -105,12 +105,15 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
 
             var paragraphs = d.loadTextResponse.paragraphs;
 
+            console.log('paragraphs',paragraphs);
+            console.log('$scope.nodeInfo.indexList',$scope.nodeInfo.indexList);
+
             // TODO: O(n*n) I certainly don't like it but don't see another way...
             for (var p in paragraphs) {
                 for (var i in $scope.nodeInfo.indexList) {
                     var section = $scope.nodeInfo.indexList[i];
                     var path = locator.getPathForIndex(section.shortTitle, section.index);
-                    if (paragraphs[p].path == path) {
+                    if (paragraphs[p].path.substr(0,path.length) == path) {
                         section.paragraphs.push(paragraphs[p]);
                         section.isLoaded = true;
                         section.isExpanded = true;
