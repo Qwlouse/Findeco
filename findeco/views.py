@@ -335,7 +335,10 @@ def store_settings(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
     assert_post_parameters(request, ['description', 'displayName'])
-    display_name = request.POST['displayName']
+    if check_username_sanity(request.POST['displayName']):
+        display_name = request.POST['displayName']
+    else:
+        raise InvalidUsername(request.POST['displayName'])
     if display_name != user.username:
         is_available = User.objects.filter(username__iexact=display_name).count() == 0
         if not is_available:
@@ -438,7 +441,10 @@ def account_registration(request):
 
     emailAddress = request.POST['emailAddress']
     password = request.POST['password']
-    displayName = request.POST['displayName']
+    if check_username_sanity(request.POST['displayName']):
+        displayName = request.POST['displayName']
+    else:
+        raise InvalidUsername(request.POST['displayName'])
     try:
         validate_email(emailAddress)
     except ValidationError:
