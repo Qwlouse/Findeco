@@ -9,7 +9,7 @@
         <ul class="microblogList">
             <li><a class="btn btn-primary" ng-click="updateFollowedUsers()"  data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in followedUsersList">
-                <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+                <a class="microblogAuthor" href="#/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                     microblogNode.authorGroup[0].displayName }}</a>
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
@@ -20,7 +20,7 @@
         <ul class="microblogList">
             <li><a class="btn btn-primary" ng-click="updateFollowedNodes()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in followedNodesList">
-                <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+                <a class="microblogAuthor" href="#/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                     microblogNode.authorGroup[0].displayName }}</a>
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
@@ -31,7 +31,7 @@
         <ul class="microblogList">
             <li><a class="btn btn-primary" ng-click="updateOwnNodes()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in ownNodesList">
-                <a class="microblogAuthor" href="#/info/{{ microblogNode.authorGroup[0].displayName }}">{{
+                <a class="microblogAuthor" href="#/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                     microblogNode.authorGroup[0].displayName }}</a>
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>

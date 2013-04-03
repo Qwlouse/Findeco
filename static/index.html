@@ -68,9 +68,9 @@
                             <li class="{{getActiveClass('/content')}}"><a href="#">Inhalte</a></li>
                             <li class="{{getActiveClass('/search')}}" style="margin-left: 200px">
                                 <div class="searchBox">
-                                    <form ng-submit="searchSubmit()">
-                                        <input type="" name="searchField" ng-model="searchString" />
-                                        <button class="searchButton" value=""></button>
+                                    <form action="" ng-submit="searchSubmit()">
+                                        <p><input type="text" name="searchField" ng-model="searchString" /></p>
+                                        <p><button class="searchButton" value=""></button></p>
                                     </form>
                                 </div>
                             </li>
@@ -80,7 +80,7 @@
                                 <a ng-href="#/profile">{{user.displayName}}</a>
                             </li>
                             <li ng-show="user.isLoggedIn">
-                                <a ng-click="logout()" style="cursor:pointer; padding: 0;"><img src="static/images/logout.png" alt="Logout" height="18" style="position: relative; top: 3px; margin: 0 0 0 0;"></a>
+                                <a ng-click="logout()" style="cursor:pointer; padding: 0;"><img src="static/images/logout.png" alt="Logout" height="18" style="position: relative; top: 3px; margin: 0 0 0 0;" /></a>
                             </li>
                             <li ng-show="!user.isLoggedIn" style="float:right"><a href="#/login" data-i18n="_accountLogin_"></a></li>
                         </ul>
@@ -107,9 +107,9 @@
     </div>
 
     <div id="messageBox" ng-controller="FindecoMessageCtrl" ng-show="service.messageList.length > 0">
-        <alert ng-repeat="message in service.messageList" type="message.type" close="closeMessage($index)">
+        <div alert ng-repeat="message in service.messageList" type="message.type" close="closeMessage($index)">
             {{message.msg}}
-        </alert>
+        </div>
     </div>
 
 </div>

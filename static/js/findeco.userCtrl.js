@@ -128,7 +128,7 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     };
 
     $scope.storeUserSettings = function () {
-        User.storeSettings().error(User.loadSettings());
+        User.storeSettings().error(User.loadSettings);
     };
 
     $scope.changePassword = function () {

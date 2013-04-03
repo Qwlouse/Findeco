@@ -1,405 +1,423 @@
 [
     {
-        "key":"_accountLogout_",
-        "value":"Abmelden",
-        "description":""
+        "key": "_accountLogout_",
+        "value": "Abmelden",
+        "description": ""
     },
     {
-        "key":"_accountLogin_",
-        "value":"Anmelden",
-        "description":""
+        "key": "_accountLogin_",
+        "value": "Anmelden",
+        "description": ""
     },
     {
-        "key":"_accountLoggedInAs_",
-        "value":"Eingeloggt als",
-        "description":""
+        "key": "_accountLoggedInAs_",
+        "value": "Eingeloggt als",
+        "description": ""
     },
     {
-        "key":"_accountUsernameBtn_",
-        "value":"Benutzerkennung",
-        "description":""
+        "key": "_accountUsernameBtn_",
+        "value": "Benutzerkennung",
+        "description": ""
     },
     {
-        "key":"_accountPasswordBtn_",
-        "value":"Passwort",
-        "description":""
+        "key": "_accountPasswordBtn_",
+        "value": "Passwort",
+        "description": ""
     },
     {
-        "key":"_accountLoginBtn_",
-        "value":"Login",
-        "description":""
+        "key": "_accountLoginBtn_",
+        "value": "Login",
+        "description": ""
     },
     {
-        "key":"_startScreenUpdateBtn_",
-        "value":"Update",
-        "description":""
+        "key": "_startScreenUpdateBtn_",
+        "value": "Update",
+        "description": ""
     },
     {
-        "key":"_textLoad_",
-        "value":"Text Laden",
-        "description":""
+        "key": "_textLoad_",
+        "value": "Text Laden",
+        "description": ""
     },
-    
+
     {
-        "key":"_argumentsPro_",
-        "value":"Pro Argumente",
-        "description":""
-    },
-    {
-        "key":"_argumentsNeut_",
-        "value":"Neutrale Argumente",
-        "description":""
+        "key": "_argumentsPro_",
+        "value": "Pro Argumente",
+        "description": ""
     },
     {
-        "key":"_argumentsCon_",
-        "value":"Contra Argumente",
-        "description":""
-    },
-    
-    {
-        "key":"_argumentsNewPro_",
-        "value":"Neues Pro Argument",
-        "description":""
+        "key": "_argumentsNeut_",
+        "value": "Neutrale Argumente",
+        "description": ""
     },
     {
-        "key":"_argumentsNewNeut_",
-        "value":"Neues Neutrales Argument",
-        "description":""
+        "key": "_argumentsCon_",
+        "value": "Contra Argumente",
+        "description": ""
+    },
+
+    {
+        "key": "_argumentsNewPro_",
+        "value": "Neues Pro Argument",
+        "description": ""
     },
     {
-        "key":"_argumentsNewCon_",
-        "value":"Neues Contra Argument",
-        "description":""
+        "key": "_argumentsNewNeut_",
+        "value": "Neues Neutrales Argument",
+        "description": ""
     },
     {
-        "key":"_argumentsNew_",
-        "value":"Neues Argument",
-        "description":""
+        "key": "_argumentsNewCon_",
+        "value": "Neues Contra Argument",
+        "description": ""
     },
     {
-        "key":"_argumentsNewTextHere_",
-        "value":"Hier können sie ihr neues Argument eingeben....",
-        "description":""
+        "key": "_argumentsNew_",
+        "value": "Neues Argument",
+        "description": ""
     },
     {
-        "key":"_argumentsCreateSendBtn_",
-        "value":"Absenden",
-        "description":""
+        "key": "_argumentsNewTextHere_",
+        "value": "Hier können sie ihr neues Argument eingeben....",
+        "description": ""
     },
     {
-        "key":"_textNew_",
-        "value":"Neuer Abschnitt",
-        "description":""
+        "key": "_argumentsCreateSendBtn_",
+        "value": "Absenden",
+        "description": ""
     },
     {
-        "key":"_alternativeTextNew_",
-        "value":"Neuer Alternativer Text",
-        "description":""
+        "key": "_createNewText_",
+        "value": "Neuer Abschnitt",
+        "description": ""
     },
     {
-        "key":"_alternativesNewTextHere_",
-        "value":"Hier können sie ihren neuen Text eingeben....",
-        "description":""
+        "key": "_createDerivativeText_",
+        "value": "Neue Verbesserung",
+        "description": ""
     },
     {
-        "key":"_textNewTextHere_",
-        "value":"Hier können sie ihren neuen Text eingeben....",
-        "description":""
+        "key": "_createOpposingText_",
+        "value": "Neuer Gegenvorschlag",
+        "description": ""
     },
     {
-        "key":"_textCreateSendBtn_",
-        "value":"Absenden",
-        "description":""
+        "key": "_alternativesNewTextHere_",
+        "value": "Hier können sie ihren neuen Text eingeben....",
+        "description": ""
     },
     {
-        "key":"_alternativesCreateSendBtn_",
-        "value":"Absenden",
-        "description":""
-    },
-    
-    
-    {
-        "key":"_pro_",
-        "value":"Pro",
-        "description":""
+        "key": "_textNewTextHere_",
+        "value": "Hier können sie ihren neuen Text eingeben....",
+        "description": ""
     },
     {
-        "key":"_con_",
-        "value":"Contra",
-        "description":""
+        "key": "_topicCreateSendBtn_",
+        "value": "Absenden",
+        "description": ""
     },
     {
-        "key":"_neut_",
-        "value":"Neutral",
-        "description":""
+        "key": "_derivateArgumentMissing_",
+        "value": "Bitte gib an ob dein Argument Neutral oder Contra ist.",
+        "description": ""
     },
     {
-        "key":"_microblogPlaceholder_",
-        "value":"Hier Microblogtext eingeben",
-        "description":""
+        "key": "_derivateCreateSendBtn_",
+        "value": "Absenden",
+        "description": ""
     },
     {
-        "key":"_microblogSendBtn_",
-        "value":"Senden",
-        "description":""
+        "key": "_opposingCreateSendBtn_",
+        "value": "Absenden",
+        "description": ""
     },
     {
-        "key":"_accountLoginFormTitle_",
-        "value":"Login",
-        "description":""
+        "key": "_expandAllSections_",
+        "value": "Alle Unterpunkte ausklappen",
+        "description": ""
+    },
+    {
+        "key": "_pro_",
+        "value": "Pro",
+        "description": ""
+    },
+    {
+        "key": "_con_",
+        "value": "Contra",
+        "description": ""
+    },
+    {
+        "key": "_neut_",
+        "value": "Neutral",
+        "description": ""
+    },
+    {
+        "key": "_microblogPlaceholder_",
+        "value": "Hier Microblogtext eingeben",
+        "description": ""
+    },
+    {
+        "key": "_microblogSendBtn_",
+        "value": "Senden",
+        "description": ""
+    },
+    {
+        "key": "_accountLoginFormTitle_",
+        "value": "Login",
+        "description": ""
     },
 
 
     {
-        "key":"_searchUserResults_",
-        "value":"Benutzer",
-        "description":""
+        "key": "_searchUserResults_",
+        "value": "Benutzer",
+        "description": ""
     },
     {
-        "key":"_searchContentResults_",
-        "value":"Suchergebnisse",
-        "description":""
+        "key": "_searchContentResults_",
+        "value": "Suchergebnisse",
+        "description": ""
     },
     {
-        "key":"_searchMicrobloggingResults_",
-        "value":"Microblogging",
-        "description":""
+        "key": "_searchMicrobloggingResults_",
+        "value": "Microblogging",
+        "description": ""
     },
     {
-        "key":"_follow_",
-        "value":"Folgen",
-        "description":""
+        "key": "_follow_",
+        "value": "Folgen",
+        "description": ""
     },
     {
-        "key":"_unfollow_",
-        "value":"Entfolgen",
-        "description":""
+        "key": "_unfollow_",
+        "value": "Entfolgen",
+        "description": ""
     },
 
     {
-        "key":"_follow_",
-        "value":"Folgen",
-        "description":""
+        "key": "_follow_",
+        "value": "Folgen",
+        "description": ""
     },
     {
-        "key":"_unfollow_",
-        "value":"Entfolgen",
-        "description":""
+        "key": "_unfollow_",
+        "value": "Entfolgen",
+        "description": ""
     },
     {
-        "key":"_description_",
-        "value":"Beschreibung",
-        "description":""
+        "key": "_description_",
+        "value": "Beschreibung",
+        "description": ""
     },
     {
-        "key":"_InvalidLogin",
-        "value":"Login Ungültig",
-        "description":""
+        "key": "_InvalidLogin",
+        "value": "Login Ungültig",
+        "description": ""
     } ,
     {
-        "key":"_NotAuthenticated",
-        "value":"Du bist nicht angemeldet!",
-        "description":""
+        "key": "_NotAuthenticated",
+        "value": "Du bist nicht angemeldet!",
+        "description": ""
     },
     {
-        "key":"_previewHeading_",
-        "value":"Vorschau:",
-        "description":""
+        "key": "_previewHeading_",
+        "value": "Vorschau:",
+        "description": ""
     },
     {
-        "key":"_accountDprNotChecked_",
-        "value":"Du musst die Datenschutzbestimmung annehmen!",
-        "description":""
+        "key": "_accountDprNotChecked_",
+        "value": "Du musst die Datenschutzbestimmung annehmen!",
+        "description": ""
     },
     {
-        "key":"_accountTosNotChecked_",
-        "value":"Du musst die Nutzungsbedingungen annehmen!",
-        "description":""
+        "key": "_accountTosNotChecked_",
+        "value": "Du musst die Nutzungsbedingungen annehmen!",
+        "description": ""
     },
     {
-        "key":"_accountPasswordsNotMatching_",
-        "value":"Die eingegebenen Passwörter stimmen nicht überein",
-        "description":""
+        "key": "_accountPasswordsNotMatching_",
+        "value": "Die eingegebenen Passwörter stimmen nicht überein",
+        "description": ""
     },
     {
-        "key":"_accountFieldsMissing_",
-        "value":"Es müssen alle Felder ausgefüllt sein",
-        "description":""
+        "key": "_accountFieldsMissing_",
+        "value": "Es müssen alle Felder ausgefüllt sein",
+        "description": ""
     },
     {
-        "key":"_accountCheckEmails_",
-        "value":"Die Registrierung ist abgeschlossen. Bitte prüfe deinen Emailaccount um den Zugang zu aktivieren.",
-        "description":""
+        "key": "_accountCheckEmails_",
+        "value": "Die Registrierung ist abgeschlossen. Bitte prüfe deinen Emailaccount um den Zugang zu aktivieren.",
+        "description": ""
     },
     {
-        "key":"_accountActivationFinished_",
-        "value":"Dein Account wurde aktiviert. Viel Spaß mit Findeco! ",
-        "description":""
+        "key": "_accountActivationFinished_",
+        "value": "Dein Account wurde aktiviert. Viel Spaß mit Findeco! ",
+        "description": ""
     },
     {
-        "key":"_accountLoginText_",
-        "value":"Mit dem Login erkennst du die Nutzungs- und Datenschutzbestimmungen an. Bitte beachte das Findeco Cookies und Javascript benötigt um zu funktionieren.",
-        "description":""
+        "key": "_accountLoginText_",
+        "value": "Mit dem Login erkennst du die Nutzungs- und Datenschutzbestimmungen an. Bitte beachte das Findeco Cookies und Javascript benötigt um zu funktionieren.",
+        "description": ""
     },
     {
-        "key":"_accountRegistrationFormLink_",
-        "value":"Noch kein Account? Hier registrieren!!!",
-        "description":""
+        "key": "_accountRegistrationFormLink_",
+        "value": "Noch kein Account? Hier registrieren!!!",
+        "description": ""
     },
     {
-        "key":"_accountRecoverPasswordByMailLink_",
-        "value":"Passwort vergessen? Hier kannst du es mit deiner Emailadresse wiederherstellen!",
-        "description":""
+        "key": "_accountRecoverPasswordByMailLink_",
+        "value": "Passwort vergessen? Hier kannst du es mit deiner Emailadresse wiederherstellen!",
+        "description": ""
     },
     {
-        "key":"_accountRecoverPasswordByUsernameLink_",
-        "value":"Passwort vergessen? Hier kannst du es mit deinem Usernamen wiederherstellen!",
-        "description":""
+        "key": "_accountRecoverPasswordByUsernameLink_",
+        "value": "Passwort vergessen? Hier kannst du es mit deinem Usernamen wiederherstellen!",
+        "description": ""
     },
     {
-        "key":"_accountRegistrationFormTitle_",
-        "value":"Accountregistrierung",
-        "description":""
+        "key": "_accountRegistrationFormTitle_",
+        "value": "Accountregistrierung",
+        "description": ""
     },
     {
-        "key":"_accountRegistrationText_",
-        "value":"ACHTUNG!!!!!!! Zur Zeit ist KEINE Registrierung möglich!!!!!!! Die Accountregistrierung steht im Rahmen der nutzungs und Datenschutzbestimmungen jedem offen. Bitte beachte das es sich um eine Demoinstanz handelt und wir die Inhalte und Accounts bei Bedarf ohne weiteren Hinweis löschen werden, wenn es für Updates oder den Systembetrieb notwendig wird.",
-        "description":""
+        "key": "_accountRegistrationText_",
+        "value": "ACHTUNG!!!!!!! Zur Zeit ist KEINE Registrierung möglich!!!!!!! Die Accountregistrierung steht im Rahmen der nutzungs und Datenschutzbestimmungen jedem offen. Bitte beachte das es sich um eine Demoinstanz handelt und wir die Inhalte und Accounts bei Bedarf ohne weiteren Hinweis löschen werden, wenn es für Updates oder den Systembetrieb notwendig wird.",
+        "description": ""
     },
     {
-        "key":"_accountUsername_",
-        "value":"Username",
-        "description":""
+        "key": "_accountUsername_",
+        "value": "Username",
+        "description": ""
     },
     {
-        "key":"_accountPassword_",
-        "value":"Passwort",
-        "description":""
+        "key": "_accountPassword_",
+        "value": "Passwort",
+        "description": ""
     },
     {
-        "key":"_accountPasswordRepeat_",
-        "value":"Passwortwiederholung",
-        "description":""
+        "key": "_accountPasswordRepeat_",
+        "value": "Passwortwiederholung",
+        "description": ""
     },
     {
-        "key":"_accountEmail_",
-        "value":"EMail Adresse",
-        "description":""
+        "key": "_accountEmail_",
+        "value": "EMail Adresse",
+        "description": ""
     },
     {
-        "key":"_accountReadTOS_",
-        "value":"Ich habe die Nutzungsbedingungen gelesen und erkenne diese an",
-        "description":""
+        "key": "_accountReadTOS_",
+        "value": "Ich habe die Nutzungsbedingungen gelesen und erkenne diese an",
+        "description": ""
     },
     {
-        "key":"_accountReadDPR_",
-        "value":"Ich habe die Datenschutzrichtlinien gelesen und erkenne diese an",
-        "description":""
+        "key": "_accountReadDPR_",
+        "value": "Ich habe die Datenschutzrichtlinien gelesen und erkenne diese an",
+        "description": ""
     },
     {
-        "key":"_accountRecoverByMailTitle_",
-        "value":"Accountwiederherstellung (per Email)",
-        "description":""
+        "key": "_accountRecoverByMailTitle_",
+        "value": "Accountwiederherstellung (per Email)",
+        "description": ""
     },
     {
-        "key":"_accountRecoverByUsernameTitle_",
-        "value":"Accountwiederherstellung (per Username)",
-        "description":""
+        "key": "_accountRecoverByUsernameTitle_",
+        "value": "Accountwiederherstellung (per Username)",
+        "description": ""
     },
     {
-        "key":"_settings_",
-        "value":"Einstellungen",
-        "description":""
+        "key": "_settings_",
+        "value": "Einstellungen",
+        "description": ""
     },
     {
-        "key":"_email_",
-        "value":"E-Mail",
-        "description":""
+        "key": "_email_",
+        "value": "E-Mail",
+        "description": ""
     },
     {
-        "key":"_followees_",
-        "value":"Ich folge ...",
-        "description":""
+        "key": "_followees_",
+        "value": "Ich folge ...",
+        "description": ""
     },
     {
-        "key":"_accountRecoveryFinished_",
-        "value":"Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
-        "description":""
+        "key": "_accountRecoveryFinished_",
+        "value": "Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
+        "description": ""
     },
     {
-        "key":"_accountRecoveryConfirmed_",
-            "value":"Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
-            "description":""
+        "key": "_accountRecoveryConfirmed_",
+        "value": "Die Accountwiederherstellung ist abgeschlossen. Bitte prüfe dein Mailpostfach für weitere Anweisungen. ",
+        "description": ""
     },
     {
-        "key":"_currentAdress_",
-        "value":"aktuelle Adresse",
-        "description":""
+        "key": "_currentAdress_",
+        "value": "aktuelle Adresse",
+        "description": ""
     },
     {
-        "key":"_username_",
-        "value":"Benutzername",
-        "description":""
+        "key": "_username_",
+        "value": "Benutzername",
+        "description": ""
     },
     {
-        "key":"_currentUsername_",
-        "value":"aktueller Benutzername",
-        "description":""
+        "key": "_currentUsername_",
+        "value": "aktueller Benutzername",
+        "description": ""
     },
     {
-        "key":"_changePassword_",
-        "value":"Passwort ändern",
-        "description":""
+        "key": "_changePassword_",
+        "value": "Passwort ändern",
+        "description": ""
     },
     {
-        "key":"_changePasswordDescription_",
-        "value":"Bitte gib dein gewünschtes Passwort zweimal ein, um Tippfehler zu vermeiden:",
-        "description":""
+        "key": "_changePasswordDescription_",
+        "value": "Bitte gib dein gewünschtes Passwort zweimal ein, um Tippfehler zu vermeiden:",
+        "description": ""
     },
     {
-        "key":"_passwordsDidNotMatch_",
-        "value":"Die angegebenen Passwörter stimmen nicht überein. Das Passwort wurde nicht geändert. Du kannst es nochmal versuchen.",
-        "description":""
+        "key": "_passwordsDidNotMatch_",
+        "value": "Die angegebenen Passwörter stimmen nicht überein. Das Passwort wurde nicht geändert. Du kannst es nochmal versuchen.",
+        "description": ""
     },
     {
-        "key":"_deleteAccount_",
-        "value":"Account löschen",
-        "description":""
+        "key": "_deleteAccount_",
+        "value": "Account löschen",
+        "description": ""
     },
     {
-        "key":"_deleteAccountExplanation_",
-        "value":"Wenn du deinen Account löschst, werden deine Beiträge nicht gelöscht. Alles was du geschrieben hast, wird anonymisiert, sodass keine Rückschlüsse auf deine Person möglich sind. Deine Follows und Spam-Markierungen werden gelöscht. Bitte beachte, dass das Löschen des Accounts nicht rückgängig gemacht werden kann. Dein Benutzername wird durch die Löschung zwar wieder frei, deine Beiträge können dir nach der Anonymisierung aber nicht wieder zugeordnet werden.",
-        "description":""
+        "key": "_deleteAccountExplanation_",
+        "value": "Wenn du deinen Account löschst, werden deine Beiträge nicht gelöscht. Alles was du geschrieben hast, wird anonymisiert, sodass keine Rückschlüsse auf deine Person möglich sind. Deine Follows und Spam-Markierungen werden gelöscht. Bitte beachte, dass das Löschen des Accounts nicht rückgängig gemacht werden kann. Dein Benutzername wird durch die Löschung zwar wieder frei, deine Beiträge können dir nach der Anonymisierung aber nicht wieder zugeordnet werden.",
+        "description": ""
     },
     {
-        "key":"_deleteAccountQuestion_",
-        "value":"Willst du deinen Account wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
-        "description":""
+        "key": "_deleteAccountQuestion_",
+        "value": "Willst du deinen Account wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "description": ""
     },
     {
-        "key":"_save_",
-        "value":"Speichern",
-        "description":""
+        "key": "_save_",
+        "value": "Speichern",
+        "description": ""
     },
     {
-        "key":"_createTextExplanation_",
-        "value":"Du kannst in dieses Eingabefeld deinen neuen Text in Creole-Markup eingeben. Der Text muss mite einer Überschrift beginnen, die mit einem einzelnen '=' eingeleitet wird. Zur Strukturierung können Überschriften ab Heading2, also mit zwei oder mehr '=' verwendet werden.",
-        "description":""
+        "key": "_createTextExplanation_",
+        "value": "Du kannst in dieses Eingabefeld deinen neuen Text in Creole-Markup eingeben. Der Text muss mite einer Überschrift beginnen, die mit einem einzelnen '=' eingeleitet wird. Zur Strukturierung können Überschriften ab Heading2, also mit zwei oder mehr '=' verwendet werden.",
+        "description": ""
     },
     {
-        "key":"_previewNotice_",
-        "value":"Eine Vorschau des von dir verfassten Texts erscheint in der rechten Spalte während der Eingabe.",
-        "description":""
+        "key": "_previewNotice_",
+        "value": "Eine Vorschau des von dir verfassten Texts erscheint in der rechten Spalte während der Eingabe.",
+        "description": ""
     },
     {
-        "key":"_appendNewParagraphExplanation_",
-        "value":"Der hier eingegebene Text wird als neuer Abschnitt auf gleicher Ebene hinten angehängt.",
-        "description":""
+        "key": "_appendNewParagraphExplanation_",
+        "value": "Der hier eingegebene Text wird als neuer Abschnitt auf gleicher Ebene hinten angehängt.",
+        "description": ""
     },
     {
-        "key":"_newTextExplanation_",
-        "value":"Der hier eingegebene Text wird eine neue Alternative zum bestehenden Text. Wird dieser Text angezeigt, ersetzt er den bestehenden Text komplett. ",
-        "description":""
+        "key": "_newTextExplanation_",
+        "value": "Der hier eingegebene Text wird eine neue Alternative zum bestehenden Text. Wird dieser Text angezeigt, ersetzt er den bestehenden Text komplett. ",
+        "description": ""
     }
-    
+
 ]

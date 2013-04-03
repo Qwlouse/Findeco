@@ -28,12 +28,16 @@
 function FindecoDefaultCtrl($scope, $location, Backend, User) {
     $scope.path = locator.getSanitizedPath();
 
+    $scope.isArgument = false;
+
+    $scope.allExpanded = false;
+
     $scope.isTextLoaded = false;
 
     $scope.graphData = [];
-    $scope.indexList = [];
     $scope.paragraphList = [];
     $scope.nodeInfo = [];
+    $scope.nodeInfo.indexList = [];
     $scope.sections = [];
     $scope.user = User;
 
@@ -64,11 +68,11 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
         $location.path(locator.getSanitizedPath(shortTitle + '.' + index));
     };
 
-    $scope.updateParagraphList = function () {
+    /*$scope.updateParagraphList = function () {
         Backend.loadText($scope.paragraphList, $scope.path).success(function () {
             $scope.isTextLoaded = true;
         });
-    };
+    };*/
 
     $scope.updateGraph = function () {
         Backend.loadGraphData($scope.graphData, $scope.path).success(function(data) {
@@ -78,26 +82,51 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
 
     $scope.updateNode = function () {
         Backend.loadNode($scope.nodeInfo, $scope.path).success(function (d) {
-            $scope.sections.length=0;
-            for (var i = 0; i < $scope.nodeInfo.indexList.length; ++i) {
-                var section = angular.copy($scope.nodeInfo.indexList[i]);
-                section.paragraphs = [];
-                section.isLoaded = false;
-                section.isExpanded = false;
-                section.path = locator.getPathForIndex(section.shortTitle, section.index);
-                $scope.sections.push(section);
+            $scope.allExpanded = true;
+            for ( var i in $scope.nodeInfo.indexList ) {
+                $scope.allExpanded = false;
+                $scope.nodeInfo.indexList[i].paragraphs = [];
+                $scope.nodeInfo.indexList[i].isLoaded = false;
+                $scope.nodeInfo.indexList[i].isExpanded = false;
             }
-            $scope.nodeInfo.path = $scope.path;
+        });
+    };
+
+    $scope.expandAll = function () {
+        var tmp = [];
+        Backend.loadText(tmp, locator.getSanitizedPath()).success(function (d) {
+            if ( d.loadTextResponse == undefined || d.loadTextResponse.paragraphs == undefined ) {
+                // TODO: Something went terribly wrong.
+                return;
+            }
+
+            var paragraphs = d.loadTextResponse.paragraphs;
+
+            // TODO: O(n*n) I certainly don't like it but don't see another way...
+            for ( var p in paragraphs ) {
+                for ( var i in $scope.nodeInfo.indexList ) {
+                    var section = $scope.nodeInfo.indexList[i];
+                    var path = locator.getPathForIndex(section.shortTitle, section.index);
+                    if ( paragraphs[p].path == path ) {
+                        section.paragraphs.push(paragraphs[p]);
+                        section.isLoaded = true;
+                        section.isExpanded = true;
+                        break;
+                    }
+                }
+            }
+            $scope.allExpanded = true;
         });
     };
 
     $scope.expandSection = function (section) {
         if (!section.isLoaded ) {
-            Backend.loadText(section.paragraphs, section.path).success(function (d) {
+            Backend.loadText(section.paragraphs, locator.getPathForIndex(section.shortTitle, section.index)).success(function (d) {
                 section.isFollowing = d.loadTextResponse.isFollowing;
                 section.isFlagging = d.loadTextResponse.isFlagging;
                 section.isLoaded = true;
                 section.isExpanded = true;
+                console.log(section.paragraphs);
             });
         } else {
             section.isExpanded = true;

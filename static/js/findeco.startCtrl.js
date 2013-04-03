@@ -33,17 +33,16 @@ function FindecoStartCtrl($scope, Backend, User) {
     $scope.user = User;
 
     $scope.updateFollowedUsers = function () {
-        Backend.loadMicroblogging($scope.followedUsersList , locator.getSanitizedPath());
+        Backend.loadMicroblogging($scope.followedUsersList , User.displayName);
     };
     $scope.updateFollowedNodes = function () {
         Backend.loadMicroblogging($scope.followedNodesList, ':collection');
     };
     $scope.updateOwnNodes = function () {
-        Backend.loadMicroblogging($scope.ownNodesList, locator.getSanitizedPath());
+        Backend.loadMicroblogging($scope.ownNodesList, ':collectionAuthor');
     };
 
     $scope.submit = function () {
-        // TODO: Cross-site-scripting protection!
         Backend.storeMicroblogPost(locator.getSanitizedPath(), $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';

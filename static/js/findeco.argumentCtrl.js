@@ -29,11 +29,14 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
     $scope.tmp = TMP;
     $scope.user = User;
 
+    $scope.isArgument = true;
+
+    $scope.nodeInfo = [];
+
     $scope.path = locator.getSanitizedArgumentFreePath();
     $scope.argumentPath = locator.getSanitizedPath();
 
     $scope.isTextLoaded = false;
-    $scope.paragraphList = [];
     $scope.argumentList = [];
 
     $scope.getPath = function () {
@@ -41,6 +44,9 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
     };
 
     $scope.parse = function(text,shortTitle) {
+        if ( text == undefined || text == "" ) {
+            return '';
+        }
         return Parser.parse(text,shortTitle,true);
     };
 
@@ -55,16 +61,24 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
     $scope.updateParagraphList = function() {
     };
 
+    $scope.relocateToDerivate = function() {
+        $location.path($scope.nodeInfo.derivate);
+    }
+
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
             var arg = $scope.argumentList[i];
             arg.path = locator.getPathForArgument(arg.argType, arg.index);
         }
-        console.log($scope.argumentList);
     }
 
     $scope.updateArgument = function () {
-        Backend.loadText($scope.paragraphList, $scope.argumentPath).success( function () {
+        Backend.loadText($scope.nodeInfo, $scope.argumentPath).success( function (d) {
+            if ( $scope.nodeInfo.path != undefined && $scope.nodeInfo.path != '' ) {
+                $scope.nodeInfo[0].derivate = $scope.nodeInfo.path;
+            }
+            $scope.nodeInfo = $scope.nodeInfo[0];
+            console.log($scope.nodeInfo);
             $scope.isTextLoaded = true;
         });
     };

@@ -138,10 +138,11 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionStoreMicroblogPost">Function::storeMicroblogPost</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_storeMicroblogPost/path</td></tr>
+    <tr><td>Call Structure:</td><td>.json_storeMicroblogPost/[path|microblogID]</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
+    <tr><td>or</td><td><a href="#ValueMicroblogID">(int) microblogID</a></td></tr>
     <tr><td>POST Parameters:</td><td><a href="#ValueMicroblogText">(String) microblogText</a></td></tr>
-    <tr><td>Description:</td><td>Store a Microblogpost attached to a path to a StructureNode or an Argument (see <a href="#ValuePath">Value::Path</a>).</td></tr>
+    <tr><td>Description:</td><td>Store a Microblogpost attached to a path to a StructureNode or an Argument (see <a href="#ValuePath">Value::Path</a>) or as a reply to a specific microblogID.</td></tr>
     <tr><td>Return:</td><td><a href="#JSONstoreMicroblogPostResponse">JSON::storeMicroblogPostResponse</a> or <a href="#JSONerrorResponse">JSON::errorResponse</a></td></tr>
 </tbody></table>
 
@@ -684,7 +685,8 @@ available. </td></tr>
 <b><a name="JSONparagraph">JSON::paragraphs</a></b>
 <table><tbody>
     <tr><td>Content:</td><td><a href="#JSONtextNode">JSON::textNode</a></td></tr>
-    <tr><td>Comment:</td><td>Contains one or more textnodes.</td></tr>
+    <tr><td>&nbsp;</td><td><a href="#ValuePath">Value::path</a></td></tr>
+    <tr><td>Comment:</td><td>Contains one or more textnodes and an optional path if the paragraph is an argument that marks a derivate node. </td></tr>
 </tbody></table>
 
 <br>

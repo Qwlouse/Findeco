@@ -1,56 +1,45 @@
 <div id="contentContainer" class="centeringContainer">
-    <div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
-        <h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
-        <ul class="argumentList">
-            <li ng-repeat="argument in argumentList | filter: {argType:'pro'}">
-                <div  follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"></div>
-                <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
-            </li>
-            <li ng-show="user.isLoggedIn">
-                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNewPro_"></a>
-            </li>
-        </ul>
-        <h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
-        <ul class="argumentList">
-            <li ng-repeat="argument in argumentList | filter: {argType:'neut'}">
-                <div  follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"></div>
-                <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
-            </li>
-            <li ng-show="user.isLoggedIn">
-                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Neutral'" data-i18n="_argumentsNewNeut_"></a>
-            </li>
-        </ul>
-        <h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
-        <ul class="argumentList">
-            <li ng-repeat="argument in argumentList | filter: {argType:'con'}">
-                <div  follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"></div>
-                <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
-            </li>
-            <li ng-show="user.isLoggedIn">
-                <a class="btn btn-primary" href="/#/createArgument/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Contra'" data-i18n="_argumentsNewCon_"></a>
-            </li>
-        </ul>
-    </div>
+    <div ng-include src="'static/partials/argument.html'"></div>
 
     <div id="centerColumn" class="contentBox">
-        <div  follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
+        <div follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
         <h1>{{ nodeInfo.fullTitle }}</h1>
-        <div findeco-graph data="graphData" path="path" class="graph"></div>
+
+        <div ng-show="!isArgument">
+            <div findeco-graph data="graphData" path="path" class="graph"></div>
+        </div>
         <p ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
-        <div ng-repeat="section in sections">
-            <a ng-show="!section.isExpanded" ng-click="expandSection(section)" style="float:left;position: relative; top:  14px; margin-right: 5px;"><img src="static/images/expand.png"></a>
-            <a ng-show="section.isExpanded" ng-click="collapseSection(section)" style="float:left;position: relative; top:  14px; margin-right: 5px;"><img src="static/images/collapse.png"></a>
+
+        <div ng-show="!allExpanded &&  !isArgument" class="btn btn-primary" ng-click="expandAll()"
+             data-i18n="_expandAllSections_"></div>
+        <div ng-repeat="section in nodeInfo.indexList">
+            <a ng-show="!section.isExpanded" ng-click="expandSection(section)"
+               style="float:left;position: relative; top:  14px; margin-right: 5px;"><img
+                    src="static/images/expand.png"></a>
+            <a ng-show="section.isExpanded" ng-click="collapseSection(section)"
+               style="float:left;position: relative; top:  14px; margin-right: 5px;"><img
+                    src="static/images/collapse.png"></a>
+
             <h2 ng-show="!section.isExpanded">
                 <a href="/#/{{ getPath(section.shortTitle + '.' + section.index) }}">{{section.fullTitle}}</a>
             </h2>
+
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
                 <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>
-        <div class="btn btn-primary" ng-click="relocate('createNewText')" data-i18n="_textNew_"><b>create new text</b></div>
+        <div ng-show="!isArgument" class="btn btn-primary" ng-click="relocate('create/topic')"
+             data-i18n="_createNewText_"></div>
 
-        <div class="btn btn-primary" ng-click="relocate('createAlternativeText')" data-i18n="_alternativeTextNew_"></div>
+        <div ng-show="!isArgument" class="btn btn-primary" ng-click="relocate('create/derivate')"
+             data-i18n="_createDerivativeText_"></div>
+
+        <div ng-show="!isArgument" class="btn btn-primary" ng-click="relocate('create/opposing')"
+             data-i18n="_createOpposingText_"></div>
+
+        <div ng-show="isArgument && nodeInfo.derivate != undefined && nodeInfo.derivate != ''" class="btn btn-primary"
+             ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
     </div>
 
     <div ng-include src="'static/partials/microblogging.html'"></div>
