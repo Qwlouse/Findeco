@@ -335,7 +335,10 @@ def store_settings(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
     assert_post_parameters(request, ['description', 'displayName'])
-    display_name = request.POST['displayName']
+    if check_username_sanity(request.POST['displayName']):
+        display_name = request.POST['displayName']
+    else:
+        raise InvalidUsername(request.POST['displayName'])
     if display_name != user.username:
         is_available = User.objects.filter(username__iexact=display_name).count() == 0
         if not is_available:
@@ -383,33 +386,47 @@ def store_text(request, path):
     p = request.POST
     if 'wikiText' in p and not \
             ('argumentType' in p or 'wikiTextAlternative' in p):
-        # fork for additional slot
-        new_path = fork_node_and_add_slot(path, user, p['wikiText'])
-        # microblog alert
-        post_new_derivate_for_node_message(user, path, new_path)
+
+        if len(p['wikiText'].strip()) > 0:
+            # fork for additional slot
+            new_path = fork_node_and_add_slot(path, user, p['wikiText'])
+            # microblog alert
+            post_new_derivate_for_node_message(user, path, new_path)
+        else:
+            raise EmptyText
 
     elif 'wikiText' in p and 'argumentType' in p and not \
             'wikiTextAlternative' in p:
-        # store argument
-        new_path = store_argument(path, p['wikiText'], p['argumentType'], user)
-        # microblog alert
-        post_new_argument_for_node_message(user, path, p['argumentType'],
-                                           new_path)
+
+        if len(p['wikiText'].strip()) > 0:
+            # store argument
+            new_path = store_argument(path, p['wikiText'], p['argumentType'], user)
+            # microblog alert
+            post_new_argument_for_node_message(user, path, p['argumentType'], new_path)
+        else:
+            raise EmptyText
 
     elif 'wikiTextAlternative' in p and not \
             ('wikiText' in p or 'argumentType' in p):
-        # store alternative
-        _, new_path = store_structure_node(path, p['wikiTextAlternative'], user)
+
+        if len(p['wikiTextAlternative'].strip()) > 0:
+            # store alternative
+            _, new_path = store_structure_node(path, p['wikiTextAlternative'], user)
+        else:
+            raise EmptyText
 
     elif 'wikiTextAlternative' in p and 'wikiText' in p and 'argumentType' in p:
-        # store Argument and Derivate of structure Node as alternative
-        arg_text = p['wikiText']
-        arg_type = p['argumentType']
-        derivate_wiki_text = p['wikiTextAlternative']
-        new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text,
-                                  user)
-        # microblog alert
-        post_new_derivate_for_node_message(user, path, new_path)
+
+        if len(p['wikiText'].strip()) > 0 and len(p['wikiTextAlternative'].strip()) > 0:
+            # store Argument and Derivate of structure Node as alternative
+            arg_text = p['wikiText']
+            arg_type = p['argumentType']
+            derivate_wiki_text = p['wikiTextAlternative']
+            new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text, user)
+            # microblog alert
+            post_new_derivate_for_node_message(user, path, new_path)
+        else:
+            raise EmptyText
 
     else:
         # wrong usage of API
@@ -424,7 +441,10 @@ def account_registration(request):
 
     emailAddress = request.POST['emailAddress']
     password = request.POST['password']
-    displayName = request.POST['displayName']
+    if check_username_sanity(request.POST['displayName']):
+        displayName = request.POST['displayName']
+    else:
+        raise InvalidUsername(request.POST['displayName'])
     try:
         validate_email(emailAddress)
     except ValidationError:

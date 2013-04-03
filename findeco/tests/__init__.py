@@ -33,7 +33,7 @@ from test_views import ViewTest
 from test_view_helpers import CreateIndexNodeForSlotTest, CreateIndexNodeForArgumentTest
 from test_view_helpers import CreateUsersInfoTest, CreateUserSettingsTest, CreateGraphDataNodeForStructureNodeTest
 from test_view_helpers import StoreStructureNodeTest, StoreArgumentTest, StoreDerivateTest
-from test_view_helpers import GetIsFollowingTest
+from test_view_helpers import GetIsFollowingTest, CheckUsernameSanityTest
 from test_load_index import LoadIndexTest, LoadArgumentIndexTest
 from test_load_node import LoadNodeTest
 from test_load_text import LoadTextTest

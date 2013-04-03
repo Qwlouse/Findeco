@@ -34,6 +34,7 @@ from ..view_helpers import create_index_node_for_slot, create_user_settings
 from ..view_helpers import create_index_node_for_argument, create_user_info
 from ..view_helpers import create_graph_data_node_for_structure_node
 from ..view_helpers import store_structure_node, store_argument, store_derivate
+from ..view_helpers import check_username_sanity
 
 
 class CreateUsersInfoTest(TestCase):
@@ -520,3 +521,23 @@ class GetIsFollowingTest(TestCase):
 
     def test_on_node_with_explicit_follow_is_2(self):
         self.assertEqual(get_is_following(self.hugo.id, self.n1), 2)
+
+
+class CheckUsernameSanityTest(TestCase):
+    def test_sane_names(self):
+        self.assertTrue(check_username_sanity("Achim"))
+        self.assertTrue(check_username_sanity("Gerda"))
+        self.assertTrue(check_username_sanity("Quetzalquatl23456789"))
+        self.assertTrue(check_username_sanity("alrique"))
+
+    def test_space_in_username(self):
+        self.assertFalse(check_username_sanity("Frank Bauer"))
+
+    def test_dot_in_username(self):
+        self.assertFalse(check_username_sanity("Frank.Bauer"))
+
+    def test_username_too_long(self):
+        self.assertFalse(check_username_sanity("FrankBauerMaierMueller"))
+
+    def test_username_begins_with_a_number(self):
+        self.assertFalse(check_username_sanity("9Frank"))
