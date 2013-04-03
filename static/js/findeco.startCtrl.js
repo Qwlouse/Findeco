@@ -43,7 +43,6 @@ function FindecoStartCtrl($scope, Backend, User) {
     };
 
     $scope.submit = function () {
-        // TODO: Cross-site-scripting protection!
         Backend.storeMicroblogPost(locator.getSanitizedPath(), $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
