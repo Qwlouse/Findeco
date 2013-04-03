@@ -50,6 +50,7 @@ findecoApp
                 });
                 link.bind('click', toggle);
                 function toggle() {
+                    console.log(scope.entity);
                     var markType = "follow";
                     if (scope.entity.isFollowing == 2) {markType = "unfollow";}
                     scope.markFunc(scope.entity.path, markType).success(function () {

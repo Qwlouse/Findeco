@@ -31,6 +31,8 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
 
     $scope.isArgument = true;
 
+    $scope.markNode = Backend.markNode;
+
     $scope.nodeInfo = [];
 
     $scope.path = locator.getSanitizedArgumentFreePath();
