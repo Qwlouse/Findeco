@@ -28,6 +28,8 @@
 function FindecoDefaultCtrl($scope, $location, Backend, User) {
     $scope.path = locator.getSanitizedPath();
 
+    $scope.isArgument = false;
+
     $scope.allExpanded = false;
 
     $scope.isTextLoaded = false;
