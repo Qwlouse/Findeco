@@ -31,9 +31,9 @@ function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Messag
     };
     $scope.radioModel = '';
 
-    $scope.showIf = function(matchArray) {
-        for ( var m in matchArray ) {
-            if ( matchArray[m] == $scope.settings.type ) {
+    $scope.showIf = function (matchArray) {
+        for (var m in matchArray) {
+            if (matchArray[m] == $scope.settings.type) {
                 return true;
             }
         }
@@ -45,68 +45,96 @@ function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Messag
     };
 
     $scope.parse = function (text) {
-        if ( text != undefined && text.length > 0 )
+        if (text != undefined && text.length > 0)
             return Parser.parse(text, null, true);
         return "";
     };
 
-    $scope.submit = function (type) {
-        if ( $scope.tmp['text'] == undefined
-            || $scope.tmp['text'] == '' ) {
-            Message.send('error','You have to put in a wikiText!');
-            return;
+    $scope.checkWikiCompatibility = function (text) {
+        if (text == undefined
+            || text == '') {
+            return 'Empty';
         }
-        Parser.parse($scope.tmp['text']);
-        if ( Parser.isErrorState() ) {
-            Message.send('error','Your wikiText seems to be erroneous. Have you set a title like this? = A title minding the spaces! =');
-            return;
+        Parser.parse(text);
+        if (Parser.isErrorState()) {
+            return 'ParseError';
         }
+
+        return true;
+    }
+
+    $scope.submit = function () {
 
         var params = {};
-        if ( type == 'argument' ) {
-            if ( $scope.tmp['argumentType'] == undefined
-                || $scope.tmp['argumentType'] == '' ) {
-                Message.send('error','You have to set an argumentType');
-                return;
-            }
-            params['wikiText'] = $scope.tmp.text;
-            params['argumentType'] = $scope.tmp.argumentType;
-        }
-        if ( type == 'alternative' ) {
-            if ( $scope.tmp['argumentType'] == undefined
-                || $scope.tmp['argumentType'] == '' ) {
-                Message.send('error','You have to set an argumentType');
-                return;
-            }
-            if ( $scope.tmp['textAlternative'] == undefined
-                || $scope.tmp['textAlternative'] == '' ) {
-                Message.send('error','You have to put in a wikiTextAlternative!');
-                return;
-            }
+        switch ($scope.settings.type) {
+            case 'argumentPro':
+            case 'argumentNeut':
+            case 'argumentCon':
+                var test = $scope.checkWikiCompatibility($scope.tmp.text);
+                if ( test != true ) {
+                    Message.send('error','_argumentText' + test + '_');
+                    break;
+                }
+                // Past watchdog
 
-            Parser.parse($scope.tmp['textAlternative']);
-            if ( Parser.isErrorState() ) {
-                Message.send('error','Your wikiTextAlternative seems to be erroneous. Have you set a title like this? = A title minding the spaces! =');
-                return;
-            }
-            params['wikiText'] = $scope.tmp.text;
-            params['wikiTextAlternative'] = $scope.tmp.textAlternative;
-            params['argumentType'] = $scope.tmp.argumentType;
+                params['argumentType'] = $scope.settings.type.toLowerCase().substr(8);
+                params['wikiText'] = $scope.tmp.text;
+            break;
+            case 'topic':
+                var test = $scope.checkWikiCompatibility($scope.tmp.text);
+                if ( test != true ) {
+                    Message.send('error','_text' + test + '_');
+                    break;
+                }
+                // Past watchdog
+
+                params['wikiText'] = $scope.tmp.text;
+            break;
+            case 'derivate':
+                // TODO: Allow argumentType selection.
+                var test = $scope.checkWikiCompatibility($scope.tmp.text);
+                if ( test != true ) {
+                    Message.send('error','_derivateText' + test + '_');
+                    break;
+                }
+                test = $scope.checkWikiCompatibility($scope.tmp.textAlternative);
+                if ( test != true ) {
+                    Message.send('error','_derivateTextAlternative' + test + '_');
+                    break;
+                }
+                // Past watchdog
+
+                params['argumentType'] = 'con';
+                params['wikiText'] = $scope.tmp.text;
+                params['wikiTextAlternative'] = $scope.tmp.textAlternative;
+            break;
+            case 'opposing':
+                var test = $scope.checkWikiCompatibility($scope.tmp.textAlternative);
+                if ( test != true ) {
+                    Message.send('error','_opposingTextAlternative' + test + '_');
+                    break;
+                }
+                // Past watchdog
+
+                params['wikiTextAlternative'] = $scope.tmp.textAlternative;
+            break;
         }
-        if ( type == 'new' ) {
-            params['wikiText'] = $scope.tmp.text;
+
+        if ( angular.equals(params,{}) ) {
+            return;
         }
-        Backend.storeText(locator.getSanitizedArgumentFreePath(),params)
+
+        Backend.storeText(locator.getSanitizedArgumentFreePath(), params)
             .success(function (data) {
-                if ( data.storeTextResponse != undefined ) {
+                if (data.storeTextResponse != undefined) {
                     $scope.tmp.text = '';
                     $scope.tmp.textAlternative = '';
                     $scope.tmp.argumentType = '';
 
                     $location.path(data.storeTextResponse.path);
                 }
-                if ( data.errorResponse != undefined ) {
-                    Message.send('error',data.errorResponse.errorMessage);
+                if (data.errorResponse != undefined) {
+                    Message.send('error', data.errorResponse.errorMessage);
                 }
             });
     };
