@@ -105,7 +105,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
 
             var paragraphs = d.loadTextResponse.paragraphs;
 
-            // TODO: O(n*n) I certainly don't like it but don't see another way...
+            // O(m*n) I certainly don't like it but don't see another way...
             for (var p in paragraphs) {
                 for (var i in $scope.nodeInfo.indexList) {
                     var section = $scope.nodeInfo.indexList[i];
