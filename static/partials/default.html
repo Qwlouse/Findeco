@@ -31,13 +31,13 @@
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>
-        <div ng-show="!isArgument" class="btn btn-primary" ng-click="relocate('create/topic')"
+        <div ng-show="!isArgument && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/topic')"
              data-i18n="_createNewText_"></div>
 
-        <div ng-show="!isArgument" class="btn btn-primary" ng-click="relocate('create/derivate')"
+        <div ng-show="!isArgument && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
              data-i18n="_createDerivativeText_"></div>
 
-        <div ng-show="!isArgument" class="btn btn-primary" ng-click="relocate('create/opposing')"
+        <div ng-show="!isArgument && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
              data-i18n="_createOpposingText_"></div>
 
         <div ng-show="isArgument && nodeInfo.derivate != undefined && nodeInfo.derivate != ''" class="btn btn-primary"
