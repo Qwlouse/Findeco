@@ -418,6 +418,17 @@
         "key": "_newTextExplanation_",
         "value": "Der hier eingegebene Text wird eine neue Alternative zum bestehenden Text. Wird dieser Text angezeigt, ersetzt er den bestehenden Text komplett. ",
         "description": ""
+    },
+    {
+        "key": "_editorHintTitle_",
+        "value": "Hinweis:",
+        "description": ""
+    },
+    {
+        "key": "_editorHint_",
+        "value": "Du musst deinen Beitrag mit = und einem leerzeichen beginnen. = Testtitel = wäre z.B. ein möglicher Titel. Ansonsten kannst du viele Wikisyntax Elemente nutzen. Probiere es mit der Live-Vorschau aus!  ",
+        "description": ""
     }
+    
 
 ]
