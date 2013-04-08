@@ -74,15 +74,18 @@ class Node(models.Model):
         no.position = max_position + 1
         no.save()
         self.update_favorite_and_invalidate_cache()
-
-        if child.node_type == Node.SLOT:
-            suffix = "/" + child.title
-        else:
-            suffix = "." + str(child.get_index(self))
-
         for p in self.paths.all():
-            child_path = p.path + suffix
-            PathCache.objects.create(path=child_path.strip('/'), node=child)
+            child.recursive_add_new_path_to_parent(self, p.path)
+
+    def recursive_add_new_path_to_parent(self, parent, path):
+        if self.node_type == Node.SLOT:
+            suffix = "/" + self.title
+        else:
+            suffix = "." + str(self.get_index(parent))
+        new_path = path + suffix
+        PathCache.objects.get_or_create(path=new_path.strip('/'), node=self)
+        for c in self.children.all():
+            c.recursive_add_new_path_to_parent(self, new_path)
 
     def add_derivate(self, derivate, arg_type=None, title="", text="",
                      authors=()):
