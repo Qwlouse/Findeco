@@ -1,5 +1,5 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
-    <div id="leftWideColumn" class="contentBox">
+    <div class="leftWideColumn contentBox">
         <h1> {{ user.displayName }} </h1>
         <h2 data-i18n="_description_">Beschreibung</h2>
         <form ng-submit="storeUserSettings()">
@@ -39,7 +39,7 @@
             </li>
         </ul>
     </div>
-    <div id="rightWideColumn" class="contentBox">
+    <div class="contentBox rightWideColumn">
         <h2 style="color: gray; border-bottom: 1px dotted gray;" data-i18n="_previewHeading_">Vorschau:</h2>
         <h1>{{user.displayName}}</h1>
         <div>
