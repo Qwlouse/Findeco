@@ -26,7 +26,7 @@
 /* Controllers */
 
 function FindecoMicroblogCtrl($scope, $routeParams, Backend, User) {
-    $scope.loadTarget = false;
+    $scope.loadTarget = locator.getSanitizedPath();
     if ( $routeParams.name != undefined ) {
         $scope.loadTarget = $routeParams.name;
     }
@@ -47,23 +47,19 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User) {
         return User.markUser(path, type).success(setAuthorForAllBlogs);
     };
 
-    $scope.updateMicrobloggingList = function (microbloggingID, type) {
-        var target = locator.getSanitizedPath();
-        if ( $scope.loadTarget != false ) {
-            target = $scope.loadTarget;
+    $scope.updateMicrobloggingList = function (oldType, oldID) {
+        var type = 'newer';
+        var id = 0;
+        if ($scope.microbloggingList[0] != undefined) {
+            id = $scope.microbloggingList[0].microblogID;
         }
 
-        if ( type == undefined ) {
-            type = 'newer';
+        if ( oldType != undefined && oldID != undefined ) {
+            type = oldType;
+            id = oldID;
         }
-
-        if ( microbloggingID == undefined && $scope.microbloggingList[0] != undefined ) {
-            microbloggingID = $scope.microbloggingList[0].microbloggingID;
-        } else if ( microbloggingID == undefined ) {
-            microbloggingID = 0;
-        }
-
-        Backend.loadMicroblogging($scope.microbloggingList, target, type, microbloggingID).success(setAuthorForAllBlogs);
+        console.log($scope.loadTarget, type, id);
+        Backend.loadMicroblogging($scope.microbloggingList, $scope.loadTarget, type, id).success(setAuthorForAllBlogs);
     };
 
     $scope.submit = function () {

@@ -97,14 +97,15 @@ angular.module('FindecoServices', [])
         return {
             loadMicroblogging: function (microblogList_out, path, type, id) {
                 var pathComponents = ['/.json_loadMicroblogging'];
-                if (id != undefined) {
+                if (id != undefined && id != 0) {
                     pathComponents.push(id);
                 }
                 if (type == undefined) {
-                    type = "older"
+                    type = "newer"
                 }
                 pathComponents.push(type);
                 pathComponents.push(path);
+                console.log(path, type, id, pathComponents);
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
@@ -116,12 +117,12 @@ angular.module('FindecoServices', [])
                                 flag = true;
                             }
                         });
-                        if ( flag == false ) {
+                        if (flag == false) {
                             microblogList_out.push(item);
                         }
                     });
                     microblogList_out = microblogList_out.sort(function (a, b) {
-                        return a.microblogID < b.microblogID;
+                        return b.microblogID - a.microblogID;
                     });
                 });
                 return promise;
