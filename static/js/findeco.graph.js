@@ -94,10 +94,18 @@ findecoApp.directive('findecoGraph', function( ) {
 
         link : function (scope, element, attrs) {
             // create svg container
-            var svg = d3.select(element[0])
-                .append("svg")
+            var parent = d3.select(element[0]);
+            var svg = parent.append("svg")
                 .attr("width", svg_width)
                 .attr("height", svg_height);
+
+            var tooltip = parent.append("div")
+                .style("position", "absolute")
+                .style("top", "0px")
+                .style("left", "0px")
+                .attr("id", "tooltip")
+                .style("visibility", "hidden")
+                .html("Ein <b>toller</b> Knoten!");
 
             // add arrowhead
             var defs = svg.append("svg:defs");
@@ -164,10 +172,20 @@ findecoApp.directive('findecoGraph', function( ) {
                     .data(nodes)
                     .enter().append("g")
                     .attr("class", "nodeGroup")
-                    .attr("title", function (d) { return d.path; })
+                    //.attr("title", function (d) { return d.path; })
                     .call(force.drag)
+                    .on("mouseover", function(d){
+                        tooltip.html("Follows Gesamt: <span id='followsColorBox'> " + d.follows + "</span>" +
+                            "<br/>direkt: <span id='directFollowColorBox'>" + d.newFollows + "</span>"+
+                            "<br/>vererbt: <span id='transitiveFollowColorBox'>" + (d.follows - d.newFollows) + "</span>"+
+                            "<br/>Entfolgungen: <span id='unfollowColorBox'>" + d.unFollows + "</span>");
+                        return tooltip.style("visibility", "visible");
+                    })
+                    .on("mousemove", function(){return tooltip.style("top", (d3.mouse(this)[1])+10+"px").style("left",(d3.mouse(this)[0])+10+"px");})
+                    .on("mouseout", function(){return tooltip.style("visibility", "hidden").style("top", "0px").style("left", "0px");})
                     .append("svg:a")
                     .attr("xlink:href", function (d) {return '/#/' + d.path; });
+
 
                 node.append("circle")  // shadow
                     .attr("r", node_radius)
