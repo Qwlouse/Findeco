@@ -24,6 +24,7 @@
 
 div.graph {
     overflow: auto;
+    position: relative;
 }
 
 div.graph .link {
@@ -68,3 +69,44 @@ div.graph .active.nodeLabel {
 
 div.graph .nodeGroup {
 }
+
+div #tooltip {
+    padding: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #aaa;
+    z-index: 100;
+}
+
+#followsColorBox {
+    float: right;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+#unfollowColorBox {
+    float: right;
+    background: #000;
+    color: #fff;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+#directFollowColorBox {
+    float: right;
+    background: #fff;
+    color: #000;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+#transitiveFollowColorBox {
+    float: right;
+    background: #999;
+    color: #000;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+
