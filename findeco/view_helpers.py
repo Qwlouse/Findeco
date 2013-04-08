@@ -349,7 +349,7 @@ def get_is_following(user_id, node):
     if v.count() > 0:
         v = v[0]
         isFollowing = 1  # at least transitive follow
-        if v.nodes.order_by('id')[0] == node:
+        if v.nodes.order_by('id')[0].id == node.id:
             isFollowing = 2  # explicit follow
     return isFollowing
 
