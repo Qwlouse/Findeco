@@ -29,7 +29,7 @@ from node_storage.factory import create_user, create_slot, create_textNode
 from node_storage.factory import create_vote, create_structureNode
 from node_storage.factory import create_argument, create_spam_flag
 from ..api_validation import userInfoValidator, indexNodeValidator
-from ..api_validation import userSettingsValidator
+from ..api_validation import userSettingsValidator, argumentIndexNodeValidator
 from ..view_helpers import create_index_node_for_slot, create_user_settings
 from ..view_helpers import create_index_node_for_argument, create_user_info
 from ..view_helpers import create_graph_data_node_for_structure_node
@@ -224,30 +224,35 @@ class CreateIndexNodeForArgumentTest(TestCase):
 
     def test_index_node_validates(self):
         for arg in self.foo_arguments:
-            index_node = create_index_node_for_argument(arg, self.foo1)
-            self.assertTrue(indexNodeValidator.validate(index_node))
+            index_node = create_index_node_for_argument(arg, self.foo1,
+                                                        self.hugo.id)
+            self.assertTrue(argumentIndexNodeValidator.validate(index_node))
 
-    def test_index_node_contains_arg_type_as_short_title(self):
+    def test_index_node_contains_arg_type(self):
         for arg, arg_type in zip(self.foo_arguments, ['pro', 'neut', 'con']):
-            index_node = create_index_node_for_argument(arg, self.foo1)
-            self.assertIn('shortTitle', index_node)
-            self.assertEqual(index_node['shortTitle'], arg_type)
+            index_node = create_index_node_for_argument(arg, self.foo1,
+                                                        self.hugo.id)
+            self.assertIn('argType', index_node)
+            self.assertEqual(index_node['argType'], arg_type)
 
     def test_index_node_contains_correct_full_title(self):
         for arg, full_title in zip(self.foo_arguments, self.arg_titles):
-            index_node = create_index_node_for_argument(arg, self.foo1)
+            index_node = create_index_node_for_argument(arg, self.foo1,
+                                                        self.hugo.id)
             self.assertIn('fullTitle', index_node)
             self.assertEqual(index_node['fullTitle'], full_title)
 
     def test_index_node_contains_correct_index(self):
         for arg, index in zip(self.foo_arguments, [1, 2, 3]):
-            index_node = create_index_node_for_argument(arg, self.foo1)
+            index_node = create_index_node_for_argument(arg, self.foo1,
+                                                        self.hugo.id)
             self.assertIn('index', index_node)
             self.assertEqual(index_node['index'], index)
 
     def test_index_node_contains_correct_author_group(self):
         for arg, authors in zip(self.foo_arguments, self.arg_authors):
-            index_node = create_index_node_for_argument(arg, self.foo1)
+            index_node = create_index_node_for_argument(arg, self.foo1,
+                                                        self.hugo.id)
             self.assertIn('authorGroup', index_node)
             author_group = index_node['authorGroup']
             for user in authors:

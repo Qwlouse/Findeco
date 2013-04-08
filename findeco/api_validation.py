@@ -196,7 +196,7 @@ ERROR_LIST = [
 userInfoValidator = JSONValidator(userInfo_schema)
 userSettingsValidator = JSONValidator(userSettings_schema)
 indexNodeValidator = JSONValidator(indexNode_schema)
-
+argumentIndexNodeValidator = JSONValidator(argumentIndexNode_schema)
 loadGraphDataResponseValidator = JSONValidator(loadGraphDataResponse_schema)
 loadIndexResponseValidator = JSONValidator(loadIndexResponse_schema)
 loadNodeResponseValidator = JSONValidator(loadNodeResponse_schema)
