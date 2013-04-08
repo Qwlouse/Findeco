@@ -507,9 +507,7 @@ def account_reset_request_by_name(request):
     assert_post_parameters(request, ['displayName'])
     displayName = request.POST['displayName']
 
-    assert_active_user(displayName)
-
-    user = User.objects.get(username=displayName)
+    user = assert_active_user(displayName)
     activationKey = random.getrandbits(256)
     user.profile.activationKey = activationKey
     user.save()
@@ -526,9 +524,7 @@ def account_reset_request_by_name(request):
 def account_reset_request_by_mail(request):
     assert_post_parameters(request, ['emailAddress'])
     emailAddress = request.POST['emailAddress']
-    assert_active_user(emailAddress)
-
-    user = User.objects.get(email=emailAddress)
+    user = assert_active_user(email=emailAddress)
     activationKey = random.getrandbits(256)
     user.profile.activationKey = activationKey
     user.save()

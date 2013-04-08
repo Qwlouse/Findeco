@@ -1,0 +1,34 @@
+<div id="contentContainer" class="centeringContainer">
+    <div ng-show="!isRootNode"  ng-include src="'static/partials/argument.html'"></div>
+
+    <div id="centerColumn" class="contentBox">
+       
+       
+       
+        
+
+
+        <div ng-repeat="section in nodeInfo.indexList">
+            <a ng-show="!section.isExpanded" ng-click="expandSection(section)"
+               style="float:left;position: relative; top:  14px; margin-right: 5px;"><img
+                    src="static/images/expand.png"></a>
+            <a ng-show="section.isExpanded" ng-click="collapseSection(section)"
+               style="float:left;position: relative; top:  14px; margin-right: 5px;"><img
+                    src="static/images/collapse.png"></a>
+
+            <h2 ng-show="!section.isExpanded">
+                <a href="/#/{{ getPath(section.shortTitle + '.' + section.index) }}">{{section.fullTitle}}</a>
+            </h2>
+
+            <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
+                <div spam-mark show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
+                <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
+                <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
+            </div>
+        </div>
+   
+ 
+    </div>
+
+    <div ng-show="!isRootNode" ng-include src="'static/partials/microblogging.html'"></div>
+</div>
