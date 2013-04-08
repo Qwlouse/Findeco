@@ -1,5 +1,5 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
-    <div id="leftWideColumn" class="contentBox">
+    <div class="contentBox leftWideColumn">
         <h2 ng-show="showIf(['argumentPro'])" data-i18n="_argumentsNewPro_"></h2>
 
         <h2 ng-show="showIf(['argumentNeut'])" data-i18n="_argumentsNewNeut_"></h2>
@@ -37,12 +37,12 @@
                    value="{{'_opposingCreateSendBtn_'|i18n}}">
         </form>
     </div>
-    <div id="rightWideColumn" class="contentBox">
+    <div class="contentBox rightWideColumn">
         <div ng-bind-html-unsafe="parse(tmp.text)"></div>
 
         <div ng-bind-html-unsafe="parse(tmp.textAlternative)"></div>
     </div>
-    <div id="rightWideColumn" class="contentBox" style ="margin-top:20px;">
+    <div class="contentBox rightWideColumn" style ="margin-top:20px;">
 			<h2>{{'_editorHintTitle_'|i18n}}</h2>
 			{{'_editorHint_'|i18n}}
     </div>
