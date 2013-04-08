@@ -33,13 +33,25 @@ function FindecoStartCtrl($scope, Backend, User) {
     $scope.user = User;
 
     $scope.updateFollowedUsers = function () {
-        Backend.loadMicroblogging($scope.followedUsersList , User.displayName);
+        var id = 0;
+        if ($scope.followedUsersList[0] != undefined) {
+            id = $scope.followedUsersList[0].microblogID;
+        }
+        Backend.loadMicroblogging($scope.followedUsersList, User.displayName, 'newer', id);
     };
     $scope.updateFollowedNodes = function () {
-        Backend.loadMicroblogging($scope.followedNodesList, ':collection');
+        var id = 0;
+        if ($scope.followedNodesList[0] != undefined) {
+            id = $scope.followedNodesList[0].microblogID;
+        }
+        Backend.loadMicroblogging($scope.followedNodesList, ':collection', 'newer', id);
     };
     $scope.updateOwnNodes = function () {
-        Backend.loadMicroblogging($scope.ownNodesList, ':collectionAuthor');
+        var id = 0;
+        if ($scope.ownNodesList[0] != undefined) {
+            id = $scope.ownNodesList[0].microblogID;
+        }
+        Backend.loadMicroblogging($scope.ownNodesList, ':collectionAuthor', 'newer', id);
     };
 
     $scope.submit = function () {

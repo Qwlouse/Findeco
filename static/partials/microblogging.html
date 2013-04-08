@@ -1,11 +1,12 @@
-<div id="rightColumn" ng-show="path != '/'" class="contentBox" ng-controller="FindecoMicroblogCtrl" style="position: relative;">
+<div id="rightColumn" ng-show="path != '/'" class="contentBox" ng-controller="FindecoMicroblogCtrl"
+     style="position: relative;">
     <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
     <ul class="microblogList">
         <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0;">
             <form ng-submit="submit()">
                 <input type="text" placeholder="{{'_microblogPlaceholder_'|i18n}}" style="width: 100%;"
-                       ng-model="microblogText" />
-                <input class="btn btn-primary" type="submit" data-i18n="_microblogSendBtn_" style="float: right;" />
+                       ng-model="microblogText"/>
+                <input class="btn btn-primary" type="submit" data-i18n="_microblogSendBtn_" style="float: right;"/>
             </form>
         </li>
         <li ng-repeat="microblogNode in microbloggingList">
@@ -16,5 +17,7 @@
             <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
             <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
         </li>
+        <li><a class="btn btn-primary" ng-click="updateMicrobloggingList('older',microbloggingList[microbloggingList.length-1].microblogID)"
+               data-i18n="_startScreenUpdateBtn_"></a></li>
     </ul>
 </div>
