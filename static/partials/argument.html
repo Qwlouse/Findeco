@@ -1,32 +1,39 @@
-<div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
+<div id="leftColumn" ng-show="path == '/'"></div>
+<div id="leftColumn" ng-show="path != '/'" class="contentBox" ng-controller="FindecoArgumentCtrl">
     <h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
     <ul class="argumentList">
         <li ng-repeat="argument in argumentList | filter: {argType:'pro'}">
-            <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16" style="float:none; top: 0;"></span>
+                <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
+                      style="float:none; top: 0;"></span>
             <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
         </li>
         <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/#/create/argumentPro/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNewPro_"></a>
+            <a class="btn btn-primary" href="/#/create/argumentPro/{{ getPath(true) }}"
+               ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNewPro_"></a>
         </li>
     </ul>
     <h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
     <ul class="argumentList">
         <li ng-repeat="argument in argumentList | filter: {argType:'neut'}">
-            <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16" style="float:none; top: 0;"></span>
+                <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
+                      style="float:none; top: 0;"></span>
             <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
         </li>
         <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/#/create/argumentNeut/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Neutral'" data-i18n="_argumentsNewNeut_"></a>
+            <a class="btn btn-primary" href="/#/create/argumentNeut/{{ getPath(true) }}"
+               ng-click="tmp.argumentType = 'Neutral'" data-i18n="_argumentsNewNeut_"></a>
         </li>
     </ul>
     <h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
     <ul class="argumentList">
         <li ng-repeat="argument in argumentList | filter: {argType:'con'}">
-            <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16" style="float:none; top: 0;"></span>
+                <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
+                      style="float:none; top: 0;"></span>
             <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
         </li>
         <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/#/create/argumentCon/{{ getPath(true) }}" ng-click="tmp.argumentType = 'Contra'" data-i18n="_argumentsNewCon_"></a>
+            <a class="btn btn-primary" href="/#/create/argumentCon/{{ getPath(true) }}"
+               ng-click="tmp.argumentType = 'Contra'" data-i18n="_argumentsNewCon_"></a>
         </li>
     </ul>
 </div>
