@@ -41,7 +41,7 @@ findecoApp
             },
             replace: true,
             template: '<a class="follow-star">' +
-                        '<img ng-src="static/images/star{{entity.isFollowing}}.png" alt="" width="{{width}}" height="{{height}}"/>' +
+                        '<img ng-src="static/images/star{{entity.isFollowing}}.png" alt="Follow" title="Folgen" width="{{width}}" height="{{height}}"/>' +
                       '</a>',
             link : function (scope, element, attrs) {
                 if (scope.entity.isFollowing != 0 &&
@@ -82,7 +82,7 @@ findecoApp
             },
             replace: true,
             template: '<a class="spam-mark">' +
-                        '<img ng-src="static/images/spam{{entity.isFlagging}}.png" alt="" width="{{width}}" height="{{height}}"/>' +
+                        '<img ng-src="static/images/spam{{entity.isFlagging}}.png" alt="SpamFlag" title="Als Spam markieren" width="{{width}}" height="{{height}}"/>' +
                       '</a>',
             link : function (scope, element, attrs) {
                 if (scope.entity.isFlagging != 0 &&
