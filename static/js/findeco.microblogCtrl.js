@@ -25,7 +25,12 @@
 'use strict';
 /* Controllers */
 
-function FindecoMicroblogCtrl($scope, Backend, User) {
+function FindecoMicroblogCtrl($scope, $routeParams, Backend, User) {
+    $scope.loadTarget = false;
+    if ( $routeParams.name != undefined ) {
+        $scope.loadTarget = $routeParams.name;
+    }
+
     function setAuthorForAllBlogs() {
         for (var i = 0; i < $scope.microbloggingList.length; ++i ) {
             var blog = $scope.microbloggingList[i];
@@ -43,7 +48,11 @@ function FindecoMicroblogCtrl($scope, Backend, User) {
     };
 
     $scope.updateMicrobloggingList = function () {
-        Backend.loadMicroblogging($scope.microbloggingList, locator.getSanitizedPath()).success(setAuthorForAllBlogs);
+        var target = locator.getSanitizedPath();
+        if ( $scope.loadTarget != false ) {
+            target = $scope.loadTarget;
+        }
+        Backend.loadMicroblogging($scope.microbloggingList, target).success(setAuthorForAllBlogs);
     };
 
     $scope.submit = function () {
@@ -57,4 +66,4 @@ function FindecoMicroblogCtrl($scope, Backend, User) {
     $scope.updateMicrobloggingList();
 }
 
-FindecoMicroblogCtrl.$inject = ['$scope', 'Backend', 'User'];
+FindecoMicroblogCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'User'];
