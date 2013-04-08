@@ -28,11 +28,15 @@
 function FindecoDefaultCtrl($scope, $location, Backend, User) {
     $scope.path = locator.getSanitizedPath();
     $scope.isArgument = false;
-
     $scope.allExpanded = false;
-
-    $scope.isTextLoaded = false;
-
+	$scope.isTextLoaded = false;  
+    
+    if (locator.getPath().length ==1 ){
+        $scope.isRootNode = true;
+	}else{
+	    $scope.isRootNode = false;
+	}
+    
     $scope.graphData = [];
 
     $scope.paragraphList = [];

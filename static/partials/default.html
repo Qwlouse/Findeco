@@ -4,14 +4,14 @@
     <div id="centerColumn" class="contentBox">
         <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
         <div follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
-        <h1>{{ nodeInfo.fullTitle }}</h1>
+        <h1  >{{ nodeInfo.fullTitle }}</h1>
 
-        <div ng-show="!isArgument">
+        <div ng-show="!isArgument  && !isRootNode">
             <div findeco-graph data="graphData" path="path" class="graph"></div>
         </div>
         <p ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
 
-        <div ng-show="!allExpanded &&  !isArgument" class="btn btn-primary" ng-click="expandAll()"
+        <div ng-show="!allExpanded &&  !isArgument  " class="btn btn-primary" ng-click="expandAll()"
              data-i18n="_expandAllSections_"></div>
         <div ng-repeat="section in nodeInfo.indexList">
             <a ng-show="!section.isExpanded" ng-click="expandSection(section)"
@@ -31,16 +31,16 @@
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>
-        <div ng-show="!isArgument && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/topic')"
+        <div ng-show="!isArgument && user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/topic')"
              data-i18n="_createNewText_"></div>
 
-        <div ng-show="!isArgument && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
+        <div ng-show="!isArgument && user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/derivate')"
              data-i18n="_createDerivativeText_"></div>
 
         <div ng-show="!isArgument && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
              data-i18n="_createOpposingText_"></div>
 
-        <div ng-show="isArgument && nodeInfo.derivate != undefined && nodeInfo.derivate != ''" class="btn btn-primary"
+        <div ng-show="isArgument && nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
              ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
     </div>
 
