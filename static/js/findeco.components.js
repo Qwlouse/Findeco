@@ -44,6 +44,11 @@ findecoApp
                         '<img ng-src="static/images/star{{entity.isFollowing}}.png" alt="" width="{{width}}" height="{{height}}"/>' +
                       '</a>',
             link : function (scope, element, attrs) {
+                if (scope.entity.isFollowing != 0 &&
+                    scope.entity.isFollowing != 1 &&
+                    scope.entity.isFollowing != 2) {
+                    scope.entity.isFollowing = 0;
+                }
                 var link = angular.element(element[0]);
                 scope.$watch('showIf', function(value){
                     link.css('display', scope.showIf ? '' : 'none');
@@ -80,6 +85,12 @@ findecoApp
                         '<img ng-src="static/images/spam{{entity.isFlagging}}.png" alt="" width="{{width}}" height="{{height}}"/>' +
                       '</a>',
             link : function (scope, element, attrs) {
+                if (scope.entity.isFlagging != 0 &&
+                    scope.entity.isFlagging != 1 &&
+                    scope.entity.isFlagging != 2) {
+                    scope.entity.isFlagging = 0;
+                }
+
                 var link = angular.element(element[0]);
                 scope.$watch('showIf', function(value){
                     link.css('display', scope.showIf ? '' : 'none');
