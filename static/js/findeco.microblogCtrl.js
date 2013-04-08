@@ -47,12 +47,23 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User) {
         return User.markUser(path, type).success(setAuthorForAllBlogs);
     };
 
-    $scope.updateMicrobloggingList = function () {
+    $scope.updateMicrobloggingList = function (microbloggingID, type) {
         var target = locator.getSanitizedPath();
         if ( $scope.loadTarget != false ) {
             target = $scope.loadTarget;
         }
-        Backend.loadMicroblogging($scope.microbloggingList, target).success(setAuthorForAllBlogs);
+
+        if ( type == undefined ) {
+            type = 'newer';
+        }
+
+        if ( microbloggingID == undefined && $scope.microbloggingList[0] != undefined ) {
+            microbloggingID = $scope.microbloggingList[0].microbloggingID;
+        } else if ( microbloggingID == undefined ) {
+            microbloggingID = 0;
+        }
+
+        Backend.loadMicroblogging($scope.microbloggingList, target, type, microbloggingID).success(setAuthorForAllBlogs);
     };
 
     $scope.submit = function () {

@@ -71,7 +71,7 @@ angular.module('FindecoServices', [])
                 function (response) {
                     return response;
                 },
-                function(response) {
+                function (response) {
                     if (response.data.errorResponse != undefined) {
                         Message.send("error", response.data.errorResponse.errorID);
                         delete response.data.errorResponse;
@@ -108,8 +108,22 @@ angular.module('FindecoServices', [])
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
-                promise.success(fillArray(microblogList_out,
-                    ['loadMicrobloggingResponse']));
+                promise.success(function (data) {
+                    angular.forEach(data['loadMicrobloggingResponse'], function (item) {
+                        var flag = false;
+                        angular.forEach(microblogList_out, function (oldItem) {
+                            if (oldItem.microblogID == item.microblogID) {
+                                flag = true;
+                            }
+                        });
+                        if ( flag == false ) {
+                            microblogList_out.push(item);
+                        }
+                    });
+                    microblogList_out = microblogList_out.sort(function (a, b) {
+                        return a.microblogID < b.microblogID;
+                    });
+                });
                 return promise;
             },
 
@@ -209,36 +223,36 @@ angular.module('FindecoServices', [])
         userInfo.register = function (displayName, password, emailAddress) {
             var promise = $http.post('/.json_accountRegistration/', {displayName: displayName, password: password, emailAddress: emailAddress});
             promise.success(function (d) {
-                
+
             });
             return promise;
         };
         userInfo.activate = function (activationKey) {
             var promise = $http.post('/.json_accountActivation/', {activationKey: activationKey});
             promise.success(function (d) {
-               
+
             });
             return promise;
         };
         userInfo.confirm = function (activationKey) {
             var promise = $http.post('/.json_accountResetConfirmation/', {activationKey: activationKey});
             promise.success(function (d) {
-               
+
             });
             return promise;
         };
         userInfo.recoverByMail = function (emailAddress) {
             var promise = $http.post('/.json_accountResetRequestByMail/', {emailAddress: emailAddress});
             promise.success(function (d) {
-               
+
             });
             return promise;
         };
-        
+
         userInfo.recoverByUsername = function (displayName) {
             var promise = $http.post('/.json_accountResetRequestByName/', {displayName: displayName});
             promise.success(function (d) {
-               
+
             });
             return promise;
         };
@@ -270,7 +284,7 @@ angular.module('FindecoServices', [])
             url = url.replace("//", "/");
             return $http.post(url, {}).success(function (d) {
                 userInfo.followees = d.markUserResponse.followees;
-                for (var i=0; i<userInfo.followees.length; i++) {
+                for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
                 }
@@ -285,7 +299,7 @@ angular.module('FindecoServices', [])
                 userInfo.displayName = data.userInfo.displayName;
                 userInfo.description = data.userInfo.description;
                 userInfo.followees = data.userSettings.followees;
-                for (var i=0; i<userInfo.followees.length; i++) {
+                for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
                 }
@@ -307,7 +321,7 @@ angular.module('FindecoServices', [])
             return $http.post('/.json_deleteUser/');
         };
 
-        userInfo.follows = function(name) {
+        userInfo.follows = function (name) {
             for (var i = 0; i < userInfo.followees.length; i++) {
                 if (userInfo.followees[i].displayName == name) {
                     return 2;
@@ -336,13 +350,13 @@ angular.module('FindecoServices', [])
         }
 
         tmp.send = function (type, message) {
-        	if (message=="_NotAuthenticated"){
-        		return "";
-        	}
-        	if (message.substr(0, 1) == "_"){
-        		message=this.localize(message);
-        	}
-            if ( this.catchList[message] != undefined ) {
+            if (message == "_NotAuthenticated") {
+                return "";
+            }
+            if (message.substr(0, 1) == "_") {
+                message = this.localize(message);
+            }
+            if (this.catchList[message] != undefined) {
                 this.catchList[message].push({type: type, msg: message});
             } else {
                 this.messageList.push({type: type, msg: message});
