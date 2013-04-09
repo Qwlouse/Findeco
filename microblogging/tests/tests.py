@@ -214,6 +214,28 @@ class MicrobloggingTests(TestCase):
                 'microblogTime' in data['loadMicrobloggingResponse'][i])
         self.assertEqual(len(data['loadMicrobloggingResponse']), 19)
 
+    def test_load_microblogging_23_older(self):
+        self.assertTrue(self.client.login(username="max", password="1234"))
+
+        response = self.client.get(
+            reverse('load_microblogging',
+                    kwargs=dict(path="Bla.1",
+                    select_id=23,
+                    microblogging_load_type="older")))
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertTrue('loadMicrobloggingResponse' in data)
+        self.assertEqual(len(data['loadMicrobloggingResponse']), 20)
+        for i in range(20):
+            self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogText'],
+                             'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+            self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'], 19 - i + 3)
+            self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
+            self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']), 1)
+            self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][i])
+
     def test_load_microblogging_only_one_post(self):
         self.assertTrue(self.client.login(username="max", password="1234"))
 
