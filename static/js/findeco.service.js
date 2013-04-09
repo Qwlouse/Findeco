@@ -374,8 +374,8 @@ angular.module('FindecoServices', [])
         var nodePattern = "[a-zA-Z][a-zA-Z0-9_-]{0,19}\\.[0-9]+";
         // TODO: disallow duplicated slashes
         var rootPath = new RegExp("^/*$");
-        var nodePath = new RegExp("^/*(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
-        var argumentPath = new RegExp("^/*(" + nodePattern + "/+)*(" + nodePattern + ")\\.(pro|neut|con)\\.[0-9]+/*$");
+        var nodePath = new RegExp("/*(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
+        var argumentPath = new RegExp("/*(" + nodePattern + "/+)*(" + nodePattern + ")\\.(pro|neut|con)\\.[0-9]+/*$");
         var userPath = new RegExp("^/user/[a-zA-Z][a-zA-Z0-9-_]{0,19}/*$");
 
         function isNonEmpty(element, index, array) {
@@ -383,11 +383,18 @@ angular.module('FindecoServices', [])
         }
 
         var location = {
-            path : "",
+            path : "",    // the full path but duplicate slashes are removed
+            prefix : "",  // things before the node or user path like /create/argumentPro/ or /user/
+            nodePath : "", // only the node path (parent for arguments, empty for users)
+            argumentPath : "", // the full path to the argument
+            userName : "", // user
             parts : [],
-            nodePath : "",
             type : "node"  // one of: root, node, arg, user, other
         };
+
+        function normalizeSlashes(path) {
+            return path.split("/").filter(isNonEmpty).join('/');
+        }
 
         location.updatePath = function () {
             var path = $location.path();
@@ -396,19 +403,35 @@ angular.module('FindecoServices', [])
             // find out the type of path
             if (path.match(rootPath)) {
                 location.type = "root";
+                location.prefix = "";
                 location.nodePath = "";
+                location.argumentPath = "";
+                location.userName = "";
             } else if (path.match(nodePath)) {
                 location.type = "node";
-                location.nodePath = location.path;
+                location.prefix = normalizeSlashes(location.path.replace(nodePath, ''));
+                location.nodePath = normalizeSlashes(nodePath.exec(location.path)[0]);
+                location.argumentPath = "";
+                location.userName = "";
             } else if (path.match(argumentPath)) {
                 location.type = "arg";
-                location.nodePath = location.path.replace(/\.(pro|con|neut)\.\d+\/?$/,'');
+                location.argumentPath = normalizeSlashes(argumentPath.exec(location.path)[0]);
+                location.prefix = normalizeSlashes(location.path.replace(argumentPath, ''));
+                location.nodePath = normalizeSlashes(location.argumentPath.replace(/\.(pro|con|neut)\.\d+\/?$/,''));
+                location.userName = "";
             } else if (path.match(userPath)) {
                 location.type = "user";
+                location.prefix = "user";
                 location.nodePath = "";
+                location.argumentPath = "";
+                location.userName = location.parts[1];
             } else {
                 location.type = "other";
                 location.nodePath = "";
+                location.prefix = "";
+                location.nodePath = "";
+                location.argumentPath = "";
+                location.userName = "";
             }
             console.log(location);
         };
