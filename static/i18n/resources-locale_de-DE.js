@@ -370,6 +370,11 @@
         "description": ""
     },
     {
+        "key": "_passwordChanged_",
+        "value": "Dein Passwort wurde geändert.",
+        "description": ""
+    },
+    {
         "key": "_changePasswordDescription_",
         "value": "Bitte gib dein gewünschtes Passwort zweimal ein, um Tippfehler zu vermeiden:",
         "description": ""
