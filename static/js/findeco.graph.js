@@ -182,7 +182,7 @@ findecoApp.directive('findecoGraph', function( ) {
                         return tooltip.style("visibility", "visible");
                     })
                     .on("mousemove", function(){return tooltip.style("top", (d3.mouse(this)[1])+10+"px").style("left",(d3.mouse(this)[0])+10+"px");})
-                    .on("mouseout", function(){return tooltip.style("visibility", "hidden").style("top", "0px").style("left", "0px");})
+                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
                     .append("svg:a")
                     .attr("xlink:href", function (d) {return '/#/' + d.path; });
 

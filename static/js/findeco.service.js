@@ -105,7 +105,6 @@ angular.module('FindecoServices', [])
                 }
                 pathComponents.push(type);
                 pathComponents.push(path);
-                console.log(path, type, id, pathComponents);
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
@@ -348,7 +347,7 @@ angular.module('FindecoServices', [])
         tmp.localize = function (string) {
             this.localizer = this.localizer || $injector.get('localize');
             return this.localizer.getLocalizedString(string);
-        }
+        };
 
         tmp.send = function (type, message) {
             if (message == "_NotAuthenticated") {
@@ -370,5 +369,65 @@ angular.module('FindecoServices', [])
         };
 
         return tmp;
+    })
+    .factory('Navigator', function ($rootScope, $location) {
+        var nodePattern = "[a-zA-Z][a-zA-Z0-9_-]{0,19}\\.[0-9]+";
+        // TODO: disallow duplicated slashes
+        var rootPath = new RegExp("^/*$");
+        var nodePath = new RegExp("^/*(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
+        var argumentPath = new RegExp("^/*(" + nodePattern + "/+)*(" + nodePattern + ")\\.(pro|neut|con)\\.[0-9]+/*$");
+        var userPath = new RegExp("^/user/[a-zA-Z][a-zA-Z0-9-_]{0,19}/*$");
+
+        function isNonEmpty(element, index, array) {
+            return (element != "");
+        }
+
+        var location = {
+            path : "",
+            parts : [],
+            nodePath : "",
+            type : "node"  // one of: root, node, arg, user, other
+        };
+
+        location.updatePath = function () {
+            var path = $location.path();
+            location.parts = path.split("/").filter(isNonEmpty);
+            location.path = location.parts.join("/");
+            // find out the type of path
+            if (path.match(rootPath)) {
+                location.type = "root";
+                location.nodePath = "";
+            } else if (path.match(nodePath)) {
+                location.type = "node";
+                location.nodePath = location.path;
+            } else if (path.match(argumentPath)) {
+                location.type = "arg";
+                location.nodePath = location.path.replace(/\.(pro|con|neut)\.\d+\/?$/,'');
+            } else if (path.match(userPath)) {
+                location.type = "user";
+                location.nodePath = "";
+            } else {
+                location.type = "other";
+                location.nodePath = "";
+            }
+            console.log(location);
+        };
+
+        location.getPathForNode = function (shortTitle, index) {
+            return location.nodePath + '/' + shortTitle + '.' + index;
+        };
+
+        location.getPathForArgument = function (argType, index) {
+            return location.nodePath + '.' + argType + '.' + index;
+        };
+
+        location.getPathForUser = function (username) {
+            return '/user/' + username;
+        };
+
+        location.updatePath();
+        $rootScope.$on('$routeChangeSuccess', location.updatePath);
+
+        return location;
     })
 ;

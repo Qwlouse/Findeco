@@ -65,7 +65,7 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
 
     $scope.relocateToDerivate = function() {
         $location.path($scope.nodeInfo.derivate);
-    }
+    };
 
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
@@ -80,7 +80,6 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
                 $scope.nodeInfo[0].derivate = $scope.nodeInfo.path;
             }
             $scope.nodeInfo = $scope.nodeInfo[0];
-            console.log($scope.nodeInfo);
             $scope.isTextLoaded = true;
         });
     };
