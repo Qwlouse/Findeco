@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Message) {
+function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigator) {
     $scope.settings = {
         type: $routeParams.type
     };
@@ -38,10 +38,6 @@ function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Messag
             }
         }
         return false;
-    }
-
-    $scope.relocate = function (target) {
-        $location.path(target + '/' + locator.getSanitizedArgumentFreePath());
     };
 
     $scope.parse = function (text) {
@@ -127,14 +123,13 @@ function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Messag
             return;
         }
 
-        Backend.storeText(locator.getSanitizedArgumentFreePath(), params)
+        Backend.storeText(Navigator.nodePath, params)
             .success(function (data) {
                 if (data.storeTextResponse != undefined) {
                     $scope.tmp.text = '';
                     $scope.tmp.textAlternative = '';
                     $scope.tmp.argumentType = '';
-
-                    $location.path(data.storeTextResponse.path);
+                    Navigator.changePath(data.storeTextResponse.path);
                 }
                 if (data.errorResponse != undefined) {
                     Message.send('error', data.errorResponse.errorMessage);

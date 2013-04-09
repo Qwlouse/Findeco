@@ -425,6 +425,10 @@ angular.module('FindecoServices', [])
             return '/user/' + username;
         };
 
+        location.changePath = function (newPath) {
+            $location.path(newPath);
+        };
+
         location.updatePath();
         $rootScope.$on('$routeChangeSuccess', location.updatePath);
 
