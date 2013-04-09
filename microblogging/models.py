@@ -82,8 +82,9 @@ class Post(models.Model):
                                             self.time)
 
 
-def create_post(text, author, path=None):
-    text = escape(text)
+def create_post(text, author, path=None, escape=True):
+    if escape:
+        text = escape(text)
     split_text = user_ref_pattern.split(text)
     mentions = []
     for i in range(1, len(split_text), 2):

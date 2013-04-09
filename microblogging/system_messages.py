@@ -28,31 +28,31 @@ system = User.objects.get(username="system")
 
 
 def post_node_was_flagged_message(path, user):
-    text = "@{user} hat /{path} als Spam markiert.".format(
+    text = '<span style="color: gray;">Hinweis:</span> @{user} hat /{path} als Spam markiert.'.format(
         user=user.username,
         path=path.strip('/'))
-    return create_post(text, system)
+    return create_post(text, user, escape=False)
 
 
 def post_node_was_unflagged_message(path, user):
-    text = "@{user} hat die Spam Markierung von /{path} zurückgezogen.".format(
+    text = '<span style="color: gray;">Hinweis:</span> @{user} hat die Spam Markierung von /{path} zurückgezogen.'.format(
         user=user.username,
         path=path.strip('/'))
-    return create_post(text, system)
+    return create_post(text, user, escape=False)
 
 
 def post_node_became_favorit_message(path):
-    text = "Der Vorschlag /{path} ist zum Favoriten geworden.".format(path=path)
+    text = 'Der Vorschlag /{path} ist zum Favoriten geworden.'.format(path=path)
     return create_post(text, system)
 
 
 def post_new_derivate_for_node_message(user, original_path, derivate_path):
-    text = "@{user} hat den Vorschlag /{original_path} zu /{derivate_path} " \
-           "weiterentwickelt".format(
+    text = '<span style="color: gray;">Hinweis:</span> @{user} hat den ' \
+           'Vorschlag /{original_path} zu /{derivate_path} weiterentwickelt.'.format(
            user=user.username,
            original_path=original_path,
            derivate_path=derivate_path)
-    return create_post(text, system)
+    return create_post(text, user, escape=False)
 
 
 def post_new_argument_for_node_message(user, path, arg_type, arg_path):
@@ -62,11 +62,11 @@ def post_new_argument_for_node_message(user, path, arg_type, arg_path):
                 'neut': "Argument",
                 'p': "Proargument",
                 'pro': "Proargument"}
-    text = "@{user} hat das {argument} /{arg_path} zum Vorschlag /{path} " \
-           "hinzugefügt.".format(
+    text = '<span style="color: gray;">Hinweis:</span> @{user} hat das {argument} /{arg_path} zum Vorschlag /{path} ' \
+           'hinzugefügt.'.format(
            user=user.username,
            arg_path=arg_path,
            argument=argument[arg_type],
            path=path)
-    return create_post(text, system)
+    return create_post(text, user, escape=False)
 
