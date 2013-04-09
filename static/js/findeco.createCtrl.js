@@ -30,6 +30,21 @@ function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Messag
         type: $routeParams.type
     };
     $scope.radioModel = '';
+    if ($scope.settings.type == 'derivate') {
+        var paragraphs = [];
+        var wikiText = "";
+        Backend.loadText(paragraphs, locator.getPath()).success(function () {
+            console.log(locator.getPath());
+            console.log(paragraphs);
+            console.log(paragraphs.length);
+            for (var i = 0; i < paragraphs.length; i++) {
+                var tmpText = paragraphs[i]['wikiText'];
+                tmpText = tmpText.replace(/={2}[ ]\[{2}.*\|/,"= ");
+                wikiText = tmpText.replace(/]{2}[ ]={2}/," =");
+            }
+            $scope.tmp.textAlternative = wikiText;
+        });
+    }
 
     $scope.showIf = function (matchArray) {
         for (var m in matchArray) {
@@ -38,7 +53,7 @@ function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Messag
             }
         }
         return false;
-    }
+    };
 
     $scope.relocate = function (target) {
         $location.path(target + '/' + locator.getSanitizedArgumentFreePath());
@@ -61,7 +76,7 @@ function FindecoCreateCtrl($scope, $location, $routeParams, Backend, TMP, Messag
         }
 
         return true;
-    }
+    };
 
     $scope.submit = function () {
 
