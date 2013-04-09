@@ -152,4 +152,4 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
     $scope.tmp = TMP;
 }
 
-FindecoCreateCtrl.$inject = ['$scope', '$location', '$routeParams', 'Backend', 'TMP', 'Message'];
+FindecoCreateCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'TMP', 'Message', 'Navigator'];
