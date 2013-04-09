@@ -31,14 +31,14 @@ def post_node_was_flagged_message(path, user):
     text = '<span style="color: gray;">Hinweis:</span> @{user} hat /{path} als Spam markiert.'.format(
         user=user.username,
         path=path.strip('/'))
-    return create_post(text, user, escape=False)
+    return create_post(text, user, do_escape=False)
 
 
 def post_node_was_unflagged_message(path, user):
     text = '<span style="color: gray;">Hinweis:</span> @{user} hat die Spam Markierung von /{path} zurückgezogen.'.format(
         user=user.username,
         path=path.strip('/'))
-    return create_post(text, user, escape=False)
+    return create_post(text, user, do_escape=False)
 
 
 def post_node_became_favorit_message(path):
@@ -52,7 +52,7 @@ def post_new_derivate_for_node_message(user, original_path, derivate_path):
            user=user.username,
            original_path=original_path,
            derivate_path=derivate_path)
-    return create_post(text, user, escape=False)
+    return create_post(text, user, do_escape=False)
 
 
 def post_new_argument_for_node_message(user, path, arg_type, arg_path):
@@ -68,5 +68,5 @@ def post_new_argument_for_node_message(user, path, arg_type, arg_path):
            arg_path=arg_path,
            argument=argument[arg_type],
            path=path)
-    return create_post(text, user, escape=False)
+    return create_post(text, user, do_escape=False)
 

@@ -438,6 +438,26 @@
         "key": "_editorHint_",
         "value": "Du musst deinen Beitrag mit = und einem leerzeichen beginnen. = Testtitel = wäre z.B. ein möglicher Titel. Ansonsten kannst du viele Wikisyntax Elemente nutzen. Probiere es mit der Live-Vorschau aus!  ",
         "description": ""
+    },
+    {
+        "key": "_argumentForThisModification_",
+        "value": "Argument: Warum ist die Weiterentwicklung nötig?",
+        "description": ""
+    },
+    {
+        "key": "_textForThisModification_",
+        "value": "Weiterentwickelter Text:",
+        "description": ""
+    },
+    {
+        "key": "_argumentPreview_",
+        "value": "Vorschau des Arguments",
+        "description": ""
+    },
+    {
+        "key": "_textPreview_",
+        "value": "Vorschau des Texts",
+        "description": ""
     }
     
 
