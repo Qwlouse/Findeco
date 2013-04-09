@@ -385,6 +385,11 @@
         "description": ""
     },
     {
+        "key": "_settingsChanged_",
+        "value": "Deine Accounteinstellungen wurden aktualisiert.",
+        "description": ""
+    },
+    {
         "key": "_deleteAccount_",
         "value": "Account löschen",
         "description": ""
