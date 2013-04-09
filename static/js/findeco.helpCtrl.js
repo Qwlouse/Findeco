@@ -25,7 +25,10 @@
 'use strict';
 /* Controllers */
 
-function FindecoHelpCtrl($scope, Backend, User) {
+function FindecoHelpCtrl($scope, Backend, User, Navigator) {
+
+    // todo: Is this used at all?
+
     function setAuthorForAllBlogs() {
         for (var i = 0; i < $scope.microbloggingList.length; ++i ) {
             var blog = $scope.microbloggingList[i];
@@ -39,20 +42,20 @@ function FindecoHelpCtrl($scope, Backend, User) {
     $scope.user = User;
     $scope.test =function(e){
     	$("#foo").html("Highlghted Item " + (e)?e.target.id:window.event.srcElement.id)
-    }
+    };
     
     $scope.followUser = function (path, type) {
         return User.markUser(path, type).success(setAuthorForAllBlogs);
     };
 
     $scope.updateMicrobloggingList = function () {
-        Backend.loadMicroblogging($scope.microbloggingList, locator.getSanitizedPath()).success(setAuthorForAllBlogs);
+        Backend.loadMicroblogging($scope.microbloggingList, Navigator.path).success(setAuthorForAllBlogs);
     };
 
     $scope.submit = function () {
         // TODO: Cross-site-scripting protection!
         if ($scope.microblogText.length <= 0) return;
-        Backend.storeMicroblogPost(locator.getSanitizedPath(), $scope.microblogText).success(function () {
+        Backend.storeMicroblogPost(Navigator.path, $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });
@@ -61,4 +64,4 @@ function FindecoHelpCtrl($scope, Backend, User) {
     $scope.updateMicrobloggingList();
 }
 
-FindecoHelpCtrl.$inject = ['$scope', 'Backend', 'User'];
+FindecoHelpCtrl.$inject = ['$scope', 'Backend', 'User', 'Navigator'];
