@@ -58,7 +58,6 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User) {
             type = oldType;
             id = oldID;
         }
-        console.log($scope.loadTarget, type, id);
         Backend.loadMicroblogging($scope.microbloggingList, $scope.loadTarget, type, id).success(setAuthorForAllBlogs);
     };
 

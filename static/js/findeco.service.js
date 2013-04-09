@@ -105,7 +105,6 @@ angular.module('FindecoServices', [])
                 }
                 pathComponents.push(type);
                 pathComponents.push(path);
-                console.log(path, type, id, pathComponents);
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
