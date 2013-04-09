@@ -88,13 +88,15 @@ def create_some_microblogging(path=None):
         blogger1 = User.objects.filter(username="Blogger 1").all()[0]
     else:
         blogger1 = create_user("Blogger 1")
-    create_post("Meine Oma fährt im Hühnerstall Motorrad!" if not path else "Meine Oma erwähnt /"+path+" im Hühnerstall.", blogger1)
+    create_post("Meine Oma fährt im Hühnerstall Motorrad!" if not path else "Meine Oma erwähnt /" +
+                path + " im Hühnerstall.", blogger1)
     if User.objects.filter(username="Troll").count() > 0:
         troll = User.objects.filter(username="Troll").all()[0]
     else:
         troll = create_user("Troll")
     if path:
-        create_post("Ich erwähne /"+path+" um zu trollen. Lies das was ich schreibe und ärgere dich!",troll)
+        create_post("Ich erwähne /" + path + " um zu trollen. Lies das was ich schreibe und ärgere dich!",
+                    troll)
 
 
 @transaction.commit_on_success
