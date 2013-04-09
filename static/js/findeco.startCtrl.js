@@ -55,7 +55,9 @@ function FindecoStartCtrl($scope, Backend, User) {
     };
 
     $scope.submit = function () {
-        Backend.storeMicroblogPost(locator.getSanitizedPath(), $scope.microblogText).success(function () {
+        // todo: on which path to microblog?
+        var path = "";
+        Backend.storeMicroblogPost(path, $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });
