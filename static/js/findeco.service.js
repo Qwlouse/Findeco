@@ -374,8 +374,8 @@ angular.module('FindecoServices', [])
         var nodePattern = "[a-zA-Z][a-zA-Z0-9_-]{0,19}\\.[0-9]+";
         // TODO: disallow duplicated slashes
         var rootPath = new RegExp("^/*$");
-        var nodePath = new RegExp("/*(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
-        var argumentPath = new RegExp("/*(" + nodePattern + "/+)*(" + nodePattern + ")\\.(pro|neut|con)\\.[0-9]+/*$");
+        var nodePath =     new RegExp("/+(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
+        var argumentPath = new RegExp("/+(" + nodePattern + "/+)*(" + nodePattern + ")\\.(pro|neut|con)\\.[0-9]+/*$");
         var userPath = new RegExp("^/user/[a-zA-Z][a-zA-Z0-9-_]{0,19}/*$");
 
         function isNonEmpty(element, index, array) {
@@ -386,7 +386,7 @@ angular.module('FindecoServices', [])
             path : "",    // the full path but duplicate slashes are removed
             prefix : "",  // things before the node or user path like /create/argumentPro/ or /user/
             nodePath : "", // only the node path (parent for arguments, empty for users)
-            argumentPath : "", // the full path to the argument
+            argumentPath : "", // the full path to the argument or node if it isn't an argument
             userName : "", // user
             parts : [],
             type : "node"  // one of: root, node, arg, user, other
@@ -399,7 +399,7 @@ angular.module('FindecoServices', [])
         location.updatePath = function () {
             var path = $location.path();
             location.parts = path.split("/").filter(isNonEmpty);
-            location.path = location.parts.join("/");
+            location.path = '/' + location.parts.join("/");
             // find out the type of path
             if (path.match(rootPath)) {
                 location.type = "root";
@@ -411,7 +411,7 @@ angular.module('FindecoServices', [])
                 location.type = "node";
                 location.prefix = normalizeSlashes(location.path.replace(nodePath, ''));
                 location.nodePath = normalizeSlashes(nodePath.exec(location.path)[0]);
-                location.argumentPath = "";
+                location.argumentPath = location.nodePath;
                 location.userName = "";
             } else if (path.match(argumentPath)) {
                 location.type = "arg";
@@ -433,7 +433,6 @@ angular.module('FindecoServices', [])
                 location.argumentPath = "";
                 location.userName = "";
             }
-            console.log(location);
         };
 
         location.getPathForNode = function (shortTitle, index) {
