@@ -112,7 +112,9 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     };
 
     $scope.searchSubmit = function () {
-        $location.path('search/' + $scope.searchString);
+        if ($scope.searchString.match(/\S/)) {
+            $location.path('search/' + $scope.searchString);
+        }
     };
 
     $scope.storeUserEMail = function () {
