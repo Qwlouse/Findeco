@@ -105,7 +105,6 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message, Navigat
 
 
     $scope.getActiveClass = function (pathPrefix) {
-        console.log("Foo", Navigator.prefix, pathPrefix);
         if (pathPrefix.length == 0 && Navigator.prefix == 0) {
             return "activeTab";
         } else if (pathPrefix.length > 0 && Navigator.prefix.substr(0, pathPrefix.length) == pathPrefix) {
