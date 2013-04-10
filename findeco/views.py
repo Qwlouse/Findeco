@@ -85,7 +85,7 @@ def load_argument_index(request, path):
     return json_response({'loadArgumentIndexResponse': data})
 
 
-@ValidPaths("StructureNode")
+@ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
 def load_node(request, path):
     node = assert_node_for_path(path)

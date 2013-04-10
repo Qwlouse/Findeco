@@ -18,7 +18,7 @@
         <li ng-repeat="argument in argumentList | filter: {argType:'neut'}">
                 <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
                       style="float:none; top: 0;"></span>
-            <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
+            <a href="/#/{{ argument.path }}">{{argument.fullTitle}}</a>
         </li>
         <li ng-show="user.isLoggedIn">
             <a class="btn btn-primary" href="/#/create/argumentNeut/{{ nav.nodePath }}"
@@ -30,7 +30,7 @@
         <li ng-repeat="argument in argumentList | filter: {argType:'con'}">
                 <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
                       style="float:none; top: 0;"></span>
-            <a href="/#/argument/{{ argument.path }}">{{argument.fullTitle}}</a>
+            <a href="/#/{{ argument.path }}">{{argument.fullTitle}}</a>
         </li>
         <li ng-show="user.isLoggedIn">
             <a class="btn btn-primary" href="/#/create/argumentCon/{{ nav.nodePath }}"
