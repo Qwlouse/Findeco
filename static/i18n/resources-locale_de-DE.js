@@ -435,8 +435,18 @@
         "description": ""
     },
     {
-        "key": "_editorHint_",
-        "value": "Du musst deinen Beitrag mit = und einem leerzeichen beginnen. = Testtitel = wäre z.B. ein möglicher Titel. Ansonsten kannst du viele Wikisyntax Elemente nutzen. Probiere es mit der Live-Vorschau aus!  ",
+        "key": "_editorHintBeginning_",
+        "value": "Du musst deinen Beitrag mit = beginnen. = Testtitel = wäre z.B. ein möglicher Titel. Ansonsten kannst du die ",
+        "description": ""
+    },
+    {
+        "key": "_editorHintCreoleLink_",
+        "value": "Wiki-Syntax von Creole",
+        "description": ""
+    },
+    {
+        "key": "_editorHintEnd_",
+        "value": " nutzen. Probiere es mit der Live-Vorschau aus.",
         "description": ""
     },
     {

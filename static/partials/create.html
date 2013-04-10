@@ -48,7 +48,7 @@
         <div ng-bind-html-unsafe="parse(tmp.textAlternative)"></div>
     </div>
     <div class="contentBox rightWideColumn" style ="margin-top:20px;">
-			<h2>{{'_editorHintTitle_'|i18n}}</h2>
-			{{'_editorHint_'|i18n}}
+			<h2 data-i18n="_editorHintTitle_"></h2>
+			<p>{{ '_editorHintBeginning_'|i18n }}<a href='http://wikicreole.org/wiki/Creole1.0'>{{ '_editorHintCreoleLink_'|i18n }}</a>{{ '_editorHintEnd_'|i18n }}</p>
     </div>
 </div>
