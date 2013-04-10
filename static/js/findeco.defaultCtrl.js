@@ -37,7 +37,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     $scope.paragraphList = [];
     $scope.nodeInfo = [];
     $scope.nodeInfo.indexList = [];
-    $scope.nodeInfo.path = $scope.nav.nodePath;
+    $scope.nodeInfo.path = $scope.nav.argumentPath;
     $scope.sections = [];
 
     $scope.relocate = function (target) {
@@ -62,7 +62,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     };
 
     $scope.updateNode = function () {
-        Backend.loadNode($scope.nodeInfo, $scope.nav.nodePath).success(function (d) {
+        Backend.loadNode($scope.nodeInfo, $scope.nav.argumentPath).success(function (d) {
             $scope.allExpanded = true;
 
             for (var i in $scope.nodeInfo.indexList) {
@@ -123,12 +123,8 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     };
 
     $scope.initialize = function () {
-        if ($scope.nav.type == 'arg') {
-            //$scope.updateParagraphList();
-        } else {
             $scope.updateNode();
             $scope.updateGraph();
-        }
     };
     $scope.initialize();
 }

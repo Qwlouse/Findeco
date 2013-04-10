@@ -25,25 +25,14 @@
 'use strict';
 /* Controllers */
 
-function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP) {
+function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
+    $scope.nav = Navigator;
     $scope.tmp = TMP;
     $scope.user = User;
 
-    $scope.isArgument = true;
-
     $scope.markNode = Backend.markNode;
 
-    $scope.nodeInfo = [];
-
-    $scope.path = locator.getSanitizedArgumentFreePath();
-    $scope.argumentPath = locator.getSanitizedPath();
-
-    $scope.isTextLoaded = false;
     $scope.argumentList = [];
-
-    $scope.getPath = function () {
-        return locator.getSanitizedArgumentFreePath();
-    };
 
     $scope.parse = function(text,shortTitle) {
         if ( text == undefined || text == "" ) {
@@ -52,46 +41,18 @@ function FindecoArgumentCtrl($scope, $location, $routeParams, Backend, User, TMP
         return Parser.parse(text,shortTitle,true);
     };
 
-    $scope.relocateRelativeTo = function(shortTitle,index) {
-        var path = $scope.path;
-        if ( $scope.path == '/' ) {
-            path = '';
-        }
-        $location.path(locator.getSanitizedPath(shortTitle + '.' + index));
-    };
-
-    $scope.updateParagraphList = function() {
-    };
-
-    $scope.relocateToDerivate = function() {
-        $location.path($scope.nodeInfo.derivate);
-    };
-
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
             var arg = $scope.argumentList[i];
-            arg.path = locator.getPathForArgument(arg.argType, arg.index);
+            arg.path = $scope.nav.getPathForArgument(arg.argType, arg.index);
         }
     }
 
-    $scope.updateArgument = function () {
-        Backend.loadText($scope.nodeInfo, $scope.argumentPath).success( function (d) {
-            if ( $scope.nodeInfo.path != undefined && $scope.nodeInfo.path != '' ) {
-                $scope.nodeInfo[0].derivate = $scope.nodeInfo.path;
-            }
-            $scope.nodeInfo = $scope.nodeInfo[0];
-            $scope.isTextLoaded = true;
-        });
-    };
-
     $scope.updateArgumentList = function () {
-        Backend.loadArgument($scope.argumentList , $scope.path).success(amendArguments);
+        Backend.loadArgument($scope.argumentList , $scope.nav.nodePath).success(amendArguments);
     };
 
     $scope.updateArgumentList();
-    if ( locator.isArgumentPath() ) {
-        $scope.updateArgument();
-    }
 }
 
-FindecoArgumentCtrl.$inject = ['$scope', '$location', '$routeParams', 'Backend', 'User', 'TMP'];
+FindecoArgumentCtrl.$inject = ['$scope', 'Backend', 'User', 'TMP', 'Navigator'];
