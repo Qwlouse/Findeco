@@ -67,6 +67,7 @@
     list-style: none;
     display: inline-block;
     padding: 0 15px 0 15px;
+    height: 27px;
 }
 
 #headerContent form{
@@ -75,7 +76,6 @@
 
 #searchTab {
     margin-left: 115px;
-    height: 27px;
 }
 
 div.searchBox {
