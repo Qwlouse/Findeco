@@ -40,10 +40,6 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     $scope.nodeInfo.path = $scope.nav.nodePath;
     $scope.sections = [];
 
-    console.log("navigator:", Navigator);
-    console.log("type:", Navigator.type);
-    console.log("type nav:", $scope.nav.type);
-
     $scope.relocate = function (target) {
         $location.path(target + '/' + $scope.nav.nodePath);
     };
@@ -134,9 +130,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
             $scope.updateGraph();
         }
     };
-    console.log("type nav1:", $scope.nav.type);
     $scope.initialize();
-    console.log("type nav2:", $scope.nav.type);
 }
 
 FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend', 'User', 'Navigator'];

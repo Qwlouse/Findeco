@@ -407,7 +407,6 @@ angular.module('FindecoServices', [])
             location.userName = "";
             location.entries = [];
             location.type = "";
-            console.log(location.type);
             // find out the type of path
             if (path.match(rootPath)) {
                 location.type = "root";
@@ -428,7 +427,6 @@ angular.module('FindecoServices', [])
             } else {
                 location.type = "other";
             }
-            console.log(location.type);
             // calculate entries
             var nodes = location.nodePath.split('/');
             var pathSoFar = "";
@@ -441,9 +439,6 @@ angular.module('FindecoServices', [])
                 var arg_parts = nodes[nodes.length - 1].split('.');
                 location.entries.push({name : arg_parts[2] + '.' + arg_parts[3], path : location.argumentPath});
             }
-            console.log(location.type);
-            console.log(location);
-            console.log(location.type);
         };
 
         location.getPathForNode = function (shortTitle, index) {
