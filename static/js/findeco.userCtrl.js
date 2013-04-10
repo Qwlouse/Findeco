@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
+function FindecoUserCtrl($scope, $location, User, $routeParams, Message, Navigator) {
     $scope.user = User;
     $scope.userEmail = User.email;
     $scope.newDisplayName = User.displayName;
@@ -103,8 +103,12 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
     };
 
 
-    $scope.getActiveClass = function (path) {
-        if ($location.path().substr(0, path.length) == path) {
+
+    $scope.getActiveClass = function (pathPrefix) {
+        console.log("Foo", Navigator.prefix, pathPrefix);
+        if (pathPrefix.length == 0 && Navigator.prefix == 0) {
+            return "activeTab";
+        } else if (pathPrefix.length > 0 && Navigator.prefix.substr(0, pathPrefix.length) == pathPrefix) {
             return "activeTab";
         } else {
             return "";
@@ -167,4 +171,4 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message) {
 
 }
 
-FindecoUserCtrl.$inject = ['$scope', '$location', 'User', '$routeParams' , 'Message'];
+FindecoUserCtrl.$inject = ['$scope', '$location', 'User', '$routeParams' , 'Message', 'Navigator'];
