@@ -32,7 +32,7 @@ var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', '
             when('/create/:type*param', {templateUrl: 'static/partials/create.html', controller: FindecoCreateCtrl}).
             when('/credits', {templateUrl: 'static/partials/credits.html', controller: FindecoDefaultCtrl}).
             when('/datenschutz', {templateUrl: 'static/partials/datenschutz.html', controller: FindecoDefaultCtrl}).
-            when('/home', {templateUrl: 'static/partials/home.html', controller: FindecoDefaultCtrl}).
+            when('/start', {templateUrl: 'static/partials/start.html', controller: FindecoDefaultCtrl}).
             when('/impressum', {templateUrl: 'static/partials/impressum.html', controller: FindecoDefaultCtrl}).
             when('/user*name', {templateUrl: 'static/partials/user.html', controller: FindecoUserInfoCtrl}).
             when('/kontakt', {templateUrl: 'static/partials/kontakt.html', controller: FindecoDefaultCtrl}).
