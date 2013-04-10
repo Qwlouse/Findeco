@@ -25,34 +25,27 @@
 'use strict';
 /* Controllers */
 
-function FindecoDefaultCtrl($scope, $location, Backend, User) {
-    $scope.path = locator.getSanitizedPath();
-    $scope.isArgument = false;
-    $scope.allExpanded = false;
-	$scope.isTextLoaded = false;  
-    
-    if (locator.getPath().length ==1 ){
-        $scope.isRootNode = true;
-	}else{
-	    $scope.isRootNode = false;
-	}
-    
-    $scope.graphData = [];
+function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
+    $scope.nav = Navigator;
+    $scope.user = User;
 
+    $scope.allExpanded = false;
+
+    $scope.isTextLoaded = false;
+
+    $scope.graphData = [];
     $scope.paragraphList = [];
     $scope.nodeInfo = [];
     $scope.nodeInfo.indexList = [];
-    $scope.nodeInfo.path = $scope.path;
+    $scope.nodeInfo.path = $scope.nav.nodePath;
     $scope.sections = [];
-    $scope.user = User;
 
-
-    $scope.getPath = function (p) {
-        return locator.getSanitizedPath(p);
-    };
+    console.log("navigator:", Navigator);
+    console.log("type:", Navigator.type);
+    console.log("type nav:", $scope.nav.type);
 
     $scope.relocate = function (target) {
-        $location.path(target + '/' + locator.getSanitizedArgumentFreePath());
+        $location.path(target + '/' + $scope.nav.nodePath);
     };
 
     $scope.parse = function (text, shortTitle) {
@@ -65,43 +58,31 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
 
     $scope.markNode = Backend.markNode;
 
-    $scope.relocateRelativeTo = function (shortTitle, index) {
-        var path = $scope.path;
-        if ($scope.path == '/') {
-            path = '';
-        }
-        $location.path(locator.getSanitizedPath(shortTitle + '.' + index));
-    };
-
-    /*$scope.updateParagraphList = function () {
-     Backend.loadText($scope.paragraphList, $scope.path).success(function () {
-     $scope.isTextLoaded = true;
-     });
-     };*/
 
     $scope.updateGraph = function () {
-        Backend.loadGraphData($scope.graphData, $scope.path).success(function (data) {
+        Backend.loadGraphData($scope.graphData, $scope.nav.nodePath).success(function (data) {
             $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
         });
     };
 
     $scope.updateNode = function () {
-        Backend.loadNode($scope.nodeInfo, $scope.path).success(function (d) {
+        Backend.loadNode($scope.nodeInfo, $scope.nav.nodePath).success(function (d) {
             $scope.allExpanded = true;
 
             for (var i in $scope.nodeInfo.indexList) {
+                var indexNode = $scope.nodeInfo.indexList[i];
                 $scope.allExpanded = false;
-                $scope.nodeInfo.indexList[i].paragraphs = [];
-                $scope.nodeInfo.indexList[i].path = locator.getPathForIndex($scope.nodeInfo.indexList[i].shortTitle, $scope.nodeInfo.indexList[i].index);
-                $scope.nodeInfo.indexList[i].isLoaded = false;
-                $scope.nodeInfo.indexList[i].isExpanded = false;
+                indexNode.paragraphs = [];
+                indexNode.path = $scope.nav.getPathForNode(indexNode.shortTitle, indexNode.index);
+                indexNode.isLoaded = false;
+                indexNode.isExpanded = false;
             }
         });
     };
 
     $scope.expandAll = function () {
         var tmp = [];
-        Backend.loadText(tmp, locator.getSanitizedPath()).success(function (d) {
+        Backend.loadText(tmp, $scope.nav.nodePath()).success(function (d) {
             if (d.loadTextResponse == undefined || d.loadTextResponse.paragraphs == undefined) {
                 // TODO: Something went terribly wrong.
                 return;
@@ -113,7 +94,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
             for (var p in paragraphs) {
                 for (var i in $scope.nodeInfo.indexList) {
                     var section = $scope.nodeInfo.indexList[i];
-                    var path = locator.getPathForIndex(section.shortTitle, section.index);
+                    var path = $scope.nav.getPathForNode(section.shortTitle, section.index);
                     if (paragraphs[p].path.substr(0,path.length) == path) {
                         section.paragraphs.push(paragraphs[p]);
                         section.isLoaded = true;
@@ -146,14 +127,16 @@ function FindecoDefaultCtrl($scope, $location, Backend, User) {
     };
 
     $scope.initialize = function () {
-        if (locator.isArgumentPath()) {
+        if ($scope.nav.type == 'arg') {
             //$scope.updateParagraphList();
         } else {
             $scope.updateNode();
             $scope.updateGraph();
         }
     };
+    console.log("type nav1:", $scope.nav.type);
     $scope.initialize();
+    console.log("type nav2:", $scope.nav.type);
 }
 
-FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend', 'User'];
+FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend', 'User', 'Navigator'];

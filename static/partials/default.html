@@ -2,16 +2,17 @@
     <div ng-include src="'static/partials/argument.html'"></div>
 
     <div id="centerColumn" class="contentBox">
-        <div spam-mark show-if="user.isLoggedIn && !isRootNode" entity="nodeInfo" mark-func="markNode"></div>
-        <div follow-star show-if="user.isLoggedIn && !isRootNode" entity="nodeInfo" mark-func="markNode"></div>
-        <h1 ng-show="!isRootNode">{{ nodeInfo.fullTitle }}</h1>
+        {{ nav.type }}
+        <div spam-mark show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
+        <div follow-star show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
+        <h1 ng-show="nav.type!='root'">{{ nodeInfo.fullTitle }}</h1>
 
-        <div ng-show="!isArgument  && !isRootNode">
+        <div ng-show="nav.type!='arg'  && nav.type!='root'">
             <div findeco-graph data="graphData" path="path" class="graph"></div>
         </div>
-        <p ng-show="!isRootNode" ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
+        <p ng-show="nav.type!='root'" ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
 
-        <div ng-show="!allExpanded &&  !isArgument && !isRootNode" class="btn btn-primary" ng-click="expandAll()"
+        <div ng-show="!allExpanded &&  nav.type!='arg' && nav.type!='root'" class="btn btn-primary" ng-click="expandAll()"
              data-i18n="_expandAllSections_"></div>
         <div ng-repeat="section in nodeInfo.indexList">
             <a ng-show="!section.isExpanded" ng-click="expandSection(section)"
@@ -22,7 +23,7 @@
                     src="static/images/collapse.png"></a>
 
             <h2 ng-show="!section.isExpanded">
-                <a href="/#/{{ getPath(section.shortTitle + '.' + section.index) }}">{{section.fullTitle}}</a>
+                <a href="/#{{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{section.fullTitle}}</a>
             </h2>
 
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
@@ -31,16 +32,16 @@
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>
-        <div ng-show="!isArgument && user.isLoggedIn && !isRootNode" class="btn btn-primary" ng-click="relocate('create/topic')"
+        <div ng-show="nav.type!='arg' && user.isLoggedIn && nav.type!='root'" class="btn btn-primary" ng-click="relocate('create/topic')"
              data-i18n="_createNewText_"></div>
 
-        <div ng-show="!isArgument && user.isLoggedIn && !isRootNode" class="btn btn-primary" ng-click="relocate('create/derivate')"
+        <div ng-show="nav.type!='arg' && user.isLoggedIn && nav.type!='root'" class="btn btn-primary" ng-click="relocate('create/derivate')"
              data-i18n="_createDerivativeText_"></div>
 
-        <div ng-show="!isArgument && user.isLoggedIn && !isRootNode" class="btn btn-primary" ng-click="relocate('create/opposing')"
+        <div ng-show="nav.type!='arg' && user.isLoggedIn && nav.type!='root'" class="btn btn-primary" ng-click="relocate('create/opposing')"
              data-i18n="_createOpposingText_"></div>
 
-        <div ng-show="isArgument && nodeInfo.derivate != undefined && nodeInfo.derivate != '' && !isRootNode" class="btn btn-primary"
+        <div ng-show="nav.type='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' && nav.type!='root'" class="btn btn-primary"
              ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
     </div>
 
