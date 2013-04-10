@@ -2,7 +2,6 @@
     <div ng-include src="'static/partials/argument.html'"></div>
 
     <div id="centerColumn" class="contentBox">
-        {{ nav.type }}
         <div spam-mark show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
         <div follow-star show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
         <h1 ng-show="nav.type!='root'">{{ nodeInfo.fullTitle }}</h1>
@@ -41,7 +40,7 @@
         <div ng-show="nav.type!='arg' && user.isLoggedIn && nav.type!='root'" class="btn btn-primary" ng-click="relocate('create/opposing')"
              data-i18n="_createOpposingText_"></div>
 
-        <div ng-show="nav.type='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' && nav.type!='root'" class="btn btn-primary"
+        <div ng-show="nav.type=='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' && nav.type!='root'" class="btn btn-primary"
              ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
     </div>
 
