@@ -291,19 +291,19 @@ def search(request, search_fields, search_string):
     if 'user' in search_fields.split('_'):
         exact_username_matches = User.objects.filter(username__iexact = search_string.strip())
         for user in exact_username_matches:
-            user_results.append({"url": "profile/"+user.username,
+            user_results.append({"url": "user/"+user.username,
                                  "title": user.username,
                                  "snippet": "Profil von "+user.username})
         user_query = get_query(search_string, ['first_name', 'last_name', ])
         found_users = User.objects.filter(user_query)
         for user in found_users:
-            user_results.append({"url": "profile/"+user.username,
+            user_results.append({"url": "user/"+user.username,
                                  "title": user.username,
                                  "snippet": "Profil von "+user.username})
         user_query = get_query(search_string, ['description', ])
         found_profiles = UserProfile.objects.filter(user_query)
         for profile in found_profiles:
-            user_results.append({"url": "profile/"+profile.user.username,
+            user_results.append({"url": "user/"+profile.user.username,
                                  "title": profile.user.username,
                                  "snippet": profile.description[:min(len(profile.description), 140)]})
     content_results = []
