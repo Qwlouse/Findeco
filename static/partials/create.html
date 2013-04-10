@@ -48,7 +48,13 @@
         <div ng-bind-html-unsafe="parse(tmp.textAlternative)"></div>
     </div>
     <div class="contentBox rightWideColumn" style ="margin-top:20px;">
-			<h2 data-i18n="_editorHintTitle_"></h2>
-			<p>{{ '_editorHintBeginning_'|i18n }}<a href='http://wikicreole.org/wiki/Creole1.0'>{{ '_editorHintCreoleLink_'|i18n }}</a>{{ '_editorHintEnd_'|i18n }}</p>
+		<h2 data-i18n="_editorHintTitle_"></h2>
+
+        <p>{{ '_editorHintBeginning_'|i18n }}<a href='http://wikicreole.org/wiki/Creole1.0'>
+        {{ '_editorHintCreoleLink_'|i18n }}</a>{{ '_editorHintEnd_'|i18n }}</p>
+
+        <p>{{ '_editorLicenseHintBeginning_'|i18n }}
+            <a href='http://creativecommons.org/licenses/by-sa/3.0/de/'>
+                {{ '_editorLicenseHintLink_'|i18n }}</a>{{ '_editorLicenseHintEnd_'|i18n }}</p>
     </div>
 </div>

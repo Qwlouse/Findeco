@@ -450,6 +450,21 @@
         "description": ""
     },
     {
+        "key": "_editorLicenseHintBeginning_",
+        "value": "Alle Diskussionsbeiträge in Findeco gelten rechtlich als veröffentlichte Leserbriefe und werden als ",
+        "description": ""
+    },
+    {
+        "key": "_editorLicenseHintLink_",
+        "value": "Creative-Commons CC-BY-SA 3.0",
+        "description": ""
+    },
+    {
+        "key": "_editorLicenseHintEnd_",
+        "value": " lizensiert.",
+        "description": ""
+    },
+    {
         "key": "_argumentForThisModification_",
         "value": "Argument: Warum ist die Weiterentwicklung nötig?",
         "description": ""
