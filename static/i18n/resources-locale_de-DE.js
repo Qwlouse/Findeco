@@ -435,8 +435,33 @@
         "description": ""
     },
     {
-        "key": "_editorHint_",
-        "value": "Du musst deinen Beitrag mit = und einem leerzeichen beginnen. = Testtitel = wäre z.B. ein möglicher Titel. Ansonsten kannst du viele Wikisyntax Elemente nutzen. Probiere es mit der Live-Vorschau aus!  ",
+        "key": "_editorHintBeginning_",
+        "value": "Du musst deinen Beitrag mit = beginnen. = Testtitel = wäre z.B. ein möglicher Titel. Ansonsten kannst du die ",
+        "description": ""
+    },
+    {
+        "key": "_editorHintCreoleLink_",
+        "value": "Wiki-Syntax von Creole",
+        "description": ""
+    },
+    {
+        "key": "_editorHintEnd_",
+        "value": " nutzen. Probiere es mit der Live-Vorschau aus.",
+        "description": ""
+    },
+    {
+        "key": "_editorLicenseHintBeginning_",
+        "value": "Alle Diskussionsbeiträge in Findeco gelten rechtlich als veröffentlichte Leserbriefe und werden als ",
+        "description": ""
+    },
+    {
+        "key": "_editorLicenseHintLink_",
+        "value": "Creative-Commons CC-BY-SA 3.0",
+        "description": ""
+    },
+    {
+        "key": "_editorLicenseHintEnd_",
+        "value": " lizensiert.",
         "description": ""
     },
     {
