@@ -426,6 +426,7 @@ angular.module('FindecoServices', [])
                 location.userName = location.parts[1];
             } else {
                 location.type = "other";
+                location.prefix = location.path;
             }
             // calculate entries
             var nodes = location.nodePath.split('/');
