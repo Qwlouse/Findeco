@@ -66,11 +66,12 @@
                             <li class="{{getActiveClass('/start')}}"><a href="#/start">Start</a></li>
                             <li class="{{getActiveClass('/aktuell')}}"><a href="#">Aktuelles</a></li>
                             <li class="{{getActiveClass('/content')}}"><a href="#">Inhalte</a></li>
-                            <li class="{{getActiveClass('/search')}}" style="margin-left: 200px">
+                            <li class="{{getActiveClass('/search')}}" style="margin-left: 115px">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
-                                        <p><input type="text" name="searchField" ng-model="searchString" /></p>
-                                        <p><button class="searchButton" value=""></button></p>
+                                        <input type="search" name="searchField" placeholder="{{ '_search_'|i18n }}"
+                                               autocomplete="on" ng-model="searchString"/>
+                                        <button class="searchButton" value=""></button>
                                     </form>
                                 </div>
                             </li>
