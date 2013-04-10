@@ -7,7 +7,7 @@
             </form>
         </li>!-->
         <ul class="microblogList">
-            <li><a class="btn btn-primary" ng-click="updateFollowedUsers()"  data-i18n="_startScreenUpdateBtn_"></a></li>
+            <li><a class="btn btn-primary" ng-click="updateFollowedUsers()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in followedUsersList">
                 <a class="microblogAuthor" href="#/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                     microblogNode.authorGroup[0].displayName }}</a>

@@ -62,10 +62,10 @@
                     <div id="headerContent" ng-controller="FindecoUserCtrl">
                         <h1>Findeco</h1>
                         <ul>
-                            <li class="{{getActiveClass('/start')}}"><a href="#/start">Start</a></li>
-                            <li class="{{getActiveClass('/aktuell')}}"><a href="#">Aktuelles</a></li>
-                            <li class="{{getActiveClass('/content')}}"><a href="#">Inhalte</a></li>
-                            <li class="{{getActiveClass('/search')}}" style="margin-left: 115px">
+                            <li class="{{getActiveClass('/start')}}"><a href="#/start" data-i18n="_start_">Start</a></li>
+                            <li class="{{getActiveClass('/news')}}"><a href="#/news" data-i18n="_news_">News</a></li>
+                            <li class="{{getActiveClass('/content')}}"><a href="#" data-i18n="_content_">Content</a></li>
+                            <li class="{{getActiveClass('/search')}}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
                                         <input type="search" name="searchField" placeholder="{{ '_search_'|i18n }}"

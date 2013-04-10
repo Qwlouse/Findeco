@@ -468,6 +468,21 @@
         "key": "_search_",
         "value": "Hier suchen ...",
         "description": ""
+    },
+    {
+        "key": "_start_",
+        "value": "Start",
+        "description": ""
+    },
+    {
+        "key": "_news_",
+        "value": "Aktuelles",
+        "description": ""
+    },
+    {
+        "key": "_content_",
+        "value": "Inhalte",
+        "description": ""
     }
     
 

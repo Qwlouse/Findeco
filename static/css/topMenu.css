@@ -67,10 +67,15 @@
     list-style: none;
     display: inline-block;
     padding: 0 15px 0 15px;
+    height: 27px;
 }
 
 #headerContent form{
     display:inline-block;
+}
+
+#searchTab {
+    margin-left: 115px;
 }
 
 div.searchBox {
@@ -83,6 +88,12 @@ div.searchBox {
     padding: 0 6px 0 6px;
     background: #000;
     overflow: hidden; /* I don't know why exactly, but this removes the gap between the ul li elements and the bottom of the header */
+}
+
+div.searchBox form input {
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
 }
 
 .searchButton {
