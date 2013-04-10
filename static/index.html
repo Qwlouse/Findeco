@@ -92,11 +92,11 @@
                 <div class="centeringContainer">
 
                     <ul>
-                        <li><a href="/#"><img ng-show="navigationEntries" src="static/images/home.png" alt="Home"/><img
-                                ng-show="navigationEntries.length == 0" src="static/images/home_blue.png"
+                        <li><a href="/#"><img ng-show="navigation.entries" src="static/images/home.png" alt="Home"/><img
+                                ng-show="navigation.entries.length == 0" src="static/images/home_blue.png"
                                 alt="Home"/></a></li>
 
-                        <li ng-repeat="nav in navigationEntries"><a ng-href="{{ nav.path }}">{{ nav.name }}</a></li>
+                        <li ng-repeat="nav in navigation.entries"><a ng-href="/#{{ nav.path }}">{{ nav.name }}</a></li>
                     </ul>
                 </div>
             </div>

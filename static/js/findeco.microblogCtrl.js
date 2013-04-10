@@ -25,8 +25,8 @@
 'use strict';
 /* Controllers */
 
-function FindecoMicroblogCtrl($scope, $routeParams, Backend, User) {
-    $scope.loadTarget = locator.getSanitizedPath();
+function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
+    $scope.loadTarget = Navigator.argumentPath;
     if ( $routeParams.name != undefined ) {
         $scope.loadTarget = $routeParams.name;
     }
@@ -63,7 +63,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User) {
 
     $scope.submit = function () {
         if ($scope.microblogText.length <= 0) return;
-        Backend.storeMicroblogPost(locator.getSanitizedPath(), $scope.microblogText).success(function () {
+        Backend.storeMicroblogPost(Navigator.argumentPath, $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });
@@ -72,4 +72,4 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User) {
     $scope.updateMicrobloggingList();
 }
 
-FindecoMicroblogCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'User'];
+FindecoMicroblogCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'User', 'Navigator'];
