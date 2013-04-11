@@ -36,7 +36,7 @@
     },
     {
         "key": "_startScreenUpdateBtn_",
-        "value": "Update",
+        "value": "aktualisieren",
         "description": ""
     },
     {
