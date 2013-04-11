@@ -1,5 +1,6 @@
 <div id="contentContainer" class="centeringContainer">
     <div ng-include src="'static/partials/argument.html'" ng-show="nav.type!='root'"></div>
+    <div style="float: left; width: 200px; min-height: 10px; padding: 25px;" ng-show="nav.type=='root'"></div>
 
     <div id="centerColumn" class="contentBox">
         <div spam-mark show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
