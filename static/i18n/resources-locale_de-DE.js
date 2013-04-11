@@ -526,7 +526,7 @@
     },
     {
         "key": "_rootText_",
-        "value": "Auf der obersten Ebene können keine Alternativen erstellt werden. Nutze die Übersicht unter diesem Hinweis, um zu Diskussionen zu navigieren.",
+        "value": "Du befindest dich auf der obersten Ebene. Wenn du neu in Findeco bist, solltest du die Funktionen zuerst auf der Spielwiese ausprobieren.",
         "description": ""
     },
     {
