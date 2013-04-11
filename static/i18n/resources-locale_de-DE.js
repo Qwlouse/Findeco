@@ -1,5 +1,10 @@
 [
     {
+        "key": "_pageTitle_",
+        "value": "Findeco der Piraten-RLP",
+        "description": ""
+    },
+    {
         "key": "_accountLogout_",
         "value": "Abmelden",
         "description": ""
@@ -523,7 +528,44 @@
         "key": "_rootText_",
         "value": "Auf der obersten Ebene können keine Alternativen erstellt werden. Nutze die Übersicht unter diesem Hinweis, um zu Diskussionen zu navigieren.",
         "description": ""
+    },
+    {
+        "key": "_InvalidActivationKey",
+        "value": "Kein oder ungültiger Aktivierungscode",
+        "description": ""
+    },
+    {
+        "key": "_accountActivationFormTitle_",
+        "value": "Accountactivierung",
+        "description": ""
+    },
+    {
+        "key": "_accountActivationText_",
+        "value": "Hier können sie ihren Account activieren",
+        "description": ""
+    },
+    {
+        "key": "_accountActivationKey_",
+        "value": "Aktivierungsschlüssel",
+        "description": ""
+    },
+    {
+        "key": "_accountActivateBtn_",
+        "value": "Aktivieren",
+        "description": ""
+    },
+    {
+        "key": "_accountRecoverBtn_",
+        "value": "Wiederherstellen",
+        "description": ""
+    },
+    {
+        "key": "_accountRegistrationBtn_",
+        "value": "Registrieren",
+        "description": ""
     }
     
+    
 
+    
 ]
