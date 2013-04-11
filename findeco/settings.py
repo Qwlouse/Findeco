@@ -161,7 +161,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'findeco',
     'microblogging',
-    'node_storage'
+    'node_storage',
+    'south'
 )
 
 # A sample logging configuration. The only tangible logging
