@@ -30,18 +30,6 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
         type: $routeParams.type
     };
     $scope.radioModel = '';
-    if ($scope.settings.type == 'derivate') {
-        var paragraphs = [];
-        var wikiText = "";
-        Backend.loadText(paragraphs, Navigator.nodePath).success(function () {
-            for (var i = 0; i < paragraphs.length; i++) {
-                var tmpText = paragraphs[i]['wikiText'];
-                tmpText = tmpText.replace(/={2}[ ]\[{2}.*\|/,"= ");
-                wikiText = tmpText.replace(/]{2}[ ]={2}/," =");
-            }
-            $scope.tmp.textAlternative = wikiText;
-        });
-    }
 
     $scope.showIf = function (matchArray) {
         for (var m in matchArray) {
@@ -150,6 +138,28 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
     };
 
     $scope.tmp = TMP;
+
+    $scope.tmp.text = "";
+    $scope.tmp.textAlternative = "";
+    if (!($scope.settings.type == 'opposing')) {
+        $scope.tmp.text = Message.localize('_editFieldPretext_');
+    }
+    if (($scope.settings.type == 'derivate') || ($scope.settings.type == 'opposing')) {
+        $scope.tmp.textAlternative = Message.localize('_editFieldPretext_');
+    }
+
+    if ($scope.settings.type == 'derivate') {
+        var paragraphs = [];
+        var wikiText = $scope.tmp.textAlternative;
+        Backend.loadText(paragraphs, Navigator.nodePath).success(function () {
+            for (var i = 0; i < paragraphs.length; i++) {
+                var tmpText = paragraphs[i]['wikiText'];
+                tmpText = tmpText.replace(/={2}[ ]\[{2}.*\|/,"= ");
+                wikiText = tmpText.replace(/]{2}[ ]={2}/," =");
+            }
+            $scope.tmp.textAlternative = wikiText;
+        });
+    }
 }
 
 FindecoCreateCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'TMP', 'Message', 'Navigator'];
