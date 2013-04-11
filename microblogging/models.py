@@ -42,7 +42,7 @@ def keyword(pattern):
 
 user_ref_pattern = keyword("@" + USERNAME)
 tag_pattern = keyword("#(?P<tagname>\w+)")
-internal_link_pattern = keyword(r"(?P<path>/(?:[a-zA-Z0-9-_]+\.\d+/)*[a-zA-Z0-9-_]+(?:\.\d+)?/?)")
+internal_link_pattern = keyword(r"(?P<path>/(?:[a-zA-Z0-9-_]+\.\d+/)*[a-zA-Z0-9-_]+(?:\.\d+)(?:\.(?:pro|neut|con)\.\d+)?/?)")
 
 url_pattern = keyword(r"((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)")
 
