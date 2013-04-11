@@ -70,6 +70,12 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
     };
 
     $scope.updateMicrobloggingList();
+
+    $('.microblogInput').focus(function(){
+        $(this).animate({height:'6em'});
+    }).blur(function(){
+        $(this).animate({height:'1.4em'});
+    });
 }
 
 FindecoMicroblogCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'User', 'Navigator'];

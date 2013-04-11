@@ -158,7 +158,7 @@
     },
     {
         "key": "_microblogPlaceholder_",
-        "value": "Hier Microblogtext eingeben",
+        "value": "Hier Text eingeben",
         "description": ""
     },
     {

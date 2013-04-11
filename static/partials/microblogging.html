@@ -4,9 +4,9 @@
     <ul class="microblogList">
         <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0;">
             <form ng-submit="submit()">
-                <input type="text" placeholder="{{'_microblogPlaceholder_'|i18n}}" style="width: 100%;"
-                       ng-model="microblogText"/>
-                <input class="btn btn-primary" type="submit" value="{{'_microblogSendBtn_'|i18n}}" style="float: right;" />
+                <textarea class="microblogInput" type="text" placeholder="{{'_microblogPlaceholder_'|i18n}}"
+                       ng-model="microblogText"></textarea>
+                <input class="btn btn-primary" type="submit" value="{{'_microblogSendBtn_'|i18n}}"/>
             </form>
         </li>
         <li ng-repeat="microblogNode in microbloggingList">
