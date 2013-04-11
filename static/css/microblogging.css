@@ -71,6 +71,9 @@ span.microblogDate {
     border-radius: 5px;
 }
 
+.microblogInput:hover {
+    border-color: #2d7cc4;
+}
 .microblogInput:focus {
     border-color: #2d7cc4;
     outline: none;

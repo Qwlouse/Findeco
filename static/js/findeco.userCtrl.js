@@ -168,6 +168,13 @@ function FindecoUserCtrl($scope, $location, User, $routeParams, Message, Navigat
     $scope.activate();
     $scope.confirm();
 
+
+    $("#searchInput").focus(function() {
+            $(".searchBox").addClass("searchActive");
+        }).blur(function() {
+            $(".searchBox").removeClass("searchActive");
+        })
+
 }
 
 FindecoUserCtrl.$inject = ['$scope', '$location', 'User', '$routeParams' , 'Message', 'Navigator'];

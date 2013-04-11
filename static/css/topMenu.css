@@ -90,6 +90,17 @@ div.searchBox {
     overflow: hidden; /* I don't know why exactly, but this removes the gap between the ul li elements and the bottom of the header */
 }
 
+div.searchBox:hover {
+    border-color: #2d7cc4;
+}
+
+div.searchBox.searchActive {
+    border-color: #2d7cc4;
+    -webkit-box-shadow:0 0 5px #2d7cc4;
+    -moz-box-shadow:0 0 5px #2d7cc4;
+    box-shadow:0 0 5px #2d7cc4;
+}
+
 div.searchBox form input {
     border: 0;
     outline: none;

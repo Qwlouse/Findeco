@@ -68,7 +68,7 @@
                             <li class="{{getActiveClass('/search')}}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
-                                        <input type="search" name="searchField" placeholder="{{ '_search_'|i18n }}"
+                                        <input id="searchInput" type="search" name="searchField" placeholder="{{ '_search_'|i18n }}"
                                                autocomplete="on" ng-model="searchString"/>
                                         <button class="searchButton" value=""></button>
                                     </form>
