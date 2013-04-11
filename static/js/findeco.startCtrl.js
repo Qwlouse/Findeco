@@ -32,26 +32,43 @@ function FindecoStartCtrl($scope, Backend, User) {
 
     $scope.user = User;
 
+    function setAuthorForAllBlogs(list) {
+        for (var i = 0; i < list.length; ++i ) {
+            var blog = list[i];
+            blog.author = blog.authorGroup[0];
+            blog.author.isFollowing = User.follows(blog.author.displayName);
+            blog.author.path = blog.author.displayName;
+        }
+    }
+
+    $scope.followUser = function (path, type) {
+        return User.markUser(path, type).success(function() {
+            setAuthorForAllBlogs($scope.followedUsersList);
+            setAuthorForAllBlogs($scope.followedNodesList);
+            setAuthorForAllBlogs($scope.ownNodesList);
+        });
+    };
+
     $scope.updateFollowedUsers = function () {
         var id = 0;
         if ($scope.followedUsersList[0] != undefined) {
             id = $scope.followedUsersList[0].microblogID;
         }
-        Backend.loadMicroblogging($scope.followedUsersList, User.displayName, 'newer', id);
+        Backend.loadMicroblogging($scope.followedUsersList, User.displayName, 'newer', id).success(function() {setAuthorForAllBlogs($scope.followedUsersList)});
     };
     $scope.updateFollowedNodes = function () {
         var id = 0;
         if ($scope.followedNodesList[0] != undefined) {
             id = $scope.followedNodesList[0].microblogID;
         }
-        Backend.loadMicroblogging($scope.followedNodesList, ':collection', 'newer', id);
+        Backend.loadMicroblogging($scope.followedNodesList, ':collection', 'newer', id).success(function() {setAuthorForAllBlogs($scope.followedNodesList)});
     };
     $scope.updateOwnNodes = function () {
         var id = 0;
         if ($scope.ownNodesList[0] != undefined) {
             id = $scope.ownNodesList[0].microblogID;
         }
-        Backend.loadMicroblogging($scope.ownNodesList, ':collectionAuthor', 'newer', id);
+        Backend.loadMicroblogging($scope.ownNodesList, ':collectionAuthor', 'newer', id).success(function() {setAuthorForAllBlogs($scope.ownNodesList)});
     };
 
     $scope.submit = function () {
