@@ -7,7 +7,7 @@
         <h1 ng-show="nav.type!='root'">{{ nodeInfo.fullTitle }}</h1>
 
         <div ng-show="nav.type!='arg'  && nav.type!='root'">
-            <div findeco-graph data="graphData" path="path" class="graph"></div>
+            <div findeco-graph data="graphData" path="nav.nodePath" class="graph"></div>
         </div>
         <p ng-show="nav.type!='root'" ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
 
