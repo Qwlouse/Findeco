@@ -1,5 +1,10 @@
 [
     {
+        "key": "_pageTitle_",
+        "value": "Findeco der Piraten-RLP",
+        "description": ""
+    },
+    {
         "key": "_accountLogout_",
         "value": "Abmelden",
         "description": ""
