@@ -5,7 +5,8 @@
         <div spam-mark show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
         <div follow-star show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
         <h1 ng-show="nav.type!='root'">{{ nodeInfo.fullTitle }}</h1>
-
+        <h1 ng-show="nav.type='root'" data-i18n="_rootCaption_"></h1>
+        <p ng-show="nav.type='root'" data-i18n="_rootText_"></p>
         <div ng-show="nav.type!='arg'  && nav.type!='root'">
             <div findeco-graph data="graphData" path="nav.nodePath" class="graph"></div>
         </div>

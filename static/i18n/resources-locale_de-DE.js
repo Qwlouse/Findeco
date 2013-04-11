@@ -513,6 +513,16 @@
         "key": "_editFieldPretext_",
         "value": "= Eine Überschrift muss angegeben sein =\nNach der Überschrift kann Creole-Syntax verwendet werden, un zu strukturieren und zu //formatieren//.",
         "description": ""
+    },
+    {
+        "key": "_rootCaption_",
+        "value": "Übersicht",
+        "description": ""
+    },
+    {
+        "key": "_rootText_",
+        "value": "Auf der obersten Ebene können keine Alternativen erstellt werden. Nutze die Übersicht unter diesem Hinweis, um zu Diskussionen zu navigieren.",
+        "description": ""
     }
     
 
