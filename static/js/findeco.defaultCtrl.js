@@ -78,7 +78,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
 
     $scope.expandAll = function () {
         var tmp = [];
-        Backend.loadText(tmp, $scope.nav.nodePath()).success(function (d) {
+        Backend.loadText(tmp, $scope.nav.nodePath).success(function (d) {
             if (d.loadTextResponse == undefined || d.loadTextResponse.paragraphs == undefined) {
                 // TODO: Something went terribly wrong.
                 return;
