@@ -136,6 +136,8 @@ findecoApp.directive('findecoGraph', function( ) {
                 for (var i = 0; i < nodes.length; i++) {
                     node_map.set(nodes[i].path, nodes[i]);
                     nodes[i].active = false;
+                    nodes[i].x = svg_width/2 + 10 * i * Math.pow(-1,i);
+                    nodes[i].y = svg_height/2 + i;
                 }
                 // currently selected node is active
                 if (node_map.has(scope.path)) {
