@@ -41,7 +41,11 @@ findecoApp
             },
             replace: true,
             template: '<a class="follow-star">' +
-                        '<img ng-src="static/images/star{{entity.isFollowing}}.png" alt="Follow" title="Folgen" width="{{width}}" height="{{height}}"/>' +
+                        '<img ng-src="static/images/star{{entity.isFollowing}}.png" ' +
+                'alt="Follow" title="Folgen" width="{{width}}" height="{{height}}" ' +
+                'onmouseover="this.src=\'static/images/star{{entity.isFollowing}}_hover.png\';" ' +
+                'onmouseout="this.src=\'static/images/star{{entity.isFollowing}}.png\';" ' +
+                '/>' +
                       '</a>',
             link : function (scope, element, attrs) {
                 if (scope.entity.isFollowing != 0 &&
