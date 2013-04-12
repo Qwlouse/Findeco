@@ -1,0 +1,531 @@
+= Positionspapiere der Piratenpartei Rheinland-Pfalz =
+
+== Für einen modernen Datenschutz ==
+=== Artikel 1 ===
+Die Piratenpartei Rheinland-Pfalz sieht den dringenden Bedarf, den Datenschutz zu modernisieren. Immer wieder tauchen
+durch neu eingeführte Technologien Regelungslücken und Unklarheiten auf, die durch auf spezielle Fälle zugeschnittene
+Gesetzesänderungen, vertragliche Vereinbarungen mit Anbietern oder Gerichtsurteile geklärt werden müssen, wobei immer
+wieder teilweise veraltete juristische Konzepte auf die Situation des 21. Jahrhunderts übertragen werden. Die Frage,
+in welche Richtung diese Modernisierung gehen soll, sorgt für mitunter heftige Diskussionen. Im Folgenden sollen sowohl
+Grundlagen für eine solche Modernisierung als auch einige konkrete Detail-Fragen geklärt werden.
+
+=== Artikel 2 ===
+Um selbstbestimmte Entscheidungen über die Preisgabe persönlicher Informationen zu ermöglichen, ist vor allem Bildung
+und Weiterbildung in diesem Bereich notwendig. Hierbei muss die Fähigkeit im Fokus stehen, zwischen unterschiedlichen
+Arten von Daten und unterschiedlichem Vertrauen zu Empfängern und Verwaltern von Daten zu differenzieren. Der bei
+jedem auch nur teilweisem Veröffentlichen von Informationen mögliche Kontrollverlust über die weitere Verbreitung muss
+ebenfalls thematisiert, diskutiert und verstanden werden.
+
+=== Artikel 3 ===
+Entscheidungen über die Weitergabe persönlicher Informationen müssen selbstbestimmt getroffen werden können. Es darf
+also keinen auch nur impliziten Zwang geben, mehr als die unbedingt und objektiv notwendigen persönlichen Daten
+preiszugeben, um bestimmte Angebote überhaupt nutzen zu können. Leider wird die hierzu bestehende Rechtslage heute
+oftmals nicht eingehalten. Durch die chronische Unterbesetzung, Unterfinanzierung und fehlende Unabhängigkeit von
+Datenschutzbehörden, besteht an vielen Stellen ein Kontroll- und Vollzugsdefizit.
+
+=== Artikel 4 ===
+Andererseits dürfen Angebote aber auch nicht komplett verboten oder durch nicht erfüllbare Anforderungen faktisch
+unmöglich gemacht werden, bloß weil sie persönliche Daten optional nutzen. Grund für die persönliche Entscheidung,
+bestimmte Daten einem Anbieter freiwillig zur Verfügung zu stellen oder diese gar zu veröffentlichen, kann
+beispielsweise der Nutzen von personalisierten Inhalten, Suchergebnissen, Empfehlungen und auch personalisierter
+Werbung, aber auch der Wunsch sein, eventuelle gesellschaftliche oder berufliche Nachteile in Kauf zu nehmen, um
+langfristig eine gesellschaftliche Akzeptanz für eine Meinung oder eine Persönlichkeits-Facette zu schaffen. Die
+PIRATEN wollen die informationelle Selbstbestimmung daher fördern und allen Menschen eine informierte Entscheidung
+über die Preisgabe und Verwendung ihrer Daten ermöglichen.
+
+=== Artikel 5 ===
+Ein großer Anteil der praktischen Datenschutz-Probleme ist auf die leichtfertige Weitergabe von Daten durch Bekannte,
+Freunde oder sonstige Kontakte zurückzuführen. In diesem Bereich ist die juristische Durchsetzung schwierig, langwierig
+und in vielen Fällen auch einfach nicht angemessen. Um diesem Problem gerecht zu werden, muss viel mehr eine
+„Datenhöflichkeit“ als gesellschaftliche Norm etabliert werden, bei der Wünsche bezüglich des Umgangs mit persönlichen
+Informationen auch im privaten Bereich respektiert werden und, falls diese nicht bekannt sind, im Einzelfall eine
+Erlaubnis eingeholt wird. Dies soll nicht nur aus rechtlichen Erwägungen und einer Furcht vor einer (mehr oder weniger
+wahrscheinlichen) Strafe geschehen, sondern eben auch aufgrund von Regeln zum Umgang miteinander, die
+gesellschaftlicher Konsens sind. Dies muss einerseits durch die Bildungsangebote in diesem Bereich nahe gebracht,
+andererseits durch passende Kommunikations- und Einstellungsmöglichkeiten in den entsprechenden Systemen auf einfache
+und benutzerfreundliche Weise ermöglicht werden.
+
+=== Artikel 6 ===
+Datenschutzbestimmungen müssen so gestaltet sein, dass auch private und nicht-kommerzielle Angebote diese ohne größeren
+finanziellen oder organisatorischen Aufwand einhalten können. Dies soll unter anderem dadurch realisiert werden, dass
+eine Modernisierung der Gesetzgebung auf der Grundlage der tatsächlich vorkommenden Prozesse entworfen wird, sodass
+diese direkt unter Vermeidung nicht notwendiger juristischer Interpretationen in konkreten Systemen umgesetzt werden
+kann. Außerdem kann der Aufwand für die Dokumentation der korrekten Umsetzung durch den Einsatz zertifizierter Software
+minimiert werden. Hierbei ist die Entwicklung und Zertifizierung von Freier Open-Source-Software besonders zu fördern.
+
+=== Artikel 7 ===
+Bei der Erhebung von Daten durch staatliche Stellen sind strengere Maßstäbe anzulegen, da sich der Bürger ihr zumeist
+nicht durch Wechsel des Anbieters oder Verzicht auf ein Angebot entziehen kann. Hier muss strikt auf Datensparsamkeit
+geachtet werden. Während die Datenweitergabe zwischen Behörden ohne Wissen und Einwilligung des Bürgers zu vermeiden
+ist, sind für notwendige Erhebungen Verfahren zu entwickeln, mit denen der Bürger den Austausch von so wenig Daten wie
+unbedingt nötig autorisieren kann. Es darf nicht sein, dass Behörden die Vorlage von kompletten Bescheiden anderer
+Behörden verlangen, wenn nur ein Bruchteil der enthaltenen persönlichen Informationen benötigt werden.
+
+=== Artikel 8 ===
+Die Möglichkeit, Anonymisierungs-Dienste und offene Netzzugänge für Internet-Verbindungen zu nutzen und anzubieten, ist
+zu erhalten und zu fördern. Sie sind wichtige Angebote, die die nicht überwachte Meinungsbildung und -äußerung im
+Internet auch technisch weitgehend sicherstellen. Die Notwendigkeit einer solchen Möglichkeit überwiegt in diesem Fall
+das öffentliche Interesse an möglicher Strafverfolgung. Insbesondere sind die Betreiber solcher Infrastruktur von der
+Haftung für durch ihre Nutzer begangene Straftaten freizustellen und sie dürfen auch nicht zur Bereithaltung von
+Verbindungsdaten ihrer Nutzer verpflichtet werden. Dies gilt auch für privat betriebene Netzzugänge. Wir PIRATEN
+verstehen das Recht auf Anonymität als Menschenrecht. Forschungsprojekte auf dem Gebiet von Anonymisierungsdiensten
+wollen wir stärker fördern.
+
+=== Artikel 9 ===
+Die bevorstehende Einführung des Internet-Protokolls IPv6 birgt deutliche Datenschutz-Risiken. Zum Einen wird der
+hintere Teil der Adresse bei einem der standardisierten Verfahren aus der eindeutigen Hardware-Adresse einzelner
+Netzwerk-Geräte ermittelt, was die eindeutige Identifikation des Gerätes auch bei Nutzung in verschiedenen Netzwerken
+ermöglicht. Zum Anderen könnte die hohe Zahl an verfügbaren Adressen dafür sorgen, dass Internet-Provider dazu
+übergehen, den vorderen von ihnen vergebenen Teil der IPv6-Adresse (das Präfix) fest einem Kunden zuzuordnen.
+Verbindungen vom Anschluss dieses Kunden wären in diesem Fall dauerhaft diesem zuzuordnen – auch durch Dritte, die
+beispielsweise bei einer Bestellung in einem Online-Shop oder einer ähnlichen Gelegenheit persönliche Daten des Kunden
+erfahren. Damit droht ein weiterer Baustein auf dem Weg zum „gläsernen Internetnutzer“ Realität zu werden. Wichtige
+Freiheitsrechte wie das Recht auf Anonymität, die Meinungsfreiheit und die Informationsfreiheit könnten in Gefahr
+geraten. Während das erste Problem durch entsprechende Voreinstellungen des Betriebssystems behoben werden kann, ist
+für das zweite Problem die Kooperation der Provider notwendig. Diese müssen notfalls gesetzlich gezwungen werden, auf
+Wunsch auch den regelmäßigen Wechsel oder idealerweise sowohl ein statisches als auch ein dynamisches wechselndes
+IPv6-Präfix anzubieten.
+
+=== Artikel 10 ===
+Ein großes datenschutzrelevantes Problem ist, dass Privatpersonen für viele Online-Geschäfte gezwungen sind, ihre
+Meldeadresse (und damit in den meisten Fällen ihren genauen Wohnort) als ladungsfähige Anschrift anzugeben. Um dieses
+Problem zu minimieren, soll die Möglichkeit geschaffen werden, bestimmte Rechtsgeschäfte auch unter Pseudonym und mit
+einem Konto bei einem entsprechenden Dienstleister als ladungsfähiger Anschrift zu tätigen. Dieser kann nur durch
+Gerichtsbeschluss gezwungen werden, die Zuordnung zu einer natürlichen Person dem Gericht bzw. eventuellen
+Prozessgegnern offenzulegen. Eine solche Dienstleistung kann entweder vom Staat direkt oder auch von staatlich
+kontrollierten Unternehmen angeboten werden, die sie beispielsweise in Kombination mit Post- und Paketlagerung oder mit
+einem pseudonymen Guthaben-Konto anbieten können.
+
+=== Artikel 11 ===
+Anonyme Bezahlverfahren im Internet müssen erhalten bleiben. Ein Verbot anonymer Bezahlung im Netz wäre rechtlich und
+ökonomisch falsch. Die Möglichkeit, nicht überwachter Zahlungsvorgänge ist nicht nur im Internet von Bedeutung. Auch
+das faktische Verbot anonymer Bareinzahlungen ist wieder aufzuheben.
+
+== Elektronische Gesundheitskarte: Aufruf zu zivilem Ungehorsam ==
+Die Piratenpartei kämpft für ein transparentes Gesundheitswesen. Transparenz bedeutet für uns in diesem Kontext aber
+nicht die Schaffung eines "gläsernen Patienten", sondern die Offenlegung aller Informationen, die die Situation des
+selbstbestimmten und mündigen Patienten verbessern und vernünftige politische Entscheidungen zum Wohle der
+Versichterten ermöglichen. Wir lehnen die elektronische Gesundheitskarte in der aktuellen Form ab und werden uns für
+deren Stopp einsetzen.
+
+De facto hebelt die elektronische Gesundheitskarte die ärztliche Schweigepflicht z.B. durch das E-Rezept aus, da
+Krankenkassen und andere Zugriffsberechtigte aus den gesammelten ärztlichen Verordnungen leicht Rückschlüsse auf die
+Diagnosen ziehen können. Die Anhäufung weiterer sensibler Datenberge auf zentralen Servern lehnen wir ab.
+
+Im Gegenzug laufen die positiven Aspekte des E-Rezepts ins Leere, da die Ärzte sich darauf nicht verlassen können und
+dürfen. Die Herrschaft des Patienten über seine Daten ist nur vordergründig gewahrt, da die geplante Pseudonymisierung
+den einfachen Rückschluss auf die Person des Patienten erlaubt, womit dem Missbrauch Tür und Tor geöffnet wird.
+
+In der Vergangenheit sind bereits mehrfach schwere Mängel in dem Konzept gerügt worden, so wunderte sich die Free
+Software Foundation Europe (FSFE), "wie leichtfertig und unprofessionell mit derart persönlichen Daten umgegangen wird"
+und forderte, das Gesamtsystem der Gesundheitstelematik von der Architektur bis zum Quellcode offen zu legen.
+
+Ab 01.10.2011 werden nun 10% der Versicherten angeschrieben und um die Zusendung eines Passfotos für die elektronische
+Gesundheitskarte gebeten. Ein solches Foto ist für die Karte gesetzlich vorgeschrieben. Für die Versicherten besteht
+aber keine Pflicht, ihrer Krankenkasse eines zu senden.
+
+Die Verweigerung des Fotos ist für Versicherte die einfachste Möglichkeit des Protestes, um gegen die ausufernde
+Erfassung von Gesundheitsdaten zu protestieren, die im Hintergrund stattfindet. Deshalb ruft die Piratenpartei
+Rheinland-Pfalz die Versicherten dazu auf, ihrer Krankenkasse kein Passfoto zu senden und sich den Initiativen zum
+Stopp der eCard anzuschließen. Die PIRATEN fordern den Bundestag auf, die elektronische Gesundheitskarte umgehend zu
+stoppen und so die Gefahren für die Bürgerinnen und Bürger von vorneherein zu verhindern.
+
+== Für ein freies und demokratisches Bildungssystem! ==
+Die Piratenpartei Rheinland-Pfalz solidarisiert sich mit den derzeit streikenden Schülern und Studenten im Land und
+fordert radikale Veränderungen im Schul- und Bildungssystem. Die Aktuelle Situation an Schulen und Hochschulen
+entspricht nicht unseren Vorstellungen von   Bildung in einer freiheitlich-demokratischen   Gesellschaft. Wir sehen
+Bildung als unabdingbares Menschenrecht und fordern Chancengleichheit und den freien Zugang zu Informationen und
+Bildung für alle Menschen sowie eine demokratische Organisation der Lehr- und Lerneinrichtungen. Wir fordern einen
+massiven Ausbau der Investitionen ins Bildungssystem und die Gewährleistung freien, selbstbestimmten Lernens im
+gesamten Bildungsweg.
+
+=== Zugang zu Bildung verbessern! ===
+Der freie Zugang zu Information, Bildung, Ausbildung und Weiterbildung ist für die Gesellschaft und eine starke
+Demokratie dringend notwendig und eine der wichtigsten Ressourcen und Investitionen in die Zukunft. Er ist daher im
+Interesse aller und es ist vordergründige staatliche Aufgabe eine gute und moderne Bildungsinfrastruktur zu
+finanzieren und jederman frei und kostenlos zur Verfügung zu stellen.
+
+Der Zugang zur Hochschule ist aktuell entgegen aller Lippenbekenntnisse stark eingerschränkt und für viele Menschen
+unmöglich. Viele Menschen können ihr Recht auf ein Studium nicht wahrnehmen, viele müssen ihr Studium vorzeitig
+abbrechen. Bewerber werden durch hohe NC-Hürden daran gehindert, überhaupt erst ein Studium zu beginnen.
+Gründe verschiedenster Art, wie Kindererziehung, soziales Engagement, Studiengangwechsel, Selbstfinanzierung und/oder
+familiäre, bzw. persönliche Schwierigkeiten erschweren die Durchführung des Studiums in Regelstudienzeit.
+Unserer Auffassung nach ist viel zu wenig Lehrpersonal vorhanden, um allen Studieninteressierten die Möglichkeit zur
+Aufnahme eines von ihnen gewünschten Studiums zu geben, oder auch nur den schon Studierenden gute Lernbedingung zu
+bieten und deren individuelle Betreuung zu ermöglichen. Die Konsequenz ist aktuell der Ausschluss Interessierter von
+einem Studium ihrer Wahl und überfüllte Veranstaltungen.
+
+Arbeitsaufwand und Anzahl Studierender pro Veranstaltung sind zu hoch, so dass Dozierende sich zwischen
+Vernachlässigung der Lehre und damit der Verpflichtung gegenüber den Studierenden oder Vernachlässigung der Forschung
+und damit der eigenen wisschenschaftlichen Karriere entscheiden müssen.
+
+Wir fordern die Gewährleistung des in der Verfassung verbrieften Rechts auf Bildung für alle Menschen und wollen die
+Hochschulen so ausstatten, dass dies uneingeschränkt wahrgenommen werden kann. Körperliche, soziale und finanzielle
+Beeinträchtigungen dürfen kein Hindernis für die Zulassung zu einem Studium und dessen erfolgreicher Durchführung und
+Beendigung sein. Eine ausreichende Finanzierung und Ausstattung der Hochschulen wollen wir sicherstellen. Die deutliche
+Erhöhung des BAFöG-Satzes sehen wir als dringend notwendig an und messen ihre hohe Priotität bei.
+
+Wir fordern die Abschaffung von Zulassungsbeschränkungen für alle Studiengänge. Mit einem an der Anzahl der
+Studieninteressierten orientierten Ausbau von Studienplätzen wollen wir jegliche Zulassungsbeschränkung obsolet machen.
+Die Wahl des Studienganges muss auf Grund des Interesses und nicht auf Grund von hohen NC-Hürden getroffen werden.
+
+=== Investitionen in Bildung aufstocken ===
+Der prozentuale Anteil der Ausgaben für den Bereich Bildung am gesamten Bruttoinlandsprodukt sinkt jährlich. Wir
+fordern drastische Investitionssteigerungen, um gute Bildung für jedermann zu ermöglichen. Wir fordern die Einstellung
+neuen Lehrpersonals an Hochschulen in ausreichender Zahl, um sowohl allen Studieninteressierten einen Platz in dem von
+Ihnen gewünschten Fach und Abschluss zur Verfügung stellen zu können, als auch allen Studierenden eine individuelle
+Betreuung durch die Leiter der jeweiligen Lehrveranstaltungen zu gewährleisten. Die an Forschung und Lehre Beteiligten
+müssen besser entlohnt werden. Die Entwicklung rückläufiger Investitionen in Universitäten wollen  wir stoppen.
+Schlechte Lernbedingungen und prekäre Beschäftigung werden wir nicht dulden. Im Bereich der Schulen fordern wir die
+Einstellung von mehr Lehrern und kleinere Klassen von maximal 20 Schülern pro Klasse.
+
+Wir fordern die Abschaffung des Studienkontenmodells, das finanziell Schwächere in der Durchführung und am
+erfolgreichen Abschluss eines Studiums effektiv benachteiligt. Die verfassungswidrige Landeskinderregelung muss
+ersatzlos aus dem Landeshochschulgesetz gestrichen werden. Durch ausreichende Möglichkeiten für Teilzeit- und
+Abendstudien wollen wir auch Berufstätigen und anderweitig zeitlich Belasteten ein Studium ermöglichen.
+
+Gebühren jeglicher Art sowie finanzielle und personelle Engpässe – gerade an den Hochschulen – schränken den Zugang zu
+Bildung ein und werden deshalb von uns kategorisch abgelehnt. Ein Studium ohne Abhängigkeit von Krediten und ohne
+Schuldenberg nach Studienabschluss muss gewährleistet sein. Wir fordern daher die gesetzlich verankerte
+Gebührenfreiheit und einen drastischen Ausbau der Investitionen in Schule und Hochschule: Das Bildungsangebot darf sich
+nicht weiter den knappen Ausgaben anpassen, sondern wir wollen die Ausgaben im Bildungsbereich an die Notwendigkeiten
+angleichen! Ein Studium ohne Abhängigkeit von Krediten muss gewährleistet sein.
+
+Eine private Finanzierung öffentlicher Bildungseinrichtungen muss stets kritisch hinterfragt werden. Ein Einfluss auf
+Lehrinhalte muss ausgeschlossen sein. Einer Kommerzialisierung von Schulen und Hochschulen stellen wir uns entschieden
+entgegen. Exzellenzinitiativen wollen wir kritisch überprüfen, damit sich nicht in Konkurrenz um Fördergelder nur noch
+wenige Hochschulen gute Lehre und Forschung leisten können.
+
+=== Lehr- und Lernmittelfreiheit und Open Access für Rheinland-Pfalz! ===
+Zum ersten Mal in der Geschichte der Menschheit besteht die Möglichkeit unser komplettes Wissen zu sammeln, zu
+speichern und für die Allgemeinheit zugänglich zu machen. Gerade im Bereich der Forschung und Lehre bieten sich hier
+ungeahnte Möglichkeiten. Leider werden diese stark beschnitten.
+
+Wir fordern eine vollständige Lern- und Lehrmittelfreiheit für Rheinland-Pfalz. Die Verwendung und das Schaffen von
+freien Werken zur Vermittlung von Wissen müssen vom Land unterstützt und ausgebaut werden. Freie Werke sind nicht nur
+kostenfrei im Unterricht einsetzbar, sondern ermöglichen dazu dem Lehrenden ohne rechtliche Hürden die Lernmittel
+auf seinen  Unterricht  anzupassen. Alle  in den  Bibliotheken bereitstehenden Bücher und Zeitschriften sollen, auch
+in digitaler Form, für die Studierenden und Mitarbeiter frei zugänglich und verfügbar sein. Das Problem nicht
+bereitstehender oder auch nicht auffindbarer Bücher würde damit gelöst. Aufwendige Fernleihen müssen der Vergangenheit
+angehören.
+
+Die Publikationen aus staatlich finanzierter oder geförderter Forschung und Lehre werden oft in kommerziellen Verlagen
+publiziert, deren Qualitätssicherung von ebenfalls meist staatlich bezahlten Wissenschaftlern im Peer-Review-Prozess
+übernommen wird. Die Publikationen werden jedoch nicht einmal Bibliotheken der Forschungseinrichtungen kostenlos zur
+Verfügung gestellt. Wir dulden nicht, dass der Steuerzahler für Produktion, Qualitätssicherung und Nutzung insgesamt
+dreifach für die Kosten der Publikationen im Milliardenbereich aufkommt. Wir fordern, dass alle wisschenschaftlichen
+Publikationen, die aus öffentlich geförderter Forschung hervorgehen, auch allen Bürgern kostenfrei zur Verfügung
+stehen. Wir unterstützen die Berliner Erklärung der Open-Access-Bewegung und fordern die Zugänglichmachung des
+wissenschaftlichen und kulturellen Erbes der Menschheit über das Internet nach dem Prinzip des Open Access. Wir sehen
+es als Aufgabe des Staates an, dieses Prinzip an den von ihm finanzierten und geförderten Einrichtungen durchzusetzen.
+
+Wir fordern den Einsatz offener Software in Forschung und Lehre. Software ist Wissen und wir wollen nicht länger
+Millionen an Steuergeldern für geschlossene und intransparente Systeme ausgeben. Mit der Förderung und dem Einsatz von
+offener Software wollen wir für Transparenz an den Hochschulen, für Erweiterbarkeit der System durch Interessierte und
+für die Förderung von kleinen und mittelständischen Unternehmen im Land sorgen. Software muss Studierenden und
+Mitarbeitern an jedem Hochschulrechner, zumindest als Alternative, angeboten werden. Auch bei der Neuanschaffung von
+Programmen oder dem Neuaufbau von Systemen und Datenbanken wollen wir, dass Open-Source-Lösungen eingesetzt werden.
+
+Wir lehnen die Anschaffung proprietärer Software bei existierenden Open-Source-Alternativen grundsätzlich ab.
+Studierende dürfen im Rahmen ihres Studiums nicht zur Nutzung oder gar zur Anschaffung bestimmter proprietärer Software
+genötigt werden, genauso wenig wie Mitarbeiter. Umfassende Kooperationsverträge mit Software-Monopolisten lehnen wir
+ab. Im Rahmen des „Open Date“ sollen Hochschulen all ihre Daten über offene, standardisierte Schnittstellen allen
+Interessierten kostenlos zur Verfügung stellen.
+
+=== Bildungseinrichtungen demokratisieren! ===
+Bildungseinrichtungen sind für SchülerInnen und StudentInnen ein prägender und umfassender Teil des Lebens. Sie sind
+deswegen als Lebensraum der Lernenden zu begreifen, der durch sie mitbestimmt werden muss. In Schulen müssen
+SchülerInnen ein Mitspracherecht bei der Gestaltung ihres Schulalltags haben. Demokratische Werte müssen vermittelt und
+vor gelebt werden, um die Akzeptanz der Entscheidungen zu erhöhen, das Gemeinschaftsgefühl zu stärken und
+selbstbestimmtes Lernen im ausreichenden Maße zu ermöglichen. Wir fordern eine grundlegende demokratische Organisation
+von Schule und Hochschule.
+
+Bei den Universitäten stellen sowohl das bestehende Ungleichgewicht zugunsten des Hochschulrats, als auch die geplante
+Novelle des Landeshochschulgesetzes eine Entmündigung der breiten Mehrheit zugunsten nicht gewählter Gremienvertreter
+und des Präsidialamts dar. Was als „Autonomie der Hochschule“ angepriesen wurde, verkehrt sich in ihr Gegenteil:
+Hochschulen verlieren die Unabhängigkeit, welche für die Erfüllung ihrer Aufgaben, die eine freiheitlich-demokratische
+Gesellschaft ihnen übertragen hat, unentbehrlich ist. Demokratische Entscheidungsstrukturen dürfen nicht weiter durch
+wirtschaftliche Einflüsse oder die Etablierung autoritärer Strukturen beeinträchtigt und unterwandert werden. Wir
+fordern die Abschaffung des Hochschulrates und die Übertragung aller Kompetenzen auf den Senat. Die unabhängige
+Mitwirkung aller Interessengruppen in den demokratischen Willensbildungsprozessen der Hochschulen muss gesichert werden
+und sich im Hochschulgesetz widerspiegeln. Studentischen VertreterInnen sollen aufgrund der Größe der
+Studierendenschaft mit einer Drittelparität in allen entscheidungsbefugten Gremien vertreten sein.
+
+=== Beabsichtigtes Landeshochschulgesetz stoppen! ===
+Verschärft wird die oben aufgezeigte Entwicklung durch das neue Landeshochschulgesetz (LHG), das unter dem Deckmantel
+der Autonomie der Hochschule demokratische Grundstrukturen unterminiert: Die Entmachtung demokratischer Gremien und
+der Ausbau präsidialer Entscheidungskompetenzen, die Begünstigung der Trennung von Forschung und Lehre sowohl durch
+die Einrichtung von Forschungskollegs, als auch durch die Möglichkeit der Freistellung von ProfessorInnen von der Lehre
+für bis zu 10 Jahre, und die Schaffung von Einfallstoren für Unternehmen durch die Gründung von Hochschulverbünden und
+außeruniversitären Betrieben, die auch Privatunternehmen offen stehen.
+
+Wir dagegen fordern, dass VertreterInnen der Studierendenschaft in den entscheidungsbefugten, universitären Gremien
+nicht länger untervertreten sind und lehnen die beabsichtigte Novelle des LHG in der derzeitigen Form ab.
+
+=== Bologna-Reform reformieren! ===
+Wir fordern ein freies und selbstbestimmtes Studium ohne bürokratische Hürden, ohne stetigen Leistungsdruck und starren
+vorgegebenen Stundenplan, wie sie heute Studierenden-Alltag sind. Durch hohen Leistungsdruck, Dauerüberprüfung und eine
+rigorose Modularisierung bleibt kein Freiraum mehr für individuelle Schwerpunktsetzung.
+
+Wir wollen die Regelstudienzeit der Bachelorgänge prüfen und die Prüfungslast mit dem Ziel der Reduzierung evaluieren.
+Den permanten Prüfungsdruck sowie den Einfluss von Einzelleistungen auf die Gesamtnote wollen wir herabsetzen. Wir
+wollen eine Ausweitung der Kombinationsmöglichkeiten der Fächer untereinander, so dass eine breit gefächerte, freie
+Bildung möglich wird. Dabei müssen auch die Fächer gleichwertig berücksichtigt werden, die abseits des jeweilig
+üblichen Fächerkanons liegen oder aus fachbezogenen Studiengängen stammen. Um die durch den Bachelor zu erzielende
+Erleichterung von Auslandsaufenthalten zu erreichen, müssen zukünftig auch sämtliche, bei Auslandsaufenthalten in den
+eigenen Fächern erbrachten Leistungen, anerkannt werden.
+
+Kleine und ohnehin schon untervertretene Studienfächer wollen wir am Leben erhalten:
+Lehre und Forschung in solchen Fächern darf nicht aus mangelnder Popularität eingestellt
+werden!
+
+Wir fordern die Umsetzung der eigentlichen Ziele, die die Bologna-Reform mit ihrem aktuellen Konzept für Bachelor und
+Master verfehlt hat: Die Schaffung einfach verständlicher und gut vergleichbarer Abschlüsse, die Erhöhung der
+internationalen Mobilität und die Reduzierung der Zahl der StudienabbrecherInnen durch ein verkürztes,
+überschaubares Studium.
+
+Wir fordern einen massiven Ausbau der Master-Studienplätze! Derzeit ist nur einem Bruchteil der BachelorabsolventInnen
+ein Platz sicher. Dies führt zu neuen Bildungshürden und die Abschlussnote wird den persönlichen Fähigkeiten
+vorangestellt. Jedem Interessenten muss ein Masterstudium ermöglicht werden! Zulassungsquoten lehnen wir ab.
+
+=== Freies, individuelles Lernen ermöglichen! ===
+Jeder Mensch ist ein Individuum mit persönlichen Neigungen, Stärken und Schwächen. Institutionelle Bildung soll daher
+den Einzelnen unterstützen seine Begabungen zu entfalten, Schwächen abzubauen und neue Interessen und Fähigkeiten zu
+entdecken. Neben starren Lehr- und Stundenplänen, werden vor allem einige Formen der Leistungsbewertung diesen
+Forderungen nicht gerecht. Insbesondere die Bewertung von Verhalten nach einem vorgegebenen Normenraster z.B. durch
+Kopfnoten lehnen wir ab.
+
+Für ein freies Lernen und Lehren ist der Schutz vor Überwachung und Zensur unabdingbare Voraussetzung. Wer sich
+beobachtet fühlt oder nicht mehr sicher weiß, wer was über ihn weiß, der wird sein Verhalten anpassen und sich in
+seinem Lehr- und Lernprozess nicht frei entfalten. Eine Zensur behindert den Zugang zu Information, zu Wissen und zu
+Demokratie und wird von uns daher aufs Schärfste bekämpft. Wir fordern den uneingeschränkten Zugang zu allen
+Informationen.
+
+Überwachung - auch in Form von Data-Warehousing-Systemen, in denen massenhaft Studierendendaten gespeichert, gesammelt
+und ausgewertet werden - lehnen wir ab. Für alle Systeme, die personenbezogene Daten von Lernenden oder Lehrenden
+verarbeiten, fordern wir maximale Transparenz, Nachvollziehbarkeit bzgl. der Datenabfragen und wirksame
+organisatorische und technische Maßnahmen zum Schutz vor Missbrauch.
+
+Verwaltungssysteme müssen auch stets die Lehre unterstützen und dürfen keinesfalls von sich aus Auswirkungen auf die
+Gestaltung des Lehrbetriebs nehmen. Eine Barrierefreiheit setzen wir für alle Systeme als unabdingbar voraus.
+
+=== Nachsatz ===
+Die Piratenpartei Rheinland-Pfalz will die obigen Forderungen auf allen Ebenen konsequent vertreten und umsetzen und
+so ein freies Lernen sowie Bildungsgerechtigkeit und Chancengleichheit etablieren und soziale Ungleichheit beseitigen.
+Wir sehen Bildung als Schlüsselfaktor zur gesellschaftlichen Teilhabe in der Informationsgesellschaft und als Grundlage
+für Frieden und Demokratie.
+
+== Informationsfreiheit im 21. Jahrhundert - Offene Daten für mündige Bürger! ==
+Der Zugang zu Wissen und Information ist die Grundlage für unsere freiheitlich-demokratische Informations- und
+Wissensgesellschaft. Wir PIRATEN fordern daher eine Stärkung der Informationsfreiheit und einen freien und offenen
+Zugang zu allen staatlichen und staatlich geförderten Informationsbeständen.
+
+=== Informationsfreiheit ist Bürgerrecht! ===
+Die alte Weisheit „Wissen ist Macht“ gilt in der Informationsgesellschaft mehr denn je. Nur wer umfänglich informiert
+ist, kann fundierte Entscheidungen fällen. Eine umfassende Information von Bürgern und Bürgerinnen ist auch
+Voraussetzung für politisches Engagement und demokratische Kontrolle der vom Volk legitimierten Macht. Jeder Bürger
+kann staatliche Angaben selbst überprüfen, aus neuen Blickwinkeln betrachten und neue, vorher unbekannte Zusammenhänge
+entdecken. Dies führt zu einer Demokratisierung der Informationskanäle und erhöht die Kontrollmöglichkeiten der
+Zivilgesellschaft gegenüber dem Staat. Gemäß dem Mehr-Augen-Prinzip können Angaben gemeinschaftlich besser überprüft,
+Entscheidungen hinterfragt und kritisiert werden. Verbesserungsvorschläge können von Allen erarbeitet werden und die
+besten Lösungen können umgesetzt werden. Dem Missbrauch und der Willkür Einzelner wird vorgebeugt.
+
+Wir PIRATEN wollen daher Parlamente und Behörden und die rechtlichen Grundlagen so umgestalten, dass sie diesem
+gesamtgesellschaftlichen Anspruch der Informationsfreiheit für alle Bürger Rechnung tragen. Wir fordern, dass sich
+der Staat vom Prinzip der Geheimhaltung abkehrt und ein Prinzip der Öffentlichkeit einführt, welches den mündigen
+Bürger in den Mittelpunkt staatlichen Handelns und Gestaltens stellt. Dies schafft nach der festen Überzeugung der
+Piratenpartei die unabdingbaren Voraussetzungen für eine moderne Wissensgesellschaft in einer freiheitlichen und
+demokratischen Ordnung. Sämtliche staatlich relevanten Informationen müssen daher grundsätzlich der Öffentlichkeit und
+damit jedermann frei zugänglich gemacht werden. Nur in wenigen klar definierten und begründeten Ausnahmefällen, wie dem
+Schutz persönlicher Daten, dürfen Informationen als nicht-öffentlich behandelt werden.
+
+=== Moderne Verwaltung mit offenen Daten! ===
+Staatliches und staatlich finanziertes Wissen muss allen Bürgern zur Verfügung stehen und darf nicht länger großen
+Teilen der Gesellschaft vorenthalten werden. Die heutige Informationspolitik schließt wertvolle Daten in Aktenschränken
+oder nicht allgemein verarbeitbaren Dateiformaten ein. Bürger bekommen wichtige Informationen nur auf Nachfrage. Wir
+wollen das Potential der weltweiten Vernetzung ausschöpfen und fordern offene Schnittstellen zum Abruf aller Daten für
+jedermann.
+
+Die modernen Informationstechnologien machen eine proaktive, zeitnahe Veröffentlichung und Verbreitung von staatlichen
+Informationen in offenen und strukturierten Datenformaten kostengünstig und schnell möglich. Die Piratenpartei fordert,
+dass alle staatlichen Stellen von diesen Möglichkeiten Gebrauch machen, statt der Verbreitung dieser Informationen
+Steine in den Weg zu legen. Wir fordern Rohdaten in maschinenlesbaren Formaten, die eine schrankenlose
+Weiterverarbeitung durch Nicht-Regierungsorganisationen, Forschungseinrichtungen und interessierte Bürger zulassen.
+Eine Veröffentlichung von Daten in Rohform und der Zugriff über offene Schnittstellen ermöglicht vielfältige
+Anwendungen. Die Piratenpartei betrachtet daher die Veröffentlichung von staatlichen Informationen in offenen,
+strukturierten Formaten als ein wesentliches Merkmal eines demokratischen Informationszeitalters. Open-Data- und
+Semantic-Web-Initiativen wollen wir deshalb explizit fördern. Ebenso wollen wir den Einsatz freier Software in allen
+Einrichtungen des Landes forcieren. Langfristige Verträge mit Monopolisten lehnen wir ab.
+
+=== Auskunftsanspruch verbessern! ===
+Wir wollen gewährleisten, dass jeder Bürger unabhängig von der Betroffenheit und ohne den Zwang zur Begründung sein
+Recht durchsetzen kann, auf allen Ebenen der staatlichen Ordnung, Einsicht in die Aktenvorgänge und die den jeweiligen
+Stellen zur Verfügung stehenden Informationen zu nehmen. Dies gilt ebenso für schriftliches Aktenmaterial wie digitale
+oder andere Medien. Ausnahmeregelungen sind eng und eindeutig zu formulieren und dürfen nicht pauschal ganze Behörden
+oder Verwaltungsgebiete ausnehmen. Die Auskunftsstelle ist verpflichtet, zeitnah und in einer klaren Kostenregelung,
+Zugang in Form einer Akteneinsicht oder einer Materialkopie zu gewähren, um eine breite, effiziente Nutzung der Daten
+zu ermöglichen. Verweigerung des Zugangs muss schriftlich begründet werden und kann vom Antragsteller, sowie von
+betroffenen Dritten gerichtlich überprüft werden lassen, wobei dem Gericht zu diesem Zweck voller Zugang durch die
+öffentliche Stelle gewährt werden muss. Alle öffentlichen Stellen sind verpflichtet, regelmäßig sowohl Organisations-
+und Aufgabenbeschreibungen zu veröffentlichen, einschließlich Übersichten der Arten von Unterlagen, auf die zugegriffen
+werden kann, als auch einen jährlichen öffentlichen Bericht über die Handhabung des Auskunftsrechts.
+
+=== Korruption erschweren! ===
+Damit für die Rheinland-Pfälzischen Bürgerinnen und Bürger klar ersichtlich ist, wer die Politik im Land beeinflusst,
+fordern wir ein vollständiges Lobbyistenregister auf Landesebene, in dem alle Verbände und Vertreter aufgeführt werden,
+die Einfluss auf Gesetzgebungsprozesse oder deren Ausgestaltung durch Verordnungen haben. In den Ministerien dürfen
+keine Mitarbeiter von Unternehmen dauerhaft ihre Arbeit verrichten. Lediglich in transparenten Anhörungen dürfen diese
+als Sachverständige angehört werden. Anhörungen zu Gesetzesinitiativen oder anderen Vorhaben der Landesregierung müssen
+stets öffentlich angekündigt werden und für jeden zugänglich sein. Insbesondere Verbraucherverbände, Bürgerrechts- und
+Menschenrechtsorganisationen müssen von Anfang an in Gesetzgebungsprozesse eingeweiht werden und Gelegenheit zur
+Stellungnahme bekommen. Alle Stellungnahmen von Interessenverbänden müssen öffentlich z.B. über das Internet zugänglich
+gemacht werden.
+
+=== Konkrete Maßnahmen für Rheinland-Pfalz ===
+Um die Informationsfreiheit im obigen Rahmen vollumfänglich zu gewährleisten, fordern wir Rheinland-Pfälzischen PIRATEN:
+
+* die Digitalisierung aller staatlichen Unterlagen, die neu erstellt werden
+* Forschungsprojekte zur Digitalisierung alter Unterlagen sowie die Erforschung von Langzeitarchivierungsstrategien
+* den freien Zugang zu allen Gesetzen und Gesetzesentwürfen, bereits in der Entstehungsphase
+* den freien Zugang zu allen Beschlüssen des Landtages und anderer politischer Gremien
+* die komplette Offenlegung des Abstimmungsverhaltens im Rheinland-Pfälzischen Landtag und seinen Ausschüssen
+* die komplette Offenlegung des Abstimmungsverhaltens der Landesregierung im Bundesrat
+* die komplette Offenlegung der Nebeneinkünfte der Landtagsabgeordneten und Minister
+* den freien Zugang zu allen finanziellen Ausgaben der Landesregierung, der Ministerien, des Landtags und seiner Fraktionen
+* den freien Zugang zu allen Messdaten, die staatlichen Institutionen vorliegen (Wetterdaten, Flugverkehrsdaten, Gewässerdaten, Katasterdaten, Luftbilder, u.v.m)
+* den freien Zugang zu allen statistischen Erhebungen, die durch die Verwaltung oder in deren Auftrag vorgenommen werden
+* das Angebot von offenen Schnittstellen zur automatischen Abfrage der bereitgehaltenen Dokumente, Daten und Informationen in standardisierten, offenen Formaten
+* die Einrichtung einer kostenlosen Beratungsstelle, die den Bürgern und Bürgerinnen offene Fragen und komplexe Sachverhalte erläutert
+* die finanzielle Förderung von Open-Data- und Semantic-Web-Initiativen und Forschung in diesem Bereich
+* die Zusammenarbeit mit Rheinland-Pfälzischen Hochschulen zur Digitalisierung, Aufbereitung und Zurverfügungstellung aller Daten in offenen Formaten
+* die Unabhängigkeit des Landesbeauftragten für Informationsfreiheit und eine bessere finanzielle und personelle Ausstattung der Behörde
+* das Angebot aller Ausschreibungen in einem standardisierten, maschinenlesbaren Datenformat
+* die Einführung einer Meldepflicht für alle Behörden bei Datenpannen und ein standardisiertes Verfahren zur Benachrichtigung der Betroffenen
+* die Veröffentlichung aller Verträge der Landesregierung und der Ministerien mit Unternehmen
+* die Einführung eines vollständigen Lobbyistenregisters auf Landesebene
+* eine klare Kennzeichnung, welche Passagen in Gesetzesentwürfen von wem hinzugefügt wurden
+* die umgehende Bekanntmachung von Art und Umfang aller Abhörmaßnahmen, Observationen oder Datenabfragen inklusive der Information von welcher Polizeibehörde oder welchem Geheimdienst diese auf welcher rechtlichen Grundlage durchgeführt werden, sowie die umfassende Information der Betroffenen sofort nach Ende der Maßnahme
+* die ausschließliche Verwendung quelloffener Software durch die Verwaltung
+
+== Meinungsfreiheit in innerparteilichen Willensbildungsprozessen gewährleisten! ==
+Wenn Menschen nicht mehr sicher sind, wer welche Daten über sie besitzt und wer was über sie weiß oder wissen könnte,
+dann werden sie ihr Verhalten vorsorglich anpassen. Insbesondere in politisch sensiblen Bereichen ist ein solches
+Anpassungsverhalten wahrscheinlich und aus demokratischer Sicht hochgefährlich. Es gefährdet die Meinungsfreiheit des
+Einzelnen und in der Konsequenz auch die gesamte freiheitliche Demokratie.
+
+Die Piratenpartei setzt sich daher für den Schutz und die Stärkung der informationellen Selbstbestimmung ein. Alle
+Menschen sollen ihre Daten kontrollieren können und ihre Meinung frei äußern können, ohne Angst vor Repressionen
+erleiden zu müssen. Der Landesverband Rheinland-Pfalz fordert daher den Bundesvorstand auf, die bundesweite
+Liquidfeedback-Instanz datenschutzgerecht umzugestalten. Insbesondere ist die anonyme Teilnahme zu ermöglichen. Eine
+Vorratsdatenspeicherung von politisch-sensiblen Präferenzen und Abstimmungsverhalten gegen den Willen des Nutzers ist
+zu unterlassen. Benutzerwünschen auf Datenlöschung ist zeitnah, unproblematisch und ohne Benachteiligung für eine
+weitere Nutzung Folge zu leisten.
+
+== Piraten für den Frieden und gegen das Vergessen ==
+Die Piratenpartei Rheinland-Pfalz bekennt sich zu den Menschenrechten als Grundlage der Gemeinschaft, des Friedens und
+der Gerechtigkeit. Wir wenden uns dabei, getragen von der Verantwortung für die Geschichte, insbesondere gegen die
+Leugnung, Verharmlosung oder Verherrlichung des Nationalsozialismus, durch die diese perverse Ideologie auch heute noch
+gesellschaftsfähig gemacht werden soll. Wir erkennen den Holocaust als historische Tatsache an und dulden keine
+Relativierung oder Verharmlosung. Wir haben keinen Zweifel daran, dass im Zuge dieses historisch einmaligen Verbrechens
+des nationalsozialistischen Deutschlands circa 6 Millionen Menschen umgebracht worden sind, die meisten von ihnen
+Juden. Wir haben demütigen Respekt und tiefes Mitgefühl für die Opfer dieses Verbrechens und ihre Angehörigen.
+
+Wir ächten alle Ideologien, die Menschen aufgrund ihrer Nationalität, ihrer Sprache, ihrer Herkunft, ihrer
+Volkszugehörigkeit, ihrer Kultur, ihres Glaubens, ihrer Weltanschauung, ihrer äußeren Erscheinung, ihrer Behinderung,
+ihrer Hautfarbe, ihres Gesundheitszustands, aufgrund ihres Geschlechtes, ihrer sexuellen Identität, ihres Alters oder
+ihres gesellschaftlichen Status ausgrenzen, unterdrücken, verurteilen, diskriminieren, oder bevorzugen. Der
+demokratische und menschenrechtsorientierte Standpunkt der PIRATEN leitet sich bedingungslos aus dem Grundgesetz und
+aus der Allgemeinen Erklärung der Menschenrechte ab. Die Würde des Menschen ist unantastbar. Alle Menschen sind frei
+und gleich an Würde und Rechten. Wir respektieren die individuelle Freiheit und wertschätzen die freie
+Meinungsäußerung. Wir treten für Toleranz ein und auch für die Meinungsfreiheit derjenigen, deren Meinung wir nicht
+teilen oder deren politische Ziele den unseren entgegenstehen. Die Freiheit des Einzelnen endet aber dort, wo andere
+Menschen in ihrer Würde, Ehre oder körperlichen Unversehrtheit eingeschränkt werden. Wir stehen daher für eine
+friedliche, kreative und laute Zivilgesellschaft, die sich mit Courage vehement gegen Diskriminierung, gegen Gewalt und
+gegen antidemokratische und totalitäre Bestrebungen einsetzt.
+
+=== Unvereinbarkeitserklärung ===
+Wir sind eine globale Gemeinschaft von Menschen, unabhängig von Alter, Geschlecht und Abstammung sowie
+gesellschaftlicher Stellung, offen für alle mit neuen Ideen.
+
+Wer jedoch mit Ideen von Rassismus, Sexismus, Homophobie, Ableismus, Transphobie und anderen Diskriminierungsformen und
+damit verbundener struktureller und körperlicher Gewalt auf uns zukommt, hat sich vom Dialog verabschiedet und ist
+jenseits der Akzeptanzgrenze.
+
+Wer es darauf anlegt, das Zusammenleben in dieser Gesellschaft zu zerstören und auf eine alternative Gesellschaft
+hinarbeitet, deren Grundsätze auf Chauvinismus und Nationalismus beruht, arbeitet gegen die moralischen Grundsätze,
+die uns als Piraten verbinden.
+
+Die Piraten erklären das Vertreten von solchen Formen der Diskriminierung und von der Verharmlosung der historischen
+und aktuellen faschistischen Gewalt für unvereinbar mit einer Mitgliedschaft.
+
+== Positionierung zum ESM-Vertrag ==
+Nach Auffassung der PIRATEN verstößt der ESM-Vertrag gegen die im Grundgesetz verankerten fundamentalen
+Rechtsprinzipien und Grundsätze einer demokratischen Staatsordnung wie den Parlamentsvorbehalt und das
+Rechtsstaatsprinzip sowie gegen die Transparenz-Grundsätze der Piratenpartei.
+
+Die PIRATEN kritisieren insbesondere das intransparente und voreingenommene Zustandekommen des Vertrages. Optionen, die
+nicht eine Rettung des Finanzsektors vor größeren Ausfällen risikoreicher Investments vorsahen, standen durch die
+Einbeziehung der Finanzlobby in die Vertragsgestaltung von vornherein nicht auf der Agenda.
+
+Die vom Steuerzahler im schlimmsten Falle zu tragenden Verpflichtungen durch den ESM (plus EFSF plus erstes
+Griechenland-Rettungspaket) betragen einen Umfang, der nach Ansicht der Piratenpartei nicht alleine vom Bundestag
+legitimiert werden kann. Wir fordern daher einen Volksentscheid in Deutschland über den ESM. Sollte es dazu nicht
+kommen, fordert die Piratenpartei aber zumindest eine öffentliche Anhörung über den ESM-Vertrag im deutschen Bundestag
+– insbesondere mit Kritikern des Vertrags. Weiterhin muss der Vertragstext allen Parlamentariern im endgültigen
+Wortlaut auf Deutsch mindestens zwei Wochen vor der abschließenden Beschlussfassung vorliegen, damit jedem
+Mandatsträger eine eingehende Prüfung und Beratung möglich ist.
+
+== Konkretisierung zur Studiegangakkreditierung ==
+Dieses Positionspapier konkretisiert den folgender Absatz aus dem Bereich "Bildung" im Wahlprogramm:
+"Die Qualität der Hochschulen wird durch ein gemischtes Gremium aus Vertretern verschiedener Hochschulen gewährleistet.
+Private Agenturen sollen keinen Einfluss auf die Akkreditierung von Studiengängen bekommen."
+
+=== Akkreditierungssystem ===
+Studiengänge müssen mindestens alle fünf Jahre akkreditiert werden, um eine konstant hohe Qualität und Vergleichbarkeit
+von Studiengängen zu gewährleisten. Die Akkreditierung wird durch einer paritätisch aus Professoren, Vertretern oder
+Vertreterinnen des akademischen Mittelbaus sowie Studierenden besetzten Akkreditierungskommission durchgeführt. Dabei
+müssen alle Vertretungen in der Akkreditierungskommission von anderen Hochschulen kommen, um voreingenommenen
+Entscheidungen vorzubeugen. Auftrag desr Akkreditierungskommission ist es die Studienqualität und die Studierbarkeit,
+sowohl konzeptionell, als auch personell, als auch von den verfügbaren Räumlichkeiten und technischen Gegebenheiten her
+sicherzustellen. Dafür nimmt die Akkreditierungskommission eine Prüfung der Studiengangskonzeption vor, spricht mit
+allen betroffenen Statusgruppen und begutachtet die Räumlichkeiten. Bei Zweifeln an der Tauglichkeit des Konzepts oder
+den Räumlichkeiten muss die Akkreditierungskommission die Akkreditierung mit Begründung ablehnen. Hochschulen haben
+jedoch das Recht nach einer einmaligen Ablehnung innerhalb von sechs Monaten eine erneute Prüfung durch das gleiche
+Gremium durchführen zu lassen. Innerhalb der Akkreditierungskommission müssen Mitglieder jeder Statusgruppe einer
+Akkreditierung zustimmen, damit der Studiengang akkreditiert werden kann. Ein Votum gegen die Akkreditierung wird zur
+Qualitätssicherung zusammen mit der Begründung veröffentlicht. Akkreditierungsräte werden durch das Kultusministerium
+kontrolliert. Jede Hochschule sowie das Kultusministerium selbst kann gegen eine erfolgte oder versagte Akkreditierung
+Beschwerde einlegen. Folgt das Ministerium der Begründung der Beschwerde, kann es selbst eine erneute Prüfung der
+Unterlagen des Studiengangs, eine Prüfung der Akkreditierungskommission oder ein erneutes Akkreditierungsverfahren
+durch eine neu zusammengesetzte Akkreditierungskommission veranlassen. Folgt das Ministerium der Beschwerde nicht, kann
+die klagende Hochschule dennoch ein erneutes Akkreditierungsverfahren mit neu zusammengesetzter
+Akkreditierungskommission in die Wege leiten, sofern diese Hochschule die entstehenden Kosten auch übernimmt.
+Beschwerde gegen eine Akkreditierung kann vorgebracht werden bei Bedenken zur Zusammensetzung der
+Akkreditierungskommission, bei Vorwürfen der Bestechlichkeit oder Befangenheit von Mitgliedern der
+Akkreditierungskommission sowie fahrlässigen Fehlern im Verfahren. Wird beim Kultusministerium eine Akkreditierung
+beantragt, werden dort per Losverfahren aus Pools qualifizierter Vertreter oder Vertreterinnen der Statusgruppen
+Kommissionsmitglieder gelost.
+
+Die Aufgabe in einer Akkreditierungskommission mitzuarbeiten ist eine Ehre und wird als solches nicht entlohnt. Den
+Kommissionsmitgliedern steht jedoch eine angemessene Aufwandsentschädigung zu. Außerdem hat die Hochschule der
+Kommissionsmitglieder Sorge zu tragen, dass die gewählten Kommissionsmitglieder für die Akkreditierungstätigkeit
+freigestellt werden und ihnen durch ihre Akkreditierungstätigkeit keine Nachteile entstehen. Die Kosten des
+Akkreditierungsverfahrens müssen von der Hochschule getragen werden, die die Akkreditierung in Auftrag gibt.
+
+== Kein Flohmärkteverbot in Rheinland-Pfalz ==
+Immer mehr Bereiche des täglichen Lebens werden vom Staat durch Vorschriften und Gesetze reguliert und reglementiert.
+Dadurch werden die Bürger vom Staat bevormundet und daran gehindert, ihren individuellen Lebensstil zu führen und sich
+frei zu entfalten. Die Piratenpartei setzt sich für die Reform und ggf. Abschaffung von Gesetzen ein, die den Bürger
+unverhältnismäßig bevormunden.
+
+In den letzten Jahren werden zunehmend Gesetze und Verordnungen diskutiert und teilweise auch verabschiedet, welche die
+Bürger bevormunden und sie in ihren Gewohnheiten oder ihrer Freizeitgestaltung einschränken. Die Freiräume der Bürger
+zur individuellen Gestaltung und Entfaltung ihres Lebens werden immer stärker beeinträchtigt. Die Piratenpartei stellt
+sich ungerechtfertigten Bevormundungen der Bürger durch den Staat vehement entgegen.
+
+Die Piratenpartei lehnt daher auch das von der SPD-Landesregierung vorangetriebene landesweite Flohmärkteverbot in
+Rheinland-Pfalz ab. Im Gegensatz zu Bevormundung ist es die Aufgabe des Staates die Grundrechte des Einzelnen zu achten
+und zu wahren und ihn vor Grundrechtseinschränkungen, auch gegenüber der Mehrheit, zu schützen. Die Freiheit des
+Einzelnen findet nur dort ihre Grenzen, wo die Freiheit eines anderen unverhältnismäßig beeinträchtigt wird. Durch
+Flohmärkte, die meist auf großen Parkplätzen stattfinden, findet nach unserer Überzeugung keine Einschränkung der
+Freiheit anderer Menschen statt. Alle diesbezüglichen Verbote und Verbotsanweisungen sind daher aufzuheben.
