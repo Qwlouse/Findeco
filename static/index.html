@@ -80,7 +80,12 @@
                                 <a ng-href="/#/profile">{{user.displayName}}</a>
                             </li>
                             <li ng-show="user.isLoggedIn">
-                                <a ng-click="logout()" style="cursor:pointer; padding: 0;"><img src="static/images/logout.png" alt="Logout" height="18" style="position: relative; top: 3px; margin: 0 0 0 0;" /></a>
+                                <a ng-click="logout()" style="cursor:pointer; padding: 0;">
+                                    <img src="static/images/logout.png"
+                                         onmouseover="this.src='static/images/logout_hover.png';"
+                                         onmouseout="this.src='static/images/logout.png';"
+                                         alt="Logout" height="18"
+                                         style="position: relative; top: 3px; margin: 0 0 0 0;" /></a>
                             </li>
                             <li ng-show="!user.isLoggedIn" style="float:right"><a href="#/login" data-i18n="_accountLogin_"></a></li>
                         </ul>
@@ -91,7 +96,12 @@
                 <div class="centeringContainer">
 
                     <ul>
-                        <li><a href="/#/"><img ng-show="navigation.entries" src="static/images/home.png" alt="Home"/><img
+                        <li><a href="/#/"><img ng-show="navigation.entries"
+                                               src="static/images/home.png"
+                                               alt="Home"
+                                               onmouseover="this.src='static/images/home_hover.png';"
+                                               onmouseout="this.src='static/images/home.png';"
+                                /><img
                                 ng-show="navigation.entries.length == 0" src="static/images/home_blue.png"
                                 alt="Home"/></a></li>
 

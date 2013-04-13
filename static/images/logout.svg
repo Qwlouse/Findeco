@@ -28,8 +28,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.313709"
-     inkscape:cx="12.949586"
-     inkscape:cy="5.6623367"
+     inkscape:cx="4.4503412"
+     inkscape:cy="8.6960547"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -60,22 +60,41 @@
      id="layer1"
      transform="translate(-272.43745,-525.06152)">
     <path
-       style="fill:none;stroke:#ecb40d;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;display:inline"
-       d="m 279.3395,537.32567 2.4815,0 0,-3.9908 m 0,-2.33462 0,-5.42881 -8.881,0 0,11.75423"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ecb40d;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 0,0 0,12.25 0,0.03125 6.921875,1.8125 0,-11.96875 L 2.34375,1 8.875,1 l 0,4.9375 1,0 0,-5.9375 z m 8.875,8.28125 0,3.46875 -1.96875,0 0,1 2.96875,0 0,-4.46875 z"
+       transform="translate(272.43745,525.06152)"
        id="rect6009"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccc" />
-    <path
-       style="fill:#ecb40d;stroke:#ecb40d;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
-       d="m 273.3381,525.85453 5.85,1.56752 0,11.73087 -6.1384,-1.64479"
-       id="path6011"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccc" />
+       sodipodi:nodetypes="cccccccccccccccccc"
+       inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout.png"
+       inkscape:export-xdpi="153.87"
+       inkscape:export-ydpi="153.87" />
     <path
        style="fill:#ecb40d;stroke:none;display:inline"
-       d="m 280.5534,531.44143 4.7767,0 0,-1.43115 2.2299,2.07787 -2.2299,2.07787 0,-1.33051 -4.7767,0 z"
+       d="m 280.0534,531.47268 4.7767,0 0,-1.43115 2.2299,2.07787 -2.2299,2.07787 0,-1.33051 -4.7767,0 z"
        id="path6014"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccc" />
+       sodipodi:nodetypes="cccccccc"
+       inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout.png"
+       inkscape:export-xdpi="153.87"
+       inkscape:export-ydpi="153.87" />
+    <path
+       inkscape:export-ydpi="153.87"
+       inkscape:export-xdpi="153.87"
+       inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout_hover.png"
+       sodipodi:nodetypes="cccccccccccccccccc"
+       inkscape:connector-curvature="0"
+       id="path3776"
+       d="m 288.70091,525.06152 0,12.25 0,0.0312 6.92187,1.8125 0,-11.96875 -4.57812,-1.125 6.53125,0 0,4.9375 1,0 0,-5.9375 z m 8.875,8.28125 0,3.46875 -1.96875,0 0,1 2.96875,0 0,-4.46875 z"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#2d7cc4;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans" />
+    <path
+       inkscape:export-ydpi="153.87"
+       inkscape:export-xdpi="153.87"
+       inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout_hover.png"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:connector-curvature="0"
+       id="path3778"
+       d="m 296.31686,531.47268 4.7767,0 0,-1.43115 2.2299,2.07787 -2.2299,2.07787 0,-1.33051 -4.7767,0 z"
+       style="fill:#2d7cc4;stroke:none;display:inline;fill-opacity:1" />
   </g>
 </svg>

@@ -17,11 +17,15 @@
              data-i18n="_expandAllSections_"></div>
         <div ng-repeat="section in nodeInfo.indexList">
             <a ng-show="!section.isExpanded" ng-hide="nav.type=='root'" ng-click="expandSection(section)"
-               style="float:left;position: relative; top: 8px; margin-right: 5px;"><img
-                    src="static/images/expand.png"></a>
+               style="float:left;position: relative; top: 8px; margin-right: 5px;"><img src="static/images/expand.png"
+                                onmouseover="this.src='static/images/expand_hover.png';"
+                                onmouseout="this.src='static/images/expand.png';"
+                    ></a>
             <a ng-show="section.isExpanded" ng-click="collapseSection(section)"
-               style="float:left;position: relative; top: 8px; margin-right: 5px;"><img
-                    src="static/images/collapse.png"></a>
+               style="float:left;position: relative; top: 8px; margin-right: 5px;"><img src="static/images/collapse.png"
+                        onmouseover="this.src='static/images/collapse_hover.png';"
+                        onmouseout="this.src='static/images/collapse.png';"
+                    ></a>
 
             <h2 ng-show="!section.isExpanded">
                 <a href="/#/{{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{section.fullTitle}}</a>
