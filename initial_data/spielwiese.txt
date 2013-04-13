@@ -1,0 +1,34 @@
+= Spielwiese =
+Nutze diesen Bereich um Funktionen von Findeco auszuprobieren. Für ernstahfte Diskussionen stehen andere Bereiche zur
+Verfügung.
+
+== Überschriften ==
+Überschriften müssen der der Größe nach angegeben werden und es darf keine Größenkategorie übersprungen werden.
+
+Ein Beitrag muss immer mit einer Überschrift auf höchster Ebene beginnen. Es darf auch nur eine Überschrift in dieser
+Größe geben.
+
+=== weitere Überschriftsebenen ===
+Es können Nach der ersten Überschrift mehrere H2 (==) bis H5 (=====) vorkommen, wobei aber keine größe ausgelassen
+werden darf. Wenn also z.B. ein H4 (====) definiert werden soll, muss zuvor ein H2 und ein H3 angegeben worden sein.
+
+== Argumente ==
+Argumente können zu vorschlägen auf jeder Ebene angegeben werden. Sie gelten jeweils nur für den auf dieser Ebene
+angezeigten Gesamttext.
+
+=== Weiterentwicklungen ===
+Genau wie Vorschläge können auch Argumente weiter entwickelt werden.
+
+==== Argumente für Weiterentwicklungen ====
+Für jede Weiterentwicklung muss ein neutrales- oder ein Gegenargument angegeben werden, das darauf eingeht, warum eine
+Veränderung notwendig war.
+
+== die Struktur verbessern ==
+Wenn ein guter Beitrag schlecht strukturiert ist, kannst du die Struktur verbessern, indem du ihn weiter entwickelst
+und zusätzliche Überschriften einfügst. Je mehr Überschriften es gibt, desto eher ist es möglich über Teilaspekte
+des Vorschlags zu diskutieren.
+
+=== Umordnen von Abschnitten ===
+Wenn ein Abschnitt an eine andere Stelle verschoben werden soll, dann muss trotzdem der Text auf der Ebene in die der
+Abschnitt eingebettet ist weiter entwickelt werden. Am leichtesten lässt sich diese Weiterentwicklung erstellen, indem
+Copy&Paste benutzt wird.
