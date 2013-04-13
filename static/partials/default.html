@@ -24,7 +24,7 @@
                     src="static/images/collapse.png"></a>
 
             <h2 ng-show="!section.isExpanded">
-                <a href="/#{{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{section.fullTitle}}</a>
+                <a href="/#/{{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{section.fullTitle}}</a>
             </h2>
 
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
