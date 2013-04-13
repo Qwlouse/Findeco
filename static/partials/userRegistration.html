@@ -3,12 +3,15 @@
     <h1> {{'_accountRegistrationFormTitle_'|i18n}} </h1>
     	{{'_accountRegistrationText_'|i18n}}
         <form ng-submit="register()">
-            <input type="text" placeholder="{{'_accountUsername_'|i18n}}" ng-model="username"><br>
-            <input type="password" placeholder="{{'_accountPassword_'|i18n}}" ng-model="password"><br>
-            <input type="password" placeholder="{{'_accountPasswordRepeat_'|i18n}}" ng-model="password2"><br>
-            <input type="text" placeholder="{{'_accountEmail_'|i18n}}" ng-model="mail"><br>
-            <input type="checkbox"  ng-model="TOS">{{'_accountReadTOS_'|i18n}}</input><br>
-            <input type="checkbox"  ng-model="DPR">{{'_accountReadDPR_'|i18n}}</input><br>
+            <input type="text" placeholder="{{'_accountUsername_'|i18n}}" ng-model="username"><br />
+            <input type="password" placeholder="{{'_accountPassword_'|i18n}}" ng-model="password"><br />
+            <input type="password" placeholder="{{'_accountPasswordRepeat_'|i18n}}" ng-model="password2"><br />
+            <input type="text" placeholder="{{'_accountEmail_'|i18n}}" ng-model="mail"><br />
+            <input type="checkbox" ng-model="TOS">{{ '_accountReadTOSBeginning_'|i18n }}<a
+                href="#/nutzungsbedingungen">{{ '_accountReadTOSLink_'|i18n }}</a>{{ '_accountReadTOSEnd_'|i18n }}</input>
+            <br/>
+            <input type="checkbox" ng-model="DPR">{{ '_accountReadDPRBeginning_'|i18n }}<a
+                href="#/datenschutz">{{ '_accountReadDPRLink_'|i18n }}</a>{{ '_accountReadDPREnd_'|i18n }}</input><br/>
             <input type="submit" value="{{'_accountRegistrationBtn_'|i18n}}">
         </form>
     </div>

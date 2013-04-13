@@ -310,13 +310,33 @@
         "description": ""
     },
     {
-        "key": "_accountReadTOS_",
-        "value": "Ich habe die Nutzungsbedingungen gelesen und erkenne diese an",
+        "key": "_accountReadTOSBeginning_",
+        "value": "Ich habe die ",
         "description": ""
     },
     {
-        "key": "_accountReadDPR_",
-        "value": "Ich habe die Datenschutzrichtlinien gelesen und erkenne diese an",
+        "key": "_accountReadTOSLink_",
+        "value": "Nutzungsbedingungen",
+        "description": ""
+    },
+    {
+        "key": "_accountReadTOSEnd_",
+        "value": " gelesen und erkenne diese an.",
+        "description": ""
+    },
+    {
+        "key": "_accountReadDPRBeginning_",
+        "value": "Ich habe die ",
+        "description": ""
+    },
+    {
+        "key": "_accountReadDPRLink_",
+        "value": "Datenschutzrichtlinien",
+        "description": ""
+    },
+    {
+        "key": "_accountReadDPREnd_",
+        "value": " gelesen und erkenne diese an.",
         "description": ""
     },
     {
