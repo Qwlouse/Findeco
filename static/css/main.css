@@ -123,6 +123,7 @@ input:focus, textarea:focus {
 /* =================== Space for the top menu ================================*/
 #topMenu {
     width: 100%;
+    min-width: 1200px;
     display: block;
 }
 
@@ -138,13 +139,14 @@ html, body {
 }
 
 #main {
-    overflow:auto;
+    /* overflow:auto; This breaks the scrollbars */
     padding-bottom: 40px; /* must be same height as the footer */
 }
 
 #footerWrap {
     position: relative;
     height: 40px;
+    min-width: 1200px;
     clear:both;
     margin: -40px 0 0 0;/* negative value of footer height */
 }
