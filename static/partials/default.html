@@ -4,7 +4,7 @@
 
     <div id="centerColumn" class="contentBox">
         <div spam-mark show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
-        <div follow-star show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
+        <div follow-star show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode" width="21" height="21"></div>
         <h1 ng-show="nav.type!='root'">{{ nodeInfo.fullTitle }}</h1>
         <h1 ng-show="nav.type=='root'" data-i18n="_rootCaption_"></h1>
         <p ng-show="nav.type=='root'" data-i18n="_rootText_"></p>
@@ -17,10 +17,10 @@
              data-i18n="_expandAllSections_"></div>
         <div ng-repeat="section in nodeInfo.indexList">
             <a ng-show="!section.isExpanded" ng-click="expandSection(section)"
-               style="float:left;position: relative; top:  14px; margin-right: 5px;"><img
+               style="float:left;position: relative; top: 8px; margin-right: 5px;"><img
                     src="static/images/expand.png"></a>
             <a ng-show="section.isExpanded" ng-click="collapseSection(section)"
-               style="float:left;position: relative; top:  14px; margin-right: 5px;"><img
+               style="float:left;position: relative; top: 8px; margin-right: 5px;"><img
                     src="static/images/collapse.png"></a>
 
             <h2 ng-show="!section.isExpanded">
@@ -29,7 +29,7 @@
 
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
                 <div spam-mark show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
-                <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
+                <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode" width="21" height="21"></div>
                 <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
             </div>
         </div>

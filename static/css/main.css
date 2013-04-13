@@ -48,7 +48,8 @@ body {
 /* Font for all the headings */
 h1, h2, h3, h4, h5, h6 {
     font-family: "Monda", sans-serif;
-    padding-bottom:15pt;
+    margin-bottom: 0.2em;
+    line-height: 120%;
 }
 
 h1 {
@@ -60,19 +61,28 @@ h1 {
 }
 
 h2 {
+    margin-top: 0.5em;
     font-size: 22pt;
 }
 
 h3 {
+    margin-top: 0.4em;
     font-size: 18pt;
 }
 
-h5 {
+h4 {
+    margin-top: 0.3em;
     font-size: 16pt;
 }
 
 h5 {
+    margin-top: 0.2em;
     font-size: 14pt;
+}
+
+/* paragraphs */
+p {
+    margin: 0 0 0.5em;
 }
 
 /* general style for links */
@@ -94,11 +104,11 @@ input, textarea {
     margin: 2px;
 }
 
-input:hover {
+input:hover, textarea:hover {
     border-color: #2d7cc4;
 }
 
-input:focus {
+input:focus, textarea:focus {
     border-color: #2d7cc4;
     -moz-box-shadow: 0 0 5px #2d7cc4;
     box-shadow: 0 0 5px #2d7cc4;
@@ -169,6 +179,7 @@ body:before {
 .contentBoxInvisible {
     background: transparent;
 }
+
 #leftColumn {
     float: left;
     width: 200px;
