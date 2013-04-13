@@ -31,8 +31,18 @@
 ################################################################################
 */
 
-@import url(http://fonts.googleapis.com/css?family=Monda:400,700);
-
+@font-face {
+  font-family: 'Monda';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Monda Regular'), local('Monda-Regular'), url(Monda-Regular.woff) format('woff');
+}
+@font-face {
+  font-family: 'Monda';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Monda Bold'), local('Monda-Bold'), url(Monda-Regular.woff) format('woff');
+}
 /*Clear some margins and paddings */
 body, h1, h2, h3, h4, h5, h6, form, button, input{
     margin: 0;
