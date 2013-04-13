@@ -67,6 +67,14 @@ h3 {
     font-size: 18pt;
 }
 
+h5 {
+    font-size: 16pt;
+}
+
+h5 {
+    font-size: 14pt;
+}
+
 /* general style for links */
 a {
     color: #e07b01;
@@ -75,6 +83,25 @@ a {
 
 a:hover {
     color: #2d7cc4;
+}
+
+/* general style for forms */
+input, textarea {
+    border: 1px solid #999;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+input:hover {
+    border-color: #2d7cc4;
+}
+
+input:focus {
+    border-color: #2d7cc4;
+    -moz-box-shadow: 0 0 5px #2d7cc4;
+    box-shadow: 0 0 5px #2d7cc4;
 }
 
 /* Fixed size container to center main part of website*/
