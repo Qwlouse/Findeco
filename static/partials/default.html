@@ -16,7 +16,7 @@
         <div ng-show="!allExpanded &&  nav.type!='arg' && nav.type!='root'" class="btn btn-primary" ng-click="expandAll()"
              data-i18n="_expandAllSections_"></div>
         <div ng-repeat="section in nodeInfo.indexList">
-            <a ng-show="!section.isExpanded" ng-click="expandSection(section)"
+            <a ng-show="!section.isExpanded" ng-hide="nav.type=='root'" ng-click="expandSection(section)"
                style="float:left;position: relative; top: 8px; margin-right: 5px;"><img
                     src="static/images/expand.png"></a>
             <a ng-show="section.isExpanded" ng-click="collapseSection(section)"
