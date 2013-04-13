@@ -1,6 +1,6 @@
 = Wahlprogramm der Piratenpartei Rheinland-Pfalz =
 
-''Freiheitsrechte und die Gestaltung der modernen Informations- und Wissensgesellschaft sind die Kernanliegen der Piratenparteien in ganz Europa und weltweit - und natürlich auch bei uns in Rheinland-Pfalz.''
+//Freiheitsrechte und die Gestaltung der modernen Informations- und Wissensgesellschaft sind die Kernanliegen der Piratenparteien in ganz Europa und weltweit - und natürlich auch bei uns in Rheinland-Pfalz.//
 
 Seit ihrer Gründung 2006 in Berlin wirkt die Piratenpartei Deutschland gemäß ihrer grundgesetzlichen Pflichten an der "Willensbildung des Volkes" mit. Während des Wahlkampfs zur Europawahl und Bundestagswahl 2009 erlebte die Piratenpartei einen raschen Mitgliederzuwachs. Bei der Bundestagswahl konnte sie als neue Partei sofort 2% der Stimmen erreichen. Für die schwedische Schwesterpartei sitzen zwei Abgeordnete im Europaparlament.
 
@@ -21,31 +21,31 @@ Die Piratenpartei will sich auf die im Programm genannten Themen konzentrieren, 
 
 == Unsere Ziele ==
 
-''Grundrechte verteidigen''
+**Grundrechte verteidigen**
 
 Die Piratenpartei setzt sich für einen stärkeren Schutz und eine unbedingte Beachtung der Menschen- und Bürgerrechte ein. Die gesamte Politik muss sich an ihnen orientieren.
 
-''Informationelle Selbstbestimmung''
+**Informationelle Selbstbestimmung**
 
 Das Recht des Einzelnen, die Nutzung seiner persönlichen Daten zu kontrollieren, muss garantiert werden. Dies gilt dem Staat gegenüber ebenso wie im Wirtschaftsbereich. Wir wollen weder den gläsernen Bürger noch den gläsernen Konsumenten.
 
-''Transparenz''
+**Transparenz**
 
 Alles staatliche Handeln muss transparent und für jeden nachvollziehbar sein. Nach unserer Überzeugung ist dies unabdingbare Voraussetzung für eine moderne Wissensgesellschaft in einer freiheitlichen und demokratischen Ordnung.
 
-''Bildung ermöglichen''
+**Bildung ermöglichen**
 
 Jeder Mensch hat das Recht auf freien Zugang zu Information und Bildung. Dies ist notwendig, um jedem Menschen unabhängig von seiner sozialen Herkunft ein größtmögliches Maß an gesellschaftlicher Teilhabe zu ermöglichen. Bildung ist eine der wichtigsten Ressourcen der Gesellschaft und der Wirtschaft, da nur durch den Erhalt, die Weitergabe und die Vermehrung von Wissen auf Dauer Fortschritt und gesellschaftlicher Wohlstand gesichert werden können.
 
-''Patente''
+**Patente**
 
 Wir lehnen Patente auf Lebewesen und Gene, auf Geschäftsideen und auch auf Software ab, weil sie unzumutbare und unverantwortliche Konsequenzen haben, weil sie die Entwicklung der Wissensgesellschaft behindern, weil sie allgemeine Güter ohne angemessene Gegenleistung und ohne Not privatisieren und weil sie kein Erfindungspotenzial im ursprünglichen Sinne besitzen.
 
-''Open Access''
+**Open Access**
 
 Aus dem Staatshaushalt wird eine Vielzahl schöpferischer Tätigkeiten finanziert. Da diese Werke von der Allgemeinheit finanziert werden, sollten sie auch der Allgemeinheit kostenlos zur Verfügung stehen.
 
-''Urheberrecht fair gestalten''
+**Urheberrecht fair gestalten**
 
 Das Urheberrecht muss auf die Anforderungen der sich entwickelnden Informationsgesellschaft angepasst werden und muss die Bedürfnisse von Konsumenten und Produzenten gleichermaßen berücksichtigen, auch in Hinblick darauf, dass die Grenzen zwischen Konsument und Produzent immer mehr verschwimmen.
 
