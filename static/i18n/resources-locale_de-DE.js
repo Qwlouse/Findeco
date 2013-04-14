@@ -266,17 +266,17 @@
     },
     {
         "key": "_accountRegistrationFormLink_",
-        "value": "Noch kein Account? Hier registrieren!!!",
+        "value": "Noch kein Account? Hier registrieren",
         "description": ""
     },
     {
         "key": "_accountRecoverPasswordByMailLink_",
-        "value": "Passwort vergessen? Hier kannst du es mit deiner Emailadresse wiederherstellen!",
+        "value": "Passwort vergessen? Hier kannst du es mit deiner E-Mail-Adresse wiederherstellen",
         "description": ""
     },
     {
         "key": "_accountRecoverPasswordByUsernameLink_",
-        "value": "Passwort vergessen? Hier kannst du es mit deinem Usernamen wiederherstellen!",
+        "value": "Passwort vergessen? Hier kannst du es mit deinem Benutzernamen wiederherstellen",
         "description": ""
     },
     {
