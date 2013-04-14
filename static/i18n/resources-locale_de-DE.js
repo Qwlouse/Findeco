@@ -275,7 +275,7 @@
     },
     {
         "key": "_accountRegistrationText_",
-        "value": "ACHTUNG!!!!!!! Zur Zeit ist KEINE Registrierung möglich!!!!!!! Die Accountregistrierung steht im Rahmen der Nutzungs- und Datenschutzbestimmungen jedem offen. Bitte beachte, dass es sich um eine Demoinstanz handelt und wir die Inhalte und Accounts bei Bedarf ohne weiteren Hinweis löschen werden, wenn es für Updates oder den Systembetrieb notwendig wird.",
+        "value": "Die Accountregistrierung steht im Rahmen der Nutzungs- und Datenschutzbestimmungen jedem offen.",
         "description": ""
     },
     {
