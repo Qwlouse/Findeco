@@ -21,7 +21,7 @@
     },
     {
         "key": "_accountUsernameBtn_",
-        "value": "Benutzerkennung",
+        "value": "Benutzername",
         "description": ""
     },
     {
@@ -41,13 +41,13 @@
     },
     {
         "key": "_textLoad_",
-        "value": "Text Laden",
+        "value": "Text laden",
         "description": ""
     },
 
     {
         "key": "_argumentsPro_",
-        "value": "Pro Argumente",
+        "value": "Pro-Argumente",
         "description": ""
     },
     {
@@ -57,13 +57,13 @@
     },
     {
         "key": "_argumentsCon_",
-        "value": "Contra Argumente",
+        "value": "Contra-Argumente",
         "description": ""
     },
 
     {
         "key": "_argumentsNewPro_",
-        "value": "Neues Pro Argument",
+        "value": "Neues Pro-Argument",
         "description": ""
     },
     {
@@ -73,7 +73,7 @@
     },
     {
         "key": "_argumentsNewCon_",
-        "value": "Neues Contra Argument",
+        "value": "Neues Contra-Argument",
         "description": ""
     },
     {
@@ -83,7 +83,7 @@
     },
     {
         "key": "_argumentsNewTextHere_",
-        "value": "Hier können sie ihr neues Argument eingeben....",
+        "value": "Hier kannst du dein neues Argument eingeben...",
         "description": ""
     },
     {
@@ -108,12 +108,12 @@
     },
     {
         "key": "_alternativesNewTextHere_",
-        "value": "Hier können sie ihren neuen Text eingeben....",
+        "value": "Hier kannst du deinen neuen Text eingeben...",
         "description": ""
     },
     {
         "key": "_textNewTextHere_",
-        "value": "Hier können sie ihren neuen Text eingeben....",
+        "value": "Hier kannst du deinen neuen Text eingeben...",
         "description": ""
     },
     {
@@ -123,7 +123,7 @@
     },
     {
         "key": "_derivateArgumentMissing_",
-        "value": "Bitte gib an ob dein Argument Neutral oder Contra ist.",
+        "value": "Bitte gib an, ob dein Argument neutral oder contra ist.",
         "description": ""
     },
     {
@@ -198,17 +198,6 @@
         "value": "Entfolgen",
         "description": ""
     },
-
-    {
-        "key": "_follow_",
-        "value": "Folgen",
-        "description": ""
-    },
-    {
-        "key": "_unfollow_",
-        "value": "Entfolgen",
-        "description": ""
-    },
     {
         "key": "_description_",
         "value": "Beschreibung",
@@ -216,7 +205,7 @@
     },
     {
         "key": "_InvalidLogin",
-        "value": "Login Ungültig",
+        "value": "Login ungültig",
         "description": ""
     } ,
     {
@@ -241,42 +230,42 @@
     },
     {
         "key": "_accountPasswordsNotMatching_",
-        "value": "Die eingegebenen Passwörter stimmen nicht überein",
+        "value": "Die eingegebenen Passwörter stimmen nicht überein.",
         "description": ""
     },
     {
         "key": "_accountFieldsMissing_",
-        "value": "Es müssen alle Felder ausgefüllt sein",
+        "value": "Es müssen alle Felder ausgefüllt sein.",
         "description": ""
     },
     {
         "key": "_accountCheckEmails_",
-        "value": "Die Registrierung ist abgeschlossen. Bitte prüfe deinen Emailaccount um den Zugang zu aktivieren.",
+        "value": "Die Registrierung ist abgeschlossen. Bitte prüfe deinen E-Mail-Account um den Zugang zu aktivieren.",
         "description": ""
     },
     {
         "key": "_accountActivationFinished_",
-        "value": "Dein Account wurde aktiviert. Viel Spaß mit Findeco! ",
+        "value": "Dein Account wurde aktiviert. Viel Spaß mit Findeco!",
         "description": ""
     },
     {
         "key": "_accountLoginText_",
-        "value": "Mit dem Login erkennst du die Nutzungs- und Datenschutzbestimmungen an. Bitte beachte das Findeco Cookies und Javascript benötigt um zu funktionieren.",
+        "value": "Mit dem Login erkennst du die Nutzungs- und Datenschutzbestimmungen an. Bitte beachte das Findeco Cookies und Javascript benötigt, um zu funktionieren.",
         "description": ""
     },
     {
         "key": "_accountRegistrationFormLink_",
-        "value": "Noch kein Account? Hier registrieren!!!",
+        "value": "Noch kein Account? Hier registrieren",
         "description": ""
     },
     {
         "key": "_accountRecoverPasswordByMailLink_",
-        "value": "Passwort vergessen? Hier kannst du es mit deiner Emailadresse wiederherstellen!",
+        "value": "Passwort vergessen? Hier kannst du es mit deiner E-Mail-Adresse wiederherstellen",
         "description": ""
     },
     {
         "key": "_accountRecoverPasswordByUsernameLink_",
-        "value": "Passwort vergessen? Hier kannst du es mit deinem Usernamen wiederherstellen!",
+        "value": "Passwort vergessen? Hier kannst du es mit deinem Benutzernamen wiederherstellen",
         "description": ""
     },
     {
@@ -286,12 +275,12 @@
     },
     {
         "key": "_accountRegistrationText_",
-        "value": "ACHTUNG!!!!!!! Zur Zeit ist KEINE Registrierung möglich!!!!!!! Die Accountregistrierung steht im Rahmen der nutzungs und Datenschutzbestimmungen jedem offen. Bitte beachte das es sich um eine Demoinstanz handelt und wir die Inhalte und Accounts bei Bedarf ohne weiteren Hinweis löschen werden, wenn es für Updates oder den Systembetrieb notwendig wird.",
+        "value": "ACHTUNG!!!!!!! Zur Zeit ist KEINE Registrierung möglich!!!!!!! Die Accountregistrierung steht im Rahmen der Nutzungs- und Datenschutzbestimmungen jedem offen. Bitte beachte, dass es sich um eine Demoinstanz handelt und wir die Inhalte und Accounts bei Bedarf ohne weiteren Hinweis löschen werden, wenn es für Updates oder den Systembetrieb notwendig wird.",
         "description": ""
     },
     {
         "key": "_accountUsername_",
-        "value": "Username",
+        "value": "Benutzername",
         "description": ""
     },
     {
@@ -306,7 +295,7 @@
     },
     {
         "key": "_accountEmail_",
-        "value": "EMail Adresse",
+        "value": "E-Mail-Adresse",
         "description": ""
     },
     {
@@ -341,12 +330,12 @@
     },
     {
         "key": "_accountRecoverByMailTitle_",
-        "value": "Accountwiederherstellung (per Email)",
+        "value": "Accountwiederherstellung (per E-Mail)",
         "description": ""
     },
     {
         "key": "_accountRecoverByUsernameTitle_",
-        "value": "Accountwiederherstellung (per Username)",
+        "value": "Accountwiederherstellung (per Benutzername)",
         "description": ""
     },
     {
@@ -361,7 +350,7 @@
     },
     {
         "key": "_followees_",
-        "value": "Ich folge ...",
+        "value": "Ich folge...",
         "description": ""
     },
     {
@@ -401,7 +390,7 @@
     },
     {
         "key": "_changePasswordDescription_",
-        "value": "Bitte gib dein gewünschtes Passwort zweimal ein, um Tippfehler zu vermeiden:",
+        "value": "Bitte gib dein gewünschtes Passwort zwei Mal ein, um Tippfehler zu vermeiden:",
         "description": ""
     },
     {
@@ -436,7 +425,7 @@
     },
     {
         "key": "_createTextExplanation_",
-        "value": "Du kannst in dieses Eingabefeld deinen neuen Text in Creole-Markup eingeben. Der Text muss mite einer Überschrift beginnen, die mit einem einzelnen '=' eingeleitet wird. Zur Strukturierung können Überschriften ab Heading2, also mit zwei oder mehr '=' verwendet werden.",
+        "value": "Du kannst in dieses Eingabefeld deinen neuen Text in Creole-Markup eingeben. Der Text muss mit einer Überschrift beginnen, die mit einem einzelnen '=' eingeleitet wird. Zur Strukturierung können Überschriften ab Heading2, also mit zwei oder mehr '=' verwendet werden.",
         "description": ""
     },
     {
@@ -511,12 +500,12 @@
     },
     {
         "key": "_loadMoreMicroblogging_",
-        "value": "mehr laden ...",
+        "value": "mehr laden...",
         "description": ""
     },
     {
         "key": "_search_",
-        "value": "Hier suchen ...",
+        "value": "Hier suchen...",
         "description": ""
     },
     {
@@ -556,12 +545,12 @@
     },
     {
         "key": "_accountActivationFormTitle_",
-        "value": "Accountactivierung",
+        "value": "Accountaktivierung",
         "description": ""
     },
     {
         "key": "_accountActivationText_",
-        "value": "Hier können sie ihren Account activieren",
+        "value": "Hier kannst du deinen Account aktivieren",
         "description": ""
     },
     {
