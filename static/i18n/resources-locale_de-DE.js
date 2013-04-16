@@ -583,9 +583,21 @@
         "key": "_accountRegistrationBtn_",
         "value": "Registrieren",
         "description": ""
+    },
+    {
+        "key": "_timeline_",
+        "value": "Timeline",
+        "description": ""
+    },
+    {
+        "key": "_newsForFollowedNodes_",
+        "value": "News zu Knoten denen ich folge",
+        "description": ""
+    },
+    {
+        "key": "_newsForOwnNodes_",
+        "value": "News zu meinen eigenen Knoten",
+        "description": ""
     }
-    
-    
-
     
 ]
