@@ -443,15 +443,15 @@ angular.module('FindecoServices', [])
         };
 
         location.getPathForNode = function (shortTitle, index) {
-            return location.nodePath + '/' + shortTitle + '.' + index;
+            return normalizeSlashes(location.nodePath + '/' + shortTitle + '.' + index);
         };
 
         location.getPathForArgument = function (argType, index) {
-            return location.nodePath + '.' + argType + '.' + index;
+            return normalizeSlashes(location.nodePath + '.' + argType + '.' + index);
         };
 
         location.getPathForUser = function (username) {
-            return '/user/' + username;
+            return 'user/' + username;
         };
 
         location.changePath = function (newPath) {

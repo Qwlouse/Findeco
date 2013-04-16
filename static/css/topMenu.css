@@ -101,10 +101,11 @@ div.searchBox.searchActive {
     box-shadow:0 0 5px #2d7cc4;
 }
 
-div.searchBox form input {
+#searchInput {
     border: 0;
     outline: none;
     -webkit-appearance: none;
+    box-shadow: 0 0 0;
 }
 
 .searchButton {
@@ -112,6 +113,12 @@ div.searchBox form input {
     height: 18px;
     width: 18px;
     background: url("../images/search.png");
+    position: relative;
+    top: -2px;
+}
+
+.searchButton:hover {
+    background: url("../images/search_hover.png");
 }
 
 #headerContent input{

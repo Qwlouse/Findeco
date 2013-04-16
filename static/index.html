@@ -62,9 +62,9 @@
                     <div id="headerContent" ng-controller="FindecoUserCtrl">
                         <h1>Findeco</h1>
                         <ul>
-                            <li class="{{getActiveClass('/start')}}"><a href="#/start" data-i18n="_start_">Start</a></li>
-                            <li class="{{getActiveClass('/news')}}"><a href="#/news" data-i18n="_news_">News</a></li>
-                            <li class="{{getActiveClass('')}}"><a href="#" data-i18n="_content_">Content</a></li>
+                            <li class="{{getActiveClass('/start')}}"><a href="/#/start" data-i18n="_start_">Start</a></li>
+                            <li class="{{getActiveClass('/news')}}"><a href="/#/news" data-i18n="_news_">News</a></li>
+                            <li class="{{getActiveClass('')}}"><a href="/#/" data-i18n="_content_">Content</a></li>
                             <li class="{{getActiveClass('/search')}}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
@@ -77,10 +77,15 @@
                         </ul>
                         <ul style="position: absolute; right: 0;">
                             <li  class="{{getActiveClass('/profile')}}" ng-show="user.isLoggedIn">
-                                <a ng-href="#/profile">{{user.displayName}}</a>
+                                <a ng-href="/#/profile">{{user.displayName}}</a>
                             </li>
                             <li ng-show="user.isLoggedIn">
-                                <a ng-click="logout()" style="cursor:pointer; padding: 0;"><img src="static/images/logout.png" alt="Logout" height="18" style="position: relative; top: 3px; margin: 0 0 0 0;" /></a>
+                                <a ng-click="logout()" style="cursor:pointer; padding: 0;">
+                                    <img src="static/images/logout.png"
+                                         onmouseover="this.src='static/images/logout_hover.png';"
+                                         onmouseout="this.src='static/images/logout.png';"
+                                         alt="Logout" height="18"
+                                         style="position: relative; top: 3px; margin: 0 0 0 0;" /></a>
                             </li>
                             <li ng-show="!user.isLoggedIn" style="float:right"><a href="#/login" data-i18n="_accountLogin_"></a></li>
                         </ul>
@@ -91,8 +96,13 @@
                 <div class="centeringContainer">
 
                     <ul>
-                        <li><a href="/#"><img ng-show="navigation.entries" src="static/images/home.png" alt="Home"/><img
-                                ng-show="navigation.entries.length == 0" src="static/images/home_blue.png"
+                        <li><a href="/#/"><img ng-show="navigation.entries"
+                                               src="static/images/home.png"
+                                               alt="Home"
+                                               onmouseover="this.src='static/images/home_hover.png';"
+                                               onmouseout="this.src='static/images/home.png';"
+                                /><img
+                                ng-show="navigation.entries.length == 0" src="static/images/home_hover.png"
                                 alt="Home"/></a></li>
 
                         <li ng-repeat="nav in navigation.entries"><a ng-href="/#{{ nav.path }}">{{ nav.name }}</a></li>
