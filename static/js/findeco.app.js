@@ -32,7 +32,7 @@ var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', '
             when('/about', {templateUrl: 'static/partials/about.html', controller: FindecoCustomContentCtrl}).
             when('/data_privacy', {templateUrl: 'static/partials/dataPrivacy.html', controller: FindecoCustomContentCtrl}).
             when('/start', {templateUrl: 'static/partials/start.html'}).
-            when('/impressum', {templateUrl: 'static/partials/impressum.html', controller: FindecoCustomContentCtrl}).
+            when('/imprint', {templateUrl: 'static/partials/imprint.html', controller: FindecoCustomContentCtrl}).
             when('/user*name', {templateUrl: 'static/partials/user.html', controller: FindecoUserInfoCtrl}).
             when('/login', {templateUrl: 'static/partials/userLogin.html', controller: FindecoUserCtrl}).
             when('/register', {templateUrl: 'static/partials/userRegistration.html', controller: FindecoUserCtrl}).
