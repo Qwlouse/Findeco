@@ -4,19 +4,14 @@
     </div>
 
     <div id="centerColumn" class="contentBox">
-        <h1>Impressum</h1>
-        <br>
-        Verantwortlich für die Demoinstanz auf demo.findeco.de:<br>
-        Maik Nauheim <br>
-        Bahnhofstr. 10 <br>
-        56242 Nordhofen <br>
-        Tel 017921/52862 <br>
-        
-        email: serverbetrieb@manano.de <br>
+        <div ng-show="content!=undefined" ng-bind-html-unsafe="content"></div>
+        <div ng-show="content==undefined">
+            <h1>Hier sollte ein Impressum stehen!</h1>
+            <br>
+            Falls nicht, fehlt vermutlich die Datei <a href="/static/customContent/impressum.html">"static/customContent/impressum.html"</a>
+            auf dem Server.
+        </div>
     </div>
-
     <div id="rightColumn" class="contentBoxInvisible">
-
     </div>
-
 </div>
