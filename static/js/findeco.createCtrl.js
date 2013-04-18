@@ -150,12 +150,12 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
 
     if ($scope.settings.type == 'derivate') {
         var paragraphs = [];
-        var wikiText = $scope.tmp.textAlternative;
+        var wikiText = "";
         Backend.loadText(paragraphs, Navigator.nodePath).success(function () {
             for (var i = 0; i < paragraphs.length; i++) {
                 var tmpText = paragraphs[i]['wikiText'];
                 tmpText = tmpText.replace(/={2}[ ]\[{2}.*\|/,"= ");
-                wikiText = tmpText.replace(/]{2}[ ]={2}/," =");
+                wikiText += tmpText.replace(/]{2}[ ]={2}/," =") + "\n\n\n";
             }
             $scope.tmp.textAlternative = wikiText;
         });
