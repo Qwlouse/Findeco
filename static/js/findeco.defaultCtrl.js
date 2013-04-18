@@ -77,31 +77,10 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     };
 
     $scope.expandAll = function () {
-        var tmp = [];
-        Backend.loadText(tmp, $scope.nav.nodePath).success(function (d) {
-            if (d.loadTextResponse == undefined || d.loadTextResponse.paragraphs == undefined) {
-                // TODO: Something went terribly wrong.
-                return;
-            }
-
-            var paragraphs = d.loadTextResponse.paragraphs;
-
-            // O(m*n) I certainly don't like it but don't see another way...
-            for (var p in paragraphs) {
-                for (var i in $scope.nodeInfo.indexList) {
-                    var section = $scope.nodeInfo.indexList[i];
-                    var path = $scope.nav.getPathForNode(section.shortTitle, section.index);
-                    if (paragraphs[p].path.substr(0,path.length) == path) {
-                        section.paragraphs.push(paragraphs[p]);
-                        section.isLoaded = true;
-                        section.isExpanded = true;
-                        section.path = path;
-                        break;
-                    }
-                }
-            }
-            $scope.allExpanded = true;
-        });
+        var sections = $scope.nodeInfo.indexList;
+        for (var i = 0; i < sections.length; ++i) {
+            $scope.expandSection(sections[i]);
+        }
     };
 
     $scope.expandSection = function (section) {
