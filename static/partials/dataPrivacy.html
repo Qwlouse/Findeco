@@ -4,58 +4,11 @@
     </div>
 
     <div id="centerColumn" class="contentBox">
-        <h1>Datenschutzerklärung</h1>
-        <p>Wir bemühen uns, auf dieser Seite möglichst wenige personenbezogene Daten zu erfassen. Daher werden diese nur
-            im technisch notwendigen Umfang erhoben. In keinem Fall werden die erhobenen Daten verkauft oder aus an
-            Dritte weitergegeben. Ausnahmen hierzu stellen nur verpflichtende Weitergaben z.B. an Ermittlungsbehörden
-            aufgrund richterlichem Beschluss dar.</p>
-        <h2>Datenverarbeitung auf dieser Internetseite</h2>
-		<p>Dein Computer oder Browser übermittelt bestimmte Daten an uns, diese sind je nach Browser- und
-            Betriebssystemtyp, -Version und -Einstellung unterschiedlich. Dazu gehören unter anderem:</p>
-		<ul>
-			<li>Uhrzeit der Serveranfrage.</li>
-			<li>Betriebssystem</li>
-			<li>Browsertyp und Version</li>
-			<li>Referrer URL (die zuvor besuchte Seite)</li>
-			<li>Hostname des zugreifenden Rechners (IP Adresse)</li>	
-		</ul>
-        <p>Diese Daten werden 90 Tage vorgehalten. </p>
-		<h2>Cookies</h2>
-        <p>Findeco verwendet Cookies, um Daten über dich zu speichern. Cookies sind kleine Textdateien, die auf deinem
-            Rechner abgelegt werden und die dein Browser speichert (Viren). Alle von uns verwendeten Cookies
-            sind sogenannte „Session-Cookies“ und werden nach Ende deines Besuchs automatisch gelöscht. In deinen
-            Browsereinstellungen kannst du die Annahme von Cookies unterbinden, was allerdings zu Fehlfunktionen oder
-            dem Nichtfunktionieren von Findeco führen kann. Eine Anmeldung ohne Session-Cookies ist leider technisch
-            nicht umsetzbar.</p>
-        <h2>Registrierung</h2>
-		<p>Zur Registrierung auf demo.findeco.de ist eine E-Mail-Adresse erforderlich. Zu keinem Zeitpunkt werden wir
-            deine E-Mail-Adresse weitergeben oder dir unaufgefordert Emails zusenden, die nicht zur Funktion oder
-            Handhabung des Systems erforderlich sind (Richtervorbehalt gilt). Du erhältst dort ausschließlich für den
-            Systembetrieb notwendige E-Mails, sofern du nicht der Verwendung für die Zusendung von Newslettern oder
-            automatischen Benachrichtigungen explizit zustimmst. Zu den für den Systembetrieb notwendigen Mails
-            gehören z.B. </p>
-        <ul>
-			<li>E-Mails bei Accounterstellung</li>
-			<li>E-Mails zur Passwortwiederherstellung</li>
-			<li>E-Mails zur Accountlöschung</li>
-		</ul>	
-	 	<h2>Accountlöschung</h2>
-		<p>Eine Accountlöschung ist zurzeit nicht automatisch möglich. Wir arbeiten zurzeit an der Implementierung.
-            Du kannst aber unter serverbetrieb@manano.de jederzeit eine Accountlöschung anfordern.</p>
-        <p>Die Beiträge gelöschter Benutzer werden nicht gelöscht, sondern anonymisiert. Sie gelten als „Leserbriefe“,
-            die veröffentlicht wurden, daher lässt sich aus den Regeln zur Accountlöschung keine Löschpflicht für den
-            Betreiber herleiten.</p>
-        <h2>Anzeigenamen</h2>
-        <p>Im System sind alle Namen frei wählbar, die noch nicht vergeben sind. Bei Namen die in Verbindung mit
-            Ereignissen der deutschen Geschichte assoziiert werden können, behält sich die Administration eine Änderung
-            oder Löschung vor. Anonymität lässt sich nur über ein Pseudonym, das nicht mit dem Nutzer in Verbindung
-            steht gewährleisten. Dieses Empfehlen wir gemäß dem BDSG §9 Abs. 3 zum Schutz der im Gesetz genannten
-            Daten.</p>
-        <h2>Passwörter</h2>
-        <p>Die Passwörter werden als Hashs gespeichert, daher ist eine Bestandsdatenauskunft seitens des Betreibers
-            über das Passwort nicht ohne beträchtliche Rechnerzeit entschlüsselbar. Auch die Administration hat keinen
-            Zugang zu den Passwörtern im Klartext.</p>
-		 
+        <div ng-show="content!=undefined" ng-bind-html-unsafe="content"></div>
+        <div ng-show="content==undefined">
+            <h1>Hier sollten Datenschutzbestimmungen stehen!</h1>
+            Falls nicht, fehlt auf dem Server vermutlich die Datei <a href="{{ path }}">"{{ path }}"</a>.
+        </div>
     </div>
 
     <div id="rightColumn" class="contentBoxInvisible">

@@ -4,44 +4,11 @@
     </div>
 
     <div id="centerColumn" class="contentBox">
-   		<h1>Nutzungsbedingungen</h1>
-
-        <p>Diese Instanz von Findeco wurde zur Nutzung für die Piraten RLP von Johannes Merkert, Justus Wingert, Klaus
-            Greff und Maik Nauheim entwickelt (Infos dazu <a href="#/about">hier</a>) und wird durch Maik Nauheim im
-            Auftrag des Landesparteitages nach Beschluss des Landesvorstandes betrieben. Dieses Betreiben der Instanz
-            berechtigt den o.g. Betreiber zu allen systemrelevanten Entscheidungen und Änderungen des Systems zur
-            Herstellung und Nutzbarkeitsanalyse einer funktionsfähigen Instanz von Findeco für den Dauerbetrieb.</p>
-        <p>Die Nutzung von Findeco ist unentgeltlich und kostenfrei.</p>
-        <p>Ein Anspruch auf die Dienstleistung oder den Zugang zu Findeco besteht nicht.</p>
-        <p>Für die Nutzung gelten unsere <a href="#/data_privacy">Datenschutzbestimmungen</a> und diese sind durch die
-            Anmeldung auch anerkannt.</p>
-        <p>Beiträge oder Aussagen in und über die Software haben den Charakter von veröffentlichten Leserbriefen. Ein
-            Löschungsanspruch, oder die Unkenntlichmachung des Absendenden besteht daher dem Grundsatz nach nicht.</p>
-        <p>Alle Beiträge werden durch das Speichern im System als
-            <a href='http://creativecommons.org/licenses/by-sa/3.0/de/'>CC-BY-SA</a> lizensiert. Nutzer haften
-            persönlich für Beiträge, die mit dieser Lizensierung inkompatibel sind. Zitate sind im Rahmen des
-            Urheberrechts natürlich gestattet.</p>
-        <p>Es besteht kein Anspruch auf einen Account auf dieser Instanz von Findeco.</p>
-        <p>Es besteht kein Anspruch auf eine dauerhafte Verfügbarkeit dieser Instanz von Findeco.</p>
-        <p>Es kann passieren, dass Datenbank und Inhalte im Moment in unregelmäßigen Abständen zurückgesetzt werden
-            müssen. Betreiber und Entwickler werden versuchen wann immer möglich die Daten zu aktualisieren. Ein
-            Anspruch auf den erhalt der Daten besteht aber nicht.</p>
-        <p>Diese Instanz ist noch nicht vollständig für den Produktivbetrieb geeignet. Für die weitere Entwicklung sind
-            reale Nutzungsdaten notwendig, die mit dieser Instanz generiert werden. Es wird weiter aktiv an
-            Findeco gearbeitet, was zu Unannehmlichkeiten führen kann, die eine produktive Nutzung behindern. Es ist
-            allerdings sehr wahrscheinlich, dass sich bereits diese Beta-Version von Findeco als nützlich erweist.</p>
-        <p>Diese Instanz ist eine Testversion (Beta). Wird das System durch den Betrieb geändert oder erneuert, besteht
-            kein Anspruch auf Übernahme alter Daten und Datensätze in das neue oder erneuerte System. Der Betreiber
-            entscheidet über den Aufwand und die Angemessenheit von Arbeiten im System allein.</p>
-        <p>Dieses Instanz wird auf einem Server der Bundes-IT der Piratenpartei Deutschland gehostet. Der Betreiber
-            hat keinen Zugriff auf alle Aspekte dieses Serversystems und kann daher nur im Rahmen der ihm zur Verfügung
-            stehenden Möglichkeiten die Stabilität und Sicherheit des Systems garantieren.</p>
-        <p>Der Betreiber und der Eigentümer des Servers unterwerfen sich für die Findeco-Instanz der Aufsicht durch
-            die Datenschutzverantwortlichen der Piraten in Rheinland-Pfalz. Vermutungen von Verstößen des BDSG, LDSG
-            oder der Datensicherheit können dort angezeigt werden und werden nach den Regeln der Piraten für
-            Datenschutzvorgänge behandelt.</p>
-        <p>Da der Betrieb die Nutzung von Pseudonymen ermöglichet, empfehlen wir diese im Hinblick auf den Datenschutz
-            gem. § 3 Abs. 9 BDSG zu nutzen, um persönlich zuzuordnende politische Daten der Zuordnung zu entziehen.</p>
+        <div ng-show="content!=undefined" ng-bind-html-unsafe="content"></div>
+        <div ng-show="content==undefined">
+            <h1>Hier sollten Nutzungsbedingungen stehen!</h1>
+            Falls nicht, fehlt auf dem Server vermutlich die Datei <a href="{{ path }}">"{{ path }}"</a>.
+        </div>
     </div>
 
     <div id="rightColumn" class="contentBoxInvisible">

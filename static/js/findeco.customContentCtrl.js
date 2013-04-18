@@ -27,9 +27,9 @@
 
 function FindecoCustomContentCtrl($scope, $http, Navigator) {
     $scope.content = undefined;
+    $scope.path = 'static/customContent' + Navigator.prefix + '.html';
 
-    var path = 'static/customContent' + Navigator.prefix + '.html';
-    $http.get(path).success(function (d) {
+    $http.get($scope.path).success(function (d) {
         $scope.content = d;
     });
 }
