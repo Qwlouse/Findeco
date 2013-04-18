@@ -31,6 +31,7 @@ function FindecoStartCtrl($scope, Backend, User) {
     $scope.ownNodesList = [];
 
     $scope.user = User;
+    $scope.username = User.displayName;
 
     function setAuthorForAllBlogs(list) {
         for (var i = 0; i < list.length; ++i ) {
@@ -80,9 +81,13 @@ function FindecoStartCtrl($scope, Backend, User) {
         });
     };
 
-    $scope.updateFollowedUsers();
-    $scope.updateFollowedNodes();
-    $scope.updateOwnNodes();
+    $scope.$watch('username', function () {
+        if ($scope.username != "") {
+            $scope.updateFollowedUsers();
+            $scope.updateFollowedNodes();
+            $scope.updateOwnNodes();
+        }
+    });
 }
 
 FindecoStartCtrl.$inject = ['$scope', 'Backend', 'User'];
