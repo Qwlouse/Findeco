@@ -42,7 +42,7 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
         Backend.loadUserInfo(name).success(function (data) {
             $scope.displayUser.exists = true;
             $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
-
+            $scope.displayUser.isFollowing = User.follows(name);
         }).error(function () {
             $scope.displayUser.exists = false;
             $scope.displayUser.name = 'User "' + name + '" existiert nicht.';
