@@ -535,7 +535,7 @@
     },
     {
         "key": "_rootText_",
-        "value": "Du befindest dich auf der obersten Ebene. Wenn du neu in Findeco bist, solltest du die Funktionen zuerst auf der Spielwiese ausprobieren.",
+        "value": "Du befindest dich auf der obersten Ebene. Wenn du neu in Findeco bist, solltest du die Funktionen zuerst auf der Spielwiese oder auf demo.findeco.de ausprobieren.",
         "description": ""
     },
     {
