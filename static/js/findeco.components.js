@@ -124,7 +124,7 @@ findecoApp
                 scope.changed = true;
                 scope.$watch('wikiText', function () {
                    scope.changed = true;
-                   if (scope.updateInterval == undefined || scope.updateInterval != "") {
+                   if (scope.updateInterval == undefined) {
                        repeatedParsing()
                    }
                 });
@@ -136,7 +136,7 @@ findecoApp
                     }
                 }
                 repeatedParsing();
-                if (scope.updateInterval != undefined && scope.updateInterval != "") {
+                if (scope.updateInterval != undefined) {
                     setInterval(repeatedParsing, scope.updateInterval);
                 }
             }
