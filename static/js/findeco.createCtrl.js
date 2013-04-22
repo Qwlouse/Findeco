@@ -58,9 +58,20 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
 
         return true;
     };
+    $scope.getButtonState = function () {
+        if ($scope.blockButton == true) {
+            return "btn btn-primary active";
+        } else {
+            return "btn btn-primary inActive";
+        }
+    };
 
     $scope.submit = function () {
-
+    	if ($scope.blockButton==true){
+    		return;
+    	}
+        
+        
         var params = {};
         switch ($scope.settings.type) {
             case 'argumentPro':
@@ -122,7 +133,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
         if ( angular.equals(params,{}) ) {
             return;
         }
-
+        $scope.blockButton=true;
         Backend.storeText(Navigator.nodePath, params)
             .success(function (data) {
                 if (data.storeTextResponse != undefined) {
@@ -134,7 +145,12 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 if (data.errorResponse != undefined) {
                     Message.send('error', data.errorResponse.errorMessage);
                 }
-            });
+                $scope.blockButton=false;
+                
+            })
+            .error(function(data){
+        		$scope.blockButton=false;
+        	});
     };
 
     $scope.tmp = TMP;
