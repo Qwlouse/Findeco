@@ -587,6 +587,14 @@
         "key": "_newsForOwnNodes_",
         "value": "News zu meinen eigenen Knoten",
         "description": ""
+    },
+    {
+        "key": "_derivateTextAlternativeParseError_",
+        "value": "Der von dir eingegebene Text ist fehlerhaft. Meist fehlt ein schließendes Gleicheichen oder du hast nicht mit einer Überschrift begonnen. ",
+        "description": ""
     }
+    
+    
+    
     
 ]
