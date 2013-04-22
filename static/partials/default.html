@@ -1,8 +1,12 @@
 <div id="contentContainer" class="centeringContainer">
+ <div ng-show="!user.isLoggedIn" id="disclaimerBox" class="contentBox" >
+  Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage der <a href="http://piraten-rlp.de/">Piratenpartei Rheinland-Pfalz.</a> 
+ </div>
     <div ng-include src="'static/partials/argument.html'" ng-show="nav.type!='root'"></div>
     <div style="float: left; width: 200px; min-height: 10px; padding: 25px;" ng-show="nav.type=='root'"></div>
 
     <div id="centerColumn" class="contentBox">
+   
         <div spam-mark show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode"></div>
         <div follow-star show-if="user.isLoggedIn && nav.type!='root'" entity="nodeInfo" mark-func="markNode" width="21" height="21"></div>
         <h1 ng-show="nav.type!='root'">{{ nodeInfo.fullTitle }}</h1>
@@ -51,4 +55,8 @@
     </div>
 
     <div ng-include src="'static/partials/microblogging.html'" ng-show="nav.type!='root'"></div>
+    <div style="clear:both; padding-bottom:25px;"></div>
+     <div ng-show="user.isLoggedIn" id="disclaimerBox" class="contentBox" >
+  Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage der <a href="http://piraten-rlp.de/">Piratenpartei Rheinland-Pfalz.</a> 
+ </div>
 </div>

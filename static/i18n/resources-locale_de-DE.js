@@ -535,7 +535,7 @@
     },
     {
         "key": "_rootText_",
-        "value": "Du befindest dich auf der obersten Ebene. Wenn du neu in Findeco bist, solltest du die Funktionen zuerst auf der Spielwiese ausprobieren.",
+        "value": "Du befindest dich auf der obersten Ebene. Wenn du neu in Findeco bist, solltest du die Funktionen zuerst auf der Spielwiese oder auf demo.findeco.de ausprobieren.",
         "description": ""
     },
     {
@@ -587,6 +587,14 @@
         "key": "_newsForOwnNodes_",
         "value": "News zu meinen eigenen Knoten",
         "description": ""
+    },
+    {
+        "key": "_derivateTextAlternativeParseError_",
+        "value": "Der von dir eingegebene Text ist fehlerhaft. Meist fehlt ein schließendes Gleicheichen oder du hast nicht mit einer Überschrift begonnen. ",
+        "description": ""
     }
+    
+    
+    
     
 ]

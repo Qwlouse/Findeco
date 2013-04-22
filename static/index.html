@@ -62,9 +62,10 @@
                 <div id="headerContainer" class="centeringContainer">
                     <div id="headerContent" ng-controller="FindecoUserCtrl">
                         <h1>Findeco</h1>
+                        <div style="margin-top:-25px; margin-left:150px;color:#ECB40D">BETA</div>
                         <ul>
                             <li class="{{getActiveClass('/start')}}"><a href="/#/start" data-i18n="_start_">Start</a></li>
-                            <li class="{{getActiveClass('/news')}}"><a href="/#/news" data-i18n="_news_">News</a></li>
+                            <li  class="{{getActiveClass('/news')}}" ng-show="user.isLoggedIn"><a href="/#/news" data-i18n="_news_">News</a></li>
                             <li class="{{getActiveClass('')}}"><a href="/#/" data-i18n="_content_">Content</a></li>
                             <li class="{{getActiveClass('/search')}}" id="searchTab">
                                 <div class="searchBox">

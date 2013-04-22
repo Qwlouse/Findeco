@@ -214,3 +214,9 @@ body:before {
     min-height: 100px;
     padding: 25px;
 }
+
+#disclaimerBox{
+	text-align:center; 
+	padding:10px; 
+	margin-bottom:25px;
+}

@@ -128,15 +128,11 @@
 }
 
 .btn:hover {
-  color: #333333;
   text-decoration: none;
-  background-position: 0 -15px;
-  -webkit-transition: background-position 0.1s linear;
-     -moz-transition: background-position 0.1s linear;
-       -o-transition: background-position 0.1s linear;
-          transition: background-position 0.1s linear;
-}
 
+  color: #2D7CC4;
+
+}
 .btn:focus {
   outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
@@ -237,7 +233,7 @@ input[type="button"].btn-block {
 }
 
 .btn-primary {
-  color: #ffffff;
+  color: #black;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #fbb450;
   *background-color: #f89406;
@@ -253,18 +249,17 @@ input[type="button"].btn-block {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
 
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary.active,
-.btn-primary.disabled,
-.btn-primary[disabled] {
-  color: #ffffff;
-  background-color: #fbb450;
-  *background-color: #f89406;
-}
+
 
 .btn-primary:active,
 .btn-primary.active {
   background-color: #e07b01 \9;
+}
+
+.active {
+
+}
+.inActive {
+	
 }
 
