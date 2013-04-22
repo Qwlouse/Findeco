@@ -112,4 +112,33 @@ findecoApp
                 }
             }
         }
+    })
+    .directive('creole', function() {
+        return {
+            restrict : 'A',
+            scope: {
+                wikiText : '=',
+                updateInterval : '@'
+            },
+            link : function (scope, element, attrs) {
+                scope.changed = true;
+                scope.$watch('wikiText', function () {
+                   scope.changed = true;
+                   if (scope.updateInterval == undefined || scope.updateInterval != "") {
+                       repeatedParsing()
+                   }
+                });
+                function repeatedParsing() {
+                    if (scope.changed && scope.wikiText != undefined) {
+                        var html = Parser.parse(scope.wikiText, "unusedShortTitle", true);
+                        element.html(html);
+                        scope.changed = false;
+                    }
+                }
+                repeatedParsing();
+                if (scope.updateInterval != undefined && scope.updateInterval != "") {
+                    setInterval(repeatedParsing, scope.updateInterval);
+                }
+            }
+        }
     });

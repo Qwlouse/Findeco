@@ -7,7 +7,7 @@
         <h1>{{displayUser.name}}</h1>
         <div ng-show="displayUser.exists">
             <h2 data-i18n="_description_">Description</h2>
-            <div ng-bind-html-unsafe="parse(displayUser.description)"></div>
+            <div creole wiki-text="displayUser.description"></div>
         </div>
     </div>
 

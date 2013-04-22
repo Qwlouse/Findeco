@@ -44,7 +44,7 @@
         <h1>{{user.displayName}}</h1>
         <div>
             <h2 data-i18n="_description_">Description</h2>
-            <div ng-bind-html-unsafe="parse(user.description)"></div>
+            <div creole wiki-text="user.description" update-interval="2000"></div>
         </div>
     </div>
 </div>

@@ -44,14 +44,6 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
         $location.path(target + '/' + $scope.nav.nodePath);
     };
 
-    $scope.parse = function (text, shortTitle) {
-        if (text != undefined) {
-            return Parser.parse(text, shortTitle, true);
-        } else {
-            return "";
-        }
-    };
-
     $scope.markNode = Backend.markNode;
 
 

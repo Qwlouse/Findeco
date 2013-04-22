@@ -34,13 +34,6 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
 
     $scope.argumentList = [];
 
-    $scope.parse = function(text,shortTitle) {
-        if ( text == undefined || text == "" ) {
-            return '';
-        }
-        return Parser.parse(text,shortTitle,true);
-    };
-
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
             var arg = $scope.argumentList[i];

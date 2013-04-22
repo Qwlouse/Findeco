@@ -11,7 +11,7 @@
         <div ng-show="nav.type!='arg'  && nav.type!='root'">
             <div findeco-graph data="graphData" path="nav.nodePath" class="graph"></div>
         </div>
-        <p ng-show="nav.type!='root'" ng-bind-html-unsafe="parse(nodeInfo.wikiText, 'ignored')"></p>
+        <p ng-show="nav.type!='root'" creole wiki-text="nodeInfo.wikiText"></p>
 
         <div ng-show="!allExpanded &&  nav.type!='arg' && nav.type!='root'" class="btn btn-primary" ng-click="expandAll()"
              data-i18n="_expandAllSections_"></div>
@@ -34,7 +34,7 @@
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
                 <div spam-mark show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
                 <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode" width="21" height="21"></div>
-                <div ng-bind-html-unsafe="parse(paragraph.wikiText,paragraph.path)"></div>
+                <div creole wiki-text="paragraph.wikiText"></div>
             </div>
         </div>
         <div ng-show="nav.type!='arg' && user.isLoggedIn && nav.type!='root'" class="btn btn-primary" ng-click="relocate('create/topic')"

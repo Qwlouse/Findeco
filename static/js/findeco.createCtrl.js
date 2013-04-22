@@ -40,12 +40,6 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
         return false;
     };
 
-    $scope.parse = function (text) {
-        if (text != undefined && text.length > 0)
-            return Parser.parse(text, null, true);
-        return "";
-    };
-
     $scope.checkWikiCompatibility = function (text) {
         if (text == undefined
             || text == '') {
