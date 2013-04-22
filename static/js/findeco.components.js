@@ -121,24 +121,30 @@ findecoApp
                 updateInterval : '@'
             },
             link : function (scope, element, attrs) {
-                scope.changed = true;
+                if (scope.updateInterval == undefined) {
+                    scope.updateInterval = 0;
+                }
+                scope.lastParseTime = 0;
+                scope.lastChangeTime = 0;
                 scope.$watch('wikiText', function () {
-                   scope.changed = true;
-                   if (scope.updateInterval == undefined) {
-                       repeatedParsing()
-                   }
+                    if (scope.updateInterval == 0) {
+                        parse()
+                    } else {
+                        scope.lastChangeTime = new Date().getTime();
+                        setTimeout(parse, 1000);
+                    }
                 });
-                function repeatedParsing() {
-                    if (scope.changed && scope.wikiText != undefined) {
-                        var html = Parser.parse(scope.wikiText, "unusedShortTitle", true);
-                        element.html(html);
-                        scope.changed = false;
+                function parse() {
+                    var now = new Date().getTime();
+                    if (now - scope.lastChangeTime > 1000 && now - scope.lastParseTime > scope.updateInterval) {
+                        if (scope.wikiText != undefined) {
+                            var html = Parser.parse(scope.wikiText, "unusedShortTitle", true);
+                            element.html(html);
+                            scope.lastParseTime = new Date().getTime();
+                        }
                     }
                 }
-                repeatedParsing();
-                if (scope.updateInterval != undefined) {
-                    setInterval(repeatedParsing, scope.updateInterval);
-                }
+                parse();
             }
         }
     });
