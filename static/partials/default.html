@@ -1,5 +1,5 @@
 <div id="contentContainer" class="centeringContainer">
- <div id="disclaimerBox" class="contentBox" >
+ <div ng-show="!user.isLoggedIn" id="disclaimerBox" class="contentBox" >
   Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage der <a href="http://piraten-rlp.de/">Piratenpartei Rheinland-Pfalz.</a> 
  </div>
     <div ng-include src="'static/partials/argument.html'" ng-show="nav.type!='root'"></div>
@@ -55,4 +55,8 @@
     </div>
 
     <div ng-include src="'static/partials/microblogging.html'" ng-show="nav.type!='root'"></div>
+    <div style="clear:both; padding-bottom:25px;"></div>
+     <div ng-show="user.isLoggedIn" id="disclaimerBox" class="contentBox" >
+  Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage der <a href="http://piraten-rlp.de/">Piratenpartei Rheinland-Pfalz.</a> 
+ </div>
 </div>
