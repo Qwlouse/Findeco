@@ -121,29 +121,39 @@ findecoApp
                 updateInterval : '@'
             },
             link : function (scope, element, attrs) {
-                if (scope.updateInterval == undefined) {
-                    scope.updateInterval = 0;
-                }
-                scope.lastParseTime = 0;
-                scope.lastChangeTime = 0;
-                scope.$watch('wikiText', function () {
-                    if (scope.updateInterval == 0) {
-                        parse()
-                    } else {
-                        scope.lastChangeTime = new Date().getTime();
-                        setTimeout(parse, 1000);
-                    }
-                });
                 function parse() {
-                    var now = new Date().getTime();
-                    if (now - scope.lastChangeTime > 1000 && now - scope.lastParseTime > scope.updateInterval) {
-                        if (scope.wikiText != undefined) {
-                            var html = Parser.parse(scope.wikiText, "unusedShortTitle", true);
-                            element.html(html);
-                            scope.lastParseTime = new Date().getTime();
-                        }
+                    if (scope.wikiText != undefined) {
+                        var html = Parser.parse(scope.wikiText, "unusedShortTitle", true);
+                        element.html(html);
                     }
                 }
+
+                function check_for_parse_timing() {
+                    var now = new Date().getTime();
+                    var interval = parseInt(scope.updateInterval);
+                    if (now >= scope.nextParseTime &&
+                        scope.lastChangeTime >= now - interval) {
+                        parse();
+                        scope.nextParseTime = now + interval;
+                        setTimeout(check_for_parse_timing, interval + 10);
+                    }
+                }
+
+                if (scope.updateInterval == undefined) {
+                    scope.$watch('wikiText', function () {
+                        parse();
+                    });
+                } else {
+                    scope.nextParseTime = 0;
+                    scope.lastChangeTime = 0;
+                    scope.$watch('wikiText', function () {
+                        var now = new Date().getTime();
+                        scope.nextParseTime = Math.max(scope.nextParseTime, now + 1000);
+                        scope.lastChangeTime = now;
+                        setTimeout(check_for_parse_timing, 1000);
+                    });
+                }
+
                 parse();
             }
         }
