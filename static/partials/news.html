@@ -18,6 +18,10 @@
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
         </ul>
+		<div ng-show="isLoading('timeline')" class="deactivateDiv">
+    	</div>
+   		<div ng-show="isLoading('timeline')" class="deactivateSpinner">
+    	</div>
     </div>
     <div class="contentBox startColumn">
         <h2 data-i18n="_newsForFollowedNodes_"></h2>
@@ -32,6 +36,10 @@
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
         </ul>
+        <div ng-show="isLoading('newsForFollowedNodes')" class="deactivateDiv">
+    	</div>
+   		<div ng-show="isLoading('newsForFollowedNodes')" class="deactivateSpinner">
+    	</div>
     </div>
     <div class="contentBox startColumn">
         <h2 data-i18n="_newsForOwnNodes_"></h2>
@@ -46,5 +54,9 @@
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
         </ul>
+        <div ng-show="isLoading('newsForOwnNodes')" class="deactivateDiv">
+    	</div>
+   		<div ng-show="isLoading('newsForOwnNodes')" class="deactivateSpinner">
+    	</div>
     </div>
 </div>

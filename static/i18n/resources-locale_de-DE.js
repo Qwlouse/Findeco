@@ -592,6 +592,16 @@
         "key": "_derivateTextAlternativeParseError_",
         "value": "Der von dir eingegebene Text ist fehlerhaft. Meist fehlt ein schließendes Gleicheichen oder du hast nicht mit einer Überschrift begonnen. ",
         "description": ""
+    },
+    {
+        "key": "_createNotChanged_",
+        "value": "Der Inhalt wurde nicht geändert und kann daher nicht gespeichert werden. ",
+        "description": ""
+    },
+    {
+        "key": "_alternativeNotChanged_",
+        "value": "Der Alternativtext wurde nicht geändert und kann daher nicht gespeichert werden.",
+        "description": ""
     }
     
     

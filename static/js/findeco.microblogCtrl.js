@@ -38,6 +38,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
             blog.author.isFollowing = User.follows(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
+        $scope.MicrobloggingIsLoading = false;
     }
 
     $scope.microbloggingList = [];
@@ -46,7 +47,9 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
     $scope.followUser = function (path, type) {
         return User.markUser(path, type).success(setAuthorForAllBlogs);
     };
-
+    $scope.isLoading = function (){
+    	return $scope.MicrobloggingIsLoading;
+    }
     $scope.updateMicrobloggingList = function (oldType, oldID) {
         var type = 'newer';
         var id = 0;
@@ -58,6 +61,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
             type = oldType;
             id = oldID;
         }
+        $scope.MicrobloggingIsLoading = true;
         Backend.loadMicroblogging($scope.microbloggingList, $scope.loadTarget, type, id).success(setAuthorForAllBlogs);
     };
 
@@ -69,6 +73,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
         });
     };
 
+    
     $scope.updateMicrobloggingList();
 
     $('.microblogInput').focus(function(){

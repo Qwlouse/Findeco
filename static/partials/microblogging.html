@@ -20,4 +20,8 @@
         <li><a ng-show="microbloggingList.length >= 20" class="btn btn-primary" ng-click="updateMicrobloggingList('older',microbloggingList[microbloggingList.length-1].microblogID)"
                data-i18n="_loadMoreMicroblogging_"></a></li>
     </ul>
+   	<div ng-show="isLoading()" class="deactivateDiv">
+    </div>
+   	<div ng-show="isLoading()" class="deactivateSpinner">
+    </div>
 </div>

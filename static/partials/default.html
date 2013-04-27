@@ -52,6 +52,10 @@
 
         <div ng-show="nav.type=='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' && nav.type!='root'" class="btn btn-primary"
              ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
+  	<div ng-show="isLoading()" class="deactivateDiv">
+    </div>
+   	<div ng-show="isLoading()" class="deactivateSpinner">
+    </div>
     </div>
 
     <div ng-include src="'static/partials/microblogging.html'" ng-show="nav.type!='root'"></div>
