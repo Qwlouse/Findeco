@@ -35,7 +35,7 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
     $scope.argumentList = [];
     
     $scope.isLoading = function (){
-    	return $scope.isLoading;
+    	return $scope.argumentIsLoading ;
     }
     
     function amendArguments() {
@@ -43,11 +43,11 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
             var arg = $scope.argumentList[i];
             arg.path = $scope.nav.getPathForArgument(arg.argType, arg.index);
         }
-        $scope.isLoading = false;
+        $scope.argumentIsLoading  = false;
     }
 
     $scope.updateArgumentList = function () {
-    	$scope.isLoading = true;
+    	$scope.argumentIsLoading = true;
         Backend.loadArgument($scope.argumentList , $scope.nav.nodePath).success(amendArguments);
     };
 

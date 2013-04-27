@@ -67,6 +67,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
                 indexNode.isExpanded = false;
             }
             $scope.isLoadingNode =false;
+           
         });
     };
 
@@ -103,8 +104,9 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
        
     };
     $scope.isLoading = function (){
+    	
     	if   (!($scope.isLoadingNode)&&!($scope.isLoadingGraph )){
-    		return false;
+    	    return false;
     	}else{
     		return true;
     	}

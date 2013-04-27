@@ -38,7 +38,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
             blog.author.isFollowing = User.follows(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
-        $scope.isLoading = false;
+        $scope.MicrobloggingIsLoading = false;
     }
 
     $scope.microbloggingList = [];
@@ -48,7 +48,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
         return User.markUser(path, type).success(setAuthorForAllBlogs);
     };
     $scope.isLoading = function (){
-    	return $scope.isLoading;
+    	return $scope.MicrobloggingIsLoading;
     }
     $scope.updateMicrobloggingList = function (oldType, oldID) {
         var type = 'newer';
@@ -61,7 +61,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
             type = oldType;
             id = oldID;
         }
-        $scope.isLoading = true;
+        $scope.MicrobloggingIsLoading = true;
         Backend.loadMicroblogging($scope.microbloggingList, $scope.loadTarget, type, id).success(setAuthorForAllBlogs);
     };
 
