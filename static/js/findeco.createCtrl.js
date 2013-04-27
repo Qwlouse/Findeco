@@ -74,7 +74,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
     		return;
         };
         
-        if (  $scope.initialAlternative==$scope.tmp.textAlternative){
+        if ( ( $scope.initialAlternative==$scope.tmp.textAlternative) &&  ( $scope.tmp.textAlternative != "")){
         	Message.send('error','_alternativeNotChanged_');  	
     		return;
         }
