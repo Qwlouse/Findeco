@@ -114,7 +114,7 @@ signals.post_save.connect(create_user_profile, sender=User)
 
 ####################### Activation Models ######################################
 class Activation(models.Model):
-    key = models.CharField(max_length=64)
+    key = models.CharField(max_length=100)
     key_valid_until = models.DateTimeField()
     user = models.ForeignKey(User)
 
@@ -145,7 +145,7 @@ class Activation(models.Model):
 
 
 class EmailActivation(models.Model):
-    key = models.CharField(max_length=64)
+    key = models.CharField(max_length=100)
     new_email = models.EmailField()
     user = models.ForeignKey(User)
 
@@ -174,7 +174,7 @@ class EmailActivation(models.Model):
 
 
 class PasswordRecovery(models.Model):
-    key = models.CharField(max_length=64)
+    key = models.CharField(max_length=100)
     key_valid_until = models.DateTimeField()
     user = models.ForeignKey(User)
 
