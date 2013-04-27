@@ -101,7 +101,7 @@ def create_user(username, description="", mail="a@bc.de", password=None,
     if password:
         new_user = User.objects.create_user(username, mail, password)
     else:
-        new_user = User(username=username)
+        new_user = User(username=username, email=mail)
         new_user.save()
     for group in groups:
         Group.objects.get(name=group).user_set.add(new_user)

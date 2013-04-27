@@ -26,18 +26,24 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 
+from test_activation_models import ActivationTest, EmailActivationTest
+from test_activation_models import PasswordRecoveryTest
 from test_profile import UserProfileTest
 from test_path import PathRegExTest
 from test_url_resolution import UrlResolutionTest
 from test_views import ViewTest
-from test_view_helpers import CreateIndexNodeForSlotTest, CreateIndexNodeForArgumentTest
-from test_view_helpers import CreateUsersInfoTest, CreateUserSettingsTest, CreateGraphDataNodeForStructureNodeTest
-from test_view_helpers import StoreStructureNodeTest, StoreArgumentTest, StoreDerivateTest
+from test_view_helpers import CreateIndexNodeForSlotTest
+from test_view_helpers import CreateIndexNodeForArgumentTest
+from test_view_helpers import CreateUsersInfoTest, CreateUserSettingsTest
+from test_view_helpers import CreateGraphDataNodeForStructureNodeTest
+from test_view_helpers import StoreStructureNodeTest, StoreArgumentTest
+from test_view_helpers import StoreDerivateTest
 from test_view_helpers import GetIsFollowingTest, CheckUsernameSanityTest
 from test_load_index import LoadIndexTest, LoadArgumentIndexTest
 from test_load_node import LoadNodeTest
 from test_load_text import LoadTextTest
-from test_user_api import LoadUserInfoTest, LoadUserSettingsTest, StoreSettingsTest, ChangePasswordTest, DeleteUserTest
+from test_user_api import LoadUserInfoTest, LoadUserSettingsTest
+from test_user_api import StoreSettingsTest, ChangePasswordTest, DeleteUserTest
 from test_store_text import StoreTextTest
 from test_load_graph_data import LoadGraphDataTest
 from test_marking import UnFollowTest, FollowTest, MarkSpamTest, UnMarkSpamTest

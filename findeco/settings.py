@@ -29,6 +29,7 @@
 from __future__ import division, print_function, unicode_literals
 
 import os
+import datetime
 
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                            os.path.pardir))
@@ -220,8 +221,12 @@ REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco' \
 REGISTRATION_RECOVERY_TITLE_SUCCESS = 'Your new Findeco Password'
 REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
 
-APPEND_SLASH=False
+APPEND_SLASH = False
 
+ACTIVATION_KEY_VALID_FOR = datetime.timedelta(hours=24)
+RECOVERY_KEY_VALID_FOR = datetime.timedelta(hours=24)
+ADMIN_PASS = "1234"
+SOUTH_TESTS_MIGRATE = False
 # try to import secret_settings and overwrite some of the default values
 try:
     from local_settings import *

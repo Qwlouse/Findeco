@@ -30,20 +30,24 @@ This file contains models for the basic Project structure:
   * automatize admin creation for every syncdb
 """
 from __future__ import division, print_function, unicode_literals
+from datetime import datetime
+import random
+
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.management import create_superuser
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models import signals
 
-from findeco.view_helpers import get_permission
+from findeco.settings import ACTIVATION_KEY_VALID_FOR, ADMIN_PASS, RECOVERY_KEY_VALID_FOR
+from .view_helpers import get_permission
 import node_storage.models as node_storage
 from node_storage import Node, Text
 
-try:
-    from local_settings import ADMIN_PASS
-except ImportError:
-    ADMIN_PASS = "1234"
+
+def generate_key(nr_of_chars=64):
+    return "".join(random.choice("0123456789BCDFGHKLMNPQRSTVWXYZ")
+                   for _ in range(nr_of_chars))
 
 
 ####################### Add profile to each user ###############################
@@ -79,6 +83,10 @@ class UserProfile(models.Model):
         blank=True,
         help_text="activationKey")
 
+    is_verified_until = models.DateTimeField(default=datetime.min)
+    last_seen = models.DateTimeField(default=datetime.min)
+    verification_key = models.CharField(max_length=64, default=generate_key)
+
     # Override the save method to prevent integrity errors
     # These happen because both the post_save signal and the inlined admin
     # interface try to create the UserProfile. See:
@@ -106,6 +114,108 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 
 signals.post_save.connect(create_user_profile, sender=User)
+
+
+####################### Activation Models ######################################
+class Activation(models.Model):
+    key = models.CharField(max_length=64)
+    key_valid_until = models.DateTimeField()
+    user = models.ForeignKey(User)
+
+    def is_valid(self):
+        return datetime.now() < self.key_valid_until
+
+    def resolve(self):
+        if self.is_valid():
+            self.user.is_active = True
+            self.user.save()
+            self.delete()
+            return True
+        else:
+            self.delete()
+            return False
+
+    @classmethod
+    def create(cls, user):
+        key = generate_key()
+        # make sure it is unique :-)
+        while cls.objects.filter(key=key).count() > 0:
+            key = generate_key()
+
+        valid_until = datetime.now() + ACTIVATION_KEY_VALID_FOR
+        entry = cls(key=key, key_valid_until=valid_until, user=user)
+        entry.save()
+        return entry
+
+
+class EmailActivation(models.Model):
+    key = models.CharField(max_length=64)
+    new_email = models.EmailField()
+    user = models.ForeignKey(User)
+
+    def resolve(self):
+        self.user.email = self.new_email
+        self.user.save()
+        self.delete()
+        return True
+
+    @classmethod
+    def create(cls, user, new_email):
+        # if there is already an entry: overwrite it
+        try:
+            entry = cls.objects.get(user=user)
+        except cls.DoesNotExist:
+            entry = cls(user=user)
+
+        entry.key = generate_key()
+        # make sure it is unique :-)
+        while cls.objects.filter(key=entry.key).count() > 0:
+            entry.key = generate_key()
+        entry.new_email = new_email
+        entry.save()
+
+        return entry
+
+
+class PasswordRecovery(models.Model):
+    key = models.CharField(max_length=64)
+    key_valid_until = models.DateTimeField()
+    user = models.ForeignKey(User)
+
+    def is_valid(self):
+        return datetime.now() < self.key_valid_until
+
+    def resolve(self):
+        if self.is_valid():
+            password = User.objects.make_random_password()
+            self.user.set_password(password)
+            self.user.save()
+            self.delete()
+            return password
+        else:
+            self.delete()
+            return False
+
+    @classmethod
+    def create(cls, user):
+        # if there is already an entry: overwrite it
+        try:
+            entry = cls.objects.get(user=user)
+            if not entry.is_valid():
+                entry.delete()
+            else:
+                # can't request again if request is still open to prevent spam
+                return None
+        except cls.DoesNotExist:
+            pass
+
+        key = generate_key()
+        # make sure it is unique :-)
+        while cls.objects.filter(key=key).count() > 0:
+            key = generate_key()
+        key_valid_until = datetime.now() + RECOVERY_KEY_VALID_FOR
+        return cls.objects.create(
+            user=user, key=key, key_valid_until=key_valid_until)
 
 
 ############################ Automatic superuser creation ######################
