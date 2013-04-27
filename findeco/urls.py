@@ -29,7 +29,6 @@ from django.contrib import admin
 from findeco.api_validation import USERNAME
 
 from findeco.paths import PATH, RESTRICTED_PATH, ID
-from findeco.views import is_logged_in
 
 admin.autodiscover()
 
@@ -41,8 +40,6 @@ SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)(_(user|content
 urlpatterns = patterns(
     '',
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
-
-    url(r'^\.json_isLoggedIn/?$', "findeco.views.is_logged_in", name='is_logged_in'),
 
     url(r'^\.json_loadUserSettings/?$',
         'findeco.views.load_user_settings',
