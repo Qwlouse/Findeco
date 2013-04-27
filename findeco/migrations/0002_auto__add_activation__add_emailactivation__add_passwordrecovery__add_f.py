@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'Activation'
         db.create_table('findeco_activation', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=64)),
+            ('key', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('key_valid_until', self.gf('django.db.models.fields.DateTimeField')()),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
         ))
@@ -20,7 +20,7 @@ class Migration(SchemaMigration):
         # Adding model 'EmailActivation'
         db.create_table('findeco_emailactivation', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=64)),
+            ('key', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('new_email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
         ))
@@ -29,7 +29,7 @@ class Migration(SchemaMigration):
         # Adding model 'PasswordRecovery'
         db.create_table('findeco_passwordrecovery', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=64)),
+            ('key', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('key_valid_until', self.gf('django.db.models.fields.DateTimeField')()),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
         ))
