@@ -24,6 +24,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
+from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from findeco.api_validation import USERNAME
@@ -31,6 +32,8 @@ from findeco.api_validation import USERNAME
 from findeco.paths import PATH, RESTRICTED_PATH, ID
 
 admin.autodiscover()
+django_cron.autodiscover()
+
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'

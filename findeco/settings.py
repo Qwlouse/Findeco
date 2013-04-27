@@ -163,7 +163,8 @@ INSTALLED_APPS = (
     'findeco',
     'microblogging',
     'node_storage',
-    'south'
+    'south',
+    'libs.django_cron'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -226,7 +227,10 @@ APPEND_SLASH = False
 ACTIVATION_KEY_VALID_FOR = datetime.timedelta(hours=24)
 RECOVERY_KEY_VALID_FOR = datetime.timedelta(hours=24)
 ADMIN_PASS = "1234"
+
+CRON_POLLING_FREQUENCY = 30
 #SOUTH_TESTS_MIGRATE = False
+
 # try to import secret_settings and overwrite some of the default values
 try:
     from local_settings import *
