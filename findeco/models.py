@@ -114,9 +114,21 @@ signals.post_save.connect(create_user_profile, sender=User)
 
 ####################### Activation Models ######################################
 class Activation(models.Model):
-    key = models.CharField(max_length=100)
+    key = models.CharField(max_length=100, default=generate_key)
     key_valid_until = models.DateTimeField()
     user = models.ForeignKey(User)
+
+    @classmethod
+    def create(cls, user):
+        key = generate_key()
+        # make sure it is unique :-)
+        while cls.objects.filter(key=key).count() > 0:
+            key = generate_key()
+
+        valid_until = datetime.now() + ACTIVATION_KEY_VALID_FOR
+        entry = cls(key=key, key_valid_until=valid_until, user=user)
+        entry.save()
+        return entry
 
     def is_valid(self):
         return datetime.now() < self.key_valid_until
@@ -131,29 +143,14 @@ class Activation(models.Model):
             self.delete()
             return False
 
-    @classmethod
-    def create(cls, user):
-        key = generate_key()
-        # make sure it is unique :-)
-        while cls.objects.filter(key=key).count() > 0:
-            key = generate_key()
-
-        valid_until = datetime.now() + ACTIVATION_KEY_VALID_FOR
-        entry = cls(key=key, key_valid_until=valid_until, user=user)
-        entry.save()
-        return entry
+    def __unicode__(self):
+        return "<Activation for %s>" % self.user.username
 
 
 class EmailActivation(models.Model):
-    key = models.CharField(max_length=100)
+    key = models.CharField(max_length=100, default=generate_key)
     new_email = models.EmailField()
     user = models.ForeignKey(User)
-
-    def resolve(self):
-        self.user.email = self.new_email
-        self.user.save()
-        self.delete()
-        return True
 
     @classmethod
     def create(cls, user, new_email):
@@ -172,25 +169,20 @@ class EmailActivation(models.Model):
 
         return entry
 
+    def resolve(self):
+        self.user.email = self.new_email
+        self.user.save()
+        self.delete()
+        return True
+
+    def __unicode__(self):
+        return "<EmailActivation for %s>" % self.user.username
+
 
 class PasswordRecovery(models.Model):
-    key = models.CharField(max_length=100)
+    key = models.CharField(max_length=100, default=generate_key)
     key_valid_until = models.DateTimeField()
     user = models.ForeignKey(User)
-
-    def is_valid(self):
-        return datetime.now() < self.key_valid_until
-
-    def resolve(self):
-        if self.is_valid():
-            password = User.objects.make_random_password()
-            self.user.set_password(password)
-            self.user.save()
-            self.delete()
-            return password
-        else:
-            self.delete()
-            return False
 
     @classmethod
     def create(cls, user):
@@ -213,6 +205,22 @@ class PasswordRecovery(models.Model):
         return cls.objects.create(
             user=user, key=key, key_valid_until=key_valid_until)
 
+    def is_valid(self):
+        return datetime.now() < self.key_valid_until
+
+    def resolve(self):
+        if self.is_valid():
+            password = User.objects.make_random_password()
+            self.user.set_password(password)
+            self.user.save()
+            self.delete()
+            return password
+        else:
+            self.delete()
+            return False
+
+    def __unicode__(self):
+        return "<PasswordRecovery for %s>" % self.user.username
 
 ############################ Automatic superuser creation ######################
 # From http://stackoverflow.com/questions/1466827/

@@ -30,7 +30,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 
-from .models import UserProfile
+from .models import UserProfile, Activation, PasswordRecovery, EmailActivation
 
 
 class UserProfileInline(admin.StackedInline):
@@ -50,3 +50,27 @@ class UserAdmin(AuthUserAdmin):
 admin.site.unregister(User)
 # register new user admin
 admin.site.register(User, UserAdmin)
+
+
+class ActivationAdmin(admin.ModelAdmin):
+    model = Activation
+    list_display = ('__unicode__', 'user', 'key_valid_until', 'key')
+    list_display_links = ('__unicode__',)
+
+admin.site.register(Activation, ActivationAdmin)
+
+
+class EmailActivationAdmin(admin.ModelAdmin):
+    model = EmailActivation
+    list_display = ('__unicode__', 'user', 'new_email', 'key')
+    list_display_links = ('__unicode__',)
+
+admin.site.register(EmailActivation, EmailActivationAdmin)
+
+
+class PasswordRecoveryAdmin(admin.ModelAdmin):
+    model = PasswordRecovery
+    list_display = ('__unicode__', 'user', 'key_valid_until', 'key')
+    list_display_links = ('__unicode__',)
+
+admin.site.register(PasswordRecovery, PasswordRecoveryAdmin)
