@@ -51,25 +51,40 @@ function FindecoStartCtrl($scope, Backend, User) {
     };
 
     $scope.updateFollowedUsers = function () {
+       	$scope.isLoadingTimeline =true;
         var id = 0;
         if ($scope.followedUsersList[0] != undefined) {
             id = $scope.followedUsersList[0].microblogID;
         }
-        Backend.loadMicroblogging($scope.followedUsersList, User.displayName, 'newer', id).success(function() {setAuthorForAllBlogs($scope.followedUsersList)});
+        Backend.loadMicroblogging($scope.followedUsersList, User.displayName, 'newer', id).success(function() {
+        	setAuthorForAllBlogs($scope.followedUsersList);
+        	$scope.isLoadingTimeline =false;
+       });
     };
     $scope.updateFollowedNodes = function () {
+
+    	$scope.isLoadingNewsForFollowedNodes=true;
         var id = 0;
         if ($scope.followedNodesList[0] != undefined) {
             id = $scope.followedNodesList[0].microblogID;
         }
-        Backend.loadMicroblogging($scope.followedNodesList, ':collection', 'newer', id).success(function() {setAuthorForAllBlogs($scope.followedNodesList)});
+        Backend.loadMicroblogging($scope.followedNodesList, ':collection', 'newer', id).success(function() {
+        	setAuthorForAllBlogs($scope.followedNodesList);
+        	
+        	$scope.isLoadingNewsForFollowedNodes=false;
+        });
     };
     $scope.updateOwnNodes = function () {
+
+    	$scope.isLoadingNewsForOwnNodes=true;
         var id = 0;
         if ($scope.ownNodesList[0] != undefined) {
             id = $scope.ownNodesList[0].microblogID;
         }
-        Backend.loadMicroblogging($scope.ownNodesList, ':collectionAuthor', 'newer', id).success(function() {setAuthorForAllBlogs($scope.ownNodesList)});
+        Backend.loadMicroblogging($scope.ownNodesList, ':collectionAuthor', 'newer', id).success(function() {
+        	setAuthorForAllBlogs($scope.ownNodesList);
+        	$scope.isLoadingNewsForOwnNodes=false;	
+        });
     };
 
     $scope.submit = function () {
@@ -83,11 +98,25 @@ function FindecoStartCtrl($scope, Backend, User) {
 
     $scope.$watch('username', function () {
         if ($scope.username != "") {
+ 
             $scope.updateFollowedUsers();
             $scope.updateFollowedNodes();
             $scope.updateOwnNodes();
         }
     });
+    $scope.isLoading = function (col){
+    	if (col =="timeline"){
+    		return $scope.isLoadingTimeline;	
+    	}
+    	if (col =="newsForFollowedNodes"){
+    		return $scope.isLoadingNewsForFollowedNodes;	
+    	}
+    	if (col =="newsForOwnNodes"){
+    		return $scope.isLoadingNewsForOwnNodes;	
+    	}
+    	
+    	return false;
+    }
 }
 
 FindecoStartCtrl.$inject = ['$scope', 'Backend', 'User'];
