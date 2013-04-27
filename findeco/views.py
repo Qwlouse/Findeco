@@ -49,7 +49,7 @@ from microblogging.system_messages import post_node_was_flagged_message
 from microblogging.system_messages import post_new_derivate_for_node_message
 from microblogging.system_messages import post_new_argument_for_node_message
 from microblogging.system_messages import post_node_was_unflagged_message
-from models import UserProfile
+from models import UserProfile, Activation, PasswordRecovery
 import node_storage as backend
 from node_storage.factory import create_user
 
@@ -465,23 +465,26 @@ def account_registration(request):
     if User.objects.filter(email__iexact=emailAddress).count():
         raise EmailAddressNotAvailiable(emailAddress)
 
-    activationKey = random.getrandbits(256)
-
-    # this might raise SMTPException which is handled by the @ViewErrorHandling
-    send_mail(settings.REGISTRATION_TITLE,
-              settings.REGISTRATION_BODY + ' ' + settings.FINDECO_BASE_URL +
-              '/#activate/' + str(activationKey),
-              settings.EMAIL_HOST_USER,
-              [emailAddress],
-              fail_silently=False)
     user = create_user(displayName,
                        description="",
                        mail=emailAddress,
                        password=password,
                        groups=['texters', 'voters', 'bloggers'])
     user.is_active = False
-    user.profile.activationKey = activationKey
     user.save()
+    activation = Activation.create(user)
+    try:
+        send_mail(settings.REGISTRATION_TITLE,
+                  settings.REGISTRATION_BODY + ' ' + settings.FINDECO_BASE_URL +
+                  '/#activate/' + str(activation.key),
+                  settings.EMAIL_HOST_USER,
+                  [emailAddress],
+                  fail_silently=False)
+    except SMTPException:
+        # This means we can't send mails, so we can't create users
+        user.delete()
+        activation.delete()
+        raise
 
     return json_response({'accountRegistrationResponse': {}})
 
@@ -489,20 +492,14 @@ def account_registration(request):
 @ViewErrorHandling
 def account_activation(request):
     assert_post_parameters(request, ['activationKey'])
-    activationKey = request.POST['activationKey']
-
-    # Check for already existing Username
-    if not ((User.objects.filter(
-            profile__activationKey__exact=activationKey).filter(
-            is_active=False).count()) == 1):
+    activation_key = request.POST['activationKey']
+    try:
+        act = Activation.objects.get(key=activation_key)
+        act.resolve()
+        return json_response({'accountActivationResponse': {}})
+    except Activation.DoesNotExist:
         raise InvalidActivationKey()
-    else:
-        user = User.objects.get(profile__activationKey__exact=activationKey)
 
-        user.profile.activationKey = ''
-        user.is_active = True
-        user.save()
-    return json_response({'accountActivationResponse': {}})
 
 
 @ViewErrorHandling
@@ -511,16 +508,19 @@ def account_reset_request_by_name(request):
     displayName = request.POST['displayName']
 
     user = assert_active_user(displayName)
-    activationKey = random.getrandbits(256)
-    user.profile.activationKey = activationKey
-    user.save()
-    send_mail(settings.REGISTRATION_RECOVERY_TITLE,
-              settings.REGISTRATION_RECOVERY_BODY + ' ' +
-              settings.FINDECO_BASE_URL + '/#confirm/' + str(activationKey),
-              settings.EMAIL_HOST_USER,
-              [user.email])
+    recovery = PasswordRecovery.create(user)
+    try:
+        send_mail(settings.REGISTRATION_RECOVERY_TITLE,
+                  settings.REGISTRATION_RECOVERY_BODY + ' ' +
+                  settings.FINDECO_BASE_URL + '/#confirm/' + str(recovery.key),
+                  settings.EMAIL_HOST_USER,
+                  [user.email])
 
-    return json_response({'accountResetRequestByNameResponse': {}})
+        return json_response({'accountResetRequestByNameResponse': {}})
+    except SMTPException:
+        recovery.delete()
+        raise
+
 
 
 @ViewErrorHandling
@@ -528,36 +528,31 @@ def account_reset_request_by_mail(request):
     assert_post_parameters(request, ['emailAddress'])
     emailAddress = request.POST['emailAddress']
     user = assert_active_user(email=emailAddress)
-    activationKey = random.getrandbits(256)
-    user.profile.activationKey = activationKey
-    user.save()
-    send_mail(settings.REGISTRATION_RECOVERY_TITLE,
-              settings.REGISTRATION_RECOVERY_BODY + ' ' +
-              settings.FINDECO_BASE_URL + '/#confirm/' + str(activationKey),
-              settings.EMAIL_HOST_USER,
-              [user.email])
+    recovery = PasswordRecovery.create(user)
+    try:
+        send_mail(settings.REGISTRATION_RECOVERY_TITLE,
+                  settings.REGISTRATION_RECOVERY_BODY + ' ' +
+                  settings.FINDECO_BASE_URL + '/#confirm/' + str(recovery.key),
+                  settings.EMAIL_HOST_USER,
+                  [user.email])
 
-    return json_response({'accountResetRequestByMailResponse': {}})
+        return json_response({'accountResetRequestByNameResponse': {}})
+    except SMTPException:
+        recovery.delete()
+        raise
 
 
 @ViewErrorHandling
 def account_reset_confirmation(request):
     assert_post_parameters(request, ['activationKey'])
-    activationKey = request.POST['activationKey']
-
-    # Check for already existing Username
-    if not ((User.objects.filter(
-            profile__activationKey__exact=activationKey).filter(
-            is_active=True).count()) == 1):
-        raise InvalidActivationKey()
-    else:
-        user = User.objects.get(profile__activationKey__exact=activationKey)
-        user.profile.activationKey = ''
-        password = User.objects.make_random_password()
-        user.set_password(password)
-        user.save()
+    recovery_key = request.POST['activationKey']
+    try:
+        rec = PasswordRecovery.objects.get(key=recovery_key)
+        new_password = rec.resolve()
         send_mail(settings.REGISTRATION_RECOVERY_TITLE_SUCCESS,
                   settings.REGISTRATION_RECOVERY_BODY_SUCCESS + ' Password : ' +
-                  str(password), settings.EMAIL_HOST_USER,
-                  [user.email])
-    return json_response({'accountResetConfirmationResponse': {}})
+                  str(new_password), settings.EMAIL_HOST_USER,
+                  [rec.user.email])
+        return json_response({'accountResetConfirmationResponse': {}})
+    except Activation.DoesNotExist:
+        raise InvalidRecoveryKey()

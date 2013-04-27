@@ -79,10 +79,6 @@ class UserProfile(models.Model):
         help_text="Profiles of users this user blocked."
     )
 
-    activationKey = models.TextField(
-        blank=True,
-        help_text="activationKey")
-
     is_verified_until = models.DateTimeField(default=datetime.min)
     last_seen = models.DateTimeField(default=datetime.min)
     verification_key = models.CharField(max_length=64, default=generate_key)

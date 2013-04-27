@@ -96,7 +96,7 @@ def assert_active_user(username=None, email=None):
     if not users.count() == 1:
         raise UnknownUser(username or email)
     user = users[0]
-    if not user.is_active or user.profile.activationKey != '':
+    if not user.is_active:
         raise UnknownUser(username or email)
 
     return user

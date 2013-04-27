@@ -1,40 +1,23 @@
 # -*- coding: utf-8 -*-
 import datetime
 from south.db import db
-from south.v2 import DataMigration
+from south.v2 import SchemaMigration
 from django.db import models
-from findeco.settings import ACTIVATION_KEY_VALID_FOR
 
 
-class Migration(DataMigration):
+class Migration(SchemaMigration):
+
     def forwards(self, orm):
-        """Write your forwards methods here."""
-        unactivated_users = orm['auth.user'].objects.filter(is_active=False).all()
-        for u in unactivated_users:
-            if u.profile.activationKey == '':
-                print("Warning: Unactivated user %s had no activationKey!" % u.username)
-                continue
-            orm.Activation.objects.create(user=u,
-                                          key=u.profile.activationKey,
-                                          key_valid_until=datetime.datetime.now() + ACTIVATION_KEY_VALID_FOR)
-            u.profile.activationKey = ''
+        # Deleting field 'UserProfile.activationKey'
+        db.delete_column('findeco_userprofile', 'activationKey')
 
-        activated_users = orm['auth.user'].objects.filter(is_active=True).exclude(profile__activationKey='').all()
-        for u in activated_users:
-            orm.PasswordRecovery.objects.create(user=u,
-                                                key=u.profile.activationKey,
-                                                key_valid_until=datetime.datetime.now() + ACTIVATION_KEY_VALID_FOR)
-            u.profile.activationKey = ''
 
     def backwards(self, orm):
-        """Write your backwards methods here."""
-        for act in orm.Activation.objects.all():
-            act.user.profile.activationKey = act.key
-            act.delete()
+        # Adding field 'UserProfile.activationKey'
+        db.add_column('findeco_userprofile', 'activationKey',
+                      self.gf('django.db.models.fields.TextField')(default='', blank=True),
+                      keep_default=False)
 
-        for recov in orm.PasswordRecovery.objects.all():
-            recov.user.profile.activationKey = recov.key
-            recov.delete()
 
     models = {
         'auth.group': {
@@ -96,7 +79,6 @@ class Migration(DataMigration):
         },
         'findeco.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
-            'activationKey': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'blocked': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'blocked_by'", 'blank': 'True', 'to': "orm['findeco.UserProfile']"}),
             'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'followees': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'followers'", 'blank': 'True', 'to': "orm['findeco.UserProfile']"}),
@@ -104,9 +86,8 @@ class Migration(DataMigration):
             'is_verified_until': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(1, 1, 1, 0, 0)'}),
             'last_seen': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(1, 1, 1, 0, 0)'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "u'profile'", 'unique': 'True', 'to': "orm['auth.User']"}),
-            'verification_key': ('django.db.models.fields.CharField', [], {'default': "u'HPN3SW34WDXNCRP6VWRR761M859MXH520W0B6B46MDQ8CR9Q4CQ136D0NT24KB5V'", 'max_length': '64'})
+            'verification_key': ('django.db.models.fields.CharField', [], {'default': "u'X54QHLVWKMTKRWQ2B4TFFH7FPXFQVYZ6L62SXZBH7KSL40CYD1QX21HMVF43FTDN'", 'max_length': '64'})
         }
     }
 
     complete_apps = ['findeco']
-    symmetrical = True

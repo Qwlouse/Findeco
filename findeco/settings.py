@@ -226,7 +226,7 @@ APPEND_SLASH = False
 ACTIVATION_KEY_VALID_FOR = datetime.timedelta(hours=24)
 RECOVERY_KEY_VALID_FOR = datetime.timedelta(hours=24)
 ADMIN_PASS = "1234"
-SOUTH_TESTS_MIGRATE = False
+#SOUTH_TESTS_MIGRATE = False
 # try to import secret_settings and overwrite some of the default values
 try:
     from local_settings import *
