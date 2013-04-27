@@ -59,6 +59,9 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
             return "btn btn-primary inActive";
         }
     };
+    $scope.getFormLockState = function () {
+        return $scope.blockButton ;
+    };
 
     $scope.submit = function () {
     	if ($scope.blockButton==true){

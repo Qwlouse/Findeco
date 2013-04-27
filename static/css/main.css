@@ -186,6 +186,7 @@ body:before {
     -webkit-border-radius: 15px;
     border-radius: 15px;
     box-shadow: 8px 8px 10px #947109;
+    position:relative;
 }
 
 .contentBoxInvisible {
@@ -219,4 +220,26 @@ body:before {
 	text-align:center; 
 	padding:10px; 
 	margin-bottom:25px;
+}
+.deactivateDiv{
+	position:absolute; 
+	left:0px;
+	top:0px;
+	height:100%; 
+	width:100%; 
+	background-color:grey; 
+	opacity:0.5;
+	border-radius: 15px 15px 15px 15px;
+	
+}
+.deactivateSpinner{
+	position:absolute; 
+	margin-top:-32px; 
+	margin-left:-32px; 
+	top:50%; 
+	left:50%; 
+	width:64px; 
+	height:64px;
+	background-image:url(../images/spinner.png);
+	border-radius: 15px 15px 15px 15px;
 }
