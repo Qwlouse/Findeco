@@ -265,7 +265,7 @@ def store_argument(path, arg_text, arg_type, author):
     # add auto follow
     create_vote(author, [original_argument])
     # copy argument for all derivates
-    for d in traverse_derivates(node):
+    for d in node.traverse_derivates():
         new_argument = create_argument(d, arg_type, title, arg_text, [author])
         original_argument.add_derivate(new_argument)
     return path + "." + arg_type + "." + str(node.arguments.count())
@@ -313,31 +313,6 @@ def fork_node_and_add_slot(path, user, wikiText):
     return fork_path
 
 
-def traverse_derivates_subset(node, subset):
-    der_list = list((node.derivates.all() & subset).all())
-    while len(der_list) > 0:
-        derivate = der_list.pop()
-        der_list += list((derivate.derivates.all() & subset).all())
-        yield derivate
-
-
-def traverse_derivates(node):
-    der_list = list(node.derivates.all())
-    while len(der_list) > 0:
-        derivate = der_list.pop()
-        der_list += list(derivate.derivates.all())
-        yield derivate
-
-
-def traverse_derivates_while(node, condition=lambda n: True):
-    der_list = list(node.derivates.all())
-    while len(der_list) > 0:
-        derivate = der_list.pop()
-        if condition(derivate):
-            der_list += list(derivate.derivates.all())
-            yield derivate
-
-
 def get_permission(name):
     a, _, n = name.partition('.')
     return Permission.objects.get(content_type__app_label=a, codename=n)
@@ -368,25 +343,25 @@ def follow_node(node, user_id):
             new_mark.user_id = user_id
             new_mark.save()
             new_mark.nodes.add(node)
-            for n in traverse_derivates_subset(node, mark.nodes.all()):
+            for n in node.traverse_derivates(subset=mark.nodes.all()):
                 mark.nodes.remove(n)
                 new_mark.nodes.add(n)
             mark.save()
             new_mark.save()
             node.update_favorite_for_all_parents()
-            for n in traverse_derivates_subset(node, mark.nodes.all()):
+            for n in node.traverse_derivates(subset=mark.nodes.all()):
                 n.update_favorite_for_all_parents()
     else:
         mark = backend.Vote()
         mark.user_id = user_id
         mark.save()
         mark.nodes.add(node)
-        for n in traverse_derivates_while(node, lambda n: n.votes.filter(
+        for n in node.traverse_derivates(condition=lambda n: n.votes.filter(
                 user=user_id).all().count() == 0):
             mark.nodes.add(n)
         mark.save()
         node.update_favorite_for_all_parents()
-        for n in traverse_derivates_while(node, lambda n: n.votes.filter(
+        for n in node.traverse_derivates(condition=lambda n: n.votes.filter(
                 user=user_id).all().count() == 0):
             n.update_favorite_for_all_parents()
 
@@ -400,7 +375,7 @@ def unfollow_node(node, user_id):
             node.update_favorite_for_all_parents()
         else:
             mark.nodes.remove(node)
-            for n in traverse_derivates_subset(node, mark.nodes.all()):
+            for n in node.traverse_derivates(subset=mark.nodes.all()):
                 mark.nodes.remove(n)
                 n.update_favorite_for_all_parents()
             if mark.nodes.count() == 0:

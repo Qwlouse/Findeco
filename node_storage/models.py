@@ -193,6 +193,20 @@ class Node(models.Model):
     def get_newfollows(self):
         return self.votes.exclude(nodes__in=self.sources.all()).count()
 
+    def traverse_derivates(self, subset=None, condition=lambda n: True):
+        if subset:
+            der_list = list((self.derivates.all() & subset).all())
+        else:
+            der_list = list(self.derivates.all())
+        while len(der_list) > 0:
+            derivate = der_list.pop()
+            if condition(derivate):
+                if subset:
+                    der_list += list((derivate.derivates.all() & subset).all())
+                else:
+                    der_list += list(derivate.derivates.all())
+                yield derivate
+
 
 class Argument(Node):
     PRO = 'p'
