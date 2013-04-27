@@ -50,6 +50,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     $scope.updateGraph = function () {
         Backend.loadGraphData($scope.graphData, $scope.nav.nodePath).success(function (data) {
             $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
+            $scope.isLoadingGraph =false;
         });
     };
 
@@ -65,6 +66,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
                 indexNode.isLoaded = false;
                 indexNode.isExpanded = false;
             }
+            $scope.isLoadingNode =false;
         });
     };
 
@@ -94,9 +96,20 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     };
 
     $scope.initialize = function () {
-            $scope.updateNode();
-            $scope.updateGraph();
+        $scope.isLoadingNode =true;
+        $scope.isLoadingGraph =true;
+        $scope.updateNode();
+        $scope.updateGraph();
+       
     };
+    $scope.isLoading = function (){
+    	if   (!($scope.isLoadingNode)&&!($scope.isLoadingGraph )){
+    		return false;
+    	}else{
+    		return true;
+    	}
+    	
+    }
     $scope.initialize();
 }
 
