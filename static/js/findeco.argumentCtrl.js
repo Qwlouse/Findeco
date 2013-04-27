@@ -33,15 +33,21 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
     $scope.markNode = Backend.markNode;
 
     $scope.argumentList = [];
-
+    
+    $scope.isLoading = function (){
+    	return $scope.isLoading;
+    }
+    
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
             var arg = $scope.argumentList[i];
             arg.path = $scope.nav.getPathForArgument(arg.argType, arg.index);
         }
+        $scope.isLoading = false;
     }
 
     $scope.updateArgumentList = function () {
+    	$scope.isLoading = true;
         Backend.loadArgument($scope.argumentList , $scope.nav.nodePath).success(amendArguments);
     };
 
