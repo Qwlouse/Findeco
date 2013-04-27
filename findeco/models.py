@@ -80,7 +80,7 @@ class UserProfile(models.Model):
         help_text="activationKey")
 
     # Override the save method to prevent integrity errors
-    # These happen because both teh post_save signal and the inlined admin
+    # These happen because both the post_save signal and the inlined admin
     # interface try to create the UserProfile. See:
     # http://stackoverflow.com/questions/2813189
     def save(self, *args, **kwargs):
@@ -120,8 +120,6 @@ signals.post_syncdb.disconnect(
 
 # Create our own admin user automatically.
 def create_admin():
-    #if not settings.DEBUG:
-    #    return
     try:
         auth_models.User.objects.get(username='admin')
     except auth_models.User.DoesNotExist:
@@ -134,18 +132,24 @@ def create_admin():
 
 
 def create_root():
-    print('Creating root node ...')
-    node = Node()
-    node.node_type = Node.STRUCTURE_NODE
-    node.title = "ROOT"
-    node.save()
-    root_text = Text()
-    root_text.text = "This is the root node."
-    root_text.node = node
-    root_text.save()
-    root_text.authors = [auth_models.User.objects.get(username='admin')]
-    root_text.save()
-    node_storage.PathCache.objects.create(path='', node=node)
+    try:
+        Node.objects.get(id=1)
+        print('Root node already present. Skipping initialization.')
+    except Node.DoesNotExist:
+        print('*' * 80)
+        print('Creating root node ...')
+        node = Node()
+        node.node_type = Node.STRUCTURE_NODE
+        node.title = "ROOT"
+        node.save()
+        root_text = Text()
+        root_text.text = "This is the root node."
+        root_text.node = node
+        root_text.save()
+        root_text.authors = [auth_models.User.objects.get(username='admin')]
+        root_text.save()
+        node_storage.PathCache.objects.create(path='', node=node)
+        print('*' * 80)
 
 
 def create_system_user():
@@ -210,12 +214,7 @@ def initialize_database(sender, **kwargs):
     create_system_user()
     create_anonymous_user()
     create_groups()
-    if Node.objects.all().count() > 0:
-        print('Root node already present. Skipping initialization.')
-        return
-    print('*' * 80)
     create_root()
-    print('*' * 80)
 
 
 signals.post_syncdb.connect(initialize_database,

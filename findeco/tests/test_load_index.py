@@ -126,13 +126,13 @@ class LoadArgumentIndexTest(TestCase):
         self.foo1 = create_structureNode('FooooBar')
         self.foo.append_child(self.foo1)
         # add arguments
-        self.foo_pro = create_argument(self.foo, arg_type='pro',
+        self.foo_pro = create_argument(self.foo1, arg_type='pro',
                                        text="weils geil ist",
                                        authors=[self.hugo])
-        self.foo_neut = create_argument(self.foo, arg_type='neut',
+        self.foo_neut = create_argument(self.foo1, arg_type='neut',
                                         text="kann noch geiler werden",
                                         authors=[self.hugo])
-        self.foo_con = create_argument(self.foo, arg_type='con',
+        self.foo_con = create_argument(self.foo1, arg_type='con',
                                        text="is aber leider root",
                                        authors=[self.hugo])
         # summary variables
@@ -144,10 +144,10 @@ class LoadArgumentIndexTest(TestCase):
         parsed = json.loads(response.content)
         self.assertIn('loadArgumentIndexResponse', parsed)
         indexNodes = parsed['loadArgumentIndexResponse']
+        self.assertEqual(len(indexNodes), 3)
         for indexNode, argument in zip(indexNodes, self.foo_arguments):
             self.assertEqual(indexNode,
-                             create_index_node_for_argument(argument,
-                                                            self.foo1))
+                             create_index_node_for_argument(argument, 0))
 
     def test_on_non_existing_node_gives_error_response(self):
         response = self.client.get(

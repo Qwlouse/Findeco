@@ -21,14 +21,17 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from django.contrib.auth.models import Permission, User
-from django.http import HttpResponse
-from findeco.api_validation import USERNAME
-from django.db.models import Q
-import functools
 import json
+import functools
 import re
+from django.contrib.auth.models import Permission, User
+from django.db.models import Q
+from django.http import HttpResponse
 
+from .api_validation import USERNAME
+from .api_validation import validate_response
+from .error_handling import *
+from .paths import parse_suffix
 import node_storage as backend
 from node_storage import get_node_for_path, get_ordered_children_for, parse
 from node_storage import create_structure_from_structure_node_schema
@@ -37,9 +40,6 @@ from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
 from node_storage.structure_parser import turn_into_valid_short_title
-from .paths import parse_suffix
-from .api_validation import validate_response
-from error_handling import *
 
 
 def json_response(data):
@@ -170,7 +170,7 @@ def create_index_node_for_slot(slot):
     return index_node
 
 
-def create_index_node_for_argument(argument, node, user_id):
+def create_index_node_for_argument(argument, user_id):
     index_node = dict(
         argType=Argument.long_arg_type(argument.arg_type),
         fullTitle=argument.title,
@@ -381,11 +381,13 @@ def follow_node(node, user_id):
         mark.user_id = user_id
         mark.save()
         mark.nodes.add(node)
-        for n in traverse_derivates_while(node, lambda n: n.votes.filter(user=user_id).all().count() == 0):
+        for n in traverse_derivates_while(node, lambda n: n.votes.filter(
+                user=user_id).all().count() == 0):
             mark.nodes.add(n)
         mark.save()
         node.update_favorite_for_all_parents()
-        for n in traverse_derivates_while(node, lambda n: n.votes.filter(user=user_id).all().count() == 0):
+        for n in traverse_derivates_while(node, lambda n: n.votes.filter(
+                user=user_id).all().count() == 0):
             n.update_favorite_for_all_parents()
 
 
@@ -405,25 +407,29 @@ def unfollow_node(node, user_id):
                 mark.delete()
 
 
-def normalize_query(query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').findall, normspace=re.compile(r'\s{2,}').sub):
+def normalize_query(query_string):
     """
-    Splits the query string in invidual keywords, getting rid of unecessary spaces and grouping quoted words together.
+    Splits the query string in invidual keywords, getting rid of unecessary
+    spaces and grouping quoted words together.
     Example:
     >>> normalize_query('  some random  words "with   quotes  " and   spaces')
     ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
     """
-    return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)]
+    findterms = re.compile(r'"([^"]+)"|(\S+)').findall
+    normspace = re.compile(r'\s{2,}').sub
+    return [normspace(' ', (t[0] or t[1]).strip())
+            for t in findterms(query_string)]
 
 
 def get_query(query_string, search_fields):
     """
-    Returns a query, that is a combination of Q objects. That combination aims to search keywords within a model by
-    testing the given search fields.
+    Returns a query, that is a combination of Q objects. That combination aims
+    to search keywords within a model by testing the given search fields.
     """
-    query = None # Query to search for every search term
+    query = None  # Query to search for every search term
     terms = normalize_query(query_string)
     for term in terms:
-        or_query = None # Query to search for a given term in each field
+        or_query = None  # Query to search for a given term in each field
         for field_name in search_fields:
             q = Q(**{"%s__icontains" % field_name: term})
             if or_query is None:
@@ -439,7 +445,8 @@ def get_query(query_string, search_fields):
 
 def change_authorship_to(old_user, new_user):
     """
-    Queries all content and removes old_user from author lists. If new_user is not already in the author list he will
+    Queries all content and removes old_user from author lists. If new_user is
+    not already in the author list he will
     be added. This will be used mostly with new_user being the anonymous user.
     """
     # Changing authorship in texts

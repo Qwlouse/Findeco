@@ -26,36 +26,35 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-import re
-from django.views.decorators.csrf import ensure_csrf_cookie
+import json
+import random
+
+from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.core.validators import validate_email
 from django.db.models import Q
 from django.http import HttpResponse
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-from django.conf import settings
-from django.core.mail import send_mail
 from django.utils.html import escape
-import json
-import random
-from findeco.api_validation import USERNAME
+from django.views.decorators.csrf import ensure_csrf_cookie
 
-from findeco.view_helpers import create_graph_data_node_for_structure_node
+from .paths import parse_suffix
+from .view_helpers import *
+import microblogging
 from microblogging.system_messages import post_node_was_flagged_message
 from microblogging.system_messages import post_new_derivate_for_node_message
 from microblogging.system_messages import post_new_argument_for_node_message
 from microblogging.system_messages import post_node_was_unflagged_message
-import node_storage as backend
-import microblogging
-from node_storage.factory import create_user
-from .paths import parse_suffix
-from .view_helpers import *
 from models import UserProfile
+import node_storage as backend
+from node_storage.factory import create_user
 
 
+#################### General stuff #############################################
 @ensure_csrf_cookie
 def home(request, path):
     with open("static/index.html", 'r') as index_html_file:
@@ -63,12 +62,57 @@ def home(request, path):
 
 
 @ViewErrorHandling
-def is_logged_in(request):
-    assert_authentication(request)
-    return json_response({'isLoggedInResponse': {
-        'displayName': request.user.username}})
+def error_404(request):
+    raise InvalidURL()
 
 
+@ViewErrorHandling
+def search(request, search_fields, search_string):
+    user_results = []
+    if 'user' in search_fields.split('_'):
+        exact_username_matches = User.objects.filter(
+            username__iexact=search_string.strip())
+        for user in exact_username_matches:
+            user_results.append({"url": "user/" + user.username,
+                                 "title": user.username,
+                                 "snippet": "Profil von " + user.username})
+        user_query = get_query(search_string, ['first_name', 'last_name', ])
+        found_users = User.objects.filter(user_query)
+        for user in found_users:
+            user_results.append({"url": "user/" + user.username,
+                                 "title": user.username,
+                                 "snippet": "Profil von " + user.username})
+        user_query = get_query(search_string, ['description', ])
+        found_profiles = UserProfile.objects.filter(user_query)
+        for profile in found_profiles:
+            user_results.append({"url": "user/" + profile.user.username,
+                                 "title": profile.user.username,
+                                 "snippet": profile.description[:min(len(profile.description), 140)]})
+    content_results = []
+    if 'content' in search_fields.split('_'):
+        node_query = get_query(search_string, ['title', ])
+        found_titles = backend.Node.objects.filter(node_query).exclude(node_type=backend.Node.SLOT).order_by("-id")
+        for node in found_titles:
+            content_results.append({"url": node.get_a_path(),
+                                    "title": node.title,
+                                    "snippet": node.text.text[:min(len(node.text.text), 140)]})
+        text_query = get_query(search_string, ['text', ])
+        found_texts = backend.Text.objects.filter(text_query).order_by("-id")
+        for text_node in found_texts:
+            content_results.append({"url": text_node.node.get_a_path(),
+                                    "title": text_node.node.title,
+                                    "snippet": text_node.text[:min(len(text_node.text), 140)]})
+    microblogging_results = []
+    if 'microblogging' in search_fields.split('_'):
+        microblogging_query = get_query(search_string, ['text', ])
+        found_posts = microblogging.Post.objects.filter(microblogging_query).order_by("-id")
+        microblogging_results = microblogging.convert_response_list(found_posts)
+    return json_response({'searchResponse': {'userResults': user_results,
+                                             'contentResults': content_results,
+                                             'microbloggingResults': microblogging_results}})
+
+
+#################### Node Infos ################################################
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def load_index(request, path):
@@ -80,7 +124,7 @@ def load_index(request, path):
 def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     node = assert_node_for_path(prefix)
-    data = [create_index_node_for_argument(a, node, request.user.id) for a in
+    data = [create_index_node_for_argument(a, request.user.id) for a in
             node.arguments.order_by('index')]
     return json_response({'loadArgumentIndexResponse': data})
 
@@ -150,57 +194,67 @@ def load_text(request, path):
             'isFlagging': paragraphs[0]['isFlagging']}})
 
 
+###################### Store/Modify Nodes ######################################
+@ValidPaths("StructureNode")
 @ViewErrorHandling
-def load_user_info(request, name):
-    user = assert_active_user(name)
-    user_info = create_user_info(user)
-    return json_response({
-        'loadUserInfoResponse': {
-            'userInfo': user_info
-        }})
-
-
-@ViewErrorHandling
-def load_user_settings(request):
+def store_text(request, path):
     assert_authentication(request)
-    user = User.objects.get(id=request.user.id)
-    return json_response({'loadUserSettingsResponse': {
-        'userInfo': create_user_info(user),
-        'userSettings': create_user_settings(user)
-    }})
+    assert_permissions(request,
+                       ['node_storage.add_node', 'node_storage.add_argument',
+                        'node_storage.add_vote', 'node_storage.add_nodeorder',
+                        'node_storage.add_derivation', 'node_storage.add_text',
+                        'node_storage.change_vote'])
+    user = request.user
+    p = request.POST
+    if 'wikiText' in p and not \
+            ('argumentType' in p or 'wikiTextAlternative' in p):
 
-
-@ViewErrorHandling
-def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = assert_active_user(username)
-    user = authenticate(username=user.username, password=password)
-    if user is not None:
-        if user.is_active:
-            django_login(request, user)
-            return json_response({
-                'loginResponse': {
-                    'userInfo': create_user_info(user),
-                    'userSettings': create_user_settings(user)
-                }})
+        if len(p['wikiText'].strip()) > 0:
+            # fork for additional slot
+            new_path = fork_node_and_add_slot(path, user, p['wikiText'])
+            # microblog alert
+            post_new_derivate_for_node_message(user, path, new_path)
         else:
-            raise DisabledAccount(username)
+            raise EmptyText
+
+    elif 'wikiText' in p and 'argumentType' in p and not \
+            'wikiTextAlternative' in p:
+
+        if len(p['wikiText'].strip()) > 0:
+            # store argument
+            new_path = store_argument(path, p['wikiText'], p['argumentType'], user)
+            # microblog alert
+            post_new_argument_for_node_message(user, path, p['argumentType'], new_path)
+        else:
+            raise EmptyText
+
+    elif 'wikiTextAlternative' in p and not \
+            ('wikiText' in p or 'argumentType' in p):
+
+        if len(p['wikiTextAlternative'].strip()) > 0:
+            # store alternative
+            _, new_path = store_structure_node(path, p['wikiTextAlternative'], user)
+        else:
+            raise EmptyText
+
+    elif 'wikiTextAlternative' in p and 'wikiText' in p and 'argumentType' in p:
+
+        if len(p['wikiText'].strip()) > 0 and len(p['wikiTextAlternative'].strip()) > 0:
+            # store Argument and Derivate of structure Node as alternative
+            arg_text = p['wikiText']
+            arg_type = p['argumentType']
+            derivate_wiki_text = p['wikiTextAlternative']
+            new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text, user)
+            # microblog alert
+            post_new_derivate_for_node_message(user, path, new_path)
+        else:
+            raise EmptyText
+
     else:
-        raise InvalidLogin()
+        # wrong usage of API
+        raise MissingPOSTParameter('fooo')
 
-
-def logout(request):
-    django_logout(request)
-    messages = [
-        "Didel dadel dana, ab geht's ins Nirvana.",
-        "Mach's gut und danke für den Fisch.",
-        "I'll be back!!"
-    ]
-    m = random.choice(messages)
-    return json_response({'logoutResponse': {
-        'farewellMessage': m
-    }})
+    return json_response({'storeTextResponse': {'path': new_path}})
 
 
 @ValidPaths("StructureNode", "Argument")
@@ -265,70 +319,59 @@ def mark_node_unfollow(request, path):
     return json_response({'markNodeResponse': {}})
 
 
+#################### User Infos ##########################################
 @ViewErrorHandling
-def mark_user_follow(request, name):
+def load_user_info(request, name):
+    user = assert_active_user(name)
+    user_info = create_user_info(user)
+    return json_response({
+        'loadUserInfoResponse': {
+            'userInfo': user_info
+        }})
+
+
+@ViewErrorHandling
+def load_user_settings(request):
     assert_authentication(request)
-    user = request.user
-    followee = assert_active_user(username=name)
-    user.profile.followees.add(followee.profile)
-    return json_response({'markUserResponse': {
-        'followees': [{'displayName': u.user.username}
-                      for u in user.profile.followees.all()]}})
+    user = User.objects.get(id=request.user.id)
+    return json_response({'loadUserSettingsResponse': {
+        'userInfo': create_user_info(user),
+        'userSettings': create_user_settings(user)
+    }})
 
 
+#################### User Interactions #########################################
 @ViewErrorHandling
-def mark_user_unfollow(request, name):
-    followee = assert_active_user(username=name)
-    user = request.user
-    user.profile.followees.remove(followee.profile)
-    return json_response({'markUserResponse': {
-        'followees': [{'displayName': u.user.username}
-                      for u in user.profile.followees.all()]}})
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = assert_active_user(username)
+    user = authenticate(username=user.username, password=password)
+    if user is not None:
+        if user.is_active:
+            django_login(request, user)
+            return json_response({
+                'loginResponse': {
+                    'userInfo': create_user_info(user),
+                    'userSettings': create_user_settings(user)
+                }})
+        else:
+            raise DisabledAccount(username)
+    else:
+        raise InvalidLogin()
 
 
-@ViewErrorHandling
-def search(request, search_fields, search_string):
-    user_results = []
-    if 'user' in search_fields.split('_'):
-        exact_username_matches = User.objects.filter(username__iexact = search_string.strip())
-        for user in exact_username_matches:
-            user_results.append({"url": "user/" + user.username,
-                                 "title": user.username,
-                                 "snippet": "Profil von " + user.username})
-        user_query = get_query(search_string, ['first_name', 'last_name', ])
-        found_users = User.objects.filter(user_query)
-        for user in found_users:
-            user_results.append({"url": "user/" + user.username,
-                                 "title": user.username,
-                                 "snippet": "Profil von " + user.username})
-        user_query = get_query(search_string, ['description', ])
-        found_profiles = UserProfile.objects.filter(user_query)
-        for profile in found_profiles:
-            user_results.append({"url": "user/" + profile.user.username,
-                                 "title": profile.user.username,
-                                 "snippet": profile.description[:min(len(profile.description), 140)]})
-    content_results = []
-    if 'content' in search_fields.split('_'):
-        node_query = get_query(search_string, ['title', ])
-        found_titles = backend.Node.objects.filter(node_query).exclude(node_type=backend.Node.SLOT).order_by("-id")
-        for node in found_titles:
-            content_results.append({"url": node.get_a_path(),
-                                    "title": node.title,
-                                    "snippet": node.text.text[:min(len(node.text.text), 140)]})
-        text_query = get_query(search_string, ['text', ])
-        found_texts = backend.Text.objects.filter(text_query).order_by("-id")
-        for text_node in found_texts:
-            content_results.append({"url": text_node.node.get_a_path(),
-                                    "title": text_node.node.title,
-                                    "snippet": text_node.text[:min(len(text_node.text), 140)]})
-    microblogging_results = []
-    if 'microblogging' in search_fields.split('_'):
-        microblogging_query = get_query(search_string, ['text', ])
-        found_posts = microblogging.Post.objects.filter(microblogging_query).order_by("-id")
-        microblogging_results = microblogging.convert_response_list(found_posts)
-    return json_response({'searchResponse': {'userResults': user_results,
-                                             'contentResults': content_results,
-                                             'microbloggingResults': microblogging_results}})
+def logout(request):
+    django_logout(request)
+    messages = [
+        "Didel dadel dana, ab geht's ins Nirvana.",
+        "Mach's gut und danke für den Fisch.",
+        "I'll be back!!"
+    ]
+    m = random.choice(messages)
+    return json_response({'logoutResponse': {
+        'farewellMessage': m
+    }})
 
 
 @ViewErrorHandling
@@ -354,6 +397,26 @@ def store_settings(request):
 
 
 @ViewErrorHandling
+def mark_user_follow(request, name):
+    assert_authentication(request)
+    user = request.user
+    followee = assert_active_user(username=name)
+    user.profile.followees.add(followee.profile)
+    return json_response({'markUserResponse': {
+        'followees': [{'displayName': u.user.username}
+                      for u in user.profile.followees.all()]}})
+
+
+@ViewErrorHandling
+def mark_user_unfollow(request, name):
+    followee = assert_active_user(username=name)
+    user = request.user
+    user.profile.followees.remove(followee.profile)
+    return json_response({'markUserResponse': {
+        'followees': [{'displayName': u.user.username}
+                      for u in user.profile.followees.all()]}})
+
+@ViewErrorHandling
 def change_password(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
@@ -374,68 +437,7 @@ def delete_user(request):
     return json_response({'deleteUserResponse': {}})
 
 
-@ValidPaths("StructureNode")
-@ViewErrorHandling
-def store_text(request, path):
-    assert_authentication(request)
-    assert_permissions(request,
-                       ['node_storage.add_node', 'node_storage.add_argument',
-                        'node_storage.add_vote', 'node_storage.add_nodeorder',
-                        'node_storage.add_derivation', 'node_storage.add_text',
-                        'node_storage.change_vote'])
-    user = request.user
-    p = request.POST
-    if 'wikiText' in p and not \
-            ('argumentType' in p or 'wikiTextAlternative' in p):
-
-        if len(p['wikiText'].strip()) > 0:
-            # fork for additional slot
-            new_path = fork_node_and_add_slot(path, user, p['wikiText'])
-            # microblog alert
-            post_new_derivate_for_node_message(user, path, new_path)
-        else:
-            raise EmptyText
-
-    elif 'wikiText' in p and 'argumentType' in p and not \
-            'wikiTextAlternative' in p:
-
-        if len(p['wikiText'].strip()) > 0:
-            # store argument
-            new_path = store_argument(path, p['wikiText'], p['argumentType'], user)
-            # microblog alert
-            post_new_argument_for_node_message(user, path, p['argumentType'], new_path)
-        else:
-            raise EmptyText
-
-    elif 'wikiTextAlternative' in p and not \
-            ('wikiText' in p or 'argumentType' in p):
-
-        if len(p['wikiTextAlternative'].strip()) > 0:
-            # store alternative
-            _, new_path = store_structure_node(path, p['wikiTextAlternative'], user)
-        else:
-            raise EmptyText
-
-    elif 'wikiTextAlternative' in p and 'wikiText' in p and 'argumentType' in p:
-
-        if len(p['wikiText'].strip()) > 0 and len(p['wikiTextAlternative'].strip()) > 0:
-            # store Argument and Derivate of structure Node as alternative
-            arg_text = p['wikiText']
-            arg_type = p['argumentType']
-            derivate_wiki_text = p['wikiTextAlternative']
-            new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text, user)
-            # microblog alert
-            post_new_derivate_for_node_message(user, path, new_path)
-        else:
-            raise EmptyText
-
-    else:
-        # wrong usage of API
-        raise MissingPOSTParameter('fooo')
-
-    return json_response({'storeTextResponse': {'path': new_path}})
-
-
+####################### Registration ###########################################
 @ViewErrorHandling
 def account_registration(request):
     assert_post_parameters(request, ['displayName', 'password', 'emailAddress'])
@@ -559,8 +561,3 @@ def account_reset_confirmation(request):
                   str(password), settings.EMAIL_HOST_USER,
                   [user.email])
     return json_response({'accountResetConfirmationResponse': {}})
-
-
-@ViewErrorHandling
-def error_404(request):
-    raise InvalidURL()
