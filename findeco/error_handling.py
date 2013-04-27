@@ -22,23 +22,29 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 import functools
-from django.http import HttpResponse
 import json
-from node_storage.structure_parser import InvalidWikiStructure
 from smtplib import SMTPException
+from django.http import HttpResponse
+from node_storage.structure_parser import InvalidWikiStructure
 
 
 def json_error_response(identifier, *args):
     response = {'errorResponse': {
         'errorID': identifier,
         'additionalInfo': args,
-        }}
+    }}
     return HttpResponse(json.dumps(response),
                         mimetype='application/json',
                         status=406)
 
 
+################### Custom View Exceptions #####################################
 class ViewError(Exception):
+    """
+    Base class for all custom view exceptions.
+    Holds an identifier that should start with a single underscore that will get
+    internationalized in the frontend.
+    """
     def __init__(self, identifier, *args):
         super(Exception, self).__init__(identifier)
         self.identifier = identifier
@@ -64,7 +70,14 @@ InvalidActivationKey = functools.partial(ViewError, '_InvalidActivationKey')
 InvalidURL = functools.partial(ViewError, '_InvalidURL')
 
 
+################### ErrorHandling Decorator ####################################
 def ViewErrorHandling(f):
+    """
+    This decorator is meant to decorate views, and will catch any ViewError
+    exception and return a corresponding json error response.
+    It also translates InvalidWikiStructure exceptions from the backend and
+    SMTPExceptions from the server to adequate json error responses.
+    """
     @functools.wraps(f)
     def wrapped(*args, **kwargs):
         try:
