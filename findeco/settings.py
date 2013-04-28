@@ -107,6 +107,12 @@ REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco' \
                              ' Account. You can request it with the Link ' \
                              'below. If you did not request it you just need' \
                              ' to ignore this Mail '
+EMAIL_VERIFICATION_TITLE = 'Please verify this e-mail-address'
+EMAIL_VERIFICATION_BODY = 'You requested an e-mail change on your Findeco' \
+                          ' Account. You can complete it with the Link ' \
+                          'below. If you did not request it you just need' \
+                          ' to ignore this Mail '
+
 REGISTRATION_RECOVERY_TITLE_SUCCESS = 'Your new Findeco Password'
 REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
 

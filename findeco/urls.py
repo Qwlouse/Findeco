@@ -187,7 +187,11 @@ urlpatterns = patterns(
     url(r'^\.json_accountResetConfirmation/?$',
         'findeco.views.account_reset_confirmation',
         name='account_reset_confirmation'),                       
-                       
+
+    url(r'^\.json_emailChangeConfirmation/?$',
+        'findeco.views.email_change_confirmation',
+        name='email_change_confirmation'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^\.admin/doc/?', include('django.contrib.admindocs.urls')),
 
