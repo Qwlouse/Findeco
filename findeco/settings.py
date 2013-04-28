@@ -24,24 +24,17 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-
-# Django settings for findeco project.
-from __future__ import division, print_function, unicode_literals
+""" Django settings for Findeco project."""
 
 ###############################################################################
-#                  Copy Values to your Local Settings File 
-#                        Start Here
-#↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+#                 Copy values to your local_settings.py file
+#                                Start Here
+#vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-# do not change the following eight lines
+# do not change the following three lines
+from __future__ import division, print_function, unicode_literals
 import datetime
-import os
-PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                           os.path.pardir))
-
-
-def projectPath(filename):
-    return os.path.join(PROJECT_DIR, filename)
+from findeco.project_path import project_path
 
 # You should turn debug off on public machines.
 # This is helpful for development and setup
@@ -63,7 +56,7 @@ DATABASES = {
         # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'ENGINE': 'django.db.backends.sqlite3',
         # DBName of path to database file if using sqlite3.
-        'NAME': projectPath("Database.sqlite3"),
+        'NAME': project_path("Database.sqlite3"),
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         # Set to empty string for localhost. Not used with sqlite3.
@@ -117,7 +110,7 @@ REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco' \
 REGISTRATION_RECOVERY_TITLE_SUCCESS = 'Your new Findeco Password'
 REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
 
-#↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+###############################################################################
 #                    End of Values for Local Settings File
 ###############################################################################
 
@@ -143,7 +136,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    PROJECT_DIR + '/static/',
+    project_path('static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -152,10 +145,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-
-
-
-
 
 CSRF_COOKIE_NAME = str("XSRF-TOKEN")
 
@@ -171,7 +160,6 @@ ROOT_URLCONF = 'findeco.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'findeco.wsgi.application'
-
 
 
 INSTALLED_APPS = (
