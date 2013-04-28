@@ -25,6 +25,8 @@ import json
 import functools
 import re
 from django.contrib.auth.models import Permission, User
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.db.models import Q
 from django.http import HttpResponse
 
@@ -441,3 +443,10 @@ def check_username_sanity(username):
         return True
     else:
         return False
+
+
+def assert_valid_email(email):
+    try:
+        validate_email(email)
+    except ValidationError:
+        raise InvalidEmailAddress()

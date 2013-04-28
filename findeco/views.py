@@ -34,13 +34,12 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from django.core.validators import validate_email
 from django.db.models import Q
 from django.http import HttpResponse
 from django.utils.html import escape
 from django.views.decorators.csrf import ensure_csrf_cookie
+from findeco.models import EmailActivation
 
 from .paths import parse_suffix
 from .view_helpers import *
@@ -391,6 +390,22 @@ def store_settings(request):
             user.username = display_name
 
     user.profile.description = escape(request.POST['description'])
+    email = request.POST['email']
+    if email != user.email:
+        assert_valid_email(email)
+        eact = EmailActivation.create(user, email)
+        try:
+            send_mail(settings.EMAIL_VERIFICATION_TITLE,
+                      settings.EMAIL_VERIFICATION_BODY + ' ' + settings.FINDECO_BASE_URL +
+                      '/#/confirmEmail/' + str(eact.key),
+                      settings.EMAIL_HOST_USER,
+                      [email],
+                      fail_silently=False)
+        except SMTPException:
+            # This means we can't send mails, so we can't change the mail
+            eact.delete()
+            raise
+
     user.email = request.POST['email']
     user.save()
     return json_response({'storeSettingsResponse': {}})
@@ -448,10 +463,8 @@ def account_registration(request):
         displayName = request.POST['displayName']
     else:
         raise InvalidUsername(request.POST['displayName'])
-    try:
-        validate_email(emailAddress)
-    except ValidationError:
-        raise InvalidEmailAddress(emailAddress)
+
+    assert_valid_email(emailAddress)
 
     # validate username
     if not check_username_sanity(displayName):
@@ -553,6 +566,18 @@ def account_reset_confirmation(request):
                   settings.REGISTRATION_RECOVERY_BODY_SUCCESS + ' Password : ' +
                   str(new_password), settings.EMAIL_HOST_USER,
                   [rec.user.email])
+        return json_response({'accountResetConfirmationResponse': {}})
+    except Activation.DoesNotExist:
+        raise InvalidRecoveryKey()
+
+
+@ViewErrorHandling
+def email_change_confirmation(request):
+    assert_post_parameters(request, ['activationKey'])
+    email_verify_key = request.POST['activationKey']
+    try:
+        eac = EmailActivation.objects.get(key=email_verify_key)
+        eac.resolve()
         return json_response({'accountResetConfirmationResponse': {}})
     except Activation.DoesNotExist:
         raise InvalidRecoveryKey()
