@@ -32,7 +32,9 @@ class ActivationKeyPruning(Job):
 
     def job(self):
         now = datetime.now()
-        Activation.objects.filter(key_valid_until__lt=now).delete()
+        for act in Activation.objects.filter(key_valid_until__lt=now):
+            act.user.delete()
+            act.delete()
         PasswordRecovery.objects.filter(key_valid_until__lt=now).delete()
 
     def __unicode__(self):

@@ -58,7 +58,8 @@ class UserProfile(models.Model):
     # The user this profile belongs to
     user = models.OneToOneField(
         User,
-        related_name='profile')
+        related_name='profile',
+        on_delete=models.CASCADE)
 
     description = models.TextField(
         blank=True,
