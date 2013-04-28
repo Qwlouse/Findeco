@@ -28,24 +28,23 @@
 # Django settings for findeco project.
 from __future__ import division, print_function, unicode_literals
 
-
-
-
-
 ###############################################################################
 #                  Copy Values to your Local Settings File 
 #                        Start Here
 #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-# do not change the following six lines
+# do not change the following eight lines
 import datetime
 import os
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                            os.path.pardir))
+
+
 def projectPath(filename):
     return os.path.join(PROJECT_DIR, filename)
 
-#You should turn debug off on public machines. This is helpfull for development and Setup
+# You should turn debug off on public machines.
+# This is helpful for development and setup
 DEBUG = True
 
 # We will send Exceptions created by the Api to this Email
@@ -53,10 +52,12 @@ ADMINS = (
     ('Your Name', 'your_name@email.com'),
 )
 
-#The admin password used on first database Sync make shure to change your Password after first login  
+# The password used for the auto-created 'admin' user on first database sync.
+# Make sure to change your password after first login
 ADMIN_PASS = "1234"
 
-# You can define your Database here. The default configuration (sglite) works fine for testing and development environments
+# You can define your database here. The default configuration (sqlite) works
+# fine for testing and development environments
 DATABASES = {
     'default': {
         # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -80,7 +81,6 @@ SECRET_KEY = 'MQ4DNT74V5FFRZNFKC01CI6DYERAXEJZO5DNURVV2G4NTZ5B6OFGFPGJGKRT'
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'Europe/Berlin'
 
-
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'de-DE'
@@ -93,16 +93,18 @@ EMAIL_HOST_USER = ''
 EMAIL_SUBJECT_PREFIX = '[Findeco]'
 EMAIL_USE_TLS = True
 
-# This url is used in mails and similar things for pointing to your Findeco System
+# This url is used in mails and similar things for pointing to
+# your Findeco system
 FINDECO_BASE_URL = 'http://127.0.0.1:8000'
 
 
-# Drop Activation keys and Recovery keys after the configured time
+# Drop activation keys and password recovery keys after the configured times
 ACTIVATION_KEY_VALID_FOR = datetime.timedelta(hours=24)
 RECOVERY_KEY_VALID_FOR = datetime.timedelta(hours=24)
 
 
-# These Strings are send on registration and Mail recovery (They will change there place in the near future
+# These strings are send on registration and Mail recovery
+# (They will change their place in the near future)
 REGISTRATION_TITLE = 'Your Findeco registration'
 REGISTRATION_BODY = 'You have registred an Findeco Account with this E-Mail ' \
                     'address. You can activate it with the Link below. If you' \
@@ -118,7 +120,6 @@ REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
 #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 #                    End of Values for Local Settings File
 ###############################################################################
-
 
 SITE_ID = 1
 
