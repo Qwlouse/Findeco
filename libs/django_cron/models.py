@@ -31,10 +31,13 @@ class Job(models.Model):
     run_frequency = models.PositiveIntegerField(default=86400)
     last_run = models.DateTimeField(default=datetime.now())
     
-    instance = models.TextField()
-    args = models.TextField()
-    kwargs = models.TextField()
+    instance = models.TextField(editable=False)
+    args = models.TextField(editable=False)
+    kwargs = models.TextField(editable=False)
     queued = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return "<%s_Job>" % self.name
 
 
 class Cron(models.Model):

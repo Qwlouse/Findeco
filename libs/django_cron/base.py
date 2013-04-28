@@ -21,10 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 import cPickle
-from threading import Timer
+from threading import Thread
+import time
 from datetime import datetime
 
-from django.dispatch import dispatcher
 from django.conf import settings
 
 from signals import cron_done
@@ -64,7 +64,7 @@ class CronScheduler(object):
             raise TypeError("You can only register a Job not a %r" % job_class)
 
         job, created = models.Job.objects.get_or_create(
-            name=str(job_instance.__class__))
+            name=str(job_instance.__class__.__name__))
         if created:
             job.instance = cPickle.dumps(job_instance)
         job.args = cPickle.dumps(args)
@@ -73,9 +73,18 @@ class CronScheduler(object):
         job.save()
 
     def execute(self):
-        """
-        Queue all Jobs for execution
-        """
+        t = Thread(target=poll_all_jobs)
+        t.setDaemon(True)
+        t.start()
+
+cronScheduler = CronScheduler()
+
+
+def poll_all_jobs():
+    """
+    Queue all Jobs for execution
+    """
+    while True:
         status, created = models.Cron.objects.get_or_create(pk=1)
 
         # This is important for 2 reasons:
@@ -95,15 +104,14 @@ class CronScheduler(object):
             # this will fail if you're debugging, so we want it
             # to fail silently and start the timer again so we
             # can pick up where we left off once debugging is done
-            Timer(polling_frequency, self.execute).start()
-            return
+            time.sleep(polling_frequency)
+            continue
 
         jobs = models.Job.objects.all()
         for job in jobs:
             if job.queued:
                 time_delta = datetime.now() - job.last_run
-                if (
-                        time_delta.seconds + 86400 * time_delta.days) > job.run_frequency:
+                if (time_delta.seconds + 86400 * time_delta.days) > job.run_frequency:
                     inst = cPickle.loads(str(job.instance))
                     args = cPickle.loads(str(job.args))
                     kwargs = cPickle.loads(str(job.kwargs))
@@ -113,19 +121,14 @@ class CronScheduler(object):
                         job.last_run = datetime.now()
                         job.save()
 
-                    except Exception:
+                    except Exception, e:
                         # if the job throws an error, just remove it from
                         # the queue. That way we can find/fix the error and
                         # requeue the job manually
                         job.queued = False
                         job.save()
+                        print(e)
 
         status.executing = False
         status.save()
-
-        # Set up for this function to run again
-        Timer(polling_frequency, self.execute).start()
-
-
-cronScheduler = CronScheduler()
-
+        time.sleep(polling_frequency)

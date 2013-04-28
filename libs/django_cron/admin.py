@@ -21,21 +21,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-
-from datetime import datetime
-from libs.django_cron import cronScheduler, Job
-from .models import Activation, PasswordRecovery
+from django.contrib import admin
+from .models import Job
 
 
-class ActivationKeyPruning(Job):
-    run_every = 3600  # seconds
+class JobAdmin(admin.ModelAdmin):
+    model = Job
+    list_display = ('__unicode__', 'run_frequency', 'last_run', 'queued')
+    list_display_links = ('__unicode__',)
 
-    def job(self):
-        now = datetime.now()
-        Activation.objects.filter(key_valid_until__lt=now).delete()
-        PasswordRecovery.objects.filter(key_valid_until__lt=now).delete()
-
-    def __unicode__(self):
-        return "<ActivationKeyPruningJob>"
-
-cronScheduler.register(ActivationKeyPruning)
+admin.site.register(Job, JobAdmin)

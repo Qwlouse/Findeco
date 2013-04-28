@@ -45,7 +45,6 @@ def autodiscover():
         try:
             app_path = __import__(app, {}, {},
                                   [str(app.split('.')[-1])]).__path__
-            print(app_path)
         except AttributeError:
             continue
 
