@@ -383,11 +383,13 @@ def store_settings(request):
     else:
         raise InvalidUsername(request.POST['displayName'])
     if display_name != user.username:
-        is_available = User.objects.filter(username__iexact=display_name).count() == 0
-        if not is_available:
-            raise UsernameNotAvailable(display_name)
-        else:
-            user.username = display_name
+        try:
+            u = User.objects.get(username__iexact=display_name)
+            if u != user:
+                raise UsernameNotAvailable(display_name)
+        except User.DoesNotExist:
+            pass
+        user.username = display_name
 
     user.profile.description = escape(request.POST['description'])
     email = request.POST['email']
