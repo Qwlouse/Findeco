@@ -23,7 +23,6 @@
  ****************************************************************************************/
 
 'use strict';
-/* App Module */
 
 var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', 'ui.bootstrap'])
     .config(['$routeProvider', function ($routeProvider) {
@@ -36,8 +35,9 @@ var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', '
             when('/user*name', {templateUrl: 'static/partials/user.html', controller: FindecoUserInfoCtrl}).
             when('/login', {templateUrl: 'static/partials/userLogin.html', controller: FindecoUserCtrl}).
             when('/register', {templateUrl: 'static/partials/userRegistration.html', controller: FindecoUserCtrl}).
-            when('/activate/*param', {templateUrl: 'static/partials/userActivate.html', controller: FindecoUserCtrl}).
-            when('/confirm/*param', {templateUrl: 'static/partials/userConfirm.html', controller: FindecoUserCtrl}).
+            when('/activate*param', {templateUrl: 'static/partials/activate.html', controller: FindecoConfirmationCtrl}).
+            when('/confirm_email*param', {templateUrl: 'static/partials/activate.html', controller: FindecoConfirmationCtrl}).
+            when('/confirm*param', {templateUrl: 'static/partials/activate.html', controller: FindecoConfirmationCtrl}).
             when('/recoverByMail', {templateUrl: 'static/partials/userRecoverByMail.html', controller: FindecoUserCtrl}).
             when('/recoverByUsername', {templateUrl: 'static/partials/userRecoverByUsername.html', controller: FindecoUserCtrl}).
             when('/terms_of_use', {templateUrl: 'static/partials/termsOfUse.html', controller: FindecoCustomContentCtrl}).

@@ -75,39 +75,6 @@ function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
         }
     };
 
-    $scope.activate = function () {
-        if (Navigator.prefix != "activate") {
-            return;
-        }
-        User.activate($routeParams.param).success(function () {
-            Navigator.changePath('/');
-            Message.send("success", "_accountActivationFinished_");
-        });
-    };
-    $scope.confirm = function () {
-        if (Navigator.prefix != "confirm") {
-            return;
-        }
-        User.confirm($routeParams.param).success(function () {
-            Navigator.changePath('/');
-            Message.send("success", "_accountRecoveryConfirmed_");
-        });
-    };
-
-    $scope.recoverByMail = function () {
-        User.recoverByMail($scope.mail).success(function () {
-            Navigator.changePath('/');
-            Message.send("success", "_accountRecoveryFinished_");
-        });
-    };
-
-    $scope.recoverByUsername = function () {
-        User.recoverByUsername($scope.username).success(function () {
-            Navigator.changePath('/');
-            Message.send("success", "_accountRecoveryFinished_");
-        });
-    };
-
     $scope.storeUserSettings = function () {
         User.storeSettings().error(User.loadSettings).success(function () {
             Message.send("success", "_settingsChanged_");
@@ -135,6 +102,20 @@ function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
         }
     };
 
+    $scope.recoverByMail = function () {
+        User.recoverByMail($scope.mail).success(function () {
+            Navigator.changePath('/');
+            Message.send("success", "_accountRecoveryFinished_");
+        });
+    };
+
+    $scope.recoverByUsername = function () {
+        User.recoverByUsername($scope.username).success(function () {
+            Navigator.changePath('/');
+            Message.send("success", "_accountRecoveryFinished_");
+        });
+    };
+
     $scope.$on('$locationChangeStart', function(event) {
         if (!event.defaultPrevented && $scope.user.isChanged()) {
             var r = window.confirm("You have unsaved changes.\n If you leave" +
@@ -146,9 +127,6 @@ function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
             }
         }
     });
-
-    $scope.activate();
-    $scope.confirm();
 }
 
 FindecoUserCtrl.$inject = ['$scope', 'User', '$routeParams' , 'Message', 'Navigator'];

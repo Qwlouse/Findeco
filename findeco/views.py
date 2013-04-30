@@ -399,7 +399,7 @@ def store_settings(request):
         try:
             send_mail(settings.EMAIL_VERIFICATION_TITLE,
                       settings.EMAIL_VERIFICATION_BODY + ' ' + settings.FINDECO_BASE_URL +
-                      '/#/confirmEmail/' + str(eact.key),
+                      '/#/confirm_email/' + str(eact.key),
                       settings.EMAIL_HOST_USER,
                       [email],
                       fail_silently=False)
@@ -567,7 +567,7 @@ def account_reset_confirmation(request):
                   str(new_password), settings.EMAIL_HOST_USER,
                   [rec.user.email])
         return json_response({'accountResetConfirmationResponse': {}})
-    except Activation.DoesNotExist:
+    except PasswordRecovery.DoesNotExist:
         raise InvalidRecoveryKey()
 
 

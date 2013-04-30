@@ -226,26 +226,21 @@ angular.module('FindecoServices', [])
         };
 
         userInfo.register = function (displayName, password, emailAddress) {
-            var promise = $http.post('/.json_accountRegistration/', {displayName: displayName, password: password, emailAddress: emailAddress});
-            promise.success(function (d) {
-
-            });
-            return promise;
+            return $http.post('/.json_accountRegistration/', {displayName: displayName, password: password, emailAddress: emailAddress});
         };
+
         userInfo.activate = function (activationKey) {
-            var promise = $http.post('/.json_accountActivation/', {activationKey: activationKey});
-            promise.success(function (d) {
-
-            });
-            return promise;
+            return $http.post('/.json_accountActivation/', {activationKey: activationKey});
         };
+
         userInfo.confirm = function (activationKey) {
-            var promise = $http.post('/.json_accountResetConfirmation/', {activationKey: activationKey});
-            promise.success(function (d) {
-
-            });
-            return promise;
+            return $http.post('/.json_accountResetConfirmation/', {activationKey: activationKey});
         };
+
+        userInfo.confirmEmail = function (activationKey) {
+            return $http.post('/.json_emailChangeConfirmation/', {activationKey: activationKey});
+        };
+
         userInfo.recoverByMail = function (emailAddress) {
             var promise = $http.post('/.json_accountResetRequestByMail/', {emailAddress: emailAddress});
             promise.success(function (d) {
@@ -446,7 +441,7 @@ angular.module('FindecoServices', [])
                 location.userName = location.parts[1];
             } else {
                 location.type = "other";
-                location.prefix = location.path;
+                location.prefix = location.parts[0];
             }
             // calculate entries
             var nodes = location.nodePath.split('/');
