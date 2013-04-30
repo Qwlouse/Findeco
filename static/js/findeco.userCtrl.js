@@ -26,7 +26,6 @@
 
 function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
     $scope.user = User;
-    $scope.newDisplayName = User.displayName;
     $scope.followUser = User.markUser;
 
     // used for login and registration
@@ -51,7 +50,7 @@ function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
 
     $scope.register = function () {
         var fields_filled_correctly = true;
-        if (($scope.password == undefined) || ($scope.mail == undefined) || ($scope.username == undefined)) {
+        if (($scope.password == '') || ($scope.mail == '') || ($scope.username == '')) {
             Message.send("error", "_accountFieldsMissing_");
             fields_filled_correctly = false;
         }
@@ -115,9 +114,7 @@ function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
     };
 
     $scope.storeNewDisplayName = function () {
-        $scope.user.displayName = $scope.newDisplayName;
         $scope.storeUserSettings();
-        $scope.newDisplayName = User.displayName;
     };
 
     $scope.storeUserSettings = function () {
@@ -146,6 +143,18 @@ function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
             });
         }
     };
+
+    $scope.$on('$locationChangeStart', function(event) {
+        if (!event.defaultPrevented && $scope.user.isChanged()) {
+            var r = window.confirm("You have unsaved changes.\n If you leave" +
+                " this page they will be lost.\n Proceed?");
+            if (r) {
+                $scope.user.resetChanges();
+            } else {
+                event.preventDefault();
+            }
+        }
+    });
 
     $scope.activate();
     $scope.confirm();

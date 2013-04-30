@@ -213,6 +213,11 @@ angular.module('FindecoServices', [])
 
     })
     .factory('User', function ($http) {
+        var data = {
+            userInfo : false,
+            userSettings : false
+        };
+
         var userInfo = {
             isLoggedIn: false,
             displayName: "",
@@ -294,18 +299,31 @@ angular.module('FindecoServices', [])
         userInfo.loadSettings = function () {
             var promise = $http.get('.json_loadUserSettings/');
             promise.success(function (d) {
-                var data = d.loadUserSettingsResponse;
+                data = d.loadUserSettingsResponse;
                 userInfo.isLoggedIn = true;
-                userInfo.displayName = data.userInfo.displayName;
-                userInfo.description = data.userInfo.description;
+                userInfo.resetChanges();
                 userInfo.followees = data.userSettings.followees;
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
                 }
-                userInfo.email = data.userSettings.email;
             });
             return promise;
+        };
+
+        userInfo.isChanged = function () {
+            if (! userInfo.isLoggedIn) {
+                return false;
+            }
+            return (userInfo.displayName != data.userInfo.displayName) ||
+                   (userInfo.description != data.userInfo.description) ||
+                   (userInfo.email != data.userSettings.email);
+        };
+
+        userInfo.resetChanges = function () {
+            userInfo.displayName = data.userInfo.displayName;
+            userInfo.description = data.userInfo.description;
+            userInfo.email = data.userSettings.email;
         };
 
         userInfo.storeSettings = function () {

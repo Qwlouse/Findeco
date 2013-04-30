@@ -16,7 +16,7 @@
         <h3 data-i18n="_username_">Username</h3>
         <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ user.displayName }}</p>
         <form ng-submit="storeNewDisplayName()">
-            <input type="text" ng-model="newDisplayName" /><br />
+            <input type="text" ng-model="user.displayName" /><br />
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
         </form>
         <h3 data-i18n="_changePassword_">change Password</h3>
