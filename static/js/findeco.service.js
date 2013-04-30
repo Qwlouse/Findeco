@@ -280,6 +280,8 @@ angular.module('FindecoServices', [])
                 userInfo.description = "";
                 userInfo.displayName = "";
                 userInfo.followees = [];
+                data.userInfo = false;
+                data.userSettings = false;
             });
         };
 
@@ -300,8 +302,8 @@ angular.module('FindecoServices', [])
             var promise = $http.get('.json_loadUserSettings/');
             promise.success(function (d) {
                 data = d.loadUserSettingsResponse;
-                userInfo.isLoggedIn = true;
                 userInfo.resetChanges();
+                userInfo.isLoggedIn = true;
                 userInfo.followees = data.userSettings.followees;
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
@@ -312,7 +314,7 @@ angular.module('FindecoServices', [])
         };
 
         userInfo.isChanged = function () {
-            if (! userInfo.isLoggedIn) {
+            if (! userInfo.isLoggedIn || !data.userInfo) {
                 return false;
             }
             return (userInfo.displayName != data.userInfo.displayName) ||
