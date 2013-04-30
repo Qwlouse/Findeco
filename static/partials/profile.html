@@ -10,7 +10,7 @@
         <h3 data-i18n="_email_">E-Mail</h3>
         <p><span data-i18n="_currentAdress_">aktuelle Adresse</span>: {{ user.email }}</p>
         <form ng-submit="storeUserEMail()">
-            <input type="text" ng-model="userEmail" /><br />
+            <input type="text" ng-model="user.email" /><br />
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
         </form>
         <h3 data-i18n="_username_">Username</h3>
@@ -22,7 +22,7 @@
         <h3 data-i18n="_changePassword_">change Password</h3>
         <p data-i18n="_changePasswordDescription_"></p>
         <form ng-submit="changePassword()">
-            <input type="password" ng-model="password1" /><br />
+            <input type="password" ng-model="password" /><br />
             <input type="password" ng-model="password2" /><br />
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
         </form>
