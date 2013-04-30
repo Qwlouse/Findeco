@@ -9,13 +9,13 @@
         <h2 data-i18n="_settings_">Einstellungen</h2>
         <h3 data-i18n="_email_">E-Mail</h3>
         <p><span data-i18n="_currentAdress_">aktuelle Adresse</span>: {{ user.email }}</p>
-        <form ng-submit="storeUserEMail()">
+        <form ng-submit="storeUserSettings()">
             <input type="text" ng-model="user.email" /><br />
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
         </form>
         <h3 data-i18n="_username_">Username</h3>
         <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ user.displayName }}</p>
-        <form ng-submit="storeNewDisplayName()">
+        <form ng-submit="storeUserSettings()">
             <input type="text" ng-model="user.displayName" /><br />
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
         </form>

@@ -94,7 +94,6 @@ function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
         });
     };
 
-
     $scope.recoverByMail = function () {
         User.recoverByMail($scope.mail).success(function () {
             Navigator.changePath('/');
@@ -107,14 +106,6 @@ function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
             Navigator.changePath('/');
             Message.send("success", "_accountRecoveryFinished_");
         });
-    };
-
-    $scope.storeUserEMail = function () {
-        $scope.storeUserSettings();
-    };
-
-    $scope.storeNewDisplayName = function () {
-        $scope.storeUserSettings();
     };
 
     $scope.storeUserSettings = function () {
