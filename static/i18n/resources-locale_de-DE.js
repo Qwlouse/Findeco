@@ -602,6 +602,11 @@
         "key": "_alternativeNotChanged_",
         "value": "Der Alternativtext wurde nicht geändert und kann daher nicht gespeichert werden.",
         "description": ""
+    },
+    {
+        "key": "_UsernameNotAvailable",
+        "value": "Der gewählte Benutzername ist nicht verfügbar. Versuche einen anderen.",
+        "description": ""
     }
     
     
