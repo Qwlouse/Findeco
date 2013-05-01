@@ -607,6 +607,11 @@
         "key": "_UsernameNotAvailable",
         "value": "Der gewählte Benutzername ist nicht verfügbar. Versuche einen anderen.",
         "description": ""
+    },
+    {
+        "key": "_InvalidEmailAddress ",
+        "value": "Die gewählte Emailadresse ist ungültig.",
+        "description": ""
     }
     
     
