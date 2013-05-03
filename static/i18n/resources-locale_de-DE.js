@@ -609,7 +609,7 @@
         "description": ""
     },
     {
-        "key": "_InvalidEmailAddress",
+        "key": "_InvalidEmailAddresss",
         "value": "Die gewählte Emailadresse ist ungültig.",
         "description": ""
     }
