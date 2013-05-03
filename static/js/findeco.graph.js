@@ -177,7 +177,8 @@ findecoApp.directive('findecoGraph', function( ) {
                     //.attr("title", function (d) { return d.path; })
                     .call(force.drag)
                     .on("mouseover", function(d){
-                        tooltip.html("Follows Gesamt: <span id='followsColorBox'> " + d.follows + "</span>" +
+                        tooltip.html(d.title +
+                        	"<br/>Follows Gesamt: <span id='followsColorBox'> " + d.follows + "</span>" +
                             "<br/>direkt: <span id='directFollowColorBox'>" + d.newFollows + "</span>"+
                             "<br/>vererbt: <span id='transitiveFollowColorBox'>" + (d.follows - d.newFollows) + "</span>"+
                             "<br/>Entfolgungen: <span id='unfollowColorBox'>" + d.unFollows + "</span>");

@@ -218,7 +218,7 @@ def create_paragraph_list_for_node(node, path, depth=1):
 
 
 def create_graph_data_node_for_structure_node(node, slot=None, path=None,
-                                              slot_path=None):
+                                              slot_path=None, title=None):
     if slot_path:
         slot = get_node_for_path(slot_path)
 
@@ -242,6 +242,7 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None,
         spamFlags=node.spam_flags.count(),
         unFollows=node.get_unfollows(),
         newFollows=node.get_newfollows(),
+        title=node.title,
         originGroup=[o.rstrip('/') for o in origin_group]
     )
     return graph_data_node

@@ -56,6 +56,7 @@ graphDataNode_schema = {
     'spamFlags': integer,
     'unFollows': integer,
     'newFollows': integer,
+    'title': string,
     'originGroup': originGroup_schema
 }
 indexNode_schema = {
