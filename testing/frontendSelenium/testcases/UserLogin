@@ -56,6 +56,13 @@
 	<td>css=img[alt=&quot;Logout&quot;]</td>
 	<td></td>
 </tr>
+<!---->
+<!--Check for displayed Username-->
+<tr>
+	<td>verifyTextPresent</td>
+	<td>${varUserName}</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

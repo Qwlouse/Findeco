@@ -410,6 +410,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td>1000</td>
+</tr>
+<tr>
 	<td>waitForTextPresent</td>
 	<td>Dein Account wurde aktiviert. Viel Spaß mit Findeco! </td>
 	<td></td>
