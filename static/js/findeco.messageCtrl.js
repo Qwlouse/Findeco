@@ -33,9 +33,7 @@ function FindecoMessageCtrl($scope, Backend, Message) {
     };
 
     $scope.$on('$routeChangeSuccess', function () {
-        for (var i = 0; i < $scope.service.messageList.length; i++) {
-            $scope.service.messageList.splice(i, 1);
-        }
+    	$scope.service.messageList= [];
     });
 }
 
