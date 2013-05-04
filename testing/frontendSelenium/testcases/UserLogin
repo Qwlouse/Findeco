@@ -51,15 +51,10 @@
 	<td>css=img[alt=&quot;Logout&quot;]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>verifyElementPresent</td>
-	<td>css=img[alt=&quot;Logout&quot;]</td>
-	<td></td>
-</tr>
 <!---->
 <!--Check for displayed Username-->
 <tr>
-	<td>verifyTextPresent</td>
+	<td>waitForTextPresent</td>
 	<td>${varUserName}</td>
 	<td></td>
 </tr>
