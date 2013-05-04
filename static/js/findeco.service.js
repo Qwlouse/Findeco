@@ -336,6 +336,7 @@ angular.module('FindecoServices', [])
             return $http.post('/.json_deleteUser/');
         };
 
+        
         userInfo.follows = function (name) {
             for (var i = 0; i < userInfo.followees.length; i++) {
                 if (userInfo.followees[i].displayName == name) {
@@ -364,7 +365,8 @@ angular.module('FindecoServices', [])
             return this.localizer.getLocalizedString(string);
         };
 
-        tmp.send = function (type, message) {
+        tmp.send = function (type, message) {     
+        	
             if (message == "_NotAuthenticated") {
                 return "";
             }
@@ -376,6 +378,8 @@ angular.module('FindecoServices', [])
             } else {
                 this.messageList.push({type: type, msg: message});
             }
+      
+            
         };
 
         tmp.catch = function (message) {
