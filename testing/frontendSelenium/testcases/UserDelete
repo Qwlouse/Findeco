@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://127.0.0.1:8000/" />
+<title>UserDelete</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">UserDelete</td></tr>
+</thead><tbody>
+<!---->
+<!--Delet Useraccount-->
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=${varUserName}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Vorschau</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@value='Account löschen']</td>
+	<td></td>
+</tr>
+<!---->
+<!--Ensure Login not possible-->
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Inhalte</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Anmelden</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Login</td>
+	<td>Login</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>//input[@ng-model='username']</td>
+	<td>${varUserName}</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>//input[@type='password']</td>
+	<td>pwd</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCssCount</td>
+	<td>css=.alert-error</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
