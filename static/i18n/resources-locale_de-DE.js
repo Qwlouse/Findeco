@@ -617,9 +617,18 @@
         "key": "_UnknownUser",
         "value": "Der Benutzer ist dem System nicht bekannt",
         "description": ""
+    },
+    {
+        "key": "_accountConfirmEmailFormTitle_",
+        "value": "E-Mailbestätigung",
+        "description": ""
+    },
+    {
+        "key": "_accountEmailConfirmed_",
+        "value": "Die E-Mailadresse wurde bestätigt",
+        "description": ""
     }
     
     
-    
-    
+
 ]
