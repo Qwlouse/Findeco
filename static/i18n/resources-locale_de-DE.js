@@ -612,6 +612,11 @@
         "key": "_InvalidEmailAddress",
         "value": "Die gewählte Emailadresse ist ungültig.",
         "description": ""
+    },
+    {
+        "key": "_UnknownUser",
+        "value": "Der Benutzer ist dem System nicht bekannt",
+        "description": ""
     }
     
     
