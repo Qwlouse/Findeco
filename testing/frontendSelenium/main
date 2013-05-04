@@ -12,6 +12,7 @@
 <tr><td><a href="testcases/UserRegistration">UserRegistration</a></td></tr>
 <tr><td><a href="testcases/UserLogin">UserLogin</a></td></tr>
 <tr><td><a href="testcases/UserProfile">UserProfile</a></td></tr>
+<tr><td><a href="testcases/UserDelete">UserDelete</a></td></tr>
 </tbody></table>
 </body>
 </html>
