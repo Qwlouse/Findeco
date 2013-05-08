@@ -231,24 +231,18 @@ findecoApp.directive('findecoGraph', function( ) {
 
 
                 force.on("tick", function(e) {
-                    // modify the links and the nodes
-                    link.attr("x1", function(d) { return d.source.x; })
-                        .attr("y1", function(d) { return d.source.y;
-                        })
-                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 5)})
-                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 5)});
 
                     var svg_height_new = svg_height;
                     node.attr('transform', function(d) {
                         var r = node_radius * scale(d.follows);
                         // make sure nodes don't exit the sides or the top
-                        var x = Math.max(Math.min(d.x, svg_width - r), r);
-                        var y = Math.max(d.y, r);
-                        if (y + r > svg_height_new)  {
-                            svg_height_new += Math.min(y + r - svg_height, 5);
+                        d.x = Math.max(Math.min(d.x, svg_width - r - 5), r + 1);
+                        d.y = Math.max(d.y, r + 1);
+                        if (d.y + r + 5 > svg_height_new)  {
+                            svg_height_new += Math.min(d.y + r  + 5 - svg_height, 5);
 
                         }
-                        return  'translate(' + x + ',' + y + ')' + ' scale(' + scale(d.follows) + ')';
+                        return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')';
                     });
                     if (svg_height > 300) {
                         svg_height_new -= 1;
@@ -259,6 +253,14 @@ findecoApp.directive('findecoGraph', function( ) {
                         force.size([svg_width, svg_height]);
                         svg.attr("height", svg_height);
                     }
+
+                    // modify the links and the nodes
+                    link.attr("x1", function(d) { return d.source.x; })
+                        .attr("y1", function(d) { return d.source.y;
+                        })
+                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 5)})
+                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 5)});
+
 
                 });
             });
