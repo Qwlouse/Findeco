@@ -240,11 +240,12 @@ findecoApp.directive('findecoGraph', function( ) {
 
                     var svg_height_new = svg_height;
                     node.attr('transform', function(d) {
+                        var r = node_radius * scale(d.follows);
                         // make sure nodes don't exit the sides or the top
-                        var x = Math.max(Math.min(d.x, svg_width), 0);
-                        var y = Math.max(d.y, 0);
-                        if (y > svg_height_new)  {
-                            svg_height_new += Math.min(y-svg_height, 5);
+                        var x = Math.max(Math.min(d.x, svg_width - r), r);
+                        var y = Math.max(d.y, r);
+                        if (y + r > svg_height_new)  {
+                            svg_height_new += Math.min(y + r - svg_height, 5);
 
                         }
                         return  'translate(' + x + ',' + y + ')' + ' scale(' + scale(d.follows) + ')';
