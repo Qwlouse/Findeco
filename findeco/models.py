@@ -39,9 +39,11 @@ from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models import signals
 
-from findeco.settings import ACTIVATION_KEY_VALID_FOR, ADMIN_PASS, RECOVERY_KEY_VALID_FOR
+from findeco.settings import ACTIVATION_KEY_VALID_FOR, ADMIN_PASS
+from findeco.settings import RECOVERY_KEY_VALID_FOR
 from .view_helpers import get_permission
-import node_storage.models as node_storage
+import microblogging.models as microblogging_models
+import node_storage.models as node_storage_models
 from node_storage import Node, Text
 
 
@@ -102,6 +104,7 @@ class UserProfile(models.Model):
 
 # Use post_save signal to ensure the profile will be created automatically
 # when a user is created (saved for the first time)
+# noinspection PyUnusedLocal
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.get_or_create(user=instance)
@@ -263,7 +266,7 @@ def create_root():
         root_text.save()
         root_text.authors = [auth_models.User.objects.get(username='admin')]
         root_text.save()
-        node_storage.PathCache.objects.create(path='', node=node)
+        node_storage_models.PathCache.objects.create(path='', node=node)
         print('*' * 80)
 
 
@@ -324,14 +327,23 @@ def create_groups():
     g.save()
 
 
-def initialize_database(sender, **kwargs):
+# noinspection PyUnusedLocal
+def initialize_database(*sender, **kwargs):
     create_admin()
     create_system_user()
     create_anonymous_user()
-    create_groups()
     create_root()
 
 
+# noinspection PyUnusedLocal
+def initialize_groups(sender, **kwargs):
+    create_groups()
+
+
 signals.post_syncdb.connect(initialize_database,
-                            sender=node_storage,
+                            sender=node_storage_models,
                             dispatch_uid='findeco.models.initialize_database')
+
+signals.post_syncdb.connect(initialize_groups,
+                            sender=microblogging_models,
+                            dispatch_uid='findeco.models.initialize_groups')
