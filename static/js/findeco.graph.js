@@ -238,7 +238,24 @@ findecoApp.directive('findecoGraph', function( ) {
                         .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 5)})
                         .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 5)});
 
-                    node.attr('transform', function(d) {  return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')'; });
+                    node.attr('transform', function(d) {
+                        // make sure nodes don't exit the sides or the top
+                        var x = Math.max(Math.min(d.x, svg_width), 0);
+                        var y = Math.max(d.y, 0);
+                        var resize = false;
+                        if (svg_height > 300) {
+                            svg_height -= 1;
+                            resize = true;
+                        }
+                        if (y > svg_height)  {
+                            svg_height += Math.min(y-svg_height, 5);
+                            resize = true;
+                        }
+                        if (resize) {
+                            svg.attr("height", svg_height);
+                        }
+                        return  'translate(' + x + ',' + y + ')' + ' scale(' + scale(d.follows) + ')';
+                    });
                 });
             });
         }
