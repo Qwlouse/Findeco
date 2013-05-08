@@ -1,5 +1,5 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
-    <div class="leftWideColumn contentBox">
+    <div class="leftWideColumn contentBox" ng-show="user.isLoggedIn">
         <h1> {{ user.displayName }} </h1>
         <h2 data-i18n="_description_">Beschreibung</h2>
         <form ng-submit="storeUserSettings()">
@@ -39,7 +39,10 @@
             </li>
         </ul>
     </div>
-    <div class="contentBox rightWideColumn">
+    <div class="leftWideColumn contentBox" ng-hide="user.isLoggedIn">
+        <h1>Du bist nicht angemeldet</h1>
+    </div>
+    <div class="contentBox rightWideColumn" ng-show="user.isLoggedIn">
         <h2 style="color: gray; border-bottom: 1px dotted gray;" data-i18n="_previewHeading_">Vorschau:</h2>
         <h1>{{user.displayName}}</h1>
         <div>
