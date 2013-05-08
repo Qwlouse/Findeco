@@ -32,8 +32,12 @@
  * @return {int} the x value of the endpoint of the line
  */
 function endx(source, target, r) {
-    var ratio = Math.abs((source.y - target.y) / (source.x - target.x));
-    var b = r/Math.sqrt(ratio * ratio + 1);
+    if (Math.abs(source.x - target.x) < 1e-6) {
+        var b = 0;
+    } else {
+        ratio = Math.abs((source.y - target.y) / (source.x - target.x));
+        b = r/Math.sqrt(ratio * ratio + 1);
+    }
     if ((source.x - target.x) > 0) {
         return target.x + b;
     } else {
@@ -50,8 +54,14 @@ function endx(source, target, r) {
  * @return {int} the y value of the endpoint of the line
  */
 function endy(source, target, r) {
-    var ratio = Math.abs((source.y - target.y) / (source.x - target.x));
-    var b = r/Math.sqrt(ratio * ratio + 1);
+    if (Math.abs(source.x - target.x) < 1e-6) {
+        var ratio = 1;
+        var b = r;
+    } else {
+        ratio = Math.abs((source.y - target.y) / (source.x - target.x));
+        b = r/Math.sqrt(ratio * ratio + 1);
+    }
+
     if ((source.y - target.y) > 0) {
         return target.y + ratio * b;
     } else {
