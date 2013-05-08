@@ -238,24 +238,27 @@ findecoApp.directive('findecoGraph', function( ) {
                         .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 5)})
                         .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 5)});
 
+                    var svg_height_new = svg_height;
                     node.attr('transform', function(d) {
                         // make sure nodes don't exit the sides or the top
                         var x = Math.max(Math.min(d.x, svg_width), 0);
                         var y = Math.max(d.y, 0);
-                        var resize = false;
-                        if (svg_height > 300) {
-                            svg_height -= 1;
-                            resize = true;
-                        }
-                        if (y > svg_height)  {
-                            svg_height += Math.min(y-svg_height, 5);
-                            resize = true;
-                        }
-                        if (resize) {
-                            svg.attr("height", svg_height);
+                        if (y > svg_height_new)  {
+                            svg_height_new += Math.min(y-svg_height, 5);
+
                         }
                         return  'translate(' + x + ',' + y + ')' + ' scale(' + scale(d.follows) + ')';
                     });
+                    if (svg_height > 300) {
+                        svg_height_new -= 1;
+
+                    }
+                    if (svg_height_new != svg_height) {
+                        svg_height = svg_height_new;
+                        force.size([svg_width, svg_height]);
+                        svg.attr("height", svg_height);
+                    }
+
                 });
             });
         }

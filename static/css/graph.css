@@ -23,7 +23,7 @@
  ****************************************************************************************/
 
 div.graph {
-    overflow: auto;
+    overflow: visible;
     position: relative;
 }
 
