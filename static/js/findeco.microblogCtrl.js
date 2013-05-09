@@ -43,6 +43,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
 
     $scope.microbloggingList = [];
     $scope.user = User;
+    $scope.microblogText = "";
 
     $scope.followUser = function (path, type) {
         return User.markUser(path, type).success(setAuthorForAllBlogs);
