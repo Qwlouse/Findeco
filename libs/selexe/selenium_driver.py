@@ -605,6 +605,17 @@ class SeleniumDriver(object):
         count = len(self.driver.find_elements_by_xpath(target))
         return int(value), count
 
+    def wd_SEL_CssCount(self, target, value):
+        """
+        Get the number of nodes that match the specified css
+        @param target: an xpath expression to locate elements
+        @param value: the number of nodes that should match the specified xpath
+        @return: the number of nodes that match the specified xpath
+        """
+        
+        count = len(self.driver.find_elements_by_css_selector(target[4:]))
+        return int(value), count
+
   
     def wd_SEL_Alert(self, target, value=None):
         """
@@ -693,7 +704,7 @@ class SeleniumDriver(object):
                 return self.driver.find_element_by_name(ttarget) 
         else:
             raise UnexpectedTagNameException('no way to find targets "%s"' % target)
-        
+
     
     def _find_element_by_link_text(self, target):
         # 1) exact-tag:
@@ -790,5 +801,21 @@ class SeleniumDriver(object):
         wc = re.sub(r"(?<!\\)\*", r".*", wc)
         wc = re.sub(r"(?<!\\)\?", r".", wc)
         return wc
-    
-    
+
+    ##################### Qlaus's custom commands ##############################
+    @seleniumcommand
+    def waitForNotVisible(self, target, value=None):
+        for i in range(60):
+            try:
+                element = self._find_target(target)
+                if not element.is_displayed():
+                    break
+            except Exception, e:
+                print(e)
+                pass
+            time.sleep(1)
+
+    @seleniumcommand
+    def verifyNotVisible(self, target, value=None):
+        element = self._find_target(target)
+        return element.is_displayed()
