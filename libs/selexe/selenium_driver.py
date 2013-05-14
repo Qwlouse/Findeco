@@ -13,16 +13,16 @@ from selenium.webdriver.common.alert import Alert
 from html2text import html2text
 
 
-
-
 def create_get_or_is(func):
     """
     Decorator to convert a test method of class SeleniumCommander (starting with 'wd_SEL*') into a Selenium
     'is*' or 'get*' function.
     """
+
     def wrap_func(self, target, value=None):
         expectedResult, result = func(self, target, value=value)
         return result
+
     return wrap_func
 
 
@@ -31,9 +31,11 @@ def create_verify(func):
     Decorator to convert a test method of class SeleniumCommander (starting with 'wd_SEL*') into a Selenium
     'verify*' function.
     """
+
     def wrap_func(self, target, value=None):
         try:
-            expectedResult, result = func(self, target, value=value)  # can raise NoAlertPresentException
+            expectedResult, result = func(self, target,
+                                          value=value)  # can raise NoAlertPresentException
             assert self._matches(expectedResult, result)
             return True
         except NoAlertPresentException:
@@ -44,10 +46,12 @@ def create_verify(func):
                 # can be made.
                 verificationError = "false"
             else:
-                verificationError = 'Actual value "%s" did not match "%s"' % (result, expectedResult)
+                verificationError = 'Actual value "%s" did not match "%s"' % (
+                    result, expectedResult)
         logging.error(verificationError)
-        self.verificationErrors.append(verificationError)        
+        self.verificationErrors.append(verificationError)
         return False
+
     return wrap_func
 
 
@@ -56,9 +60,11 @@ def create_verifyNot(func):
     Decorator to convert a test method of class SeleniumCommander (starting with 'wd_SEL*') into a Selenium '
     verifyNot*' function.
     """
+
     def wrap_func(self, target, value=None):
         try:
-            expectedResult, result = func(self, target, value=value)  # can raise NoAlertPresentException
+            expectedResult, result = func(self, target,
+                                          value=value)  # can raise NoAlertPresentException
             assert not self._matches(expectedResult, result)
             return True
         except NoAlertPresentException:
@@ -69,10 +75,12 @@ def create_verifyNot(func):
                 # can be made.
                 verificationError = "true"
             else:
-                verificationError = 'Actual value "%s" did match "%s"' % (result, expectedResult)
+                verificationError = 'Actual value "%s" did match "%s"' % (
+                    result, expectedResult)
         logging.error(verificationError)
-        self.verificationErrors.append(verificationError)        
+        self.verificationErrors.append(verificationError)
         return False
+
     return wrap_func
 
 
@@ -81,10 +89,12 @@ def create_assert(func):
     Decorator to convert a test method of class SeleniumCommander (starting with 'wd_SEL*') into a Selenium
     'assert*' function.
     """
+
     def wrap_func(self, target, value=None):
         expectedResult, result = func(self, target, value=value)
         assert self._matches(expectedResult, result), \
-                    'Actual value "%s" did not match "%s"' % (result, expectedResult)
+            'Actual value "%s" did not match "%s"' % (result, expectedResult)
+
     return wrap_func
 
 
@@ -93,10 +103,12 @@ def create_assertNot(func):
     Decorator to convert a test method of class SeleniumCommander (starting with 'wd_SEL*') into a Selenium
     'assertNot*' function.
     """
+
     def wrap_func(self, target, value=None):
         expectedResult, result = func(self, target, value=value)
         assert not self._matches(expectedResult, result), \
-                    'Actual value "%s" did match "%s"' % (result, expectedResult)
+            'Actual value "%s" did match "%s"' % (result, expectedResult)
+
     return wrap_func
 
 
@@ -105,9 +117,10 @@ def create_waitFor(func):
     Decorator to convert a test method of class SeleniumCommander (starting with 'wd_SEL*') into a Selenium
     'waitFor*' function.
     """
+
     def wrap_func(self, target, value=None):
-        for i in range (self.num_repeats):
-            try: 
+        for i in range(self.num_repeats):
+            try:
                 expectedResult, result = func(self, target, value=value)
                 assert self._matches(expectedResult, result)
                 break
@@ -115,6 +128,7 @@ def create_waitFor(func):
                 time.sleep(self.poll)
         else:
             raise RuntimeError("Timed out after %d ms" % self.wait_for_timeout)
+
     return wrap_func
 
 
@@ -123,8 +137,9 @@ def create_waitForNot(func):
     Decorator to convert a test method of class SeleniumCommander (starting with 'wd_SEL*') into a Selenium
     'waitForNot*' function.
     """
+
     def wrap_func(self, target, value=None):
-        for i in range (self.num_repeats):
+        for i in range(self.num_repeats):
             try:
                 expectedResult, result = func(self, target, value=value)
                 assert not self._matches(expectedResult, result)
@@ -133,6 +148,7 @@ def create_waitForNot(func):
                 time.sleep(self.poll)
         else:
             raise RuntimeError("Timed out after %d ms" % self.wait_for_timeout)
+
     return wrap_func
 
 
@@ -141,6 +157,7 @@ def create_store(func):
     Decorator to convert a test method of class SeleniumCommander (starting with 'wd_SEL*') into a Selenium
     'store*' function.
     """
+
     def wrap_func(self, target, value=None):
         expectedResult, result = func(self, target, value=value)
         # for e.g. 'storeConfirmation' the variable name will be provided in 'target' (with 'value' being None),
@@ -148,6 +165,7 @@ def create_store(func):
         # The the heuristic is to use 'value' preferably over 'target' if available. Hope this works ;-)
         variableName = value or target
         self.storedVariables[variableName] = result
+
     return wrap_func
 
 
@@ -188,19 +206,20 @@ def create_selenium_methods(cls):
     return cls
 
 
-
 def seleniumcommand(method):
     """
     Method decorator for selenium commands in SeleniumCommander class.
     Wraps all available selenium commands for expand selenium variables in 'target' and 'value'
     arguments.
     """
+
     def seleniumMethod(self, target, value=None, log=True, **kw):
         if log:
             logging.info('%s(%r, %r)' % (method.__name__, target, value))
         v_target = self._expandVariables(target)
-        v_value  = self._expandVariables(value) if value else value
+        v_value = self._expandVariables(value) if value else value
         return method(self, v_target, v_value, **kw)
+
     #
     seleniumMethod.__name__ = method.__name__
     seleniumMethod.__doc__ = method.__doc__
@@ -216,9 +235,12 @@ def create_aliases(cls):
     for methodName in cls.__dict__.keys():  # must loop over keys() as the dict gets modified while looping
         if re.match(r"(verifyNot|assertNot|waitForNot)\w+Present", methodName):
             method = getattr(cls, methodName)
+
             def aliasMethod(self, target, value=None):
                 return method(self, target, value)
-            alias = methodName.replace("Not", "").replace("Present", "NotPresent")
+
+            alias = methodName.replace("Not", "").replace("Present",
+                                                          "NotPresent")
             setattr(cls, alias, aliasMethod)
     return cls
 
@@ -236,7 +258,7 @@ class SeleniumDriver(object):
         self.wait = False
         # 'storedVariables' is used through the 'create_store' decorator above to store values during a selenium run:
         self.storedVariables = {}
-      
+
     def initVerificationErrors(self):
         """
         Reset the list of verification errors.
@@ -264,7 +286,8 @@ class SeleniumDriver(object):
         try:
             method = getattr(self, command)
         except AttributeError:
-            raise NotImplementedError('no proper function for sel command "%s" implemented' % command)
+            raise NotImplementedError(
+                'no proper function for sel command "%s" implemented' % command)
         return method(target, value, **kw)
 
     def _importUserFunctions(self):
@@ -276,26 +299,34 @@ class SeleniumDriver(object):
         """
         try:
             import userfunctions
-            funcNames = [key for (key, value) in userfunctions.__dict__.iteritems() \
-                         if isinstance(value, types.FunctionType) and not key.startswith("_")]
+
+            funcNames = [key for (key, value) in
+                         userfunctions.__dict__.iteritems() \
+                         if isinstance(value,
+                                       types.FunctionType) and not key.startswith(
+                    "_")]
             for funcName in funcNames:
-                newBoundMethod = new.instancemethod(seleniumcommand(getattr(userfunctions, funcName)), self, SeleniumDriver)
+                newBoundMethod = new.instancemethod(
+                    seleniumcommand(getattr(userfunctions, funcName)), self,
+                    SeleniumDriver)
                 setattr(self, funcName, newBoundMethod)
             logging.info("User functions: " + ", ".join(funcNames))
         except ImportError:
             logging.info("Using no user functions")
-        
+
 
     sel_var_pat = re.compile(r'\${([\w\d]+)}')
+
     def _expandVariables(self, s):
         """
         Expand variables contained in selenese files.
         Multiple variables can be contained in a string from a selenese file. The format is ${<VARIABLENAME}.
         Those are replaced from self.storedVariables via a re.sub() method.
         """
-        return self.sel_var_pat.sub(lambda matchobj: self.storedVariables[matchobj.group(1)], s)
-    
-    
+        return self.sel_var_pat.sub(
+            lambda matchobj: self.storedVariables[matchobj.group(1)], s)
+
+
     def setTimeoutAndPoll(self, timeout, poll):
         """
         Set attributes for commands starting with 'waitFor'. This is done initially.
@@ -334,7 +365,7 @@ class SeleniumDriver(object):
         self.wait = True
         self.driver.implicitly_wait(self.wait_for_timeout / 1000)
         self._find_target(target).click()
-	
+
 
     @seleniumcommand
     def click(self, target, value=None):
@@ -343,7 +374,7 @@ class SeleniumDriver(object):
         @param target: a string determining an element in the HTML page
         @param value:  <not used>
         """
-	self.wait = True
+        self.wait = True
         self.driver.implicitly_wait(self.wait_for_timeout / 1000)
         self._find_target(target).click()
 
@@ -378,23 +409,24 @@ class SeleniumDriver(object):
         elif tag == 'index':
             select.select_by_index(int(tvalue))
         else:
-            raise UnexpectedTagNameException("Unknown option locator tag: " + tag)
+            raise UnexpectedTagNameException(
+                "Unknown option locator tag: " + tag)
 
-	
+
     def _matchOptionText(self, target, tvalue):
         for option in target.find_elements_by_xpath("*"):
             text = option.text
             if self._matches(tvalue, text):
                 return text
         return tvalue
-    
+
     def _matchOptionValue(self, target, tvalue):
         for option in target.find_elements_by_xpath("*"):
             value = option.get_attribute("value")
             if self._matches(tvalue, value):
                 return value
         return tvalue
-        
+
     @seleniumcommand
     def type(self, target, value):
         """
@@ -405,8 +437,8 @@ class SeleniumDriver(object):
         target_elem = self._find_target(target)
         target_elem.clear()
         target_elem.send_keys(value)
-        
-  
+
+
     @seleniumcommand
     def check(self, target, value=None):
         """
@@ -419,7 +451,7 @@ class SeleniumDriver(object):
             target_elem.click()
 
     @seleniumcommand
-    def uncheck(self, target, value=None): 
+    def uncheck(self, target, value=None):
         """
         Uncheck a toggle-button (checkbox/radio).
         @param target: an element locator
@@ -438,10 +470,10 @@ class SeleniumDriver(object):
         @param value: <not used>
         """
         target_elem = self._find_target(target)
-	    # Action Chains will not work with several Firefox Versions. Firefox Version 10.2 should be ok.
+        # Action Chains will not work with several Firefox Versions. Firefox Version 10.2 should be ok.
         ActionChains(self.driver).move_to_element(target_elem).perform()
 
-  
+
     @seleniumcommand
     def mouseOut(self, target, value=None):
         """
@@ -453,7 +485,7 @@ class SeleniumDriver(object):
         actions = ActionChains(self.driver)
         actions.move_to_element(target_elem)
         actions.move_by_offset(target_elem.size["width"] / 2 + 1, 0).perform()
-        
+
 
     @seleniumcommand
     def waitForPopUp(self, target, value):
@@ -465,10 +497,11 @@ class SeleniumDriver(object):
         is not specified, the default timeout will be used. See the setTimeoutAndPoll function for the default timeout.
         """
         # value allows custom timeout
-    	timeout = self.wait_for_timeout if not value else int(value)
-    	num_repeats = int(timeout / 1000 / self.poll) 
-    	if target in ("null", "0"):
-                raise NotImplementedError('"null" or "0" are currently not available as pop up locators')
+        timeout = self.wait_for_timeout if not value else int(value)
+        num_repeats = int(timeout / 1000 / self.poll)
+        if target in ("null", "0"):
+            raise NotImplementedError(
+                '"null" or "0" are currently not available as pop up locators')
         for i in range(num_repeats):
             try:
                 self.driver.switch_to_window(target)
@@ -479,7 +512,7 @@ class SeleniumDriver(object):
         else:
             raise NoSuchWindowException("Timed out after %d ms" % timeout)
 
-    
+
     @seleniumcommand
     def selectWindow(self, target, value=None):
         """
@@ -502,8 +535,9 @@ class SeleniumDriver(object):
                 if self.driver.find_element_by_xpath("//title").text == ttarget:
                     break
         else:
-	    raise NotImplementedError('No way to find the window: use "name" or "title" locators of specify target as "null"')
-	    
+            raise NotImplementedError(
+                'No way to find the window: use "name" or "title" locators of specify target as "null"')
+
     @seleniumcommand	
     def selectPopUp(self, target, value=None):
     	"""
