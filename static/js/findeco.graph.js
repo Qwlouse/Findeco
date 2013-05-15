@@ -32,8 +32,12 @@
  * @return {int} the x value of the endpoint of the line
  */
 function endx(source, target, r) {
-    var ratio = Math.abs((source.y - target.y) / (source.x - target.x));
-    var b = r/Math.sqrt(ratio * ratio + 1);
+    if (Math.abs(source.x - target.x) < 1e-6) {
+        var b = 0;
+    } else {
+        ratio = Math.abs((source.y - target.y) / (source.x - target.x));
+        b = r/Math.sqrt(ratio * ratio + 1);
+    }
     if ((source.x - target.x) > 0) {
         return target.x + b;
     } else {
@@ -50,8 +54,14 @@ function endx(source, target, r) {
  * @return {int} the y value of the endpoint of the line
  */
 function endy(source, target, r) {
-    var ratio = Math.abs((source.y - target.y) / (source.x - target.x));
-    var b = r/Math.sqrt(ratio * ratio + 1);
+    if (Math.abs(source.x - target.x) < 1e-6) {
+        var ratio = 1;
+        var b = r;
+    } else {
+        ratio = Math.abs((source.y - target.y) / (source.x - target.x));
+        b = r/Math.sqrt(ratio * ratio + 1);
+    }
+
     if ((source.y - target.y) > 0) {
         return target.y + ratio * b;
     } else {
@@ -231,6 +241,29 @@ findecoApp.directive('findecoGraph', function( ) {
 
 
                 force.on("tick", function(e) {
+
+                    var svg_height_new = svg_height;
+                    node.attr('transform', function(d) {
+                        var r = node_radius * scale(d.follows);
+                        // make sure nodes don't exit the sides or the top
+                        d.x = Math.max(Math.min(d.x, svg_width - r - 5), r + 1);
+                        d.y = Math.max(d.y, r + 1);
+                        if (d.y + r + 5 > svg_height_new)  {
+                            svg_height_new += Math.min(d.y + r  + 5 - svg_height, 5);
+
+                        }
+                        return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')';
+                    });
+                    if (svg_height > 300) {
+                        svg_height_new -= 1;
+
+                    }
+                    if (svg_height_new != svg_height) {
+                        svg_height = svg_height_new;
+                        force.size([svg_width, svg_height]);
+                        svg.attr("height", svg_height);
+                    }
+
                     // modify the links and the nodes
                     link.attr("x1", function(d) { return d.source.x; })
                         .attr("y1", function(d) { return d.source.y;
@@ -238,7 +271,7 @@ findecoApp.directive('findecoGraph', function( ) {
                         .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 5)})
                         .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 5)});
 
-                    node.attr('transform', function(d) {  return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')'; });
+
                 });
             });
         }

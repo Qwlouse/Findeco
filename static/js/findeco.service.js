@@ -222,6 +222,7 @@ angular.module('FindecoServices', [])
             isLoggedIn: false,
             displayName: "",
             description: "",
+            email: "",
             followees: []
         };
 
@@ -264,6 +265,7 @@ angular.module('FindecoServices', [])
                 userInfo.isLoggedIn = true;
                 userInfo.displayName = data.userInfo.displayName;
                 userInfo.description = data.userInfo.description;
+                userInfo.email = data.userSettings.email;
                 userInfo.followees = data.userSettings.followees;
             });
             return promise;
@@ -275,6 +277,7 @@ angular.module('FindecoServices', [])
                 userInfo.description = "";
                 userInfo.displayName = "";
                 userInfo.followees = [];
+                userInfo.email = "";
                 data.userInfo = false;
                 data.userSettings = false;
             });
