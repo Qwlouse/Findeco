@@ -97,11 +97,6 @@
 <!---->
 <!--Change email - store of address-->
 <tr>
-	<td>storeExpression</td>
-	<td>javascript{new Date().getTime()}</td>
-	<td>varMailAdress</td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>xpath=(//input[@type='text'])[1]</td>
 	<td></td>
@@ -153,7 +148,7 @@
 <tr>
 	<td>type</td>
 	<td>name=mail</td>
-	<td>${varMailAdress}</td>
+	<td>${varMailAdress}a</td>
 </tr>
 <tr>
 	<td>pause</td>
