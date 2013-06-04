@@ -180,8 +180,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'findeco',
-    'microblogging',
     'node_storage',
+    'microblogging',
     'south',
     'libs.django_cron'
 )
