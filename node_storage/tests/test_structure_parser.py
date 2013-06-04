@@ -412,7 +412,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                   ]}
         create_structure_from_structure_node_schema(
             schema, self.slot1, [self.hugo],
-            origin_group=[self.structure1], arg_type='n')
+            clone_candidates=[self.structure1], origin_candidates=[self.structure1], arg_type='n')
         node_list = Node.objects.filter(title="Layer 1").all()
         self.assertEqual(len(node_list), 1)
         n = node_list[0]
@@ -454,7 +454,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                   ]}
         create_structure_from_structure_node_schema(
             schema, self.slot1, [self.hugo],
-            origin_group=[self.structure1], arg_type='n')
+            clone_candidates=[self.structure1], origin_candidates=[self.structure1], arg_type='n')
         node_list = Node.objects.filter(title="Layer 1").all()
         self.assertEqual(len(node_list), 1)
         n = node_list[0]
@@ -479,6 +479,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
         self.assertEqual(sub_structure2.text.text,
                          "Layer 2 text 2 but changed.")
         self.assertEqual(len(sub_structure2.children.all()), 0)
+        self.assertEqual(len(sub_structure2.sources.all()), 1)
         self.assertEqual(sub_structure2.sources.all()[0], self.text2)
 
     def test_create_structure_from_structure_node_schema_without_origin_group(
