@@ -114,7 +114,7 @@ class StoreTextTest(TestCase):
             parents=self.slot).all()[0]).all()[0].title, "Argumenttitel")
         self.assertEqual(Argument.objects.filter(concerns=Node.objects.filter(
             parents=self.slot).all()[0]).all()[0].text.text,
-            "Das ist jetzt besser")
+                         "Das ist jetzt besser")
 
     def test_store_with_argumente(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
@@ -131,4 +131,41 @@ class StoreTextTest(TestCase):
             parents=self.slot).all()[0]).all()[0].title, "Argumenttitel")
         self.assertEqual(Argument.objects.filter(concerns=Node.objects.filter(
             parents=self.slot).all()[0]).all()[0].text.text,
-            "Das ist jetzt besser")
+                         "Das ist jetzt besser")
+
+    def test_add_derivate_preserves_substructure(self):
+        self.assertTrue(self.client.login(username="Hugo", password="1234"))
+        text_string = "= Bla =\nBlubb.\n== Level 2 ==\nSome text."
+        print(self.url)
+        response = self.client.post(self.url, dict(wikiText=text_string))
+        self.assertEqual(response.status_code, 200)
+        text_string2 = text_string + "\n== Another Level 2 ==\nSome other text."
+        print(self.url)
+        response = self.client.post(
+            self.url, dict(argumentType="con",
+                           wikiText="= Argumenttitle =\nThis is better now.",
+                           wikiTextAlternative=text_string2))
+        self.assertEqual(response.status_code, 200)
+        print(self.url)
+        response = self.client.post(
+            self.url, dict(argumentType="con",
+                           wikiText="= Argumenttitle =\nThis is even better now.",
+                           wikiTextAlternative=text_string2))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['storeTextResponse']['path'], "Slot.4")
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].text.text, "Blubb.")
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].children.all()[0].children.all()[0].text.text,
+                         "Some text.")
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].children.all()[1].children.all()[0].text.text,
+                         "Some other text.")
+        for text_node in Node.objects.filter(parents=self.slot).all():
+            print(str(text_node) + ", text=" + text_node.text.text)
+            for slot in text_node.children.all():
+                print("  " + str(slot))
+                for sub_text_node in slot.children.all():
+                    print("    " + str(sub_text_node) + ", text=" + sub_text_node.text.text)
+                    for sub_slot in sub_text_node.children.all():
+                        print("      " + str(sub_slot))
+            print("_____________")
+        self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].children.all()[0].children.all()[0],
+                         Node.objects.filter(parents=self.slot).all()[1].children.all()[0].children.all()[0])
