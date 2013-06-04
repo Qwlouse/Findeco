@@ -251,9 +251,9 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None,
 def store_structure_node(path, wiki_text, author):
     slot_path = path.rsplit('.', 1)[0]
     slot = get_node_for_path(slot_path)
-    structure = backend.parse(wiki_text, None)
+    structure_schema = backend.parse(wiki_text, None)
     structure_node = backend.create_structure_from_structure_node_schema(
-        structure, slot, [author])
+        structure_schema, slot, [author], slot.children.all())
     # add auto follow
     create_vote(author, [structure_node])
     return structure_node, get_good_path_for_structure_node(structure_node,

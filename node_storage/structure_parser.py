@@ -100,7 +100,7 @@ def getHeadingMatcher(level=0):
     else:
         raise ValueError(
             "level must be between 1 and 6 or 0, but was %d." % level)
-    pattern = r"^\s*={%s}(?P<title>[^=§]+)"\
+    pattern = r"^\s*={%s}(?P<title>[^=§]+)" \
               r"(?:§\s*(?P<short_title>[^=§\s][^=§]*))?=*\s*$"
     return re.compile(pattern % s, flags=re.MULTILINE)
 
@@ -126,7 +126,7 @@ def validate_structure_schema(structure):
         # validate short title
     assert 1 <= len(structure['short_title']) <= 20, \
         "Length of short title must be between 1 and 20 (but was %d)." % len(
-        structure['short_title'])
+            structure['short_title'])
     # validate children
     for c in structure['children']:
         validate_structure_schema(c)
@@ -241,10 +241,9 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors,
     origin_found = False
     if len(origin_group) > 0 and (arg_type or arg_title or arg_text):
         for origin in origin_group:
-            if origin.title == schema['title'] and origin.text.text == schema[
-                'text'] and [child['short_title'] for child in
-                             schema['children']] == [child.title for child in
-                                                     origin.children.all()]:
+            if origin.title == schema['title'] and origin.text.text == schema['text'] and \
+                [child['short_title'] for child in schema['children']] == \
+                    [child.title for child in origin.children.all()]:
                 structure = origin
                 origin_found = True
     if not origin_found:
@@ -256,8 +255,7 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors,
                                 text=arg_text, authors=authors)
     for child in schema['children']:
         if origin_found:
-            child_slot = structure.children.filter(title=child['short_title'])\
-                .all()[0]
+            child_slot = structure.children.filter(title=child['short_title']).all()[0]
         else:
             child_slot = create_slot(child['short_title'])
             structure.append_child(child_slot)
