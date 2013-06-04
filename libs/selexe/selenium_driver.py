@@ -236,8 +236,8 @@ def create_aliases(cls):
         if re.match(r"(verifyNot|assertNot|waitForNot)\w+Present", methodName):
             method = getattr(cls, methodName)
 
-            def aliasMethod(self, target, value=None):
-                return method(self, target, value)
+            def aliasMethod(self, target, value=None, method=[method]):
+                return method[0](self, target, value)
 
             alias = methodName.replace("Not", "").replace("Present",
                                                           "NotPresent")
