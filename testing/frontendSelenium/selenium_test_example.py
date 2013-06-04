@@ -21,7 +21,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-
+import sys
+sys.path.append("../..")
 from libs.selexe.selexe_runner import SelexeRunner
 
 # Example how to use selenium testrunner to run a testcase
