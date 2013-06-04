@@ -248,12 +248,15 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None,
     return graph_data_node
 
 
-def store_structure_node(path, wiki_text, author):
+def store_structure_node(path, wiki_text, author, argument=None):
     slot_path = path.rsplit('.', 1)[0]
     slot = get_node_for_path(slot_path)
     structure_schema = backend.parse(wiki_text, None)
+    clone_candidates = None
+    if argument:
+        clone_candidates = slot.children.all()
     structure_node = backend.create_structure_from_structure_node_schema(
-        structure_schema, slot, [author], slot.children.all())
+        structure_schema, slot, [author], clone_candidates)
     # add auto follow
     create_vote(author, [structure_node])
     return structure_node, get_good_path_for_structure_node(structure_node,
@@ -275,7 +278,7 @@ def store_argument(path, arg_text, arg_type, author):
 
 
 def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
-    new_node, new_path = store_structure_node(path, derivate_wiki_text, author)
+    new_node, new_path = store_structure_node(path, derivate_wiki_text, author, argument=True)
     node = get_node_for_path(path)
     arg_title, arg_text = backend.split_title_from_text(arg_text)
     arg = node.add_derivate(new_node, arg_type=arg_type,
