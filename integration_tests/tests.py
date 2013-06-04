@@ -20,15 +20,37 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from __future__ import division, print_function, unicode_literals
-import sys
-sys.path.append("../..")
+import unittest
+from django.test import TestCase
 from libs.selexe.selexe_runner import SelexeRunner
+from findeco.project_path import project_path
 
 # Example how to use selenium testrunner to run a testcase
-# further testing infrastructure will come soon
+class SelTest(TestCase):
+    def setUp(self):
 
-selexe = SelexeRunner('./testcases/ContentPageRoot')
-res = selexe.run()
-assert res == []
+        pass
 
+    def test_content_page_does_not_contain_root(self):
+        selexe = SelexeRunner(project_path('integration_tests/testcases/ContentPageRoot'))
+        res = selexe.run()
+        self.assertListEqual(res, [])
+
+    def test_user_lifecycle(self):
+        selexe = SelexeRunner(project_path('integration_tests/testcases/UserRegistration'))
+        res = selexe.run()
+        self.assertListEqual(res, [])
+        selexe = SelexeRunner(project_path('integration_tests/testcases/UserLogin'))
+        res = selexe.run()
+        self.assertListEqual(res, [])
+        selexe = SelexeRunner(project_path('integration_tests/testcases/UserProfile'))
+        res = selexe.run()
+        self.assertListEqual(res, [])
+        selexe = SelexeRunner(project_path('integration_tests/testcases/UserDelete'))
+        res = selexe.run()
+        self.assertListEqual(res, [])
+
+if __name__ == '__main__':
+    unittest.main()

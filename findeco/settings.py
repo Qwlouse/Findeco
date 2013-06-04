@@ -183,7 +183,8 @@ INSTALLED_APPS = (
     'node_storage',
     'microblogging',
     'south',
-    'libs.django_cron'
+    'libs.django_cron',
+    'integration_tests'
 )
 
 # A sample logging configuration. The only tangible logging

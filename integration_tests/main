@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <link rel="selenium.base" href="http://127.0.0.1:8000/" />
   <title>Test Suite</title>
 </head>
 <body>
