@@ -233,34 +233,34 @@ def get_title_from_text(text):
 
 
 def create_structure_from_structure_node_schema(schema, parent_slot, authors,
-                                                origin_group=None,
+                                                clone_candidates=None,
                                                 arg_type=None, arg_title="",
                                                 arg_text=""):
-    if not origin_group:
-        origin_group = []
-    origin_found = False
-    if len(origin_group) > 0 and (arg_type or arg_title or arg_text):
-        for origin in origin_group:
+    if not clone_candidates:
+        clone_candidates = []
+    clone_found = False
+    if len(clone_candidates) > 0 and (arg_type or arg_title or arg_text):
+        for origin in clone_candidates:
             if origin.title == schema['title'] and origin.text.text == schema['text'] and \
                 [child['short_title'] for child in schema['children']] == \
                     [child.title for child in origin.children.all()]:
                 structure = origin
-                origin_found = True
-    if not origin_found:
+                clone_found = True
+    if not clone_found:
         structure = create_structureNode(long_title=schema['title'],
                                          text=schema['text'], authors=authors)
         parent_slot.append_child(structure)
-        for origin in origin_group:
+        for origin in clone_candidates:
             origin.add_derivate(structure, arg_type=arg_type, title=arg_title,
                                 text=arg_text, authors=authors)
     for child in schema['children']:
-        if origin_found:
+        if clone_found:
             child_slot = structure.children.filter(title=child['short_title']).all()[0]
         else:
             child_slot = create_slot(child['short_title'])
             structure.append_child(child_slot)
         sub_origin_group = []
-        for origin in origin_group:
+        for origin in clone_candidates:
             for origin_slot in origin.children.filter(
                     title=child['short_title']).all():
                 sub_origin_group += origin_slot.children.all()
