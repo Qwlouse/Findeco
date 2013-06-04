@@ -137,7 +137,7 @@ class StoreTextTest(TestCase):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         text_string = "= Bla =\nBlubb.\n== Level 2 ==\nSome text."
         print(self.url)
-        response = self.client.post(self.url, dict(wikiText=text_string))
+        response = self.client.post(self.url, dict(wikiTextAlternative=text_string))
         self.assertEqual(response.status_code, 200)
         text_string2 = text_string + "\n== Another Level 2 ==\nSome other text."
         print(self.url)
@@ -146,13 +146,7 @@ class StoreTextTest(TestCase):
                            wikiText="= Argumenttitle =\nThis is better now.",
                            wikiTextAlternative=text_string2))
         self.assertEqual(response.status_code, 200)
-        print(self.url)
-        response = self.client.post(
-            self.url, dict(argumentType="con",
-                           wikiText="= Argumenttitle =\nThis is even better now.",
-                           wikiTextAlternative=text_string2))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['storeTextResponse']['path'], "Slot.4")
+        self.assertEqual(json.loads(response.content)['storeTextResponse']['path'], "Slot.3")
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].text.text, "Blubb.")
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].children.all()[0].children.all()[0].text.text,
                          "Some text.")
