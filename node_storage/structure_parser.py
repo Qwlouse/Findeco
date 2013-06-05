@@ -282,13 +282,12 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, author,
     if not clone_found:
         structure = create_structureNode(long_title=schema['title'],
                                          text=schema['text'], authors=[author])
-
+        create_vote(author, [structure])
         parent_slot.append_child(structure)
         arg = origin.add_derivate(structure, arg_type=arg_type, title=arg_title,
                             text=arg_text, authors=[author])
 
         # auto-follows
-        create_vote(author, [structure])
         create_vote(author, [arg])
 
     for child in schema['children']:

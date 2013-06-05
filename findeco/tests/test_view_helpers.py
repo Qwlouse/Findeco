@@ -498,8 +498,7 @@ class StoreDerivateTest(TestCase):
                            "= Bla =\nText\n== Blubb ==\nText 2",
                            self.mustermann), "Flopp.2")
         self.assertEqual(Node.objects.filter(title="Bla").count(), 1)
-        self.assertEqual(
-            Node.objects.filter(title="Bla").all()[0].votes.count(), 1)
+        self.assertEqual(Node.objects.get(title="Bla").votes.count(), 1)
         self.assertEqual(self.text1.arguments.count(), 1)
         self.assertEqual(self.text1.arguments.all()[0].votes.count(), 1)
 

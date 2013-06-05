@@ -288,8 +288,6 @@ def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     new_node = backend.create_derivate_from_structure_node_schema(
         structure_schema, slot, author,  node, arg_type, arg_title, arg_text)
 
-    # add auto follow
-    create_vote(author, [new_node])
     return get_good_path_for_structure_node(new_node, slot, slot_path)
 
 
