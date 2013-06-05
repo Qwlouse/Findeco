@@ -144,13 +144,6 @@ class StoreSettingsTest(TestCase):
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.username, "hans2")
 
-    def test_change_email_works(self):
-        self.assertTrue(self.client.login(username="hans", password='1234'))
-        _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans2', email='holla@email.de'))
-        hans = User.objects.get(id=self.hans.id)
-        self.assertEqual(hans.email, "holla@email.de")
-
 
 class ChangePasswordTest(TestCase):
     def setUp(self):
