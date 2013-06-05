@@ -256,7 +256,7 @@ def store_structure_node(path, wiki_text, author, argument=None):
     if argument:
         clone_candidates = slot.children.all()
     structure_node = backend.create_structure_from_structure_node_schema(
-        structure_schema, slot, [author], clone_candidates)
+        structure_schema, slot, author, clone_candidates)
     # add auto follow
     create_vote(author, [structure_node])
     return structure_node, get_good_path_for_structure_node(structure_node,

@@ -233,7 +233,7 @@ def get_title_from_text(text):
         raise InvalidWikiStructure('Must start with H1 heading to set title')
 
 
-def create_structure_from_structure_node_schema(schema, parent_slot, authors,
+def create_structure_from_structure_node_schema(schema, parent_slot, author,
                                                 clone_candidates=None):
     if not clone_candidates:
         clone_candidates = []
@@ -247,8 +247,12 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors,
             clone_found = True
     if not clone_found:
         structure = create_structureNode(long_title=schema['title'],
-                                         text=schema['text'], authors=authors)
+                                         text=schema['text'], authors=[author])
         parent_slot.append_child(structure)
+
+        # auto-follows
+        create_vote(author, [structure])
+
     for child in schema['children']:
         if clone_found:
             child_slot = structure.children.get(title=child['short_title'])
@@ -260,7 +264,7 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors,
             for candidate_slot in candidate.children.filter(
                     title=child['short_title']).all():
                 sub_clone_candidate_group += candidate_slot.children.all()
-        create_structure_from_structure_node_schema(child, child_slot, authors,
+        create_structure_from_structure_node_schema(child, child_slot, author,
                                                     sub_clone_candidate_group)
     return structure
 
@@ -298,7 +302,7 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, author,
             sub_origin = origin.children.get(title=child['short_title']).favorite
             create_derivate_from_structure_node_schema(child, child_slot, author, sub_origin, arg_type, arg_title, arg_text)
         except ObjectDoesNotExist:
-            create_structure_from_structure_node_schema(child, child_slot, [author], [])
+            create_structure_from_structure_node_schema(child, child_slot, author, [])
 
     return structure
 

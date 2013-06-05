@@ -23,7 +23,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext
 from django.test import TestCase
 import json
 from findeco.tests.helpers import assert_is_error_response
@@ -136,11 +135,9 @@ class StoreTextTest(TestCase):
     def test_add_derivate_preserves_substructure(self):
         self.assertTrue(self.client.login(username="Hugo", password="1234"))
         text_string = "= Bla =\nBlubb.\n== Level 2 ==\nSome text."
-        print(self.url)
         response = self.client.post(self.url, dict(wikiTextAlternative=text_string))
         self.assertEqual(response.status_code, 200)
         text_string2 = text_string + "\n== Another Level 2 ==\nSome other text."
-        print(self.url)
         response = self.client.post(
             self.url, dict(argumentType="con",
                            wikiText="= Argumenttitle =\nThis is better now.",
@@ -160,6 +157,6 @@ class StoreTextTest(TestCase):
                     print("    " + str(sub_text_node) + ", text=" + sub_text_node.text.text)
                     for sub_slot in sub_text_node.children.all():
                         print("      " + str(sub_slot))
-            print("_____________")
+            print("__________________________________")
         self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].children.all()[0].children.all()[0],
                          Node.objects.filter(parents=self.slot).all()[1].children.all()[0].children.all()[0])
