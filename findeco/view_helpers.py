@@ -286,7 +286,7 @@ def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     structure_schema = backend.parse(derivate_wiki_text, None)
 
     new_node = backend.create_derivate_from_structure_node_schema(
-        structure_schema, slot, [author],  node, arg_type, arg_title, arg_text)
+        structure_schema, slot, author,  node, arg_type, arg_title, arg_text)
 
     # add auto follow
     create_vote(author, [new_node])

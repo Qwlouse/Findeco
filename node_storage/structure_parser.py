@@ -29,7 +29,7 @@ from __future__ import division, print_function, unicode_literals
 import re
 import unicodedata
 from django.core.exceptions import ObjectDoesNotExist
-from factory import create_structureNode, create_slot
+from factory import create_structureNode, create_slot, create_vote
 
 h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*[ \t]*")
 general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*",
@@ -265,7 +265,7 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors,
     return structure
 
 
-def create_derivate_from_structure_node_schema(schema, parent_slot, authors,
+def create_derivate_from_structure_node_schema(schema, parent_slot, author,
                                                origin, arg_type=None,
                                                arg_title="", arg_text=""):
     clone_found = False
@@ -277,11 +277,15 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, authors,
         clone_found = True
     if not clone_found:
         structure = create_structureNode(long_title=schema['title'],
-                                         text=schema['text'], authors=authors)
+                                         text=schema['text'], authors=[author])
 
         parent_slot.append_child(structure)
-        origin.add_derivate(structure, arg_type=arg_type, title=arg_title,
-                            text=arg_text, authors=authors)
+        arg = origin.add_derivate(structure, arg_type=arg_type, title=arg_title,
+                            text=arg_text, authors=[author])
+
+        # auto-follows
+        create_vote(author, [structure])
+        create_vote(author, [arg])
 
     for child in schema['children']:
         if clone_found:
@@ -292,9 +296,9 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, authors,
 
         try:
             sub_origin = origin.children.get(title=child['short_title']).favorite
-            create_derivate_from_structure_node_schema(child, child_slot, authors, sub_origin, arg_type, arg_title, arg_text)
+            create_derivate_from_structure_node_schema(child, child_slot, author, sub_origin, arg_type, arg_title, arg_text)
         except ObjectDoesNotExist:
-            create_structure_from_structure_node_schema(child, child_slot, authors, [])
+            create_structure_from_structure_node_schema(child, child_slot, [author], [])
 
     return structure
 
