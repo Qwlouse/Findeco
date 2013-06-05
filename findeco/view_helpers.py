@@ -312,7 +312,7 @@ def fork_node_and_add_slot(path, user, wikiText):
     short_title = turn_into_valid_short_title(schema['title'], short_titles)
     new_slot = create_slot(short_title)
     fork.append_child(new_slot)
-    node = create_structure_from_structure_node_schema(schema, new_slot, [user])
+    node = create_structure_from_structure_node_schema(schema, new_slot, user)
     arg_title = "Abschnitt über '{0}' fehlt.".format(schema['title'])
     source_node.add_derivate(fork, 'con', arg_title, authors=[user])
     # auto follow
