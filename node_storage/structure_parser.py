@@ -233,6 +233,72 @@ def get_title_from_text(text):
 
 
 def create_structure_from_structure_node_schema(schema, parent_slot, authors,
+                                                clone_candidates=None):
+    if not clone_candidates:
+        clone_candidates = []
+    clone_found = False
+    for candidate in clone_candidates:
+        if candidate.title == schema['title'] and \
+           candidate.text.text == schema['text'] and \
+           [child['short_title'] for child in schema['children']] == \
+                [child.title for child in candidate.children.all()]:
+            structure = candidate
+            clone_found = True
+    if not clone_found:
+        structure = create_structureNode(long_title=schema['title'],
+                                         text=schema['text'], authors=authors)
+        parent_slot.append_child(structure)
+    for child in schema['children']:
+        if clone_found:
+            child_slot = structure.children.filter(title=child['short_title']).all()[0]
+        else:
+            child_slot = create_slot(child['short_title'])
+            structure.append_child(child_slot)
+        sub_clone_candidate_group = []
+        for candidate in clone_candidates:
+            for candidate_slot in candidate.children.filter(
+                    title=child['short_title']).all():
+                sub_clone_candidate_group += candidate_slot.children.all()
+        create_structure_from_structure_node_schema(child, child_slot, authors,
+                                                    sub_clone_candidate_group)
+    return structure
+
+
+def create_derivate_from_structure_node_schema(schema, parent_slot, authors,
+                                               origin, arg_type=None,
+                                               arg_title="", arg_text=""):
+    clone_found = False
+    if origin.title == schema['title'] and \
+       origin.text.text == schema['text'] and \
+       [child['short_title'] for child in schema['children']] == \
+            [child.title for child in origin.children.all()]:
+        structure = origin
+        clone_found = True
+    if not clone_found:
+        structure = create_structureNode(long_title=schema['title'],
+                                         text=schema['text'], authors=authors)
+
+        parent_slot.append_child(structure)
+        origin.add_derivate(structure, arg_type=arg_type, title=arg_title,
+                            text=arg_text, authors=authors)
+    for child in schema['children']:
+        if clone_found:
+            child_slot = structure.children.filter(title=child['short_title']).all()[0]
+        else:
+            child_slot = create_slot(child['short_title'])
+            structure.append_child(child_slot)
+        sub_clone_candidate_group = []
+        for candidate in clone_candidates:
+            for candidate_slot in candidate.children.filter(
+                    title=child['short_title']).all():
+                sub_clone_candidate_group += candidate_slot.children.all()
+        create_structure_from_structure_node_schema(child, child_slot, authors,
+                                                    sub_clone_candidate_group)
+    return structure
+
+
+'''
+def create_structure_from_structure_node_schema(schema, parent_slot, authors,
                                                 clone_candidates=None, origin_candidates=None,
                                                 arg_type=None, arg_title="",
                                                 arg_text=""):
@@ -272,3 +338,4 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors,
                                                     sub_clone_candidate_group, sub_origin_group, arg_type,
                                                     arg_title, arg_text)
     return structure
+    '''
