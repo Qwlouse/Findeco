@@ -33,6 +33,7 @@ from ..factory import create_textNode, create_user
 from ..path_helpers import get_root_node
 from ..models import Node
 from ..structure_parser import create_structure_from_structure_node_schema
+from ..structure_parser import create_derivate_from_structure_node_schema
 from ..structure_parser import InvalidWikiStructure
 from ..structure_parser import parse as pyparser
 from ..structure_parser import remove_unallowed_chars
@@ -395,7 +396,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                                      "Layer 2 text 2.", [self.hugo])
         self.slot12.append_child(self.text2)
 
-    def test_create_structure_from_structure_node_schema_with_origin_group(
+    def test_create_derivate_from_structure_node_schema_with_origin_group(
             self):
         schema = {'short_title': "Ignored",
                   'title': "Layer 1",
@@ -410,9 +411,9 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'text': "Layer 2 text 2.",
                        'children': []},
                   ]}
-        create_structure_from_structure_node_schema(
-            schema, self.slot1, [self.hugo],
-            clone_candidates=[self.structure1], origin_candidates=[self.structure1], arg_type='n')
+        create_derivate_from_structure_node_schema(
+            schema, self.slot1, self.hugo,
+            origin=self.structure1, arg_type='n')
         node_list = Node.objects.filter(title="Layer 1").all()
         self.assertEqual(len(node_list), 1)
         n = node_list[0]
@@ -437,7 +438,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
         self.assertEqual(sub_structure2.text.text, "Layer 2 text 2.")
         self.assertEqual(len(sub_structure2.children.all()), 0)
 
-    def test_create_structure_from_structure_node_schema_with_origin_group_difference_in_second_layer(
+    def test_create_derivate_from_structure_node_schema_with_origin_group_difference_in_second_layer(
             self):
         schema = {'short_title': "Ignored",
                   'title': "Layer 1",
@@ -452,9 +453,9 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'text': "Layer 2 text 2 but changed.",
                        'children': []},
                   ]}
-        create_structure_from_structure_node_schema(
-            schema, self.slot1, [self.hugo],
-            clone_candidates=[self.structure1], origin_candidates=[self.structure1], arg_type='n')
+        create_derivate_from_structure_node_schema(
+            schema, self.slot1, self.hugo,
+            origin=self.structure1, arg_type='n')
         node_list = Node.objects.filter(title="Layer 1").all()
         self.assertEqual(len(node_list), 1)
         n = node_list[0]
@@ -497,8 +498,7 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'text': "Layer 1, second text.",
                        'children': []},
                   ]}
-        create_structure_from_structure_node_schema(schema, self.slot1,
-                                                    [self.hugo])
+        create_structure_from_structure_node_schema(schema, self.slot1, self.hugo)
         node_list = Node.objects.filter(title="My first structure Node").all()
         self.assertEqual(len(node_list), 1)
         n = node_list[0]
