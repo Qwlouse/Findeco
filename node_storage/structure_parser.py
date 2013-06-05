@@ -251,7 +251,7 @@ def create_structure_from_structure_node_schema(schema, parent_slot, authors,
         parent_slot.append_child(structure)
     for child in schema['children']:
         if clone_found:
-            child_slot = structure.children.filter(title=child['short_title']).all()[0]
+            child_slot = structure.children.get(title=child['short_title'])
         else:
             child_slot = create_slot(child['short_title'])
             structure.append_child(child_slot)
@@ -292,7 +292,6 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, authors,
 
         try:
             sub_origin = origin.children.get(title=child['short_title']).favorite
-
             create_derivate_from_structure_node_schema(child, child_slot, authors, sub_origin, arg_type, arg_title, arg_text)
         except ObjectDoesNotExist:
             create_structure_from_structure_node_schema(child, child_slot, authors, [])
