@@ -28,6 +28,7 @@
 from __future__ import division, print_function, unicode_literals
 import re
 import unicodedata
+from django.core.exceptions import ObjectDoesNotExist
 from factory import create_structureNode, create_slot
 
 h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*[ \t]*")
@@ -281,19 +282,21 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, authors,
         parent_slot.append_child(structure)
         origin.add_derivate(structure, arg_type=arg_type, title=arg_title,
                             text=arg_text, authors=authors)
+
     for child in schema['children']:
         if clone_found:
-            child_slot = structure.children.filter(title=child['short_title']).all()[0]
+            child_slot = structure.children.get(title=child['short_title'])
         else:
             child_slot = create_slot(child['short_title'])
             structure.append_child(child_slot)
-        sub_clone_candidate_group = []
-        for candidate in clone_candidates:
-            for candidate_slot in candidate.children.filter(
-                    title=child['short_title']).all():
-                sub_clone_candidate_group += candidate_slot.children.all()
-        create_structure_from_structure_node_schema(child, child_slot, authors,
-                                                    sub_clone_candidate_group)
+
+        try:
+            sub_origin = origin.children.get(title=child['short_title']).favorite
+
+            create_derivate_from_structure_node_schema(child, child_slot, authors, sub_origin, arg_type, arg_title, arg_text)
+        except ObjectDoesNotExist:
+            create_structure_from_structure_node_schema(child, child_slot, authors, [])
+
     return structure
 
 
