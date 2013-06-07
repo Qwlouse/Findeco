@@ -95,6 +95,7 @@ angular.module('FindecoServices', [])
         }
 
         return {
+           
             loadMicroblogging: function (microblogList_out, path, type, id) {
                 var pathComponents = ['/.json_loadMicroblogging'];
                 if (id != undefined && id != 0) {

@@ -2,24 +2,25 @@
  <div ng-show="!user.isLoggedIn" id="disclaimerBox" class="contentBox" >
   Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage der <a href="http://piraten-rlp.de/">Piratenpartei Rheinland-Pfalz.</a> 
  </div>
-    <div ng-include src="'static/partials/argument.html'"  ></div>
  
+    <div style="float: left; width: 200px; min-height: 10px; padding: 25px;"  ></div>
 
     <div id="centerColumn" class="contentBox">
    
-        <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
-        <div follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode" width="21" height="21"></div>
-        <h1 >{{ nodeInfo.fullTitle }}</h1>
+       
+        
+        <h1 data-i18n="_rootCaption_"></h1>
+        <p  data-i18n="_rootText_"></p>
+       
+       
 
-        <div ng-show="nav.type!='arg' >
-            <div findeco-graph data="graphData" path="nav.nodePath" class="graph"></div>
-        </div>
-        <p creole wiki-text="nodeInfo.wikiText"></p>
-
-        <div ng-show="!allExpanded &&  nav.type!='arg' " class="btn btn-primary" ng-click="expandAll()"
-             data-i18n="_expandAllSections_"></div>
+        
         <div ng-repeat="section in nodeInfo.indexList">
-           
+            <a ng-show="!section.isExpanded" ng-hide="nav.type=='root'" ng-click="expandSection(section)"
+               style="float:left;position: relative; top: 8px; margin-right: 5px;"><img src="static/images/expand.png"
+                                onmouseover="this.src='static/images/expand_hover.png';"
+                                onmouseout="this.src='static/images/expand.png';"
+                    ></a>
             <a ng-show="section.isExpanded" ng-click="collapseSection(section)"
                style="float:left;position: relative; top: 8px; margin-right: 5px;"><img src="static/images/collapse.png"
                         onmouseover="this.src='static/images/collapse_hover.png';"
@@ -29,31 +30,23 @@
             <h2 ng-show="!section.isExpanded">
                 <a href="/#/{{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{section.fullTitle}}</a>
             </h2>
-
+ 
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
                 <div spam-mark show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
                 <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode" width="21" height="21"></div>
                 <div creole wiki-text="paragraph.wikiText"></div>
             </div>
         </div>
-        <div ng-show="nav.type!='arg' && user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/topic')"
-             data-i18n="_createNewText_"></div>
+      
 
-        <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
-             data-i18n="_createDerivativeText_"></div>
-
-        <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
-             data-i18n="_createOpposingText_"></div>
-
-        <div ng-show="nav.type=='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
-             ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
+      
   	<div ng-show="isLoading()" class="deactivateDiv">
     </div>
    	<div ng-show="isLoading()" class="deactivateSpinner">
     </div>
     </div>
 
-    <div ng-include src="'static/partials/microblogging.html'"></div>
+ 
     <div style="clear:both; padding-bottom:25px;"></div>
      <div ng-show="user.isLoggedIn" id="disclaimerBox" class="contentBox" >
   Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage der <a href="http://piraten-rlp.de/">Piratenpartei Rheinland-Pfalz.</a> 
