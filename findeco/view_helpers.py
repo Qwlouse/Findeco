@@ -297,7 +297,7 @@ def build_score_tree(origin, schema):
                 score_tree['slots'].append(schema_slot)
                 child_scores = []
                 for child in slot.children.all():
-                    child_score_tree = build_scores(child, schema_child)
+                    child_score_tree = build_score_tree(child, schema_child)
                     schema_slot['children'].append(child_score_tree)
                     child_scores.append(child_score_tree['score'])
                 score_tree['score'] += max(child_scores)
