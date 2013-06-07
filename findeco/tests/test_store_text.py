@@ -151,21 +151,6 @@ class StoreTextTest(TestCase):
                          "Some text.")
         self.assertEqual(new_node.children.all()[1].children.all()[0].text.text,
                          "Some other text.")
-        for text_node in Node.objects.filter(parents=self.slot).all():
-            print(str(text_node) + ", text=" + text_node.text.text)
-            for slot in text_node.children.all():
-                print("  " + str(slot))
-                for sub_text_node in slot.children.all():
-                    print("    " + str(sub_text_node) + ", text=" + sub_text_node.text.text)
-                    for sub_slot in sub_text_node.children.all():
-                        print("      " + str(sub_slot))
-            print("__________________________________")
         old_node = get_node_for_path('Slot.2')
-        print(new_node.children.all()[0])
-        print(new_node.children.all()[0].children.all()[0])
-        print(new_node.children.all()[0].children.all()[0].text.text)
-        print(old_node.children.all()[0])
-        print(old_node.children.all()[0].children.all()[0])
-        print(old_node.children.all()[0].children.all()[0].text.text)
         self.assertEqual(new_node.children.all()[0].children.all()[0],
                          old_node.children.all()[0].children.all()[0])
