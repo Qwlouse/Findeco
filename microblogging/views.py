@@ -75,12 +75,12 @@ def load_timeline(request, name, select_id, microblogging_load_type):
 
     Referenced posts will show up in the timeline as the originals do.
     Hiding of the original posts for a tidy
-    timeline should be done in the frontend due to performance resons.
+    timeline should be done in the frontend due to performance reasons.
     """
     named_user = assert_active_user(name)
 
     if named_user == request.user:
-        followed = Q(author__profile__followers=request.user)
+        followed = Q(author__in=named_user.user.profile.followees)
     else:
         followed = Q(author=named_user)
     own = Q(author=named_user)
