@@ -296,7 +296,12 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, author,
         if clone_found:
             child_slot = structure.children.get(title=child['short_title'])
         else:
-            child_slot = create_slot(child['short_title'])
+            print("### no clone! ###")
+            if child['short_title'] in score_tree['slots']:
+                print("~~~ slot found ~~~")
+                child_slot = origin.children.get(title=child['short_title'])
+            else:
+                child_slot = create_slot(child['short_title'])
             structure.append_child(child_slot)
 
         best = 0, None  # score, id

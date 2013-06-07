@@ -161,5 +161,11 @@ class StoreTextTest(TestCase):
                         print("      " + str(sub_slot))
             print("__________________________________")
         old_node = get_node_for_path('Slot.2')
+        print(new_node.children.all()[0])
+        print(new_node.children.all()[0].children.all()[0])
+        print(new_node.children.all()[0].children.all()[0].text.text)
+        print(old_node.children.all()[0])
+        print(old_node.children.all()[0].children.all()[0])
+        print(old_node.children.all()[0].children.all()[0].text.text)
         self.assertEqual(new_node.children.all()[0].children.all()[0],
                          old_node.children.all()[0].children.all()[0])
