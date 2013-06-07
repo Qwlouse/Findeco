@@ -1,15 +1,11 @@
 <div id="leftColumn"  class="contentBox" ng-controller="FindecoSyschangeCtrl">
-
     <h3 class="argumentHeading" data-i18n="_SystemNews_"></h3>
+    <h5 class="argumentHeading" data-i18n="_externalLink_"></h5>
 
     <ul class="argumentList">
         <li ng-repeat="news in newsList">
            
             <a href="{{ news.url }}">{{news.title}}</a>
-        </li>
-        <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/#/create/argumentCon/{{ nav.nodePath }}"
-               ng-click="tmp.argumentType = 'Contra'" data-i18n="_argumentsNewCon_"></a>
         </li>
     </ul>
        	<div ng-show="isLoading()" class="deactivateDiv">

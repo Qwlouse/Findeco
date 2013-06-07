@@ -627,7 +627,17 @@
         "key": "_accountEmailConfirmed_",
         "value": "Die E-Mailadresse wurde bestätigt",
         "description": ""
-    }
+    },
+    {
+    	  "key": "_SystemNews_",
+          "value": "Systemnews",
+          "description": ""
+    },
+    {
+  	  "key": "_externalLink_",
+        "value": "(extern)",
+        "description": ""
+   }
     
     
 
