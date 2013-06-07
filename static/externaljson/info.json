@@ -1,0 +1,185 @@
+
+{
+  "status": "ok",
+  "count": 3,
+  "count_total": 3,
+  "pages": 1,
+  "currPage": 1,
+  "posts": [
+    {
+      "id": "91",
+      "type": "post",
+      "slug": "hypertext-gegen-missverstandnisse",
+      "url": "http:\/\/rlp.tools.manano.de\/?p=91",
+      "status": "publish",
+      "title": "Hypertext gegen Missverst\u00e4ndnisse",
+      "title_plain": "Hypertext gegen Missverst\u00e4ndnisse",
+      "date": "2012-08-30 11:29:34",
+      "modified": "2013-06-05 22:56:26",
+      "excerpt": "Ein h\u00e4ufiger Grund f\u00fcr vermeidbare Eskalationen der Diskussionen auf Mailinglisten oder in Foren sind Missverst\u00e4ndnisse. Diese entstehen meist weil Begriffe von &hellip; <a href=\"http:\/\/rlp.tools.manano.de\/?p=91\"> Continue reading <span class=\"meta-nav\">&rarr;<\/span><\/a>",
+      "parent": "0",
+      "category": [
+        {
+          "term_id": "1",
+          "name": "Allgemein",
+          "slug": "allgemein",
+          "term_group": "0",
+          "term_taxonomy_id": "1",
+          "taxonomy": "category",
+          "description": "",
+          "parent": "0",
+          "count": "7",
+          "object_id": "91",
+          "cat_ID": "1",
+          "category_count": "7",
+          "category_description": "",
+          "cat_name": "Allgemein",
+          "category_nicename": "allgemein",
+          "category_parent": "0"
+        }
+      ],
+      "tag": [
+        
+      ],
+      "author": [
+        {
+          "id": "2",
+          "slug": "pinae",
+          "name": "Johannes Merkert",
+          "first_name": "Johannes",
+          "last_name": "Merkert",
+          "nickname": "pinae",
+          "url": "http:\/\/www.findeco.de",
+          "description": "",
+          "gravatar": "http:\/\/www.gravatar.com\/avatar\/ba90db56432431e8798a112882b5ccbb?s=100&d=mm&r=g"
+        }
+      ],
+      "comment_count": "0",
+      "comment_status": "closed"
+    },
+    {
+      "id": "87",
+      "type": "post",
+      "slug": "disqussion-interface-entwurf",
+      "url": "http:\/\/rlp.tools.manano.de\/?p=87",
+      "status": "publish",
+      "title": "DisQussion: Interface Entwurf",
+      "title_plain": "DisQussion: Interface Entwurf",
+      "date": "2012-05-18 15:02:17",
+      "modified": "2013-06-06 20:44:26",
+      "excerpt": "Das Interface soll m\u00f6glichst einfach und \u00fcbersichtlich gestaltet sein. Es gibt grunds\u00e4tzlich zwei Elemente:  \tAuf der linken Seite den Graphen mit den Dazugeh\u00f6rigen &hellip; <a href=\"http:\/\/rlp.tools.manano.de\/?p=87\"> Continue reading <span class=\"meta-nav\">&rarr;<\/span><\/a>",
+      "parent": "0",
+      "category": [
+        {
+          "term_id": "1",
+          "name": "Allgemein",
+          "slug": "allgemein",
+          "term_group": "0",
+          "term_taxonomy_id": "1",
+          "taxonomy": "category",
+          "description": "",
+          "parent": "0",
+          "count": "7",
+          "object_id": "87",
+          "cat_ID": "1",
+          "category_count": "7",
+          "category_description": "",
+          "cat_name": "Allgemein",
+          "category_nicename": "allgemein",
+          "category_parent": "0"
+        }
+      ],
+      "tag": {
+        "6": {
+          "term_id": "6",
+          "name": "DisQussion",
+          "slug": "disqussion",
+          "term_group": "0",
+          "term_taxonomy_id": "6",
+          "taxonomy": "post_tag",
+          "description": "",
+          "parent": "0",
+          "count": "5",
+          "object_id": "87"
+        }
+      },
+      "author": [
+        {
+          "id": "2",
+          "slug": "pinae",
+          "name": "Johannes Merkert",
+          "first_name": "Johannes",
+          "last_name": "Merkert",
+          "nickname": "pinae",
+          "url": "http:\/\/www.findeco.de",
+          "description": "",
+          "gravatar": "http:\/\/www.gravatar.com\/avatar\/ba90db56432431e8798a112882b5ccbb?s=100&d=mm&r=g"
+        }
+      ],
+      "comment_count": "0",
+      "comment_status": "closed"
+    },
+    {
+      "id": "84",
+      "type": "post",
+      "slug": "disqussion-voting",
+      "url": "http:\/\/rlp.tools.manano.de\/?p=84",
+      "status": "publish",
+      "title": "DisQussion: Voting",
+      "title_plain": "DisQussion: Voting",
+      "date": "2012-05-18 17:20:50",
+      "modified": "2013-06-05 22:52:05",
+      "excerpt": "Vorschl\u00e4ge und Argumente sollen in DisQussion von allen angemeldeten Benutzern bewertet werden k\u00f6nnen. Da es aber in der Diskussion besonders am Anfang inhaltlich gute &hellip; <a href=\"http:\/\/rlp.tools.manano.de\/?p=84\"> Continue reading <span class=\"meta-nav\">&rarr;<\/span><\/a>",
+      "parent": "0",
+      "category": [
+        {
+          "term_id": "1",
+          "name": "Allgemein",
+          "slug": "allgemein",
+          "term_group": "0",
+          "term_taxonomy_id": "1",
+          "taxonomy": "category",
+          "description": "",
+          "parent": "0",
+          "count": "7",
+          "object_id": "84",
+          "cat_ID": "1",
+          "category_count": "7",
+          "category_description": "",
+          "cat_name": "Allgemein",
+          "category_nicename": "allgemein",
+          "category_parent": "0"
+        }
+      ],
+      "tag": {
+        "6": {
+          "term_id": "6",
+          "name": "DisQussion",
+          "slug": "disqussion",
+          "term_group": "0",
+          "term_taxonomy_id": "6",
+          "taxonomy": "post_tag",
+          "description": "",
+          "parent": "0",
+          "count": "5",
+          "object_id": "84"
+        }
+      },
+      "author": [
+        {
+          "id": "2",
+          "slug": "pinae",
+          "name": "Johannes Merkert",
+          "first_name": "Johannes",
+          "last_name": "Merkert",
+          "nickname": "pinae",
+          "url": "http:\/\/www.findeco.de",
+          "description": "",
+          "gravatar": "http:\/\/www.gravatar.com\/avatar\/ba90db56432431e8798a112882b5ccbb?s=100&d=mm&r=g"
+        }
+      ],
+      "comment_count": "0",
+      "comment_status": "closed"
+    }
+  ]
+}
