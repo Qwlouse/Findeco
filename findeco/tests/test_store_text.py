@@ -30,6 +30,7 @@ from findeco.view_helpers import assert_node_for_path
 
 from node_storage import get_root_node, Node, Argument
 from node_storage.factory import create_user, create_slot, create_textNode
+from node_storage.path_helpers import get_node_for_path
 
 
 class StoreTextTest(TestCase):
@@ -144,10 +145,11 @@ class StoreTextTest(TestCase):
                            wikiTextAlternative=text_string2))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['storeTextResponse']['path'], "Slot.3")
-        self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].text.text, "Blubb.")
-        self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].children.all()[0].children.all()[0].text.text,
+        new_node = get_node_for_path('Slot.3')
+        self.assertEqual(new_node.text.text, "Blubb.")
+        self.assertEqual(new_node.children.all()[0].children.all()[0].text.text,
                          "Some text.")
-        self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].children.all()[1].children.all()[0].text.text,
+        self.assertEqual(new_node.children.all()[1].children.all()[0].text.text,
                          "Some other text.")
         for text_node in Node.objects.filter(parents=self.slot).all():
             print(str(text_node) + ", text=" + text_node.text.text)
@@ -158,5 +160,6 @@ class StoreTextTest(TestCase):
                     for sub_slot in sub_text_node.children.all():
                         print("      " + str(sub_slot))
             print("__________________________________")
-        self.assertEqual(Node.objects.filter(parents=self.slot).all()[2].children.all()[0].children.all()[0],
-                         Node.objects.filter(parents=self.slot).all()[1].children.all()[0].children.all()[0])
+        old_node = get_node_for_path('Slot.2')
+        self.assertEqual(new_node.children.all()[0].children.all()[0],
+                         old_node.children.all()[0].children.all()[0])
