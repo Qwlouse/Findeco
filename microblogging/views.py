@@ -80,7 +80,7 @@ def load_timeline(request, name, select_id, microblogging_load_type):
     named_user = assert_active_user(name)
 
     if named_user == request.user:
-        followed = Q(author__in=named_user.user.profile.followees)
+        followed = Q(author__in=named_user.profile.followees.all())
     else:
         followed = Q(author=named_user)
     own = Q(author=named_user)
