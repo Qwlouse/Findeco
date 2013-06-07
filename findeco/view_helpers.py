@@ -25,7 +25,7 @@ import json
 import functools
 import re
 from django.contrib.auth.models import Permission, User
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db.models import Q
 from django.http import HttpResponse
@@ -281,7 +281,7 @@ def build_score_tree(origin, schema):
     score_tree = {
         'id': origin.id,
         'score': 0,
-        'slots': []
+        'slots': {}
     }
     if origin.title == schema['title'] and \
        origin.text.text == schema['text']:
@@ -290,17 +290,15 @@ def build_score_tree(origin, schema):
     for slot in origin.children.all():
         for schema_child in schema['children']:
             if slot.title == schema_child['short_title']:
-                schema_slot = {
-                    'short_title': schema_child['short_title'],
-                    'children': []
-                }
-                score_tree['slots'].append(schema_slot)
+                schema_slot = []
+                score_tree['slots'][schema_child['short_title']] = schema_slot
                 child_scores = []
                 for child in slot.children.all():
                     child_score_tree = build_score_tree(child, schema_child)
-                    schema_slot['children'].append(child_score_tree)
+                    schema_slot.append(child_score_tree)
                     child_scores.append(child_score_tree['score'])
                 score_tree['score'] += max(child_scores)
+                break
 
     return score_tree
 
@@ -316,7 +314,8 @@ def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
     score_tree = build_score_tree(node, structure_schema)
 
     new_node = backend.create_derivate_from_structure_node_schema(
-        structure_schema, slot, author,  node, arg_type, arg_title, arg_text)
+        structure_schema, slot, author,  node, score_tree, arg_type, arg_title,
+        arg_text)
 
     return get_good_path_for_structure_node(new_node, slot, slot_path)
 

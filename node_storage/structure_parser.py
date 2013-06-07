@@ -30,6 +30,7 @@ import re
 import unicodedata
 from django.core.exceptions import ObjectDoesNotExist
 from factory import create_structureNode, create_slot, create_vote
+from node_storage import Node
 
 h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*[ \t]*")
 general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*",
@@ -270,7 +271,8 @@ def create_structure_from_structure_node_schema(schema, parent_slot, author,
 
 
 def create_derivate_from_structure_node_schema(schema, parent_slot, author,
-                                               origin, arg_type=None,
+                                               origin, score_tree,
+                                               arg_type=None,
                                                arg_title="", arg_text=""):
     clone_found = False
     if origin.title == schema['title'] and \
@@ -297,54 +299,19 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, author,
             child_slot = create_slot(child['short_title'])
             structure.append_child(child_slot)
 
-        try:
-            sub_origin = origin.children.get(title=child['short_title']).favorite
-            create_derivate_from_structure_node_schema(child, child_slot, author, sub_origin, arg_type, arg_title, arg_text)
-        except ObjectDoesNotExist:
-            create_structure_from_structure_node_schema(child, child_slot, author, [])
+        best = 0, None  # score, id
+        if child['short_title'] in score_tree['slots']:
+            for candidate in score_tree['slots'][child['short_title']]:
+                if candidate['score'] >= best[0]:
+                    best = candidate['score'], candidate
 
-    return structure
-
-
-'''
-def create_structure_from_structure_node_schema(schema, parent_slot, authors,
-                                                clone_candidates=None, origin_candidates=None,
-                                                arg_type=None, arg_title="",
-                                                arg_text=""):
-    if not clone_candidates:
-        clone_candidates = []
-    if not origin_candidates:
-        origin_candidates = []
-    clone_found = False
-    if len(clone_candidates) > 0 and (arg_type or arg_title or arg_text):
-        for candidate in clone_candidates:
-            if candidate.title == schema['title'] and candidate.text.text == schema['text'] and \
-                [child['short_title'] for child in schema['children']] == \
-                    [child.title for child in candidate.children.all()]:
-                structure = candidate
-                clone_found = True
-    if not clone_found:
-        structure = create_structureNode(long_title=schema['title'],
-                                         text=schema['text'], authors=authors)
-        parent_slot.append_child(structure)
-        for candidate in origin_candidates:
-            candidate.add_derivate(structure, arg_type=arg_type, title=arg_title,
-                                text=arg_text, authors=authors)
-    for child in schema['children']:
-        if clone_found:
-            child_slot = structure.children.filter(title=child['short_title']).all()[0]
+        if best[0] > 0:
+            sub_origin = Node.objects.get(id=best[1]['id'])
+            create_derivate_from_structure_node_schema(
+                child, child_slot, author, sub_origin, best[1], arg_type,
+                arg_title, arg_text)
         else:
-            child_slot = create_slot(child['short_title'])
-            structure.append_child(child_slot)
-        sub_clone_candidate_group = []
-        sub_origin_group = []
-        for candidate in clone_candidates:
-            for origin_slot in candidate.children.filter(
-                    title=child['short_title']).all():
-                sub_clone_candidate_group += origin_slot.children.all()
-                sub_origin_group += origin_slot.children.all()
-        create_structure_from_structure_node_schema(child, child_slot, authors,
-                                                    sub_clone_candidate_group, sub_origin_group, arg_type,
-                                                    arg_title, arg_text)
+            create_structure_from_structure_node_schema(child, child_slot,
+                                                        author, [])
+
     return structure
-    '''
