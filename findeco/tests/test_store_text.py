@@ -140,7 +140,7 @@ class StoreTextTest(TestCase):
         self.assertEqual(response.status_code, 200)
         text_string2 = text_string + "\n== Another Level 2 ==\nSome other text."
         response = self.client.post(
-            self.url, dict(argumentType="con",
+            "/.json_storeText/Slot.2", dict(argumentType="con",
                            wikiText="= Argumenttitle =\nThis is better now.",
                            wikiTextAlternative=text_string2))
         self.assertEqual(response.status_code, 200)
