@@ -180,6 +180,14 @@ body:before {
     /*font-family: sans-serif;*/
 }
 
+#contentContainer p {
+    text-align: justify;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+
 .contentBox {
     background: #e6e6e6;
     -moz-border-radius: 15px;
