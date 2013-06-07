@@ -24,6 +24,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from findeco.settings import STATICFILES_DIRS
+from findeco.view_helpers import build_score_tree
 from node_storage.structure_parser import validate_structure_schema
 import os.path as path
 import PyV8
@@ -411,9 +412,10 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'text': "Layer 2 text 2.",
                        'children': []},
                   ]}
+        score_tree = build_score_tree(self.structure1, schema)
         create_derivate_from_structure_node_schema(
             schema, self.slot1, self.hugo,
-            origin=self.structure1, arg_type='n')
+            self.structure1, score_tree, arg_type='n')
         node_list = Node.objects.filter(title="Layer 1").all()
         self.assertEqual(len(node_list), 1)
         n = node_list[0]
@@ -453,12 +455,11 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'text': "Layer 2 text 2 but changed.",
                        'children': []},
                   ]}
+        score_tree = build_score_tree(self.structure1, schema)
         create_derivate_from_structure_node_schema(
             schema, self.slot1, self.hugo,
-            origin=self.structure1, arg_type='n')
-        node_list = Node.objects.filter(title="Layer 1").all()
-        self.assertEqual(len(node_list), 1)
-        n = node_list[0]
+            self.structure1, score_tree, arg_type='n')
+        n = Node.objects.get(title="Layer 1")
         self.assertEqual(n, self.structure1)
         self.assertEqual(n.text.text, "text")
         slots = n.children.all()
