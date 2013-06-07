@@ -394,6 +394,11 @@
         "description": ""
     },
     {
+        "key": "_changeEMailDescription_",
+        "value": "Wenn du dein Passwort änderst, wirst du eine EMail zugesendet bekommen, in der du dein neues Passwort bestätigen musst. Erst nach der Bestätigung wird die Änderung wirksam.",
+        "description": ""
+    },
+    {
         "key": "_passwordsDidNotMatch_",
         "value": "Die angegebenen Passwörter stimmen nicht überein. Das Passwort wurde nicht geändert. Du kannst es nochmal versuchen.",
         "description": ""
