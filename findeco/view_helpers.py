@@ -283,9 +283,11 @@ def build_score_tree(origin, schema):
         'score': 0,
         'slots': {}
     }
-    if origin.title == schema['title'] and \
-       origin.text.text == schema['text']:
+    if origin.title == schema['title']:
         score_tree['score'] += 1
+
+    if origin.text.text == schema['text']:
+        score_tree['score'] += 2
 
     for slot in origin.children.all():
         for schema_child in schema['children']:
