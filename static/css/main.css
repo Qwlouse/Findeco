@@ -180,6 +180,10 @@ body:before {
     /*font-family: sans-serif;*/
 }
 
+#contentContainer p {
+    text-align: justify;
+}
+
 .contentBox {
     background: #e6e6e6;
     -moz-border-radius: 15px;
