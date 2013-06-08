@@ -33,7 +33,7 @@
 
 #headerContainer {
     background: url("../images/logo.png") no-repeat 0 5px;
-    background-size:80px;
+    background-size:300px;
     position: relative;
     height: 100%;
 }
@@ -44,14 +44,6 @@
     display: block;
     width: 1110px;
     height: 100%;
-}
-
-#headerContent h1 {
-    /*font-style: italic;*/
-    font-weight: bold;
-    font-size: 36px;
-    margin-left: 15px;
-    color: #b3b3b3;
 }
 
 #headerContent ul {
