@@ -22,7 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from node_storage.factory import create_slot, create_structureNode, create_vote, create_user
+from node_storage.factory import create_slot, create_structureNode, create_vote, create_user, create_spam_flag
 from node_storage.tools import delete_node
 from node_storage.path_helpers import get_root_node, get_node_for_path, IllegalPath
 
@@ -37,7 +37,8 @@ class ToolsTest(TestCase):
         self.path = 'verfassungswiedrig.1'
         self.udo = create_user('udo')
         create_vote(self.udo, [self.node])
-
+        self.horst = create_user('horst')
+        create_spam_flag(self.horst, [self.node])
 
     def test_delete_node_removes_node(self):
         node = get_node_for_path(self.path)
@@ -49,4 +50,10 @@ class ToolsTest(TestCase):
         node = get_node_for_path(self.path)
         delete_node(node)
         self.assertEqual(self.udo.vote_set.count(), 0)
+
+    def test_delete_node_removes_spam_flags(self):
+        self.assertEqual(self.horst.spamflag_set.count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(self.horst.spamflag_set.count(), 0)
 

@@ -21,7 +21,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
+from node_storage import Vote
 
 
 def delete_node(node):
     node.delete()
+    # remove all empty votes
+    Vote.objects.filter(nodes=None).delete()
