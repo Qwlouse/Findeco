@@ -54,10 +54,7 @@ def convert_long_urls(request):
     """
     This function removes the unnecessary part from urls which are copy&pasted from the url field of the browser.
     """
-    if 'HTTP_HOST' in request.META.keys():
-        hostname = request.META['HTTP_HOST']
-    else:
-        hostname = request.META['SERVER_NAME'] + ":" + request.META['SERVER_PORT']
+    hostname = request.META['HTTP_HOST']
     text = request.POST['microblogText']
     text = text.replace("https://" + hostname + "/#", "")
     text = text.replace("http://" + hostname + "/#", "")

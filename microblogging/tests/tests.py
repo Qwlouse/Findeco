@@ -103,7 +103,8 @@ class MicrobloggingTests(TestCase):
 
         response = self.client.post(
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
-            dict(microblogText="Bla bla bla. I have to reference http://testserver:80/#/bla.1."))
+            dict(microblogText="Bla bla bla. I have to reference http://findecotest:4321/#/bla.1."),
+            HTTP_HOST="findecotest:4321")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(
             Post.objects.filter(text="Bla bla bla. I have to reference /bla.1.").all()), 1)
