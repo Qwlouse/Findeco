@@ -21,10 +21,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from node_storage import Vote
+from node_storage import Vote, Argument
 
 
 def delete_node(node):
+    # delete derivation argument
+    Argument.objects.filter(derivation__derivate=node).delete()
+    # delete all derivatives
     for derivate in node.derivates.all():
         delete_node(derivate)
     node.delete()

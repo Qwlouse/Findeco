@@ -22,8 +22,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from node_storage import Text, Node
-from node_storage.factory import create_slot, create_structureNode, create_vote, create_user, create_spam_flag
+from node_storage import Text, Node, Argument
+from node_storage.factory import create_slot, create_structureNode, create_vote, create_user, create_spam_flag, create_argument
 from node_storage.tools import delete_node
 from node_storage.path_helpers import get_root_node, get_node_for_path, IllegalPath
 
@@ -38,6 +38,7 @@ class ToolsTest(TestCase):
         self.root.append_child(self.slot1)
         self.node = create_structureNode('To be or not to be', 'never both')
         self.slot1.append_child(self.node)
+        self.arg = create_argument(self.node, 'c', "no", "lyrics")
         self.path = 'soon_empty.1'
 
         self.slot2 = create_slot('verfassungswiedrig')
@@ -102,3 +103,15 @@ class ToolsTest(TestCase):
         node = get_node_for_path(self.source_path)
         delete_node(node)
         self.assertEqual(Node.objects.filter(title='BöserTitel').count(), 0)
+
+    def test_delete_node_removes_argument(self):
+        self.assertEqual(Argument.objects.filter(title='no').count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(Argument.objects.filter(title='no').count(), 0)
+
+    def test_delete_node_on_derivate_removes_derivation_argument(self):
+        self.assertEqual(Argument.objects.filter(title='zu schwach').count(), 1)
+        node = get_node_for_path(self.derivate_path)
+        delete_node(node)
+        self.assertEqual(Argument.objects.filter(title='zu schwach').count(), 0)
