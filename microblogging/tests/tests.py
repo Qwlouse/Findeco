@@ -88,6 +88,26 @@ class MicrobloggingTests(TestCase):
         self.assertEqual(len(
             Post.objects.filter(text="Bla bla bla. I had to say it.").all()), 1)
 
+    def test_store_microblog_post_with_reference(self):
+        self.assertTrue(self.client.login(username="max", password="1234"))
+
+        response = self.client.post(
+            reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
+            dict(microblogText="Bla bla bla. I have to reference /bla.1."))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(
+            Post.objects.filter(text="Bla bla bla. I have to reference /bla.1.").all()), 1)
+
+    def test_store_microblog_post_with_long_url_reference(self):
+        self.assertTrue(self.client.login(username="max", password="1234"))
+
+        response = self.client.post(
+            reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
+            dict(microblogText="Bla bla bla. I have to reference http://testserver:80/#/bla.1."))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(
+            Post.objects.filter(text="Bla bla bla. I have to reference /bla.1.").all()), 1)
+
     def test_store_microblog_post_not_authenticated(self):
         response = self.client.post(
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),

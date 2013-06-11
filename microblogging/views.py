@@ -50,6 +50,21 @@ def convert_response_list(post_list):
     return response_list
 
 
+def convert_long_urls(request):
+    """
+    This function removes the unnecessary part from urls which are copy&pasted from the url field of the browser.
+    """
+    if 'HTTP_HOST' in request.META.keys():
+        hostname = request.META['HTTP_HOST']
+    else:
+        hostname = request.META['SERVER_NAME'] + ":" + request.META['SERVER_PORT']
+    text = request.POST['microblogText']
+    text = text.replace("https://" + hostname + "/#", "")
+    text = text.replace("http://" + hostname + "/#", "")
+    text = text.replace(hostname + "/#", "")
+    return text
+
+
 @ViewErrorHandling
 def load_microblogging(request, path, select_id, microblogging_load_type):
     # TODO refactor and optimize this method
@@ -131,5 +146,6 @@ def load_collection(request, select_id, microblogging_load_type, only_author=Fal
 def store_microblog_post(request, path):
     assert_authentication(request)
     assert_post_parameters(request, ['microblogText'])
-    create_post(request.POST['microblogText'], request.user, path)
+    post_text = convert_long_urls(request)
+    create_post(post_text, request.user, path)
     return json_response({'storeMicrobloggingResponse': {}})
