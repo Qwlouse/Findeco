@@ -21,10 +21,19 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from test_helpers import HelpersTest
-from test_node import NodeTest
-from test_structure_parser import StructureParserTest
-from test_structure_parser import CreateStructureFromStructureNodeSchemaTest
-from test_nodepath_cache import NodePathCacheTest
-from test_tools import ToolsTest
+from node_storage.models import PathCache, TextCache, Vote, Argument, IndexCache
 
+
+def delete_node(node):
+    paths = PathCache.objects.filter(node=node).all()
+    TextCache.objects.filter(path__in=paths).delete()
+    IndexCache.objects.filter(path__in=paths).delete()
+
+    # delete derivation argument
+    Argument.objects.filter(derivation__derivate=node).delete()
+    # delete all derivatives
+    for derivate in node.derivates.all():
+        delete_node(derivate)
+    node.delete()
+    # remove all empty votes
+    Vote.objects.filter(nodes=None).delete()
