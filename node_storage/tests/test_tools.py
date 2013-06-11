@@ -29,15 +29,22 @@ from node_storage.path_helpers import get_root_node, get_node_for_path, IllegalP
 
 class ToolsTest(TestCase):
     def setUp(self):
+        self.horst = create_user('horst')
+        self.udo = create_user('udo')
+
         self.root = get_root_node()
         self.slot = create_slot('verfassungswiedrig')
         self.root.append_child(self.slot)
+        self.source = create_structureNode('Auffälliger Titel', 'gewöhnlicher text')
+        self.slot.append_child(self.source)
+        self.path = 'verfassungswiedrig.2'
         self.node = create_structureNode('Auffälliger Titel', 'verfassungswiedriger text')
         self.slot.append_child(self.node)
-        self.path = 'verfassungswiedrig.1'
-        self.udo = create_user('udo')
+        self.source.add_derivate(self.node, arg_type='con', title="zu schwach",
+                                 text="muss fieser werden", authors=[self.udo])
+
         create_vote(self.udo, [self.node])
-        self.horst = create_user('horst')
+        create_vote(self.horst, [self.source, self.node])
         create_spam_flag(self.horst, [self.node])
 
     def test_delete_node_removes_node(self):
@@ -57,3 +64,8 @@ class ToolsTest(TestCase):
         delete_node(node)
         self.assertEqual(self.horst.spamflag_set.count(), 0)
 
+    def test_delete_node_does_not_remove_vote_from_source(self):
+        self.assertEqual(self.source.votes.count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(self.source.votes.count(), 1)
