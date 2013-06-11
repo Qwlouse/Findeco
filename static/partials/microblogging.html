@@ -10,7 +10,8 @@
             </form>
         </li>
         <li ng-repeat="microblogNode in microbloggingList">
-            <div follow-star show-if="user.isLoggedIn" entity="microblogNode.authorGroup[0]" mark-func="followUser"
+            <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
+                 entity="microblogNode.authorGroup[0]" mark-func="followUser"
                  style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
             <a class="microblogAuthor" href="#/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                 microblogNode.authorGroup[0].displayName }}</a>

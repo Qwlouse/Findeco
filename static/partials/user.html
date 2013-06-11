@@ -3,7 +3,8 @@
     </div>
 
     <div id="centerColumn" class="contentBox">
-        <div follow-star show-if="user.isLoggedIn" entity="displayUser" mark-func="followUser"></div>
+        <div follow-star show-if="user.isLoggedIn && displayUser.name != user.displayName"
+             entity="displayUser" mark-func="followUser"></div>
         <h1>{{displayUser.name}}</h1>
         <div ng-show="displayUser.exists">
             <h2 data-i18n="_description_">Description</h2>
