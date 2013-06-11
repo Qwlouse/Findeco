@@ -111,7 +111,7 @@ def create_initial_data():
     #with open("initial_data/grundsatzprogramm_bund.txt", 'r') as f:
     #    gsp_text = f.read()
     #schema = parse(unicode(gsp_text, encoding='utf-8'), grundsatzprogramm.title)
-    #create_structure_from_structure_node_schema(schema, grundsatzprogramm, [decided])
+    #create_structure_from_structure_node_schema(schema, grundsatzprogramm, decided)
     #create_some_microblogging("Grundsatzprogramm.1")
 
     # Wahlprogramm BTW
@@ -120,7 +120,7 @@ def create_initial_data():
     #with open("initial_data/wahlprogramm_btw.txt", 'r') as f:
     #    wpbtw_text = f.read()
     #schema = parse(unicode(wpbtw_text, encoding='utf-8'), wahlprogramm_btw.title)
-    #create_structure_from_structure_node_schema(schema, wahlprogramm_btw, [decided])
+    #create_structure_from_structure_node_schema(schema, wahlprogramm_btw, decided)
     #create_alternatives_for_urheberrecht("Wahlprogramm_BTW.1/Urheberrecht.1")
     #create_some_microblogging("Wahlprogramm_BTW.1/Urheberrecht.1")
 
@@ -130,7 +130,7 @@ def create_initial_data():
     #with open("initial_data/positionspapiere_bund.txt", 'r') as f:
     #    pospbund_text = f.read()
     #schema = parse(unicode(pospbund_text, encoding='utf-8'), posp_bund.title)
-    #create_structure_from_structure_node_schema(schema, posp_bund, [decided])
+    #create_structure_from_structure_node_schema(schema, posp_bund, decided)
 
     # Wahlprogramm Rheinland-Pfalz
     wahlprogramm_rlp = create_slot("Wahlprogramm_RLP")
@@ -138,7 +138,7 @@ def create_initial_data():
     with open("initial_data/wahlprogramm_rlp.txt", 'r') as f:
         wahlprogrammrlp_text = f.read()
     schema = parse(unicode(wahlprogrammrlp_text, encoding='utf-8'), wahlprogramm_rlp.title)
-    create_structure_from_structure_node_schema(schema, wahlprogramm_rlp, [decided])
+    create_structure_from_structure_node_schema(schema, wahlprogramm_rlp, decided)
 
     # Positionspapiere Rheinland-Pfalz
     posp_rlp = create_slot("Positionspapiere_RLP")
@@ -146,7 +146,7 @@ def create_initial_data():
     with open("initial_data/positionspapiere_rlp.txt", 'r') as f:
         posprlp_text = f.read()
     schema = parse(unicode(posprlp_text, encoding='utf-8'), posp_rlp.title)
-    create_structure_from_structure_node_schema(schema, posp_rlp, [decided])
+    create_structure_from_structure_node_schema(schema, posp_rlp, decided)
 
     # Satzung Rheinland-Pfalz
     satzung_rlp = create_slot("Satzung_RLP")
@@ -154,7 +154,7 @@ def create_initial_data():
     with open("initial_data/satzung_rlp.txt", 'r') as f:
         satzungrlp_text = f.read()
     schema = parse(unicode(satzungrlp_text, encoding='utf-8'), satzung_rlp.title)
-    create_structure_from_structure_node_schema(schema, satzung_rlp, [decided])
+    create_structure_from_structure_node_schema(schema, satzung_rlp, decided)
 
     # Spielwiese
     spielwiese = create_slot("Spielwiese")
@@ -162,7 +162,7 @@ def create_initial_data():
     with open("initial_data/spielwiese.txt", 'r') as f:
         spielwiese_text = f.read()
     schema = parse(unicode(spielwiese_text, encoding='utf-8'), spielwiese.title)
-    create_structure_from_structure_node_schema(schema, spielwiese, [decided])
+    create_structure_from_structure_node_schema(schema, spielwiese, decided)
 
 
 class Command(BaseCommand):

@@ -63,7 +63,7 @@ class MicrobloggingTests(TestCase):
             self.posts.append(
                 create_post("Ich finde /Bla.1 gut.", self.user_max))
         self.posts.append(
-            create_post("Ich finde /Blubb schlecht.", self.user_max))
+            create_post("Ich finde /Blubb.1 schlecht.", self.user_max))
         create_vote(self.user_max, [self.text_node1])
 
     def test_post_creation(self):
@@ -82,11 +82,34 @@ class MicrobloggingTests(TestCase):
 
         response = self.client.post(
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
-            dict(microblogText="Bla bla bla. I had to say it."))
+            dict(microblogText="Bla bla bla. I had to say it."),
+            HTTP_HOST="findecotest:4321")
         print(response.content)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(
             Post.objects.filter(text="Bla bla bla. I had to say it.").all()), 1)
+
+    def test_store_microblog_post_with_reference(self):
+        self.assertTrue(self.client.login(username="max", password="1234"))
+
+        response = self.client.post(
+            reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
+            dict(microblogText="Bla bla bla. I have to reference /bla.1."),
+            HTTP_HOST="findecotest:4321")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(
+            Post.objects.filter(text="Bla bla bla. I have to reference /bla.1.").all()), 1)
+
+    def test_store_microblog_post_with_long_url_reference(self):
+        self.assertTrue(self.client.login(username="max", password="1234"))
+
+        response = self.client.post(
+            reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
+            dict(microblogText="Bla bla bla. I have to reference http://findecotest:4321/#/bla.1."),
+            HTTP_HOST="findecotest:4321")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(
+            Post.objects.filter(text="Bla bla bla. I have to reference /bla.1.").all()), 1)
 
     def test_store_microblog_post_not_authenticated(self):
         response = self.client.post(

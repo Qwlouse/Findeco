@@ -46,3 +46,23 @@ ul.argumentList li {
     font-weight: bolder;
     color: gray;
 }
+ul.newsList {
+    font-size: 10pt;
+    list-style: none;
+    color: #999999;
+    padding: 5px 0 5px 0;
+    margin: 0 0 10px 0;
+}
+
+ul.newsList li a {
+
+    padding: 5px 0;
+    width: 200px;
+    font-size:10pt;
+}
+
+ul.newsList li {
+    margin-bottom: 10px;
+    font-size: 10pt;
+}
+
