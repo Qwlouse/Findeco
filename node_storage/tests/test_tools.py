@@ -22,8 +22,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from node_storage import Text, Node, Argument
+from node_storage import Text, Node, Argument, TextCache, IndexCache
 from node_storage.factory import create_slot, create_structureNode, create_vote, create_user, create_spam_flag, create_argument
+from node_storage.models import PathCache
 from node_storage.tools import delete_node
 from node_storage.path_helpers import get_root_node, get_node_for_path, IllegalPath
 
@@ -40,6 +41,8 @@ class ToolsTest(TestCase):
         self.slot1.append_child(self.node)
         self.arg = create_argument(self.node, 'c', "no", "lyrics")
         self.path = 'soon_empty.1'
+        TextCache.objects.create(path=self.path, paragraphs="doesn't matter")
+        IndexCache.objects.create(path=self.path, index_nodes="doesn't matter")
 
         self.slot2 = create_slot('verfassungswiedrig')
         self.root.append_child(self.slot2)
@@ -115,3 +118,21 @@ class ToolsTest(TestCase):
         node = get_node_for_path(self.derivate_path)
         delete_node(node)
         self.assertEqual(Argument.objects.filter(title='zu schwach').count(), 0)
+
+    def test_delete_node_removes_path_cache_entry(self):
+        self.assertEqual(PathCache.objects.filter(path=self.path).count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(PathCache.objects.filter(path=self.path).count(), 0)
+
+    def test_delete_node_removes_text_cache_entry(self):
+        self.assertEqual(TextCache.objects.filter(path=self.path).count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(TextCache.objects.filter(path=self.path).count(), 0)
+
+    def test_delete_node_removes_index_cache_entry(self):
+        self.assertEqual(IndexCache.objects.filter(path=self.path).count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(IndexCache.objects.filter(path=self.path).count(), 0)
