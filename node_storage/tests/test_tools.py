@@ -78,3 +78,9 @@ class ToolsTest(TestCase):
         delete_node(node)
         self.assertEqual(
             Text.objects.filter(text='verfassungswiedriger text').count(), 0)
+
+    def test_delete_node_removes_derivation(self):
+        self.assertEqual(self.source.derivates.count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(self.source.derivates.count(), 0)
