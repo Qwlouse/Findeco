@@ -22,7 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from node_storage import Text
+from node_storage import Text, Node
 from node_storage.factory import create_slot, create_structureNode, create_vote, create_user, create_spam_flag
 from node_storage.tools import delete_node
 from node_storage.path_helpers import get_root_node, get_node_for_path, IllegalPath
@@ -34,15 +34,22 @@ class ToolsTest(TestCase):
         self.udo = create_user('udo')
 
         self.root = get_root_node()
-        self.slot = create_slot('verfassungswiedrig')
-        self.root.append_child(self.slot)
+        self.slot1 = create_slot('soon_empty')
+        self.root.append_child(self.slot1)
+        self.node = create_structureNode('To be or not to be', 'never both')
+        self.slot1.append_child(self.node)
+        self.path = 'soon_empty.1'
+
+        self.slot2 = create_slot('verfassungswiedrig')
+        self.root.append_child(self.slot2)
         self.source = create_structureNode('Auffälliger Titel', 'gewöhnlicher text')
-        self.slot.append_child(self.source)
-        self.path = 'verfassungswiedrig.2'
-        self.node = create_structureNode('Auffälliger Titel', 'verfassungswiedriger text')
-        self.slot.append_child(self.node)
-        self.source.add_derivate(self.node, arg_type='con', title="zu schwach",
+        self.slot2.append_child(self.source)
+        self.derivate = create_structureNode('Auffälliger Titel', 'verfassungswiedriger text')
+        self.slot2.append_child(self.derivate)
+        self.source.add_derivate(self.derivate, arg_type='con', title="zu schwach",
                                  text="muss fieser werden", authors=[self.udo])
+
+        self.derivate_path = 'verfassungswiedrig.2'
 
         create_vote(self.udo, [self.node])
         create_vote(self.horst, [self.source, self.node])
@@ -67,20 +74,24 @@ class ToolsTest(TestCase):
 
     def test_delete_node_does_not_remove_vote_from_source(self):
         self.assertEqual(self.source.votes.count(), 1)
-        node = get_node_for_path(self.path)
+        node = get_node_for_path(self.derivate_path)
         delete_node(node)
         self.assertEqual(self.source.votes.count(), 1)
 
     def test_delete_node_removes_text(self):
-        self.assertEqual(
-            Text.objects.filter(text='verfassungswiedriger text').count(), 1)
+        self.assertEqual(Text.objects.filter(text='never both').count(), 1)
         node = get_node_for_path(self.path)
         delete_node(node)
-        self.assertEqual(
-            Text.objects.filter(text='verfassungswiedriger text').count(), 0)
+        self.assertEqual(Text.objects.filter(text='never both').count(), 0)
 
     def test_delete_node_removes_derivation(self):
         self.assertEqual(self.source.derivates.count(), 1)
-        node = get_node_for_path(self.path)
+        node = get_node_for_path(self.derivate_path)
         delete_node(node)
         self.assertEqual(self.source.derivates.count(), 0)
+
+    def test_delete_node_removes_empty_parent_slot(self):
+        self.assertEqual(Node.objects.filter(title='soon_empty').count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(Node.objects.filter(title='soon_empty').count(), 0)
