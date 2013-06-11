@@ -22,6 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
+from microblogging.models import create_post, Post
 from node_storage import Text, Node, Argument, TextCache, IndexCache
 from node_storage.factory import create_slot, create_structureNode, create_vote, create_user, create_spam_flag, create_argument
 from node_storage.models import PathCache
@@ -59,6 +60,9 @@ class ToolsTest(TestCase):
         create_vote(self.udo, [self.node])
         create_vote(self.horst, [self.source, self.node])
         create_spam_flag(self.horst, [self.node])
+
+        create_post('i reference /verfassungswiedrig.1 because i like it ',
+                    self.horst, self.path)
 
     def test_delete_node_removes_node(self):
         node = get_node_for_path(self.path)
@@ -136,3 +140,15 @@ class ToolsTest(TestCase):
         node = get_node_for_path(self.path)
         delete_node(node)
         self.assertEqual(IndexCache.objects.filter(path=self.path).count(), 0)
+
+    def test_delete_node_removes_referring_posts1(self):
+        self.assertEqual(Post.objects.count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(Post.objects.count(), 0)
+
+    def test_delete_node_removes_referring_posts2(self):
+        self.assertEqual(Post.objects.count(), 1)
+        node = get_node_for_path(self.source)
+        delete_node(node)
+        self.assertEqual(Post.objects.count(), 0)

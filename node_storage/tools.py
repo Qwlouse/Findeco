@@ -21,6 +21,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
+from microblogging import Post
 from node_storage.models import PathCache, TextCache, Vote, Argument, IndexCache
 
 
@@ -28,6 +29,8 @@ def delete_node(node):
     paths = PathCache.objects.filter(node=node).all()
     TextCache.objects.filter(path__in=paths).delete()
     IndexCache.objects.filter(path__in=paths).delete()
+
+    Post.objects.filter(node_references=node).delete()
 
     # delete derivation argument
     Argument.objects.filter(derivation__derivate=node).delete()
