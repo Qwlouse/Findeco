@@ -38,6 +38,9 @@
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
+            <li><a ng-show="followedNodesList.length >= 20" class="btn btn-primary"
+                   ng-click="updateFollowedNodes('older',followedNodesList[followedNodesList.length-1].microblogID)"
+                   data-i18n="_loadMoreMicroblogging_"></a></li>
         </ul>
         <div ng-show="isLoading('newsForFollowedNodes')" class="deactivateDiv">
     	</div>
@@ -56,6 +59,9 @@
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
+            <li><a ng-show="followedNodesList.length >= 20" class="btn btn-primary"
+                   ng-click="updateOwnNodes('older',ownNodesList[ownNodesList.length-1].microblogID)"
+                   data-i18n="_loadMoreMicroblogging_"></a></li>
         </ul>
         <div ng-show="isLoading('newsForOwnNodes')" class="deactivateDiv">
     	</div>
