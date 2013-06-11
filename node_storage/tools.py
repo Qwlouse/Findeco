@@ -21,10 +21,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from test_helpers import HelpersTest
-from test_node import NodeTest
-from test_structure_parser import StructureParserTest
-from test_structure_parser import CreateStructureFromStructureNodeSchemaTest
-from test_nodepath_cache import NodePathCacheTest
-from test_tools import ToolsTest
 
+
+def delete_node(node):
+    node.delete()
