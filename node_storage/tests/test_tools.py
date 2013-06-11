@@ -42,13 +42,14 @@ class ToolsTest(TestCase):
 
         self.slot2 = create_slot('verfassungswiedrig')
         self.root.append_child(self.slot2)
-        self.source = create_structureNode('Auffälliger Titel', 'gewöhnlicher text')
+        self.source = create_structureNode('BöserTitel', 'gewöhnlicher text')
         self.slot2.append_child(self.source)
-        self.derivate = create_structureNode('Auffälliger Titel', 'verfassungswiedriger text')
+        self.derivate = create_structureNode('BöserTitel', 'verfassungswiedriger text')
         self.slot2.append_child(self.derivate)
         self.source.add_derivate(self.derivate, arg_type='con', title="zu schwach",
                                  text="muss fieser werden", authors=[self.udo])
 
+        self.source_path = 'verfassungswiedrig.1'
         self.derivate_path = 'verfassungswiedrig.2'
 
         create_vote(self.udo, [self.node])
@@ -95,3 +96,9 @@ class ToolsTest(TestCase):
         node = get_node_for_path(self.path)
         delete_node(node)
         self.assertEqual(Node.objects.filter(title='soon_empty').count(), 0)
+
+    def test_delete_node_removes_derivates(self):
+        self.assertEqual(Node.objects.filter(title='BöserTitel').count(), 2)
+        node = get_node_for_path(self.source_path)
+        delete_node(node)
+        self.assertEqual(Node.objects.filter(title='BöserTitel').count(), 0)

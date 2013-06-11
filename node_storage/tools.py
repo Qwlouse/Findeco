@@ -25,6 +25,8 @@ from node_storage import Vote
 
 
 def delete_node(node):
+    for derivate in node.derivates.all():
+        delete_node(derivate)
     node.delete()
     # remove all empty votes
     Vote.objects.filter(nodes=None).delete()
