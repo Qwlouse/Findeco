@@ -8,8 +8,8 @@
         </li>!-->
         <h2 data-i18n="_timeline_"></h2>
         <ul class="microblogList">
-            <li><a class="btn btn-primary" ng-click="updateFollowedUsers()" data-i18n="_startScreenUpdateBtn_"></a></li>
-            <li ng-repeat="microblogNode in followedUsersList">
+            <li><a class="btn btn-primary" ng-click="updateTimeline()" data-i18n="_startScreenUpdateBtn_"></a></li>
+            <li ng-repeat="microblogNode in timelineList">
                 <div follow-star show-if="user.isLoggedIn" entity="microblogNode.author" mark-func="followUser"
                      style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
                 <a class="microblogAuthor" href="#/user/{{ microblogNode.authorGroup[0].displayName }}">{{
@@ -17,6 +17,9 @@
                 <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
             </li>
+            <li><a ng-show="timelineList.length >= 20" class="btn btn-primary"
+                   ng-click="updateTimeline('older',timelineList[timelineList.length-1].microblogID)"
+                   data-i18n="_loadMoreMicroblogging_"></a></li>
         </ul>
 		<div ng-show="isLoading('timeline')" class="deactivateDiv">
     	</div>

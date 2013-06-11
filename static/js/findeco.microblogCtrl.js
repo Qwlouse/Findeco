@@ -50,7 +50,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
     };
     $scope.isLoading = function (){
     	return $scope.MicrobloggingIsLoading;
-    }
+    };
     $scope.updateMicrobloggingList = function (oldType, oldID) {
         var type = 'newer';
         var id = 0;
