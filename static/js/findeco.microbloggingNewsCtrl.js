@@ -25,8 +25,8 @@
 'use strict';
 /* Controllers */
 
-function FindecoNewsCtrl($scope, Backend, User) {
-    $scope.allNodesList = [];
+function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
+    $scope.timelineList = [];
     $scope.followedNodesList = [];
     $scope.ownNodesList = [];
 
@@ -44,27 +44,27 @@ function FindecoNewsCtrl($scope, Backend, User) {
 
     $scope.followUser = function (path, type) {
         return User.markUser(path, type).success(function() {
-            setAuthorForAllBlogs($scope.allNodesList);
+            setAuthorForAllBlogs($scope.timelineList);
             setAuthorForAllBlogs($scope.followedNodesList);
             setAuthorForAllBlogs($scope.ownNodesList);
         });
     };
 
-    $scope.updateAllNodes = function (oldType, oldID) {
+    $scope.updateTimeline = function (oldType, oldID) {
         var type = 'newer';
         var id = 0;
-        if ($scope.allNodesList[0] != undefined) {
-            id = $scope.allNodesList[0].microblogID;
+        if ($scope.timelineList[0] != undefined) {
+            id = $scope.timelineList[0].microblogID;
         }
 
         if ( oldType != undefined && oldID != undefined ) {
             type = oldType;
             id = oldID;
         }
-        $scope.isLoadingNewsForAllNodes = true;
-        Backend.loadMicroblogging($scope.allNodesList, ':collectionAll', type, id).success(function() {
-        	setAuthorForAllBlogs($scope.allNodesList);
-        	$scope.isLoadingNewsForAllNodes = false;
+        $scope.isLoadingTimeline =true;
+        Backend.loadMicroblogging($scope.timelineList, User.displayName, type, id).success(function() {
+        	setAuthorForAllBlogs($scope.timelineList);
+        	$scope.isLoadingTimeline =false;
        });
     };
 
@@ -116,14 +116,14 @@ function FindecoNewsCtrl($scope, Backend, User) {
     $scope.$watch('username', function () {
         if ($scope.username != "") {
  
-            $scope.updateAllNodes();
+            $scope.updateTimeline();
             $scope.updateFollowedNodes();
             $scope.updateOwnNodes();
         }
     });
     $scope.isLoading = function (col){
     	if (col =="timeline"){
-    		return $scope.isLoadingNewsForAllNodes;
+    		return $scope.isLoadingTimeline;	
     	}
     	if (col =="newsForFollowedNodes"){
     		return $scope.isLoadingNewsForFollowedNodes;	

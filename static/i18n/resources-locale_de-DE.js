@@ -585,12 +585,17 @@
     },
     {
         "key": "_newsForFollowedNodes_",
-        "value": "News zu Knoten denen ich folge",
+        "value": "News zu Vorschlägen denen ich folge",
         "description": ""
     },
     {
         "key": "_newsForOwnNodes_",
-        "value": "News zu meinen eigenen Knoten",
+        "value": "News zu meinen eigenen Vorschlägen",
+        "description": ""
+    },
+    {
+        "key": "_newsForAllNodes_",
+        "value": "News zu allen Vorschlägen im System",
         "description": ""
     },
     {
@@ -634,15 +639,40 @@
         "description": ""
     },
     {
-    	  "key": "_SystemNews_",
-          "value": "Systemnews",
-          "description": ""
+    	"key": "_SystemNews_",
+        "value": "Systemnews",
+        "description": ""
     },
     {
-  	  "key": "_externalLink_",
+  	    "key": "_externalLink_",
         "value": "(extern)",
         "description": ""
-   }
+    },
+    {
+  	    "key": "_mentions_",
+        "value": "Erwähnungen",
+        "description": ""
+    },
+    {
+  	    "key": "_empty_",
+        "value": "Leer",
+        "description": ""
+    },
+    {
+  	    "key": "_contactDevelopersForIdeasWhatToPutHere_",
+        "value": "Wenn du Ideen hast, was in dieser Spalte stehen könnte, dann kontaktiere die Entwickler und teile deine Idee mit.",
+        "description": ""
+    },
+    {
+  	    "key": "_microbloggingNews_",
+        "value": "Microblogging",
+        "description": ""
+    },
+    {
+  	    "key": "_newsForAllNode_",
+        "value": "News zu allen Vorschlägen",
+        "description": ""
+    }
     
     
 
