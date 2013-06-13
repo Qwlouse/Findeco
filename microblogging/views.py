@@ -147,10 +147,13 @@ def load_collection(request, select_id, microblogging_load_type, only_author=Fal
     Use this function to get a collection of blogposts regarding nodes
     which are followed by the user.
     """
+    print(select_id)
+    print(all_nodes)
     if not select_id:  # Get latest posts
         if all_nodes:
             feed = Post.objects.order_by('-time')
         else:
+            print(request.user)
             feed = Post.objects.filter(node_references__votes__user=request.user).order_by('-time')
         if only_author:
             feed = feed.filter(node_references__text__authors=request.user)

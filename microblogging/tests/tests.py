@@ -38,10 +38,9 @@ import json
 ROOT_SYMBOL = "/#/"
 
 
-class MicrobloggingTests(TestCase):
+class StoreMicrobloggingTests(TestCase):
     def setUp(self):
         self.user_max = create_user("max", password="1234")
-        self.user_maria = create_user("Maria")
 
         root = backend.get_root_node()
         slot1 = create_slot("Bla")
@@ -57,25 +56,6 @@ class MicrobloggingTests(TestCase):
         text_node2 = create_textNode("Whatever2", "Testtext Nummer 2",
                                      [self.user_max])
         slot2.append_child(text_node2)
-
-        self.posts = []
-        for i in range(25):
-            self.posts.append(
-                create_post("Ich finde /Bla.1 gut.", self.user_max))
-        self.posts.append(
-            create_post("Ich finde /Blubb.1 schlecht.", self.user_max))
-        create_vote(self.user_max, [self.text_node1])
-
-    def test_post_creation(self):
-        all_posts = Post.objects.all()
-        self.assertSequenceEqual(all_posts, self.posts)
-        self.assertEqual(
-            all_posts[0].text,
-            'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
-        self.assertEqual(all_posts[0].author, self.user_max)
-        self.assertEqual(all_posts[0].id, 1)
-        self.assertSequenceEqual(all_posts[0].node_references.all(),
-                                 [self.text_node1])
 
     def test_store_microblog_post(self):
         self.assertTrue(self.client.login(username="max", password="1234"))
@@ -116,6 +96,46 @@ class MicrobloggingTests(TestCase):
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
             dict(microblogText="Bla bla bla. I had to say it."))
         assert_is_error_response(response, '_NotAuthenticated')
+
+
+class MicrobloggingTests(TestCase):
+    def setUp(self):
+        self.user_max = create_user("max", password="1234")
+        self.user_maria = create_user("Maria")
+
+        root = backend.get_root_node()
+        slot1 = create_slot("Bla")
+        root.append_child(slot1)
+
+        self.text_node1 = create_textNode("Whatever", "Testtext",
+                                          [self.user_max])
+        slot1.append_child(self.text_node1)
+
+        slot2 = create_slot("Blubb")
+        root.append_child(slot2)
+
+        text_node2 = create_textNode("Whatever2", "Testtext Nummer 2",
+                                     [self.user_max])
+        slot2.append_child(text_node2)
+
+        self.posts = []
+        for i in range(25):
+            self.posts.append(
+                create_post("Ich finde /Bla.1 gut.", self.user_max))
+        self.posts.append(
+            create_post("Ich finde /Blubb.1 schlecht.", self.user_max))
+        create_vote(self.user_max, [self.text_node1])
+
+    def test_post_creation(self):
+        all_posts = Post.objects.all()
+        self.assertSequenceEqual(all_posts, self.posts)
+        self.assertEqual(
+            all_posts[0].text,
+            'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+        self.assertEqual(all_posts[0].author, self.user_max)
+        self.assertEqual(all_posts[0].id, 1)
+        self.assertSequenceEqual(all_posts[0].node_references.all(),
+                                 [self.text_node1])
 
     def test_load_microblogging_illegal_path(self):
         self.assertTrue(self.client.login(username="max", password="1234"))

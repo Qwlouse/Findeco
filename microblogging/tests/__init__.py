@@ -26,4 +26,4 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 
-from tests import MicrobloggingTests
+from tests import MicrobloggingTests, StoreMicrobloggingTests
