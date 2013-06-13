@@ -27,8 +27,7 @@
 
 function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
     $scope.timelineList = [];
-    $scope.followedNodesList = [];
-    $scope.ownNodesList = [];
+    $scope.mentionsList = [];
 
     $scope.user = User;
     $scope.username = User.displayName;
@@ -45,8 +44,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
     $scope.followUser = function (path, type) {
         return User.markUser(path, type).success(function() {
             setAuthorForAllBlogs($scope.timelineList);
-            setAuthorForAllBlogs($scope.followedNodesList);
-            setAuthorForAllBlogs($scope.ownNodesList);
+            setAuthorForAllBlogs($scope.mentionsList);
         });
     };
 
@@ -68,39 +66,21 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
        });
     };
 
-    $scope.updateFollowedNodes = function (oldType, oldID) {
+    $scope.updateMentions = function (oldType, oldID) {
         var type = 'newer';
         var id = 0;
-        if ($scope.followedNodesList[0] != undefined) {
-            id = $scope.followedNodesList[0].microblogID;
+        if ($scope.mentionsList[0] != undefined) {
+            id = $scope.mentionsList[0].microblogID;
         }
 
         if ( oldType != undefined && oldID != undefined ) {
             type = oldType;
             id = oldID;
         }
-        $scope.isLoadingNewsForFollowedNodes=true;
-        Backend.loadMicroblogging($scope.followedNodesList, ':collection', type, id).success(function() {
-        	setAuthorForAllBlogs($scope.followedNodesList);
-        	
-        	$scope.isLoadingNewsForFollowedNodes=false;
-        });
-    };
-    $scope.updateOwnNodes = function (oldType, oldID) {
-        var type = 'newer';
-    	var id = 0;
-        if ($scope.ownNodesList[0] != undefined) {
-            id = $scope.ownNodesList[0].microblogID;
-        }
-
-        if ( oldType != undefined && oldID != undefined ) {
-            type = oldType;
-            id = oldID;
-        }
-        $scope.isLoadingNewsForOwnNodes=true;
-        Backend.loadMicroblogging($scope.ownNodesList, ':collectionAuthor', type, id).success(function() {
-        	setAuthorForAllBlogs($scope.ownNodesList);
-        	$scope.isLoadingNewsForOwnNodes=false;	
+        $scope.isLoadingMentions=true;
+        Backend.loadMicroblogging($scope.mentionsList, User.displayName, type, id, true).success(function() {
+        	setAuthorForAllBlogs($scope.mentionsList);
+        	$scope.isLoadingMentions=false;
         });
     };
 
@@ -117,19 +97,15 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
         if ($scope.username != "") {
  
             $scope.updateTimeline();
-            $scope.updateFollowedNodes();
-            $scope.updateOwnNodes();
+            $scope.updateMentions();
         }
     });
     $scope.isLoading = function (col){
     	if (col =="timeline"){
     		return $scope.isLoadingTimeline;	
     	}
-    	if (col =="newsForFollowedNodes"){
-    		return $scope.isLoadingNewsForFollowedNodes;	
-    	}
-    	if (col =="newsForOwnNodes"){
-    		return $scope.isLoadingNewsForOwnNodes;	
+    	if (col =="mentions"){
+    		return $scope.isLoadingMentions;
     	}
     	
     	return false;

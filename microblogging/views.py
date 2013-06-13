@@ -97,8 +97,8 @@ def load_timeline(request, name, select_id, microblogging_load_type):
         followed = Q(author=named_user)
     own = Q(author=named_user)
     if not select_id:  # Get latest posts
-        feed = Post.objects.filter(followed | own).\
-            order_by('-time').distinct().prefetch_related('author', 'is_reference_to')[:20]
+        feed = Post.objects.filter(followed | own). \
+                   order_by('-time').distinct().prefetch_related('author', 'is_reference_to')[:20]
         return json_response({
             'loadMicrobloggingResponse': convert_response_list(feed)})
     else:
@@ -107,6 +107,34 @@ def load_timeline(request, name, select_id, microblogging_load_type):
         else:  # older
             startpoint = Q(id__lt=select_id)
         feed = Post.objects.filter(followed | own)
+        feed = feed.filter(startpoint).order_by('time').distinct()
+        feed = feed.prefetch_related('author', 'is_reference_to')[:20]
+        return json_response({
+            'loadMicrobloggingResponse': convert_response_list(reversed(feed))})
+
+
+@ViewErrorHandling
+def load_mentions(request, name, select_id, microblogging_load_type):
+    """
+    Use this function to get the timeline of mentions of the given user.
+
+    Referenced posts will show up in the timeline as the originals do.
+    Hiding of the original posts for a tidy
+    timeline should be done in the frontend due to performance reasons.
+    """
+    named_user = assert_active_user(name)
+
+    if not select_id:  # Get latest posts
+        feed = named_user.mentioning_entries.order_by('-time').distinct()
+        feed = feed.prefetch_related('author', 'is_reference_to')[:20]
+        return json_response({
+            'loadMicrobloggingResponse': convert_response_list(feed)})
+    else:
+        if microblogging_load_type == "newer":
+            startpoint = Q(id__gt=select_id)
+        else:  # older
+            startpoint = Q(id__lt=select_id)
+        feed = named_user.mentioning_enties
         feed = feed.filter(startpoint).order_by('time').distinct()
         feed = feed.prefetch_related('author', 'is_reference_to')[:20]
         return json_response({

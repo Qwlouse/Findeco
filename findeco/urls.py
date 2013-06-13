@@ -81,6 +81,16 @@ urlpatterns = patterns(
         name='load_timeline',
         kwargs={'select_id': None}),
 
+    url(r'^\.json_loadMicroblogging/mentions/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
+        USERNAME + '$',
+        'microblogging.views.load_mentions',
+        name='load_mentions'),
+
+    url(r'^\.json_loadMicroblogging/mentions/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
+        'microblogging.views.load_mentions',
+        name='load_mentions',
+        kwargs={'select_id': None}),
+
     url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collection$',
         'microblogging.views.load_collection',
         name='load_collection'),

@@ -100,8 +100,11 @@ angular.module('FindecoServices', [])
        	 	 return promise;
        	 	
             },
-            loadMicroblogging: function (microblogList_out, path, type, id) {
+            loadMicroblogging: function (microblogList_out, path, type, id, mentions) {
                 var pathComponents = ['/.json_loadMicroblogging'];
+                if (mentions != undefined && mentions == true) {
+                    pathComponents.push('mentions');
+                }
                 if (id != undefined && id != 0) {
                     pathComponents.push(id);
                 }
