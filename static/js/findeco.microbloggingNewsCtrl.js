@@ -112,4 +112,4 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
     }
 }
 
-FindecoNewsCtrl.$inject = ['$scope', 'Backend', 'User'];
+FindecoMicrobloggingNewsCtrl.$inject = ['$scope', 'Backend', 'User'];
