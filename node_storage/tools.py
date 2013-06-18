@@ -46,8 +46,7 @@ def delete_node(node):
             delete_node(parent)
         else:
             parent.update_favorite_and_invalidate_cache()
-
-    for n in Node.objects.filter(parents=None).exclude(id=1):
+    for n in Node.objects.filter(parents=None).exclude(title='ROOT').exclude(node_type=Node.ARGUMENT):
         delete_node(n)
 
     # remove all empty votes
