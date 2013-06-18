@@ -32,7 +32,7 @@
         <ul class="microblogList">
             <li><a class="btn btn-primary" ng-click="updateMentions()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in mentionsList">
-                <div follow-star show-if="user.isLoggedIn && microblogNode.author.id != user.id"
+                <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
                      entity="microblogNode.author" mark-func="followUser"
                      style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
                 <a class="microblogAuthor" href="#/user/{{ microblogNode.authorGroup[0].displayName }}">{{
