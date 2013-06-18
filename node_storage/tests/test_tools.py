@@ -149,6 +149,6 @@ class ToolsTest(TestCase):
 
     def test_delete_node_removes_referring_posts2(self):
         self.assertEqual(Post.objects.count(), 1)
-        node = get_node_for_path(self.source)
+        node = get_node_for_path(self.source_path)
         delete_node(node)
         self.assertEqual(Post.objects.count(), 0)
