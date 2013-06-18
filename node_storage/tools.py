@@ -22,7 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from microblogging import Post
-from node_storage.models import PathCache, TextCache, Vote, Argument, IndexCache
+from node_storage.models import PathCache, TextCache, Vote, Argument, IndexCache, Node
 
 
 def delete_node(node):
@@ -37,6 +37,20 @@ def delete_node(node):
     # delete all derivatives
     for derivate in node.derivates.all():
         delete_node(derivate)
+
+    children = list(node.children.all())
+    parents = list(node.parents.all())
     node.delete()
+    for p in parents:
+        parent = Node.objects.get(id=p.id)
+        if parent.children.count() == 0:
+            delete_node(parent)
+        else:
+            parent.update_favorite_and_invalidate_cache()
+
+    for c in children:
+        child = Node.objects.get(id=c.id)
+        delete_node(child)
+
     # remove all empty votes
     Vote.objects.filter(nodes=None).delete()

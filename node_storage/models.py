@@ -58,7 +58,7 @@ class Node(models.Model):
         through='Derivation'
     )
     favorite = models.ForeignKey('self', related_name='favorite_of', null=True,
-                                 blank=True)
+                                 blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=150)
     node_type = models.CharField(max_length=1, choices=NODETYPE)
 
@@ -125,7 +125,7 @@ class Node(models.Model):
             return
         new_favorite = self.children.annotate(num_votes=Count('votes')).\
             order_by('-num_votes', '-pk')[0]
-        if new_favorite != self.favorite:
+        if not self.favorite or new_favorite != self.favorite:
             self.favorite = new_favorite
             self.save()
             # TODO: optimize this

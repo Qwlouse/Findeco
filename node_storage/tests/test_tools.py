@@ -42,6 +42,11 @@ class ToolsTest(TestCase):
         self.slot1.append_child(self.node)
         self.arg = create_argument(self.node, 'c', "no", "lyrics")
         self.path = 'soon_empty.1'
+        self.child_slot = create_slot('or_to_pee')
+        self.node.append_child(self.child_slot)
+        self.child = create_structureNode('or to pee')
+        self.child_slot.append_child(self.child)
+
         TextCache.objects.create(path=self.path, paragraphs="doesn't matter")
         IndexCache.objects.create(path=self.path, index_nodes="doesn't matter")
 
@@ -105,6 +110,12 @@ class ToolsTest(TestCase):
         delete_node(node)
         self.assertEqual(Node.objects.filter(title='soon_empty').count(), 0)
 
+    def test_delete_node_does_not_remove_non_empty_parent_slot(self):
+        self.assertEqual(Node.objects.filter(title='verfassungswiedrig').count(), 1)
+        node = get_node_for_path(self.derivate_path)
+        delete_node(node)
+        self.assertEqual(Node.objects.filter(title='verfassungswiedrig').count(), 1)
+
     def test_delete_node_removes_derivates(self):
         self.assertEqual(Node.objects.filter(title='BöserTitel').count(), 2)
         node = get_node_for_path(self.source_path)
@@ -152,3 +163,11 @@ class ToolsTest(TestCase):
         node = get_node_for_path(self.source_path)
         delete_node(node)
         self.assertEqual(Post.objects.count(), 0)
+
+    def test_delete_node_removes_children(self):
+        self.assertEqual(Node.objects.filter(title='or_to_pee').count(), 1)
+        self.assertEqual(Node.objects.filter(title='or to pee').count(), 1)
+        node = get_node_for_path(self.path)
+        delete_node(node)
+        self.assertEqual(Node.objects.filter(title='or_to_pee').count(), 0)
+        self.assertEqual(Node.objects.filter(title='or to pee').count(), 0)
