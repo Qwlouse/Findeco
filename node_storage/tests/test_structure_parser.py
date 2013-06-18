@@ -374,8 +374,8 @@ class StructureParserTest(TestCase):
         for pname, parse in self.parser.items():
             s = parse(wiki, "foo")
             self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            print(s)
-            print(schema)
+            #print(s)
+            #print(schema)
             self.assertEqual(s, schema, "fail in " + pname)
 
 

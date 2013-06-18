@@ -64,7 +64,6 @@ class StoreMicrobloggingTests(TestCase):
             reverse('store_microblog_post', kwargs=dict(path="Bla.1")),
             dict(microblogText="Bla bla bla. I had to say it."),
             HTTP_HOST="findecotest:4321")
-        print(response.content)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(
             Post.objects.filter(text="Bla bla bla. I had to say it.").all()), 1)
