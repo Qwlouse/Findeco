@@ -21,6 +21,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
+from django.core.exceptions import ObjectDoesNotExist
 from microblogging import Post
 from node_storage.models import PathCache, TextCache, Vote, Argument, IndexCache, Node
 
@@ -35,17 +36,26 @@ def delete_node(node):
     # delete derivation argument
     Argument.objects.filter(derivation__derivate=node).delete()
     # delete all derivatives
-    for derivate in node.derivates.all():
-        delete_node(derivate)
-
+    derivates = list(node.derivates.all())
     parents = list(node.parents.all())
     node.delete()
+
+    for d in derivates:
+        try:
+            derivate = Node.objects.get(id=d.id)
+            delete_node(derivate)
+        except ObjectDoesNotExist:
+            pass
+
     for p in parents:
-        parent = Node.objects.get(id=p.id)
-        if parent.children.count() == 0:
-            delete_node(parent)
-        else:
-            parent.update_favorite_and_invalidate_cache()
+        try:
+            parent = Node.objects.get(id=p.id)
+            if parent.children.count() == 0:
+                delete_node(parent)
+            else:
+                parent.update_favorite_and_invalidate_cache()
+        except ObjectDoesNotExist:
+            pass
     for n in Node.objects.filter(parents=None).exclude(title='ROOT').exclude(node_type=Node.ARGUMENT):
         delete_node(n)
 
