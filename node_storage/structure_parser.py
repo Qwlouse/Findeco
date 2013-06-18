@@ -28,7 +28,7 @@
 from __future__ import division, print_function, unicode_literals
 import re
 import unicodedata
-from django.core.exceptions import ObjectDoesNotExist
+from path_helpers import get_good_path_for_structure_node
 from factory import create_structureNode, create_slot, create_vote
 from node_storage import Node
 
@@ -274,6 +274,7 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, author,
                                                origin, score_tree,
                                                arg_type=None,
                                                arg_title="", arg_text=""):
+    new_path_couples = []
     clone_found = False
     if origin.title == schema['title'] and \
        origin.text.text == schema['text'] and \
@@ -284,13 +285,18 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, author,
     if not clone_found:
         structure = create_structureNode(long_title=schema['title'],
                                          text=schema['text'], authors=[author])
+        # auto-follow node
         create_vote(author, [structure])
+        # append node
         parent_slot.append_child(structure)
         arg = origin.add_derivate(structure, arg_type=arg_type, title=arg_title,
                             text=arg_text, authors=[author])
 
-        # auto-follows
+        # auto-follow argument
         create_vote(author, [arg])
+        # data for microblogging message
+        new_path_couples.append((get_good_path_for_structure_node(origin, parent_slot),
+                                 get_good_path_for_structure_node(structure, parent_slot)))
 
     for child in schema['children']:
         if clone_found:
@@ -310,11 +316,12 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, author,
 
         if best[0] > 0:
             sub_origin = Node.objects.get(id=best[1]['id'])
-            create_derivate_from_structure_node_schema(
+            _, sub_path_couples = create_derivate_from_structure_node_schema(
                 child, child_slot, author, sub_origin, best[1], arg_type,
                 arg_title, arg_text)
+            new_path_couples += sub_path_couples
         else:
             create_structure_from_structure_node_schema(child, child_slot,
                                                         author, [])
 
-    return structure
+    return structure, new_path_couples

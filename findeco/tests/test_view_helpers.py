@@ -483,20 +483,25 @@ class StoreDerivateTest(TestCase):
         create_vote(self.mustermann, [self.text1])
 
     def test_store_derivate(self):
-        self.assertEqual(
-            store_derivate("Flopp.1", "= Avast =\nAgainst it!", "con",
+        path, couples = store_derivate("Flopp.1", "= Avast =\nAgainst it!", "con",
                            "= Bla =\nText\n== Blubb ==\nText 2",
-                           self.mustermann), "Flopp.2")
+                           self.mustermann)
+        self.assertEqual(path, "Flopp.2")
+        self.assertSequenceEqual(couples, [("Flopp.1", "Flopp.2")])
         self.assertEqual(self.text1.derivates.count(), 1)
         self.assertEqual(self.text1.derivates.all()[0].title, "Bla")
         self.assertEqual(self.text1.arguments.all()[0].title, "Avast")
         self.assertEqual(self.text1.derivates.all()[0].votes.count(), 1)
 
     def test_auto_follows(self):
-        self.assertEqual(
-            store_derivate("Flopp.1", "= Avast =\nAgainst it!", "con",
+        path, couples = store_derivate("Flopp.1", "= Avast =\nAgainst it!", "con",
                            "= Bla =\nText\n== Blubb ==\nText 2",
-                           self.mustermann), "Flopp.2")
+                           self.mustermann)
+        self.assertEqual(path, "Flopp.2")
+        self.assertSequenceEqual(couples, [("Flopp.1", "Flopp.2")])
+        print(list(Node.objects.get(title="Bla").votes.all()))
+        print(len(Node.objects.get(title="Bla").votes.all()))
+        print(Node.objects.get(title="Bla").votes.count())
         self.assertEqual(Node.objects.filter(title="Bla").count(), 1)
         self.assertEqual(Node.objects.get(title="Bla").votes.count(), 1)
         self.assertEqual(self.text1.arguments.count(), 1)

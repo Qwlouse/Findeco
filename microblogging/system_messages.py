@@ -55,6 +55,13 @@ def post_new_derivate_for_node_message(user, original_path, derivate_path):
     return create_post(text, user, do_escape=False)
 
 
+def post_new_derivate_for_node_message_list(user, path_couples):
+    posts = []
+    for old_path, new_path in path_couples:
+        posts.append(post_new_derivate_for_node_message(user, old_path, new_path))
+    return posts
+
+
 def post_new_argument_for_node_message(user, path, arg_type, arg_path):
     argument = {'c': "Gegenargument",
                 'con': "Gegenargment",
