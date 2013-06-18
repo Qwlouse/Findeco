@@ -315,11 +315,11 @@ def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
 
     score_tree = build_score_tree(node, structure_schema)
 
-    new_node = backend.create_derivate_from_structure_node_schema(
+    new_node, path_couples = backend.create_derivate_from_structure_node_schema(
         structure_schema, slot, author,  node, score_tree, arg_type, arg_title,
         arg_text)
 
-    return get_good_path_for_structure_node(new_node, slot, slot_path)
+    return get_good_path_for_structure_node(new_node, slot, slot_path), path_couples
 
 
 def fork_node_and_add_slot(path, user, wikiText):

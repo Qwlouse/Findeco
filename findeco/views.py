@@ -46,6 +46,7 @@ from .view_helpers import *
 import microblogging
 from microblogging.system_messages import post_node_was_flagged_message
 from microblogging.system_messages import post_new_derivate_for_node_message
+from microblogging.system_messages import post_new_derivate_for_node_message_list
 from microblogging.system_messages import post_new_argument_for_node_message
 from microblogging.system_messages import post_node_was_unflagged_message
 from models import UserProfile, Activation, PasswordRecovery
@@ -243,9 +244,9 @@ def store_text(request, path):
             arg_text = p['wikiText']
             arg_type = p['argumentType']
             derivate_wiki_text = p['wikiTextAlternative']
-            new_path = store_derivate(path, arg_text, arg_type, derivate_wiki_text, user)
+            new_path, path_couples = store_derivate(path, arg_text, arg_type, derivate_wiki_text, user)
             # microblog alert
-            post_new_derivate_for_node_message(user, path, new_path)
+            post_new_derivate_for_node_message_list(user, path_couples)
         else:
             raise EmptyText
 
