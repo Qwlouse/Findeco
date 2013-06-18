@@ -27,6 +27,7 @@ from django.test import TestCase
 from libs.selexe.selexe_runner import SelexeRunner
 from findeco.project_path import project_path
 
+
 # Example how to use selenium testrunner to run a testcase
 class SelTest(TestCase):
     def setUp(self):
