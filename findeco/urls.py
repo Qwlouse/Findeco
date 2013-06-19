@@ -28,7 +28,7 @@ from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from findeco.api_validation import USERNAME
-
+from findeco.feeds import RssFeed, AtomFeed
 from findeco.paths import PATH, RESTRICTED_PATH, ID
 
 admin.autodiscover()
@@ -43,6 +43,8 @@ SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)(_(user|content
 urlpatterns = patterns(
     '',
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
+    url(r'^feeds/rss/$', RssSiteNewsFeed()),
+    url(r'^feeds/atom/$', AtomSiteNewsFeed()),
 
     url(r'^\.json_loadUserSettings/?$',
         'findeco.views.load_user_settings',
