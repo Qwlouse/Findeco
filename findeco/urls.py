@@ -43,8 +43,8 @@ SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)(_(user|content
 urlpatterns = patterns(
     '',
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
-    url(r'^feeds/rss/$', RssSiteNewsFeed()),
-    url(r'^feeds/atom/$', AtomSiteNewsFeed()),
+    url(r'^feeds/rss/$', RssFeed()),
+    url(r'^feeds/atom/$', AtomFeed()),
 
     url(r'^\.json_loadUserSettings/?$',
         'findeco.views.load_user_settings',
