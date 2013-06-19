@@ -1,5 +1,4 @@
 from django.contrib.syndication.views import Feed
-from django.contrib.auth.models import User
 from django.utils.feedgenerator import Atom1Feed
 from microblogging.models import Post
 class RssFeed(Feed):
