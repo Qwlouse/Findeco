@@ -175,7 +175,9 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
     if ($scope.settings.type == 'derivate') {
         var paragraphs = [];
         var wikiText = "";
+        $scope.blockButton=true;
         Backend.loadText(paragraphs, Navigator.nodePath).success(function () {
+        	$scope.blockButton=false;
             for (var i = 0; i < paragraphs.length; i++) {
                 var tmpText = paragraphs[i]['wikiText'];
                 tmpText = tmpText.replace(/={2}[ ]\[{2}.*\|/,"= ");
