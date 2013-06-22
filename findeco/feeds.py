@@ -8,11 +8,15 @@ class RssFeed(Feed):
 
     
     def item_title(self, item):
+        return item.text
+    def item_author_name(self, item):
+        return item.author
+
+    def item_link(self, item):
         
         return item.text
-    def item_link(self, item):
-        return item.text
-      
+    def item_date(self, item):
+        return item.date
     def items(self):
         feed = Post.objects.order_by('-time')
         return feed
