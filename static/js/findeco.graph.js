@@ -22,6 +22,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
+var minHeight = 150;
+
 /////////////////////// Helpers ////////////////////////////////////////////////
 /**
  * Helper function that calculates the x value of an endpoint of a line such
@@ -78,7 +80,7 @@ function endy(source, target, r) {
 findecoApp.directive('findecoGraph', function( ) {
     // Parameters
     var svg_width = 580,
-        svg_height = 300;
+        svg_height = minHeight;
     var node_radius = 20;
 
     // colors are like this [active.newFollow, active.follow, active.unfollow,
@@ -254,7 +256,7 @@ findecoApp.directive('findecoGraph', function( ) {
                         }
                         return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')';
                     });
-                    if (svg_height > 300) {
+                    if (svg_height > minHeight) {
                         svg_height_new -= 1;
 
                     }

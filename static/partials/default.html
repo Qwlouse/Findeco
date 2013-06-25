@@ -19,8 +19,6 @@
             <div findeco-graph data="graphData" path="nav.nodePath" class="graph"></div>
         </div>
 
-        <div class="tipp">Text des ausgewählten Vorschlags:</div>
-
         <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
         <div follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode" width="21" height="21"></div>
         <h1 >{{ nodeInfo.fullTitle }}</h1>
