@@ -63,7 +63,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 30pt;
+    font-size: 24pt;
 }
 
 #leftColumn h1, #rightColumn h1 {
@@ -72,22 +72,23 @@ h1 {
 
 h2 {
     margin-top: 0.5em;
-    font-size: 22pt;
+    font-size: 18pt;
 }
 
 h3 {
     margin-top: 0.4em;
-    font-size: 18pt;
+    font-size: 14pt;
 }
 
 h4 {
     margin-top: 0.3em;
-    font-size: 16pt;
+    font-size: 12pt;
 }
 
 h5 {
     margin-top: 0.2em;
-    font-size: 14pt;
+    font-size: 10pt;
+    font-style: italic;
 }
 
 /* paragraphs */
