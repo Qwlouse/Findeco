@@ -15,9 +15,9 @@
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="expand.svg"
-   inkscape:export-filename="/home/greff/Programming/Findeco/static/images/collapse.png"
-   inkscape:export-xdpi="6.8600001"
-   inkscape:export-ydpi="6.8600001">
+   inkscape:export-filename="/home/greff/Programming/Findeco/static/images/expand.png"
+   inkscape:export-xdpi="5.4299998"
+   inkscape:export-ydpi="5.4299998">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="64.733324"
+     inkscape:cx="22.590467"
      inkscape:cy="125.34332"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
@@ -59,7 +59,7 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-287.43045,-241.6479)"
-     style="display:none">
+     style="display:inline">
     <path
        sodipodi:type="star"
        style="fill:#e07b01;fill-opacity:1;stroke:none"
@@ -112,7 +112,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="collapse"
-     style="display:inline"
+     style="display:none"
      transform="translate(-1.4285586,2.7180193)">
     <path
        inkscape:transform-center-x="-2.2547119e-05"

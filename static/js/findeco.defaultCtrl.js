@@ -57,9 +57,9 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     $scope.updateNode = function () {
         Backend.loadNode($scope.nodeInfo, $scope.nav.argumentPath).success(function (d) {
             $scope.allExpanded = true;
-
-            for (var i in $scope.nodeInfo.indexList) {
-                var indexNode = $scope.nodeInfo.indexList[i];
+            $scope.sections = $scope.nodeInfo.indexList;
+            for (var i in $scope.sections) {
+                var indexNode = $scope.sections[i];
                 $scope.allExpanded = false;
                 indexNode.paragraphs = [];
                 indexNode.path = $scope.nav.getPathForNode(indexNode.shortTitle, indexNode.index);
@@ -72,10 +72,17 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     };
 
     $scope.expandAll = function () {
-        var sections = $scope.nodeInfo.indexList;
-        for (var i = 0; i < sections.length; ++i) {
-            $scope.expandSection(sections[i]);
+        for (var i = 0; i < $scope.sections.length; ++i) {
+            $scope.expandSection($scope.sections[i]);
         }
+        $scope.allExpanded = true;
+    };
+
+    $scope.collapseAll = function () {
+        for (var i = 0; i < $scope.sections.length; ++i) {
+            $scope.collapseSection($scope.sections[i]);
+        }
+        $scope.allExpanded = false;
     };
 
     $scope.expandSection = function (section) {
@@ -89,11 +96,17 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
         } else {
             section.isExpanded = true;
         }
+        $scope.allExpanded = true;
+
+        for (var i = 0; i < $scope.sections.length; ++i) {
+            $scope.allExpanded &= $scope.sections[i].isExpanded
+        }
 
     };
 
     $scope.collapseSection = function (section) {
         section.isExpanded = false;
+        $scope.allExpanded = false;
     };
 
     $scope.initialize = function () {
@@ -104,14 +117,8 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
        
     };
     $scope.isLoading = function (){
-    	
-    	if   (!($scope.isLoadingNode)&&!($scope.isLoadingGraph )){
-    	    return false;
-    	}else{
-    		return true;
-    	}
-    	
-    }
+    	return $scope.isLoadingNode || $scope.isLoadingGraph;
+    };
     $scope.initialize();
 }
 
