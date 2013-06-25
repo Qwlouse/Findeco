@@ -103,6 +103,7 @@ class Node(models.Model):
             for author in argument.text.authors.all():
                 copy_argument_text_obj.authors.add(author)
             copy_argument_text_obj.save()
+            argument.add_derivate(copy_argument)
         derivate.update_favorite_for_all_parents()
         if arg_type or title or text or len(authors) > 0:
             arg_type = Argument.short_arg_type(arg_type)
