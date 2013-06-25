@@ -25,11 +25,8 @@
  /* Rootline */
 #navigationBar {
     position: relative;
-    height: 35px;
-    background: linear-gradient(top, #333333 0%, #212121 100%);
-    background: -moz-linear-gradient(top, #333333 0%, #212121 100%);
-    background: -webkit-linear-gradient(top, #333333 0%, #212121 100%);
-
+    height: 28px;
+    background: #333333;
 }
 
 #navigationBar a {
@@ -45,6 +42,7 @@
 #navigationBar img {
     display: inline;
     margin-left: 5px; /*optical margin to make rootline appear lined up*/
+    height: 14px;
 }
 #navigationBar ul{
     padding: 0;
@@ -54,7 +52,7 @@
 }
 
 #navigationBar ul li {
-    padding-top: 5px;
+    padding-top: 4px;
     display: inline-block;
     font-size: 12pt;
 }
