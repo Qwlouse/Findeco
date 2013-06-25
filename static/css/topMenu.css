@@ -24,7 +24,7 @@
 
 /* Header with logo and main navigation */
 #header {
-    height: 90px;
+    height: 60px;
     width: 100%;
     background: linear-gradient(top, #414141 0%, #000000 100%);
     background: -moz-linear-gradient(top, #414141 0%, #000000 100%);
@@ -33,16 +33,16 @@
 
 #headerContainer {
     background: url("../images/logo.png") no-repeat 0 5px;
-    background-size:300px;
+    background-size:200px;
     position: relative;
     height: 100%;
 }
 
 #headerContent {
     position: relative;
-    margin-left: 90px;
+    margin-left: 250px;
     display: block;
-    width: 1110px;
+    width: 950px;
     height: 100%;
 }
 
