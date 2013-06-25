@@ -9,7 +9,7 @@
         <div ng-show="nav.type!='arg'" >
             <div class="tipp">
                 <form>
-                <span ng-show="graphData.length > 1">Es gibt zu diesem Thema {{ graphData.length }} konkurrierende <strong>Vorschläge</strong>.</span>
+                <span ng-show="graphData.length > 1">Es gibt zu diesem Thema {{ graphData.length }} konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschläge</a>.</span>
                 Es werden <select name="graph-filter" size="1" style="font-size: 100%; color: gray;">
                     <option disabled>nur relevante</option>
                     <option disabled>alle außer Spam</option>
@@ -26,7 +26,7 @@
         <p creole wiki-text="nodeInfo.wikiText"></p>
 
         <div ng-show="sections.length > 0 && nav.type!='arg' " class="tipp">
-            Dieser Vorschlag hat {{ nodeInfo.indexList.length }} Abschnitte.
+            Dieser <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschlag</a> hat {{ nodeInfo.indexList.length }} Abschnitte.
             Du kannst hier alle Abschnitte <a ng-hide="allExpanded" ng-click="expandAll()" style="cursor: pointer;">ausklappen.</a>
             <a ng-show="allExpanded" ng-click="collapseAll()" style="cursor: pointer;">einklappen.</a>
         </div>
