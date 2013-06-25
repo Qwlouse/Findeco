@@ -672,6 +672,11 @@
   	    "key": "_newsForAllNode_",
         "value": "News zu allen Vorschlägen",
         "description": ""
+    },
+    {
+  	    "key": "_WhatAreArgumentsTipp_",
+        "value": "In dieser Spalte werden alle Argumente zum Thema gesammelt. Wenn du zum Thema etwas beitragen möchtest, das nicht direkt den Text des Vorschlags verändert, ist hier die richtige Stelle. Argumenten kann man genau wie Vorschlägen folgen, was die Sortierung verändert.",
+        "description": ""
     }
     
     
