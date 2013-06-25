@@ -1,8 +1,10 @@
 <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl"
      style="position: relative;">
-    <div class="tipp">Microblogging zum Thema:</div>
+    <div ng-show="microbloggingList.length > 0 " class="tipp">Microblogging zum Thema:</div>
+    
+
     <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
-    <ul class="microblogList">
+    <ul class="microblogList" >
         <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0;">
             <form ng-submit="submit()">
                 <textarea class="microblogInput" type="text" placeholder="{{'_microblogPlaceholder_'|i18n}}"
@@ -26,4 +28,7 @@
     </div>
    	<div ng-show="isLoading()" class="deactivateSpinner">
     </div>
+    <div ng-show="!user.isLoggedIn && microbloggingList.length < 5 "  ><h3 class="argumentHeading" >Mitmachen?</h3></div>
+    <div ng-show="!user.isLoggedIn && microbloggingList.length < 5" class="tipp" style="text-align: center">Melde dich an und du kannst die Themen bearbeiten, Argumente einbringen oder auch zu den bestehenden Vorschlägen Microbloggen. <br>  <a class="link" href="/#/register/"
+   >Anmelden</a>  </div>
 </div>
