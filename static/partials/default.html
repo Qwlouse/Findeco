@@ -25,8 +25,10 @@
 
         <p creole wiki-text="nodeInfo.wikiText"></p>
 
-        <div ng-show="!allExpanded &&  nav.type!='arg' " class="btn btn-primary" ng-click="expandAll()"
-             data-i18n="_expandAllSections_"></div>
+        <div ng-show="!allExpanded &&  nav.type!='arg' " class="tipp">
+            Dieser Vorschlag hat {{ nodeInfo.indexList.length }} Abschnitte.
+            Du kannst <a ng-click="expandAll()" style="cursor: pointer;">hier alle Abschnitte Ausklappen</a>.
+        </div>
         <div ng-repeat="section in nodeInfo.indexList">
            
             <a ng-show="!section.isExpanded" ng-hide="nav.type=='root'" ng-click="expandSection(section)"
