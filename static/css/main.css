@@ -251,3 +251,8 @@ body:before {
 	background-image:url(../images/spinner.png);
 	border-radius: 15px 15px 15px 15px;
 }
+
+.tipp {
+    color: gray;
+    font-size: 75%;
+}
