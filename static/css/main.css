@@ -257,3 +257,8 @@ body:before {
     color: gray;
     font-size: 75%;
 }
+
+.tipp a.tippLink {
+    color: gray;
+    text-decoration: underline;
+}
