@@ -175,7 +175,7 @@ body:before {
 /*========================= Main Container Columns ===========================*/
 #contentContainer {
     min-height: 100px;
-    margin-top: 65px;
+    margin-top: 30px;
     font-size: 10pt;
     color: rgb(51, 51, 51);
     /*font-family: sans-serif;*/
