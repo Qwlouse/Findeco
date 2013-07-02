@@ -26,6 +26,7 @@
 ################################################################################
 """
 Pathparser 
+
 Paths are of the form:
   PATH = (NODE + '/')* + [SUFFIX] + ['/']
   SHORT_TITLE = ALPHA + (ALPHANUM | '_' | '-'){0:19}
