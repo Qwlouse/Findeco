@@ -69,10 +69,10 @@
                 <div id="headerContainer" class="centeringContainer">
                     <div id="headerContent" ng-controller="FindecoMenuCtrl">
                         <ul>
-                            <li class="{{getActiveClass('')}} {{getActiveClass('start')}}"><a href="/#/start" data-i18n="_start_">Start</a></li>
-                            <li class="{{getActiveClass('news')}}" ng-show="user.isLoggedIn"><a href="/#/news" data-i18n="_news_">News</a></li>
-                            <li class="{{getActiveClass('microblogging')}}" ng-show="user.isLoggedIn"><a href="/#/microblogging" data-i18n="_microbloggingNews_">Microblogging</a></li>
-                            <li class="{{isContentActive()}}"><a href="/#/index" data-i18n="_content_">Content</a></li>
+                            <li class="{{getActiveClass('start')}}"><a href="/start" data-i18n="_start_">Start</a></li>
+                            <li class="{{getActiveClass('news')}}" ng-show="user.isLoggedIn"><a href="/news" data-i18n="_news_">News</a></li>
+                            <li class="{{getActiveClass('microblogging')}}" ng-show="user.isLoggedIn"><a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a></li>
+                            <li class="{{getActiveClass('')}}"><a href="/index" data-i18n="_content_">Content</a></li>
                             <li class="{{getActiveClass('search')}}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
@@ -85,17 +85,17 @@
                         </ul>
                         <ul style="position: absolute; right: 0;">
                             <li  class="{{getActiveClass('profile')}}" ng-show="user.isLoggedIn">
-                                <a ng-href="/#/profile">{{user.displayName}}</a>
+                                <a ng-href="/profile">{{user.displayName}}</a>
                             </li>
                             <li ng-show="user.isLoggedIn">
                                 <a ng-click="logout()" style="cursor:pointer; padding: 0;">
-                                    <img src="static/images/logout.png"
-                                         onmouseover="this.src='static/images/logout_hover.png';"
-                                         onmouseout="this.src='static/images/logout.png';"
+                                    <img src="/static/images/logout.png"
+                                         onmouseover="this.src='/static/images/logout_hover.png';"
+                                         onmouseout="this.src='/static/images/logout.png';"
                                          alt="Logout" height="18"
                                          style="position: relative; top: 3px; margin: 0 0 0 0;" /></a>
                             </li>
-                            <li ng-show="!user.isLoggedIn" style="float:right"><a href="#/login" data-i18n="_accountLogin_"></a></li>
+                            <li ng-show="!user.isLoggedIn" style="float:right"><a href="/login" data-i18n="_accountLogin_"></a></li>
                         </ul>
                     </div>
                 </div>
@@ -105,16 +105,16 @@
                 <div class="centeringContainer">
 
                     <ul>
-                        <li><a href="/#/index"><img ng-show="navigation.entries"
-                                               src="static/images/home.png"
+                        <li><a href="/index"><img ng-show="navigation.entries"
+                                               src="/static/images/home.png"
                                                alt="Home"
-                                               onmouseover="this.src='static/images/home_hover.png';"
-                                               onmouseout="this.src='static/images/home.png';"
+                                               onmouseover="this.src='/static/images/home_hover.png';"
+                                               onmouseout="this.src='/static/images/home.png';"
                                 /><img
-                                ng-show="navigation.entries.length == 0" src="static/images/home_hover.png"
+                                ng-show="navigation.entries.length == 0" src="/static/images/home_hover.png"
                                 alt="Home"/></a></li>
 
-                        <li ng-repeat="nav in navigation.entries"><a ng-href="/#{{ nav.path }}">{{ nav.name }}</a></li>
+                        <li ng-repeat="nav in navigation.entries"><a href="{{ nav.path }}">{{ nav.name }}</a></li>
                     </ul>
                 </div>
             </div>

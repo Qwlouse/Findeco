@@ -6,11 +6,11 @@
         <li ng-repeat="argument in argumentList | filter: {argType:'pro'}">
                 <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
                       style="float:none; top: 0;"></span>
-            <a href="/#/{{ argument.path }}">{{argument.fullTitle}}</a>
+            <a href="/{{ argument.path }}">{{argument.fullTitle}}</a>
         </li>
   
         <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/#/create/argumentPro/{{ nav.nodePath }}"
+            <a class="btn btn-primary" href="/create/argumentPro/{{ nav.nodePath }}"
                ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNewPro_"></a>
         </li>
     </ul>
@@ -20,11 +20,11 @@
         <li ng-repeat="argument in argumentList | filter: {argType:'neut'}">
                 <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
                       style="float:none; top: 0;"></span>
-            <a href="/#/{{ argument.path }}">{{argument.fullTitle}}</a>
+            <a href="/{{ argument.path }}">{{argument.fullTitle}}</a>
         </li>
         
         <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/#/create/argumentNeut/{{ nav.nodePath }}"
+            <a class="btn btn-primary" href="/create/argumentNeut/{{ nav.nodePath }}"
                ng-click="tmp.argumentType = 'Neutral'" data-i18n="_argumentsNewNeut_"></a>
         </li>
     </ul>
@@ -36,12 +36,12 @@
                       style="float:none; top: 0;"></span>
                       
             
-            <a href="/#/{{ argument.path }}">{{argument.fullTitle}}</a>
+            <a href="/{{ argument.path }}">{{argument.fullTitle}}</a>
         </li>
    
         
         <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/#/create/argumentCon/{{ nav.nodePath }}"
+            <a class="btn btn-primary" href="/create/argumentCon/{{ nav.nodePath }}"
                ng-click="tmp.argumentType = 'Contra'" data-i18n="_argumentsNewCon_"></a>
              
         </li>

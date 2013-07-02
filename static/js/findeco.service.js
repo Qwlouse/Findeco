@@ -65,6 +65,10 @@ angular.module('FindecoServices', [])
 
         $httpProvider.responseInterceptors.push('errorHandler');
     })
+    .config(function ($locationProvider) {
+        $locationProvider.html5Mode(true);
+        $locationProvider.hashPrefix('!');
+    })
     .factory('errorHandler', function ($q, Message) {
         return function (promise) {
             return promise.then(

@@ -2,7 +2,7 @@
  <div ng-show="!user.isLoggedIn" id="disclaimerBox" class="contentBox" >
   Die Texte sind Aussagen von einzelnen Benutzern im <a href="http://www.piratenpartei-nrw.de/2013/06/19/die-piraten-sind-im-neuland-zuhause/">#Neuland</a> und sind als Beiträge einer Fortlaufenden Diskussion keine offizielle Aussage der <a href="http://piraten-rlp.de/">Piratenpartei Rheinland-Pfalz.</a>
  </div>
-    <div ng-include src="'static/partials/argument.html'"  ></div>
+    <div ng-include src="'/static/partials/argument.html'"  ></div>
 
 
     <div id="centerColumn" class="contentBox">
@@ -35,20 +35,20 @@
             <a ng-show="!section.isExpanded" ng-hide="nav.type=='root'" ng-click="expandSection(section)"
                style="float:left;position: relative; top: 8px; margin-right: 5px;"
                title="{{'_expandSection_'|i18n}}">
-                <img src="static/images/expand.png"
-                     onmouseover="this.src='static/images/expand_hover.png';"
-                     onmouseout="this.src='static/images/expand.png';">
+                <img src="/static/images/expand.png"
+                     onmouseover="this.src='/static/images/expand_hover.png';"
+                     onmouseout="this.src='/static/images/expand.png';">
             </a>
             <a ng-show="section.isExpanded" ng-click="collapseSection(section)"
                style="float:left;position: relative; top: 8px; margin-right: 5px;"
                title="{{'_collapseSection_'|i18n}}">
-                <img src="static/images/collapse.png"
-                     onmouseover="this.src='static/images/collapse_hover.png';"
-                     onmouseout="this.src='static/images/collapse.png';">
+                <img src="/static/images/collapse.png"
+                     onmouseover="this.src='/static/images/collapse_hover.png';"
+                     onmouseout="this.src='/static/images/collapse.png';">
             </a>
 
             <h2 ng-show="!section.isExpanded">
-                <a href="/#/{{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{section.fullTitle}}</a>
+                <a href="/{{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{section.fullTitle}}</a>
             </h2>
 
             <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
