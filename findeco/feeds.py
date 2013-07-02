@@ -2,7 +2,7 @@ from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 from microblogging.models import Post
 class RssFeed(Feed):
-    title = "Findeco-test"
+    title = "Findeco Test-Feed"
     link = "/rss/"
     description = "Inhalte des Findeco Systems"
 

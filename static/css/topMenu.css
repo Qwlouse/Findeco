@@ -29,6 +29,8 @@
     background: linear-gradient(top, #414141 0%, #000000 100%);
     background: -moz-linear-gradient(top, #414141 0%, #000000 100%);
     background: -webkit-linear-gradient(top, #414141 0%, #000000 100%);
+	background: -ms-linear-gradient(top, #414141 0%, #000 100%);
+	background-color: #101010;
 }
 
 #headerContainer {
@@ -100,13 +102,19 @@ div.searchBox.searchActive {
     box-shadow: 0 0 0;
 }
 
+.searchBox input {
+	float:left;
+}
+
 .searchButton {
+	float:left;
     border: 0;
     height: 18px;
     width: 18px;
     background: url("../images/search.png");
     position: relative;
-    top: -2px;
+	display: inline;
+    top: 2px;
 }
 
 .searchButton:hover {
