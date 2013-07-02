@@ -215,7 +215,7 @@ angular.module('FindecoServices', [])
 
             search: function (searchResults, search_string) {
                 var searchFields = "user_content_microblogging";
-                var promise = $http.get('.json_search/' + searchFields + '/' + search_string);
+                var promise = $http.get('/.json_search/' + searchFields + '/' + search_string);
 
                 promise.success(function (d) {
                     angular.copy(d.searchResponse, searchResults);
@@ -309,7 +309,7 @@ angular.module('FindecoServices', [])
         };
 
         userInfo.loadSettings = function () {
-            var promise = $http.get('.json_loadUserSettings/');
+            var promise = $http.get('/.json_loadUserSettings/');
             promise.success(function (d) {
                 data = d.loadUserSettingsResponse;
                 userInfo.resetChanges();
@@ -339,7 +339,7 @@ angular.module('FindecoServices', [])
         };
 
         userInfo.storeSettings = function () {
-            return $http.post('.json_storeSettings/', {displayName: userInfo.displayName,
+            return $http.post('/.json_storeSettings/', {displayName: userInfo.displayName,
                 description: userInfo.description, email: userInfo.email});
         };
 
