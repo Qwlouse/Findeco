@@ -69,10 +69,10 @@
                 <div id="headerContainer" class="centeringContainer">
                     <div id="headerContent" ng-controller="FindecoMenuCtrl">
                         <ul>
-                            <li class="{{getActiveClass('start')}}"><a href="/#/start" data-i18n="_start_">Start</a></li>
+                            <li class="{{getActiveClass('')}} {{getActiveClass('start')}}"><a href="/#/start" data-i18n="_start_">Start</a></li>
                             <li class="{{getActiveClass('news')}}" ng-show="user.isLoggedIn"><a href="/#/news" data-i18n="_news_">News</a></li>
                             <li class="{{getActiveClass('microblogging')}}" ng-show="user.isLoggedIn"><a href="/#/microblogging" data-i18n="_microbloggingNews_">Microblogging</a></li>
-                            <li class="{{getActiveClass('')}}"><a href="/#/" data-i18n="_content_">Content</a></li>
+                            <li class="{{isContentActive()}}"><a href="/#/index" data-i18n="_content_">Content</a></li>
                             <li class="{{getActiveClass('search')}}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
@@ -105,7 +105,7 @@
                 <div class="centeringContainer">
 
                     <ul>
-                        <li><a href="/#/"><img ng-show="navigation.entries"
+                        <li><a href="/#/index"><img ng-show="navigation.entries"
                                                src="static/images/home.png"
                                                alt="Home"
                                                onmouseover="this.src='static/images/home_hover.png';"

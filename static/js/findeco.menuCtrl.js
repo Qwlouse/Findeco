@@ -34,10 +34,20 @@ function FindecoMenuCtrl($scope, User, Navigator) {
     };
 
     $scope.getActiveClass = function (pathPrefix) {
-        if (pathPrefix.length == 0 && Navigator.prefix == 0) {
+        if (pathPrefix.length == 0 && Navigator.prefix == 0 && Navigator.nodePath == 0) {
             return "activeTab";
         } else if (pathPrefix.length > 0 &&
             Navigator.prefix == pathPrefix) {
+            return "activeTab";
+        } else {
+            return "";
+        }
+    };
+
+    $scope.isContentActive = function () {
+        if (Navigator.prefix.length == 0 && Navigator.nodePath.length > 0) {
+            return "activeTab";
+        } else if (Navigator.prefix.substr(0, 5) == 'index') {
             return "activeTab";
         } else {
             return "";

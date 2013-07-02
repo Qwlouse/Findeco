@@ -30,7 +30,6 @@ var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', '
             when('/create/:type*param', {templateUrl: 'static/partials/create.html', controller: FindecoCreateCtrl}).
             when('/about', {templateUrl: 'static/partials/about.html', controller: FindecoCustomContentCtrl}).
             when('/data_privacy', {templateUrl: 'static/partials/dataPrivacy.html', controller: FindecoCustomContentCtrl}).
-            when('/start', {templateUrl: 'static/partials/start.html'}).
             when('/imprint', {templateUrl: 'static/partials/imprint.html', controller: FindecoCustomContentCtrl}).
             when('/user*name', {templateUrl: 'static/partials/user.html', controller: FindecoUserInfoCtrl}).
             when('/login', {templateUrl: 'static/partials/userLogin.html', controller: FindecoUserCtrl}).
@@ -45,6 +44,10 @@ var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', '
             when('/news', {templateUrl: 'static/partials/news.html', controller: FindecoNewsCtrl}).
             when('/microblogging', {templateUrl: 'static/partials/microbloggingNews.html', controller: FindecoMicrobloggingNewsCtrl}).
             when('/search/*searchString', {templateUrl: 'static/partials/searchResults.html', controller: FindecoSearchCtrl}).
-            when('/', {templateUrl: 'static/partials/startDefault.html', controller: FindecoDefaultCtrl}).
+            when('/', {templateUrl: 'static/partials/start.html'}).
+            when('/start', {templateUrl: 'static/partials/start.html'}).
+            when('/index', {templateUrl: 'static/partials/startDefault.html', controller: FindecoDefaultCtrl}).
+            when('/index.htm', {templateUrl: 'static/partials/startDefault.html', controller: FindecoDefaultCtrl}).
+            when('/index.html', {templateUrl: 'static/partials/startDefault.html', controller: FindecoDefaultCtrl}).
             otherwise({templateUrl: 'static/partials/default.html', controller: FindecoDefaultCtrl});
     }]);
