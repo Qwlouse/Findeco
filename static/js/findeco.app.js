@@ -41,6 +41,10 @@ var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', '
             when('/recoverByUsername', {templateUrl: 'static/partials/userRecoverByUsername.html', controller: FindecoUserCtrl}).
             when('/terms_of_use', {templateUrl: 'static/partials/termsOfUse.html', controller: FindecoCustomContentCtrl}).
             when('/profile', {templateUrl: 'static/partials/profile.html', controller: FindecoUserCtrl}).
+            when('/profile/account', {templateUrl: 'static/partials/profile.html', controller: FindecoUserCtrl}).
+            when('/profile/password', {templateUrl: 'static/partials/profilePassword.html', controller: FindecoUserCtrl}).
+            when('/profile/mail', {templateUrl: 'static/partials/profileMailSettings.html', controller: FindecoUserCtrl}).
+            when('/profile/delete', {templateUrl: 'static/partials/profileDelete.html', controller: FindecoUserCtrl}).
             when('/news', {templateUrl: 'static/partials/news.html', controller: FindecoNewsCtrl}).
             when('/microblogging', {templateUrl: 'static/partials/microbloggingNews.html', controller: FindecoMicrobloggingNewsCtrl}).
             when('/search/*searchString', {templateUrl: 'static/partials/searchResults.html', controller: FindecoSearchCtrl}).

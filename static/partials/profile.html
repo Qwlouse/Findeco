@@ -1,37 +1,28 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
-    <div class="leftWideColumn contentBox" ng-show="user.isLoggedIn">
+	<div class="contentBox profileLeftWideColumn" ng-show="user.isLoggedIn">
+	<div ng-include src="'static/partials/profileMenu.html'"  ></div>
+</ngInclude>
+  
+    	
+    	
+    
+    </div>
+    <div class="profileCenterWideColumn contentBox" ng-show="user.isLoggedIn">
         <h1> {{ user.displayName }} </h1>
         <h2 data-i18n="_description_">Beschreibung</h2>
         <form ng-submit="storeUserSettings()">
             <textarea ng-model="user.description" placeholder="Beschreibung" style="width: 100%; resize: vertical;" rows="5">  </textarea>
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
         </form>
-        <h2 data-i18n="_settings_">Einstellungen</h2>
-        <h3 data-i18n="_email_">E-Mail</h3>
-        <p><span data-i18n="_currentAdress_">aktuelle Adresse</span>: {{ user.email }}</p>
-        <p data-i18n="_changeEMailDescription_"></p>
-        <form ng-submit="storeUserSettings()">
-            <input type="text" ng-model="user.email" /><br />
-            <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
-        </form>
-        <h3 data-i18n="_username_">Username</h3>
+      
+       
+        <h2 data-i18n="_username_">Username</h2>
         <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ user.displayName }}</p>
         <form ng-submit="storeUserSettings()">
             <input type="text" ng-model="user.displayName" /><br />
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
         </form>
-        <h3 data-i18n="_changePassword_">change Password</h3>
-        <p data-i18n="_changePasswordDescription_"></p>
-        <form ng-submit="changePassword()">
-            <input type="password" ng-model="password" /><br />
-            <input type="password" ng-model="password2" /><br />
-            <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
-        </form>
-        <h3 data-i18n="_deleteAccount_">delete Account</h3>
-        <p data-i18n="_deleteAccountExplanation_"></p>
-        <form ng-submit="deleteAccount()">
-            <input class="btn btn-primary" type="submit" value="{{'_deleteAccount_'|i18n}}">
-        </form>
+ 
         <h2 data-i18n="_followees_" style="padding-bottom: 0;">Ich folge:</h2>
         <ul>
             <li ng-repeat="followee in user.followees">
@@ -40,11 +31,11 @@
             </li>
         </ul>
     </div>
-    <div class="leftWideColumn contentBox" ng-hide="user.isLoggedIn">
+    <div class="profileCenterWideColumn contentBox" ng-hide="user.isLoggedIn">
         <h1>Du bist nicht angemeldet</h1>
     </div>
-    <div class="contentBox rightWideColumn" ng-show="user.isLoggedIn">
-        <h2 style="color: gray; border-bottom: 1px dotted gray;" data-i18n="_previewHeading_">Vorschau:</h2>
+    <div class="contentBox profileRightWideColumn" ng-show="user.isLoggedIn">
+        <h2 style="color: gray; " data-i18n="_previewHeading_">Vorschau</h2>
         <h1>{{user.displayName}}</h1>
         <div>
             <h2 data-i18n="_description_">Description</h2>
