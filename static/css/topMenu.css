@@ -113,7 +113,6 @@ div.searchBox.searchActive {
     width: 18px;
     background: url("../images/search.png");
     position: relative;
-	display: inline;
     top: 2px;
 }
 

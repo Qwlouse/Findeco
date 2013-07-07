@@ -171,8 +171,6 @@
         "value": "Login",
         "description": ""
     },
-
-
     {
         "key": "_searchUserResults_",
         "value": "Benutzer",
@@ -683,7 +681,4 @@
         "value": "Abschnitt einklappen",
         "description": ""
     }
-    
-    
-
 ]
