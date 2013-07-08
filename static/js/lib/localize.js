@@ -126,7 +126,7 @@ angular.module('localization', [])
                 });
 
                 attrs.$observe('i18n', function (value) {
-                    i18nDirective.updateText(elm, attrs.i18n);
+                    i18nDirective.updateText(elm, value);
                 });
             }
         };
@@ -141,8 +141,10 @@ angular.module('localization', [])
     .directive('i18nAttr', ['localize', function (localize) {
         var i18NAttrDirective = {
             restrict: "EAC",
-            updateText:function(elm, token){
+            updateText:function(scope, elm, token){
                 var values = token.split('|');
+                var attrName = values[1];
+                var test23 = Modernizr.input.placeholder;
                 // construct the tag to insert into the element
                 var tag = localize.getLocalizedString(values[0]);
                 // update the element only if data was returned
@@ -153,18 +155,38 @@ angular.module('localization', [])
                             tag = tag.replace(target, values[index]);
                         }
                     }
+                    
                     // insert the text into the element
-                    elm.attr(values[1], tag);
+                    
+                    elm.attr(attrName, tag);
+                    
+                    if(attrName == 'placeholder' && !Modernizr.input.placeholder) {
+                        elm.val(tag);
+                        elm.addClass('placeholder');
+                        
+                        elm.bind('focus', function(){
+                            if( elm.val() === tag) {
+                                elm.val('');
+                                elm.removeClass('placeholder');
+                            }
+                        });
+                        elm.bind('blur', function(){
+                            if( elm.val() === '' || elm.val() === undefined ) {
+                                elm.val(tag);
+                                elm.addClass('placeholder');
+                            }
+                        });   
+                    }
                 }
             },
             link: function (scope, elm, attrs) {
                 scope.$on('localizeResourcesUpdates', function() {
-                    i18NAttrDirective.updateText(elm, attrs.i18nAttr);
+                    i18NAttrDirective.updateText(scope, elm, attrs.i18nAttr);
                 });
 
                 attrs.$observe('i18nAttr', function (value) {
                     i18NAttrDirective.updateText(elm, value);
-                });
+                }); 
             }
         };
 

@@ -1,4 +1,4 @@
-[
+﻿[
     {
         "key": "_pageTitle_",
         "value": "Findeco der Piraten-RLP",
