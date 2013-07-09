@@ -135,7 +135,7 @@ timeline should be done in the frontend due to performance reasons.
             startpoint = Q(id__gt=select_id)
         else: # older
             startpoint = Q(id__lt=select_id)
-        feed = named_user.mentioning_enties
+        feed = named_user.mentioning_entries
         feed = feed.filter(startpoint).order_by('time').distinct()
         feed = feed.prefetch_related('author', 'is_reference_to')[:20]
         return json_response({
