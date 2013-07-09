@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de" ng-app="Findeco">
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" lang="de" id="ng-app" xml:lang="de" ng-app="Findeco">
 
 <head>
     <!-- TODO: Add metadata -->
@@ -33,7 +33,9 @@
     <script type="text/javascript" src="/static/js/lib/codeholicsCreole.js"></script>
     <script type="text/javascript" src="/static/js/lib/moment.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/ui-bootstrap-tpls-0.2.0.min.js"></script>
-
+	<script type="text/javascript" src="/static/js/lib/modernizr.custom.js"></script>
+	<script type="text/javascript" src="/static/js/lib/localize.js"></script>
+	
     <!-- Javascript files -->
     <script type="text/javascript" src="/static/js/findeco.app.js"></script>
     <script type="text/javascript" src="/static/js/findeco.argumentCtrl.js"></script>
@@ -57,9 +59,8 @@
     <script type="text/javascript" src="/static/js/findeco.structureParser.js"></script>
     <script type="text/javascript" src="/static/js/findeco.userCtrl.js"></script>
     <script type="text/javascript" src="/static/js/findeco.userInfoCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/lib/localize.js"></script>
 
-    <title>{{'_pageTitle_'|i18n}}</title>
+    <title data-i18n="_pageTitle_"></title>
 </head>
 <body >
 <div id="wrap">
@@ -76,8 +77,7 @@
                             <li class="{{getActiveClass('search')}}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
-                                        <input id="searchInput" type="search" name="searchField" placeholder="{{ '_search_'|i18n }}"
-                                               autocomplete="on" ng-model="searchString"/>
+                                        <input id="searchInput" type="search" name="searchField" placeholder="" autocomplete="on" ng-model="searchString" data-i18n-attr="_search_|placeholder"/>
                                         <button class="searchButton" value=""></button>
                                     </form>
                                 </div>
@@ -124,7 +124,6 @@
 
         <div ng-controller="FindecoUserCtrl" ng-show="false"></div>
     </div>
-
     <div id="messageBox" ng-controller="FindecoMessageCtrl" ng-show="service.messageList.length > 0">
         <div alert ng-repeat="message in service.messageList" type="message.type" close="closeMessage($index)">
             {{message.msg}}
@@ -143,6 +142,5 @@
         </ul>
     </div>
 </div>
-
 </body>
 </html>
