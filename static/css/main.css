@@ -263,3 +263,8 @@ body:before {
     color: gray;
     text-decoration: underline;
 }
+
+.rss {
+    padding-top: 10px;
+    float: right;
+}
