@@ -142,47 +142,51 @@ angular.module('localization', [])
         var i18NAttrDirective = {
             restrict: "EAC",
             updateText:function(scope, elm, token){
-                var values = token.split('|');
-                var attrName = values[1];
-                var test23 = Modernizr.input.placeholder;
-                // construct the tag to insert into the element
-                var tag = localize.getLocalizedString(values[0]);
-                // update the element only if data was returned
-                if ((tag !== null) && (tag !== undefined) && (tag !== '')) {
-                    if (values.length > 2) {
-                        for (var index = 2; index < values.length; index++) {
-                            var target = '{' + (index - 2) + '}';
-                            tag = tag.replace(target, values[index]);
+                if(token != undefined)
+                {
+                    var values = token.split('|');
+                    var attrName = values[1];
+                    
+                    // construct the tag to insert into the element
+                    var tag = localize.getLocalizedString(values[0]);
+                    
+                    // update the element only if data was returned
+                    if ((tag !== null) && (tag !== undefined) && (tag !== '')) {
+                        if (values.length > 2) {
+                            for (var index = 2; index < values.length; index++) {
+                                var target = '{' + (index - 2) + '}';
+                                tag = tag.replace(target, values[index]);
+                            }
                         }
-                    }
-                    
-                    // update the text of the elements current attriubte 
-                    elm.attr(attrName, tag);
-                    
-                    // check for placeholder attribute that is not supported by older browsers
-                    // like ie9 and prio versions
-                    if(attrName == 'placeholder' && !Modernizr.input.placeholder) {
-                        // set inital value of the input field
-                        elm.val(tag);
-                        // add placeholder class
-                        elm.addClass('placeholder');
                         
-                        elm.bind('focus', function(){
-                            if( elm.val() === tag) {
-                                // field focused remove inital value
-                                elm.val('');
-                                // remove placeholder class
-                                elm.removeClass('placeholder');
-                            }
-                        });
-                        elm.bind('blur', function(){
-                            if( elm.val() === '' || elm.val() === undefined ) {
-                                // field is left empty so reset inital value
-                                elm.val(tag);
-                                // add placeholder class
-                                elm.addClass('placeholder');
-                            }
-                        });   
+                        // update the text of the elements current attriubte 
+                        elm.attr(attrName, tag);
+                        
+                        // check for placeholder attribute that is not supported by older browsers
+                        // like ie9 and prio versions
+                        if(attrName == 'placeholder' && !Modernizr.input.placeholder) {
+                            // set inital value of the input field
+                            elm.val(tag);
+                            // add placeholder class
+                            elm.addClass('placeholder');
+                            
+                            elm.bind('focus', function(){
+                                if( elm.val() === tag) {
+                                    // field focused remove inital value
+                                    elm.val('');
+                                    // remove placeholder class
+                                    elm.removeClass('placeholder');
+                                }
+                            });
+                            elm.bind('blur', function(){
+                                if( elm.val() === '' || elm.val() === undefined ) {
+                                    // field is left empty so reset inital value
+                                    elm.val(tag);
+                                    // add placeholder class
+                                    elm.addClass('placeholder');
+                                }
+                            });   
+                        }
                     }
                 }
             },
