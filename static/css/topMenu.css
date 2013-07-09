@@ -149,6 +149,7 @@ div.searchBox.searchActive {
 
 #headerContent ul li.activeTab {
     background: #333333;
+    border-radius: 6px 6px 0 0;
 }
 
 #headerContent ul li.activeTab a{

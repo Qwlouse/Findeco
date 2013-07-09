@@ -156,23 +156,30 @@ angular.module('localization', [])
                         }
                     }
                     
-                    // insert the text into the element
-                    
+                    // update the text of the elements current attriubte 
                     elm.attr(attrName, tag);
                     
+                    // check for placeholder attribute that is not supported by older browsers
+                    // like ie9 and prio versions
                     if(attrName == 'placeholder' && !Modernizr.input.placeholder) {
+                        // set inital value of the input field
                         elm.val(tag);
+                        // add placeholder class
                         elm.addClass('placeholder');
                         
                         elm.bind('focus', function(){
                             if( elm.val() === tag) {
+                                // field focused remove inital value
                                 elm.val('');
+                                // remove placeholder class
                                 elm.removeClass('placeholder');
                             }
                         });
                         elm.bind('blur', function(){
                             if( elm.val() === '' || elm.val() === undefined ) {
+                                // field is left empty so reset inital value
                                 elm.val(tag);
+                                // add placeholder class
                                 elm.addClass('placeholder');
                             }
                         });   
