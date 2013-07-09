@@ -32,6 +32,7 @@ function FindecoNewsCtrl($scope, Backend, User) {
 
     $scope.user = User;
     $scope.username = User.displayName;
+    $scope.rsskey = User.rsskey;
 
     function setAuthorForAllBlogs(list) {
         for (var i = 0; i < list.length; ++i ) {
