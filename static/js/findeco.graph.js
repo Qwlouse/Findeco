@@ -185,7 +185,11 @@ findecoApp.directive('findecoGraph', function( ) {
                 var node = svg.selectAll(".node")
                     .data(nodes)
                     .enter().append("g")
-                    .attr("class", "nodeGroup")
+                    .attr("class", function (d) {
+                        if (d.active) return "nodeGroup";
+                        else return "nodeGroup inactive";
+                    })
+//                    .attr("class", "nodeGroup")
                     //.attr("title", function (d) { return d.path; })
                     .call(force.drag)
                     .on("mouseover", function(d){

@@ -116,7 +116,7 @@ div #tooltip {
 
 }
 
-.nodeGroup:hover .diffButton{
+.nodeGroup.inactive:hover .diffButton{
     fill: #fff;
     visibility: visible;
 }
@@ -132,7 +132,7 @@ div #tooltip {
     visibility: hidden;
 }
 
-.nodeGroup:hover .diffButtonText {
+.nodeGroup.inactive:hover  .diffButtonText {
     visibility: visible;
 }
 
