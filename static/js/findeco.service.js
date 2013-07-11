@@ -235,6 +235,7 @@ angular.module('FindecoServices', [])
             displayName: "",
             description: "",
             email: "",
+            rsskey:"",
             followees: []
         };
 
@@ -277,6 +278,7 @@ angular.module('FindecoServices', [])
                 userInfo.isLoggedIn = true;
                 userInfo.displayName = data.userInfo.displayName;
                 userInfo.description = data.userInfo.description;
+                userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.email = data.userSettings.email;
                 userInfo.followees = data.userSettings.followees;
             });
@@ -314,11 +316,13 @@ angular.module('FindecoServices', [])
                 data = d.loadUserSettingsResponse;
                 userInfo.resetChanges();
                 userInfo.isLoggedIn = true;
+                userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.followees = data.userSettings.followees;
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
                 }
+                
             });
             return promise;
         };
@@ -396,7 +400,7 @@ angular.module('FindecoServices', [])
       
             
         };
-
+		
         tmp.catch = function (message) {
             this.catchList[message] = [];
             return this.catchList[message];

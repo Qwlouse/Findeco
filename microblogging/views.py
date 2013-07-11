@@ -31,6 +31,7 @@ from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
 from models import create_post, Post
 import node_storage as backend
+from django.contrib.auth.models import Permission, User
 from findeco.view_helpers import json_response
 from time import mktime
 
@@ -52,8 +53,8 @@ def convert_response_list(post_list):
 
 def convert_long_urls(request):
     """
-    This function removes the unnecessary part from urls which are copy&pasted from the url field of the browser.
-    """
+This function removes the unnecessary part from urls which are copy&pasted from the url field of the browser.
+"""
     hostname = request.META['HTTP_HOST']
     text = request.POST['microblogText']
     text = text.replace("https://" + hostname + "/#", "")
@@ -66,14 +67,14 @@ def convert_long_urls(request):
 def load_microblogging(request, path, select_id, microblogging_load_type):
     # TODO refactor and optimize this method
     node = assert_node_for_path(path)
-    if not select_id:  # Get latest posts
+    if not select_id: # Get latest posts
         posts = list(reversed(node.microblogging_references.order_by('-time').
                               prefetch_related('author', 'is_reference_to')[:20]))
     else:
         if microblogging_load_type == "newer":
             posts = list(node.microblogging_references.filter(id__gt=select_id).
                          order_by('time').prefetch_related('author', 'is_reference_to')[:20])
-        else:  # older
+        else: # older
             posts = list(reversed(node.microblogging_references.filter(id__lt=select_id).
                                   order_by('-time').prefetch_related('author', 'is_reference_to')[:20]))
     return json_response({
@@ -83,12 +84,12 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
 @ViewErrorHandling
 def load_timeline(request, name, select_id, microblogging_load_type):
     """
-    Use this function to get the timeline for the given user.
+Use this function to get the timeline for the given user.
 
-    Referenced posts will show up in the timeline as the originals do.
-    Hiding of the original posts for a tidy
-    timeline should be done in the frontend due to performance reasons.
-    """
+Referenced posts will show up in the timeline as the originals do.
+Hiding of the original posts for a tidy
+timeline should be done in the frontend due to performance reasons.
+"""
     named_user = assert_active_user(name)
 
     if named_user == request.user:
@@ -96,7 +97,7 @@ def load_timeline(request, name, select_id, microblogging_load_type):
     else:
         followed = Q(author=named_user)
     own = Q(author=named_user)
-    if not select_id:  # Get latest posts
+    if not select_id: # Get latest posts
         feed = Post.objects.filter(followed | own). \
                    order_by('-time').distinct().prefetch_related('author', 'is_reference_to')[:20]
         return json_response({
@@ -104,7 +105,7 @@ def load_timeline(request, name, select_id, microblogging_load_type):
     else:
         if microblogging_load_type == "newer":
             startpoint = Q(id__gt=select_id)
-        else:  # older
+        else: # older
             startpoint = Q(id__lt=select_id)
         feed = Post.objects.filter(followed | own)
         feed = feed.filter(startpoint).order_by('time').distinct()
@@ -116,15 +117,15 @@ def load_timeline(request, name, select_id, microblogging_load_type):
 @ViewErrorHandling
 def load_mentions(request, name, select_id, microblogging_load_type):
     """
-    Use this function to get the timeline of mentions of the given user.
+Use this function to get the timeline of mentions of the given user.
 
-    Referenced posts will show up in the timeline as the originals do.
-    Hiding of the original posts for a tidy
-    timeline should be done in the frontend due to performance reasons.
-    """
+Referenced posts will show up in the timeline as the originals do.
+Hiding of the original posts for a tidy
+timeline should be done in the frontend due to performance reasons.
+"""
     named_user = assert_active_user(name)
 
-    if not select_id:  # Get latest posts
+    if not select_id: # Get latest posts
         feed = named_user.mentioning_entries.order_by('-time').distinct()
         feed = feed.prefetch_related('author', 'is_reference_to')[:20]
         return json_response({
@@ -132,9 +133,9 @@ def load_mentions(request, name, select_id, microblogging_load_type):
     else:
         if microblogging_load_type == "newer":
             startpoint = Q(id__gt=select_id)
-        else:  # older
+        else: # older
             startpoint = Q(id__lt=select_id)
-        feed = named_user.mentioning_enties
+        feed = named_user.mentioning_entries
         feed = feed.filter(startpoint).order_by('time').distinct()
         feed = feed.prefetch_related('author', 'is_reference_to')[:20]
         return json_response({
@@ -144,12 +145,12 @@ def load_mentions(request, name, select_id, microblogging_load_type):
 @ViewErrorHandling
 def load_collection(request, select_id, microblogging_load_type, only_author=False, all_nodes=False):
     """
-    Use this function to get a collection of blogposts regarding nodes
-    which are followed by the user.
-    """
+Use this function to get a collection of blogposts regarding nodes
+which are followed by the user.
+"""
     print(select_id)
     print(all_nodes)
-    if not select_id:  # Get latest posts
+    if not select_id: # Get latest posts
         if all_nodes:
             feed = Post.objects.order_by('-time')
         else:
@@ -163,7 +164,7 @@ def load_collection(request, select_id, microblogging_load_type, only_author=Fal
         if microblogging_load_type == "newer":
             startpoint = Q(id__gt=select_id)
             print("newer, select-id=" + str(select_id))
-        else:  # older
+        else: # older
             startpoint = Q(id__lt=select_id)
             print("older, select-id=" + str(select_id))
         if all_nodes:
@@ -183,3 +184,38 @@ def store_microblog_post(request, path):
     post_text = convert_long_urls(request)
     create_post(post_text, request.user, path)
     return json_response({'storeMicrobloggingResponse': {}})
+
+'''
+Getter For Now only used for RSS
+'''
+def get_mentions(username,count):
+        users = User.objects.filter(username__iexact=username)
+        named_user = users[0]
+            
+        feed_data = named_user.mentioning_entries.order_by('-time').distinct()
+        feed_data = feed_data.prefetch_related('author', 'is_reference_to')[:count]
+        return feed_data 
+def get_timeline(username,count):
+        users = User.objects.filter(username__iexact=username)
+        named_user = users[0]
+        followed = Q(author__in=named_user.profile.followees.all())
+        own = Q(author=named_user)
+        feed_data = Post.objects.filter(followed | own).order_by('-time').distinct().prefetch_related('author', 'is_reference_to')[:20]
+        return feed_data  
+def get_news():
+        feed_data = Post.objects.order_by('-time')
+        feed_data = feed_data.prefetch_related('author', 'is_reference_to')[:20]
+        return feed_data  
+def get_newsAuthor(username,count):
+        users = User.objects.filter(username__iexact=username)
+        named_user = users[0]
+        feed_data = Post.objects.filter(node_references__votes__user=named_user).order_by('-time')
+        feed_data = feed_data.filter(node_references__text__authors=named_user)
+        feed_data = feed_data.prefetch_related('author', 'is_reference_to')[:20]
+        return feed_data
+def get_newsFollow(username,count):
+        users = User.objects.filter(username__iexact=username)
+        named_user = users[0]
+        feed_data = Post.objects.filter(node_references__votes__user=named_user).order_by('-time')
+        feed_data = feed_data.prefetch_related('author', 'is_reference_to')[:20]
+        return feed_data

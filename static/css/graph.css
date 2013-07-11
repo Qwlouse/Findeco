@@ -74,9 +74,10 @@ div #tooltip {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    background: #aaa;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
-    min-width: 12em;
+    width: 20em;
 }
 
 #followsColorBox {

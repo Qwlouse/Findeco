@@ -62,7 +62,7 @@ span.microblogDate {
 .microblogInput {
     width: 100%;
     height: 1.4em;
-    margin: 0 0 5px 0;
+    margin: 3px 0 5px 0;
     padding: 0 3px 0 3px;
     resize: none;
     border: 1px solid #999;

@@ -27,7 +27,7 @@
 from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from findeco.api_validation import USERNAME
+from findeco.api_validation import USERNAME, RSSKEY
 from findeco.feeds import RssFeed, AtomFeed
 from findeco.paths import PATH, RESTRICTED_PATH, ID
 
@@ -39,12 +39,17 @@ GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
 BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
 SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)(_(user|content|microblogging))*))'
+RSSTYPE= r'(?P<rsstype>(timeline)|(mention)|(news)|(newsAuthor)|(newsFollow))'
 
 urlpatterns = patterns(
     '',
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
-    url(r'^feeds/rss/$', RssFeed()),
-    url(r'^feeds/atom/$', AtomFeed()),
+    url(r'^feeds/rss/' + RSSTYPE + '/' + USERNAME +'/' + RSSKEY +'$', RssFeed()),
+    #url(r'^feeds/atom/$', AtomFeed()),
+   
+   # url(r'^\.json_markUser/unfollow/' + USERNAME + '$',
+    #    'findeco.views.mark_user_unfollow',
+     #   name = 'mark_user_unfollow'),
 
     url(r'^\.json_loadUserSettings/?$',
         'findeco.views.load_user_settings',

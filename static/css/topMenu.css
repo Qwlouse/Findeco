@@ -113,7 +113,6 @@ div.searchBox.searchActive {
     width: 18px;
     background: url("../images/search.png");
     position: relative;
-	display: inline;
     top: 2px;
 }
 
@@ -130,6 +129,12 @@ div.searchBox.searchActive {
     border: 0;
 }
 
+/* Format for browsers that dont support placeholder attribute*/
+#headerContent input.placeholder {
+    color: #999999;
+    font-size: 9pt;
+}
+
 #headerContent ul li a{
     color: #ecb40d;
     font-weight: bold;
@@ -144,6 +149,7 @@ div.searchBox.searchActive {
 
 #headerContent ul li.activeTab {
     background: #333333;
+    border-radius: 6px 6px 0 0;
 }
 
 #headerContent ul li.activeTab a{

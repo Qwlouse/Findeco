@@ -189,14 +189,14 @@ findecoApp.directive('findecoGraph', function( ) {
                     //.attr("title", function (d) { return d.path; })
                     .call(force.drag)
                     .on("mouseover", function(d){
-                        tooltip.html(d.title +
+                        tooltip.html("<b>" + d.title + "</b>" +
                         	"<br/>Follows Gesamt: <span id='followsColorBox'> " + d.follows + "</span>" +
                             "<br/>direkt: <span id='directFollowColorBox'>" + d.newFollows + "</span>"+
                             "<br/>vererbt: <span id='transitiveFollowColorBox'>" + (d.follows - d.newFollows) + "</span>"+
                             "<br/>Entfolgungen: <span id='unfollowColorBox'>" + d.unFollows + "</span>");
                         return tooltip.style("visibility", "visible");
                     })
-                    .on("mousemove", function(){return tooltip.style("top", (d3.mouse(this)[1])+10+"px").style("left",(d3.mouse(this)[0])+10+"px");})
+                    .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
                     .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
                     .append("svg:a")
                     .attr("xlink:href", function (d) {return '/' + d.path; });

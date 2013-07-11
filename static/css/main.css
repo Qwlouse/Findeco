@@ -131,6 +131,7 @@ input:focus, textarea:focus {
     margin-left: auto;
     margin-right: auto;
 }
+
 /* =================== Space for the top menu ================================*/
 #topMenu {
     width: 100%;
@@ -261,4 +262,9 @@ body:before {
 .tipp a.tippLink {
     color: gray;
     text-decoration: underline;
+}
+
+.rss {
+    padding-top: 10px;
+    float: right;
 }
