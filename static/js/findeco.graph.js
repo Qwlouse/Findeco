@@ -197,10 +197,7 @@ findecoApp.directive('findecoGraph', function( ) {
                         return tooltip.style("visibility", "visible");
                     })
                     .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
-                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
-                    .append("svg:a")
-                    .attr("xlink:href", function (d) {return '/' + d.path; });
-
+                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
                 node.append("circle")  // shadow
                     .attr("r", node_radius)
@@ -208,16 +205,35 @@ findecoApp.directive('findecoGraph', function( ) {
                     .attr("filter", "url(#blur)")
                     .attr('transform', "translate(2, 2)");
 
+                var diff_button_group = node.append("svg:a")  // diff-button
+                    .attr("xlink:href", function (d) {return '?compare=' + d.path; })
+                    .append("g")
+                    .attr('transform', "translate(-" + (node_radius-3) + ", -" + (node_radius-3) + ")");
 
-                node.append("circle")
+
+                diff_button_group
+                    .append("circle")
+                    .attr("r", 13)
+                    .attr("class", "diffButton")
+                    .on('click', function() {alert('ha!');});
+
+                diff_button_group
+                    .append("text")
+                    .attr("text-anchor", "middle")
+                    .attr("class", "diffButtonText")
+                    .text('diff');
+
+                var g = node.append("g").append("svg:a")  // Node Center Group
+                  .attr("xlink:href", function (d) {return '/' + d.path; });
+
+                g.append("circle")  // Center Circle
                     .attr("class", function (d) {
                         if (d.active) return "active nodeBackgroundCircle";
                         else return "nodeBackgroundCircle";
                     })
                     .attr("r", node_radius);
 
-
-                node.append("text")
+                g.append("text")  // Node number
                     .attr("class", function (d) {
                         if (d.active) return "active nodeLabel";
                         else return "nodeLabel";

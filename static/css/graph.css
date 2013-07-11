@@ -110,4 +110,32 @@ div #tooltip {
     padding-right: 0.5em;
 }
 
+.diffButton {
+    fill: #DDD;
+    visibility: hidden;
 
+}
+
+.nodeGroup:hover .diffButton{
+    fill: #fff;
+    visibility: visible;
+}
+
+.nodeGroup .diffButton:hover {
+    /*fill: #2d7cc4;*/
+}
+
+.diffButtonText {
+    font-size: 7pt;
+    font-weight: bold;
+    fill: #e07b01;
+    visibility: hidden;
+}
+
+.nodeGroup:hover .diffButtonText {
+    visibility: visible;
+}
+
+.diffButtonText:hover{
+    fill: #2d7cc4;
+}
