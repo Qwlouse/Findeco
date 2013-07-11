@@ -91,7 +91,7 @@ def create_post(text, author, path=None, do_escape=True):
         username = split_text[i]
         try:
             u = User.objects.get(username__iexact=username)
-            split_text[i] = '<a href="/#/user/{0}">@{0}</a>'.format(u.username)
+            split_text[i] = '<a href="/user/{0}">@{0}</a>'.format(u.username)
             mentions.append(u)
         except User.DoesNotExist:
             split_text[i] = '@' + username
@@ -100,7 +100,7 @@ def create_post(text, author, path=None, do_escape=True):
     split_text = tag_pattern.split(text)
     for i in range(1, len(split_text), 2):
         tagname = split_text[i]
-        split_text[i] = '<a href="/#/search/{0}">#{0}</a>'.format(tagname)
+        split_text[i] = '<a href="/search/{0}">#{0}</a>'.format(tagname)
     text = "".join(split_text)
 
     split_text = internal_link_pattern.split(text)
@@ -118,7 +118,7 @@ def create_post(text, author, path=None, do_escape=True):
                     parent=slot).all()[0].position
                 path += "." + str(position)
             split_text[i] = '<a href="{0}">{1}</a>'.format(
-                '/#' + path, path.rsplit('/', 1)[1])
+                path, n.title)
             nodes.append(n)
         except backend.IllegalPath:
             pass
