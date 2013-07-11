@@ -234,6 +234,9 @@ urlpatterns = patterns(
 
     # Uncomment the next line to enable the admin:
     url(r'^\.admin/?', include(admin.site.urls)),
+
+    # Fallback
+    url(r'.*', 'findeco.views.home', name='fallback', kwargs={'path': ''})
 )
 
 handler404 = 'findeco.views.error_404'
