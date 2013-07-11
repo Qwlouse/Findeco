@@ -268,3 +268,8 @@ body:before {
     padding-top: 10px;
     float: right;
 }
+
+.rss img {
+    width: 16px;
+    height: 16px;
+}

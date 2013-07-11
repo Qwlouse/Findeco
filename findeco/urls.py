@@ -98,6 +98,16 @@ urlpatterns = patterns(
         name='load_mentions',
         kwargs={'select_id': None}),
 
+    url(r'^\.json_loadMicroblogging/own/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
+        USERNAME + '$',
+        'microblogging.views.load_own',
+        name='load_own'),
+
+    url(r'^\.json_loadMicroblogging/own/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
+        'microblogging.views.load_own',
+        name='load_own',
+        kwargs={'select_id': None}),
+
     url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collection$',
         'microblogging.views.load_collection',
         name='load_collection'),

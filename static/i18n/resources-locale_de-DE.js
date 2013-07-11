@@ -680,5 +680,15 @@
   	    "key": "_collapseSection_",
         "value": "Abschnitt einklappen",
         "description": ""
+    },
+    {
+  	    "key": "_ownPosts_",
+        "value": "eigene Posts",
+        "description": ""
+    },
+    {
+  	    "key": "_composePost_",
+        "value": "Post verfassen",
+        "description": ""
     }
 ]

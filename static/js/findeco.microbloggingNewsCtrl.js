@@ -28,6 +28,7 @@
 function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
     $scope.timelineList = [];
     $scope.mentionsList = [];
+    $scope.ownPostsList = [];
 
     $scope.user = User;
     $scope.username = User.displayName;
@@ -45,6 +46,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
         return User.markUser(path, type).success(function() {
             setAuthorForAllBlogs($scope.timelineList);
             setAuthorForAllBlogs($scope.mentionsList);
+            setAuthorForAllBlogs($scope.ownPostsList);
         });
     };
 
@@ -84,11 +86,33 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
         });
     };
 
+    $scope.updateOwnPosts = function (oldType, oldID) {
+        var type = 'newer';
+        var id = 0;
+        if ($scope.ownPostsList[0] != undefined) {
+            id = $scope.ownPostsList[0].microblogID;
+        }
+
+        if ( oldType != undefined && oldID != undefined ) {
+            type = oldType;
+            id = oldID;
+        }
+        $scope.isLoadingOwnPosts=true;
+        Backend.loadMicroblogging($scope.ownPostsList, User.displayName, type, id, false, true).success(function() {
+        	setAuthorForAllBlogs($scope.ownPostsList);
+        	$scope.isLoadingOwnPosts=false;
+        });
+    };
+
     $scope.submit = function () {
         // todo: on which path to microblog?
         var path = "";
+
+        if ($scope.microblogText.length <= 0) return;
         Backend.storeMicroblogPost(path, $scope.microblogText).success(function () {
-            $scope.updateMicrobloggingList();
+            $scope.updateTimeline();
+            $scope.updateMentions();
+            $scope.updateOwnPosts();
             $scope.microblogText = '';
         });
     };
@@ -98,8 +122,10 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
  
             $scope.updateTimeline();
             $scope.updateMentions();
+            $scope.updateOwnPosts();
         }
     });
+
     $scope.isLoading = function (col){
     	if (col =="timeline"){
     		return $scope.isLoadingTimeline;	
@@ -107,9 +133,18 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
     	if (col =="mentions"){
     		return $scope.isLoadingMentions;
     	}
+        if (col =="own"){
+    		return $scope.isLoadingOwnPosts;
+    	}
     	
     	return false;
-    }
+    };
+
+    $('.microblogInput').focus(function(){
+        $(this).animate({height:'6em'});
+    }).blur(function(){
+        $(this).animate({height:'1.4em'});
+    });
 }
 
 FindecoMicrobloggingNewsCtrl.$inject = ['$scope', 'Backend', 'User'];
