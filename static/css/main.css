@@ -273,3 +273,21 @@ body:before {
     width: 16px;
     height: 16px;
 }
+
+.diff del {
+    background-color: #ff8080;
+    text-decoration: none;
+}
+
+.red {
+    background-color: #ff8080;
+}
+
+.diff ins {
+    background-color: #80ff80;
+    text-decoration: none;
+}
+
+.green {
+    background-color: #80ff80;
+}

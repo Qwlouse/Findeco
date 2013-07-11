@@ -26,8 +26,40 @@
 /* Controllers */
 
 function FindecoDiffCtrl($scope, Backend, User) {
-    $scope.path1 = "/this.4/is.2/an.1/example.12";
-    $scope.path2 = "/this.4/is.2/another.1/example.1";
+    $scope.path1 = "Spielwiese.3";
+    $scope.path2 = "Spielwiese.8";
+    $scope.text1Loaded = false;
+    $scope.text2Loaded = false;
+
+    $scope.loadTexts = function (path1, path2) {
+        $scope.text1 = "";
+        $scope.text2 = "";
+        var text1Paragraphs = [];
+        Backend.loadText(text1Paragraphs, path1).success(function (d) {
+            $scope.text1Loaded = true;
+            for (var i = 0; i < text1Paragraphs.length; i++) {
+                $scope.text1 += text1Paragraphs[i].wikiText;
+            }
+            $scope.createDiff(path1, path2);
+        });
+        var text2Paragraphs = [];
+        Backend.loadText(text2Paragraphs, path2).success(function (d) {
+            $scope.text2Loaded = true;
+            for (var i = 0; i < text2Paragraphs.length; i++) {
+                $scope.text2 += text2Paragraphs[i].wikiText;
+            }
+            $scope.createDiff(path1, path2);
+        });
+    };
+
+    $scope.createDiff = function (path1, path2) {
+        if ($scope.text1Loaded && $scope.text2Loaded) {
+            console.log("creating Diff");
+            $scope.diffHTML = diffString($scope.text1, $scope.text2);
+        }
+    };
+
+    $scope.loadTexts($scope.path1, $scope.path2);
 }
 
 FindecoDiffCtrl.$inject = ['$scope', 'Backend', 'User'];
