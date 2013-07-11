@@ -14,6 +14,6 @@
     <div id="centerColumn" class="contentBox">
         <h2>Vergleiche <span class="green"><a href="{{ path1 }}">{{ path1 }}</a></span> mit
             <span class="red"><a href="{{ path2 }}">{{ path2 }}</a></span></h2>
-        <div ng-bind-html-unsafe="diffHTML" class="diff"></div>
+        <pre wrap=soft ng-bind-html-unsafe="diffHTML" class="diff"></pre>
     </div>
 </div>

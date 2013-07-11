@@ -25,9 +25,10 @@
 'use strict';
 /* Controllers */
 
-function FindecoDiffCtrl($scope, Backend, User) {
-    $scope.path1 = "Spielwiese.3";
-    $scope.path2 = "Spielwiese.8";
+function FindecoDiffCtrl($scope, Backend, Navigator) {
+    $scope.nav = Navigator;
+    $scope.path1 = Navigator.nodePath;
+    $scope.path2 = Navigator.segments.compare;
     $scope.text1Loaded = false;
     $scope.text2Loaded = false;
 
@@ -40,7 +41,7 @@ function FindecoDiffCtrl($scope, Backend, User) {
             for (var i = 0; i < text1Paragraphs.length; i++) {
                 $scope.text1 += text1Paragraphs[i].wikiText;
             }
-            $scope.createDiff(path1, path2);
+            $scope.createDiff();
         });
         var text2Paragraphs = [];
         Backend.loadText(text2Paragraphs, path2).success(function (d) {
@@ -48,11 +49,11 @@ function FindecoDiffCtrl($scope, Backend, User) {
             for (var i = 0; i < text2Paragraphs.length; i++) {
                 $scope.text2 += text2Paragraphs[i].wikiText;
             }
-            $scope.createDiff(path1, path2);
+            $scope.createDiff();
         });
     };
 
-    $scope.createDiff = function (path1, path2) {
+    $scope.createDiff = function () {
         if ($scope.text1Loaded && $scope.text2Loaded) {
             console.log("creating Diff");
             $scope.diffHTML = diffString($scope.text1, $scope.text2);
@@ -62,4 +63,4 @@ function FindecoDiffCtrl($scope, Backend, User) {
     $scope.loadTexts($scope.path1, $scope.path2);
 }
 
-FindecoDiffCtrl.$inject = ['$scope', 'Backend', 'User'];
+FindecoDiffCtrl.$inject = ['$scope', 'Backend', 'Navigator'];
