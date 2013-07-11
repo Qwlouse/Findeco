@@ -210,7 +210,7 @@ findecoApp.directive('findecoGraph', function( ) {
                     .attr('transform', "translate(2, 2)");
 
                 var diff_button_group = node.append("svg:a")  // diff-button
-                    .attr("xlink:href", function (d) {return '?compare=' + d.path; })
+                    .attr("xlink:href", function (d) {return '/diff/' + scope.path + '?compare=' + d.path; })
                     .append("g")
                     .attr('transform', "translate(-" + (node_radius-3) + ", -" + (node_radius-3) + ")");
 

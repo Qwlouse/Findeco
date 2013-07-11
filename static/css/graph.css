@@ -113,16 +113,11 @@ div #tooltip {
 .diffButton {
     fill: #DDD;
     visibility: hidden;
-
 }
 
 .nodeGroup.inactive:hover .diffButton{
     fill: #fff;
     visibility: visible;
-}
-
-.nodeGroup .diffButton:hover {
-    /*fill: #2d7cc4;*/
 }
 
 .diffButtonText {
