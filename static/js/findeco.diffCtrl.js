@@ -26,12 +26,13 @@
 /* Controllers */
 
 function FindecoDiffCtrl($scope, Backend, Navigator) {
+	
     $scope.nav = Navigator;
     $scope.path1 = Navigator.nodePath;
     $scope.path2 = Navigator.segments.compare;
     $scope.text1Loaded = false;
     $scope.text2Loaded = false;
-
+    $scope.diffIsLoading =true;
     $scope.loadTexts = function (path1, path2) {
         $scope.text1 = "";
         $scope.text2 = "";
@@ -57,9 +58,12 @@ function FindecoDiffCtrl($scope, Backend, Navigator) {
         if ($scope.text1Loaded && $scope.text2Loaded) {
             console.log("creating Diff");
             $scope.diffHTML = diffString($scope.text1, $scope.text2);
+            $scope.diffIsLoading =false;
         }
     };
-
+    $scope.isLoading = function (){
+    	return $scope.diffIsLoading ;
+    }
     $scope.loadTexts($scope.path1, $scope.path2);
 }
 

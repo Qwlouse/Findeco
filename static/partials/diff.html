@@ -15,5 +15,9 @@
         <h2>Vergleiche <span class="green"><a href="{{ path1 }}">{{ path1 }}</a></span> mit
             <span class="red"><a href="{{ path2 }}">{{ path2 }}</a></span></h2>
         <pre wrap=soft ng-bind-html-unsafe="diffHTML" class="diff"></pre>
+        <div ng-show="isLoading()" class="deactivateDiv">
+    	</div>
+   		<div ng-show="isLoading()" class="deactivateSpinner">
+    	</div>
     </div>
 </div>
