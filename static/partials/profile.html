@@ -1,6 +1,7 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
 	<div class="contentBox profileLeftWideColumn" ng-show="user.isLoggedIn">
 	<div ng-include src="'static/partials/profileMenu.html'"  ></div>
+	<div ng-include src="'static/partials/boxFollow.html'"  ></div>
 </ngInclude>
   
     	
@@ -8,7 +9,13 @@
     
     </div>
     <div class="profileCenterWideColumn contentBox" ng-show="user.isLoggedIn">
-        <h1> {{ user.displayName }} </h1>
+          <h2 data-i18n="_username_">Username</h2>
+        <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ user.displayName }}</p>
+        <form ng-submit="storeUserSettings()">
+            <input type="text" ng-model="user.displayName" /><br />
+            <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
+        </form>
+ 
         <h2 data-i18n="_description_">Beschreibung</h2>
         <form ng-submit="storeUserSettings()">
             <textarea ng-model="user.description" placeholder="Beschreibung" style="width: 100%; resize: vertical;" rows="5">  </textarea>
@@ -16,27 +23,13 @@
         </form>
       
        
-        <h2 data-i18n="_username_">Username</h2>
-        <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ user.displayName }}</p>
-        <form ng-submit="storeUserSettings()">
-            <input type="text" ng-model="user.displayName" /><br />
-            <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
-        </form>
- 
-        <h2 data-i18n="_followees_" style="padding-bottom: 0;">Ich folge:</h2>
-        <ul>
-            <li ng-repeat="followee in user.followees">
-                <a href="/user/{{ followee.path }}">{{ followee.displayName }}</a>
-                <div follow-star show-if="true" entity="followee" mark-func="followUser" style="float: none; top: 0;" width="12pt" height="12pt"></div>
-            </li>
-        </ul>
+  
+
     </div>
     <div class="profileCenterWideColumn contentBox" ng-hide="user.isLoggedIn">
         <h1>Du bist nicht angemeldet</h1>
     </div>
-    <div class="contentBox profileRightWideColumn" ng-show="user.isLoggedIn">
-        <h2 style="color: gray; " data-i18n="_previewHeading_">Vorschau</h2>
-        <h1>{{user.displayName}}</h1>
+    <div class="contentBox profileRightWideColumn" ng-show="user.isLoggedIn">      
         <div>
             <h2 data-i18n="_description_">Description</h2>
             <div creole wiki-text="user.description" update-interval="2000"></div>

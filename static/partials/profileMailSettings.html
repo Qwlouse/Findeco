@@ -5,7 +5,7 @@
   
     </div>
     <div class="profileCenterWideColumn contentBox" ng-show="user.isLoggedIn">
-        <h1 data-i18n="_email_">E-Mail</h1>
+        <h2 data-i18n="_email_">E-Mail</h2>
         <p><span data-i18n="_currentAdress_">aktuelle Adresse</span>: {{ user.email }}</p>
         <p data-i18n="_changeEMailDescription_"></p>
         <form ng-submit="storeUserSettings()">
@@ -18,7 +18,7 @@
         <h1>Du bist nicht angemeldet</h1>
     </div>
      <div class="contentBox profileRightWideColumn" ng-show="user.isLoggedIn">
-        <h2 style="color: gray;" >Passwort Hinweise</h2>
+        <h2 >Passwort Hinweise</h2>
           <div class="tipp" >Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und Kleinschreibung als auch Sonderzeichen in deinem Passwort.</div>
        
     </div>
