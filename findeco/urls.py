@@ -237,6 +237,8 @@ urlpatterns = patterns(
 
     # path fallback for diffs
     url(r'^(diff).*', 'findeco.views.home', name='home'),
+    url(r'^.*/$', 'findeco.views.home', name = 'home'),
 )
+
 
 handler404 = 'findeco.views.error_404'

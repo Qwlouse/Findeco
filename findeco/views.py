@@ -56,7 +56,7 @@ from node_storage.factory import create_user
 
 #################### General stuff #############################################
 @ensure_csrf_cookie
-def home(request, path):
+def home(request, path = ""):
     with open("static/index.html", 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), mimetype='text/html')
 
