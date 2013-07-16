@@ -26,7 +26,7 @@ from findeco.jsonvalidator import JSONValidator, JSONValidationError
 
 
 USERNAME = r'(?P<name>[a-zA-Z][a-zA-Z0-9-_]{0,19})'
-RSSKEY = r'(?P<rsskey>[a-zA-Z][a-zA-Z0-9-_]{0,133})'
+RSSKEY = r'(?P<rsskey>[a-zA-Z0-9]{16})'
 
 ################# JSON Schemas #################################################
 # The JSON responses are validated by example

@@ -62,7 +62,7 @@ function FindecoDiffCtrl($scope, Backend, Navigator) {
         }
     };
     $scope.isLoading = function (){
-    	return $scope.diffIsLoading ;
+    	return $scope.diffIsLoading;
     };
     $scope.loadTexts($scope.path1, $scope.path2);
 }
