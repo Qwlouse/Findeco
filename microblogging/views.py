@@ -57,9 +57,9 @@ This function removes the unnecessary part from urls which are copy&pasted from 
 """
     hostname = request.META['HTTP_HOST']
     text = request.POST['microblogText']
-    text = text.replace("https://" + hostname + "/#", "")
-    text = text.replace("http://" + hostname + "/#", "")
-    text = text.replace(hostname + "/#", "")
+    text = text.replace("https://" + hostname, "")
+    text = text.replace("http://" + hostname, "")
+    text = text.replace(hostname, "")
     return text
 
 
