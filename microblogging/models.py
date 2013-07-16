@@ -25,7 +25,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
-
+from __future__ import division, print_function, unicode_literals
 from django.db import models
 import re
 from findeco.api_validation import USERNAME
@@ -117,8 +117,7 @@ def create_post(text, author, path=None, do_escape=True):
                 position = backend.NodeOrder.objects.filter(child=n).filter(
                     parent=slot).all()[0].position
                 path += "." + str(position)
-            split_text[i] = '<a href="{0}">{1}</a>'.format(
-                path, n.title)
+            split_text[i] = '<a href="{0}">{1}</a>'.format(path, n.title)
             nodes.append(n)
         except backend.IllegalPath:
             pass
