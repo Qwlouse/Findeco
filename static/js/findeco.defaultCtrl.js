@@ -37,6 +37,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     $scope.paragraphList = [];
     $scope.nodeInfo = [];
     $scope.nodeInfo.indexList = [];
+    $scope.authors = [];
     $scope.nodeInfo.path = $scope.nav.argumentPath;
     $scope.sections = [];
 
@@ -57,6 +58,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     $scope.updateNode = function () {
         Backend.loadNode($scope.nodeInfo, $scope.nav.argumentPath).success(function (d) {
             $scope.allExpanded = true;
+            $scope.authors = $scope.nodeInfo.authors;
             $scope.sections = $scope.nodeInfo.indexList;
             for (var i in $scope.sections) {
                 var indexNode = $scope.sections[i];
