@@ -85,6 +85,7 @@ class UserProfile(models.Model):
     is_verified_until = models.DateTimeField(default=datetime.min)
     last_seen = models.DateTimeField(default=datetime.min)
     verification_key = models.CharField(max_length=64, default=generate_key)
+    api_key = models.CharField(max_length=16, default=lambda: generate_key(16))
 
     # Override the save method to prevent integrity errors
     # These happen because both the post_save signal and the inlined admin
