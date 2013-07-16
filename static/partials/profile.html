@@ -9,7 +9,7 @@
           <h2 data-i18n="_username_">Username</h2>
         <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ user.displayName }}</p>
         <form ng-submit="storeUserSettings()">
-            <input type="text" ng-model="user.displayName" /><br />
+            <input type="text" ng-model="displayNameTmp" /><br />
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
         </form>
  
