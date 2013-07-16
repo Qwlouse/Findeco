@@ -134,18 +134,13 @@ def load_argument_index(request, path):
 def load_node(request, path):
     node = assert_node_for_path(path)
     index_nodes = get_index_nodes_for_path(path)
-    print(437568)
-    print(node.text)
-    print(node.text.authors.all())
-    author_list = [author.username for author in node.text.authors.all()]
-    print(author_list)
 
     return json_response({'loadNodeResponse': {
         'fullTitle': node.title,
         'isFollowing': get_is_following(request.user.id, node),
         'isFlagging': get_is_flagging(request.user.id, node),
         'wikiText': node.text.text,
-        'authors': author_list,
+        'authors': [author.username for author in node.text.authors.all()],
         'indexList': index_nodes
     }})
 
