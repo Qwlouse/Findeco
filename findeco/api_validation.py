@@ -102,6 +102,7 @@ loadNodeResponse_schema = {
         'isFollowing': integer,
         'isFlagging': integer,
         'wikiText': string,
+        'authors': [string, None],
         'indexList': [indexNode_schema, None]
     }}
 

@@ -264,6 +264,11 @@ body:before {
     text-decoration: underline;
 }
 
+.authors {
+    font-size: 75%;
+    color: gray;
+}
+
 .rss {
     padding-top: 10px;
     float: right;
