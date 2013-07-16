@@ -482,7 +482,6 @@ angular.module('FindecoServices', [])
                 var arg_parts = nodes[nodes.length - 1].split('.');
                 location.entries.push({name : arg_parts[2] + '.' + arg_parts[3], path : location.argumentPath});
             }
-            console.log(location);
         };
 
         location.getPathForNode = function (shortTitle, index) {

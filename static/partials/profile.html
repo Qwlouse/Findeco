@@ -1,12 +1,9 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
 	<div class="contentBox profileLeftWideColumn" ng-show="user.isLoggedIn">
-	<div ng-include src="'static/partials/profileMenu.html'"  ></div>
-	<div ng-include src="'static/partials/boxFollow.html'"  ></div>
+	<div ng-include src="'/static/partials/profileMenu.html'"  ></div>
+	<div ng-include src="'/static/partials/boxFollow.html'"  ></div>
 </ngInclude>
   
-    	
-    	
-    
     </div>
     <div class="profileCenterWideColumn contentBox" ng-show="user.isLoggedIn">
           <h2 data-i18n="_username_">Username</h2>
@@ -22,8 +19,6 @@
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
         </form>
       
-       
-  
 
     </div>
     <div class="profileCenterWideColumn contentBox" ng-hide="user.isLoggedIn">

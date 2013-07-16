@@ -39,17 +39,11 @@ GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 BLOG_ID = r'(?P<select_id>' + ID + ')'
 BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
 SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)(_(user|content|microblogging))*))'
-RSSTYPE= r'(?P<rsstype>(timeline)|(mention)|(news)|(newsAuthor)|(newsFollow))'
+RSSTYPE = r'(?P<rsstype>(timeline)|(mention)|(news)|(newsAuthor)|(newsFollow))'
 
 urlpatterns = patterns(
     '',
-    url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
-    url(r'^feeds/rss/' + RSSTYPE + '/' + USERNAME +'/' + RSSKEY +'$', RssFeed()),
-    #url(r'^feeds/atom/$', AtomFeed()),
-   
-   # url(r'^\.json_markUser/unfollow/' + USERNAME + '$',
-    #    'findeco.views.mark_user_unfollow',
-     #   name = 'mark_user_unfollow'),
+    url(r'^feeds/rss/' + RSSTYPE + '/' + USERNAME + '/' + RSSKEY + '$', RssFeed()),
 
     url(r'^\.json_loadUserSettings/?$',
         'findeco.views.load_user_settings',
@@ -183,11 +177,11 @@ urlpatterns = patterns(
 
     url(r'^\.json_markUser/follow/' + USERNAME + '$',
         'findeco.views.mark_user_follow',
-        name = 'mark_user_follow'),
+        name='mark_user_follow'),
 
     url(r'^\.json_markUser/unfollow/' + USERNAME + '$',
         'findeco.views.mark_user_unfollow',
-        name = 'mark_user_unfollow'),
+        name='mark_user_unfollow'),
 
     url(r'^\.json_search/'+SEARCH_FIELDS+'/(?P<search_string>(.*))$',
         'findeco.views.search',
@@ -204,15 +198,15 @@ urlpatterns = patterns(
     url(r'^\.json_storeText/' + PATH + '$',
         'findeco.views.store_text',
         name='store_text'),
-                       
+
     url(r'^\.json_accountRegistration/?$',
         'findeco.views.account_registration',
         name='account_registration'),
-                       
+
     url(r'^\.json_accountActivation/?$',
         'findeco.views.account_activation',
         name='account_activation'),
-                       
+
     url(r'^\.json_accountResetRequestByMail/?$',
         'findeco.views.account_reset_request_by_mail',
         name='account_reset_request_by_mail'),
@@ -220,10 +214,10 @@ urlpatterns = patterns(
     url(r'^\.json_accountResetRequestByName/?$',
         'findeco.views.account_reset_request_by_name',
         name='account_reset_request_by_name'),
-    
+
     url(r'^\.json_accountResetConfirmation/?$',
         'findeco.views.account_reset_confirmation',
-        name='account_reset_confirmation'),                       
+        name='account_reset_confirmation'),
 
     url(r'^\.json_emailChangeConfirmation/?$',
         'findeco.views.email_change_confirmation',
@@ -235,9 +229,9 @@ urlpatterns = patterns(
     # Uncomment the next line to enable the admin:
     url(r'^\.admin/?', include(admin.site.urls)),
 
-    # path fallback for diffs
-    url(r'^(diff).*', 'findeco.views.home', name='home'),
+    url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
 
+    url(r'.*', 'findeco.views.home', name='home', kwargs={'path': 'wildcard'}),
 )
 
 
