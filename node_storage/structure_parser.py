@@ -66,7 +66,7 @@ def remove_unallowed_chars(s):
 
 
 def remove_and_compress_whitespaces(s):
-    return '_'.join(s.split())
+    return '_'.join(s.split()).strip('_')
 
 
 def turn_into_valid_short_title(title, short_title_set=(), max_length=20):
