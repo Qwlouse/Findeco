@@ -13,7 +13,7 @@
  * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
  *                                                                                      *
  * You should have received a copy of the GNU General Public License along with         *
- * Findeco. If not, see <http://www.gnu.org/licenses/>.                                  *
+ * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
  ****************************************************************************************/
 
 /****************************************************************************************
@@ -63,7 +63,7 @@ function FindecoDiffCtrl($scope, Backend, Navigator) {
     };
     $scope.isLoading = function (){
     	return $scope.diffIsLoading ;
-    }
+    };
     $scope.loadTexts($scope.path1, $scope.path2);
 }
 
