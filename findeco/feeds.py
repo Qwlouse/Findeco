@@ -7,7 +7,7 @@ from microblogging.models import Post
 from django.shortcuts import get_object_or_404
 def rsskeyIsValid( rsskey , name):
     user= User.objects.get(username=name)
-    if rsskey==user.profile.verification_key[:8]:
+    if rsskey==user.profile.api_key:
         return  True
     else:
         return False
@@ -17,6 +17,7 @@ class RssFeed(Feed):
     title = "Findeco Test-Feed"
     link = "/rss/"
     description = "Inhalte des Findeco Systems"
+ 
     def item_title(self, item):
         
         return item.author.username + " schreibt:"
