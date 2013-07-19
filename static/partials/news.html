@@ -7,7 +7,7 @@
             </form>
         </li>!-->
         <h2 data-i18n="_newsForAllNodes_" style="width:210px; float:left;"></h2>
-        <a class="rss" href="/feeds/rss/news/{{ user.displayName }}/{{ user.rsskey }}"><img alt="RSS-Feed" src="./static/images/feed.png"> </a>
+        <a class="rss" target="_new" href="/feeds/rss/news/{{ user.displayName }}/{{ user.rsskey }}"><img alt="RSS-Feed" src="./static/images/feed.png"> </a>
       	<div style="clear:both"></div>
         
         <ul class="microblogList">
@@ -32,7 +32,7 @@
     </div>
     <div class="contentBox startColumn">
         <h2 data-i18n="_newsForFollowedNodes_" style="width:210px; float:left;"></h2>
-        <a class="rss" href="/feeds/rss/newsFollow/{{ user.displayName }}/{{ user.rsskey }}"><img alt="RSS-Feed" src="./static/images/feed.png"> </a>
+        <a class="rss" target="_new" href="/feeds/rss/newsFollow/{{ user.displayName }}/{{ user.rsskey }}"><img alt="RSS-Feed" src="./static/images/feed.png"> </a>
       	<div style="clear:both"></div>
         
         
@@ -58,7 +58,7 @@
     </div>
     <div class="contentBox startColumn">
         <h2  data-i18n="_newsForOwnNodes_" style="width:210px; float:left;"></h2>
-        <a class="rss" href="/feeds/rss/newsAuthor/{{ user.displayName }}/{{ user.rsskey }}"><img alt="RSS-Feed" src="./static/images/feed.png"> </a>
+        <a class="rss" target="_new" href="/feeds/rss/newsAuthor/{{ user.displayName }}/{{ user.rsskey }}"><img alt="RSS-Feed" src="./static/images/feed.png"> </a>
       	<div style="clear:both"></div>
         <ul class="microblogList">
             <li><a class="btn btn-primary" ng-click="updateOwnNodes()" data-i18n="_startScreenUpdateBtn_"></a></li>
