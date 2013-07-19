@@ -401,7 +401,7 @@ def store_settings(request):
         try:
             send_mail(settings.EMAIL_VERIFICATION_TITLE,
                       settings.EMAIL_VERIFICATION_BODY + ' ' + settings.FINDECO_BASE_URL +
-                      '/#/confirm_email/' + str(eact.key),
+                      '/confirm_email/' + str(eact.key),
                       settings.EMAIL_HOST_USER,
                       [email],
                       fail_silently=False)
@@ -491,7 +491,7 @@ def account_registration(request):
     try:
         send_mail(settings.REGISTRATION_TITLE,
                   settings.REGISTRATION_BODY + ' ' + settings.FINDECO_BASE_URL +
-                  '/#/activate/' + str(activation.key),
+                  '/activate/' + str(activation.key),
                   settings.EMAIL_HOST_USER,
                   [emailAddress],
                   fail_silently=False)
@@ -527,7 +527,7 @@ def account_reset_request_by_name(request):
     try:
         send_mail(settings.REGISTRATION_RECOVERY_TITLE,
                   settings.REGISTRATION_RECOVERY_BODY + ' ' +
-                  settings.FINDECO_BASE_URL + '/#/confirm/' + str(recovery.key),
+                  settings.FINDECO_BASE_URL + '/confirm/' + str(recovery.key),
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
@@ -547,7 +547,7 @@ def account_reset_request_by_mail(request):
     try:
         send_mail(settings.REGISTRATION_RECOVERY_TITLE,
                   settings.REGISTRATION_RECOVERY_BODY + ' ' +
-                  settings.FINDECO_BASE_URL + '/#/confirm/' + str(recovery.key),
+                  settings.FINDECO_BASE_URL + '/confirm/' + str(recovery.key),
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
