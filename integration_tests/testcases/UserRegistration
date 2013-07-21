@@ -12,7 +12,7 @@
 <tr><td rowspan="1" colspan="3">UserRegistration</td></tr>
 </thead><tbody>
 <!--TODO:-->
-<!--Activation via server/#/activate/ is not tested-->
+<!--Activation via server/activate/ is not tested-->
 <!--Adding check of registration confirmation (after Signup)-->
 <!---->
 <!---->

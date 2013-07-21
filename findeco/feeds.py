@@ -26,7 +26,7 @@ class RssFeed(Feed):
     #def item_author_name(self, item):
         #return item.author.username
     #def item_author_link(self, item):
-    #    return "http://localhost:8000/#/user/" + item.author.username
+    #    return "http://localhost:8000/user/" + item.author.username
     def item_link(self, item):
         # return item
         return "http://www.findeco.de"
