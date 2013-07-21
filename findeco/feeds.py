@@ -5,7 +5,6 @@ from django.contrib.auth.models import *
 from models import UserProfile
 from microblogging.models import Post
 from django.shortcuts import get_object_or_404
-from ubuntu_sso.utils.txsecrets import Item
 import hashlib
 from findeco.settings import FINDECO_BASE_URL
 import this
