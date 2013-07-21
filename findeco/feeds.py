@@ -7,7 +7,7 @@ from microblogging.models import Post
 from django.shortcuts import get_object_or_404
 import hashlib
 from findeco.settings import FINDECO_BASE_URL
-import this
+
 
 
 def rsskeyIsValid( rsskey , name):
