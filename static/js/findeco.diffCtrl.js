@@ -41,7 +41,7 @@ function FindecoDiffCtrl($scope, Backend, Navigator) {
         Backend.loadText(text1Paragraphs, path1).success(function (d) {
             $scope.text1Loaded = true;
             for (var i = 0; i < text1Paragraphs.length; i++) {
-                $scope.text1 += text1Paragraphs[i].wikiText;
+                $scope.text1 += text1Paragraphs[i].wikiText + "\n";
             }
             $scope.createDiff();
         });
@@ -49,7 +49,7 @@ function FindecoDiffCtrl($scope, Backend, Navigator) {
         Backend.loadText(text2Paragraphs, path2).success(function (d) {
             $scope.text2Loaded = true;
             for (var i = 0; i < text2Paragraphs.length; i++) {
-                $scope.text2 += text2Paragraphs[i].wikiText;
+                $scope.text2 += text2Paragraphs[i].wikiText + "\n";
             }
             $scope.createDiff();
         });

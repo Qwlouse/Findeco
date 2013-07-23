@@ -279,6 +279,11 @@ body:before {
     height: 16px;
 }
 
+.diff {
+    white-space: pre-wrap;
+    display: inline;
+}
+
 .diff del {
     background-color: #ff8080;
     text-decoration: none;
