@@ -14,6 +14,11 @@
     <div id="centerColumn" class="contentBox">
         <h2>Vergleiche <span class="red"><a href="/{{ path1 }}">{{ path1 }}</a></span> mit
             <span class="green"><a href="/{{ path2 }}">{{ path2 }}</a></span></h2>
+        <div ng-repeat="change in changes">
+            <pre ng-show="!change.added && !change.removed">{{ change.value }}</pre>
+            <pre ng-show="change.added && !change.removed"><ins>{{ change.value }}</ins></pre>
+            <pre ng-show="!change.added && change.removed"><del>{{ change.value }}</del></pre>
+        </div>
         <pre wrap=soft ng-bind-html-unsafe="diffHTML" class="diff"></pre>
         <div ng-show="isLoading()" class="deactivateDiv">
     	</div>
