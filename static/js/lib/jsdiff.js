@@ -1,15 +1,33 @@
-/*
- * Javascript Diff Algorithm
- *  By John Resig (http://ejohn.org/)
- *  Modified by Chu Alan "sprite"
- *
- * Released under the MIT license.
- *
- * More Info:
- *  http://ejohn.org/projects/javascript-diff-algorithm/
- */
+/* See license.txt for terms of usage */
 
-function escape(s) {
+/*
+ * Text diff implementation.
+ * 
+ * This library supports the following APIS:
+ * JsDiff.diffChars: Character by character diff
+ * JsDiff.diffWords: Word (as defined by \b regex) diff which ignores whitespace
+ * JsDiff.diffLines: Line based diff
+ * 
+ * JsDiff.diffCss: Diff targeted at CSS content
+ * 
+ * These methods are based on the implementation proposed in
+ * "An O(ND) Difference Algorithm and its Variations" (Myers, 1986).
+ * http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.4.6927
+ */
+var JsDiff = (function() {
+  function clonePath(path) {
+    return { newPos: path.newPos, components: path.components.slice(0) };
+  }
+  function removeEmpty(array) {
+    var ret = [];
+    for (var i = 0; i < array.length; i++) {
+      if (array[i]) {
+        ret.push(array[i]);
+      }
+    }
+    return ret;
+  }
+  function escapeHTML(s) {
     var n = s;
     n = n.replace(/&/g, "&amp;");
     n = n.replace(/</g, "&lt;");
@@ -17,145 +35,241 @@ function escape(s) {
     n = n.replace(/"/g, "&quot;");
 
     return n;
-}
-
-function diffString( o, n ) {
-  o = o.replace(/\s+$/, '');
-  n = n.replace(/\s+$/, '');
-
-  var out = diff(o == "" ? [] : o.split(/\s+/), n == "" ? [] : n.split(/\s+/) );
-  var str = "";
-
-  var oSpace = o.match(/\s+/g);
-  if (oSpace == null) {
-    oSpace = ["\n"];
-  } else {
-    oSpace.push("\n");
-  }
-  var nSpace = n.match(/\s+/g);
-  if (nSpace == null) {
-    nSpace = ["\n"];
-  } else {
-    nSpace.push("\n");
   }
 
-  if (out.n.length == 0) {
-      for (var i = 0; i < out.o.length; i++) {
-        str += '<del>' + escape(out.o[i]) + oSpace[i] + "</del>";
-      }
-  } else {
-    if (out.n[0].text == null) {
-      for (n = 0; n < out.o.length && out.o[n].text == null; n++) {
-        str += '<del>' + escape(out.o[n]) + oSpace[n] + "</del>";
-      }
-    }
 
-    for ( var i = 0; i < out.n.length; i++ ) {
-      if (out.n[i].text == null) {
-        str += '<ins>' + escape(out.n[i]) + nSpace[i] + "</ins>";
-      } else {
-        var pre = "";
-
-        for (n = out.n[i].row + 1; n < out.o.length && out.o[n].text == null; n++ ) {
-          pre += '<del>' + escape(out.o[n]) + oSpace[n] + "</del>";
+  var fbDiff = function(ignoreWhitespace) {
+    this.ignoreWhitespace = ignoreWhitespace;
+  };
+  fbDiff.prototype = {
+      diff: function(oldString, newString) {
+        // Handle the identity case (this is due to unrolling editLength == 0
+        if (newString == oldString) {
+          return [{ value: newString }];
         }
-        str += " " + out.n[i].text + nSpace[i] + pre;
+        if (!newString) {
+          return [{ value: oldString, removed: true }];
+        }
+        if (!oldString) {
+          return [{ value: newString, added: true }];
+        }
+
+        newString = this.tokenize(newString);
+        oldString = this.tokenize(oldString);
+
+        var newLen = newString.length, oldLen = oldString.length;
+        var maxEditLength = newLen + oldLen;
+        var bestPath = [{ newPos: -1, components: [] }];
+
+        // Seed editLength = 0
+        var oldPos = this.extractCommon(bestPath[0], newString, oldString, 0);
+        if (bestPath[0].newPos+1 >= newLen && oldPos+1 >= oldLen) {
+          return bestPath[0].components;
+        }
+
+        for (var editLength = 1; editLength <= maxEditLength; editLength++) {
+          for (var diagonalPath = -1*editLength; diagonalPath <= editLength; diagonalPath+=2) {
+            var basePath;
+            var addPath = bestPath[diagonalPath-1],
+                removePath = bestPath[diagonalPath+1];
+            oldPos = (removePath ? removePath.newPos : 0) - diagonalPath;
+            if (addPath) {
+              // No one else is going to attempt to use this value, clear it
+              bestPath[diagonalPath-1] = undefined;
+            }
+
+            var canAdd = addPath && addPath.newPos+1 < newLen;
+            var canRemove = removePath && 0 <= oldPos && oldPos < oldLen;
+            if (!canAdd && !canRemove) {
+              bestPath[diagonalPath] = undefined;
+              continue;
+            }
+
+            // Select the diagonal that we want to branch from. We select the prior
+            // path whose position in the new string is the farthest from the origin
+            // and does not pass the bounds of the diff graph
+            if (!canAdd || (canRemove && addPath.newPos < removePath.newPos)) {
+              basePath = clonePath(removePath);
+              this.pushComponent(basePath.components, oldString[oldPos], undefined, true);
+            } else {
+              basePath = clonePath(addPath);
+              basePath.newPos++;
+              this.pushComponent(basePath.components, newString[basePath.newPos], true, undefined);
+            }
+
+            var oldPos = this.extractCommon(basePath, newString, oldString, diagonalPath);
+
+            if (basePath.newPos+1 >= newLen && oldPos+1 >= oldLen) {
+              return basePath.components;
+            } else {
+              bestPath[diagonalPath] = basePath;
+            }
+          }
+        }
+      },
+
+      pushComponent: function(components, value, added, removed) {
+        var last = components[components.length-1];
+        if (last && last.added === added && last.removed === removed) {
+          // We need to clone here as the component clone operation is just
+          // as shallow array clone
+          components[components.length-1] =
+            {value: this.join(last.value, value), added: added, removed: removed };
+        } else {
+          components.push({value: value, added: added, removed: removed });
+        }
+      },
+      extractCommon: function(basePath, newString, oldString, diagonalPath) {
+        var newLen = newString.length,
+            oldLen = oldString.length,
+            newPos = basePath.newPos,
+            oldPos = newPos - diagonalPath;
+        while (newPos+1 < newLen && oldPos+1 < oldLen && this.equals(newString[newPos+1], oldString[oldPos+1])) {
+          newPos++;
+          oldPos++;
+          
+          this.pushComponent(basePath.components, newString[newPos], undefined, undefined);
+        }
+        basePath.newPos = newPos;
+        return oldPos;
+      },
+
+      equals: function(left, right) {
+        var reWhitespace = /\S/;
+        if (this.ignoreWhitespace && !reWhitespace.test(left) && !reWhitespace.test(right)) {
+          return true;
+        } else {
+          return left == right;
+        }
+      },
+      join: function(left, right) {
+        return left + right;
+      },
+      tokenize: function(value) {
+        return value;
       }
-    }
-  }
+  };
   
-  return str;
-}
+  var CharDiff = new fbDiff();
+  
+  var WordDiff = new fbDiff(true);
+  WordDiff.tokenize = function(value) {
+    return removeEmpty(value.split(/(\s+|\b)/g));
+  };
+  
+  var CssDiff = new fbDiff(true);
+  CssDiff.tokenize = function(value) {
+    return removeEmpty(value.split(/([{}:;,]|\s+)/g));
+  };
+  
+  var LineDiff = new fbDiff();
+  LineDiff.tokenize = function(value) {
+    var values = value.split(/\n/g),
+        ret = [];
+    for (var i = 0; i < values.length-1; i++) {
+      ret.push(values[i] + "\n");
+    }
+    if (values.length) {
+      ret.push(values[values.length-1]);
+    }
+    return ret;
+  };
+  
+  return {
+    diffChars: function(oldStr, newStr) { return CharDiff.diff(oldStr, newStr); },
+    diffWords: function(oldStr, newStr) { return WordDiff.diff(oldStr, newStr); },
+    diffLines: function(oldStr, newStr) { return LineDiff.diff(oldStr, newStr); },
 
-function randomColor() {
-    return "rgb(" + (Math.random() * 100) + "%, " + 
-                    (Math.random() * 100) + "%, " + 
-                    (Math.random() * 100) + "%)";
-}
-function diffString2( o, n ) {
-  o = o.replace(/\s+$/, '');
-  n = n.replace(/\s+$/, '');
+    diffCss: function(oldStr, newStr) { return CssDiff.diff(oldStr, newStr); },
 
-  var out = diff(o == "" ? [] : o.split(/\s+/), n == "" ? [] : n.split(/\s+/) );
+    createPatch: function(fileName, oldStr, newStr, oldHeader, newHeader) {
+      var ret = [];
+      
+      ret.push("Index: " + fileName);
+      ret.push("===================================================================");
+      ret.push("--- " + fileName + "\t" + oldHeader);
+      ret.push("+++ " + fileName + "\t" + newHeader);
+      
+      var diff = LineDiff.diff(oldStr, newStr);
+      diff.push({value: "", lines: []});   // Append an empty value to make cleanup easier
+      
+      var oldRangeStart = 0, newRangeStart = 0, curRange = [],
+          oldLine = 1, newLine = 1;
+      for (var i = 0; i < diff.length; i++) {
+        var current = diff[i],
+            lines = current.lines || current.value.replace(/\n$/, "").split("\n");
+        current.lines = lines;
+        
+        if (current.added || current.removed) {
+          if (!oldRangeStart) {
+            var prev = diff[i-1];
+            oldRangeStart = oldLine;
+            newRangeStart = newLine;
+            
+            if (prev) {
+              curRange.push.apply(curRange, prev.lines.slice(-4).map(function(entry) { return " " + entry; }));
+              oldRangeStart -= 4;
+              newRangeStart -= 4;
+            }
+          }
+          curRange.push.apply(curRange, lines.map(function(entry) { return (current.added?"+":"-") + entry; }));
+          if (current.added) {
+            newLine += lines.length;
+          } else {
+            oldLine += lines.length;
+          }
+        } else {
+          if (oldRangeStart) {
+            if (lines.length <= 8 && i < diff.length-1) {
+              // Overlapping 
+              curRange.push.apply(curRange, lines.map(function(entry) { return " " + entry; }));
+            } else {
+              // end the range and output
+              var contextSize = Math.min(lines.length, 4);
+              ret.push(
+                  "@@ -" + oldRangeStart + "," + (oldLine-oldRangeStart+contextSize)
+                  + " +" + newRangeStart + "," + (newLine-newRangeStart+contextSize)
+                  + " @@");
+              ret.push.apply(ret, curRange);
+              ret.push.apply(ret, lines.slice(0, contextSize).map(function(entry) { return " " + entry; }));
 
-  var oSpace = o.match(/\s+/g);
-  if (oSpace == null) {
-    oSpace = ["\n"];
-  } else {
-    oSpace.push("\n");
-  }
-  var nSpace = n.match(/\s+/g);
-  if (nSpace == null) {
-    nSpace = ["\n"];
-  } else {
-    nSpace.push("\n");
-  }
-
-  var os = "";
-  var colors = new Array();
-  for (var i = 0; i < out.o.length; i++) {
-      colors[i] = randomColor();
-
-      if (out.o[i].text != null) {
-          os += '<span style="background-color: ' +colors[i]+ '">' + 
-                escape(out.o[i].text) + oSpace[i] + "</span>";
-      } else {
-          os += "<del>" + escape(out.o[i]) + oSpace[i] + "</del>";
+              oldRangeStart = 0;  newRangeStart = 0; curRange = [];
+            }
+          }
+          oldLine += lines.length;
+          newLine += lines.length;
+        }
       }
-  }
-
-  var ns = "";
-  for (var i = 0; i < out.n.length; i++) {
-      if (out.n[i].text != null) {
-          ns += '<span style="background-color: ' +colors[out.n[i].row]+ '">' + 
-                escape(out.n[i].text) + nSpace[i] + "</span>";
-      } else {
-          ns += "<ins>" + escape(out.n[i]) + nSpace[i] + "</ins>";
+      if (diff.length > 1 && !/\n$/.test(diff[diff.length-2].value)) {
+        ret.push("\\ No newline at end of file\n");
       }
-  }
+      
+      return ret.join("\n");
+    },
 
-  return { o : os , n : ns };
+    convertChangesToXML: function(changes){
+      var ret = [];
+      for ( var i = 0; i < changes.length; i++) {
+        var change = changes[i];
+        if (change.added) {
+          ret.push("<ins>");
+        } else if (change.removed) {
+          ret.push("<del>");
+        }
+
+        ret.push(escapeHTML(change.value));
+
+        if (change.added) {
+          ret.push("</ins>");
+        } else if (change.removed) {
+          ret.push("</del>");
+        }
+      }
+      return ret.join("");
+    }
+  };
+})();
+
+if (typeof module !== "undefined") {
+    module.exports = JsDiff;
 }
-
-function diff( o, n ) {
-  var ns = new Object();
-  var os = new Object();
-  
-  for ( var i = 0; i < n.length; i++ ) {
-    if ( ns[ n[i] ] == null )
-      ns[ n[i] ] = { rows: new Array(), o: null };
-    ns[ n[i] ].rows.push( i );
-  }
-  
-  for ( var i = 0; i < o.length; i++ ) {
-    if ( os[ o[i] ] == null )
-      os[ o[i] ] = { rows: new Array(), n: null };
-    os[ o[i] ].rows.push( i );
-  }
-  
-  for ( var i in ns ) {
-    if ( ns[i].rows.length == 1 && typeof(os[i]) != "undefined" && os[i].rows.length == 1 ) {
-      n[ ns[i].rows[0] ] = { text: n[ ns[i].rows[0] ], row: os[i].rows[0] };
-      o[ os[i].rows[0] ] = { text: o[ os[i].rows[0] ], row: ns[i].rows[0] };
-    }
-  }
-  
-  for ( var i = 0; i < n.length - 1; i++ ) {
-    if ( n[i].text != null && n[i+1].text == null && n[i].row + 1 < o.length && o[ n[i].row + 1 ].text == null && 
-         n[i+1] == o[ n[i].row + 1 ] ) {
-      n[i+1] = { text: n[i+1], row: n[i].row + 1 };
-      o[n[i].row+1] = { text: o[n[i].row+1], row: i + 1 };
-    }
-  }
-  
-  for ( var i = n.length - 1; i > 0; i-- ) {
-    if ( n[i].text != null && n[i-1].text == null && n[i].row > 0 && o[ n[i].row - 1 ].text == null && 
-         n[i-1] == o[ n[i].row - 1 ] ) {
-      n[i-1] = { text: n[i-1], row: n[i].row - 1 };
-      o[n[i].row-1] = { text: o[n[i].row-1], row: i - 1 };
-    }
-  }
-  
-  return { o: o, n: n };
-}
-
