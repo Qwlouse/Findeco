@@ -191,7 +191,7 @@ def create_paragraph_for_node(node, path, depth=1):
     if depth == 1:
         text_pattern = "{markup} {title} {markup}\n{text}"
     else:
-        text_pattern = "{markup} [[#/{path}|{title}]] {markup}\n{text}"
+        text_pattern = "{markup} [[/{path}|{title}]] {markup}\n{text}"
 
     text = text_pattern.format(
         markup=markup,
