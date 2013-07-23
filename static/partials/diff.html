@@ -12,7 +12,7 @@
             auswählen.</div>
     </div>
     <div id="centerColumn" class="contentBox">
-        <h2>Vergleiche <span class="red"><a href="/{{ path1 }}">{{ path1 }}</a></span> mit
+        <h2 style="line-height: 150%">Vergleiche <span class="red"><a href="/{{ path1 }}">{{ path1 }}</a></span> mit
             <span class="green"><a href="/{{ path2 }}">{{ path2 }}</a></span></h2>
         <span style="" ng-repeat="change in changes"><pre
                 ng-show="!change.added && !change.removed" class="diff">{{ change.value }}</pre><pre
