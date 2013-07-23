@@ -46,7 +46,8 @@ userSettings_schema = {
     'userRights': integer,
     'followers': [user_schema, None],
     'followees': [user_schema, None],
-    'email': string
+    'email': string,
+    'rsskey': string
 }
 authorGroup_schema = [userInfo_schema]
 originGroup_schema = ["path", None]

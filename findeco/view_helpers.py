@@ -156,7 +156,7 @@ def create_user_settings(user):
         blockedUsers=[{'displayName': u.user.username} for u in
                       user.profile.blocked.all()],
         userRights=rights,
-        rsskey = user.profile.api_key,
+        rsskey=user.profile.api_key,
         email=user.email
     )
     return user_settings
