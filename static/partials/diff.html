@@ -5,15 +5,15 @@
         <div class="tipp" style="padding-top: 1em; padding-bottom: 1em;">Der Vergleich wird als
             <a href="http://de.wikipedia.org/wiki/Diff">Diff</a> angezeigt. Worte die in beiden Texten vorkommen werden
             normal angezeigt. Worte die nur in <a href="{{ path1 }}">{{ path1 }}</a> aber nicht in
-            <a href="{{ path2 }}">{{ path2 }}</a> vorkommen werden <span class="red">rot</span> hinterlegt. Worte die in
+            <a href="{{ path2 }}">{{ path2 }}</a> vorkommen werden <span class="green">grün</span> hinterlegt. Worte die in
             <a href="{{ path2 }}">{{ path2 }}</a> vorkommen, aber nicht in <a href="{{ path1 }}">{{ path1 }}</a> werden
-            <span class="green">grün</span> hinterlegt.</div>
+            <span class="red">rot</span> hinterlegt.</div>
         <div class="tipp">Um Argumente oder Microblogging zu diesen Vorschlägen zu sehen, musst du einen der Vorschläge
             auswählen.</div>
     </div>
     <div id="centerColumn" class="contentBox">
-        <h2>Vergleiche <span class="green"><a href="{{ path1 }}">{{ path1 }}</a></span> mit
-            <span class="red"><a href="{{ path2 }}">{{ path2 }}</a></span></h2>
+        <h2>Vergleiche <span class="red"><a href="{{ path1 }}">{{ path1 }}</a></span> mit
+            <span class="green"><a href="{{ path2 }}">{{ path2 }}</a></span></h2>
         <pre wrap=soft ng-bind-html-unsafe="diffHTML" class="diff"></pre>
         <div ng-show="isLoading()" class="deactivateDiv">
     	</div>
