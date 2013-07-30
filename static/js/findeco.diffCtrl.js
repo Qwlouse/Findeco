@@ -35,6 +35,7 @@ function FindecoDiffCtrl($scope, Backend, Navigator) {
     $scope.diffIsLoading = true;
     $scope.changes = [];
     var difftool = new diff_match_patch();
+    difftool.Diff_Timeout = 20.0;
 
     $scope.loadTexts = function (path1, path2) {
         $scope.text1 = "";
@@ -59,9 +60,8 @@ function FindecoDiffCtrl($scope, Backend, Navigator) {
 
     $scope.createDiff = function () {
         if ($scope.text1Loaded && $scope.text2Loaded) {
-            console.log("creating Diff");
-            $scope.changes = difftool.diff_main($scope.text1, $scope.text2, false);
-            console.log($scope.changes);
+            $scope.changes = difftool.diff_main($scope.text1, $scope.text2);
+            difftool.diff_cleanupSemantic($scope.changes);
             $scope.diffIsLoading =false;
         }
     };
