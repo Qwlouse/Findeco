@@ -22,6 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from microblogging.models import create_post
+import node_storage as backend
 from django.contrib.auth.models import User
 
 system = User.objects.get(username="system")
@@ -47,12 +48,22 @@ def post_node_became_favorit_message(path):
 
 
 def post_new_derivate_for_node_message(user, original_path, derivate_path):
+    original_node = backend.get_node_for_path(original_path)
+    derivate_node = backend.get_node_for_path(derivate_path)
+    original_title = original_node.title + "(Vorschlag " + str(original_path.rsplit('.', 1)[1]) + ")"
+    derivate_title = ""
+    if original_node.title != derivate_node.title:
+        derivate_title += derivate_node.title
+    derivate_title += "(Vorschlag " + str(derivate_path.rsplit('.', 1)[1]) + ")"
     text = '<span style="color: gray;">Hinweis:</span> @{user} hat den ' \
-           'Vorschlag /{original_path} zu /{derivate_path} weiterentwickelt.'.format(
-           user=user.username,
-           original_path=original_path,
-           derivate_path=derivate_path)
-    return create_post(text, user, do_escape=False)
+           'Vorschlag <a href="/{original_path}">{original_title}</a> zu ' \
+           '<a href="/{derivate_path}">{derivate_title}</a> weiterentwickelt.'.format(
+        user=user.username,
+        original_path=original_path,
+        original_title=original_title,
+        derivate_path=derivate_path,
+        derivate_title=derivate_title)
+    return create_post(text, user, path=original_path, second_path=derivate_path, do_escape=False)
 
 
 def post_new_derivate_for_node_message_list(user, path_couples):
@@ -71,9 +82,9 @@ def post_new_argument_for_node_message(user, path, arg_type, arg_path):
                 'pro': "Proargument"}
     text = '<span style="color: gray;">Hinweis:</span> @{user} hat das {argument} /{arg_path} zum Vorschlag /{path} ' \
            'hinzugefügt.'.format(
-           user=user.username,
-           arg_path=arg_path,
-           argument=argument[arg_type],
-           path=path)
+        user=user.username,
+        arg_path=arg_path,
+        argument=argument[arg_type],
+        path=path)
     return create_post(text, user, do_escape=False)
 

@@ -174,16 +174,13 @@ timeline should be done in the frontend due to performance reasons.
 @ViewErrorHandling
 def load_collection(request, select_id, microblogging_load_type, only_author=False, all_nodes=False):
     """
-Use this function to get a collection of blogposts regarding nodes
-which are followed by the user.
-"""
-    print(select_id)
-    print(all_nodes)
+    Use this function to get a collection of blogposts regarding nodes
+    which are followed by the user.
+    """
     if not select_id:  # Get latest posts
         if all_nodes:
             feed = Post.objects.order_by('-time')
         else:
-            print(request.user)
             feed = Post.objects.filter(node_references__votes__user=request.user).order_by('-time')
         if only_author:
             feed = feed.filter(node_references__text__authors=request.user)
@@ -192,10 +189,8 @@ which are followed by the user.
     else:
         if microblogging_load_type == "newer":
             startpoint = Q(id__gt=select_id)
-            print("newer, select-id=" + str(select_id))
         else:  # older
             startpoint = Q(id__lt=select_id)
-            print("older, select-id=" + str(select_id))
         if all_nodes:
             feed = Post.objects.filter(startpoint)
         else:
