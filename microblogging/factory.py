@@ -32,7 +32,14 @@ def parse_microblogging(text, author, location, time=None, references_to=None):
     Parse the text of a Microblog-Post and turn it into a JSON Structure that
     can then easily be
     """
-    pass
+    return {
+        'author': author.id,
+        'location': 1,
+        'text': "text",
+        'mentions': [],
+        'references': [],
+        'answer_to': -1
+    }
 
 
 def validate_microblogging_schema(structure):

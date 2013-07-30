@@ -31,7 +31,7 @@ from node_storage.factory import create_user, create_slot, create_structureNode
 from node_storage.path_helpers import get_root_node
 
 
-class MicrobloggingFactoryTest(TestCase):
+class MicrobloggingSchemaTest(TestCase):
 
     def setUp(self):
         self.hugo = create_user('hugo')
@@ -109,6 +109,23 @@ class MicrobloggingFactoryTest(TestCase):
         with self.assertRaisesRegexp(AssertionError, "sorted"):
             self.assertTrue(validate_microblogging_schema(self.schema_skeleton))
 
+
+class MicrobloggingParserTest(TestCase):
+    def setUp(self):
+        self.hugo = create_user('hugo')
+        self.herbert = create_user('herbert')
+        self.root = get_root_node()
+
     def test_parseMicroblogging(self):
         mbs = parse_microblogging("text", self.hugo, "")
-
+        expected = {
+            'author': self.hugo.id,
+            'location': self.root.id,
+            'text': "text",
+            'mentions': [],
+            'references': [],
+            'answer_to': -1
+        }
+        for n, e in expected.items():
+            self.assertEqual(e, mbs[n], "Mismatch for '%s': %s != %s" %
+                                        (n, e, mbs[n]))
