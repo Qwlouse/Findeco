@@ -82,7 +82,7 @@ class Post(models.Model):
                                             self.time)
 
 
-def create_post(text, author, path=None, do_escape=True):
+def create_post(text, author, path=None, second_path=None, do_escape=True):
     if do_escape:
         text = escape(text)
     split_text = user_ref_pattern.split(text)
@@ -107,6 +107,8 @@ def create_post(text, author, path=None, do_escape=True):
     nodes = []
     if path is not None:
         nodes.append(backend.get_node_for_path(path))
+    if second_path is not None:
+        nodes.append(backend.get_node_for_path(second_path))
     for i in range(1, len(split_text), 2):
         path = split_text[i]
         try:

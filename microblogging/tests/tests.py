@@ -130,7 +130,7 @@ class MicrobloggingTests(TestCase):
         self.assertSequenceEqual(all_posts, self.posts)
         self.assertEqual(
             all_posts[0].text,
-            'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+            'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Whatever</a> gut.')
         self.assertEqual(all_posts[0].author, self.user_max)
         self.assertEqual(all_posts[0].id, 1)
         self.assertSequenceEqual(all_posts[0].node_references.all(),
@@ -162,7 +162,7 @@ class MicrobloggingTests(TestCase):
                 'microblogText' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
                 data['loadMicrobloggingResponse'][i]['microblogText'],
-                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Whatever</a> gut.')
             self.assertTrue(
                 'microblogID' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
@@ -191,7 +191,7 @@ class MicrobloggingTests(TestCase):
             self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
                 data['loadMicrobloggingResponse'][i]['microblogText'],
-                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Whatever</a> gut.')
             self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'], 25 - i)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
@@ -214,7 +214,7 @@ class MicrobloggingTests(TestCase):
                 'microblogText' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
                 data['loadMicrobloggingResponse'][i]['microblogText'],
-                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Whatever</a> gut.')
             self.assertTrue(
                 'microblogID' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
@@ -243,7 +243,7 @@ class MicrobloggingTests(TestCase):
                 'microblogText' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
                 data['loadMicrobloggingResponse'][i]['microblogText'],
-                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Whatever</a> gut.')
             self.assertTrue(
                 'microblogID' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
@@ -271,7 +271,7 @@ class MicrobloggingTests(TestCase):
         for i in range(20):
             self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogText'],
-                             'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+                             'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Whatever</a> gut.')
             self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'], 19 - i + 3)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
@@ -293,7 +293,7 @@ class MicrobloggingTests(TestCase):
         self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][0])
         self.assertEqual(data['loadMicrobloggingResponse'][0]['microblogText'],
                          'Ich finde <a href="' + ROOT_SYMBOL +
-                         'Blubb.1">Blubb.1</a> schlecht.')
+                         'Blubb.1">Whatever2</a> schlecht.')
         self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][0])
         self.assertEqual(data['loadMicrobloggingResponse'][0]['microblogID'],
                          26)
@@ -317,7 +317,7 @@ class MicrobloggingTests(TestCase):
                 'microblogText' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
                 data['loadMicrobloggingResponse'][i]['microblogText'],
-                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Whatever</a> gut.')
             self.assertTrue(
                 'microblogID' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
@@ -344,7 +344,7 @@ class MicrobloggingTests(TestCase):
         self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][0])
         self.assertEqual(data['loadMicrobloggingResponse'][0]['microblogText'],
                          'Ich finde <a href="' + ROOT_SYMBOL +
-                         'Blubb.1">Blubb.1</a> schlecht.')
+                         'Blubb.1">Whatever2</a> schlecht.')
         self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][0])
         self.assertEqual(data['loadMicrobloggingResponse'][0]['microblogID'],
                          26)
@@ -357,7 +357,7 @@ class MicrobloggingTests(TestCase):
                 'microblogText' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
                 data['loadMicrobloggingResponse'][i]['microblogText'],
-                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Whatever</a> gut.')
             self.assertTrue(
                 'microblogID' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
@@ -383,7 +383,7 @@ class MicrobloggingTests(TestCase):
             self.assertTrue('microblogText' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(
                 data['loadMicrobloggingResponse'][i]['microblogText'],
-                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Bla.1</a> gut.')
+                'Ich finde <a href="' + ROOT_SYMBOL + 'Bla.1">Whatever</a> gut.')
             self.assertTrue('microblogID' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(data['loadMicrobloggingResponse'][i]['microblogID'], 25 - i)
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
