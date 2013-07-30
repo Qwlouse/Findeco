@@ -68,21 +68,6 @@ def js_escape_unicode(s):
     return str(ESCAPABLE.sub(_js_escape_unicode_re_callack, s))
 
 
-def convert_to_unicode(d):
-    for k in d.keys():
-        if type(d[k]) == str:
-            try:
-                d[k] = unicode(d[k])
-            except UnicodeDecodeError:
-                print("Unicode Problem: ")
-                print(k)
-                print(d[k])
-        if type(d[k]) == list:
-            for x in d[k]:
-                x = convert_to_unicode(x)
-    return d
-
-
 class StructureParserTest(TestCase):
     @classmethod
     def setUpClass(cls):
