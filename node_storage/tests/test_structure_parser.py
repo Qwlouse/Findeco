@@ -27,7 +27,6 @@ from findeco.settings import STATICFILES_DIRS
 from findeco.view_helpers import build_score_tree
 from node_storage.structure_parser import validate_structure_schema
 import os.path as path
-import PyV8
 
 from ..factory import create_slot, create_structureNode
 from ..factory import create_textNode, create_user
@@ -69,26 +68,6 @@ def js_escape_unicode(s):
     return str(ESCAPABLE.sub(_js_escape_unicode_re_callack, s))
 
 
-def convert_to_unicode(d):
-    for k in d.keys():
-        if type(d[k]) == str:
-            try:
-                d[k] = unicode(d[k])
-            except UnicodeDecodeError:
-                print("Unicode Problem: ")
-                print(k)
-                print(d[k])
-        if type(d[k]) == list:
-            for x in d[k]:
-                x = convert_to_unicode(x)
-    return d
-
-
-class Global(PyV8.JSClass):
-    def writeln(self, arg):
-        print(arg)
-
-
 class StructureParserTest(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -101,17 +80,8 @@ class StructureParserTest(TestCase):
                     cls.jsparser_source = f.read()
                 break
 
-        cls.jsparser = js_escape_unicode(cls.jsparser_source)
-
     def setUp(self):
-        self.assertIsNotNone(self.jsparser_source)
-        self.ctxt = PyV8.JSContext(Global())
-        self.ctxt.enter()
-        self.ctxt.eval(self.jsparser)
-        testcode = "var s='%s'; var t='%s';parseStructure(s, t);"
-        self.jsparser = lambda x, y: convert_to_unicode(PyV8.convert(
-            self.ctxt.eval(testcode % (x.replace('\n', "' + \n '"), y))))
-        self.parser = {"pyparser": pyparser, "jsparser": self.jsparser}
+        self.parse = pyparser
 
     def test_strip_accents(self):
         self.assertEqual(strip_accents("aäàáâeèéêiìíîoöòóôuüùúû"),
@@ -174,10 +144,10 @@ class StructureParserTest(TestCase):
             'text': "Der text.",
             'children': []
         }
-        for pname, parse in self.parser.items():
-            s = parse(wiki, "foo")
-            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s, schema, "fail in " + pname)
+
+        s = self.parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s, schema)
 
     def test_structure_parser_processes_short_title(self):
         wiki = """=Titel=
@@ -191,10 +161,10 @@ class StructureParserTest(TestCase):
                  }
             ]
         }
-        for pname, parse in self.parser.items():
-            s = parse(wiki, "foo")
-            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s, schema, "fail in " + pname)
+
+        s = self.parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s, schema)
 
     # TODO unskip this test
     # def test_structure_parser_turns_title_into_short_title(self):
@@ -232,10 +202,9 @@ class StructureParserTest(TestCase):
             'text': "Der text.",
             'children': []
         }
-        for pname, parse in self.parser.items():
-            s = parse(wiki, "foo")
-            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s, schema, "fail in " + pname)
+        s = self.parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s, schema)
 
     def test_structure_parser_without_title_raises_exception(self):
         wiki = "nur text"
@@ -259,10 +228,9 @@ class StructureParserTest(TestCase):
             'text': "Der text.",
             'children': []
         }
-        for pname, parse in self.parser.items():
-            s = parse(wiki, "foo")
-            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s, schema, "fail in " + pname)
+        s = self.parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s, schema)
 
     def test_structure_parser_with_nested_h2(self):
         wiki = """
@@ -287,10 +255,9 @@ class StructureParserTest(TestCase):
                        'children': []},
                   ]}
 
-        for pname, parse in self.parser.items():
-            s = parse(wiki, "foo")
-            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s, schema, "fail in " + pname)
+        s = self.parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s, schema)
 
     def test_structure_parser_with_nested_h4(self):
         wiki = """
@@ -314,10 +281,9 @@ class StructureParserTest(TestCase):
                        'text': "mehr text",
                        'children': []},
                   ]}
-        for pname, parse in self.parser.items():
-            s = parse(wiki, "foo")
-            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            self.assertEqual(s, schema, "fail in " + pname)
+        s = self.parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s, schema)
 
     def test_structure_parser_with_deep_example(self):
         wiki = """
@@ -371,12 +337,9 @@ class StructureParserTest(TestCase):
                             ]},
                        ]},
                   ]}
-        for pname, parse in self.parser.items():
-            s = parse(wiki, "foo")
-            self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-            #print(s)
-            #print(schema)
-            self.assertEqual(s, schema, "fail in " + pname)
+        s = self.parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s, schema)
 
 
 class CreateStructureFromStructureNodeSchemaTest(TestCase):
