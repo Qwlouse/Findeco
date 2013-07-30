@@ -1,5 +1,7 @@
 <div id="contentContainer" class="centeringContainer">
     <div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
+        <div class="tipp">In dieser Spalte stehen User bei denen sich der Suchbegriff im Benutzernamen oder in der
+            Beschreibung findet.</div>
         <h1 data-i18n="_searchUserResults_">Suchergebnisse zu Usern</h1>
         <ul class="searchResults">
             <li ng-repeat="result in searchResults.userResults">
@@ -10,6 +12,8 @@
     </div>
 
     <div id="centerColumn" class="contentBox">
+        <div class="tipp">Die Suchergebnisse sind in drei Spalten aufgeteilt. In dieser Spalte stehen Vorschläge und
+            Argumente zum Suchbegriff.</div>
         <h1 data-i18n="_searchContentResults_">Suchergebnisse</h1>
         <ul class="searchResults">
             <li ng-repeat="result in searchResults.contentResults">
@@ -20,6 +24,7 @@
     </div>
 
     <div id="rightColumn" class="contentBox" style="position: relative;">
+        <div class="tipp">In dieser Spalte stehen Suchergebnisse aus dem Microblogging.</div>
         <h1 data-i18n="_searchMicrobloggingResults_">Suchergebnisse im Microblogging</h1>
         <ul class="microblogList">
             <li ng-repeat="microblogNode in searchResults.microbloggingResults">
