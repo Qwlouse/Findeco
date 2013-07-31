@@ -48,7 +48,8 @@ from test_store_text import StoreTextTest
 from test_load_graph_data import LoadGraphDataTest
 from test_marking import UnFollowTest, FollowTest, MarkSpamTest, UnMarkSpamTest
 from test_search import SearchTest
-
+from test_fe_page_start import *
+from test_fe_page_login import *
 try:
     from microblogging.tests import *
 except ImportError:

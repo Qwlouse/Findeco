@@ -11,6 +11,16 @@
 <thead>
 <tr><td rowspan="1" colspan="3">UserDelete</td></tr>
 </thead><tbody>
+<tr>
+	<td>openWindow</td>
+	<td>http://localhost:8000</td>
+	<td>${varWindowname}</td>
+</tr>
+<tr>
+	<td>windowMaximize</td>
+	<td></td>
+	<td></td>
+</tr>
 <!---->
 <!---->
 <!---->

@@ -4,37 +4,17 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://127.0.0.1:8000/" />
-<title>ContentPageRoot</title>
+<title>init</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ContentPageRoot</td></tr>
+<tr><td rowspan="1" colspan="3">init</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForNotVisible</td>
-	<td>css=.deactivateSpinner</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextNotPresent</td>
-	<td>root</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyCssCount</td>
-	<td>css=.contentBox</td>
-	<td>6</td>
-</tr>
-<tr>
-	<td>verifyCssCount</td>
-	<td>h2</td>
-	<td>6</td>
+	<td>storeExpression</td>
+	<td>javascript{&quot;User&quot; + new Date().getTime()}</td>
+	<td>varUserName</td>
 </tr>
 </tbody></table>
 </body>
