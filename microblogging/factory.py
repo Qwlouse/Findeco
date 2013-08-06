@@ -48,7 +48,9 @@ def validate_microblogging_schema(structure):
         'author': user_id,
         'location': node_id,
         'time': timestamp,
-        'text': text,
+        'type': one of [userpost, node_created, node_refined, node_spam_marked,
+                        node_spam_unmarked, node_followed, node_unfollowed]
+        'template_text': text,
         'mentions': [user_id, None],  # have to be sorted and unique
         'references': [path, None],   # have to be sorted and unique
         'answer_to': microblog_id     # -1 if not an answer
@@ -57,7 +59,8 @@ def validate_microblogging_schema(structure):
     entries = [('author', int),
                ('location', int),
                ('time', int),
-               ('text', unicode),
+               ('type', unicode),
+               ('template_text', unicode),
                ('mentions', list),
                ('references', list),
                ('answer_to', int)]
@@ -66,6 +69,14 @@ def validate_microblogging_schema(structure):
         e = structure[n]
         assert isinstance(e,  t), \
             "Type of field '%s' should be %s but was %s" % (n, t, type(e))
+
+    # validate type
+    allowed_types = {"userpost", "node_created", "node_refined",
+                     "node_spam_marked", "node_spam_unmarked",
+                     "node_followed", "node_unfollowed"}
+
+    assert structure['type'] in allowed_types, \
+        "Invalid type '%s'" % structure['type']
 
     # validate mentions
     mentions = structure['mentions']

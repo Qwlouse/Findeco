@@ -42,7 +42,8 @@ class MicrobloggingSchemaTest(TestCase):
             'author': 0,
             'location': 0,
             'time': 0,
-            'text': "some text",
+            'type': "userpost",
+            'template_text': "some text",
             'mentions': [],
             'references': [],
             'answer_to': -1
@@ -52,7 +53,8 @@ class MicrobloggingSchemaTest(TestCase):
             'author': self.hugo,
             'location': 'foo.1',
             'time': '12:30',
-            'text': None,
+            'type': 5,
+            'template_text': None,
             'mentions': {},
             'references': {},
             'answer_to': 'my_mom'
@@ -77,12 +79,18 @@ class MicrobloggingSchemaTest(TestCase):
             with self.assertRaisesRegexp(AssertionError, e):
                 validate_microblogging_schema(schema)
 
-    def test_validate_microblogging_schema_fails_for_wrong_types(self):
+    def test_validate_microblogging_schema_fails_for_wrong_datatypes(self):
         for n, e in self.wrong_schema.items():
             schema = dict(self.schema_skeleton)
             schema[n] = e
             with self.assertRaisesRegexp(AssertionError, n):
                 validate_microblogging_schema(schema)
+
+    def test_validate_microblogging_schema_fails_for_wrong_type(self):
+        schema = dict(self.schema_skeleton)
+        schema['type'] = 'uncle bob'
+        with self.assertRaisesRegexp(AssertionError, 'type'):
+            validate_microblogging_schema(schema)
 
     def test_validate_microblogging_schema_fails_for_duplicate_mentions(self):
         self.schema_skeleton['mentions'] = [self.hugo.id, self.hugo.id]
