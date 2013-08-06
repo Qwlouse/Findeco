@@ -162,6 +162,14 @@ class MicrobloggingParserTest(TestCase):
         }
         self.assert_schema_equal(mbs, expected)
 
+    def test_parseMicroblogging_invalid_reference(self):
+        mbs = parse_microblogging("someone should write /cool.1", self.hugo, "")
+        expected = {
+            'template_text': "someone should write /cool.1",
+            'references': [],
+        }
+        self.assert_schema_equal(mbs, expected)
+
     def test_parseMicroblogging_single_mention(self):
         mbs = parse_microblogging("hey @herbert cool name", self.hugo, "")
         expected = {

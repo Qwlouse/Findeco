@@ -27,7 +27,7 @@ from django.contrib.auth.models import User
 
 from findeco.api_validation import USERNAME
 from findeco.paths import RESTRICTED_PATH
-from node_storage.path_helpers import get_node_for_path
+from node_storage.path_helpers import get_node_for_path, IllegalPath
 
 
 def keyword(pattern):
@@ -45,15 +45,27 @@ def parse_microblogging(text, author, location, time=None, references_to=None):
     can then easily be turned into a database entry
     """
     # extract references
-    references = sorted(set(re.findall(REFERENCE_PATTERN, text)))
+    references = set()
+    for r in set(re.findall(REFERENCE_PATTERN, text)):
+        try:
+            get_node_for_path(r)
+            references.add(r)
+        except IllegalPath:
+            pass
+    references = sorted(references)
 
     def reference_sub(m):
-        return "{n%d}" % references.index(m.group().strip('/'))
+        path = m.group().strip('/')
+        if path in references:
+            return "{n%d}" % references.index(path)
+        else:
+            return '/' + path
+
     template_text, _ = re.subn(REFERENCE_PATTERN, reference_sub, text)
 
     # extract mentions
     mentions = dict()
-    for m in re.findall(MENTION_PATTERN, template_text):
+    for m in set(re.findall(MENTION_PATTERN, template_text)):
         try:
             mentions[m] = User.objects.get(username=m).id
         except User.DoesNotExist:
