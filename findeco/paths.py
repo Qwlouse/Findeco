@@ -49,16 +49,16 @@ Examples:
 from __future__ import division, print_function, unicode_literals
 import re
 
-SHORT_TITLE = r'([a-zA-Z][a-zA-Z0-9-_]{0,19})'
-ID = r'([0-9]+)'
+SHORT_TITLE = r'(?:[a-zA-Z][a-zA-Z0-9-_]{0,19})'
+ID = r'(?:[0-9]+)'
 SLOT = SHORT_TITLE
-NODE = '(' + SLOT + r'\.' + ID + ')'
-ARG_CATEGORY = r'(' + NODE + r'\.' + '(pro|neut|con|all)' + ')'
-ARG = r'(' + NODE + r'\.' + '(pro|neut|con|all)' + r'(\.' + ID + '))'
-SUFFIX = r'(' + ARG + '|' + ARG_CATEGORY + '|' + NODE + '|' + SLOT + ')'
-RESTRICTED_SUFFIX = r'(' + ARG + '|' + NODE + ')'
-PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
-RESTRICTED_PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + RESTRICTED_SUFFIX + \
+NODE = '(?:' + SLOT + r'\.' + ID + ')'
+ARG_CATEGORY = r'(?:' + NODE + r'\.' + '(?:pro|neut|con|all)' + ')'
+ARG = r'(?:' + NODE + r'\.' + '(?:pro|neut|con|all)' + r'(?:\.' + ID + '))'
+SUFFIX = r'(?:' + ARG + '|' + ARG_CATEGORY + '|' + NODE + '|' + SLOT + ')'
+RESTRICTED_SUFFIX = r'(?:' + ARG + '|' + NODE + ')'
+PATH = '(?P<path>' + '(?:' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
+RESTRICTED_PATH = '(?P<path>' + '(?:' + NODE + '/' + ')*' + RESTRICTED_SUFFIX + \
                   '?' + ')' + '/?'
 pathMatcher = re.compile(PATH)
 
