@@ -54,12 +54,20 @@ def parse_microblogging(text, author, location, time=None, references_to=None):
     # extract mentions
     mentions = dict()
     for m in re.findall(MENTION_PATTERN, template_text):
-        mentions[m] = User.objects.get(username=m).id
+        try:
+            mentions[m] = User.objects.get(username=m).id
+        except User.DoesNotExist:
+            pass
 
     sorted_mentions = sorted(mentions.values())
 
     def mention_sub(m):
-        return "{u%d}" % sorted_mentions.index(mentions[m.group().strip('@')])
+        username = m.group().strip('@')
+        if username in mentions:
+            return "{u%d}" % sorted_mentions.index(mentions[username])
+        else:
+            return '@' + username
+
     template_text, _ = re.subn(MENTION_PATTERN, mention_sub, template_text)
 
     return {

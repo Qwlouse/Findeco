@@ -180,3 +180,13 @@ class MicrobloggingParserTest(TestCase):
             'mentions': [self.hugo.id, self.herbert.id],
         }
         self.assert_schema_equal(mbs, expected)
+
+    def test_parseMicroblogging_invalid_mention(self):
+        mbs = parse_microblogging("does anyone know @ninja",
+                                  self.hugo, "")
+        expected = {
+            'author': self.hugo.id,
+            'template_text': "does anyone know @ninja",
+            'mentions': [],
+        }
+        self.assert_schema_equal(mbs, expected)
