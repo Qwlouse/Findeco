@@ -39,12 +39,7 @@ MENTION_PATTERN = keyword("@" + USERNAME)
 REFERENCE_PATTERN = keyword(r'/' + RESTRICTED_PATH)
 
 
-def parse_microblogging(text, author, location, time=None, references_to=None):
-    """
-    Parse the text of a Microblog-Post and turn it into a JSON Structure that
-    can then easily be turned into a database entry
-    """
-    # extract references
+def extract_references(text):
     references = set()
     for r in set(re.findall(REFERENCE_PATTERN, text)):
         try:
@@ -62,10 +57,12 @@ def parse_microblogging(text, author, location, time=None, references_to=None):
             return '/' + path
 
     template_text, _ = re.subn(REFERENCE_PATTERN, reference_sub, text)
+    return references, template_text
 
-    # extract mentions
+
+def extract_mentions(text):
     mentions = dict()
-    for m in set(re.findall(MENTION_PATTERN, template_text)):
+    for m in set(re.findall(MENTION_PATTERN, text)):
         try:
             mentions[m] = User.objects.get(username=m).id
         except User.DoesNotExist:
@@ -80,14 +77,24 @@ def parse_microblogging(text, author, location, time=None, references_to=None):
         else:
             return '@' + username
 
-    template_text, _ = re.subn(MENTION_PATTERN, mention_sub, template_text)
+    template_text, _ = re.subn(MENTION_PATTERN, mention_sub, text)
+    return sorted_mentions, template_text
+
+
+def parse_microblogging(text, author, location, time=None, references_to=None):
+    """
+    Parse the text of a Microblog-Post and turn it into a JSON Structure that
+    can then easily be turned into a database entry
+    """
+    references, template_text = extract_references(text)
+    mentions, template_text = extract_mentions(template_text)
 
     return {
         'author': author.id,
         'location': get_node_for_path(location).id,
         'type': "userpost",
         'template_text': template_text,
-        'mentions': sorted_mentions,
+        'mentions': mentions,
         'references': references,
         'answer_to': -1
     }
