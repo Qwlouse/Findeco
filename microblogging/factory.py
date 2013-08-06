@@ -81,7 +81,7 @@ def extract_mentions(text):
     return sorted_mentions, template_text
 
 
-def parse_microblogging(text, author, location, time=None, references_to=None):
+def parse_microblogging(text, author, location, references_to=None):
     """
     Parse the text of a Microblog-Post and turn it into a JSON Structure that
     can then easily be turned into a database entry
@@ -105,7 +105,6 @@ def validate_microblogging_schema(structure):
     MICROBLOG_POST = {
         'author': user_id,
         'location': node_id,
-        'time': timestamp,
         'type': one of [userpost, node_created, node_refined, node_spam_marked,
                         node_spam_unmarked, node_followed, node_unfollowed]
         'template_text': text,
@@ -116,7 +115,6 @@ def validate_microblogging_schema(structure):
     """
     entries = [('author', int),
                ('location', int),
-               ('time', int),
                ('type', unicode),
                ('template_text', unicode),
                ('mentions', list),

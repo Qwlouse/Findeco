@@ -41,7 +41,6 @@ class MicrobloggingSchemaTest(TestCase):
         self.schema_skeleton = {
             'author': 0,
             'location': 0,
-            'time': 0,
             'type': "userpost",
             'template_text': "some text",
             'mentions': [],
@@ -52,7 +51,6 @@ class MicrobloggingSchemaTest(TestCase):
         self.wrong_schema = {
             'author': self.hugo,
             'location': 'foo.1',
-            'time': '12:30',
             'type': 5,
             'template_text': None,
             'mentions': {},
