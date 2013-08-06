@@ -146,13 +146,8 @@ class MicrobloggingParserTest(TestCase):
     def test_parseMicroblogging_single_node_reference(self):
         mbs = parse_microblogging("the proposal /foo.1 is cool", self.hugo, "")
         expected = {
-            'author': self.hugo.id,
-            'location': self.root.id,
-            'type': "userpost",
             'template_text': "the proposal {n0} is cool",
-            'mentions': [],
             'references': ['foo.1'],
-            'answer_to': -1
         }
         self.assert_schema_equal(mbs, expected)
 
@@ -161,13 +156,27 @@ class MicrobloggingParserTest(TestCase):
                                   "better than /foo.1 because /foo.1 sucks",
                                   self.hugo, "")
         expected = {
-            'author': self.hugo.id,
-            'location': self.root.id,
-            'type': "userpost",
             'template_text': "{n0} was improved to {n1} and is now better than "
                              "{n0} because {n0} sucks",
-            'mentions': [],
             'references': ['foo.1', 'foo.2'],
-            'answer_to': -1
+        }
+        self.assert_schema_equal(mbs, expected)
+
+    def test_parseMicroblogging_single_mention(self):
+        mbs = parse_microblogging("hey @herbert cool name", self.hugo, "")
+        expected = {
+            'author': self.hugo.id,
+            'template_text': "hey {u0} cool name",
+            'mentions': [self.herbert.id],
+        }
+        self.assert_schema_equal(mbs, expected)
+
+    def test_parseMicroblogging_multiple_mention(self):
+        mbs = parse_microblogging("@herbert is like @hugo but more @herbert",
+                                  self.hugo, "")
+        expected = {
+            'author': self.hugo.id,
+            'template_text': "{u1} is like {u0} but more {u1}",
+            'mentions': [self.hugo.id, self.herbert.id],
         }
         self.assert_schema_equal(mbs, expected)

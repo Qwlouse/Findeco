@@ -25,18 +25,18 @@ from __future__ import division, print_function, unicode_literals
 import re
 from django.contrib.auth.models import User
 
+from findeco.api_validation import USERNAME
 from findeco.paths import RESTRICTED_PATH
 from node_storage.path_helpers import get_node_for_path
 
 
-WORDSTART = r"(?:(?<=\s)|\A)"
-WORDEND = r"\b"
-
-
 def keyword(pattern):
+    WORDSTART = r"(?:(?<=\s)|\A)"
+    WORDEND = r"\b"
     return re.compile(WORDSTART + pattern + WORDEND)
 
-internal_link_pattern = keyword(r'/' + RESTRICTED_PATH)
+MENTION_PATTERN = keyword("@" + USERNAME)
+REFERENCE_PATTERN = keyword(r'/' + RESTRICTED_PATH)
 
 
 def parse_microblogging(text, author, location, time=None, references_to=None):
@@ -44,19 +44,30 @@ def parse_microblogging(text, author, location, time=None, references_to=None):
     Parse the text of a Microblog-Post and turn it into a JSON Structure that
     can then easily be turned into a database entry
     """
-
-    references = sorted(set(re.findall(internal_link_pattern, text)))
+    # extract references
+    references = sorted(set(re.findall(REFERENCE_PATTERN, text)))
 
     def reference_sub(m):
         return "{n%d}" % references.index(m.group().strip('/'))
+    template_text, _ = re.subn(REFERENCE_PATTERN, reference_sub, text)
 
-    template_text, n = re.subn(internal_link_pattern, reference_sub, text)
+    # extract mentions
+    mentions = dict()
+    for m in re.findall(MENTION_PATTERN, template_text):
+        mentions[m] = User.objects.get(username=m).id
+
+    sorted_mentions = sorted(mentions.values())
+
+    def mention_sub(m):
+        return "{u%d}" % sorted_mentions.index(mentions[m.group().strip('@')])
+    template_text, _ = re.subn(MENTION_PATTERN, mention_sub, template_text)
+
     return {
         'author': author.id,
         'location': get_node_for_path(location).id,
         'type': "userpost",
         'template_text': template_text,
-        'mentions': [],
+        'mentions': sorted_mentions,
         'references': references,
         'answer_to': -1
     }
