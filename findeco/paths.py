@@ -58,7 +58,7 @@ ARG = r'(?:' + NODE + r'\.' + '(?:pro|neut|con|all)' + r'(?:\.' + ID + '))'
 SUFFIX = r'(?:' + ARG + '|' + ARG_CATEGORY + '|' + NODE + '|' + SLOT + ')'
 RESTRICTED_SUFFIX = r'(?:' + ARG + '|' + NODE + ')'
 PATH = '(?P<path>' + '(?:' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
-RESTRICTED_PATH = '(?P<path>' + '(?:' + NODE + '/' + ')*' + RESTRICTED_SUFFIX + \
+RESTRICTED_PATH = '(?P<path>' + '(?:' + NODE + '/' + ')*' + RESTRICTED_SUFFIX +\
                   '?' + ')' + '/?'
 pathMatcher = re.compile(PATH)
 
