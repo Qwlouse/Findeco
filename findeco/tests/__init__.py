@@ -25,7 +25,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-
 from test_activation_models import ActivationTest, EmailActivationTest
 from test_activation_models import PasswordRecoveryTest
 from test_profile import UserProfileTest
@@ -49,7 +48,9 @@ from test_load_graph_data import LoadGraphDataTest
 from test_marking import UnFollowTest, FollowTest, MarkSpamTest, UnMarkSpamTest
 from test_search import SearchTest
 from test_fe_page_start import *
+from test_fe_page_registration import *
 from test_fe_page_login import *
+from test_fe_page_profile import *
 try:
     from microblogging.tests import *
 except ImportError:

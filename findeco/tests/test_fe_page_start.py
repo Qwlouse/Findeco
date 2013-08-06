@@ -10,7 +10,7 @@ import time
 class TestFePageStart(LiveServerTestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(3)
+        self.driver.implicitly_wait(1)
     def tearDown(self):
         self.driver.quit()
     def test_check_page_Contents(self):
