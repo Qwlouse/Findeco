@@ -22,22 +22,42 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 
+import re
 from django.contrib.auth.models import User
 
+from findeco.paths import RESTRICTED_PATH
 from node_storage.path_helpers import get_node_for_path
+
+
+WORDSTART = r"(?:(?<=\s)|\A)"
+WORDEND = r"\b"
+
+
+def keyword(pattern):
+    return re.compile(WORDSTART + pattern + WORDEND)
+
+internal_link_pattern = keyword(r'/' + RESTRICTED_PATH)
 
 
 def parse_microblogging(text, author, location, time=None, references_to=None):
     """
     Parse the text of a Microblog-Post and turn it into a JSON Structure that
-    can then easily be
+    can then easily be turned into a database entry
     """
+
+    references = sorted(set(re.findall(internal_link_pattern, text)))
+
+    def reference_sub(m):
+        return "{n%d}" % references.index(m.group().strip('/'))
+
+    template_text, n = re.subn(internal_link_pattern, reference_sub, text)
     return {
         'author': author.id,
-        'location': 1,
-        'text': "text",
+        'location': get_node_for_path(location).id,
+        'type': "userpost",
+        'template_text': template_text,
         'mentions': [],
-        'references': [],
+        'references': references,
         'answer_to': -1
     }
 

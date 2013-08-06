@@ -118,17 +118,56 @@ class MicrobloggingParserTest(TestCase):
         self.hugo = create_user('hugo')
         self.herbert = create_user('herbert')
         self.root = get_root_node()
+        # self.foo1 = create_nodes_for_path('foo.1')
+        self.foo2 = create_nodes_for_path('foo.2')
+
+    def assert_schema_equal(self, actual, expected):
+        for n, e in expected.items():
+            self.assertEqual(e, actual[n], "Mismatch for '%s': %s != %s" %
+                                           (n, e, actual[n]))
 
     def test_parseMicroblogging(self):
         mbs = parse_microblogging("text", self.hugo, "")
         expected = {
             'author': self.hugo.id,
             'location': self.root.id,
-            'text': "text",
+            'type': "userpost",
+            'template_text': "text",
             'mentions': [],
             'references': [],
             'answer_to': -1
         }
-        for n, e in expected.items():
-            self.assertEqual(e, mbs[n], "Mismatch for '%s': %s != %s" %
-                                        (n, e, mbs[n]))
+        self.assert_schema_equal(mbs, expected)
+
+    def test_parseMicroblogging_correct_location(self):
+        mbs = parse_microblogging("text", self.hugo, "foo.2")
+        self.assertEqual(mbs['location'], self.foo2.id)
+
+    def test_parseMicroblogging_single_node_reference(self):
+        mbs = parse_microblogging("the proposal /foo.1 is cool", self.hugo, "")
+        expected = {
+            'author': self.hugo.id,
+            'location': self.root.id,
+            'type': "userpost",
+            'template_text': "the proposal {n0} is cool",
+            'mentions': [],
+            'references': ['foo.1'],
+            'answer_to': -1
+        }
+        self.assert_schema_equal(mbs, expected)
+
+    def test_parseMicroblogging_multiple_node_references(self):
+        mbs = parse_microblogging("/foo.1 was improved to /foo.2 and is now "
+                                  "better than /foo.1 because /foo.1 sucks",
+                                  self.hugo, "")
+        expected = {
+            'author': self.hugo.id,
+            'location': self.root.id,
+            'type': "userpost",
+            'template_text': "{n0} was improved to {n1} and is now better than "
+                             "{n0} because {n0} sucks",
+            'mentions': [],
+            'references': ['foo.1', 'foo.2'],
+            'answer_to': -1
+        }
+        self.assert_schema_equal(mbs, expected)
