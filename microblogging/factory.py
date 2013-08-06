@@ -64,14 +64,14 @@ def extract_mentions(text):
     mentions = dict()
     for m in set(re.findall(MENTION_PATTERN, text)):
         try:
-            mentions[m] = User.objects.get(username=m).id
+            mentions[m.lower()] = User.objects.get(username__iexact=m).id
         except User.DoesNotExist:
             pass
 
     sorted_mentions = sorted(mentions.values())
 
     def mention_sub(m):
-        username = m.group().strip('@')
+        username = m.group().strip('@').lower()
         if username in mentions:
             return "{u%d}" % sorted_mentions.index(mentions[username])
         else:

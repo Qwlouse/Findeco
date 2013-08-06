@@ -171,7 +171,6 @@ class MicrobloggingParserTest(TestCase):
     def test_parseMicroblogging_single_mention(self):
         mbs = parse_microblogging("hey @herbert cool name", self.hugo, "")
         expected = {
-            'author': self.hugo.id,
             'template_text': "hey {u0} cool name",
             'mentions': [self.herbert.id],
         }
@@ -181,7 +180,6 @@ class MicrobloggingParserTest(TestCase):
         mbs = parse_microblogging("@herbert is like @hugo but more @herbert",
                                   self.hugo, "")
         expected = {
-            'author': self.hugo.id,
             'template_text': "{u1} is like {u0} but more {u1}",
             'mentions': [self.hugo.id, self.herbert.id],
         }
@@ -191,8 +189,15 @@ class MicrobloggingParserTest(TestCase):
         mbs = parse_microblogging("does anyone know @ninja",
                                   self.hugo, "")
         expected = {
-            'author': self.hugo.id,
             'template_text': "does anyone know @ninja",
             'mentions': [],
+        }
+        self.assert_schema_equal(mbs, expected)
+
+    def test_parseMicroblogging_mention_case_insensitive(self):
+        mbs = parse_microblogging("hey @HERBert cool name", self.hugo, "")
+        expected = {
+            'template_text': "hey {u0} cool name",
+            'mentions': [self.herbert.id],
         }
         self.assert_schema_equal(mbs, expected)
