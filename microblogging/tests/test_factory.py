@@ -27,7 +27,7 @@ from django.test import TestCase
 from microblogging.factory import parse_microblogging
 from microblogging.factory import validate_microblogging_schema
 
-from node_storage.factory import create_user, create_slot, create_structureNode
+from node_storage.factory import create_user, create_nodes_for_path
 from node_storage.path_helpers import get_root_node
 
 
@@ -36,12 +36,7 @@ class MicrobloggingSchemaTest(TestCase):
     def setUp(self):
         self.hugo = create_user('hugo')
         self.herbert = create_user('herbert')
-
-        self.foo = create_slot('foo')
-        root = get_root_node()
-        root.append_child(self.foo)
-        self.foo1 = create_structureNode('Foobar')
-        self.foo.append_child(self.foo1)
+        self.foo1 = create_nodes_for_path('foo.1')
 
         self.schema_skeleton = {
             'author': 0,
