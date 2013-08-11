@@ -183,9 +183,11 @@ INSTALLED_APPS = (
     'node_storage',
     'microblogging',
     'south',
-    'libs.django_cron',
-    'integration_tests'
+    'django_nose',
+    'libs.django_cron'
 )
+
+TEST_RUNNER = str('django_nose.NoseTestSuiteRunner')
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
