@@ -49,5 +49,5 @@ def py_files(filename):
 def execute_manage_test(*args):
     import os
     os.environ['DJANGO_SETTINGS_MODULE'] = 'findeco.settings'
-    exit_code = os.system('./manage.py test ' + " ".join(args[1:]))
+    exit_code = os.system('./manage.py test --attr="!selenium"' + " ".join(args[1:]))
     return exit_code == 0
