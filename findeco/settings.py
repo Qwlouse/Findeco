@@ -232,10 +232,17 @@ except ImportError:
     pass
 
 
-#if manage.py test was called, use test settings
+# if manage.py test was called, use test settings
 import sys
 if 'test' in sys.argv:
-    try:
-        from test_settings import *
-    except ImportError:
-        pass
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': project_path('test_sqlite.db')
+        }
+    }
+
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+        'django.contrib.auth.hashers.SHA1PasswordHasher',
+    )
