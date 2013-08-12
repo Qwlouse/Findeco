@@ -223,10 +223,19 @@ APPEND_SLASH = False
 CRON_POLLING_FREQUENCY = 300  # in seconds
 
 # uncomment this if you don't want unittests to run migrations
-#SOUTH_TESTS_MIGRATE = False
+SOUTH_TESTS_MIGRATE = False
 
 # try to import secret_settings and overwrite some of the default values
 try:
     from local_settings import *
 except ImportError:
     pass
+
+
+#if manage.py test was called, use test settings
+import sys
+if 'test' in sys.argv:
+    try:
+        from test_settings import *
+    except ImportError:
+        pass
