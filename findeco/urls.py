@@ -252,7 +252,7 @@ urlpatterns += patterns(
 
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
 
-    url(r'.*', 'findeco.views.home', name='home', kwargs={'path': 'wildcard'}),
+    url(r'^[^.].*', 'findeco.views.home', name='home', kwargs={'path': 'wildcard'}),
 )
 
 

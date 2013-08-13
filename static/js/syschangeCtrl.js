@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -22,20 +22,25 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-#messageBox {
-    min-height: 50px;
-    width: 600px;
-    position: fixed;
-    left: 50%;
-    top: 130px;
-    margin-left: -300px;
-    z-index: 500;
+'use strict';
+/* Controllers */
+
+function FindecoSyschangeCtrl($scope, Backend, User, TMP, Navigator) {
+
+    $scope.newsList =[];
+
+    var foo=[];
+    Backend.loadAnnounce().success(function (d) {
+    	 for (var i = 0; i < d["count"]; ++i) {
+    		 $scope.newsList[i]=[];
+    	
+    		 $scope.newsList[i].title=d["posts"][i]["title"]
+    		 $scope.newsList[i].url=d["posts"][i]["url"]
+    	 }
+    
+    });
+   
+    
 }
 
-button.close {
-    float: right;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-}
+FindecoSyschangeCtrl.$inject = ['$scope', 'Backend', 'User', 'TMP', 'Navigator'];

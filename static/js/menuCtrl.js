@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -22,20 +22,50 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-#messageBox {
-    min-height: 50px;
-    width: 600px;
-    position: fixed;
-    left: 50%;
-    top: 130px;
-    margin-left: -300px;
-    z-index: 500;
+'use strict';
+
+function FindecoMenuCtrl($scope, User, Navigator) {
+    $scope.user = User;
+
+    $scope.logout = function () {
+        User.logout().success(function () {
+            Navigator.changePath('/');
+        });
+    };
+
+    $scope.getActiveClass = function (pathPrefix) {
+        if (pathPrefix.length == 0 && Navigator.prefix == 0 && Navigator.nodePath == 0) {
+            return "activeTab";
+        } else if (pathPrefix.length > 0 &&
+            Navigator.prefix == pathPrefix) {
+            return "activeTab";
+        } else {
+            return "";
+        }
+    };
+
+    $scope.isContentActive = function () {
+        if (Navigator.prefix.length == 0 && Navigator.nodePath.length > 0) {
+            return "activeTab";
+        } else if (Navigator.prefix.substr(0, 5) == 'index') {
+            return "activeTab";
+        } else {
+            return "";
+        }
+    };
+
+    $scope.searchSubmit = function () {
+        if ($scope.searchString.match(/\S/)) {
+            Navigator.changePath('search/' + $scope.searchString);
+        }
+    };
+
+    $("#searchInput").focus(function() {
+            $(".searchBox").addClass("searchActive");
+        }).blur(function() {
+            $(".searchBox").removeClass("searchActive");
+        })
+
 }
 
-button.close {
-    float: right;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-}
+FindecoMenuCtrl.$inject = ['$scope', 'User', 'Navigator'];

@@ -25,6 +25,3 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-
-#from tests import MicrobloggingTests, StoreMicrobloggingTests
-from test_factory import MicrobloggingSchemaTest, MicrobloggingParserTest
