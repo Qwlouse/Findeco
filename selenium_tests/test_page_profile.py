@@ -25,7 +25,7 @@
 from django.test import LiveServerTestCase
 from nose.plugins.attrib import attr
 from selenium import webdriver
-
+import time
 
 @attr('selenium')
 class TestFePageProfile(LiveServerTestCase):
@@ -35,10 +35,83 @@ class TestFePageProfile(LiveServerTestCase):
 
     def tearDown(self):
         self.driver.quit()
+    def login(self):
+        self.driver.get(self.live_server_url + '/login')
+        self.driver.implicitly_wait(1)
+        self.driver.find_element_by_xpath("//input[@type='password']").send_keys("1234")
+        self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("admin")
+        self.driver.find_element_by_css_selector("input.btn.btn-primary").click()
+        time.sleep(1)
+        body = self.driver.find_element_by_tag_name('body')
+        self.assertIn('admin', body.text, "Login without success")
 
     def test_change_user_description(self):
         self.driver.get(self.live_server_url + '/')
+        self.login()
         self.driver.find_element_by_link_text("admin").click()
+        time.sleep(1)
         self.driver.find_element_by_xpath("//textarea[@ng-model='user.description']").send_keys("Dies ist die Userbeschreibung")
+        time.sleep(1)
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('Dies ist die Userbeschreibung', body.text, "Preview does not work")
+        self.driver.find_element_by_css_selector("input[type='submit']").click()
+        self.driver.find_elements_by_css_selector(".alert-success")
+        self.driver.find_element_by_css_selector("button.close").click()
+    
+    def test_change_user_email(self):
+        self.login()
+        self.driver.get(self.live_server_url + '/profile/mail')
+        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").clear()
+        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("")
+        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("footrash-mail.com")
+        self.driver.find_element_by_xpath("(//input[@value='Speichern'])[1]").click()
+        self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert")))
+        self.driver.find_element_by_css_selector("button.close").click()
+        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("foo@trash-mail.com")
+
+    def test_change_user_name(self):
+        self.login()
+        self.driver.get(self.live_server_url + '/profile')
+        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").clear()
+        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("")
+        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("admin")
+        self.driver.find_element_by_xpath("(//input[@value='Speichern'])[1]").click()
+        self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert")))
+        self.driver.find_element_by_css_selector("button.close").click()
+        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("")
+        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("admin2")
+        self.driver.find_element_by_xpath("(//input[@value='Speichern'])[1]").click()
+        self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert-success")))
+        
+    def test_change_password(self):
+        self.login()
+        self.driver.get(self.live_server_url + '/profile/password')
+        self.driver.find_element_by_xpath("(//input[@type='password'])[1]").clear()
+        self.driver.find_element_by_xpath("(//input[@type='password'])[2]").clear()
+        self.driver.find_element_by_xpath("(//input[@type='password'])[1]").send_keys("foobar")
+        self.driver.find_element_by_xpath("(//input[@type='password'])[2]").send_keys("foo")
+        self.driver.find_element_by_xpath("(//input[@value='Speichern'])[1]").click()
+        self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert")))
+        self.driver.find_element_by_css_selector("button.close").click()
+        self.driver.find_element_by_xpath("(//input[@type='password'])[1]").clear()
+        self.driver.find_element_by_xpath("(//input[@type='password'])[2]").clear()
+        self.driver.find_element_by_xpath("(//input[@type='password'])[1]").send_keys("foo")
+        self.driver.find_element_by_xpath("(//input[@type='password'])[2]").send_keys("foo")
+        self.driver.find_element_by_xpath("(//input[@value='Speichern'])[1]").click()
+        self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert-success")))
+        self.driver.find_element_by_css_selector("img[alt=\"Logout\"]").click()
+        self.driver.get(self.live_server_url + '/login')
+        self.driver.implicitly_wait(1)
+        self.driver.find_element_by_xpath("//input[@type='password']").send_keys("foo")
+        self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("admin")
+        self.driver.find_element_by_css_selector("input.btn.btn-primary").click()
+        time.sleep(1)
+        body = self.driver.find_element_by_tag_name('body')
+        self.assertIn('admin', body.text, "Login without success")
+        
+  #  def test_delete_user(self):
+     #   self.login()
+     #  self.driver.get(self.live_server_url + '/profile/delete')
+    #    self.driver.find_element_by_xpath("(//input[@value='Account löschen'])[1]").click()
+   #    self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert")))
+    #   
