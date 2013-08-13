@@ -73,29 +73,26 @@ class EmailActivationTest(TestCase):
     def test_email_activations_overwrite_each_other(self):
         act1 = EmailActivation.create(self.hans, 'mail1@abc.de')
         act2 = EmailActivation.create(self.hans, 'mail2@abc.de')
-        act3 = EmailActivation.create(self.hans, 'mail3@abc.de')
         self.assertEqual(EmailActivation.objects.filter(user=self.hans).count(),
                          1)
         act = EmailActivation.objects.get(user=self.hans)
         self.assertTrue(act.resolve())
         hans = User.objects.get(id=self.hans.id)
-        self.assertEqual(hans.email, 'mail3@abc.de')
+        self.assertEqual(hans.email, 'mail2@abc.de')
 
 
 class PasswordRecoveryTest(TestCase):
-    def setUp(self):
-        self.hans = create_user('hans', mail="abc@de.com", password="forgotten")
-        self.hans.is_active = True
-
     def test_recovery_creation(self):
-        act = PasswordRecovery.create(self.hans)
-        self.assertEqual(act.user, self.hans)
+        hans = create_user('hans')
+        act = PasswordRecovery.create(hans)
+        self.assertEqual(act.user, hans)
         self.assertTrue(act.is_valid())
         self.assertTrue(len(act.key) > 60)
 
     def test_recovery_resolve(self):
-        act = PasswordRecovery.create(self.hans)
+        hans = create_user('hans', password="forgotten")
+        act = PasswordRecovery.create(hans)
         pw = act.resolve()
         self.assertTrue(pw)
         self.assertIsNone(authenticate(username='hans', password='forgotten'))
-        self.assertEqual(authenticate(username='hans', password=pw), self.hans)
+        self.assertEqual(authenticate(username='hans', password=pw), hans)

@@ -2,8 +2,7 @@
 # coding=utf-8
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2013 Maik Nauheim <findeco@maik-nauheim.de>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -17,20 +16,29 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
 #
-################################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-################################################################################
+# from __future__ import division, print_function, unicode_literals
 
-import os
-import sys
+from django.test import LiveServerTestCase
+from nose.plugins.attrib import attr
+from selenium import webdriver
 
-if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "findeco.settings")
 
-    from django.core.management import execute_from_command_line
+@attr('selenium')
+class TestFePageProfile(LiveServerTestCase):
+    def setUp(self):
+        self.driver = webdriver.Firefox()
+        self.driver.implicitly_wait(1)
 
-    execute_from_command_line(sys.argv)
+    def tearDown(self):
+        self.driver.quit()
+
+    def test_change_user_description(self):
+        self.driver.get(self.live_server_url + '/')
+        self.driver.find_element_by_link_text("admin").click()
+        self.driver.find_element_by_xpath("//textarea[@ng-model='user.description']").send_keys("Dies ist die Userbeschreibung")
+        body = self.driver.find_element_by_tag_name('body')
+        self.assertIn('Dies ist die Userbeschreibung', body.text, "Preview does not work")

@@ -1,19 +1,41 @@
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support.ui import *  # available since 2.4.0
-
+#!/usr/bin/python
+# coding=utf-8
+# Findeco is dually licensed under GPLv3 or later and MPLv2.
+#
+# Copyright (c) 2013 Maik Nauheim <findeco@maik-nauheim.de>
+# This file is part of Findeco.
+#
+# Findeco is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# Findeco is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Findeco. If not, see <http://www.gnu.org/licenses/>.
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # from __future__ import division, print_function, unicode_literals
+
 from django.test import LiveServerTestCase
-import time
+from nose.plugins.attrib import attr
+from selenium import webdriver
 
 
-
+@attr('selenium')
 class TestFePageRegistration(LiveServerTestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(1)
+
     def tearDown(self):
         self.driver.quit()
+
     def test_check_click_path_to_page(self):
         self.driver.get(self.live_server_url + '/')
         self.driver.find_element_by_link_text("Anmelden").click()
@@ -95,9 +117,9 @@ class TestFePageRegistration(LiveServerTestCase):
         self.assertEqual(0, len(self.driver.find_elements_by_css_selector(".alert")))
         '''@todo: Registration is not completed thus mail problems in testing env'''
         '''@todo: Ensure Activation code is invalidated'''
-       # time.sleep(20)
+        # time.sleep(20)
         # self.driver.get("http://www.trash-mail.com")
-       # self.driver.find_element_by_name("mail").click()
+        # self.driver.find_element_by_name("mail").click()
         # self.driver.find_element_by_name("mail").clear()
         # self.driver.find_element_by_name("mail").send_keys("fin")
         # self.driver.find_element_by_name("submit").click()
