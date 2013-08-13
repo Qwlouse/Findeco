@@ -24,7 +24,7 @@
 
 'use strict';
 
-function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
+function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Navigator) {
     $scope.user = User;
     $scope.displayNameTmp = User.displayName;
     $scope.followUser = User.markUser;
@@ -129,5 +129,3 @@ function FindecoUserCtrl($scope, User, $routeParams, Message, Navigator) {
         }
     });
 }
-
-FindecoUserCtrl.$inject = ['$scope', 'User', '$routeParams' , 'Message', 'Navigator'];

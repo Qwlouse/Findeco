@@ -115,8 +115,7 @@ class TestFePageRegistration(LiveServerTestCase):
         self.driver.find_element_by_css_selector("input[type=\"submit\"]").click()
 
         self.assertEqual(0, len(self.driver.find_elements_by_css_selector(".alert")))
-        '''@todo: Registration is not completed thus mail problems in testing env'''
-        '''@todo: Ensure Activation code is invalidated'''
+     
         # time.sleep(20)
         # self.driver.get("http://www.trash-mail.com")
         # self.driver.find_element_by_name("mail").click()
