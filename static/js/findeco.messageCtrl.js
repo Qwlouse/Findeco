@@ -31,10 +31,6 @@ function FindecoMessageCtrl($scope, Backend, Message) {
     $scope.closeMessage = function (index) {
         $scope.service.messageList.splice(index, 1);
     };
-
-    $scope.$on('$routeChangeSuccess', function () {
-    	$scope.service.messageList= [];
-    });
 }
 
 FindecoMessageCtrl.$inject = ['$scope', 'Backend', 'Message'];
