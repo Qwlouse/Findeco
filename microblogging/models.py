@@ -88,6 +88,25 @@ class Post(models.Model):
         blank=True,
         null=True)
 
+    @classmethod
+    def short_post_type(cls, arg_type):
+        return {None: cls.USER_POST,
+                'userpost': cls.USER_POST,
+                'node_created': cls.NODE_CREATED,
+                'node_refined': cls.NODE_REFINED,
+                'node_spam_marked': cls.SPAM_MARKED,
+                'node_spam_unmarked': cls.SPAM_UNMARKED,
+                'node_followed': cls.NODE_FOLLOWED,
+                'node_unfollowed': cls.NODE_UNFOLLOWED,
+                cls.USER_POST: cls.USER_POST,
+                cls.NODE_CREATED: cls.NODE_CREATED,
+                cls.NODE_REFINED: cls.NODE_REFINED,
+                cls.SPAM_MARKED: cls.SPAM_MARKED,
+                cls.SPAM_UNMARKED: cls.SPAM_UNMARKED,
+                cls.NODE_FOLLOWED: cls.NODE_FOLLOWED,
+                cls.NODE_UNFOLLOWED: cls.NODE_UNFOLLOWED
+                }[arg_type]
+
     def __unicode__(self):
         if self.is_reference_to:
             return u'%s references "%s" by %s on %s' % (

@@ -27,6 +27,7 @@ from django.contrib.auth.models import User
 
 from findeco.api_validation import USERNAME
 from findeco.paths import RESTRICTED_PATH
+from microblogging import Post
 from node_storage.path_helpers import get_node_for_path, IllegalPath
 
 
@@ -100,6 +101,18 @@ def parse_microblogging(text, author, location, references_to=None):
     }
 
 
+def create_post(schema, save=True):
+    post = Post(
+        author_id=schema['author'],
+        node_references=schema['references'],
+        post_type=Post.short_post_type(schema['type']),
+
+    )
+    if save:
+        post.save()
+    return post
+
+
 def validate_microblogging_schema(structure):
     """
     MICROBLOG_POST = {
@@ -151,6 +164,5 @@ def validate_microblogging_schema(structure):
         assert isinstance(r,  unicode), \
             "references have to be paths (unicode) but was %s" % type(r)
         get_node_for_path(r)  # raises Illegal Path if invalid path
-
 
     return True
