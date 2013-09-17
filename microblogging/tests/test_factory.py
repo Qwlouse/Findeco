@@ -117,7 +117,7 @@ class MicrobloggingParserTest(TestCase):
         self.hugo = create_user('hugo')
         self.herbert = create_user('herbert')
         self.root = get_root_node()
-        # self.foo1 = create_nodes_for_path('foo.1')
+        self.foo1 = create_nodes_for_path('foo.1')
         self.foo2 = create_nodes_for_path('foo.2')
 
     def assert_schema_equal(self, actual, expected):
@@ -146,7 +146,7 @@ class MicrobloggingParserTest(TestCase):
         mbs = parse_microblogging("the proposal /foo.1 is cool", self.hugo, "")
         expected = {
             'template_text': "the proposal {n0} is cool",
-            'references': ['foo.1'],
+            'references': [self.foo1],
         }
         self.assert_schema_equal(mbs, expected)
 
@@ -157,7 +157,7 @@ class MicrobloggingParserTest(TestCase):
         expected = {
             'template_text': "{n0} was improved to {n1} and is now better than "
                              "{n0} because {n0} sucks",
-            'references': ['foo.1', 'foo.2'],
+            'references': [self.foo1, self.foo2],
         }
         self.assert_schema_equal(mbs, expected)
 

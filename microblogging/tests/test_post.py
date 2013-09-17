@@ -25,7 +25,6 @@ from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from microblogging.factory import create_post
 from node_storage.factory import create_user, create_nodes_for_path
-from microblogging.models import Post
 
 
 class PostTest(TestCase):

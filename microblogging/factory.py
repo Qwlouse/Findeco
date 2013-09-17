@@ -96,7 +96,7 @@ def parse_microblogging(text, author, location, references_to=None):
         'type': "userpost",
         'template_text': template_text,
         'mentions': mentions,
-        'references': references,
+        'references': [get_node_for_path(p) for p in references],
         'answer_to': None
     }
 
