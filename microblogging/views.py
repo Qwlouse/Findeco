@@ -145,12 +145,12 @@ timeline should be done in the frontend due to performance reasons.
 @ViewErrorHandling
 def load_own(request, name, select_id, microblogging_load_type):
     """
-Use this function to get the own posts of the user.
+    Use this function to get the own posts of the user.
 
-Referenced posts will show up in the timeline as the originals do.
-Hiding of the original posts for a tidy
-timeline should be done in the frontend due to performance reasons.
-"""
+    Referenced posts will show up in the timeline as the originals do.
+    Hiding of the original posts for a tidy
+    timeline should be done in the frontend due to performance reasons.
+    """
     named_user = assert_active_user(name)
 
     own = Q(author=named_user)

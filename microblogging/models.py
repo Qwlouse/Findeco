@@ -48,12 +48,30 @@ url_pattern = keyword(r"((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}[-A-Za-z0-9+&@#/
 
 
 class Post(models.Model):
+    USER_POST = 'p'
+    NODE_CREATED = 'c'
+    NODE_REFINED = 'r'
+    SPAM_MARKED = 's'
+    SPAM_UNMARKED = 'n'
+    NODE_FOLLOWED = 'f'
+    NODE_UNFOLLOWED = 'u'
+    MICROBLOGGING_TYPE = (
+        (USER_POST, 'userpost'),
+        (NODE_CREATED, 'node_created'),
+        (NODE_REFINED, 'node_refined'),
+        (SPAM_MARKED, 'node_spam_marked'),
+        (SPAM_UNMARKED, 'node_spam_unmarked'),
+        (NODE_FOLLOWED, 'node_followed'),
+        (NODE_UNFOLLOWED, 'node_unfollowed')
+    )
+
     node_references = models.ManyToManyField(
         backend.Node,
         symmetrical=False,
         related_name='microblogging_references',
         blank=True)
-    text = models.TextField()
+    text_cache = models.TextField()
+    text_template = models.TextField()
     author = models.ForeignKey(
         User,
         related_name='microblogging_posts')
@@ -63,6 +81,7 @@ class Post(models.Model):
         symmetrical=False,
         blank=True)
     time = models.DateTimeField('date posted', auto_now=True)
+    post_type = models.CharField(max_length=1, choices=MICROBLOGGING_TYPE)
     is_reference_to = models.ForeignKey(
         'self',
         related_name='referenced',
