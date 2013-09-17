@@ -32,6 +32,8 @@ class PostTest(TestCase):
 
     def setUp(self):
         self.hugo = create_user('hugo')
+        self.herbert = create_user('herbert')
+
         self.foo1 = create_nodes_for_path('foo.1')
 
         self.schema_skeleton = {
@@ -53,18 +55,21 @@ class PostTest(TestCase):
 
     def test_render_text_inserts_users(self):
         schema = self.schema_skeleton
-        schema['template_text'] = "reference user {u0}"
-        schema['mentions'] = [self.hugo]
+        schema['template_text'] = "reference users {u0}, {u1} and {u0} again."
+        schema['mentions'] = [self.hugo, self.herbert]
         p = create_post(schema)
         p.render()
-        self.assertRegexpMatches(p.text_cache, "hugo")
+        self.assertEqual(p.text_cache, 'reference users '
+                                       '<a href="/user/hugo">@hugo</a>, '
+                                       '<a href="/user/herbert">@herbert</a> '
+                                       'and <a href="/user/hugo">@hugo</a> '
+                                       'again.')
 
     def test_create_post_adds_many_to_many_relations(self):
-        maximus = create_user('max')
         node2 = create_nodes_for_path('bar.1')
         schema = self.schema_skeleton
         schema['template_text'] = "reference to {u0} and {u1} and {n0} and {n1}"
-        schema['mentions'] = [self.hugo, maximus]
+        schema['mentions'] = [self.hugo, self.herbert]
         schema['references'] = [self.foo1, node2]
         p = create_post(schema)
         p_db = Post.objects.all()[0]
@@ -72,3 +77,4 @@ class PostTest(TestCase):
         self.assertEqual(p.post_type, p_db.post_type)
         self.assertListEqual(list(p.mentions.all()), list(p_db.mentions.all()))
         self.assertListEqual(list(p.node_references.all()), list(p_db.node_references.all()))
+

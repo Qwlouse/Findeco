@@ -113,7 +113,13 @@ class Post(models.Model):
                 }[arg_type]
 
     def render(self):
-        self.text_cache = self.text_template
+        user_dict = {
+            'u' + str(i): '<a href="/user/{0}">@{0}</a>'.format(u.username)
+            for i, u in enumerate(self.mentions.order_by('id'))
+        }
+        text = self.text_template
+        text = text.format(**user_dict)
+        self.text_cache = text
 
     def __unicode__(self):
         if self.is_reference_to:
