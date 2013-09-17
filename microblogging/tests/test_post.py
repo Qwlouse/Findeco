@@ -31,6 +31,8 @@ class PostTest(TestCase):
 
     def setUp(self):
         self.hugo = create_user('hugo')
+        self.herbert = create_user('herbert')
+
         self.foo1 = create_nodes_for_path('foo.1')
 
         self.schema_skeleton = {
@@ -52,8 +54,12 @@ class PostTest(TestCase):
 
     def test_render_text_inserts_users(self):
         schema = self.schema_skeleton
-        schema['template_text'] = "reference user {u0}"
-        schema['mentions'] = [self.hugo]
+        schema['template_text'] = "reference users {u0}, {u1} and {u0} again."
+        schema['mentions'] = [self.hugo, self.herbert]
         p = create_post(schema)
         p.render()
-        self.assertRegexpMatches(p.text_cache, "hugo")
+        self.assertEqual(p.text_cache, 'reference users '
+                                       '<a href="/user/hugo">@hugo</a>, '
+                                       '<a href="/user/herbert">@herbert</a> '
+                                       'and <a href="/user/hugo">@hugo</a> '
+                                       'again.')
