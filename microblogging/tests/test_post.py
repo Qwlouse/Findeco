@@ -34,7 +34,7 @@ class PostTest(TestCase):
         self.foo1 = create_nodes_for_path('foo.1')
 
         self.schema_skeleton = {
-            'author': self.hugo,
+            'author': self.hugo.id,
             'location': self.foo1,
             'type': "userpost",
             'template_text': "some text",

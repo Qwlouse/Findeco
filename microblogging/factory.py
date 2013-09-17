@@ -106,14 +106,13 @@ def create_post(schema):
     Creates a Post-object out of a Post-schema and saved it to the database.
     The Object is returned.
     """
-    post = Post(
+    post = Post.objects.create(
         author_id=schema['author'],
         post_type=Post.short_post_type(schema['type']),
         text_template=schema['template_text'],
         location=schema['location'],
         is_answer_to=schema['answer_to']
     )
-    post.save()
     post.mentions = schema['mentions']
     post.node_references = schema['references']
     return post
