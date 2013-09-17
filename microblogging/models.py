@@ -125,9 +125,17 @@ class Post(models.Model):
         format_dict = collections.defaultdict(warn_then_missing_string)
         format_dict.update(user_dict)
         format_dict.update(node_dict)
-
+        # escape html
         text = escape(self.text_template)
+        # insert references and mentions
         text = text.format(**format_dict)
+        # replace #hashtags by links to search
+        split_text = tag_pattern.split(text)
+        for i in range(1, len(split_text), 2):
+            tagname = split_text[i]
+            split_text[i] = '<a href="/search/{0}">#{0}</a>'.format(tagname)
+        text = "".join(split_text)
+
         self.text_cache = text
 
     def __unicode__(self):

@@ -85,3 +85,11 @@ class PostTest(TestCase):
                                        'and <a href="/foo.1">foo_long</a> '
                                        'again.')
 
+    def test_render_text_inserts_links_for_hash_tags(self):
+        schema = self.schema_skeleton
+        schema['template_text'] = "link to #hash #tag"
+        p = create_post(schema)
+        p.render()
+        self.assertEqual(p.text_cache, 'link to '
+                                       '<a href="/search/hash">#hash</a> '
+                                       '<a href="/search/tag">#tag</a>')
