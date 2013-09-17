@@ -117,20 +117,20 @@ class Post(models.Model):
             'u' + str(i): '<a href="/user/{0}">@{0}</a>'.format(u.username)
             for i, u in enumerate(self.mentions.order_by('id'))
         }
-        text = self.text_template
+        text = escape(self.text_template)
         text = text.format(**user_dict)
         self.text_cache = text
 
     def __unicode__(self):
-        if self.is_reference_to:
+        if self.is_answer_to:
             return u'%s references "%s" by %s on %s' % (
                 self.author.username,
-                self.text,
-                self.is_reference_to.author.username,
+                self.text_cache,
+                self.is_answer_to.author.username,
                 self.time)
         else:
             return u'%s says "%s" on %s' % (self.author.username,
-                                            self.text,
+                                            self.text_cache,
                                             self.time)
 
 
