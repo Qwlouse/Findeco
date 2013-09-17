@@ -122,15 +122,15 @@ class Post(models.Model):
         self.text_cache = text
 
     def __unicode__(self):
-        if self.is_reference_to:
+        if self.is_answer_to:
             return u'%s references "%s" by %s on %s' % (
                 self.author.username,
-                self.text,
-                self.is_reference_to.author.username,
+                self.text_cache,
+                self.is_answer_to.author.username,
                 self.time)
         else:
             return u'%s says "%s" on %s' % (self.author.username,
-                                            self.text,
+                                            self.text_cache,
                                             self.time)
 
 
