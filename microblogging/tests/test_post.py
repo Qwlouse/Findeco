@@ -25,6 +25,7 @@ from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from microblogging.factory import create_post
 from node_storage.factory import create_user, create_nodes_for_path
+from microblogging.models import Post
 
 
 class PostTest(TestCase):
@@ -82,4 +83,18 @@ class PostTest(TestCase):
                                        '<a href="/foo.1">foo_long</a>, '
                                        '<a href="/foo.1/bar.1">bar_long</a> '
                                        'and <a href="/foo.1">foo_long</a> '
-                                       'again.')
+                                       'again.')                                       'again.')
+
+    def test_create_post_adds_many_to_many_relations(self):
+        node2 = create_nodes_for_path('bar.1')
+        schema = self.schema_skeleton
+        schema['template_text'] = "reference to {u0} and {u1} and {n0} and {n1}"
+        schema['mentions'] = [self.hugo, self.herbert]
+        schema['references'] = [self.foo1, node2]
+        p = create_post(schema)
+        p_db = Post.objects.all()[0]
+        self.assertEqual(p.author, p_db.author)
+        self.assertEqual(p.post_type, p_db.post_type)
+        self.assertListEqual(list(p.mentions.all()), list(p_db.mentions.all()))
+        self.assertListEqual(list(p.node_references.all()), list(p_db.node_references.all()))
+
