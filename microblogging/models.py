@@ -135,6 +135,12 @@ class Post(models.Model):
             tagname = split_text[i]
             split_text[i] = '<a href="/search/{0}">#{0}</a>'.format(tagname)
         text = "".join(split_text)
+        # replace external links
+        split_text = url_pattern.split(text)
+        for i in range(1, len(split_text), 2):
+            link = split_text[i]
+            split_text[i] = '<a href="{0}">{0}</a>'.format(link)
+        text = "".join(split_text)
 
         self.text_cache = text
 

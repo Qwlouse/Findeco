@@ -93,3 +93,13 @@ class PostTest(TestCase):
         self.assertEqual(p.text_cache, 'link to '
                                        '<a href="/search/hash">#hash</a> '
                                        '<a href="/search/tag">#tag</a>')
+
+    def test_render_text_converts_links(self):
+        schema = self.schema_skeleton
+        schema['template_text'] = "link to http://www.findeco.de"
+        p = create_post(schema)
+        p.render()
+        self.assertEqual(p.text_cache, 'link to '
+                                       '<a href="http://www.findeco.de">'
+                                       'http://www.findeco.de</a>')
+
