@@ -70,6 +70,11 @@ class Post(models.Model):
         symmetrical=False,
         related_name='microblogging_references',
         blank=True)
+    location = models.ForeignKey(
+        backend.Node,
+        related_name='microblogging_from_here',
+        blank=False,
+        null=False)
     text_cache = models.TextField()
     text_template = models.TextField()
     author = models.ForeignKey(
@@ -82,7 +87,7 @@ class Post(models.Model):
         blank=True)
     time = models.DateTimeField('date posted', auto_now=True)
     post_type = models.CharField(max_length=1, choices=MICROBLOGGING_TYPE)
-    is_reference_to = models.ForeignKey(
+    is_answer_to = models.ForeignKey(
         'self',
         related_name='referenced',
         blank=True,

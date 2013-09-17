@@ -102,12 +102,19 @@ def parse_microblogging(text, author, location, references_to=None):
 
 
 def create_post(schema, save=True):
+    """
+    Creates a Post-object out of a Post-schema and saved it to the database.
+    The Object is returned.
+    """
     post = Post(
         author_id=schema['author'],
-        node_references=schema['references'],
         post_type=Post.short_post_type(schema['type']),
-
+        text_template=schema['template_text'],
+        location=schema['location'],
+        is_answer_to=schema['answer_to']
     )
+    post.mentions = schema['mentions']
+    post.node_references = schema['references']
     if save:
         post.save()
     return post
