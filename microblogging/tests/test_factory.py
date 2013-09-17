@@ -133,7 +133,7 @@ class MicrobloggingParserTest(TestCase):
             'template_text': "text",
             'mentions': [],
             'references': [],
-            'answer_to': -1
+            'answer_to': None
         }
         self.assert_schema_equal(mbs, expected)
 

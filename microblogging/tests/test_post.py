@@ -46,7 +46,7 @@ class PostTest(TestCase):
     def test_render_text_generates_text(self):
         schema = self.schema_skeleton
         schema['template_text'] = "text without special stuff"
-        p = create_post(schema, save=False)
+        p = create_post(schema)
         p.render()
         self.assertEqual(p.text_cache, "text without special stuff")
 
@@ -54,6 +54,6 @@ class PostTest(TestCase):
         schema = self.schema_skeleton
         schema['template_text'] = "reference user {u0}"
         schema['mentions'] = [self.hugo]
-        p = create_post(schema, save=False)
+        p = create_post(schema)
         p.render()
         self.assertRegexpMatches(p.text_cache, "hugo")
