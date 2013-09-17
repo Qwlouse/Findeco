@@ -97,7 +97,7 @@ def parse_microblogging(text, author, location, references_to=None):
         'template_text': template_text,
         'mentions': mentions,
         'references': references,
-        'answer_to': -1
+        'answer_to': None
     }
 
 

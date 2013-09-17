@@ -112,6 +112,9 @@ class Post(models.Model):
                 cls.NODE_UNFOLLOWED: cls.NODE_UNFOLLOWED
                 }[arg_type]
 
+    def render(self):
+        self.text_cache = self.text_template
+
     def __unicode__(self):
         if self.is_reference_to:
             return u'%s references "%s" by %s on %s' % (
