@@ -38,7 +38,7 @@ import json
 ROOT_SYMBOL = "/"
 
 
-class StoreMicrobloggingTests(TestCase):
+"""class StoreMicrobloggingTests(TestCase):
     def setUp(self):
         self.user_max = create_user("max", password="1234")
 
@@ -389,3 +389,5 @@ class MicrobloggingTests(TestCase):
             self.assertTrue('authorGroup' in data['loadMicrobloggingResponse'][i])
             self.assertEqual(len(data['loadMicrobloggingResponse'][i]['authorGroup']), 1)
             self.assertTrue('microblogTime' in data['loadMicrobloggingResponse'][i])
+
+"""

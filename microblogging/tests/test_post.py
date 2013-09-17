@@ -52,6 +52,13 @@ class PostTest(TestCase):
         p.render()
         self.assertEqual(p.text_cache, "text without special stuff")
 
+    def test_render_text_escapes_html(self):
+        schema = self.schema_skeleton
+        schema['template_text'] = "<script> evil </script>"
+        p = create_post(schema)
+        p.render()
+        self.assertEqual(p.text_cache, "&lt;script&gt; evil &lt;/script&gt;")
+
     def test_render_text_inserts_users(self):
         schema = self.schema_skeleton
         schema['template_text'] = "reference users {u0}, {u1} and {u0} again."
