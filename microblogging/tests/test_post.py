@@ -34,6 +34,7 @@ class PostTest(TestCase):
         self.herbert = create_user('herbert')
 
         self.foo1 = create_nodes_for_path('foo.1')
+        self.foo1bar1 = create_nodes_for_path('foo.1/bar.1')
 
         self.schema_skeleton = {
             'author': self.hugo.id,
@@ -59,7 +60,7 @@ class PostTest(TestCase):
         p.render()
         self.assertEqual(p.text_cache, "&lt;script&gt; evil &lt;/script&gt;")
 
-    def test_render_text_inserts_users(self):
+    def test_render_text_inserts_mentions(self):
         schema = self.schema_skeleton
         schema['template_text'] = "reference users {u0}, {u1} and {u0} again."
         schema['mentions'] = [self.hugo, self.herbert]
@@ -69,4 +70,16 @@ class PostTest(TestCase):
                                        '<a href="/user/hugo">@hugo</a>, '
                                        '<a href="/user/herbert">@herbert</a> '
                                        'and <a href="/user/hugo">@hugo</a> '
+                                       'again.')
+
+    def test_render_text_inserts_node_references(self):
+        schema = self.schema_skeleton
+        schema['template_text'] = "reference nodes {n0}, {n1} and {n0} again."
+        schema['references'] = [self.foo1, self.foo1bar1]
+        p = create_post(schema)
+        p.render()
+        self.assertEqual(p.text_cache, 'reference nodes '
+                                       '<a href="/foo.1">foo_long</a>, '
+                                       '<a href="/foo.1/bar.1">bar_long</a> '
+                                       'and <a href="/foo.1">foo_long</a> '
                                        'again.')

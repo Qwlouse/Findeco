@@ -27,6 +27,7 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.db import models
+import collections
 import re
 from findeco.api_validation import USERNAME
 import node_storage as backend
@@ -117,8 +118,16 @@ class Post(models.Model):
             'u' + str(i): '<a href="/user/{0}">@{0}</a>'.format(u.username)
             for i, u in enumerate(self.mentions.order_by('id'))
         }
+        node_dict = {
+            'n' + str(i): '<a href="/{}">{}</a>'.format(n.get_a_path(), n.title)
+            for i, n in enumerate(self.node_references.order_by('id'))
+        }
+        format_dict = collections.defaultdict(warn_then_missing_string)
+        format_dict.update(user_dict)
+        format_dict.update(node_dict)
+
         text = escape(self.text_template)
-        text = text.format(**user_dict)
+        text = text.format(**format_dict)
         self.text_cache = text
 
     def __unicode__(self):
@@ -132,6 +141,12 @@ class Post(models.Model):
             return u'%s says "%s" on %s' % (self.author.username,
                                             self.text_cache,
                                             self.time)
+
+
+def warn_then_missing_string():
+    import warnings
+    warnings.warn('corrupted text_template')
+    return "MISSING"
 
 
 def create_post(text, author, path=None, second_path=None, do_escape=True):
