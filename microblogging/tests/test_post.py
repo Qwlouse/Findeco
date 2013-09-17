@@ -83,7 +83,7 @@ class PostTest(TestCase):
                                        '<a href="/foo.1">foo_long</a>, '
                                        '<a href="/foo.1/bar.1">bar_long</a> '
                                        'and <a href="/foo.1">foo_long</a> '
-                                       'again.')                                       'again.')
+                                       'again.')
 
     def test_create_post_adds_many_to_many_relations(self):
         node2 = create_nodes_for_path('bar.1')
