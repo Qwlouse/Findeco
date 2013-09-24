@@ -29,7 +29,7 @@ from django.db.models import Q
 from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
-from models import create_post, Post
+from models import Post
 import node_storage as backend
 from django.contrib.auth.models import Permission, User
 from findeco.view_helpers import json_response
@@ -206,7 +206,7 @@ def store_microblog_post(request, path):
     assert_authentication(request)
     assert_post_parameters(request, ['microblogText'])
     post_text = convert_long_urls(request)
-    create_post(post_text, request.user, path)
+    #create_post(post_text, request.user, path)
     return json_response({'storeMicrobloggingResponse': {}})
 
 
