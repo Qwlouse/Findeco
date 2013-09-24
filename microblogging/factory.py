@@ -28,7 +28,7 @@ from django.contrib.auth.models import User
 from findeco.api_validation import USERNAME
 from findeco.paths import RESTRICTED_PATH
 from microblogging.models import Post
-from node_storage.path_helpers import get_node_for_path, IllegalPath, get_root_node
+from node_storage.path_helpers import get_node_for_path, IllegalPath
 
 
 def keyword(pattern):
@@ -106,6 +106,7 @@ def create_post_from_schema(schema):
     Creates a Post-object out of a Post-schema and saved it to the database.
     The Object is returned.
     """
+    print('create_post(' + str(schema) + ')')
     post = Post.objects.create(
         author_id=schema['author'],
         post_type=Post.short_post_type(schema['type']),

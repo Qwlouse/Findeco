@@ -38,7 +38,7 @@ class PostTest(TestCase):
 
         self.schema_skeleton = {
             'author': self.hugo.id,
-            'location': self.foo1,
+            'location': self.foo1.id,
             'type': "userpost",
             'template_text': "some text",
             'mentions': [],
