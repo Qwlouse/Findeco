@@ -21,11 +21,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-#from django.contrib.auth.models import User
 from microblogging.factory import create_post
 import node_storage as backend
-
-#system = User.objects.get(username="system")
 
 
 def post_node_was_flagged_message(path, user):

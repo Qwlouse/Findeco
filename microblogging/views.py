@@ -29,7 +29,6 @@ from django.db.models import Q
 from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
-from microblogging.factory import create_post
 from .models import Post
 from django.contrib.auth.models import User
 from findeco.view_helpers import json_response
@@ -53,8 +52,9 @@ def convert_response_list(post_list):
 
 def convert_long_urls(request):
     """
-This function removes the unnecessary part from urls which are copy&pasted from the url field of the browser.
-"""
+    This function removes the unnecessary part from urls which are copy&pasted
+    from the url field of the browser.
+    """
     hostname = request.META['HTTP_HOST']
     text = request.POST['microblogText']
     text = text.replace("https://" + hostname, "")
@@ -115,7 +115,7 @@ def load_microblogging(request, path, select_id, microblogging_load_type):
         if microblogging_load_type == "newer":
             posts = list(node.microblogging_references.filter(id__gt=select_id).
                          order_by('time').prefetch_related('author', 'is_reference_to')[:20])
-        else: # older
+        else:  # older
             posts = list(reversed(node.microblogging_references.filter(id__lt=select_id).
                                   order_by('-time').prefetch_related('author', 'is_reference_to')[:20]))
     return json_response({

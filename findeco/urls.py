@@ -28,7 +28,7 @@ from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from findeco.api_validation import USERNAME, RSSKEY
-from findeco.feeds import RssFeed, AtomFeed
+from findeco.feeds import RssFeed
 from findeco.paths import PATH, RESTRICTED_PATH, ID
 
 admin.autodiscover()
@@ -200,7 +200,8 @@ urlpatterns += patterns(
     '',
 
     # RSS Feed
-    url(r'^feeds/rss/' + RSSTYPE + '/' + USERNAME + '/' + RSSKEY + '$', RssFeed()),
+    url(r'^feeds/rss/' + RSSTYPE + '/' + USERNAME + '/' + RSSKEY + '$',
+        RssFeed()),
 
     # admin docs
     url(r'^\.admin/doc/?', include('django.contrib.admindocs.urls')),
@@ -210,7 +211,8 @@ urlpatterns += patterns(
 
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
 
-    url(r'^[^.].*', 'findeco.views.home', name='home', kwargs={'path': 'wildcard'}),
+    url(r'^[^.].*', 'findeco.views.home', name='home',
+        kwargs={'path': 'wildcard'}),
 )
 
 

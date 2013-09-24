@@ -28,7 +28,7 @@ from django.contrib.auth.models import User
 from findeco.api_validation import USERNAME
 from findeco.paths import RESTRICTED_PATH
 from microblogging.models import Post
-from node_storage.path_helpers import get_node_for_path, IllegalPath, get_root_node
+from node_storage.path_helpers import get_node_for_path, IllegalPath
 
 
 def keyword(pattern):
