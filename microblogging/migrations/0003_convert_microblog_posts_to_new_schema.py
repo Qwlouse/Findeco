@@ -6,6 +6,7 @@ from south.v2 import DataMigration
 from django.db import models
 from django.utils.html import strip_tags
 from findeco.paths import RESTRICTED_PATH
+from node_storage.path_helpers import get_root_node
 from microblogging.factory import parse_microblogging
 
 
@@ -14,10 +15,18 @@ class Migration(DataMigration):
         parts = re.compile(r'<a href="/' + RESTRICTED_PATH + '">.*?</a>').split(text)
         for i in range(1, len(parts), 2):
             parts[i] = '/' + parts[i]
-        return parts.join()
+        return ''.join(parts)
 
     def get_location_and_references(self, candidates, references):
-        location = candidates[0]
+        """
+        Findes the one reference which is not mentioned in the text. If all are mentioned in the text it returns the
+        first one.
+        :rtype : (node, [node])
+        """
+        try:
+            location = candidates[0]
+        except IndexError:
+            location = get_root_node()
         new_references = []
         for candidate in candidates:
             if not candidate in references:
@@ -30,10 +39,12 @@ class Migration(DataMigration):
         for post in orm['microblogging.Post'].objects.all():
             text = self.replace_node_references(post.text)
             strip_tags(text)
-            schema = parse_microblogging(text, post.author, post.node_references.all()[0])
+
+            schema = parse_microblogging(text, post.author, '/', get_root_node())
             post.text_template = schema['template_text']
-            post.location, post.node_references = self.get_location(list(post.node_references.all()), schema['references'])
-            post.render()
+            post.location, post.node_references = self.get_location_and_references(list(post.node_references.all()),
+                                                                                   schema['references'])
+            #post.render()
             post.save()
 
     def backwards(self, orm):
