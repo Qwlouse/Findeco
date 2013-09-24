@@ -21,30 +21,30 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-#from microblogging.models import create_post
+#from django.contrib.auth.models import User
+from microblogging.factory import create_post
 import node_storage as backend
-from django.contrib.auth.models import User
 
-system = User.objects.get(username="system")
+#system = User.objects.get(username="system")
 
 
 def post_node_was_flagged_message(path, user):
     text = '<span style="color: gray;">Hinweis:</span> @{user} hat /{path} als Spam markiert.'.format(
         user=user.username,
         path=path.strip('/'))
-    return #create_post(text, user, do_escape=False)
+    return create_post(text, user)
 
 
 def post_node_was_unflagged_message(path, user):
     text = '<span style="color: gray;">Hinweis:</span> @{user} hat die Spam Markierung von /{path} zurückgezogen.'.format(
         user=user.username,
         path=path.strip('/'))
-    return #create_post(text, user, do_escape=False)
+    return create_post(text, user)
 
 
-def post_node_became_favorit_message(path):
-    text = 'Der Vorschlag /{path} ist zum Favoriten geworden.'.format(path=path)
-    return #create_post(text, system)
+# def post_node_became_favorit_message(path):
+#     text = 'Der Vorschlag /{path} ist zum Favoriten geworden.'.format(path=path)
+#     return create_post(text, system)
 
 
 def post_new_derivate_for_node_message(user, original_path, derivate_path):
@@ -63,7 +63,7 @@ def post_new_derivate_for_node_message(user, original_path, derivate_path):
         original_title=original_title,
         derivate_path=derivate_path,
         derivate_title=derivate_title)
-    return #create_post(text, user, path=original_path, second_path=derivate_path, do_escape=False)
+    return create_post(text, user, original_path)
 
 
 def post_new_derivate_for_node_message_list(user, path_couples):

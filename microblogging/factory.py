@@ -27,8 +27,8 @@ from django.contrib.auth.models import User
 
 from findeco.api_validation import USERNAME
 from findeco.paths import RESTRICTED_PATH
-from microblogging import Post
-from node_storage.path_helpers import get_node_for_path, IllegalPath
+from microblogging.models import Post
+from node_storage.path_helpers import get_node_for_path, IllegalPath, get_root_node
 
 
 def keyword(pattern):
@@ -82,7 +82,7 @@ def extract_mentions(text):
     return sorted_mentions, template_text
 
 
-def parse_microblogging(text, author, location, references_to=None):
+def parse_microblogging(text, author, location, answer_to=None):
     """
     Parse the text of a Microblog-Post and turn it into a JSON Structure that
     can then easily be turned into a database entry
@@ -97,11 +97,11 @@ def parse_microblogging(text, author, location, references_to=None):
         'template_text': template_text,
         'mentions': mentions,
         'references': [get_node_for_path(p) for p in references],
-        'answer_to': None
+        'answer_to': answer_to
     }
 
 
-def create_post(schema):
+def create_post_from_schema(schema):
     """
     Creates a Post-object out of a Post-schema and saved it to the database.
     The Object is returned.
@@ -110,11 +110,21 @@ def create_post(schema):
         author_id=schema['author'],
         post_type=Post.short_post_type(schema['type']),
         text_template=schema['template_text'],
-        location=schema['location'],
+        location_id=schema['location'],
         is_answer_to=schema['answer_to']
     )
     post.mentions = schema['mentions']
     post.node_references = schema['references']
+    return post
+
+
+def create_post(text, author, location='', answer_to=None):
+    """
+    Create a post from a given text.
+    """
+    schema = parse_microblogging(text, author, location, answer_to)
+    post = create_post_from_schema(schema)
+    post.render()
     return post
 
 

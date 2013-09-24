@@ -23,15 +23,15 @@
 from __future__ import division, print_function, unicode_literals
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext
 from django.test import TestCase
 import json
 from findeco.api_validation import storeSettingsResponseValidator
 from findeco.tests.helpers import assert_is_error_response
 
-from node_storage.factory import create_user, create_slot, create_textNode, create_argument, create_vote
-from microblogging.models import create_post, Post
-from ..api_validation import errorResponseValidator
+from node_storage.factory import create_user, create_slot, create_textNode
+from microblogging.models import Post
+from microblogging.factory import create_post
+
 from ..api_validation import loadUserInfoResponseValidator
 from ..api_validation import loadUserSettingsResponseValidator
 from ..view_helpers import create_user_info, create_user_settings
@@ -189,7 +189,7 @@ class DeleteUserTest(TestCase):
         self.assertFalse(self.client.login(username="hans", password='1234'))
         self.assertEqual(len(Post.objects.filter(author=self.hans).all()), 0)
         self.assertEqual(len(Post.objects.filter(author=self.anon).all()), 1)
-        self.assertEqual(Post.objects.filter(author=self.anon).all()[0].text, "Bla")
+        self.assertEqual(Post.objects.filter(author=self.anon).all()[0].text_cache, "Bla")
         self.assertEqual(len(Post.objects.filter(author=self.karl).all()), 1)
         self.assertNotIn(self.hans, self.text1.text.authors.all())
         self.assertNotIn(self.hans, self.text2.text.authors.all())

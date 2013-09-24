@@ -29,9 +29,9 @@ from django.db.models import Q
 from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
-from models import Post
-import node_storage as backend
-from django.contrib.auth.models import Permission, User
+from microblogging.factory import create_post
+from .models import Post
+from django.contrib.auth.models import User
 from findeco.view_helpers import json_response
 from time import mktime
 
@@ -61,6 +61,47 @@ This function removes the unnecessary part from urls which are copy&pasted from 
     text = text.replace("http://" + hostname, "")
     text = text.replace(hostname, "")
     return text
+
+
+@ViewErrorHandling
+def load_microblogging_all(request):
+    pass
+
+
+@ViewErrorHandling
+def load_microblogging_for_node(request, path):
+    pass
+
+
+@ViewErrorHandling
+def load_microblogging_timeline(request, name):
+    pass
+
+
+@ViewErrorHandling
+def load_microblogging_mentions(request, name):
+    pass
+
+
+@ViewErrorHandling
+def load_microblogging_from_user(request, name):
+    pass
+
+
+@ViewErrorHandling
+def load_microblogging_for_followed_nodes(request, name):
+    pass
+
+
+@ViewErrorHandling
+def load_microblogging_for_authored_nodes(request, name):
+    pass
+
+
+@ViewErrorHandling
+def store_microblogging(request, path):
+    pass
+
 
 
 @ViewErrorHandling
@@ -206,7 +247,7 @@ def store_microblog_post(request, path):
     assert_authentication(request)
     assert_post_parameters(request, ['microblogText'])
     post_text = convert_long_urls(request)
-    #create_post(post_text, request.user, path)
+#    create_post(post_text, request.user, path)
     return json_response({'storeMicrobloggingResponse': {}})
 
 

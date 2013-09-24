@@ -26,7 +26,7 @@ from django.test import TestCase
 from microblogging import Post
 
 from microblogging.factory import parse_microblogging
-from microblogging.factory import validate_microblogging_schema, create_post
+from microblogging.factory import validate_microblogging_schema, create_post_from_schema
 
 from node_storage.factory import create_user, create_nodes_for_path
 from node_storage.path_helpers import get_root_node
@@ -222,7 +222,7 @@ class CreatePostTest(TestCase):
             'answer_to': None
         }
 
-        p = create_post(schema)
+        p = create_post_from_schema(schema)
         p_db = Post.objects.get(id=p.id)
         self.assertEqual(p.author, p_db.author)
         self.assertEqual(p.post_type, p_db.post_type)
