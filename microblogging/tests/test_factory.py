@@ -214,7 +214,7 @@ class CreatePostTest(TestCase):
 
         schema = {
             'author': hugo.id,
-            'location': foo,
+            'location': foo.id,
             'type': "userpost",
             'template_text': "reference to {u0} and {u1} and {n0} and {n1}",
             'mentions': [hugo, herbert],
