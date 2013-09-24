@@ -42,8 +42,8 @@ class Migration(DataMigration):
 
             schema = parse_microblogging(text, post.author, '/', get_root_node())
             post.text_template = schema['template_text']
-            post.location.id, post.node_references = self.get_location_and_references(list(post.node_references.all()),
-                                                                                   schema['references'])
+            post.location.id, post.node_references =\
+                self.get_location_and_references(list(post.node_references.all()), schema['references'])
             post.render()
             post.save()
 
