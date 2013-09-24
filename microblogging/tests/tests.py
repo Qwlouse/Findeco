@@ -29,7 +29,7 @@ from django.test import TestCase
 from findeco.tests.helpers import assert_is_error_response
 from node_storage.factory import create_slot, create_textNode
 from node_storage.factory import create_user, create_vote
-from ..models import create_post
+#from ..models import create_post
 from django.core.urlresolvers import reverse
 import node_storage as backend
 from ..models import Post

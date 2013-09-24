@@ -30,9 +30,10 @@ import json
 from django.test import TestCase
 
 from django.core.urlresolvers import reverse
+from microblogging.factory import create_post
 from node_storage import get_root_node
 from node_storage.factory import create_textNode, create_slot, create_user
-from microblogging.models import create_post
+
 
 class SearchTest(TestCase):
     def setUp(self):

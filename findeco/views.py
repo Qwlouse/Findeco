@@ -104,7 +104,7 @@ def search(request, search_fields, search_string):
                                     "snippet": text_node.text[:min(len(text_node.text), 140)]})
     microblogging_results = []
     if 'microblogging' in search_fields.split('_'):
-        microblogging_query = get_query(search_string, ['text', ])
+        microblogging_query = get_query(search_string, ['text_cache', ])
         found_posts = microblogging.Post.objects.filter(microblogging_query).order_by("-id")
         microblogging_results = microblogging.convert_response_list(found_posts)
     return json_response({'searchResponse': {'userResults': user_results,

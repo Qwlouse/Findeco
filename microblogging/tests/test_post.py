@@ -23,7 +23,7 @@
 from __future__ import division, print_function, unicode_literals
 
 from django.test import TestCase
-from microblogging.factory import create_post
+from microblogging.factory import create_post_from_schema
 from node_storage.factory import create_user, create_nodes_for_path
 
 
@@ -49,14 +49,14 @@ class PostTest(TestCase):
     def test_render_text_generates_text(self):
         schema = self.schema_skeleton
         schema['template_text'] = "text without special stuff"
-        p = create_post(schema)
+        p = create_post_from_schema(schema)
         p.render()
         self.assertEqual(p.text_cache, "text without special stuff")
 
     def test_render_text_escapes_html(self):
         schema = self.schema_skeleton
         schema['template_text'] = "<script> evil </script>"
-        p = create_post(schema)
+        p = create_post_from_schema(schema)
         p.render()
         self.assertEqual(p.text_cache, "&lt;script&gt; evil &lt;/script&gt;")
 
@@ -64,7 +64,7 @@ class PostTest(TestCase):
         schema = self.schema_skeleton
         schema['template_text'] = "reference users {u0}, {u1} and {u0} again."
         schema['mentions'] = [self.hugo, self.herbert]
-        p = create_post(schema)
+        p = create_post_from_schema(schema)
         p.render()
         self.assertEqual(p.text_cache, 'reference users '
                                        '<a href="/user/hugo">@hugo</a>, '
@@ -76,7 +76,7 @@ class PostTest(TestCase):
         schema = self.schema_skeleton
         schema['template_text'] = "reference nodes {n0}, {n1} and {n0} again."
         schema['references'] = [self.foo1, self.foo1bar1]
-        p = create_post(schema)
+        p = create_post_from_schema(schema)
         p.render()
         self.assertEqual(p.text_cache, 'reference nodes '
                                        '<a href="/foo.1">foo_long</a>, '
@@ -87,7 +87,7 @@ class PostTest(TestCase):
     def test_render_text_inserts_links_for_hash_tags(self):
         schema = self.schema_skeleton
         schema['template_text'] = "link to #hash #tag"
-        p = create_post(schema)
+        p = create_post_from_schema(schema)
         p.render()
         self.assertEqual(p.text_cache, 'link to '
                                        '<a href="/search/hash">#hash</a> '
@@ -96,7 +96,7 @@ class PostTest(TestCase):
     def test_render_text_converts_links(self):
         schema = self.schema_skeleton
         schema['template_text'] = "link to http://www.findeco.de"
-        p = create_post(schema)
+        p = create_post_from_schema(schema)
         p.render()
         self.assertEqual(p.text_cache, 'link to '
                                        '<a href="http://www.findeco.de">'

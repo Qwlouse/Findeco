@@ -162,79 +162,37 @@ urlpatterns = patterns(
 urlpatterns += patterns(
     'microblogging.views',
 
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
-        RESTRICTED_PATH + '$',
-        'load_microblogging',
-        name='load_microblogging'),
+    url(r'^\.loadMicrobloggingAll$',
+        'load_microblogging_all',
+        name='load_microblogging_all'),
 
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/' +
-        RESTRICTED_PATH + '$',
-        'load_microblogging',
-        name='load_microblogging',
-        kwargs={'select_id': None}),
+    url(r'^\.loadMicrobloggingForNode/' + PATH + '$',
+        'load_microblogging_for_node',
+        name='load_microblogging_for_node'),
 
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
-        USERNAME + '$',
-        'load_timeline',
-        name='load_timeline'),
+    url(r'^\.loadMicrobloggingTimeline/' + USERNAME + '/$',
+        'load_microblogging_timeline',
+        name='load_microblogging_timeline'),
 
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
-        'load_timeline',
-        name='load_timeline',
-        kwargs={'select_id': None}),
+    url(r'^\.loadMicrobloggingMentions/' + USERNAME + '/$',
+        'load_microblogging_mentions',
+        name='load_microblogging_mentions'),
 
-    url(r'^\.json_loadMicroblogging/mentions/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
-        USERNAME + '$',
-        'load_mentions',
-        name='load_mentions'),
+    url(r'^\.loadMicrobloggingFromUser/' + USERNAME + '/$',
+        'load_microblogging_from_user',
+        name='load_microblogging_from_user'),
 
-    url(r'^\.json_loadMicroblogging/mentions/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
-        'load_mentions',
-        name='load_mentions',
-        kwargs={'select_id': None}),
+    url(r'^\.loadMicrobloggingForFollowedNodes/' + USERNAME + '/$',
+        'load_microblogging_for_followed_nodes',
+        name='load_microblogging_for_followed_nodes'),
 
-    url(r'^\.json_loadMicroblogging/own/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
-        USERNAME + '$',
-        'load_own',
-        name='load_own'),
+    url(r'^\.loadMicrobloggingForAuthoredNodes/' + USERNAME + '/$',
+        'load_microblogging_for_authored_nodes',
+        name='load_microblogging_for_authored_nodes'),
 
-    url(r'^\.json_loadMicroblogging/own/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
-        'load_own',
-        name='load_own',
-        kwargs={'select_id': None}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collection$',
-        'load_collection',
-        name='load_collection'),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/:collection$',
-        'load_collection',
-        name='load_collection',
-        kwargs={'select_id': None}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collectionAuthor$',
-        'load_collection',
-        name='load_collection_author',
-        kwargs={'only_author': True}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/:collectionAuthor$',
-        'load_collection',
-        name='load_collection_author',
-        kwargs={'select_id': None, 'only_author': True}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collectionAll$',
-        'load_collection',
-        name='load_collection_all',
-        kwargs={'all_nodes': True}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/:collectionAll$',
-        'load_collection',
-        name='load_collection_all',
-        kwargs={'select_id': None, 'all_nodes': True}),
-
-    url(r'^\.json_storeMicroblogPost/' + PATH + '$',
-        'store_microblog_post',
-        name='store_microblog_post'),
+    url(r'^\.storeMicroblogging/' + PATH + '$',
+        'store_microblogging',
+        name='store_microblogging'),
 )
 
 ########### Other urls ###########

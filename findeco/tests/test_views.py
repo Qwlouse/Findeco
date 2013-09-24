@@ -40,10 +40,6 @@ views = [('load_index', dict(path='')),
          ('load_graph_data', dict(graph_data_type='default', path='')),
          ('load_graph_data', dict(graph_data_type='full', path='')),
          ('load_graph_data', dict(graph_data_type='withSpam', path='')),
-         ('load_microblogging', dict(path='', select_id=0,
-                                     microblogging_load_type='newer')),
-         ('load_microblogging', dict(path='', select_id=0,
-                                     microblogging_load_type='older')),
          ('load_text', dict(path='')),
          ('load_user_info', dict(name='admin')),
          ('logout', dict()),
@@ -51,7 +47,6 @@ views = [('load_index', dict(path='')),
          ('unflag_node', dict(path='')),
          ('mark_node_follow', dict(path='')),
          ('mark_node_unfollow', dict(path='')),
-         ('store_microblog_post', dict(path='')),
          ('store_settings', dict()),
          ('store_text', dict(path=''))]
 
@@ -93,17 +88,6 @@ class ViewTest(TestCase):
                 reverse('load_graph_data',
                         kwargs=dict(path=p, graph_data_type=t)))
             validate_response(response.content, 'load_graph_data')
-
-    def test_load_microblogging_response_is_valid(self):
-        paths = structure_node_paths + argument_paths
-        load_type = ['newer', 'older']
-        for p, t in itertools.product(paths, load_type):
-            result = self.client.get(
-                reverse('load_microblogging',
-                        kwargs=dict(path=p,
-                                    microblogging_load_type=t,
-                                    select_id=1)))
-            validate_response(result.content, 'load_microblogging')
 
     def test_load_text_response_is_valid(self):
         for p in structure_node_paths + slot_paths + argument_paths:

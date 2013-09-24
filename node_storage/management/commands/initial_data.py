@@ -27,7 +27,7 @@
 from django.contrib.auth.models import User
 from django.core.management import BaseCommand
 from django.db import transaction
-from microblogging.models import create_post
+from microblogging.factory import create_post
 from node_storage import get_node_for_path
 from node_storage.factory import create_user, create_slot, create_structureNode, create_argument, create_vote, create_spam_flag
 from node_storage.path_helpers import get_root_node
