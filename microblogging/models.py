@@ -27,7 +27,6 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 from django.db import models
-import collections
 import re
 import node_storage as backend
 from django.contrib.auth.models import User
@@ -119,13 +118,18 @@ class Post(models.Model):
             'n' + str(i): '<a href="/{}">{}</a>'.format(n.get_a_path(), n.title)
             for i, n in enumerate(self.node_references.order_by('id'))
         }
-        format_dict = collections.defaultdict(warn_then_missing_string)
+        format_dict = dict()
         format_dict.update(user_dict)
         format_dict.update(node_dict)
         # escape html
         text = escape(self.text_template)
         # insert references and mentions
-        text = text.format(**format_dict)
+        try:
+            text = text.format(**format_dict)
+        except KeyError:
+            import warnings
+            warnings.warn('corrupted text_template')
+            text = 'CORRUPTED: ' + text
         # replace #hashtags by links to search
         split_text = tag_pattern.split(text)
         for i in range(1, len(split_text), 2):
@@ -153,9 +157,3 @@ class Post(models.Model):
             return u'%s says "%s" on %s' % (self.author.username,
                                             self.text_cache,
                                             self.time)
-
-
-def warn_then_missing_string():
-    import warnings
-    warnings.warn('corrupted text_template')
-    return "MISSING"
