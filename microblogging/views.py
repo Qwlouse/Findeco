@@ -40,11 +40,11 @@ def convert_response_list(post_list):
     response_list = []
     for post in post_list:
         authors = [{'displayName': post.author.username}]
-        if post.is_reference_to:
+        if post.is_answer_to:
             authors.append(
                 {'displayName': post.is_reference_to.author.username})
         response_list.append(
-            {'microblogText': post.text,
+            {'microblogText': post.text_cache,
              'authorGroup': authors,
              'microblogTime': int(mktime(post.time.timetuple())),
              'microblogID': post.pk})
