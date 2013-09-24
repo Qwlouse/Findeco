@@ -24,16 +24,16 @@ class Migration(DataMigration):
         :rtype : (node, [node])
         """
         try:
-            location = candidates[0]
+            location_id = candidates[0].id
         except IndexError:
-            location = get_root_node()
+            location_id = get_root_node().id
         new_references = []
         for candidate in candidates:
             if not candidate in references:
-                location = candidate
+                location_id = candidate.id
             else:
                 new_references.append(candidate)
-        return location, new_references
+        return location_id, new_references
 
     def forwards(self, orm):
         for post in orm['microblogging.Post'].objects.all():
@@ -42,9 +42,9 @@ class Migration(DataMigration):
 
             schema = parse_microblogging(text, post.author, '/', get_root_node())
             post.text_template = schema['template_text']
-            post.location, post.node_references = self.get_location_and_references(list(post.node_references.all()),
+            post.location.id, post.node_references = self.get_location_and_references(list(post.node_references.all()),
                                                                                    schema['references'])
-            #post.render()
+            post.render()
             post.save()
 
     def backwards(self, orm):
