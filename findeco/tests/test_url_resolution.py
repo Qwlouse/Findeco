@@ -65,37 +65,6 @@ valid_routes = [
          url_name='load_argument_index',
          kwargs=dict(path='some.1/path.2')),
 
-    #### loadMicroblogging
-    dict(url='/.json_loadMicroblogging/0/newer/some.1/path.2',
-         func=load_microblogging,
-         url_name='load_microblogging',
-         kwargs=dict(path='some.1/path.2', select_id='0',
-                     microblogging_load_type='newer')),
-
-    dict(url='/.json_loadMicroblogging/74/newer/some.1/path.2',
-         func=load_microblogging,
-         url_name='load_microblogging',
-         kwargs=dict(path='some.1/path.2', select_id='74',
-                     microblogging_load_type='newer')),
-
-    dict(url='/.json_loadMicroblogging/0/older/some.1/path.2',
-         func=load_microblogging,
-         url_name='load_microblogging',
-         kwargs=dict(path='some.1/path.2', select_id='0',
-                     microblogging_load_type='older')),
-
-    dict(url='/.json_loadMicroblogging/74/older/some.1/path.2',
-         func=load_microblogging,
-         url_name='load_microblogging',
-         kwargs=dict(path='some.1/path.2', select_id='74',
-                     microblogging_load_type='older')),
-
-    dict(url='/.json_loadMicroblogging/older/some.1/path.2',
-         func=load_microblogging,
-         url_name='load_microblogging',
-         kwargs=dict(path='some.1/path.2', select_id=None,
-                     microblogging_load_type='older')),
-
     #### loadText
     dict(url='/.json_loadText/some.1/path.2',
          func=load_text,
@@ -237,12 +206,6 @@ valid_routes = [
          url_name='mark_node_unfollow',
          kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
-    #### storeMicroBlogPost
-    dict(url='/.json_storeMicroblogPost/some.1/path.2',
-         func=store_microblog_post,
-         url_name='store_microblog_post',
-         kwargs=dict(path='some.1/path.2')),
-
     #### storeSettings
     dict(url='/.json_storeSettings/',
          func=store_settings,
@@ -282,11 +245,6 @@ invalid_routes = [
     dict(url='/.json_loadIndex/some.1/path.2.newt'),
     dict(url='/.json_loadIndex/some.1/path.2.bon'),
     dict(url='/.json_loadIndex/some.1/path.2.ill'),
-    #### loadMicroblogging
-    dict(url='/.json_loadMicroblogging/-1/newer/some.1/path.2'),
-    dict(url='/.json_loadMicroblogging/74/newwer/some.1/path.2'),
-    dict(url='/.json_loadMicroblogging/older/12/some.1/path.2'),
-    dict(url='/.json_loadMicroblogging/74/older/newer/some.1/path.2'),
     #### loadText
     dict(url='/.json_loadText/1.some/path.2'),
     dict(url='/.json_loadText/some.1/2.path'),
@@ -320,8 +278,6 @@ invalid_routes = [
     dict(url='/.json_markNode/notspam/some.1/path.2.8437569384'),
     dict(url='/.json_markNode/follow/some.1/path.2.neut.name.8437569384'),
     dict(url='/.json_markNode/unfollow/some.1/path.2.num.8437569384'),
-    #### storeMicroBlogPost
-    dict(url='/.json_storeMicruBlogPost/'),
     #### storeSettings
     dict(url='/.json_storeSettings/some.1/path.2'),
     #### storeText

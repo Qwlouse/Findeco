@@ -189,7 +189,7 @@ class DeleteUserTest(TestCase):
         self.assertFalse(self.client.login(username="hans", password='1234'))
         self.assertEqual(len(Post.objects.filter(author=self.hans).all()), 0)
         self.assertEqual(len(Post.objects.filter(author=self.anon).all()), 1)
-        self.assertEqual(Post.objects.filter(author=self.anon).all()[0].text_cache, "Bla")
+        self.assertEqual(Post.objects.filter(author=self.anon).all()[0].text_template, "Bla")
         self.assertEqual(len(Post.objects.filter(author=self.karl).all()), 1)
         self.assertNotIn(self.hans, self.text1.text.authors.all())
         self.assertNotIn(self.hans, self.text2.text.authors.all())

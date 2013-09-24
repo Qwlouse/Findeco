@@ -140,6 +140,7 @@ class Post(models.Model):
         text = "".join(split_text)
 
         self.text_cache = text
+        self.save()
 
     def __unicode__(self):
         if self.is_answer_to:
