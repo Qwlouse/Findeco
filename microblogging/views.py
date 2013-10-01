@@ -53,7 +53,20 @@ def load_microblogging_for_node(request, path):
 
 @ViewErrorHandling
 def load_microblogging_timeline(request, name):
-    pass
+    """
+    Use this function to get the timeline for the given user.
+
+    Referenced posts will show up in the timeline as the originals do.
+    Hiding of the original posts for a tidy
+    timeline should be done in the frontend due to performance reasons.
+    """
+    named_user = assert_active_user(name)
+
+    if request.user == named_user:
+        query = Q(author=named_user) | Q(author__in=named_user.profile.followees.all())
+    else:
+        query = Q(author=named_user)
+    return microblogging_response(query, request.GET)
 
 
 @ViewErrorHandling
@@ -79,7 +92,6 @@ def load_microblogging_for_authored_nodes(request, name):
 @ViewErrorHandling
 def store_microblogging(request, path):
     pass
-
 
 
 @ViewErrorHandling
