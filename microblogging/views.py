@@ -25,7 +25,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
+import json
 from django.db.models import Q
+from django.http import HttpResponse
 from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
@@ -38,16 +40,20 @@ from time import mktime
 def convert_response_list(post_list):
     response_list = []
     for post in post_list:
-        authors = [{'displayName': post.author.username}]
+        authors = [post.author.username]
         if post.is_answer_to:
-            authors.append(
-                {'displayName': post.is_reference_to.author.username})
+            authors.append(post.is_reference_to.author.username)
         response_list.append(
             {'microblogText': post.text_cache,
              'authorGroup': authors,
              'microblogTime': int(mktime(post.time.timetuple())),
              'microblogID': post.pk})
     return response_list
+
+
+def microblogging_response(posts):
+    return json_response({
+        'loadMicrobloggingResponse': convert_response_list(reversed(posts))})
 
 
 def convert_long_urls(request):
@@ -65,7 +71,7 @@ def convert_long_urls(request):
 
 @ViewErrorHandling
 def load_microblogging_all(request):
-    pass
+    return microblogging_response(Post.objects.all()[:20])
 
 
 @ViewErrorHandling
