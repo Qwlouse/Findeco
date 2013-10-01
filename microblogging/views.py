@@ -71,7 +71,17 @@ def load_microblogging_timeline(request, name):
 
 @ViewErrorHandling
 def load_microblogging_mentions(request, name):
-    pass
+    """
+    Use this function to get the timeline of mentions of the given user.
+
+    Referenced posts will show up in the timeline as the originals do.
+    Hiding of the original posts for a tidy
+    timeline should be done in the frontend due to performance reasons.
+    """
+    named_user = assert_active_user(name)
+
+    query = Q(mentions__in=named_user)
+    return microblogging_response(query, request.GET)
 
 
 @ViewErrorHandling
