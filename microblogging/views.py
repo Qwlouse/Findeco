@@ -35,6 +35,7 @@ from .models import Post
 from django.contrib.auth.models import User
 from findeco.view_helpers import json_response
 from time import mktime
+from node_storage.path_helpers import get_node_for_path
 
 
 def convert_response_list(post_list):
@@ -51,11 +52,6 @@ def convert_response_list(post_list):
     return response_list
 
 
-def microblogging_response(posts):
-    return json_response({
-        'loadMicrobloggingResponse': convert_response_list(reversed(posts))})
-
-
 def convert_long_urls(request):
     """
     This function removes the unnecessary part from urls which are copy&pasted
@@ -69,9 +65,14 @@ def convert_long_urls(request):
     return text
 
 
-@ViewErrorHandling
-def load_microblogging_all(request):
-    options = request.GET
+def microblogging_response(query=Q(), options=()):
+    load_query = get_load_type_query(options)
+    posts = Post.objects.filter(query).filter(load_query).order_by('-id')[:20]
+    return json_response({
+        'loadMicrobloggingResponse': convert_response_list(posts)})
+
+
+def get_load_type_query(options):
     load_type = "newer"
     load_id = -1
     if "type" in options:
@@ -84,12 +85,17 @@ def load_microblogging_all(request):
         load_id = options["id"]
 
     if load_id == -1:
-        return microblogging_response(Post.objects.order_by('id')[:20])
+        return Q()
     else:
         if load_type == "newer":
-            return microblogging_response(Post.objects.filter(id__gt=load_id).order_by('id')[:20])
+            return Q(id__gt=load_id)
         elif load_type == "older":
-            return microblogging_response(Post.objects.filter(id__lt=load_id).order_by('id')[:20])
+            return Q(id__lt=load_id)
+
+
+@ViewErrorHandling
+def load_microblogging_all(request):
+    return microblogging_response(options=request.GET)
 
 
 
