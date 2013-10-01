@@ -1,39 +1,134 @@
 # -*- coding: utf-8 -*-
 import datetime
 import re
+import collections
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
-from django.utils.html import strip_tags
+from django.utils.html import strip_tags, escape
 from findeco.paths import RESTRICTED_PATH
+from node_storage.models import PathCache, Node, Argument
+from node_storage.path_helpers import get_root_node
 from microblogging.factory import parse_microblogging
+
+WORDSTART = r"(?:(?<=\s)|\A)"
+WORDEND = r"\b"
+
+
+def keyword(pattern):
+    return re.compile(WORDSTART + pattern + WORDEND)
+
+tag_pattern = keyword(r"#(?P<tagname>\w+)")
+url_pattern = keyword(r"((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}"
+                      r"[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)")
+
+
+def warn_then_missing_string():
+    import warnings
+    warnings.warn('corrupted text_template')
+    return "MISSING"
 
 
 class Migration(DataMigration):
     def replace_node_references(self, text):
-        parts = re.compile(r'<a href="/' + RESTRICTED_PATH + '">.*?</a>').split(text)
+        parts = re.compile(r'<a href="/(?:#/)?' + RESTRICTED_PATH + '">.*?</a>').split(text)
         for i in range(1, len(parts), 2):
             parts[i] = '/' + parts[i]
-        return parts.join()
+        return ''.join(parts)
+
+    def node_get_a_path(self, n):
+        """
+        Returns a path which needn't be the only valid path to the node.
+        """
+        paths = PathCache.objects.filter(node=n)
+        if paths.count() > 0:
+            return paths[0].path
+        else:
+            # Note: This should NEVER happen
+            # but since it did we have a backup plan here
+            # TODO Remove if we are absolutely sure that every node is in PathCache
+
+            if n.parents.count() == 0:
+                return ""
+            if n.node_type == Node.ARGUMENT:
+                self_as_arg = Argument.objects.filter(argument_id=n.id).all()[0]
+                npath = self_as_arg.concerns.get_a_path().strip('/')
+                return '%s.%s.%d' % (npath, self_as_arg.arg_type, self_as_arg.index)
+            parent = n.parents.all()[0]
+            if self.node_type == Node.SLOT:
+                suffix = n.title
+            else:
+                suffix = "." + str(self.get_index(parent)) + "/"
+            path = parent.get_a_path() + suffix
+            # write to path
+            PathCache.objects.create(node=n, path=path)
+            return path
+
+    def post_render(self, post):
+        user_dict = {
+            'u' + str(i): u'<a href="/user/{0}">@{0}</a>'.format(u.username)
+            for i, u in enumerate(post.mentions.order_by('id'))
+        }
+        node_dict = {
+            'n' + str(i): u'<a href="/{}">{}</a>'.format(self.node_get_a_path(n), n.title)
+            for i, n in enumerate(post.node_references.order_by('id'))
+        }
+        print(node_dict)
+        format_dict = collections.defaultdict(warn_then_missing_string)
+        format_dict.update(user_dict)
+        format_dict.update(node_dict)
+        # escape html
+        text = escape(post.text_template)
+        # insert references and mentions
+        text = text.format(**format_dict)
+        # replace #hashtags by links to search
+        split_text = tag_pattern.split(text)
+        for i in range(1, len(split_text), 2):
+            tagname = split_text[i]
+            split_text[i] = u'<a href="/search/{0}">#{0}</a>'.format(tagname)
+        text = "".join(split_text)
+        # replace external links
+        split_text = url_pattern.split(text)
+        for i in range(1, len(split_text), 2):
+            link = split_text[i]
+            split_text[i] = u'<a href="{0}">{0}</a>'.format(link)
+        text = "".join(split_text)
+
+        post.text_cache = text
+        post.save()
 
     def get_location_and_references(self, candidates, references):
-        location = candidates[0]
+        """
+        Findes the one reference which is not mentioned in the text. If all are mentioned in the text it returns the
+        first one.
+        :rtype : (node, [node])
+        """
+        try:
+            location_id = candidates[0].id
+        except IndexError:
+            location_id = get_root_node().id
         new_references = []
         for candidate in candidates:
-            if not candidate in references:
-                location = candidate
+            if candidate in references:
+                location_id = candidate.id
             else:
                 new_references.append(candidate)
-        return location, new_references
+        return location_id, new_references
 
     def forwards(self, orm):
         for post in orm['microblogging.Post'].objects.all():
             text = self.replace_node_references(post.text)
-            strip_tags(text)
-            schema = parse_microblogging(text, post.author, post.node_references.all()[0])
+            text = strip_tags(text)
+
+            schema = parse_microblogging(text, post.author, '/', get_root_node())
             post.text_template = schema['template_text']
-            post.location, post.node_references = self.get_location(list(post.node_references.all()), schema['references'])
-            post.render()
+            post.location.id, post.node_references =\
+                self.get_location_and_references(list(post.node_references.all()), schema['references'])
+            if post.node_references.count() < schema['references']:
+                print("Missing reference! Deleting the post.")
+                post.delete()
+                continue
+            self.post_render(post)
             post.save()
 
     def backwards(self, orm):

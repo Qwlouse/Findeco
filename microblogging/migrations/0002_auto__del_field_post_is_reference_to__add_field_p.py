@@ -31,11 +31,11 @@ class Migration(SchemaMigration):
                       keep_default=False)
 
         # Renaming field 'Post.is_reference_to' to 'Post.is_answer_to'
-        db.rename_column('microblogging_post', 'is_reference_to_id', 'is_answer_to')
+        db.rename_column('microblogging_post', 'is_reference_to_id', 'is_answer_to_id')
 
     def backwards(self, orm):
         # Renaming field 'Post.is_answer_to' to 'Post.is_reference_to'
-        db.rename_column('microblogging_post', 'is_answer_to', 'is_reference_to_id')
+        db.rename_column('microblogging_post', 'is_answer_to_id', 'is_reference_to_id')
 
         # Adding field 'Post.text'
         db.add_column('microblogging_post', 'text',
