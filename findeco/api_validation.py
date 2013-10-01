@@ -191,6 +191,7 @@ ERROR_LIST = [
     "_InvalidEmailAddress",
     "_InvalidActivationKey",
     "_InvalidURL",
+    "_InvalidMircobloggingOptions",
     "_ServerError"
 ]
 

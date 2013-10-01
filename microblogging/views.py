@@ -28,6 +28,7 @@ from __future__ import division, print_function, unicode_literals
 import json
 from django.db.models import Q
 from django.http import HttpResponse
+from findeco.error_handling import InvalidMicrobloggingOptions
 from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
@@ -74,15 +75,15 @@ def microblogging_response(query=Q(), options=()):
 
 def get_load_type_query(options):
     if "type" in options or 'id' in options:
-        assert 'type' in options
-        assert 'id' in options
-        load_type = options["type"]
-        load_id = options["id"]
+        if not ('type' in options and 'id' in options):
+            raise InvalidMicrobloggingOptions(json.dumps(options))
 
-        if load_type == "newer":
-            return Q(id__gt=load_id)
-        elif load_type == "older":
-            return Q(id__lt=load_id)
+        if options["type"] == "newer":
+            return Q(id__gt=options["id"])
+        elif options["type"] == "older":
+            return Q(id__lt=options["id"])
+        else:
+            raise InvalidMicrobloggingOptions(json.dumps(options))
 
     else:
         return Q()
