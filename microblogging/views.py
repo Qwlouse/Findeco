@@ -25,7 +25,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
+import json
 from django.db.models import Q
+from django.http import HttpResponse
+from findeco.error_handling import InvalidMicrobloggingOptions
 from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
@@ -33,15 +36,15 @@ from .models import Post
 from django.contrib.auth.models import User
 from findeco.view_helpers import json_response
 from time import mktime
+from node_storage.path_helpers import get_node_for_path
 
 
 def convert_response_list(post_list):
     response_list = []
     for post in post_list:
-        authors = [{'displayName': post.author.username}]
+        authors = [post.author.username]
         if post.is_answer_to:
-            authors.append(
-                {'displayName': post.is_reference_to.author.username})
+            authors.append(post.is_reference_to.author.username)
         response_list.append(
             {'microblogText': post.text_cache,
              'authorGroup': authors,
@@ -63,9 +66,34 @@ def convert_long_urls(request):
     return text
 
 
+def microblogging_response(query=Q(), options=()):
+    load_query = get_load_type_query(options)
+    posts = Post.objects.filter(query).filter(load_query).order_by('-id')[:20]
+    return json_response({
+        'loadMicrobloggingResponse': convert_response_list(posts)})
+
+
+def get_load_type_query(options):
+    if "type" in options or 'id' in options:
+        if not ('type' in options and 'id' in options):
+            raise InvalidMicrobloggingOptions(json.dumps(options))
+
+        if options["type"] == "newer":
+            return Q(id__gt=options["id"])
+        elif options["type"] == "older":
+            return Q(id__lt=options["id"])
+        else:
+            raise InvalidMicrobloggingOptions(json.dumps(options))
+
+    else:
+        return Q()
+
+
+
 @ViewErrorHandling
 def load_microblogging_all(request):
-    pass
+    return microblogging_response(options=request.GET)
+
 
 
 @ViewErrorHandling
