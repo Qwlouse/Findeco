@@ -54,6 +54,30 @@ class ViewTest(TestCase):
         for p in posts:
             self.assertIn(p.id, ids)
 
+    def test_load_microblogging_all_with_newer(self):
+        hugo = create_user("hugo")
+        herbert = create_user("herbert")
+        create_nodes_for_path("foo.1")
+        p1 = create_post("text", hugo, location='')
+        p2 = create_post("text3", hugo, location='foo.1')
+        p3 = create_post("text2", herbert, location='foo.1')
+        response = self.client.get(reverse('load_microblogging_all'),
+                                   {'type': 'newer', 'id': p1.id})
+        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        self.assertEqual(len(res), 2)
+        self.assertEqual(res[0]["microblogID"], p3.id)
+        self.assertEqual(res[1]["microblogID"], p2.id)
 
-
-
+    def test_load_microblogging_all_with_older(self):
+        hugo = create_user("hugo")
+        herbert = create_user("herbert")
+        create_nodes_for_path("foo.1")
+        p1 = create_post("text", hugo, location='')
+        p2 = create_post("text3", hugo, location='foo.1')
+        p3 = create_post("text2", herbert, location='foo.1')
+        response = self.client.get(reverse('load_microblogging_all'),
+                                   {'type': 'older', 'id': p3.id})
+        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        self.assertEqual(len(res), 2)
+        self.assertEqual(res[0]["microblogID"], p2.id)
+        self.assertEqual(res[1]["microblogID"], p1.id)

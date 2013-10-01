@@ -71,7 +71,26 @@ def convert_long_urls(request):
 
 @ViewErrorHandling
 def load_microblogging_all(request):
-    return microblogging_response(Post.objects.all()[:20])
+    options = request.GET
+    load_type = "newer"
+    load_id = -1
+    if "type" in options:
+        assert 'id' in options
+        load_type = options["type"]
+        load_id = options["id"]
+    if 'id' in options:
+        assert 'id' in options
+        load_type = options["type"]
+        load_id = options["id"]
+
+    if load_id == -1:
+        return microblogging_response(Post.objects.order_by('id')[:20])
+    else:
+        if load_type == "newer":
+            return microblogging_response(Post.objects.filter(id__gt=load_id).order_by('id')[:20])
+        elif load_type == "older":
+            return microblogging_response(Post.objects.filter(id__lt=load_id).order_by('id')[:20])
+
 
 
 @ViewErrorHandling
