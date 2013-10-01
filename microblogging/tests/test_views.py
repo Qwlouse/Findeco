@@ -85,6 +85,7 @@ class ViewTest(TestCase):
     def test_load_microblogging_all_with_option_error(self):
         response = self.client.get(reverse('load_microblogging_all'),
                                    {'type': 'older'})
-        self.assertFalse(validate_response(response.content, "load_microblogging"))
+        self.assertFalse(validate_response(response.content,
+                                           "load_microblogging"))
         err = json.loads(response.content)["errorResponse"]
         self.assertEqual(err["errorID"], "_InvalidMircobloggingOptions")

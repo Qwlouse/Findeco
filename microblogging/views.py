@@ -66,9 +66,10 @@ def convert_long_urls(request):
     return text
 
 
-def microblogging_response(query=Q(), options=()):
+def microblogging_response(query, options):
     load_query = get_load_type_query(options)
-    posts = Post.objects.filter(query).filter(load_query).order_by('-id')[:20]
+    posts = Post.objects.filter(query).filter(load_query).\
+        order_by('-id').distinct()[:20]
     return json_response({
         'loadMicrobloggingResponse': convert_response_list(posts)})
 
@@ -92,13 +93,15 @@ def get_load_type_query(options):
 
 @ViewErrorHandling
 def load_microblogging_all(request):
-    return microblogging_response(options=request.GET)
+    return microblogging_response(Q(), request.GET)
 
 
 
 @ViewErrorHandling
 def load_microblogging_for_node(request, path):
-    pass
+    node = get_node_for_path(path)
+    query = Q(location=node) | Q(node_references=node)
+    return microblogging_response(query, request.GET)
 
 
 @ViewErrorHandling
