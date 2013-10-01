@@ -86,12 +86,25 @@ def load_microblogging_mentions(request, name):
 
 @ViewErrorHandling
 def load_microblogging_from_user(request, name):
-    pass
+    """
+    Use this function to get the posts for the given user.
+    """
+    named_user = assert_active_user(name)
+
+    query = Q(author=named_user)
+    return microblogging_response(query, request.GET)
 
 
 @ViewErrorHandling
 def load_microblogging_for_followed_nodes(request, name):
-    pass
+    """
+    Use this function to get a collection of blogposts regarding nodes
+    which are followed by the user.
+    """
+    named_user = assert_active_user(name)
+
+    query = Q(node_references__votes__user=named_user)
+    return microblogging_response(query, request.GET)
 
 
 @ViewErrorHandling
