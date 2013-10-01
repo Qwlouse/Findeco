@@ -106,10 +106,13 @@ class Migration(DataMigration):
         try:
             location_id = candidates[0].id
         except IndexError:
-            location_id = get_root_node().id
+            if len(references) > 0:
+                location_id = references[0].id
+            else:
+                location_id = get_root_node().id
         new_references = []
         for candidate in candidates:
-            if candidate in references:
+            if not candidate.id in [x.id for x in references]:
                 location_id = candidate.id
             else:
                 new_references.append(candidate)
@@ -124,10 +127,12 @@ class Migration(DataMigration):
             post.text_template = schema['template_text']
             post.location.id, post.node_references =\
                 self.get_location_and_references(list(post.node_references.all()), schema['references'])
-            if post.node_references.count() < schema['references']:
-                print("Missing reference! Deleting the post.")
-                post.delete()
-                continue
+            if post.node_references.count() < len(schema['references']):
+                print("Missing reference! Adding location to node references.")
+                post.node_references.add(post.location)
+            if post.node_references.count() < len(schema['references']):
+                print("Missing reference! Using references from the Text.")
+                post.node_references = [orm['node_storage.Node'].objects.get(id=r.id) for r in schema['references']]
             self.post_render(post)
             post.save()
 
