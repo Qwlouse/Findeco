@@ -73,24 +73,20 @@ def microblogging_response(query=Q(), options=()):
 
 
 def get_load_type_query(options):
-    load_type = "newer"
-    load_id = -1
-    if "type" in options:
-        assert 'id' in options
-        load_type = options["type"]
-        load_id = options["id"]
-    if 'id' in options:
+    if "type" in options or 'id' in options:
+        assert 'type' in options
         assert 'id' in options
         load_type = options["type"]
         load_id = options["id"]
 
-    if load_id == -1:
-        return Q()
-    else:
         if load_type == "newer":
             return Q(id__gt=load_id)
         elif load_type == "older":
             return Q(id__lt=load_id)
+
+    else:
+        return Q()
+
 
 
 @ViewErrorHandling
