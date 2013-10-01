@@ -89,3 +89,20 @@ class ViewTest(TestCase):
                                            "load_microblogging"))
         err = json.loads(response.content)["errorResponse"]
         self.assertEqual(err["errorID"], "_InvalidMircobloggingOptions")
+
+    def test_load_microblogging_for_node_newest(self):
+        hugo = create_user("hugo")
+        create_nodes_for_path("foo.1")
+        wrong_post = create_post("text", hugo, location='')
+        posts = [create_post("text1", hugo, location='foo.1'),
+                 create_post("text2", hugo, location='foo.1'),
+                 create_post("text3", hugo, location='foo.1')]
+        response = self.client.get(reverse('load_microblogging_for_node',
+                                           kwargs={'path': 'foo.1'}))
+        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        self.assertEqual(len(res), 3)
+        self.assertNotIn(wrong_post.id, [m["microblogID"] for m in res])
+        for post in posts:
+            self.assertIn(post.id, [m["microblogID"] for m in res])
+
+
