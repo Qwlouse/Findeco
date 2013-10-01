@@ -24,6 +24,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
+from microblogging.view_helpers import convert_response_list
 
 from models import Post
-from views import convert_response_list
