@@ -96,7 +96,14 @@ def load_microblogging_for_followed_nodes(request, name):
 
 @ViewErrorHandling
 def load_microblogging_for_authored_nodes(request, name):
-    pass
+    """
+    Use this function to get a collection of blogposts regarding nodes
+    which are followed by the user.
+    """
+    named_user = assert_active_user(name)
+
+    query = Q(node_references__in=named_user__author_in__node)
+    return microblogging_response(query, request.GET)
 
 
 @ViewErrorHandling
