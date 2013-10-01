@@ -60,25 +60,35 @@ def convert_long_urls(request):
     return text
 
 
-def microblogging_response(query, options):
-    load_query = get_load_type_query(options)
-    posts = Post.objects.filter(query).filter(load_query).\
-        order_by('-id').distinct()[:20]
-    return json_response({
-        'loadMicrobloggingResponse': convert_response_list(posts)})
-
-
-def get_load_type_query(options):
+def get_load_type(options):
     if "type" in options or 'id' in options:
         if not ('type' in options and 'id' in options):
             raise InvalidMicrobloggingOptions(json.dumps(options))
 
-        if options["type"] == "newer":
-            return Q(id__gt=options["id"])
-        elif options["type"] == "older":
-            return Q(id__lt=options["id"])
-        else:
+        if options["type"] not in ["newer", "older"]:
             raise InvalidMicrobloggingOptions(json.dumps(options))
 
+        return options["type"], options["id"]
+
     else:
-        return Q()
+        return "newer", -1
+
+
+def get_posts(query, options):
+    load_type, load_id = get_load_type(options)
+    posts = Post.objects.filter(query).distinct()
+    if load_id == -1:
+        return posts.order_by('-id')[:20]
+    else:
+        if load_type == "newer":
+            return reversed(posts.filter(id__gt=load_id).order_by('id')[:20])
+        elif load_type == "older":
+            return posts.filter(id__lt=load_id).order_by('-id')[:20]
+
+
+def microblogging_response(query, options):
+    posts = get_posts(query, options)
+    return json_response({
+        'loadMicrobloggingResponse': convert_response_list(posts)})
+
+
