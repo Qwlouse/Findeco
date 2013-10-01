@@ -106,7 +106,6 @@ def create_post_from_schema(schema):
     Creates a Post-object out of a Post-schema and saved it to the database.
     The Object is returned.
     """
-    print('create_post(' + str(schema) + ')')
     post = Post.objects.create(
         author_id=schema['author'],
         post_type=Post.short_post_type(schema['type']),

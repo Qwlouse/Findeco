@@ -101,4 +101,3 @@ class PostTest(TestCase):
         self.assertEqual(p.text_cache, 'link to '
                                        '<a href="http://www.findeco.de">'
                                        'http://www.findeco.de</a>')
-
