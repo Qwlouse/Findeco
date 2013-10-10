@@ -47,13 +47,11 @@ def convert_response_list(post_list):
     return response_list
 
 
-def convert_long_urls(request):
+def convert_long_urls(text, hostname):
     """
     This function removes the unnecessary part from urls which are copy&pasted
     from the url field of the browser.
     """
-    hostname = request.META['HTTP_HOST']
-    text = request.POST['microblogText']
     text = text.replace("https://" + hostname, "")
     text = text.replace("http://" + hostname, "")
     text = text.replace(hostname, "")

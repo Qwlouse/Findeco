@@ -27,12 +27,13 @@ from django.test import TestCase
 from findeco.api_validation import validate_response
 from findeco.error_handling import ViewError
 from microblogging.factory import create_post
-from microblogging.view_helpers import microblogging_response, get_load_type
+from microblogging.view_helpers import microblogging_response, get_load_type, convert_long_urls
 from node_storage.factory import create_user
 
 
 class ViewHelpersTest(TestCase):
     ################## get_load_type_query #####################################
+
     def test_get_load_type_query_without_options(self):
         t, i = get_load_type({})
         self.assertEqual(t, "newer")
@@ -58,6 +59,7 @@ class ViewHelpersTest(TestCase):
         self.assertEqual(i, 5)
 
     ################## microblogging_response ##################################
+
     def test_microblogging_response_empty(self):
         response = microblogging_response(Q(), {})
         self.assertEqual(response.status_code, 200)
@@ -96,3 +98,35 @@ class ViewHelpersTest(TestCase):
         result = json.loads(response.content)["loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
         self.assertEqual([p['microblogID'] for p in result], range(23, 3, -1))
+
+    ################## convert_long_urls #######################################
+
+    def test_convert_long_urls_removes_hostname_from_structure_node_path(self):
+        text = convert_long_urls("text http://www.hostname.de/foo.1/ text",
+                                 "www.hostname.de")
+        self.assertEqual(text, "text /foo.1/ text")
+
+    def test_convert_long_urls_removes_hostname_from_argument_path(self):
+        text = convert_long_urls(
+            "text http://www.hostname.de/foo.1/ba.2.con.7 text",
+            "www.hostname.de")
+        self.assertEqual(text, "text /foo.1/ba.2.con.7 text")
+
+    def test_convert_long_urls_leaves_hostname_for_non_node_path(self):
+        text = convert_long_urls("text http://www.hostname.de/imprint text",
+                                 "www.hostname.de")
+        self.assertEqual(text, "text http://www.hostname.de/imprint text")
+
+    def test_convert_long_urls_converts_user_urls(self):
+        text = convert_long_urls("text http://www.hostname.de/user/admin text",
+                                 "www.hostname.de")
+        self.assertEqual(text, "text @admin text")
+
+    def test_convert_long_urls_leaves_hostname_for_root_path(self):
+        text = convert_long_urls("text http://www.hostname.de text",
+                                 "www.hostname.de")
+        self.assertEqual(text, "text http://www.hostname.de text")
+
+        text = convert_long_urls("text http://www.hostname.de/ text",
+                                 "www.hostname.de")
+        self.assertEqual(text, "text http://www.hostname.de/ text")

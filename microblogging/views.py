@@ -32,6 +32,7 @@ from django.contrib.auth.models import User
 from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
+from microblogging.factory import create_post
 from microblogging.view_helpers import convert_long_urls, microblogging_response
 from .models import Post
 from findeco.view_helpers import json_response
@@ -112,7 +113,12 @@ def load_microblogging_for_authored_nodes(request, name):
 
 @ViewErrorHandling
 def store_microblogging(request, path):
-    pass
+    assert_authentication(request)
+    assert_post_parameters(request, ['microblogText'])
+    post_text = convert_long_urls(request.POST['microblogText'],
+                                  request.META['HTTP_HOST'])
+    create_post(post_text, request.user, path)
+    return json_response({'storeMicrobloggingResponse': {}})
 
 
 ############################## OLD STUFF #######################################
