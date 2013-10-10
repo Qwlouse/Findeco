@@ -32,11 +32,9 @@ from django.contrib.auth.models import User
 from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
-from microblogging import convert_response_list
 from microblogging.view_helpers import convert_long_urls, microblogging_response
 from .models import Post
 from findeco.view_helpers import json_response
-from node_storage.path_helpers import get_node_for_path
 
 
 @ViewErrorHandling
@@ -46,7 +44,7 @@ def load_microblogging_all(request):
 
 @ViewErrorHandling
 def load_microblogging_for_node(request, path):
-    node = get_node_for_path(path)
+    node = assert_node_for_path(path)
     query = Q(location=node) | Q(node_references=node)
     return microblogging_response(query, request.GET)
 
