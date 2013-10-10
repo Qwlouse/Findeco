@@ -103,7 +103,8 @@ def load_microblogging_for_followed_nodes(request, name):
     """
     named_user = assert_active_user(name)
 
-    query = Q(node_references__votes__user=named_user)
+    query = (Q(node_references__votes__user=named_user) |
+             Q(location__votes__user=named_user))
     return microblogging_response(query, request.GET)
 
 
