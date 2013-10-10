@@ -70,6 +70,27 @@ class ViewTest(TestCase):
 
     ################# Load Microblogging Timeline ##############################
 
+    def test_load_microblogging_timeline(self):
+        hugo = create_user("hugo")
+        herbert = create_user("herbert")
+        heinrich = create_user("heinrich")
+
+        herbert.profile.followers.add(hugo.profile)
+
+        posts = [create_post("Own Post", hugo, location=''),
+                 create_post("Followed Post", herbert, location='')]
+        wrong_post = create_post("Wrong Post", heinrich, location='')
+
+        response = self.client.get(reverse('load_microblogging_timeline',
+                                           kwargs={'name': 'hugo'}))
+        res = json.loads(response.content)["loadMicrobloggingResponse"]
+
+        response_id_list = [m["microblogID"] for m in res]
+        for post in posts:
+            self.assertIn(post.id, response_id_list)
+        self.assertNotIn(wrong_post.id, response_id_list)
+        self.assertEqual(len(res), 2)
+
     ################# Load Microblogging Mentions ##############################
 
     def test_load_microblogging_mentions(self):
