@@ -25,7 +25,7 @@ import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from microblogging.factory import create_post
-from node_storage.factory import create_user, create_nodes_for_path, create_vote, create_slot, create_structureNode
+from node_storage.factory import create_user, create_nodes_for_path, create_vote
 
 
 class ViewTest(TestCase):
@@ -106,8 +106,7 @@ class ViewTest(TestCase):
 
         wrong_posts = [
             create_post("no mentions", hugo, location=''),
-            create_post("@herbert", hugo, location=''),
-            ]
+            create_post("@herbert", hugo, location='')]
 
         response = self.client.get(reverse('load_microblogging_from_user',
                                            kwargs={'name': 'herbert'}))
@@ -154,8 +153,29 @@ class ViewTest(TestCase):
     ################# Load Microblogging For Authored Nodes ####################
 
     def test_load_microblogging_for_authored_nodes(self):
-        foo = create_slot('foo')
-        foo1 = create_structureNode('Foo_long', authors='')
+        hugo = create_user('hugo')
+        herbert = create_user('herbert')
 
-        foo2 = create_nodes_for_path("foo.2")
-        foo1bar1 = create_nodes_for_path("foo.1/bar.1")
+        create_nodes_for_path("foo.1", authors=[herbert])
+        create_nodes_for_path("foo.2", authors=[hugo])
+        create_nodes_for_path("foo.1/bar.1", authors=[hugo, herbert])
+
+        posts = [create_post("posted at node", hugo, location='foo.2'),
+                 create_post("reference /foo.2", hugo, location=''),
+                 create_post("reference /foo.1/bar.1", hugo, location='foo.2')]
+
+        wrong_posts = [create_post("posted somewhere", hugo, location='foo.1'),
+                       create_post("reference wrong /foo.1", hugo, location=''),
+                       create_post("neither", hugo, location='')]
+
+        response = self.client.get(
+            reverse('load_microblogging_for_authored_nodes',
+                    kwargs={'name': 'hugo'}))
+        res = json.loads(response.content)["loadMicrobloggingResponse"]
+
+        response_id_list = [m["microblogID"] for m in res]
+        for post in posts:
+            self.assertIn(post.id, response_id_list)
+        for post in wrong_posts:
+            self.assertNotIn(post.id, response_id_list)
+        self.assertEqual(len(res), 3)

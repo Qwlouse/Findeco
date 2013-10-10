@@ -107,7 +107,8 @@ def load_microblogging_for_authored_nodes(request, name):
     """
     named_user = assert_active_user(name)
 
-    query = Q(node_references__text__author__in=named_user)
+    query = (Q(node_references__text__authors=named_user) |
+             Q(location__text__authors=named_user))
     return microblogging_response(query, request.GET)
 
 
