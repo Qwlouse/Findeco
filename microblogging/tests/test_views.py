@@ -94,9 +94,31 @@ class ViewTest(TestCase):
         for post in wrong_posts:
             self.assertNotIn(post.id, response_id_list)
 
-
-
     ################# Load Microblogging From User  ############################
+
+    def test_load_microblogging_from_user(self):
+        hugo = create_user("hugo")
+        herbert = create_user("herbert")
+
+        posts = [create_post("@hugo ", herbert, location=''),
+                 create_post("@herbert @hugo", herbert, location='')]
+
+        wrong_posts = [
+            create_post("no mentions", hugo, location=''),
+            create_post("@herbert", hugo, location=''),
+        ]
+
+        response = self.client.get(reverse('load_microblogging_from_user',
+                                           kwargs={'name': 'herbert'}))
+        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        self.assertEqual(len(res), 2)
+        response_id_list = [m["microblogID"] for m in res]
+
+        for post in posts:
+            self.assertIn(post.id, response_id_list)
+
+        for post in wrong_posts:
+            self.assertNotIn(post.id, response_id_list)
 
     ################# Load Microblogging For Followed Nodes ####################
 
