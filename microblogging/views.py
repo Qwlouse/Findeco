@@ -80,7 +80,7 @@ def load_microblogging_mentions(request, name):
     """
     named_user = assert_active_user(name)
 
-    query = Q(mentions__in=named_user)
+    query = Q(mentions=named_user)
     return microblogging_response(query, request.GET)
 
 

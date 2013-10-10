@@ -48,7 +48,7 @@ class ViewTest(TestCase):
 
     ################# Load Microblogging For Node ##############################
 
-    def test_load_microblogging_for_node_newest(self):
+    def test_load_microblogging_for_node(self):
         hugo = create_user("hugo")
         create_nodes_for_path("foo.1")
         wrong_post = create_post("text", hugo, location='')
@@ -69,6 +69,32 @@ class ViewTest(TestCase):
     ################# Load Microblogging Timeline ##############################
 
     ################# Load Microblogging Mentions ##############################
+
+    def test_load_microblogging_mentions(self):
+        hugo = create_user("hugo")
+        herbert = create_user("herbert")
+
+        posts = [create_post("@hugo ", herbert, location=''),
+                 create_post("@herbert @hugo", herbert, location='')]
+
+        wrong_posts = [
+            create_post("no mentions", hugo, location=''),
+            create_post("@herbert", hugo, location=''),
+        ]
+
+        response = self.client.get(reverse('load_microblogging_mentions',
+                                           kwargs={'name': 'hugo'}))
+        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        self.assertEqual(len(res), 2)
+        response_id_list = [m["microblogID"] for m in res]
+
+        for post in posts:
+            self.assertIn(post.id, response_id_list)
+
+        for post in wrong_posts:
+            self.assertNotIn(post.id, response_id_list)
+
+
 
     ################# Load Microblogging From User  ############################
 
