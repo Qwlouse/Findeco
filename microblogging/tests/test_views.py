@@ -25,7 +25,7 @@ import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from microblogging.factory import create_post
-from node_storage.factory import create_user, create_nodes_for_path, create_vote
+from node_storage.factory import create_user, create_nodes_for_path, create_vote, create_slot, create_structureNode
 
 
 class ViewTest(TestCase):
@@ -123,7 +123,7 @@ class ViewTest(TestCase):
     ################# Load Microblogging For Followed Nodes ####################
 
     def test_load_microblogging_for_followed_nodes(self):
-        foo1 = create_nodes_for_path("foo.1")
+        create_nodes_for_path("foo.1")
         foo2 = create_nodes_for_path("foo.2")
         foo1bar1 = create_nodes_for_path("foo.1/bar.1")
 
@@ -151,8 +151,11 @@ class ViewTest(TestCase):
             self.assertNotIn(post.id, response_id_list)
         self.assertEqual(len(res), 3)
 
-
-
     ################# Load Microblogging For Authored Nodes ####################
 
+    def test_load_microblogging_for_authored_nodes(self):
+        foo = create_slot('foo')
+        foo1 = create_structureNode('Foo_long', authors='')
 
+        foo2 = create_nodes_for_path("foo.2")
+        foo1bar1 = create_nodes_for_path("foo.1/bar.1")
