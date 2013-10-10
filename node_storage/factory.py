@@ -114,7 +114,7 @@ def create_user(username, description="", mail="a@bc.de", password=None,
     return new_user
 
 
-def create_nodes_for_path(path):
+def create_nodes_for_path(path, authors=()):
     nodes, last = parse_path(path)
     current_node = get_root_node()
     current_path = ""
@@ -139,7 +139,8 @@ def create_nodes_for_path(path):
                     'position')[0].position
 
             for i in range(highest_index, index):
-                current_node = create_structureNode(short_title + '_long')
+                current_node = create_structureNode(short_title + '_long',
+                                                    authors=authors)
                 current_slot.append_child(current_node)
 
     return current_node
