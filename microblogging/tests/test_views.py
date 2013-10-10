@@ -99,9 +99,12 @@ class ViewTest(TestCase):
         hugo = create_user("hugo")
         create_nodes_for_path("foo.1")
         wrong_post = create_post("text", hugo, location='')
-        posts = [create_post("text1", hugo, location='foo.1'),
-                 create_post("text2", hugo, location='foo.1'),
-                 create_post("text3", hugo, location='foo.1')]
+        posts = [create_post("is only posted there", hugo,
+                             location='foo.1'),
+                 create_post("references /foo.1 and is posted there", hugo,
+                             location='foo.1'),
+                 create_post("references /foo.1 but is not posted there", hugo,
+                             location='')]
         response = self.client.get(reverse('load_microblogging_for_node',
                                            kwargs={'path': 'foo.1'}))
         res = json.loads(response.content)["loadMicrobloggingResponse"]
