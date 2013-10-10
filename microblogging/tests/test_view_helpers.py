@@ -106,6 +106,10 @@ class ViewHelpersTest(TestCase):
                                  "www.hostname.de")
         self.assertEqual(text, "text /foo.1/ text")
 
+        text = convert_long_urls("text https://www.hostname.de/foo.1/ text",
+                                 "www.hostname.de")
+        self.assertEqual(text, "text /foo.1/ text")
+
     def test_convert_long_urls_removes_hostname_from_argument_path(self):
         text = convert_long_urls(
             "text http://www.hostname.de/foo.1/ba.2.con.7 text",

@@ -26,9 +26,12 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 import json
+import re
 from time import mktime
-from django.db.models import Q
+from findeco.api_validation import USERNAME
+
 from findeco.error_handling import InvalidMicrobloggingOptions
+from findeco.paths import RESTRICTED_PATH, RESTRICTED_NONROOT_PATH
 from findeco.view_helpers import json_response
 from .models import Post
 
@@ -52,9 +55,18 @@ def convert_long_urls(text, hostname):
     This function removes the unnecessary part from urls which are copy&pasted
     from the url field of the browser.
     """
-    text = text.replace("https://" + hostname, "")
-    text = text.replace("http://" + hostname, "")
-    text = text.replace(hostname, "")
+    hostname_path_pattern = re.compile(r"(https?://)?" +
+                                       r"(" + re.escape(hostname) + r")/" +
+                                       r"(?=" + RESTRICTED_NONROOT_PATH +
+                                       r"(?:\s|$))")
+
+    username_pattern = re.compile(r"(https?://)?" +
+                                  r"(" + re.escape(hostname) + r")/user/" +
+                                  r"(?=" + USERNAME + r"(?:\s|$))")
+
+    text = hostname_path_pattern.sub("/", text)
+    text = username_pattern.sub("@", text)
+
     return text
 
 
