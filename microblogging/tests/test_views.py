@@ -30,6 +30,9 @@ from node_storage.factory import create_user, create_nodes_for_path
 
 
 class ViewTest(TestCase):
+
+    ################# Load Microblogging All ###################################
+
     def test_load_microblogging_all_status_ok(self):
         response = self.client.get(reverse('load_microblogging_all'))
         self.assertEqual(response.status_code, 200)
@@ -90,6 +93,8 @@ class ViewTest(TestCase):
         err = json.loads(response.content)["errorResponse"]
         self.assertEqual(err["errorID"], "_InvalidMircobloggingOptions")
 
+    ################# Load Microblogging For Node ##############################
+
     def test_load_microblogging_for_node_newest(self):
         hugo = create_user("hugo")
         create_nodes_for_path("foo.1")
@@ -104,5 +109,15 @@ class ViewTest(TestCase):
         self.assertNotIn(wrong_post.id, [m["microblogID"] for m in res])
         for post in posts:
             self.assertIn(post.id, [m["microblogID"] for m in res])
+
+    ################# Load Microblogging Timeline ##############################
+
+    ################# Load Microblogging Mentions ##############################
+
+    ################# Load Microblogging From User  ############################
+
+    ################# Load Microblogging For Followed Nodes ####################
+
+    ################# Load Microblogging For Authored Nodes ####################
 
 
