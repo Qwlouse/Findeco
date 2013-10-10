@@ -98,11 +98,70 @@ angular.module('FindecoServices', [])
             }
         }
 
+        function filterMicroblogging(data, microblogList_out) {
+            angular.forEach(data['loadMicrobloggingResponse'], function (item) {
+                var flag = false;
+                angular.forEach(microblogList_out, function (oldItem) {
+                    if (oldItem.microblogID == item.microblogID) {
+                        flag = true;
+                    }
+                });
+                if (flag == false) {
+                    microblogList_out.push(item);
+                }
+            });
+            microblogList_out = microblogList_out.sort(function (a, b) {
+                return b.microblogID - a.microblogID;
+            });
+        }
+
         return {
        	 	loadAnnounce: function () {
        	 	 var promise = $http.get('/static/externaljson/info.json');
        	 	 return promise;
        	 	
+            },
+            loadMicrobloggingForFollowedNodes: function (microblogList_out, name, id, type) {
+                var path = '/.loadMicrobloggingForFollowedNodes/' + name + '/';
+                if (id != undefined && id != 0) {
+                    path += id + '/';
+                }
+                if (type == undefined) {
+                    type = "newer";
+                }
+                var promise = $http.get(path + type);
+                promise.success(function (data) {
+                    filterMicroblogging(data, microblogList_out);
+                });
+                return promise;
+            },
+            loadMicrobloggingForAllNodes: function (microblogList_out, id, type) {
+                var path = '/.loadMicrobloggingAll/';
+                if (id != undefined && id != 0) {
+                    path += id + '/';
+                }
+                if (type == undefined) {
+                    type = "newer";
+                }
+                var promise = $http.get(path + type);
+                promise.success(function (data) {
+                    filterMicroblogging(data, microblogList_out);
+                });
+                return promise;
+            },
+            loadMicrobloggingForAuthoredNodes: function (microblogList_out, name, id, type) {
+                var path = '/.loadMicrobloggingForAuthoredNodes/' + name + '/';
+                if (id != undefined && id != 0) {
+                    path += id + '/';
+                }
+                if (type == undefined) {
+                    type = "newer";
+                }
+                var promise = $http.get(path + type);
+                promise.success(function (data) {
+                    filterMicroblogging(data, microblogList_out);
+                });
+                return promise;
             },
             loadMicroblogging: function (microblogList_out, path, type, id, mentions, own) {
                 var pathComponents = ['/.json_loadMicroblogging'];
