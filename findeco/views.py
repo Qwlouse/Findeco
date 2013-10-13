@@ -40,6 +40,7 @@ from django.http import HttpResponse
 from django.utils.html import escape
 from django.views.decorators.csrf import ensure_csrf_cookie
 from findeco.models import EmailActivation
+from findeco.project_path import project_path
 
 from .paths import parse_suffix
 from .view_helpers import *
@@ -57,7 +58,7 @@ from node_storage.factory import create_user
 #################### General stuff #############################################
 @ensure_csrf_cookie
 def home(request, path=""):
-    with open("static/index.html", 'r') as index_html_file:
+    with open(project_path("static/index.html"), 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), mimetype='text/html')
 
 
