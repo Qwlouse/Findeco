@@ -1,0 +1,9 @@
+# This file defines the layout of the root node.
+# every line creates slot on the root level and fills it with the wiki-text
+# from the specified textfile.
+#
+# short_title           source_file
+Wahlprogramm_RLP        wahlprogramm_rlp.txt
+Positionspapiere_RLP    positionspapiere_rlp.txt
+Satzung_RLP             satzung_rlp.txt
+Spielwiese              spielwiese.txt
