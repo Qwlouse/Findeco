@@ -7,7 +7,7 @@ from findeco.paths import RESTRICTED_PATH
 
 
 microblogging_patterns = patterns('microblogging.views',
-    url(r'^\.loadMicrobloggingAll$',
+    url(r'^\.loadMicrobloggingAll/$',
         'load_microblogging_all',
         name='load_microblogging_all'),
 
