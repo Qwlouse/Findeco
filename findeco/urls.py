@@ -27,8 +27,7 @@
 from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from findeco.api_validation import USERNAME, RSSKEY
-from findeco.feeds import RssFeed
+from findeco.api_validation import USERNAME
 from findeco.paths import PATH, RESTRICTED_PATH
 from microblogging.urls import microblogging_patterns
 
@@ -39,7 +38,6 @@ django_cron.autodiscover()
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)' \
                 r'(_(user|content|microblogging))*))'
-RSSTYPE = r'(?P<rsstype>(timeline)|(mention)|(news)|(newsAuthor)|(newsFollow))'
 
 
 ########### Findeco API Calls ###########
@@ -163,10 +161,6 @@ urlpatterns += microblogging_patterns
 ########### Other urls ###########
 urlpatterns += patterns(
     '',
-
-    # RSS Feed
-    url(r'^feeds/rss/' + RSSTYPE + '/' + USERNAME + '/' + RSSKEY + '$',
-        RssFeed()),
 
     # admin docs
     url(r'^\.admin/doc/?', include('django.contrib.admindocs.urls')),

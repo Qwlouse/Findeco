@@ -41,6 +41,7 @@ from django.utils.html import escape
 from django.views.decorators.csrf import ensure_csrf_cookie
 from findeco.models import EmailActivation
 from findeco.project_path import project_path
+from findeco.search_tools import get_search_query
 
 from .paths import parse_suffix
 from .view_helpers import *
@@ -79,13 +80,13 @@ def search(request, search_fields, search_string):
             user_results.append({"url": "user/" + user.username,
                                  "title": user.username,
                                  "snippet": "Profil von " + user.username})
-        user_query = get_query(search_string, ['first_name', 'last_name', ])
+        user_query = get_search_query(search_string, ['first_name', 'last_name', ])
         found_users = User.objects.filter(user_query)
         for user in found_users:
             user_results.append({"url": "user/" + user.username,
                                  "title": user.username,
                                  "snippet": "Profil von " + user.username})
-        user_query = get_query(search_string, ['description', ])
+        user_query = get_search_query(search_string, ['description', ])
         found_profiles = UserProfile.objects.filter(user_query)
         for profile in found_profiles:
             user_results.append({"url": "user/" + profile.user.username,
@@ -93,13 +94,13 @@ def search(request, search_fields, search_string):
                                  "snippet": profile.description[:min(len(profile.description), 140)]})
     content_results = []
     if 'content' in things_to_search_for:
-        node_query = get_query(search_string, ['title', ])
+        node_query = get_search_query(search_string, ['title', ])
         found_titles = backend.Node.objects.filter(node_query).exclude(node_type=backend.Node.SLOT).order_by("-id")
         for node in found_titles:
             content_results.append({"url": node.get_a_path(),
                                     "title": node.title,
                                     "snippet": node.text.text[:min(len(node.text.text), 140)]})
-        text_query = get_query(search_string, ['text', ])
+        text_query = get_search_query(search_string, ['text', ])
         found_texts = backend.Text.objects.filter(text_query).order_by("-id")
         for text_node in found_texts:
             content_results.append({"url": text_node.node.get_a_path(),

@@ -4,7 +4,10 @@ from __future__ import division, print_function, unicode_literals
 from django.conf.urls import patterns, url
 from findeco.api_validation import USERNAME
 from findeco.paths import RESTRICTED_PATH
+from findeco.api_validation import RSSKEY
+from .feeds import MicrobloggingFeed
 
+RSSTYPE = r'(?P<rsstype>(timeline)|(mention)|(news)|(newsAuthor)|(newsFollow))'
 
 microblogging_patterns = patterns('microblogging.views',
     url(r'^\.loadMicrobloggingAll/$',
@@ -38,4 +41,8 @@ microblogging_patterns = patterns('microblogging.views',
     url(r'^\.storeMicroblogging/' + RESTRICTED_PATH + '$',
         'store_microblogging',
         name='store_microblogging'),
+
+    # RSS Feed
+    url(r'^feeds/rss/' + RSSTYPE + '/' + USERNAME + '/' + RSSKEY + '$',
+        MicrobloggingFeed()),
 )

@@ -33,7 +33,8 @@ from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
 from microblogging.factory import create_post
-from microblogging.view_helpers import convert_long_urls, microblogging_response
+from microblogging.view_helpers import *
+from microblogging.view_helpers import get_microblogging_for_followed_nodes_query
 from .models import Post
 from findeco.view_helpers import json_response
 
@@ -46,7 +47,7 @@ def load_microblogging_all(request):
 @ViewErrorHandling
 def load_microblogging_for_node(request, path):
     node = assert_node_for_path(path)
-    query = Q(location=node) | Q(node_references=node)
+    query = get_microblogging_for_node_query(node)
     return microblogging_response(query, request.GET)
 
 
@@ -56,10 +57,7 @@ def load_microblogging_timeline(request, name):
     Use this function to get the timeline for the given user.
     """
     named_user = assert_active_user(name)
-
-    query = (Q(author=named_user) |
-             Q(author__in=named_user.profile.followees.all()))
-
+    query = get_timeline_query(named_user)
     return microblogging_response(query, request.GET)
 
 
@@ -69,8 +67,7 @@ def load_microblogging_mentions(request, name):
     Use this function to get the timeline of mentions of the given user.
     """
     named_user = assert_active_user(name)
-
-    query = Q(mentions=named_user)
+    query = get_mentions_query(named_user)
     return microblogging_response(query, request.GET)
 
 
@@ -80,8 +77,7 @@ def load_microblogging_from_user(request, name):
     Use this function to get the posts for the given user.
     """
     named_user = assert_active_user(name)
-
-    query = Q(author=named_user)
+    query = get_microblogging_from_user_query(named_user)
     return microblogging_response(query, request.GET)
 
 
@@ -92,9 +88,7 @@ def load_microblogging_for_followed_nodes(request, name):
     which are followed by the user.
     """
     named_user = assert_active_user(name)
-
-    query = (Q(node_references__votes__user=named_user) |
-             Q(location__votes__user=named_user))
+    query = get_microblogging_for_followed_nodes_query(named_user)
     return microblogging_response(query, request.GET)
 
 
@@ -105,9 +99,7 @@ def load_microblogging_for_authored_nodes(request, name):
     which are followed by the user.
     """
     named_user = assert_active_user(name)
-
-    query = (Q(node_references__text__authors=named_user) |
-             Q(location__text__authors=named_user))
+    query = get_microblogging_for_authored_nodes_query(named_user)
     return microblogging_response(query, request.GET)
 
 

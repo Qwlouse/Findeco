@@ -27,28 +27,14 @@
 from __future__ import division, print_function, unicode_literals
 import json
 import re
-from time import mktime
-
+from django.db.models import Q
 from findeco.api_validation import USERNAME
 from findeco.error_handling import InvalidMicrobloggingOptions
 from findeco.paths import RESTRICTED_NONROOT_PATH
-from findeco.view_helpers import json_response, get_query
+from findeco.view_helpers import json_response
 
 from .models import Post
-
-
-def convert_to_response_list(post_list):
-    response_list = []
-    for post in post_list:
-        authors = [post.author.username]
-        if post.is_answer_to:
-            authors.append(post.is_reference_to.author.username)
-        response_list.append(
-            {'microblogText': post.text_cache,
-             'authorGroup': authors,
-             'microblogTime': int(mktime(post.time.timetuple())),
-             'microblogID': post.pk})
-    return response_list
+from .tools import convert_to_response_list
 
 
 def convert_long_urls(text, hostname):
@@ -103,13 +89,28 @@ def microblogging_response(query, options):
         'loadMicrobloggingResponse': convert_to_response_list(posts)})
 
 
-def search_for_microblogging(search_string):
-    microblogging_query = get_query(search_string, ['text_cache', ])
-    found_posts = Post.objects.filter(microblogging_query).order_by("-id")
-    return convert_to_response_list(found_posts)
+def get_microblogging_for_authored_nodes_query(named_user):
+    return (Q(node_references__text__authors=named_user) |
+            Q(location__text__authors=named_user))
 
 
-def change_microblogging_authorship(old_user, new_user):
-    for post in old_user.microblogging_posts.all():
-        post.author = new_user
-        post.save()
+def get_microblogging_from_user_query(named_user):
+    return Q(author=named_user)
+
+
+def get_mentions_query(named_user):
+    return Q(mentions=named_user)
+
+
+def get_timeline_query(named_user):
+    return (Q(author=named_user) |
+            Q(author__in=named_user.profile.followees.all()))
+
+
+def get_microblogging_for_node_query(node):
+    return Q(location=node) | Q(node_references=node)
+
+
+def get_microblogging_for_followed_nodes_query(named_user):
+    return (Q(node_references__votes__user=named_user) |
+            Q(location__votes__user=named_user))
