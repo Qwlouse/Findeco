@@ -372,6 +372,12 @@ angular.module('FindecoServices', [])
 
         return userInfo;
     })
+    .factory('Fesettings', function (Disclaimer_Disable){
+        var settings ={}
+        settings.disclaimerText= Disclaimer_Disable
+        return settings;
+
+    })
     .factory('TMP', function () {
         var tmp = {};
         return tmp;

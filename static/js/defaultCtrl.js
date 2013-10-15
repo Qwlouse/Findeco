@@ -25,10 +25,10 @@
 'use strict';
 /* Controllers */
 
-function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
+function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesettings) {
     $scope.nav = Navigator;
     $scope.user = User;
-
+    $scope.fesettings = Fesettings;
     $scope.allExpanded = false;
 
     $scope.isTextLoaded = false;
@@ -124,4 +124,4 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
     $scope.initialize();
 }
 
-FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend', 'User', 'Navigator'];
+FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend', 'User', 'Navigator', 'Fesettings'];
