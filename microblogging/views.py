@@ -122,15 +122,6 @@ def store_microblogging(request, path):
 
 
 ############################## OLD STUFF #######################################
-@ViewErrorHandling
-def store_microblog_post(request, path):
-    assert_authentication(request)
-    assert_post_parameters(request, ['microblogText'])
-    post_text = convert_long_urls(request)
-#    create_post(post_text, request.user, path)
-    return json_response({'storeMicrobloggingResponse': {}})
-
-
 # Getter For Now only used for RSS
 
 def get_mentions(username, count):
