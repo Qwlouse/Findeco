@@ -75,12 +75,6 @@ argumentIndexNode_schema = {
     'isFlagging': integer,
     'authorGroup': authorGroup_schema
 }
-microblogNode_schema = {
-    'microblogText': string,
-    'authorGroup': ["user"],
-    'microblogTime': integer,
-    'microblogID': integer
-}
 textNode_schema = {
     'wikiText': string,
     'path': string,
@@ -105,14 +99,10 @@ loadNodeResponse_schema = {
         'wikiText': string,
         'authors': [string, None],
         'indexList': [indexNode_schema, None]
-    }}
-
-
+    }
+}
 loadArgumentIndexResponse_schema = {
     'loadArgumentIndexResponse': [argumentIndexNode_schema, None]
-}
-loadMicrobloggingResponse_schema = {
-    'loadMicrobloggingResponse': [microblogNode_schema, None]
 }
 loadTextResponse_schema = {
     'loadTextResponse': {
@@ -153,10 +143,6 @@ deleteUser_schema = {
 }
 markNodeResponse_schema = {
     'markNodeResponse': {
-    }
-}
-storeMicroblogPostResponse_schema = {
-    'storeMicroblogPostResponse': {
     }
 }
 storeSettingsResponse_schema = {
@@ -205,9 +191,8 @@ argumentIndexNodeValidator = JSONValidator(argumentIndexNode_schema)
 loadGraphDataResponseValidator = JSONValidator(loadGraphDataResponse_schema)
 loadIndexResponseValidator = JSONValidator(loadIndexResponse_schema)
 loadNodeResponseValidator = JSONValidator(loadNodeResponse_schema)
-loadArgumentIndexResponseValidator = JSONValidator(loadArgumentIndexResponse_schema)
-loadMicrobloggingResponseValidator = JSONValidator(
-    loadMicrobloggingResponse_schema)
+loadArgumentIndexResponseValidator = JSONValidator(
+    loadArgumentIndexResponse_schema)
 loadTextResponseValidator = JSONValidator(loadTextResponse_schema)
 loadUserInfoResponseValidator = JSONValidator(loadUserInfoResponse_schema)
 loadUserSettingsResponseValidator = JSONValidator(
@@ -217,8 +202,6 @@ logoutResponseValidator = JSONValidator(logoutResponse_schema)
 changePasswordValidator = JSONValidator(changePassword_schema)
 deleteUserValidator = JSONValidator(deleteUser_schema)
 markNodeResponseValidator = JSONValidator(markNodeResponse_schema)
-storeMicroblogPostResponseValidator = JSONValidator(
-    storeMicroblogPostResponse_schema)
 storeSettingsResponseValidator = JSONValidator(storeSettingsResponse_schema)
 storeTextResponseValidator = JSONValidator(storeTextResponse_schema)
 
@@ -230,7 +213,8 @@ class ErrorResponseValidator(object):
     def validate(self, data):
         self.validator.validate(data)
         if not data['errorResponse']['errorID'] in ERROR_LIST:
-            raise JSONValidationError('Invalid errorID "%s"'%data['errorResponse']['errorID'])
+            raise JSONValidationError('Invalid errorID "%s"' %
+                                      data['errorResponse']['errorID'])
 
 errorResponseValidator = ErrorResponseValidator()
 
@@ -238,7 +222,6 @@ view_validators = {
     'load_graph_data': loadGraphDataResponseValidator,
     'load_index': loadIndexResponseValidator,
     'load_argument_index': loadArgumentIndexResponseValidator,
-    'load_microblogging': loadMicrobloggingResponseValidator,
     'load_text': loadTextResponseValidator,
     'load_node': loadNodeResponseValidator,
     'load_user_info': loadUserInfoResponseValidator,
@@ -251,7 +234,6 @@ view_validators = {
     'unflag_node': markNodeResponseValidator,
     'mark_node_follow': markNodeResponseValidator,
     'mark_node_unfollow': markNodeResponseValidator,
-    'store_microblog_post': storeMicroblogPostResponseValidator,
     'store_settings': storeSettingsResponseValidator,
     'store_text': storeTextResponseValidator
 }

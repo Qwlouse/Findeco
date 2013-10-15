@@ -24,7 +24,7 @@ from __future__ import division, print_function, unicode_literals
 import json
 from django.db.models import Q
 from django.test import TestCase
-from findeco.api_validation import validate_response
+from microblogging.api_validation import validate_response
 from findeco.error_handling import ViewError
 from microblogging.factory import create_post
 from microblogging.view_helpers import microblogging_response, get_load_type, convert_long_urls
