@@ -24,16 +24,14 @@ from __future__ import division, print_function, unicode_literals
 import json
 import functools
 import re
+
 from django.contrib.auth.models import Permission, User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db.models import Q
 from django.http import HttpResponse
 
-from .api_validation import USERNAME
-from .api_validation import validate_response
-from .error_handling import *
-from .paths import parse_suffix
+from microblogging import change_microblogging_authorship
 import node_storage as backend
 from node_storage import get_node_for_path, get_ordered_children_for, parse
 from node_storage import create_structure_from_structure_node_schema
@@ -42,6 +40,11 @@ from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
 from node_storage.structure_parser import turn_into_valid_short_title
+
+from .api_validation import USERNAME
+from .api_validation import validate_response
+from .error_handling import *
+from .paths import parse_suffix
 
 
 def json_response(data):
@@ -471,9 +474,7 @@ def change_authorship_to(old_user, new_user):
             text.authors.add(new_user)
         text.save()
     # Changing authorship in microblogging
-    for post in old_user.microblogging_posts.all():
-        post.author = new_user
-        post.save()
+    change_microblogging_authorship(old_user, new_user)
 
 
 def check_username_sanity(username):

@@ -107,3 +107,9 @@ def search_for_microblogging(search_string):
     microblogging_query = get_query(search_string, ['text_cache', ])
     found_posts = Post.objects.filter(microblogging_query).order_by("-id")
     return convert_to_response_list(found_posts)
+
+
+def change_microblogging_authorship(old_user, new_user):
+    for post in old_user.microblogging_posts.all():
+        post.author = new_user
+        post.save()

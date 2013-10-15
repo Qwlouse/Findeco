@@ -25,3 +25,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from view_helpers import search_for_microblogging
+from view_helpers import change_microblogging_authorship
