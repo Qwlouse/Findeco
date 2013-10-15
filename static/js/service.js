@@ -130,73 +130,43 @@ angular.module('FindecoServices', [])
         }
 
         return {
-       	 	loadAnnounce: function () {
-       	 	    return $http.get('/static/externaljson/info.json');
+            loadAnnounce: function () {
+                return $http.get('/static/externaljson/info.json');
             },
+
             loadMicrobloggingForFollowedNodes: function (microblogList_out, name, id, type) {
                 var path = '/.loadMicrobloggingForFollowedNodes/' + name + '/';
                 return addIdTypeAndGetPromise(microblogList_out, path, id, type);
             },
+
             loadMicrobloggingForAllNodes: function (microblogList_out, id, type) {
                 var path = '/.loadMicrobloggingAll/';
                 return addIdTypeAndGetPromise(microblogList_out, path, id, type);
             },
+
             loadMicrobloggingForAuthoredNodes: function (microblogList_out, name, id, type) {
                 var path = '/.loadMicrobloggingForAuthoredNodes/' + name + '/';
                 return addIdTypeAndGetPromise(microblogList_out, path, id, type);
             },
+
             loadMicrobloggingMentions: function (microblogList_out, name, id, type) {
                 var path = '/.loadMicrobloggingMentions/' + name + '/mentions/';
                 return addIdTypeAndGetPromise(microblogList_out, path, id, type);
             },
+
             loadMicrobloggingTimeline: function (microblogList_out, name, id, type) {
                 var path = '/.loadMicrobloggingTimeline/' + name + '/';
                 return addIdTypeAndGetPromise(microblogList_out, path, id, type);
             },
+
             loadMicrobloggingFromUser: function (microblogList_out, name, id, type) {
                 var path = '/.loadMicrobloggingFromUser/' + name + '/';
                 return addIdTypeAndGetPromise(microblogList_out, path, id, type);
             },
+
             loadMicrobloggingForNode: function (microblogList_out, path, id, type) {
                 var url_part = '/.loadMicrobloggingForNode/' + path + '/';
                 return addIdTypeAndGetPromise(microblogList_out, url_part, id, type);
-            },
-            loadMicroblogging: function (microblogList_out, path, type, id, mentions, own) {
-                var pathComponents = ['/.json_loadMicroblogging'];
-                if (mentions != undefined && mentions == true) {
-                    pathComponents.push('mentions');
-                }
-                if (own != undefined && own == true) {
-                    pathComponents.push('own');
-                }
-                if (id != undefined && id != 0) {
-                    pathComponents.push(id);
-                }
-                if (type == undefined) {
-                    type = "newer"
-                }
-                pathComponents.push(type);
-                pathComponents.push(path);
-                var url = pathComponents.join('/');
-                url = url.replace("//", "/");
-                var promise = $http.get(url);
-                promise.success(function (data) {
-                    angular.forEach(data['loadMicrobloggingResponse'], function (item) {
-                        var flag = false;
-                        angular.forEach(microblogList_out, function (oldItem) {
-                            if (oldItem.microblogID == item.microblogID) {
-                                flag = true;
-                            }
-                        });
-                        if (flag == false) {
-                            microblogList_out.push(item);
-                        }
-                    });
-                    microblogList_out = microblogList_out.sort(function (a, b) {
-                        return b.microblogID - a.microblogID;
-                    });
-                });
-                return promise;
             },
 
             markNode: function (nodePath, markType) {
