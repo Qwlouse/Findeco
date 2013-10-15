@@ -52,6 +52,7 @@ class Post(models.Model):
     SPAM_UNMARKED = 'n'
     NODE_FOLLOWED = 'f'
     NODE_UNFOLLOWED = 'u'
+    ARGUMENT_CREATED = 'a'
     MICROBLOGGING_TYPE = (
         (USER_POST, 'userpost'),
         (NODE_CREATED, 'node_created'),
@@ -59,7 +60,8 @@ class Post(models.Model):
         (SPAM_MARKED, 'node_spam_marked'),
         (SPAM_UNMARKED, 'node_spam_unmarked'),
         (NODE_FOLLOWED, 'node_followed'),
-        (NODE_UNFOLLOWED, 'node_unfollowed')
+        (NODE_UNFOLLOWED, 'node_unfollowed'),
+        (ARGUMENT_CREATED, 'argument_created')
     )
 
     node_references = models.ManyToManyField(
