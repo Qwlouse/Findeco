@@ -106,7 +106,15 @@ angular.module('FindecoServices', [])
                         flag = true;
                     }
                 });
-                if (flag == false) {
+                if (!flag) {
+                    var authors = [];
+                    angular.forEach(item.authorGroup, function (authorName) {
+                        var author = {};
+                        author.displayName = authorName;
+                        authors.push(author);
+                    });
+                    item.authorGroup = authors;
+                    console.log(item);
                     microblogList_out.push(item);
                 }
             });
