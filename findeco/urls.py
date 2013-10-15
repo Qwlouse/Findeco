@@ -29,15 +29,14 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from findeco.api_validation import USERNAME, RSSKEY
 from findeco.feeds import RssFeed
-from findeco.paths import PATH, RESTRICTED_PATH, ID
+from findeco.paths import PATH, RESTRICTED_PATH
+from microblogging.urls import microblogging_patterns
 
 admin.autodiscover()
 django_cron.autodiscover()
 
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
-BLOG_ID = r'(?P<select_id>' + ID + ')'
-BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
 SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)' \
                 r'(_(user|content|microblogging))*))'
 RSSTYPE = r'(?P<rsstype>(timeline)|(mention)|(news)|(newsAuthor)|(newsFollow))'
@@ -159,41 +158,7 @@ urlpatterns = patterns(
 )
 
 ########### Microblogging API ###########
-urlpatterns += patterns(
-    'microblogging.views',
-
-    url(r'^\.loadMicrobloggingAll/$',
-        'load_microblogging_all',
-        name='load_microblogging_all'),
-
-    url(r'^\.loadMicrobloggingForNode/' + PATH + '$',
-        'load_microblogging_for_node',
-        name='load_microblogging_for_node'),
-
-    url(r'^\.loadMicrobloggingTimeline/' + USERNAME + '/$',
-        'load_microblogging_timeline',
-        name='load_microblogging_timeline'),
-
-    url(r'^\.loadMicrobloggingMentions/' + USERNAME + '/$',
-        'load_microblogging_mentions',
-        name='load_microblogging_mentions'),
-
-    url(r'^\.loadMicrobloggingFromUser/' + USERNAME + '/$',
-        'load_microblogging_from_user',
-        name='load_microblogging_from_user'),
-
-    url(r'^\.loadMicrobloggingForFollowedNodes/' + USERNAME + '/$',
-        'load_microblogging_for_followed_nodes',
-        name='load_microblogging_for_followed_nodes'),
-
-    url(r'^\.loadMicrobloggingForAuthoredNodes/' + USERNAME + '/$',
-        'load_microblogging_for_authored_nodes',
-        name='load_microblogging_for_authored_nodes'),
-
-    url(r'^\.storeMicroblogging/' + PATH + '$',
-        'store_microblogging',
-        name='store_microblogging'),
-)
+urlpatterns += microblogging_patterns
 
 ########### Other urls ###########
 urlpatterns += patterns(
