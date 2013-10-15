@@ -29,7 +29,6 @@ function FindecoSyschangeCtrl($scope, Backend, User, TMP, Navigator) {
 
     $scope.newsList =[];
 
-    var foo=[];
     Backend.loadAnnounce().success(function (d) {
     	 for (var i = 0; i < d["count"]; ++i) {
     		 $scope.newsList[i]=[];
