@@ -147,6 +147,18 @@ angular.module('FindecoServices', [])
                 var path = '/.loadMicrobloggingForAuthoredNodes/' + name + '/';
                 return addIdTypeAndGetPromise(path, id, type);
             },
+            loadMicrobloggingMentions: function (microblogList_out, name, id, type) {
+                var path = '/.loadMicrobloggingMentions/' + name + '/mentions/';
+                return addIdTypeAndGetPromise(path, id, type);
+            },
+            loadMicrobloggingTimeline: function (microblogList_out, name, id, type) {
+                var path = '/.loadMicrobloggingTimeline/' + name + '/';
+                return addIdTypeAndGetPromise(path, id, type);
+            },
+            loadMicrobloggingFromUser: function (microblogList_out, name, id, type) {
+                var path = '/.loadMicrobloggingFromUser/' + name + '/';
+                return addIdTypeAndGetPromise(path, id, type);
+            },
             loadMicroblogging: function (microblogList_out, path, type, id, mentions, own) {
                 var pathComponents = ['/.json_loadMicroblogging'];
                 if (mentions != undefined && mentions == true) {

@@ -62,7 +62,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
             id = oldID;
         }
         $scope.isLoadingTimeline =true;
-        Backend.loadMicroblogging($scope.timelineList, User.displayName, type, id).success(function() {
+        Backend.loadMicrobloggingTimeline($scope.timelineList, User.displayName, id, type).success(function() {
         	setAuthorForAllBlogs($scope.timelineList);
         	$scope.isLoadingTimeline =false;
        });
@@ -80,7 +80,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
             id = oldID;
         }
         $scope.isLoadingMentions=true;
-        Backend.loadMicroblogging($scope.mentionsList, User.displayName, type, id, true).success(function() {
+        Backend.loadMicrobloggingMentions($scope.mentionsList, User.displayName, id, type).success(function() {
         	setAuthorForAllBlogs($scope.mentionsList);
         	$scope.isLoadingMentions=false;
         });
@@ -98,7 +98,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
             id = oldID;
         }
         $scope.isLoadingOwnPosts=true;
-        Backend.loadMicroblogging($scope.ownPostsList, User.displayName, type, id, false, true).success(function() {
+        Backend.loadMicrobloggingFromUser($scope.ownPostsList, User.displayName, id, type).success(function() {
         	setAuthorForAllBlogs($scope.ownPostsList);
         	$scope.isLoadingOwnPosts=false;
         });
