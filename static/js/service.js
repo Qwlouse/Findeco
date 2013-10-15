@@ -115,18 +115,19 @@ angular.module('FindecoServices', [])
             });
         }
 
-        function addIdTypeAndGetPromise(microblogList_out, path, id, type) {
+        function addIdTypeAndGetPromise(microblogList_out, url, id, type) {
+            var idParam = '';
             if (id != undefined && id != 0) {
-                    path += id + '/';
-                }
-                if (type == undefined) {
-                    type = "newer";
-                }
-                var promise = $http.get(path + type);
-                promise.success(function (data) {
-                    filterMicroblogging(data, microblogList_out);
-                });
-                return promise;
+                idParam = '?id=' + id + '&';
+            }
+            if (type == undefined) {
+                type = "newer";
+            }
+            var promise = $http.get(url + '?' + idParam + 'type=' + type);
+            promise.success(function (data) {
+                filterMicroblogging(data, microblogList_out);
+            });
+            return promise;
         }
 
         return {
@@ -150,7 +151,7 @@ angular.module('FindecoServices', [])
             },
 
             loadMicrobloggingMentions: function (microblogList_out, name, id, type) {
-                var path = '/.loadMicrobloggingMentions/' + name + '/mentions/';
+                var path = '/.loadMicrobloggingMentions/' + name + '/';
                 return addIdTypeAndGetPromise(microblogList_out, path, id, type);
             },
 
