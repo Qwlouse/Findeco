@@ -29,8 +29,6 @@ from findeco.api_validation import storeSettingsResponseValidator
 from findeco.tests.helpers import assert_is_error_response
 
 from node_storage.factory import create_user, create_slot, create_textNode
-from microblogging.models import Post
-from microblogging.factory import create_post
 
 from ..api_validation import loadUserInfoResponseValidator
 from ..api_validation import loadUserSettingsResponseValidator
@@ -173,8 +171,6 @@ class DeleteUserTest(TestCase):
         self.text4 = create_textNode("Gemeinsamer Text mit anonymous",
                                      "Anonymous wird dabei geholfen haben diesen Text zu erstellen",
                                      [self.hans, self.karl, self.anon])
-        self.post1 = create_post("Bla", self.hans)
-        self.post2 = create_post("Blubb", self.karl)
 
     def test_delete_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
@@ -187,10 +183,6 @@ class DeleteUserTest(TestCase):
         response = self.client.post(reverse('delete_user'))
         self.assertEqual(response.status_code, 200)
         self.assertFalse(self.client.login(username="hans", password='1234'))
-        self.assertEqual(len(Post.objects.filter(author=self.hans).all()), 0)
-        self.assertEqual(len(Post.objects.filter(author=self.anon).all()), 1)
-        self.assertEqual(Post.objects.filter(author=self.anon).all()[0].text_template, "Bla")
-        self.assertEqual(len(Post.objects.filter(author=self.karl).all()), 1)
         self.assertNotIn(self.hans, self.text1.text.authors.all())
         self.assertNotIn(self.hans, self.text2.text.authors.all())
         self.assertNotIn(self.hans, self.text3.text.authors.all())
