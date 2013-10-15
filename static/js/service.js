@@ -116,9 +116,9 @@ angular.module('FindecoServices', [])
         }
 
         function addIdTypeAndGetPromise(microblogList_out, url, id, type) {
-            var idParam = '';
+            var idParam = 'id=-1&';
             if (id != undefined && id != 0) {
-                idParam = '?id=' + id + '&';
+                idParam = 'id=' + id + '&';
             }
             if (type == undefined) {
                 type = "newer";
@@ -166,7 +166,7 @@ angular.module('FindecoServices', [])
             },
 
             loadMicrobloggingForNode: function (microblogList_out, path, id, type) {
-                var url_part = '/.loadMicrobloggingForNode/' + path + '/';
+                var url_part = '/.loadMicrobloggingForNode/' + path;
                 return addIdTypeAndGetPromise(microblogList_out, url_part, id, type);
             },
 
