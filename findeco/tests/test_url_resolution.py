@@ -29,7 +29,6 @@ from __future__ import division, print_function, unicode_literals
 from django.core.urlresolvers import resolve, Resolver404
 from django.test import TestCase
 
-from microblogging.views import load_microblogging, store_microblog_post
 from ..views import load_user_settings, load_index, load_graph_data, load_text
 from ..views import load_user_info, load_argument_index
 from ..views import login, logout, flag_node, unflag_node, store_text
