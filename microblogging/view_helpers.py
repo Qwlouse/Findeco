@@ -28,15 +28,16 @@ from __future__ import division, print_function, unicode_literals
 import json
 import re
 from time import mktime
-from findeco.api_validation import USERNAME
 
+from findeco.api_validation import USERNAME
 from findeco.error_handling import InvalidMicrobloggingOptions
-from findeco.paths import RESTRICTED_PATH, RESTRICTED_NONROOT_PATH
-from findeco.view_helpers import json_response
+from findeco.paths import RESTRICTED_NONROOT_PATH
+from findeco.view_helpers import json_response, get_query
+
 from .models import Post
 
 
-def convert_response_list(post_list):
+def convert_to_response_list(post_list):
     response_list = []
     for post in post_list:
         authors = [post.author.username]
@@ -99,6 +100,10 @@ def get_posts(query, options):
 def microblogging_response(query, options):
     posts = get_posts(query, options)
     return json_response({
-        'loadMicrobloggingResponse': convert_response_list(posts)})
+        'loadMicrobloggingResponse': convert_to_response_list(posts)})
 
 
+def search_for_microblogging(search_string):
+    microblogging_query = get_query(search_string, ['text_cache', ])
+    found_posts = Post.objects.filter(microblogging_query).order_by("-id")
+    return convert_to_response_list(found_posts)

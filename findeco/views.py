@@ -44,7 +44,7 @@ from findeco.project_path import project_path
 
 from .paths import parse_suffix
 from .view_helpers import *
-import microblogging
+from microblogging import search_for_microblogging
 from microblogging.system_messages import post_node_was_flagged_message
 from microblogging.system_messages import post_new_derivate_for_node_message
 from microblogging.system_messages import post_new_derivate_for_node_message_list
@@ -69,8 +69,10 @@ def error_404(request):
 
 @ViewErrorHandling
 def search(request, search_fields, search_string):
+    things_to_search_for = set(search_fields.split('_'))
+
     user_results = []
-    if 'user' in search_fields.split('_'):
+    if 'user' in things_to_search_for:
         exact_username_matches = User.objects.filter(
             username__iexact=search_string.strip())
         for user in exact_username_matches:
@@ -90,7 +92,7 @@ def search(request, search_fields, search_string):
                                  "title": profile.user.username,
                                  "snippet": profile.description[:min(len(profile.description), 140)]})
     content_results = []
-    if 'content' in search_fields.split('_'):
+    if 'content' in things_to_search_for:
         node_query = get_query(search_string, ['title', ])
         found_titles = backend.Node.objects.filter(node_query).exclude(node_type=backend.Node.SLOT).order_by("-id")
         for node in found_titles:
@@ -104,13 +106,13 @@ def search(request, search_fields, search_string):
                                     "title": text_node.node.title,
                                     "snippet": text_node.text[:min(len(text_node.text), 140)]})
     microblogging_results = []
-    if 'microblogging' in search_fields.split('_'):
-        microblogging_query = get_query(search_string, ['text_cache', ])
-        found_posts = microblogging.Post.objects.filter(microblogging_query).order_by("-id")
-        microblogging_results = microblogging.convert_response_list(found_posts)
-    return json_response({'searchResponse': {'userResults': user_results,
-                                             'contentResults': content_results,
-                                             'microbloggingResults': microblogging_results}})
+    if 'microblogging' in things_to_search_for:
+        microblogging_results = search_for_microblogging(search_string)
+
+    return json_response(
+        {'searchResponse': {'userResults': user_results,
+                            'contentResults': content_results,
+                            'microbloggingResults': microblogging_results}})
 
 
 #################### Node Infos ################################################
