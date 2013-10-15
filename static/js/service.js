@@ -131,9 +131,7 @@ angular.module('FindecoServices', [])
 
         return {
        	 	loadAnnounce: function () {
-       	 	 var promise = $http.get('/static/externaljson/info.json');
-       	 	 return promise;
-       	 	
+       	 	    return $http.get('/static/externaljson/info.json');
             },
             loadMicrobloggingForFollowedNodes: function (microblogList_out, name, id, type) {
                 var path = '/.loadMicrobloggingForFollowedNodes/' + name + '/';
