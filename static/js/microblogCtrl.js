@@ -63,7 +63,13 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
             id = oldID;
         }
         $scope.MicrobloggingIsLoading = true;
-        Backend.loadMicrobloggingForNode($scope.microbloggingList, $scope.loadTarget, id, type).success(setAuthorForAllBlogs);
+        if (Navigator.type == 'user') {
+            Backend.loadMicrobloggingFromUser($scope.microbloggingList, User.displayName, id, type).
+                success(setAuthorForAllBlogs);
+        } else {
+            Backend.loadMicrobloggingForNode($scope.microbloggingList, $scope.loadTarget, id, type).
+                success(setAuthorForAllBlogs);
+        }
     };
 
     $scope.submit = function () {
