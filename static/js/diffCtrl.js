@@ -26,7 +26,7 @@
 /* Controllers */
 
 function FindecoDiffCtrl($scope, Backend, Navigator) {
-	
+
     $scope.nav = Navigator;
     $scope.path1 = Navigator.nodePath;
     $scope.path2 = Navigator.segments.compare;
@@ -34,6 +34,10 @@ function FindecoDiffCtrl($scope, Backend, Navigator) {
     $scope.text2Loaded = false;
     $scope.diffIsLoading = true;
     $scope.changes = [];
+    if (!$scope.path2) {
+        Navigator.changePath('/')
+
+    }
     var difftool = new diff_match_patch();
     difftool.Diff_Timeout = 20.0;
 
