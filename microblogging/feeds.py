@@ -27,14 +27,17 @@ class MicrobloggingFeed(Feed):
     def item_title(self, item):
         return item.author.username
 
+    def item_link(self, item):
+        return "/" + item.location.get_a_path()
+
     def item_guid(self, item):
-        return item.id
+        return str(item.id)
 
     def item_date(self, item):
         return item.time
 
     def item_description(self, item):
-        return item.text
+        return item.text_cache
 
     def get_object(self, request, rsstype , rsskey , name):
         self.rsstype = rsstype
