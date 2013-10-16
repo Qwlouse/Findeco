@@ -30,6 +30,7 @@ findecoApp.constant('Disclaimer',{
     text: 'Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage des Betreibers' ,
     enable: true
 });
+
 findecoApp.constant('Boxes',{
     1:{
        title:'Was ist das?',
@@ -70,4 +71,11 @@ findecoApp.constant('Boxes',{
     }
 
 
+});
+
+
+/*Please don't touch things below these Line except you know exactly what you are doing */
+
+findecoApp.constant('Sidebar',{
+    enable: false
 });

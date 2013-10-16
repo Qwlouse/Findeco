@@ -5,7 +5,9 @@
  </div>
  
 
-<div ng-include src="'/static/partials/syschanges.html'"  ></div>
+<div ng-show="fesettings.sidebar.enable==true" ng-include src="'/static/partials/syschanges.html'"  ></div>
+<div id="leftColumn" ng-show="fesettings.sidebar.enable==false"   ></div>
+
     <div id="centerColumn" class="contentBox">
    
        
