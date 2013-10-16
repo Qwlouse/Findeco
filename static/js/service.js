@@ -372,8 +372,9 @@ angular.module('FindecoServices', [])
 
         return userInfo;
     })
-    .factory('Fesettings', function (Disclaimer, Boxes){
+    .factory('Fesettings', function (Disclaimer, Boxes,Version){
         var settings ={}
+        settings.version = Version;
         settings.disclaimer = Disclaimer;
         settings.boxes = Boxes;
         return settings;

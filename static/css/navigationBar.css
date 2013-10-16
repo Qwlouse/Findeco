@@ -67,3 +67,10 @@
 #navigationBar li:last-child a {
     color: #2d7cc4;
 }
+.version{
+    color:white;
+    font-size: 0.5em;
+    position: absolute;
+    top:3px;
+    right:-30px;
+    }

@@ -24,9 +24,9 @@
 
 'use strict';
 
-function FindecoMenuCtrl($scope, User, Navigator) {
+function FindecoMenuCtrl($scope, User, Navigator, Fesettings) {
     $scope.user = User;
-
+    $scope.fesettings = Fesettings;
     $scope.logout = function () {
         User.logout().success(function () {
             Navigator.changePath('/');
@@ -68,4 +68,4 @@ function FindecoMenuCtrl($scope, User, Navigator) {
 
 }
 
-FindecoMenuCtrl.$inject = ['$scope', 'User', 'Navigator'];
+FindecoMenuCtrl.$inject = ['$scope', 'User', 'Navigator','Fesettings'];
