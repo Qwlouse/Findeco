@@ -196,14 +196,6 @@ angular.module('FindecoServices', [])
                 return promise;
             },
 
-            loadIndex: function (indexNodes_out, path) {
-                var url = ['/.json_loadIndex', path].join('/');
-                url = url.replace("//", "/");
-                var promise = $http.get(url);
-                promise.success(fillArray(indexNodes_out, ['loadIndexResponse']));
-                return promise;
-            },
-
             loadGraphData: function (graphData_out, path, graphType) {
                 if (graphType == undefined) {
                     graphType = "full";
