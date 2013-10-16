@@ -1,6 +1,6 @@
 <div id="contentContainer" class="centeringContainer">
 
- <div ng-show="!user.isLoggedIn" id="disclaimerBox" ng-bind-html-unsafe="fesettings.disclaimerText" class="contentBox" >
+ <div ng-show="!user.isLoggedIn&&fesettings.disclaimer.enable" id="disclaimerBox" ng-bind-html-unsafe="fesettings.disclaimer.text" class="contentBox" >
 
  </div>
  
@@ -49,7 +49,7 @@
 
  
     <div style="clear:both; padding-bottom:25px;"></div>
-     <div ng-show="user.isLoggedIn" id="disclaimerBox" ng-bind-html-unsafe="fesettings.disclaimerText" class="contentBox" >
+     <div ng-show="user.isLoggedIn" id="disclaimerBox" ng-bind-html-unsafe="fesettings.disclaimer.text" class="contentBox" >
 
  </div>
 </div>
