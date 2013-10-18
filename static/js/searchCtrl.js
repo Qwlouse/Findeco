@@ -31,7 +31,7 @@ function FindecoSearchCtrl($scope, Backend, $routeParams) {
     $scope.search = function () {
         Backend.search($scope.searchResults,$routeParams.searchString);
     };
-
+    $scope.searchString = $routeParams.searchString;
     $scope.search();
 }
 
