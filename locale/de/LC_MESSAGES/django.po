@@ -20,28 +20,28 @@ msgstr ""
 
 #: microblogging/models.py:178
 msgid "node_created_message"
-msgstr ""
+msgstr "<span style=\"color: gray;\">Hinweis:</span> {u0} hat den Vorschlag {n0} erstellt."
 
 #: microblogging/models.py:179
 msgid "node_refined_message"
-msgstr ""
+msgstr "<span style=\"color: gray;\">Hinweis:</span> {u0} hat {n0} zu {n1} weiterentwickelt."
 
 #: microblogging/models.py:180
 msgid "node_flagged_as_spam_message"
-msgstr ""
+msgstr "<span style=\"color: gray;\">Hinweis:</span> {u0} hat {n0} als Spam markiert."
 
 #: microblogging/models.py:181
 msgid "node_unflagged_as_spam_message"
-msgstr ""
+msgstr "<span style=\"color: gray;\">Hinweis:</span> {u0} hat die Spam-Markierung für {n0} zurückgezogen."
 
 #: microblogging/models.py:182
 msgid "node_followed_message"
-msgstr ""
+msgstr "<span style=\"color: gray;\">Hinweis:</span> {u0} folgt dem Knoten {n0}."
 
 #: microblogging/models.py:183
 msgid "node_unfollowed_message"
-msgstr ""
+msgstr "<span style=\"color: gray;\">Hinweis:</span> {u0} folgt dem Knoten {n0}."
 
 #: microblogging/models.py:184
 msgid "argument_created_message"
-msgstr ""
+msgstr "<span style=\"color: gray;\">Hinweis:</span> {u0} hat dem Vorschlag {n0} das Argument {n1} hinzugefügt."
