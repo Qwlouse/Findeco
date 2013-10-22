@@ -23,7 +23,7 @@
 from __future__ import division, print_function, unicode_literals
 
 from django.test import TestCase
-from microblogging import Post
+from microblogging.models import Post
 
 from microblogging.factory import create_post_from_schema, parse_microblogging
 from microblogging.factory import validate_microblogging_schema

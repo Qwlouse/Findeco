@@ -24,6 +24,7 @@
 from __future__ import division, print_function, unicode_literals
 from django.contrib.auth import models as auth_models
 from microblogging.models import Post
+from findeco.models import get_system_user
 import node_storage as backend
 
 
@@ -41,7 +42,7 @@ def post_node_was_flagged_message(path, user):
 def post_node_was_unflagged_message(path, user):
     post = Post()
     post.location = backend.get_node_for_path(path)
-    post.author = auth_models.User.objects.get(username='system')
+    post.author = get_system_user()
     post.post_type = Post.SPAM_UNMARKED
     post.save()
     post.mentions = [user]
@@ -57,7 +58,7 @@ def post_new_derivate_for_node_message(user, original_path, derivate_path):
 
     post.location = original_node
     post.post_type = Post.NODE_REFINED
-    post.author = auth_models.User.objects.get(username='system')
+    post.author = get_system_user()
     post.save()
     post.node_references = [original_node, derivate_node]
     post.mentions = [user]
@@ -75,7 +76,7 @@ def post_new_derivate_for_node_message_list(user, path_couples):
 def post_new_argument_for_node_message(user, path, arg_type, arg_path):
     post = Post()
     post.location = backend.get_node_for_path(path)
-    post.author = auth_models.User.objects.get(username='system')
+    post.author = get_system_user()
     post.post_type = Post.ARGUMENT_CREATED
     post.save()
     post.mentions = [user]
