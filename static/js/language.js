@@ -93,6 +93,10 @@ ClassLanguage.prototype.get = function (target) {
                 	return 'Absenden';
 				case 'cancel':
                 	return 'Abbrechen';
+                case 'account':
+                	return 'Account';
+                case 'mailSettings':
+                	return 'E-Mail Einstellungen';
 				//Login Forms and Registration
 				case 'qForgotPassword':
                 	return 'Passwort vergessen?';
@@ -147,7 +151,21 @@ ClassLanguage.prototype.get = function (target) {
                     return 'Diese URL ist ungültig oder der Vorschlag existiert nicht.';
                 case 'httpInternalServerError':
                     return 'Ein Serverfehler ist aufgetreten. Bitte laden sie die Seite erneut';
-                
+
+
+                // common Senteces
+                case 'notLoggedIn':
+                    return 'Du bist zur Zeit nicht eingeloggt.';
+
+
+                //Profile
+                case 'passwordHints':
+                    return 'Passwort Hinweise';
+                case 'passwordHints':
+                    return 'Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und Kleinschreibung als auch Sonderzeichen in deinem Passwort.';
+                 case 'deleteAccount':
+                    return 'Account löschen';
+
                 
                 default:
                     return 'Es wurde keine Übersetzung für ' + target + ' definiert. ';
