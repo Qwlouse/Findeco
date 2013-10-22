@@ -47,7 +47,7 @@ def post_node_was_unflagged_message(path, user):
     post.post_type = Post.SPAM_UNMARKED
     post.save()
     post.mentions = [user]
-    post.save()
+    post.render()
     return post
 
 
@@ -63,7 +63,7 @@ def post_new_derivate_for_node_message(user, original_path, derivate_path):
     post.save()
     post.node_references = [original_node, derivate_node]
     post.mentions = [user]
-    post.save()
+    post.render()
     return post
 
 
