@@ -22,7 +22,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
-from django.contrib.auth import models as auth_models
 from microblogging.models import Post
 from findeco.models import get_system_user
 import node_storage as backend
@@ -31,7 +30,7 @@ import node_storage as backend
 def post_node_was_flagged_message(path, user):
     post = Post()
     post.location = backend.get_node_for_path(path)
-    post.author = auth_models.User.objects.get(username='system')
+    post.author = get_system_user()
     post.post_type = Post.SPAM_MARKED
     post.save()
     post.mentions = [user]
