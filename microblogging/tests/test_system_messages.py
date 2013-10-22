@@ -26,6 +26,7 @@ from node_storage.factory import create_user
 from node_storage.path_helpers import get_root_node
 from findeco.models import get_system_user
 from microblogging.system_messages import post_node_was_flagged_message
+from microblogging.models import Post
 
 
 class ViewHelpersTest(TestCase):
@@ -34,11 +35,21 @@ class ViewHelpersTest(TestCase):
         post = post_node_was_flagged_message('/', hugo)
         self.assertEqual(post.author, get_system_user())
         self.assertEqual(post.location, get_root_node())
+        self.assertEqual(post.post_type, Post.SPAM_MARKED)
         self.assertIn(hugo, post.mentions.all())
-        self.assertEqual(
-            post.text_template,
-            '<span style="color: gray;">Hinweis:</span> {u0} hat {n0} als Spam markiert.')
         self.assertEqual(
             post.text_cache,
             '<span style="color: gray;">Hinweis:</span> '+
             '<a href="/user/hugo">Hugo</a> hat <a href="/">/</a> als Spam markiert.')
+
+    def test_post_node_was_unflagged_message(self):
+        hugo = create_user('Hugo')
+        post = post_node_was_flagged_message('/', hugo)
+        self.assertEqual(post.author, get_system_user())
+        self.assertEqual(post.location, get_root_node())
+        self.assertEqual(post.post_type, Post.SPAM_UNMARKED)
+        self.assertIn(hugo, post.mentions.all())
+        self.assertEqual(
+            post.text_cache,
+            '<span style="color: gray;">Hinweis:</span> '+
+            '<a href="/user/hugo">Hugo</a> hat die Spam-Markierung für <a href="/">/</a> entfernt.')
