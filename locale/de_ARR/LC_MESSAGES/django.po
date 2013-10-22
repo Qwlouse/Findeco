@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 22:31+0100\n"
+"POT-Creation-Date: 2013-10-22 21:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,157 +18,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: findeco/views.py:57 findeco/views.py:68 findeco/views.py:82
-#: findeco/tests/test_load_index.py:102 findeco/tests/test_load_index.py:141
-msgid "NonExistingNode"
-msgstr "Dieser Schatz existiert nicht"
-
-#: findeco/views.py:57 findeco/views.py:68 findeco/views.py:101
-#: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
-#: findeco/views.py:259
-msgid "Illegal Path: "
-msgstr "Dieser Pfad ist für Schiffsjungen wie dich verboten, Qlaus!!"
-
-#: findeco/views.py:82
-#, python-format
-msgid "Could not find slot: %(slot_path)s for node %(path)s."
-msgstr "Der Schatz %(slot_path)s ist nicht im Schiff %(path)s."
-
-#: findeco/views.py:101 findeco/tests/test_load_index.py:110
-#: findeco/tests/test_load_text.py:124
-msgid "IllegalPath"
-msgstr "ARR!!!! Kein Durchgang auf diesem Pfad!!!!"
-
-#: findeco/views.py:130 findeco/tests/test_user_api.py:56
-msgid "UnknownUser"
-msgstr "Ich kenn dich nicht, ein Schritt weiter und es geht über die Planke!!"
-
-#: findeco/views.py:130
-#, python-format
-msgid "User '%s' not found!"
-msgstr "Kapitän!!!! '%s' is verschwunden!"
-
-#: findeco/views.py:139 findeco/views.py:179 findeco/views.py:199
-#: findeco/views.py:216 findeco/views.py:252 findeco/views.py:277
-#: findeco/views.py:300 findeco/tests/test_marking.py:60
-#: findeco/tests/test_marking.py:127 findeco/tests/test_marking.py:184
-#: findeco/tests/test_marking.py:235 findeco/tests/test_store_text.py:51
-#: findeco/tests/test_user_api.py:91
-msgid "NotAuthenticated"
-msgstr "Über die Planke, Landratte!"
-
-#: findeco/views.py:140
-msgid "You need to be logged in to load user settings."
-msgstr "Hau ab!!! An diesen Schatz dürfen nur erfahrene Crewmitglieder"
-
-#: findeco/views.py:160
-msgid "DisabledAccount"
-msgstr "Der Käpt'n ruht bei Neptun, Lisa!"
-
-#: findeco/views.py:160
-#, python-format
-msgid "Account '%s' is deactivated"
-msgstr "Bei Neptun! Käpt'n %s hat's hinter sich!"
-
-#: findeco/views.py:162
-msgid "InvalidLogin"
-msgstr "Arr! Der Schlüssel passt nicht in die Schatztruhe!"
-
-#: findeco/views.py:162
-msgid "Username or password wrong."
-msgstr "Bei Neptun, hör auf mit dem Seemannsgarn, Kevin!"
-
-#: findeco/views.py:179
-msgid "You need to be authenticated to flag node."
-msgstr "Hey!!! Markieren nur für Crewmitglieder!"
-
-#: findeco/views.py:181 findeco/views.py:201 findeco/views.py:218
-#: findeco/views.py:254 findeco/views.py:308 findeco/tests/test_marking.py:66
-#: findeco/tests/test_marking.py:133 findeco/tests/test_marking.py:190
-#: findeco/tests/test_marking.py:241 findeco/tests/test_store_text.py:57
-msgid "PermissionDenied"
-msgstr "Hinfort, Sven!"
-
-#: findeco/views.py:181
-msgid "You do not have the permission to flag "
-msgstr "Seit wann hat der Schiffsjunge das Recht die Flagge zu hissen?"
-
-#: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
-#: findeco/views.py:259
-msgid "Illegal Path"
-msgstr "Ey, du kommst hier nicht durch, Klaus!"
-
-#: findeco/views.py:199
-msgid "You need to be authenticated to unflag node."
-msgstr "Du willst nen Jolly Roger? Wer bistn' du?"
-
-#: findeco/views.py:201
-msgid "You do not have the permission to unflag "
-msgstr "Nimm deine stinkenden Finger von der Flagge, du Hund!"
-
-#: findeco/views.py:216
-msgid "You need to be authenticated to follow node."
-msgstr "Jonny, du schon wieder? Geh Fische füttern oder Deck schrubben!"
-
-#: findeco/views.py:218
-msgid "You do not have the permission to follow "
-msgstr "Schiffsjunge, versuch nicht schon wieder mir zu folgen"
-
-#: findeco/views.py:252
-msgid "You need to be authenticated to unfollow node."
-msgstr "Ich kenn dich nicht!! ARRR!!! Also musst du mir weiterfolgen, ich lass dich nicht allein."
-
-#: findeco/views.py:254
-msgid "You do not have the permission to unfollow "
-msgstr "Du bleibst gefälligst her, du Klabautermann!"
-
-#: findeco/views.py:277
-msgid "You need to be authenticated to store settings."
-msgstr "Justus!! An die Schwarzpulverkammer dürfen nur ausgewiesene Piraten"
-
-#: findeco/views.py:281 findeco/views.py:285
-#: findeco/tests/test_user_api.py:109 findeco/tests/test_user_api.py:116
-msgid "MissingPOSTParameter"
-msgstr "Deine Schatzkarte ist weg."
-
-#: findeco/views.py:281
-msgid "The 'description' POST parameter is missing."
-msgstr "ARRRGH!!! Die Wegbeschreibung in der Schatzkarte fehlt."
-
-#: findeco/views.py:285
-msgid "The 'displayName' POST parameter is missing."
-msgstr "ARRR!!! Kein Etikett auf der Flaschenpost"
-
-#: findeco/views.py:290 findeco/tests/test_user_api.py:124
-msgid "NameNotAvailable"
-msgstr "Hochstapler! Der Papagei will sich mit fremden Federn schmücken! Über die Planke mit ihm."
-
-#: findeco/views.py:290
-#, python-format
-msgid "The name '%s' is already taken."
-msgstr "AARGGHHHH Noch ein  '%s' ? Haben wir so viele Planken?"
-
-#: findeco/views.py:300
-msgid "You need to be authenticated to store text."
-msgstr "Von Landratten wird keine Ladung verstaut!"
-
-#: findeco/views.py:308
-msgid "You do not have the permission to store text."
-msgstr "Geh das Deck schrubben, Schiffsjunge!"
-
-#: findeco/views.py:312 findeco/views.py:317
-#: findeco/tests/test_store_text.py:72 findeco/tests/test_store_text.py:79
-msgid "MissingPostParameter"
-msgstr "ARR!!! Flaschenpost geht nicht mit leeren Flaschen!!"
-
-#: findeco/views.py:313
-msgid "storeText is missing the 'wikiText' POST parameter!"
-msgstr "Elex will nen Keks!"
-
-#: findeco/views.py:318
-msgid ""
-"You cannot use storeText to save a wikiTextAlternative without an "
-"argumentType!"
+#: microblogging/models.py:178
+msgid "node_created_message"
 msgstr ""
-"Verdammt! ein Stück der Schatzkarte fehlt."
-""
+
+#: microblogging/models.py:179
+msgid "node_refined_message"
+msgstr ""
+
+#: microblogging/models.py:180
+msgid "node_flagged_as_spam_message"
+msgstr ""
+
+#: microblogging/models.py:181
+msgid "node_unflagged_as_spam_message"
+msgstr ""
+
+#: microblogging/models.py:182
+msgid "node_followed_message"
+msgstr ""
+
+#: microblogging/models.py:183
+msgid "node_unfollowed_message"
+msgstr ""
+
+#: microblogging/models.py:184
+msgid "argument_created_message"
+msgstr ""
