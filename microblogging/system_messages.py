@@ -81,7 +81,7 @@ def post_new_argument_for_node_message(user, path, arg_type, arg_path):
     post.post_type = Post.ARGUMENT_CREATED
     post.save()
     post.mentions = [user]
-    post.mentions = [backend.get_node_for_path(arg_path), post.location]
+    post.node_references = [backend.get_node_for_path(arg_path), post.location]
     post.save()
     return post
 

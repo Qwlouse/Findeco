@@ -22,11 +22,12 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from node_storage.factory import create_user, create_nodes_for_path
+from node_storage.models import Argument
+from node_storage.factory import create_user, create_nodes_for_path, create_argument
 from node_storage.path_helpers import get_root_node
 from findeco.models import get_system_user
 from microblogging.system_messages import post_node_was_flagged_message, post_node_was_unflagged_message
-from microblogging.system_messages import post_new_derivate_for_node_message
+from microblogging.system_messages import post_new_derivate_for_node_message, post_new_argument_for_node_message
 from microblogging.models import Post
 
 
@@ -57,8 +58,8 @@ class ViewHelpersTest(TestCase):
 
     def test_post_new_derivate_for_node_message(self):
         hugo = create_user('Hugo')
-        node_A = create_nodes_for_path('/bla.1/blubb.1', hugo)
-        node_B = create_nodes_for_path('/bla.2/pling.1', hugo)
+        node_A = create_nodes_for_path('/bla.1/blubb.1', [hugo])
+        node_B = create_nodes_for_path('/bla.2/pling.1', [hugo])
         post = post_new_derivate_for_node_message(hugo, '/bla.1/blubb.1', '/bla.2/pling.1')
         self.assertEqual(post.author, get_system_user())
         self.assertEqual(post.location, node_A)
@@ -72,3 +73,21 @@ class ViewHelpersTest(TestCase):
             '<span style="color: gray;">Hinweis:</span> ' +
             '<a href="/user/hugo">Hugo</a> hat <a href="/bla.1/blubb.1">blubb_long</a> zu ' +
             '<a href="/bla.2/pling.1">pling_long</a> weiterentwickelt.')
+
+    def test_post_new_generic_argument_for_node_message(self):
+        hugo = create_user('Hugo')
+        node = create_nodes_for_path('/bla.1/blubb.1', [hugo])
+        argument = create_argument(node, Argument.PRO, 'Argumentutinio', 'Arrgumente!', [hugo])
+        post = post_new_argument_for_node_message(hugo, '/bla.1/blubb.1', Argument.PRO, '/bla.1/blubb.1.pro.1')
+        self.assertEqual(post.author, get_system_user())
+        self.assertEqual(post.location, node)
+        self.assertEqual(post.post_type, Post.NODE_REFINED)
+        self.assertIn(hugo, post.mentions.all())
+        self.assertIn(node, post.node_references.all())
+        self.assertIn(argument, post.node_references.all())
+        self.assertEqual(post.node_references.count(), 2)
+        self.assertEqual(
+            post.text_cache,
+            '<span style="color: gray;">Hinweis:</span> ' +
+            '<a href="/user/hugo">Hugo</a> hat zu Vorschlag <a href="/bla.1/blubb.1">blubb_long</a> das Argument ' +
+            '<a href="/bla.2/pling.1">Argumentutinio</a> hinzugefügt.')
