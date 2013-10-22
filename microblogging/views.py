@@ -108,7 +108,7 @@ def store_microblogging(request, path):
     assert_authentication(request)
     assert_post_parameters(request, ['microblogText'])
     post_text = convert_long_urls(request.POST['microblogText'],
-                                  request.META['HTTP_HOST'])
+                                  request.get_host())
     create_post(post_text, request.user, path)
     return json_response({'storeMicrobloggingResponse': {}})
 
