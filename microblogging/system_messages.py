@@ -34,6 +34,7 @@ def post_node_was_flagged_message(path, user):
     post.post_type = Post.SPAM_MARKED
     post.save()
     post.mentions = [user]
+    post.node_references = [post.location]
     post.save()
     post.render()
     return post
@@ -46,6 +47,7 @@ def post_node_was_unflagged_message(path, user):
     post.post_type = Post.SPAM_UNMARKED
     post.save()
     post.mentions = [user]
+    post.node_references = [post.location]
     post.render()
     return post
 
