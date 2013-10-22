@@ -123,8 +123,33 @@ class Post(models.Model):
         format_dict = dict()
         format_dict.update(user_dict)
         format_dict.update(node_dict)
-        # escape html
-        text = escape(self.text_template)
+
+        if self.post_type == self.USER_POST:
+            # escape html
+            text = escape(self.text_template)
+            # replace #hashtags by links to search
+            split_text = tag_pattern.split(text)
+            for i in range(1, len(split_text), 2):
+                tagname = split_text[i]
+                split_text[i] = '<a href="/search/{0}">#{0}</a>'.format(tagname)
+            text = "".join(split_text)
+            # replace external links
+            split_text = url_pattern.split(text)
+            for i in range(1, len(split_text), 2):
+                link = split_text[i]
+                split_text[i] = '<a href="{0}">{0}</a>'.format(link)
+            text = "".join(split_text)
+        else:
+            text = {
+                self.NODE_CREATED: 'node created',
+                self.NODE_REFINED: 'node refined',
+                self.SPAM_MARKED: 'node flagged',
+                self.SPAM_UNMARKED: 'node unflagged',
+                self.NODE_FOLLOWED: 'node followed',
+                self.NODE_UNFOLLOWED: 'node unfollowed',
+                self.ARGUMENT_CREATED: 'argument created',
+            }[self.post_type]
+
         # insert references and mentions
         try:
             text = text.format(**format_dict)
@@ -132,18 +157,6 @@ class Post(models.Model):
             import warnings
             warnings.warn('corrupted text_template')
             text = 'CORRUPTED: ' + text
-        # replace #hashtags by links to search
-        split_text = tag_pattern.split(text)
-        for i in range(1, len(split_text), 2):
-            tagname = split_text[i]
-            split_text[i] = '<a href="/search/{0}">#{0}</a>'.format(tagname)
-        text = "".join(split_text)
-        # replace external links
-        split_text = url_pattern.split(text)
-        for i in range(1, len(split_text), 2):
-            link = split_text[i]
-            split_text[i] = '<a href="{0}">{0}</a>'.format(link)
-        text = "".join(split_text)
 
         self.text_cache = text
         self.save()
