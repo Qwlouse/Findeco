@@ -42,7 +42,7 @@ class ViewHelpersTest(TestCase):
         self.assertEqual(
             post.text_cache,
             '<span style="color: gray;">Hinweis:</span> ' +
-            '<a href="/user/hugo">Hugo</a> hat <a href="/">/</a> als Spam markiert.')
+            '<a href="/user/Hugo">@Hugo</a> hat <a href="/">/</a> als Spam markiert.')
 
     def test_post_node_was_unflagged_message(self):
         hugo = create_user('Hugo')
@@ -54,7 +54,7 @@ class ViewHelpersTest(TestCase):
         self.assertEqual(
             post.text_cache,
             '<span style="color: gray;">Hinweis:</span> ' +
-            '<a href="/user/hugo">Hugo</a> hat die Spam-Markierung für <a href="/">/</a> entfernt.')
+            '<a href="/user/Hugo">@Hugo</a> hat die Spam-Markierung für <a href="/">/</a> entfernt.')
 
     def test_post_new_derivate_for_node_message(self):
         hugo = create_user('Hugo')
@@ -89,5 +89,5 @@ class ViewHelpersTest(TestCase):
         self.assertEqual(
             post.text_cache,
             '<span style="color: gray;">Hinweis:</span> ' +
-            '<a href="/user/hugo">Hugo</a> hat zu Vorschlag <a href="/bla.1/blubb.1">blubb_long</a> das Argument ' +
+            '<a href="/user/Hugo">@Hugo</a> hat zu Vorschlag <a href="/bla.1/blubb.1">blubb_long</a> das Argument ' +
             '<a href="/bla.2/pling.1">Argumentutinio</a> hinzugefügt.')
