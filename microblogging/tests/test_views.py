@@ -25,6 +25,7 @@ import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from microblogging.factory import create_post
+from microblogging.models import Post
 from node_storage.factory import create_user, create_nodes_for_path, create_vote
 
 
@@ -200,3 +201,25 @@ class ViewTest(TestCase):
         for post in wrong_posts:
             self.assertNotIn(post.id, response_id_list)
         self.assertEqual(len(res), 3)
+
+    def test_store_microblogging(self):
+        hugo = create_user('hugo', password='oguh')
+        foo1 = create_nodes_for_path('foo.1')
+        self.assertTrue(self.client.login(username="hugo", password="oguh"))
+        response = self.client.post(
+            reverse('store_microblogging', kwargs={'path': 'foo.1'}),
+            {'microblogText': 'test stuff on http://testserver/foo.1/ and reference /foo.1 and also @hugo'})
+        res = json.loads(response.content)
+        self.assertIn("storeMicrobloggingResponse", res)
+
+        self.assertEqual(hugo.microblogging_posts.count(), 1)
+        p = hugo.microblogging_posts.all()[0]
+        self.assertEqual(p.location, foo1)
+        self.assertEqual(p.author, hugo)
+        self.assertEqual(p.post_type, Post.USER_POST)
+        self.assertIn(hugo, p.mentions.all())
+        self.assertIn(foo1, p.node_references.all())
+        self.assertEqual(p.text_template,
+                         "test stuff on {n0}/ and reference {n0} and also {u0}")
+        self.assertTrue(p.text_cache != "")
+
