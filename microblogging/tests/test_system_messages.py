@@ -71,7 +71,7 @@ class ViewHelpersTest(TestCase):
         self.assertEqual(
             post.text_cache,
             '<span style="color: gray;">Hinweis:</span> ' +
-            '<a href="/user/hugo">Hugo</a> hat <a href="/bla.1/blubb.1">blubb_long</a> zu ' +
+            '<a href="/user/Hugo">@Hugo</a> hat <a href="/bla.1/blubb.1">blubb_long</a> zu ' +
             '<a href="/bla.2/pling.1">pling_long</a> weiterentwickelt.')
 
     def test_post_new_generic_argument_for_node_message(self):
