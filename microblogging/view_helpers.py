@@ -65,7 +65,7 @@ def get_load_type(options):
         if options["type"] not in ["newer", "older"]:
             raise InvalidMicrobloggingOptions(json.dumps(options))
 
-        return options["type"], options["id"]
+        return options["type"], int(options["id"])
 
     else:
         return "newer", -1
