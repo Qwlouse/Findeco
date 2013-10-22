@@ -84,7 +84,7 @@ class ViewHelpersTest(TestCase):
         self.assertEqual(post.post_type, Post.ARGUMENT_CREATED)
         self.assertIn(hugo, post.mentions.all())
         self.assertIn(node, post.node_references.all())
-        self.assertIn(argument, post.node_references.all())
+        self.assertIn(argument.pk, [a.pk for a in post.node_references.all()])
         self.assertEqual(post.node_references.count(), 2)
         self.assertEqual(
             post.text_cache,
