@@ -26,11 +26,13 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from django.db import models
 import re
-import node_storage as backend
 from django.contrib.auth.models import User
+from django.db import models
 from django.utils.html import escape
+from django.utils.translation import ugettext
+
+import node_storage as backend
 
 WORDSTART = r"(?:(?<=\s)|\A)"
 WORDEND = r"\b"
@@ -124,39 +126,19 @@ class Post(models.Model):
         format_dict.update(user_dict)
         format_dict.update(node_dict)
 
+        # get template
         if self.post_type == self.USER_POST:
-            # escape html
-            text = escape(self.text_template)
-            # replace #hashtags by links to search
-            split_text = tag_pattern.split(text)
-            for i in range(1, len(split_text), 2):
-                tagname = split_text[i]
-                split_text[i] = '<a href="/search/{0}">#{0}</a>'.format(tagname)
-            text = "".join(split_text)
-            # replace external links
-            split_text = url_pattern.split(text)
-            for i in range(1, len(split_text), 2):
-                link = split_text[i]
-                split_text[i] = '<a href="{0}">{0}</a>'.format(link)
-            text = "".join(split_text)
+            template = preprocess_userpost_template(self.text_template)
         else:
-            text = {
-                self.NODE_CREATED: 'node created',
-                self.NODE_REFINED: 'node refined',
-                self.SPAM_MARKED: 'node flagged',
-                self.SPAM_UNMARKED: 'node unflagged',
-                self.NODE_FOLLOWED: 'node followed',
-                self.NODE_UNFOLLOWED: 'node unfollowed',
-                self.ARGUMENT_CREATED: 'argument created',
-            }[self.post_type]
+            template = SYSTEM_MESSAGE_TEMPLATES[self.post_type]
 
         # insert references and mentions
         try:
-            text = text.format(**format_dict)
+            text = template.format(**format_dict)
         except KeyError:
             import warnings
             warnings.warn('corrupted text_template')
-            text = 'CORRUPTED: ' + text
+            text = 'CORRUPTED: ' + template
 
         self.text_cache = text
         self.save()
@@ -172,3 +154,32 @@ class Post(models.Model):
             return u'%s says "%s" on %s' % (self.author.username,
                                             self.text_cache,
                                             self.time)
+
+
+def preprocess_userpost_template(template):
+    # escape html
+    processed_template = escape(template)
+    # replace #hashtags by links to search
+    split_text = tag_pattern.split(processed_template)
+    for i in range(1, len(split_text), 2):
+        tagname = split_text[i]
+        split_text[i] = '<a href="/search/{0}">#{0}</a>'.format(tagname)
+    processed_template = "".join(split_text)
+    # replace external links
+    split_text = url_pattern.split(processed_template)
+    for i in range(1, len(split_text), 2):
+        link = split_text[i]
+        split_text[i] = '<a href="{0}">{0}</a>'.format(link)
+    processed_template = "".join(split_text)
+    return processed_template
+
+
+SYSTEM_MESSAGE_TEMPLATES = {
+    Post.NODE_CREATED: ugettext('node_created_message'),
+    Post.NODE_REFINED: ugettext('node_refined_message'),
+    Post.SPAM_MARKED: ugettext('node_flagged_as_spam_message'),
+    Post.SPAM_UNMARKED: ugettext('node_unflagged_as_spam_message'),
+    Post.NODE_FOLLOWED: ugettext('node_followed_message'),
+    Post.NODE_UNFOLLOWED: ugettext('node_unfollowed_message'),
+    Post.ARGUMENT_CREATED: ugettext('argument_created_message'),
+}

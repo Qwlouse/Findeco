@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 21:03+0100\n"
+"POT-Creation-Date: 2013-10-22 21:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,155 +17,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: findeco/views.py:57 findeco/views.py:68 findeco/views.py:82
-#: findeco/tests/test_load_index.py:102 findeco/tests/test_load_index.py:141
-msgid "NonExistingNode"
-msgstr "NonExistingNode"
+#: microblogging/models.py:178
+msgid "node_created_message"
+msgstr ""
 
-#: findeco/views.py:57 findeco/views.py:68 findeco/views.py:101
-#: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
-#: findeco/views.py:259
-msgid "Illegal Path: "
-msgstr "Illegal Path: "
+#: microblogging/models.py:179
+msgid "node_refined_message"
+msgstr ""
 
-#: findeco/views.py:82
-#, python-format
-msgid "Could not find slot: %(slot_path)s for node %(path)s."
-msgstr "Could not find slot: %(slot_path)s for node %(path)s."
+#: microblogging/models.py:180
+msgid "node_flagged_as_spam_message"
+msgstr ""
 
-#: findeco/views.py:101 findeco/tests/test_load_index.py:110
-#: findeco/tests/test_load_text.py:124
-msgid "IllegalPath"
-msgstr "IllegalPath"
+#: microblogging/models.py:181
+msgid "node_unflagged_as_spam_message"
+msgstr ""
 
-#: findeco/views.py:130 findeco/tests/test_user_api.py:56
-msgid "UnknownUser"
-msgstr "UnknownUser"
+#: microblogging/models.py:182
+msgid "node_followed_message"
+msgstr ""
 
-#: findeco/views.py:130
-#, python-format
-msgid "User '%s' not found!"
-msgstr "User '%s' not found!"
+#: microblogging/models.py:183
+msgid "node_unfollowed_message"
+msgstr ""
 
-#: findeco/views.py:139 findeco/views.py:179 findeco/views.py:199
-#: findeco/views.py:216 findeco/views.py:252 findeco/views.py:277
-#: findeco/views.py:300 findeco/tests/test_marking.py:60
-#: findeco/tests/test_marking.py:127 findeco/tests/test_marking.py:184
-#: findeco/tests/test_marking.py:235 findeco/tests/test_store_text.py:51
-#: findeco/tests/test_user_api.py:91
-msgid "NotAuthenticated"
-msgstr "NotAuthenticated"
-
-#: findeco/views.py:140
-msgid "You need to be logged in to load user settings."
-msgstr "You need to be logged in to load user settings."
-
-#: findeco/views.py:160
-msgid "DisabledAccount"
-msgstr "DisabledAccount"
-
-#: findeco/views.py:160
-#, python-format
-msgid "Account '%s' is deactivated"
-msgstr "Account '%s' is deactivated"
-
-#: findeco/views.py:162
-msgid "InvalidLogin"
-msgstr "InvalidLogin"
-
-#: findeco/views.py:162
-msgid "Username or password wrong."
-msgstr "Username or password wrong."
-
-#: findeco/views.py:179
-msgid "You need to be authenticated to flag node."
-msgstr "You need to be authenticated to flag node."
-
-#: findeco/views.py:181 findeco/views.py:201 findeco/views.py:218
-#: findeco/views.py:254 findeco/views.py:308 findeco/tests/test_marking.py:66
-#: findeco/tests/test_marking.py:133 findeco/tests/test_marking.py:190
-#: findeco/tests/test_marking.py:241 findeco/tests/test_store_text.py:57
-msgid "PermissionDenied"
-msgstr "PermissionDenied"
-
-#: findeco/views.py:181
-msgid "You do not have the permission to flag "
-msgstr "You do not have the permission to flag "
-
-#: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
-#: findeco/views.py:259
-msgid "Illegal Path"
-msgstr "Illegal Path"
-
-#: findeco/views.py:199
-msgid "You need to be authenticated to unflag node."
-msgstr "You need to be authenticated to unflag node."
-
-#: findeco/views.py:201
-msgid "You do not have the permission to unflag "
-msgstr "You do not have the permission to unflag "
-
-#: findeco/views.py:216
-msgid "You need to be authenticated to follow node."
-msgstr "You need to be authenticated to follow node."
-
-#: findeco/views.py:218
-msgid "You do not have the permission to follow "
-msgstr "You do not have the permission to follow "
-
-#: findeco/views.py:252
-msgid "You need to be authenticated to unfollow node."
-msgstr "You need to be authenticated to unfollow node."
-
-#: findeco/views.py:254
-msgid "You do not have the permission to unfollow "
-msgstr "You do not have the permission to unfollow "
-
-#: findeco/views.py:277
-msgid "You need to be authenticated to store settings."
-msgstr "You need to be authenticated to store settings."
-
-#: findeco/views.py:281 findeco/views.py:285
-#: findeco/tests/test_user_api.py:109 findeco/tests/test_user_api.py:116
-msgid "MissingPOSTParameter"
-msgstr "MissingPOSTParameter"
-
-#: findeco/views.py:281
-msgid "The 'description' POST parameter is missing."
-msgstr "The 'description' POST parameter is missing."
-
-#: findeco/views.py:285
-msgid "The 'displayName' POST parameter is missing."
-msgstr "The 'displayName' POST parameter is missing."
-
-#: findeco/views.py:290 findeco/tests/test_user_api.py:124
-msgid "NameNotAvailable"
-msgstr "NameNotAvailable"
-
-#: findeco/views.py:290
-#, python-format
-msgid "The name '%s' is already taken."
-msgstr "The name '%s' is already taken."
-
-#: findeco/views.py:300
-msgid "You need to be authenticated to store text."
-msgstr "You need to be authenticated to store text."
-
-#: findeco/views.py:308
-msgid "You do not have the permission to store text."
-msgstr "You do not have the permission to store text."
-
-#: findeco/views.py:312 findeco/views.py:317
-#: findeco/tests/test_store_text.py:72 findeco/tests/test_store_text.py:79
-msgid "MissingPostParameter"
-msgstr "MissingPostParameter"
-
-#: findeco/views.py:313
-msgid "storeText is missing the 'wikiText' POST parameter!"
-msgstr "storeText is missing the 'wikiText' POST parameter!"
-
-#: findeco/views.py:318
-msgid ""
-"You cannot use storeText to save a wikiTextAlternative without an "
-"argumentType!"
-msgstr "You cannot use storeText to save a wikiTextAlternative without an argumentType!"
+#: microblogging/models.py:184
+msgid "argument_created_message"
+msgstr ""
