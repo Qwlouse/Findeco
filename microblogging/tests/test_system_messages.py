@@ -89,5 +89,5 @@ class ViewHelpersTest(TestCase):
         self.assertEqual(
             post.text_cache,
             '<span style="color: gray;">Hinweis:</span> ' +
-            '<a href="/user/Hugo">@Hugo</a> hat zu Vorschlag <a href="/bla.1/blubb.1">blubb_long</a> das Argument ' +
-            '<a href="/bla.2/pling.1">Argumentutinio</a> hinzugefügt.')
+            '<a href="/user/Hugo">@Hugo</a> hat dem Vorschlag <a href="/bla.1/blubb.1">blubb_long</a> das Argument ' +
+            '<a href="/bla.1/blubb.1.pro.1">Argumentutinio</a> hinzugefügt.')
