@@ -36,6 +36,7 @@ def post_node_was_flagged_message(path, user):
     post.save()
     post.mentions = [user]
     post.save()
+    post.render()
     return post
 
 
