@@ -81,7 +81,7 @@ class ViewHelpersTest(TestCase):
         post = post_new_argument_for_node_message(hugo, '/bla.1/blubb.1', Argument.PRO, '/bla.1/blubb.1.pro.1')
         self.assertEqual(post.author, get_system_user())
         self.assertEqual(post.location, node)
-        self.assertEqual(post.post_type, Post.NODE_REFINED)
+        self.assertEqual(post.post_type, Post.ARGUMENT_CREATED)
         self.assertIn(hugo, post.mentions.all())
         self.assertIn(node, post.node_references.all())
         self.assertIn(argument, post.node_references.all())
