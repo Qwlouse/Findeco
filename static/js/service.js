@@ -404,6 +404,10 @@ angular.module('FindecoServices', [])
       
             
         };
+
+        tmp.clear = function (){
+            this.messageList = [];
+        }
 		
         tmp.catch = function (message) {
             this.catchList[message] = [];
@@ -412,7 +416,7 @@ angular.module('FindecoServices', [])
 
         return tmp;
     })
-    .factory('Navigator', function ($rootScope, $location) {
+    .factory('Navigator', function ($rootScope, $location, Message) {
         var nodePattern = "[a-zA-Z][a-zA-Z0-9_-]{0,19}\\.[0-9]+";
         // TODO: disallow duplicated slashes
         var rootPath = new RegExp("^/*$");
@@ -440,6 +444,8 @@ angular.module('FindecoServices', [])
         }
 
         location.updatePath = function () {
+            Message.clear();
+
             var path = $location.path();
             location.segments = $location.search();
             location.parts = path.split("/").filter(isNonEmpty);
