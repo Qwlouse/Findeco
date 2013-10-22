@@ -57,4 +57,4 @@ var findecoApp = angular.module('Findeco', ['FindecoServices', 'localization', '
             otherwise({templateUrl: '/static/partials/default.html', controller: FindecoDefaultCtrl});
     }]);
 
-findecoApp.constant('Version','0.2.0-beta');
+findecoApp.constant('Version','0.3.0-alpha');
