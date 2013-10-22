@@ -39,6 +39,6 @@ class ViewHelpersTest(TestCase):
             post.text_template,
             '<span style="color: gray;">Hinweis:</span> {u0} hat {n0} als Spam markiert.')
         self.assertEqual(
-            post.text_template,
+            post.text_cache,
             '<span style="color: gray;">Hinweis:</span> '+
             '<a href="/user/hugo">Hugo</a> hat <a href="/">/</a> als Spam markiert.')
