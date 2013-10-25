@@ -114,7 +114,6 @@ angular.module('FindecoServices', [])
                         authors.push(author);
                     });
                     item.authorGroup = authors;
-                    console.log(item);
                     microblogList_out.push(item);
                 }
             });

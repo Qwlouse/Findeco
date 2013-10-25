@@ -52,7 +52,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
 
     $scope.updateTimeline = function (oldType, oldID) {
         var type = 'newer';
-        var id = 0;
+        var id = -1;
         if ($scope.timelineList[0] != undefined) {
             id = $scope.timelineList[0].microblogID;
         }
@@ -70,7 +70,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
 
     $scope.updateMentions = function (oldType, oldID) {
         var type = 'newer';
-        var id = 0;
+        var id = -1;
         if ($scope.mentionsList[0] != undefined) {
             id = $scope.mentionsList[0].microblogID;
         }
@@ -88,7 +88,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
 
     $scope.updateOwnPosts = function (oldType, oldID) {
         var type = 'newer';
-        var id = 0;
+        var id = -1;
         if ($scope.ownPostsList[0] != undefined) {
             id = $scope.ownPostsList[0].microblogID;
         }
