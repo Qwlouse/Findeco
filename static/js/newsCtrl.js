@@ -116,11 +116,19 @@ function FindecoNewsCtrl($scope, Backend, User) {
 
     $scope.$watch('username', function () {
         if ($scope.username != "") {
- 
             $scope.updateAllNodes();
             $scope.updateFollowedNodes();
             $scope.updateOwnNodes();
+        }else{
+            setTimeout(function(){
+                $scope.updateAllNodes();
+                $scope.updateFollowedNodes();
+                $scope.updateOwnNodes();
+
+            }, 1000);
+
         }
+
     });
     $scope.isLoading = function (col){
     	if (col =="timeline"){

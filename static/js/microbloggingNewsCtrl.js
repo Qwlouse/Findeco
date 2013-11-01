@@ -119,7 +119,6 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
 
     $scope.$watch('username', function () {
         if ($scope.username != "") {
- 
             $scope.updateTimeline();
             $scope.updateMentions();
             $scope.updateOwnPosts();
@@ -129,7 +128,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
                 $scope.updateMentions();
                 $scope.updateOwnPosts();
 
-            }, 750);
+            }, 1000);
 
 
         }
