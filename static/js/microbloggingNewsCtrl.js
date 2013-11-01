@@ -123,6 +123,15 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
             $scope.updateTimeline();
             $scope.updateMentions();
             $scope.updateOwnPosts();
+        }else{
+            setTimeout(function(){
+                $scope.updateTimeline();
+                $scope.updateMentions();
+                $scope.updateOwnPosts();
+
+            }, 750);
+
+
         }
     });
 
