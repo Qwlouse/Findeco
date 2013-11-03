@@ -72,7 +72,7 @@
                 <div id="headerContainer" class="centeringContainer">
                     <div id="headerContent" ng-controller="FindecoMenuCtrl">
                         <div class="version">Version: {{ fesettings.version }}</div>
-
+                        <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">Achtung!! Sie sind als Admin User angemeldet</div>
                         <ul>
                             <li class="{{getActiveClass('')}} {{getActiveClass('start')}}"><a href="/start" data-i18n="_start_">Start</a></li>
                             <li class="{{getActiveClass('news')}}" ng-show="user.isLoggedIn"><a href="/news" data-i18n="_news_">News</a></li>

@@ -227,6 +227,7 @@ angular.module('FindecoServices', [])
 
         var userInfo = {
             isLoggedIn: false,
+            isAdmin:false,
             displayName: "",
             description: "",
             email: "",
@@ -276,6 +277,12 @@ angular.module('FindecoServices', [])
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.email = data.userSettings.email;
                 userInfo.followees = data.userSettings.followees;
+
+                if (userInfo.displayName== "admin"){
+                    userInfo.isAdmin =true;
+                }
+
+
             });
             return promise;
         };
@@ -287,6 +294,7 @@ angular.module('FindecoServices', [])
                 userInfo.displayName = "";
                 userInfo.followees = [];
                 userInfo.email = "";
+                userInfo.isAdmin =false;
                 data.userInfo = false;
                 data.userSettings = false;
             });
@@ -316,6 +324,9 @@ angular.module('FindecoServices', [])
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
+                }
+                if (userInfo.displayName== "admin"){
+                    userInfo.isAdmin =true;
                 }
                 
             });
