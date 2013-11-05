@@ -26,17 +26,12 @@
 ################################################################################
 from __future__ import division, print_function, unicode_literals
 
-from django.db.models import Q
-from django.contrib.auth.models import User
-
 from findeco.view_helpers import assert_node_for_path, assert_active_user
 from findeco.view_helpers import assert_authentication, assert_post_parameters
 from findeco.view_helpers import ViewErrorHandling
-from microblogging.factory import create_post
-from microblogging.view_helpers import *
-from microblogging.view_helpers import get_microblogging_for_followed_nodes_query
-from .models import Post
-from findeco.view_helpers import json_response
+from .factory import create_post
+from .view_helpers import *
+from .view_helpers import get_microblogging_for_followed_nodes_query
 
 
 @ViewErrorHandling
@@ -111,56 +106,3 @@ def store_microblogging(request, path):
                                   request.get_host())
     create_post(post_text, request.user, path)
     return json_response({'storeMicrobloggingResponse': {}})
-
-
-############################## OLD STUFF #######################################
-# Getter For Now only used for RSS
-
-def get_mentions(username, count):
-        users = User.objects.filter(username__iexact=username)
-        named_user = users[0]
-            
-        feed_data = named_user.mentioning_entries.order_by('-time').distinct()
-        feed_data = feed_data.prefetch_related('author', 'is_reference_to')[:count]
-        return feed_data
-
-
-def get_own(username, count):
-        users = User.objects.filter(username__iexact=username)
-        named_user = users[0]
-
-        feed_data = Post.objects.filter(author=named_user).order_by('-time').distinct()
-        feed_data = feed_data.prefetch_related('author', 'is_reference_to')[:count]
-        return feed_data
-
-
-def get_timeline(username, count):
-        users = User.objects.filter(username__iexact=username)
-        named_user = users[0]
-        followed = Q(author__in=named_user.profile.followees.all())
-        own = Q(author=named_user)
-        feed_data = Post.objects.filter(followed | own).order_by('-time').distinct().prefetch_related('author', 'is_reference_to')[:20]
-        return feed_data
-
-
-def get_news():
-        feed_data = Post.objects.order_by('-time')
-        feed_data = feed_data.prefetch_related('author', 'is_reference_to')[:20]
-        return feed_data
-
-
-def get_newsAuthor(username, count):
-        users = User.objects.filter(username__iexact=username)
-        named_user = users[0]
-        feed_data = Post.objects.filter(node_references__votes__user=named_user).order_by('-time')
-        feed_data = feed_data.filter(node_references__text__authors=named_user)
-        feed_data = feed_data.prefetch_related('author', 'is_reference_to')[:20]
-        return feed_data
-
-
-def get_newsFollow(username, count):
-        users = User.objects.filter(username__iexact=username)
-        named_user = users[0]
-        feed_data = Post.objects.filter(node_references__votes__user=named_user).order_by('-time')
-        feed_data = feed_data.prefetch_related('author', 'is_reference_to')[:20]
-        return feed_data
