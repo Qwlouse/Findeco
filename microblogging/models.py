@@ -161,7 +161,8 @@ class Post(models.Model):
 def create_html_for_node(node):
     path = node.get_a_path()
     title = node.title
-    index = path.rsplit('.', 1)[1]
+    split_path = path.rsplit('.', 1)
+    index = split_path[1] if len(split_path) > 1 else 1
     return NODE_LINK_TEMPLATE.format(path, title, index)
 
 
