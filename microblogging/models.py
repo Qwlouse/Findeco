@@ -40,6 +40,7 @@ WORDEND = r"\b"
 
 NODE_LINK_TEMPLATE = '<a href="/{}">{}<span class="nodeIndex">{}</span></a>'
 
+
 def keyword(pattern):
     return re.compile(WORDSTART + pattern + WORDEND)
 

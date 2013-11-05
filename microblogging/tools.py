@@ -29,6 +29,38 @@ def search_for_microblogging(search_string):
 
 
 def change_microblogging_authorship(old_user, new_user):
+    # change author of post to new user
     for post in old_user.microblogging_posts.all():
         post.author = new_user
+        post.render()
         post.save()
+
+    # change mention of post to new user
+    for post in Post.objects.filter(mentions=old_user):
+        old_order = [u.id for u in post.mentions.order_by('id')]
+        post.mentions.remove(old_user)
+        post.mentions.add(new_user)
+        post.save()
+        new_order = [u.id for u in post.mentions.order_by('id')]
+        # [3, 5, 9] "{u0} {u1} {u2}" = "3 5 9"
+        # [1, 3, 9] "{u1} {u0} {u2}" = "3 1 9"
+        permutation = []
+        for user_id in old_order:
+            if user_id == old_user.id:
+                permutation.append(new_order.index(new_user.id))
+            else:
+                permutation.append(new_order.index(user_id))
+
+        print(old_order)
+        print(new_order)
+        print(permutation)
+        for i in range(len(permutation)):
+            post.text_template = post.text_template.replace('{u%d}' % i,
+                                                            '{P%d}' % i)
+
+        for i, p in enumerate(permutation):
+            post.text_template = post.text_template.replace('{P%d}' % i,
+                                                            '{u%d}' % p)
+        post.render()
+
+
