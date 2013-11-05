@@ -86,7 +86,7 @@ class Post(models.Model):
         related_name='mentioning_entries',
         symmetrical=False,
         blank=True)
-    time = models.DateTimeField('date posted', auto_now=True)
+    time = models.DateTimeField('date posted', auto_now_add=True)
     post_type = models.CharField(max_length=1, choices=MICROBLOGGING_TYPE)
     is_answer_to = models.ForeignKey(
         'self',

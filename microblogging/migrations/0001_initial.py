@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('text', self.gf('django.db.models.fields.TextField')()),
             ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='microblogging_posts', to=orm['auth.User'])),
-            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('is_reference_to', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='referenced', null=True, to=orm['microblogging.Post'])),
         ))
         db.send_create_signal('microblogging', ['Post'])
@@ -91,7 +91,7 @@ class Migration(SchemaMigration):
             'mentions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'mentioning_entries'", 'blank': 'True', 'to': "orm['auth.User']"}),
             'node_references': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'microblogging_references'", 'blank': 'True', 'to': "orm['node_storage.Node']"}),
             'text': ('django.db.models.fields.TextField', [], {}),
-            'time': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
+            'time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
         },
         'node_storage.argument': {
             'Meta': {'object_name': 'Argument', '_ormbases': ['node_storage.Node']},

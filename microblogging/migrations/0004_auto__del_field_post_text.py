@@ -67,7 +67,7 @@ class Migration(SchemaMigration):
             'post_type': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
             'text_cache': ('django.db.models.fields.TextField', [], {}),
             'text_template': ('django.db.models.fields.TextField', [], {}),
-            'time': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
+            'time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
         },
         'node_storage.argument': {
             'Meta': {'object_name': 'Argument', '_ormbases': ['node_storage.Node']},
