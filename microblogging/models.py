@@ -38,6 +38,8 @@ WORDSTART = r"(?:(?<=\s)|\A)"
 WORDEND = r"\b"
 
 
+NODE_LINK_TEMPLATE = '<a href="/{}">{}<span class="nodeIndex">{}</span></a>'
+
 def keyword(pattern):
     return re.compile(WORDSTART + pattern + WORDEND)
 
@@ -119,7 +121,7 @@ class Post(models.Model):
             for i, u in enumerate(self.mentions.order_by('id'))
         }
         node_dict = {
-            'n' + str(i): '<a href="/{}">{}</a>'.format(n.get_a_path(), n.title)
+            'n' + str(i): create_html_for_node(n)
             for i, n in enumerate(self.node_references.order_by('id'))
         }
         format_dict = dict()
@@ -154,6 +156,13 @@ class Post(models.Model):
             return u'%s says "%s" on %s' % (self.author.username,
                                             self.text_cache,
                                             self.time)
+
+
+def create_html_for_node(node):
+    path = node.get_a_path()
+    title = node.title
+    index = path.rsplit('.', 1)[1]
+    return NODE_LINK_TEMPLATE.format(path, title, index)
 
 
 def preprocess_userpost_template(template):

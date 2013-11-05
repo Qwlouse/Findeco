@@ -37,8 +37,7 @@ ul.microblogList li {
 }
 
 ul.microblogList li + li + li{
-    border-top: 1px solid;
-    border-color: #CCC;
+    border-top: 1px solid #CCC;
 }
 
 a.microblogAuthor {
@@ -80,4 +79,14 @@ span.microblogDate {
     -webkit-box-shadow:0 0 5px #2d7cc4;
     -moz-box-shadow:0 0 5px #2d7cc4;
     box-shadow:0 0 5px #2d7cc4;
+}
+
+.nodeIndex:before
+{
+content:"(";
+}
+
+.nodeIndex:after
+{
+content:")";
 }
