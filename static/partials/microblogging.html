@@ -24,7 +24,7 @@
                     <span class="location-icon location-here"></span>
                 </div>
                 <div ng-switch-when="false">
-                    <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
+                    <a href="/{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
                 </div>
             </div>
             <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
