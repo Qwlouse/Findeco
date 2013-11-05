@@ -91,11 +91,11 @@ span.microblogDate {
 }
 
 .location-here {
-    background-position: 0 0;
+    background-position: -8px 0;
 }
 
 .location-there {
-    background-position: -8px 0;
+    background-position: 0 0;
 }
 
 .nodeIndex:before
