@@ -109,7 +109,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
         var path = "";
 
         if ($scope.microblogText.length <= 0) return;
-        Backend.storeMicroblogPost(path, $scope.microblogText).success(function () {
+        Backend.storeMicroblogging(path, $scope.microblogText).success(function () {
             $scope.updateTimeline();
             $scope.updateMentions();
             $scope.updateOwnPosts();
