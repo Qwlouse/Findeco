@@ -81,3 +81,20 @@ span.microblogDate {
     -moz-box-shadow:0 0 5px #2d7cc4;
     box-shadow:0 0 5px #2d7cc4;
 }
+
+.location-icon {
+    background: url("../images/location.png") no-repeat;
+    height: 12px;
+    width: 8px;
+    margin-top: 2px;
+    margin-left: 3px;
+    float: right;
+}
+
+.location-here {
+    background-position: 0 0;
+}
+
+.location-there {
+    background-position: -8px 0;
+}

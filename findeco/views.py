@@ -143,6 +143,7 @@ def load_node(request, path):
 
     return json_response({'loadNodeResponse': {
         'fullTitle': node.title,
+        'nodeID': node.pk,
         'isFollowing': get_is_following(request.user.id, node),
         'isFlagging': get_is_flagging(request.user.id, node),
         'wikiText': node.text.text,

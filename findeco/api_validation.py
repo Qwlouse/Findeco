@@ -94,6 +94,7 @@ loadIndexResponse_schema = {
 loadNodeResponse_schema = {
     'loadNodeResponse': {
         'fullTitle': string,
+        'nodeID': integer,
         'isFollowing': integer,
         'isFlagging': integer,
         'wikiText': string,

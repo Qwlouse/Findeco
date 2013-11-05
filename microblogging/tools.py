@@ -15,6 +15,8 @@ def convert_to_response_list(post_list):
         response_list.append(
             {'microblogText': post.text_cache,
              'authorGroup': authors,
+             'location': post.location_id,
+             'locationPath': post.location.get_a_path(),
              'microblogTime': int(mktime(post.time.timetuple())),
              'microblogID': post.pk})
     return response_list

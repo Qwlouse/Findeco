@@ -59,6 +59,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator) {
         Backend.loadNode($scope.nodeInfo, $scope.nav.argumentPath).success(function (d) {
             $scope.allExpanded = true;
             $scope.authors = $scope.nodeInfo.authors;
+            $scope.nav.nodeID = $scope.nodeInfo.nodeID;
             $scope.sections = $scope.nodeInfo.indexList;
             for (var i in $scope.sections) {
                 var indexNode = $scope.sections[i];
