@@ -79,9 +79,9 @@ class PostTest(TestCase):
         p = create_post_from_schema(schema)
         p.render()
         self.assertEqual(p.text_cache, 'reference nodes '
-                                       '<a href="/foo.1">foo_long</a>, '
-                                       '<a href="/foo.1/bar.1">bar_long</a> '
-                                       'and <a href="/foo.1">foo_long</a> '
+                                       '<a href="/foo.1">foo_long<span class="nodeIndex">1</span></a>, '
+                                       '<a href="/foo.1/bar.1">bar_long<span class="nodeIndex">1</span></a> '
+                                       'and <a href="/foo.1">foo_long<span class="nodeIndex">1</span></a> '
                                        'again.')
 
     def test_render_text_inserts_links_for_hash_tags(self):

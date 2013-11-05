@@ -37,8 +37,7 @@ ul.microblogList li {
 }
 
 ul.microblogList li + li + li{
-    border-top: 1px solid;
-    border-color: #CCC;
+    border-top: 1px solid #CCC;
 }
 
 a.microblogAuthor {
@@ -74,6 +73,7 @@ span.microblogDate {
 .microblogInput:hover {
     border-color: #2d7cc4;
 }
+
 .microblogInput:focus {
     border-color: #2d7cc4;
     outline: none;
@@ -97,4 +97,14 @@ span.microblogDate {
 
 .location-there {
     background-position: -8px 0;
+}
+
+.nodeIndex:before
+{
+content:"(";
+}
+
+.nodeIndex:after
+{
+content:")";
 }
