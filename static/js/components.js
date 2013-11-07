@@ -169,12 +169,12 @@ findecoApp
             template: '<div>Platzhalter</div>',
             replace: true,
             link: function(scope, elem, attr) {
-                elem.html('<div style="color:white" >helptestNormal</div>');
+                elem.html('<div style="color:deeppink; font-weight:bold; font-size:20px;" >?</div>');
                 if (scope.htype==1){
-                    elem.html('<div style="color:white">helptestLarge</div>');
+                    elem.html('<div style="color:deeppink; font-weight:bold; font-size:40px;" >?</div>');
                 }
                 if (scope.htype==3){
-                    elem.html('<div style="color:white">helptestSmall</div>');
+                    elem.html('<div style="color:deeppink; font-weight:bold; font-size:10px;" >?</div>');
                 }
 
                 var link = angular.element(elem[0]);

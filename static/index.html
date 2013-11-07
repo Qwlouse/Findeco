@@ -29,6 +29,7 @@
     <!-- Javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-route.js"></script>
     <script type="text/javascript" src="/static/js/lib/d3.v3.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular-cookies.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/codeholicsCreole.js"></script>
@@ -155,7 +156,7 @@
         </ul>
     </div>
 </div>
-<div id="helpbox" ng-controller="FindecoHelpCtrl" ng-show="visible" >
+<div ng-animate="'animate'" id="helpbox" ng-controller="FindecoHelpCtrl" ng-show="visible" >
 
     <div ng-click="hide();"  style="position:absolute; top:0px;right:0px;font-size:30px;float:left;width:50px;height: 50px;color:#ffffff;opacity:: 1px;">
         X
