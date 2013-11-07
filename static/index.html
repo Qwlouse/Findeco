@@ -105,12 +105,12 @@
                             </li>
                             <li ng-show="user.isLoggedIn">
                                 <a ng-click="logout()" style="cursor:pointer; padding: 0;">
-                                    <img src="/static/images/logout.png"
-                                         <!--onmouseover="this.src='/static/images/logout_hover.png';"
-                                         onmouseout="this.src='/static/images/logout.png';"-->>
-                                    <!--todo: Reimplemnt without Angularerror-->
-                                         alt="Logout" height="18"
+                                    <img src="/static/images/logout.png" alt="Logout" height="18"
                                          style="position: relative; top: 3px; margin: 0 0 0 0;" /></a>
+                                         <!--onmouseover="this.src='/static/images/logout_hover.png';"
+                                         onmouseout="this.src='/static/images/logout.png';"-->
+                                    <!--todo: Reimplemnt without Angularerror-->
+
                             </li>
                             <li ng-show="!user.isLoggedIn" style="float:right"><a href="/login" data-i18n="_accountLogin_"></a></li>
                         </ul>
