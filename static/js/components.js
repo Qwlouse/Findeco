@@ -174,22 +174,26 @@ findecoApp
 
             link: function(scope, elem, attr) {
 
+
                 $rootScope.$watch('helpIsActive', function(oldVal) {
                     if (oldVal){
-                            elem.html('<div style="color:deeppink; font-weight:bold; font-size:20px;" >?</div>');
+                            elem.html('<div class="help-small-icon help-small-b "></div>');
 
 
                         if (scope.htype==1){
-                            elem.html('<div style="color:deeppink; font-weight:bold; font-size:40px;" >?</div>');
+                            elem.html('<div class="help-small-icon help-small-b " ></div>');
                         }
                         if (scope.htype==3){
-                            elem.html('<div style="color:deeppink; font-weight:bold; font-size:10px;" >?</div>');
+                            elem.html('<div class="help-small-icon help-small-b "  ></div>');
                         }
                     } else{
                         elem.html('');
                     }
 
                  });
+
+
+
                 var link = angular.element(elem[0]);
                 link.bind('click', function() {
                     Help.setID(scope.hid);

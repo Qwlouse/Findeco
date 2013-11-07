@@ -77,9 +77,6 @@
                 <div id="headerContainer" class="centeringContainer">
                     <div id="headerContent" ng-controller="FindecoMenuCtrl">
 
-                      <help hid=1 htype=1> </help>
-
-
                         <div class="version">Version: {{ fesettings.version }}</div>
                         <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">Achtung!! Sie sind als Admin User angemeldet</div>
                         <ul>
@@ -177,8 +174,9 @@
 
 
         {{ helptext }}
-        In dieser Spalte werden alle Argumente zum Thema gesammelt.
-Wenn du selbst ein Argument hinzufügen möchtest, kannst du dich hier anmelden oder hier registrieren </div>
+
+        <a href="{{ more }}">mehr....</a>
+    </div>
 </div>
 </body>
 </html>

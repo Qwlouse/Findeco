@@ -71,3 +71,20 @@
     float: right;
     padding-right: 15px;
 }
+
+.help-small-icon {
+    background: url("/static/images/help.png") no-repeat;
+    height: 14px;
+    width: 13px;
+    margin-top: 2px;
+    margin-left: 3px;
+    float: right;
+}
+
+.help-small-b {
+    background-position: -13px 0;
+}
+
+.help-small-a  {
+    background-position: 0 0;
+}

@@ -529,12 +529,15 @@ angular.module('FindecoServices', [])
         isLoaded:false,
         data:[],
 
-
-
         setID:function(x){
             help.id=x;
             $rootScope.$broadcast('change_Help',x);
             return true;
+        },
+
+        getID:function(x){
+
+            return help.id;
         },
         setHelpStatus:function(x){
             $rootScope.helpIsActive=x;
@@ -562,23 +565,41 @@ angular.module('FindecoServices', [])
             }
             var result = '';
             if ((help.data !== []) && (help.data.length > 0)) {
+                var i=0, len=help.data.length;
+                    for (; i<len; i++) {
+                        if (help.data[i].key == help.id) {
 
-                    var i=0, len=help.data.length;
-                       for (; i<len; i++) {
-                           if (help.data[i].key == "_logout_") {
-                              alert("treffer"+help.data[i].value)
-                            break;
-                           }
+                            help.helptext=help.data[i].description;
+
                         }
+                    }
 
+                }
 
-                help.helptext="hallo"+help.id;
-                   }
+            return help.helptext;
+            },
+            getMoreLink:function () {
+            if (help.isLoaded==false){
+                help.loadResourceFile();
+            }
+            var result = '';
+            if ((help.data !== []) && (help.data.length > 0)) {
+                var i=0, len=help.data.length;
+                    for (; i<len; i++) {
+                        if (help.data[i].key == help.id) {
 
+                            help.helptext=help.data[i].more;
+                            break;
+                        }
+                    }
+
+                }
+            return help.helptext;
             }
 
 
         }
+
     return help;
     })
 ;

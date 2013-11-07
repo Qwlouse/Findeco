@@ -1,27 +1,17 @@
 [
     {
-        "key":"_logout_",
-        "value":"Abmelden",
-        "description":"logout "
+        "key": "1",
+        "more": "link1",
+        "description": "Der testhifetext1"
     },
     {
-        "key":"_login_",
-        "value":"Anmelden",
-        "description":""
+        "key": "2",
+        "more": "link2",
+        "description": "Testhilfetext2"
     },
     {
-        "key":"_loggedInAs_",
-        "value":"Eingeloggt als",
-        "description":""
-    },
-    {
-        "key":"_loadText_",
-        "value":"Text Laden",
-        "description":""
-    },
-    {
-        "key":"_MicroblogPlaceholder_",
-        "value":"Hier kannst du microbloggen !!!",
-        "description":"Microblogging Placeholder Text"
+        "key": "3",
+        "more": "link3",
+        "description": "testhilfext3"
     }
 ]

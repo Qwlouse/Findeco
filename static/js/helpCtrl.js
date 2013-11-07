@@ -34,6 +34,7 @@ function FindecoHelpCtrl($scope,Help) {
         $scope.panelIsHidden=true;
 
     }
+    Help.loadResourceFile();
     $scope.helpIsActive=true;
     Help.setHelpStatus($scope.helpIsActive);
     $scope.toogleHelpStatus =function(){
@@ -48,8 +49,8 @@ function FindecoHelpCtrl($scope,Help) {
     $scope.$on('change_Help', function(e,num) {
             $scope.panelIsHidden=false;
 
-       $scope.helptext=     Help.getHelpText()
-
+       $scope.helptext=     Help.getHelpText();
+       $scope.more = Help.getMoreLink();
 
 
                 $scope.$apply();

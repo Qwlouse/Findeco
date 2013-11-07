@@ -1,5 +1,6 @@
 <div id="leftColumn"  class="contentBox" ng-controller="FindecoArgumentCtrl">
-    <h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
+    <help hid=1 htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
+<div style="clear: both"></div>
     <div ng-show="argumentList.length <1 " class="tipp" style="text-align: center">Es gibt zur Zeit keine<br>Pro-Argumente</div>
 
     <ul class="argumentList">
@@ -14,7 +15,8 @@
                ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNewPro_"></a>
         </li>
     </ul>
-    <h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
+    <help hid=2 htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
+    <div style="clear: both"></div>
     <div ng-show="argumentList.length <1 " class="tipp" style="text-align: center">Es gibt zur Zeit keine<br>Neutralen Argumente</div>
     <ul class="argumentList">
         <li ng-repeat="argument in argumentList | filter: {argType:'neut'}">
@@ -28,7 +30,8 @@
                ng-click="tmp.argumentType = 'Neutral'" data-i18n="_argumentsNewNeut_"></a>
         </li>
     </ul>
-    <h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
+    <help hid=3 htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
+    <div style="clear: both"></div>
     <div ng-show="argumentList.length <1 " class="tipp" style="text-align: center">Es gibt zur Zeit keine<br>Contra-Argumente</div>
     <ul class="argumentList">
         <li ng-repeat="argument in argumentList | filter: {argType:'con'}">
