@@ -25,18 +25,27 @@
 'use strict';
 /* Controllers */
 
-function FindecoHelpCtrl($scope) {
+function FindecoHelpCtrl($scope,Help) {
     // todo: Is this used at all?
     // todo: Yes Now it is!!!!! Finally!!!
-    $scope.isHidden=true;
-
-    $scope.hide =function(){
-        $scope.isHidden=true;
+    $scope.panelIsHidden=true;
+    $scope.helpIsActive=true;
+    $scope.hidePanel =function(){
+        $scope.panelIsHidden=true;
 
     }
 
+    $scope.toogleHelpStatus =function(){
+        if ($scope.helpIsActive){
+            $scope.helpIsActive=false;
+        }else{
+            $scope.helpIsActive=true;
+        }
+        Help.setHelpStatus($scope.helpIsActive);
+
+    }
     $scope.$on('change_Help', function(e,num) {
-            $scope.isHidden=false;
+            $scope.panelIsHidden=false;
 
 
             if (num==1){

@@ -64,3 +64,10 @@
 .helppanel.ng-hide-add.ng-hide-add-active {
     bottom: -150px;
 }
+
+
+.helpactivator{
+   padding-top:5px;
+    float: right;
+    padding-right: 15px;
+}

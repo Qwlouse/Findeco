@@ -161,7 +161,7 @@ findecoApp
             }
         }
     })
-    .directive('help', function(Help){
+    .directive('help', function(Help,$rootScope){
         return {
             restrict: 'E',
             scope: {
@@ -172,14 +172,23 @@ findecoApp
             template: '<div>Platzhalter</div>',
             replace: true,
             link: function(scope, elem, attr) {
-                elem.html('<div style="color:deeppink; font-weight:bold; font-size:20px;" >?</div>');
-                if (scope.htype==1){
-                    elem.html('<div style="color:deeppink; font-weight:bold; font-size:40px;" >?</div>');
-                }
-                if (scope.htype==3){
-                    elem.html('<div style="color:deeppink; font-weight:bold; font-size:10px;" >?</div>');
-                }
 
+                $rootScope.$watch('helpIsActive', function(oldVal, newVal) {
+                    if (newVal){
+                            elem.html('<div style="color:deeppink; font-weight:bold; font-size:20px;" >?</div>');
+
+
+                        if (scope.htype==1){
+                            elem.html('<div style="color:deeppink; font-weight:bold; font-size:40px;" >?</div>');
+                        }
+                        if (scope.htype==3){
+                            elem.html('<div style="color:deeppink; font-weight:bold; font-size:10px;" >?</div>');
+                        }
+                    } else{
+                        elem.html('');
+                    }
+
+                 });
                 var link = angular.element(elem[0]);
                 link.bind('click', function() {
                     Help.setID(scope.hid);

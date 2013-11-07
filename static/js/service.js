@@ -524,11 +524,17 @@ angular.module('FindecoServices', [])
         return location;
     })
     .service('Help', function ($rootScope) {
+        var helpIsActive=true;
         return {
 
         setID:function(x){
 
             $rootScope.$broadcast('change_Help',x);
+            return true;
+        },
+        setHelpStatus:function(x){
+            $rootScope.helpIsActive=x;
+            //$rootScope.$broadcast('change_Help',x);
             return true;
         }
     }
