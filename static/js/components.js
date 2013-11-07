@@ -157,4 +157,36 @@ findecoApp
                 parse();
             }
         }
-    });
+    })
+    .directive('help', function(Help){
+        return {
+            restrict: 'E',
+            scope: {
+                help:'=',
+                htype:'=',
+                hid:'='
+            },
+            template: '<div>Platzhalter</div>',
+            replace: true,
+            link: function(scope, elem, attr) {
+                elem.html('<div style="color:white" >helptestNormal</div>');
+                if (scope.htype==1){
+                    elem.html('<div style="color:white">helptestLarge</div>');
+                }
+                if (scope.htype==3){
+                    elem.html('<div style="color:white">helptestSmall</div>');
+                }
+
+                var link = angular.element(elem[0]);
+                link.bind('click', function() {
+                    Help.setID(scope.hid);
+                });
+            }
+
+        };
+    }
+    );
+
+
+
+  ;

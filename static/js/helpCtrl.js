@@ -25,43 +25,32 @@
 'use strict';
 /* Controllers */
 
-function FindecoHelpCtrl($scope, Backend, User, Navigator) {
-
+function FindecoHelpCtrl($scope) {
     // todo: Is this used at all?
+    // todo: Yes Now it is!!!!! Finally!!!
+    $scope.visible=true;
 
-    function setAuthorForAllBlogs() {
-        for (var i = 0; i < $scope.microbloggingList.length; ++i ) {
-            var blog = $scope.microbloggingList[i];
-            blog.author = blog.authorGroup[0];
-            blog.author.isFollowing = User.follows(blog.author.displayName);
-            blog.author.path = blog.author.displayName;
-        }
+    $scope.hide =function(){
+        $scope.visible=false;
     }
 
-    $scope.microbloggingList = [];
-    $scope.user = User;
-    $scope.test =function(e){
-    	$("#foo").html("Highlghted Item " + (e)?e.target.id:window.event.srcElement.id)
-    };
-    
-    $scope.followUser = function (path, type) {
-        return User.markUser(path, type).success(setAuthorForAllBlogs);
-    };
+    $scope.$on('change_Help', function(e,num) {
+            $scope.visible=true;
 
-    $scope.updateMicrobloggingList = function () {
-        Backend.loadMicroblogging($scope.microbloggingList, Navigator.path).success(setAuthorForAllBlogs);
-    };
 
-    $scope.submit = function () {
-        // TODO: Cross-site-scripting protection!
-        if ($scope.microblogText.length <= 0) return;
-        Backend.storeMicroblogPost(Navigator.path, $scope.microblogText).success(function () {
-            $scope.updateMicrobloggingList();
-            $scope.microblogText = '';
-        });
-    };
+            if (num==1){
+                $scope.helptext ="Helptext ID" +num;
+            }
+            if (num==2){
+                $scope.helptext ="Helptext ID" +num;
+            }
 
-    $scope.updateMicrobloggingList();
+
+                $scope.$apply();
+
+    });
+
+
 }
 
-FindecoHelpCtrl.$inject = ['$scope', 'Backend', 'User', 'Navigator'];
+FindecoHelpCtrl.$inject = ['$scope',  'Help'];

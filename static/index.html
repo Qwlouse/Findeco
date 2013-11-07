@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="/static/css/create.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/start.css" type="text/css"/>
 	<link rel="stylesheet" href="/static/css/profile.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/help.css" type="text/css"/>
     <!-- Javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular.min.js"></script>
@@ -48,6 +49,7 @@
     <script type="text/javascript" src="/static/js/FE_SETTINGS.js"></script>
     <script type="text/javascript" src="/static/js/filters.js"></script>
     <script type="text/javascript" src="/static/js/graph.js"></script>
+    <script type="text/javascript" src="/static/js/helpCtrl.js"></script>
     <script type="text/javascript" src="/static/js/messageCtrl.js"></script>
     <script type="text/javascript" src="/static/js/menuCtrl.js"></script>
     <script type="text/javascript" src="/static/js/microblogCtrl.js"></script>
@@ -65,16 +67,22 @@
     <title data-i18n="_pageTitle_"></title>
 </head>
 <body >
+
 <div id="wrap">
     <div id="main">
         <div id="topMenu">
             <div id="header">
                 <div id="headerContainer" class="centeringContainer">
                     <div id="headerContent" ng-controller="FindecoMenuCtrl">
+
+                      <help hid=1 htype=1> </help>
+
+
                         <div class="version">Version: {{ fesettings.version }}</div>
                         <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">Achtung!! Sie sind als Admin User angemeldet</div>
                         <ul>
                             <li class="{{getActiveClass('')}} {{getActiveClass('start')}}"><a href="/start" data-i18n="_start_">Start</a></li>
+                            <li></li>
                             <li class="{{getActiveClass('news')}}" ng-show="user.isLoggedIn"><a href="/news" data-i18n="_news_">News</a></li>
                             <li class="{{getActiveClass('microblogging')}}" ng-show="user.isLoggedIn"><a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a></li>
                             <li class="{{ isContentActive() }}"><a href="/index" data-i18n="_content_">Content</a></li>
@@ -87,9 +95,11 @@
                                 </div>
                             </li>
                         </ul>
+
                         <ul style="position: absolute; right: 0;">
                             <li  class="{{getActiveClass('profile')}}" ng-show="user.isLoggedIn">
                                 <a ng-href="/profile">{{user.displayName}}</a>
+
                             </li>
                             <li ng-show="user.isLoggedIn">
                                 <a ng-click="logout()" style="cursor:pointer; padding: 0;">
@@ -103,11 +113,11 @@
                         </ul>
                     </div>
                 </div>
-                
+
             </div>
             <div id="navigationBar" ng-controller="FindecoNavigationCtrl">
                 <div class="centeringContainer">
-
+<help hid=2 htype=2> </help>
                     <ul>
                         <li><a href="/index"><img ng-show="navigation.entries"
                                                src="/static/images/home.png"
@@ -144,6 +154,18 @@
             <li><a href="/about">Über Findeco</a></li>
         </ul>
     </div>
+</div>
+<div id="helpbox" ng-controller="FindecoHelpCtrl" ng-show="visible" >
+
+    <div ng-click="hide();"  style="position:absolute; top:0px;right:0px;font-size:30px;float:left;width:50px;height: 50px;color:#ffffff;opacity:: 1px;">
+        X
+    </div>
+    <div style=";width:850px;color:#ffffff;opacity:1">
+
+
+        {{ helptext }}
+        In dieser Spalte werden alle Argumente zum Thema gesammelt.
+Wenn du selbst ein Argument hinzufügen möchtest, kannst du dich hier anmelden oder hier registrieren </div>
 </div>
 </body>
 </html>
