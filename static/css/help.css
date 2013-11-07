@@ -81,6 +81,10 @@
     float: right;
 }
 
+.help-small-icon:hover {
+    background-position: -38px 0;
+}
+
 .help-small-b {
     background-position: -13px 0;
 }
