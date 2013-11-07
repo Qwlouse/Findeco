@@ -37,7 +37,7 @@ function FindecoHelpCtrl($scope) {
 
     $scope.$on('change_Help', function(e,num) {
             $scope.isHidden=false;
-            
+
 
             if (num==1){
                 $scope.helptext ="Helptext ID" +num;
