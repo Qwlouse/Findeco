@@ -34,7 +34,8 @@ function FindecoHelpCtrl($scope,Help) {
         $scope.panelIsHidden=true;
 
     }
-
+    $scope.helpIsActive=true;
+    Help.setHelpStatus($scope.helpIsActive);
     $scope.toogleHelpStatus =function(){
         if ($scope.helpIsActive){
             $scope.helpIsActive=false;

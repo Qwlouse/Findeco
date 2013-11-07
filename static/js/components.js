@@ -171,10 +171,11 @@ findecoApp
             },
             template: '<div>Platzhalter</div>',
             replace: true,
+
             link: function(scope, elem, attr) {
 
-                $rootScope.$watch('helpIsActive', function(oldVal, newVal) {
-                    if (newVal){
+                $rootScope.$watch('helpIsActive', function(oldVal) {
+                    if (oldVal){
                             elem.html('<div style="color:deeppink; font-weight:bold; font-size:20px;" >?</div>');
 
 

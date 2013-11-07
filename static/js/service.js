@@ -525,6 +525,7 @@ angular.module('FindecoServices', [])
     })
     .service('Help', function ($rootScope) {
         var helpIsActive=true;
+        $rootScope.helpIsActive =true;
         return {
 
         setID:function(x){
