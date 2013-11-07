@@ -42,11 +42,14 @@ findecoApp
             replace: true,
             template: '<a class="follow-star">' +
                         '<img ng-src="/static/images/star{{entity.isFollowing}}.png" ' +
-                'alt="Follow" title="Folgen" width="{{width}}" height="{{height}}" ' +
-                'onmouseover="this.src=\'/static/images/star{{entity.isFollowing}}_hover.png\';" ' +
-                'onmouseout="this.src=\'/static/images/star{{entity.isFollowing}}.png\';" ' +
-                '/>' +
+                'alt="Follow" title="Folgen" width="{{width}}" height="{{height}}" ' +    '/>' +
+                
                       '</a>',
+
+         //       'onmouseover="this.src=\'/static/images/star{{entity.isFollowing}}_hover.png\';" ' +
+           //     'onmouseout="this.src=\'/static/images/star{{entity.isFollowing}}.png\';" ' +
+            // todo: Reimplemnt without Angularerror-->
+
             link : function (scope, element, attrs) {
                 if (scope.entity.isFollowing != 0 &&
                     scope.entity.isFollowing != 1 &&
