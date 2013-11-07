@@ -28,15 +28,16 @@
 function FindecoHelpCtrl($scope) {
     // todo: Is this used at all?
     // todo: Yes Now it is!!!!! Finally!!!
-    $scope.visible=true;
+    $scope.isHidden=true;
 
     $scope.hide =function(){
-        $scope.visible=false;
+        $scope.isHidden=true;
+
     }
 
     $scope.$on('change_Help', function(e,num) {
-            $scope.visible=true;
-
+            $scope.isHidden=false;
+            
 
             if (num==1){
                 $scope.helptext ="Helptext ID" +num;

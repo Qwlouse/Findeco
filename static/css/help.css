@@ -30,36 +30,37 @@
 ################################################################################
 */
 
-#helpbox{
+.helppanel{
     position:fixed;
     width:90%;
     margin-left: 5%;
     height: 80px;
     bottom: 0px;
     background-color: #000000;
-    opacity: 0.8;
+    opacity:0.8;
     padding: 7px;
 }
-    .animate-enter,
-    .animate-leave
-    {
-    -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    }
 
-    .animate-enter {
-    top: 100%;
-    }
-    .animate-enter.animate-enter-active {
-    top: 0;
-    }
+.helppanel.ng-hide-add,
+.helppanel.ng-hide-remove {
+  -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
+  transition:0.5s linear all;
+  display:block!important;
 
-    .animate-leave {
-    top: 0;
-    }
-    .animate-leave.animate-leave-active{
-    top: -100%;
-    }
+
+}
+.helppanel.ng-hide-remove {
+    bottom: -150px;
+}
+.helppanel.ng-hide-remove.ng-hide-remove-active {
+    bottom: 0px;
+}
+
+.helppanel.ng-hide-add {
+    bottom: 0px;
+}
+.helppanel.ng-hide-add.ng-hide-add-active {
+    bottom: -150px;
+}
