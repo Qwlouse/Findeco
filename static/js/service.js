@@ -523,13 +523,16 @@ angular.module('FindecoServices', [])
 
         return location;
     })
-    .service('Help', function ($rootScope) {
-        var helpIsActive=true;
+    .service('Help', function ($rootScope,$http) {
         $rootScope.helpIsActive =true;
-        return {
+        var help={
+        isLoaded:false,
+        data:[],
+
+
 
         setID:function(x){
-
+            help.id=x;
             $rootScope.$broadcast('change_Help',x);
             return true;
         },
@@ -538,7 +541,44 @@ angular.module('FindecoServices', [])
             //$rootScope.$broadcast('change_Help',x);
             return true;
         }
-    }
+            ,
 
+        successCallback:function (data) {
+
+            help.data = data;
+           help.resourceFileLoaded = true;
+
+        },
+        loadResourceFile:function () {
+
+            var url = '/static/resource-help.js';
+                $http({ method:"GET", url:url, cache:false }).success(help.successCallback).error(function () {
+                   alert("Helptextfile not found")
+                });
+        },
+        getHelpText:function () {
+            if (help.isLoaded==false){
+                help.loadResourceFile();
+            }
+            var result = '';
+            if ((help.data !== []) && (help.data.length > 0)) {
+
+                    var i=0, len=help.data.length;
+                       for (; i<len; i++) {
+                           if (help.data[i].key == "_logout_") {
+                              alert("treffer"+help.data[i].value)
+                            break;
+                           }
+                        }
+
+
+                help.helptext="hallo"+help.id;
+                   }
+
+            }
+
+
+        }
+    return help;
     })
 ;
