@@ -74,8 +74,8 @@
 
 .help-small-icon {
     background: url("/static/images/help.png") no-repeat;
-    height: 14px;
-    width: 13px;
+    height: 19px;
+    width: 19px;
     margin-top: 2px;
     margin-left: 3px;
     float: right;
@@ -86,9 +86,9 @@
 }
 
 .help-small-b {
-    background-position: -13px 0;
+    background-position: 0px 0;
 }
 
 .help-small-a  {
-    background-position: 0 0;
+    background-position: -19px 0;
 }
