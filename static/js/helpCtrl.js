@@ -48,8 +48,8 @@ function FindecoHelpCtrl($scope,Help) {
     }
     $scope.$on('change_Help', function(e,num) {
             $scope.panelIsHidden=false;
-
-       $scope.helptext=     Help.getHelpText();
+        $scope.title = Help.getHelpTitle();
+        $scope.helptext= Help.getHelpText();
        $scope.more = Help.getMoreLink();
 
 
