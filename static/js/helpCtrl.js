@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License along with         *
  * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
  ****************************************************************************************/
-
 /****************************************************************************************
  * This Source Code Form is subject to the terms of the Mozilla Public                  *
  * License, v. 2.0. If a copy of the MPL was not distributed with this                  *
@@ -24,40 +23,30 @@
 
 'use strict';
 /* Controllers */
-
-function FindecoHelpCtrl($scope,Help) {
+function FindecoHelpCtrl($scope, Help) {
     // todo: Is this used at all?
     // todo: Yes Now it is!!!!! Finally!!!
-    $scope.panelIsHidden=true;
-    $scope.helpIsActive=true;
-    $scope.hidePanel =function(){
-        $scope.panelIsHidden=true;
-
-    }
     Help.loadResourceFile();
-    $scope.helpIsActive=true;
+    $scope.panelIsHidden = true;
+    $scope.helpIsActive = true;
     Help.setHelpStatus($scope.helpIsActive);
-    $scope.toogleHelpStatus =function(){
-        if ($scope.helpIsActive){
-            $scope.helpIsActive=false;
-        }else{
-            $scope.helpIsActive=true;
+    $scope.hidePanel = function () {
+        $scope.panelIsHidden = true;
+    }
+    $scope.toogleHelpStatus = function () {
+        if ($scope.helpIsActive) {
+            $scope.helpIsActive = false;
+        } else {
+            $scope.helpIsActive = true;
         }
         Help.setHelpStatus($scope.helpIsActive);
-
     }
-    $scope.$on('change_Help', function(e,num) {
-            $scope.panelIsHidden=false;
+    $scope.$on('change_Help', function (e, num) {
+        $scope.panelIsHidden = false;
         $scope.title = Help.helpTitle;
-        $scope.helptext= Help.helpText;
-       $scope.more = Help.moreLink;
-
-
-                $scope.$apply();
-
+        $scope.helptext = Help.helpText;
+        $scope.more = Help.moreLink;
+        $scope.$apply();
     });
-
-
 }
-
-FindecoHelpCtrl.$inject = ['$scope',  'Help'];
+FindecoHelpCtrl.$inject = ['$scope', 'Help'];

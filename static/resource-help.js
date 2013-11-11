@@ -1,6 +1,6 @@
 [
     {
-        "key": "1",
+        "key": "f1",
         "title":"Hilfe zu Thema 1",
         "more": "link1",
         "description": "Der testhifetext1"
