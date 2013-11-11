@@ -177,6 +177,7 @@ findecoApp
                         if (scope.htype == 3) {
                             elem.html('<div class="help-small-icon help-small-b "  ></div>');
                         }
+
                     } else {
                         elem.html('');
                     }
