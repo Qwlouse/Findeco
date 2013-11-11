@@ -95,11 +95,11 @@ angular.module('FindecoServices', [])
         }
 
         return {
-            loadAnnounce     : function () {
+            loadAnnounce      : function () {
                 var promise = $http.get('/static/externaljson/info.json');
                 return promise;
             },
-            loadMicroblogging: function (microblogList_out, path, type, id, mentions, own) {
+            loadMicroblogging : function (microblogList_out, path, type, id, mentions, own) {
                 var pathComponents = ['/.json_loadMicroblogging'];
                 if (mentions != undefined && mentions == true) {
                     pathComponents.push('mentions');
@@ -136,7 +136,7 @@ angular.module('FindecoServices', [])
                 });
                 return promise;
             },
-            markNode: function (nodePath, markType) {
+            markNode          : function (nodePath, markType) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
@@ -148,13 +148,13 @@ angular.module('FindecoServices', [])
                 //url = url.replace("//","/");
                 return $http.post(url, {microblogText: microblogText});
             },
-            storeText: function (path, params) {
+            storeText         : function (path, params) {
                 var pathComponents = ['/.json_storeText', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 return $http.post(url, params);
             },
-            loadArgument: function (indexNodes_out, path) {
+            loadArgument      : function (indexNodes_out, path) {
                 var url = ['/.json_loadArgumentIndex', path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
@@ -162,7 +162,7 @@ angular.module('FindecoServices', [])
                     ['loadArgumentIndexResponse']));
                 return promise;
             },
-            loadText: function (paragraphList_out, path) {
+            loadText          : function (paragraphList_out, path) {
                 var url = ['/.json_loadText', path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
@@ -170,12 +170,12 @@ angular.module('FindecoServices', [])
                     ['loadTextResponse', 'paragraphs']));
                 return promise;
             },
-            loadUserInfo: function (user) {
+            loadUserInfo      : function (user) {
                 var url = ['/.json_loadUserInfo', user].join('/');
                 url = url.replace("//", "/");
                 return $http.get(url);
             },
-            loadNode: function (nodeInfo, path) {
+            loadNode          : function (nodeInfo, path) {
                 var url = ['/.json_loadNode', path].join('/');
                 var promise = $http.get(url);
                 promise.success(function (d) {
@@ -183,7 +183,7 @@ angular.module('FindecoServices', [])
                 });
                 return promise;
             },
-            loadGraphData: function (graphData_out, path, graphType) {
+            loadGraphData     : function (graphData_out, path, graphType) {
                 if (graphType == undefined) {
                     graphType = "full";
                 }
@@ -193,7 +193,7 @@ angular.module('FindecoServices', [])
                 promise.success(fillArray(graphData_out, ['loadGraphDataResponse', 'graphDataChildren']));
                 return promise;
             },
-            search: function (searchResults, search_string) {
+            search            : function (searchResults, search_string) {
                 var searchFields = "user_content_microblogging";
                 var promise = $http.get('/.json_search/' + searchFields + '/' + search_string);
                 promise.success(function (d) {
@@ -467,81 +467,48 @@ angular.module('FindecoServices', [])
     .service('Help', function ($rootScope, $http) {
         $rootScope.helpIsActive = true;
         var help = {
-            isLoaded: false,
-            data:[],
-            setID: function (x) {
+            isLoaded        : false,
+            data            : [],
+            helpText        : "",
+            helpTitle       : "",
+            moreLink        : "",
+            setID           : function (x) {
                 help.id = x;
-                $rootScope.$broadcast('change_Help', x);
-                return true;
-            },
-            getID        : function (x) {
-                return help.id;
-            },
-            setHelpStatus: function (x) {
-                $rootScope.helpIsActive = x;
-                //$rootScope.$broadcast('change_Help',x);
-                return true;
-            },
-            successCallback : function (data) {
-
-                help.data = data;
-                help.resourceFileLoaded = true;
-            },
-            loadResourceFile: function () {
-                if (help.isLoaded == false){
-                    var url = '/static/resource-help.js';
-                $http({ method: "GET", url: url, cache: false }).success(help.successCallback).error(function () {
-                    alert("Helptextfile not found")
-                });
-            }
-            },
-            getHelpText     : function () {
-
-                    help.loadResourceFile();
-
-
-                var result = '';
-                if ((help.data !== []) && (help.data.length > 0)) {
-                    var i = 0, len = help.data.length;
-                    for (; i < len; i++) {
-                        if (help.data[i].key == help.id) {
-                            help.helptext = help.data[i].description;
-                        }
-                    }
-                }
-                return help.helptext;
-            },
-            getHelpTitle: function () {
                 help.loadResourceFile();
                 var result = '';
                 if ((help.data !== []) && (help.data.length > 0)) {
                     var i = 0, len = help.data.length;
                     for (; i < len; i++) {
                         if (help.data[i].key == help.id) {
-                            help.helptitle = help.data[i].description;
+                            help.helpText = help.data[i].description;
+                            help.moreLink = help.data[i].more;
+                            help.helpTitle = help.data[i].title;
                         }
                     }
                 }
-                return help.helptext;
+                $rootScope.$broadcast('change_Help', x);
+                return true;
             },
-            getMoreLink     : function () {
+            getID           : function (x) {
+                return help.id;
+            },
+            setHelpStatus   : function (x) {
+                $rootScope.helpIsActive = x;
+                //$rootScope.$broadcast('change_Help',x);
+                return true;
+            },
+            successCallback : function (data) {
+                help.data = data;
+                help.resourceFileLoaded = true;
+            },
+            loadResourceFile: function () {
                 if (help.isLoaded == false) {
-                    help.loadResourceFile();
+                    var url = '/static/resource-help.js';
+                    $http({ method: "GET", url: url, cache: false }).success(help.successCallback).error(function () {
+                        alert("Helptextfile not found")
+                    });
                 }
-                var result = '';
-                if ((help.data !== []) && (help.data.length > 0)) {
-                    var i = 0, len = help.data.length;
-                    for (; i < len; i++) {
-                        if (help.data[i].key == help.id) {
-                            help.helptext = help.data[i].more;
-                            break;
-                        }
-                    }
-                }
-                return help.helptext;
             }
-
-
         }
         return help;
     })

@@ -48,9 +48,9 @@ function FindecoHelpCtrl($scope,Help) {
     }
     $scope.$on('change_Help', function(e,num) {
             $scope.panelIsHidden=false;
-        $scope.title = Help.getHelpTitle();
-        $scope.helptext= Help.getHelpText();
-       $scope.more = Help.getMoreLink();
+        $scope.title = Help.helpTitle;
+        $scope.helptext= Help.helpText;
+       $scope.more = Help.moreLink;
 
 
                 $scope.$apply();
