@@ -94,47 +94,84 @@ angular.module('FindecoServices', [])
             }
         }
 
-        return {
-            loadAnnounce      : function () {
-                var promise = $http.get('/static/externaljson/info.json');
-                return promise;
-            },
-            loadMicroblogging : function (microblogList_out, path, type, id, mentions, own) {
-                var pathComponents = ['/.json_loadMicroblogging'];
-                if (mentions != undefined && mentions == true) {
-                    pathComponents.push('mentions');
-                }
-                if (own != undefined && own == true) {
-                    pathComponents.push('own');
-                }
-                if (id != undefined && id != 0) {
-                    pathComponents.push(id);
-                }
-                if (type == undefined) {
-                    type = "newer"
-                }
-                pathComponents.push(type);
-                pathComponents.push(path);
-                var url = pathComponents.join('/');
-                url = url.replace("//", "/");
-                var promise = $http.get(url);
-                promise.success(function (data) {
-                    angular.forEach(data['loadMicrobloggingResponse'], function (item) {
-                        var flag = false;
-                        angular.forEach(microblogList_out, function (oldItem) {
-                            if (oldItem.microblogID == item.microblogID) {
-                                flag = true;
-                            }
-                        });
-                        if (flag == false) {
-                            microblogList_out.push(item);
-                        }
-                    });
-                    microblogList_out = microblogList_out.sort(function (a, b) {
-                        return b.microblogID - a.microblogID;
-                    });
+        function filterMicroblogging(data, microblogList_out) {
+            angular.forEach(data['loadMicrobloggingResponse'], function (item) {
+                var flag = false;
+                angular.forEach(microblogList_out, function (oldItem) {
+                    if (oldItem.microblogID == item.microblogID) {
+                        flag = true;
+                    }
                 });
-                return promise;
+                if (!flag) {
+                    var authors = [];
+                    angular.forEach(item.authorGroup, function (authorName) {
+                        var author = {};
+                        author.displayName = authorName;
+                        authors.push(author);
+                    });
+                    item.authorGroup = authors;
+                    microblogList_out.push(item);
+                }
+            });
+            microblogList_out = microblogList_out.sort(function (a, b) {
+                return b.microblogID - a.microblogID;
+            });
+        }
+
+        function addIdTypeAndGetPromise(microblogList_out, url, id, type) {
+            var idParam = 'id=-1&';
+            if (id != undefined && id != 0) {
+                idParam = 'id=' + id + '&';
+            }
+            if (type == undefined) {
+                type = "newer";
+            }
+            var promise = $http.get(url + '?' + idParam + 'type=' + type);
+            promise.success(function (data) {
+                filterMicroblogging(data, microblogList_out);
+            });
+            return promise;
+        }
+
+        return {
+            loadAnnounce: function () {
+                return $http.get('/static/externaljson/info.json');
+            },
+
+            loadMicrobloggingForFollowedNodes: function (microblogList_out, name, id, type) {
+                var path = '/.loadMicrobloggingForFollowedNodes/' + name + '/';
+                return addIdTypeAndGetPromise(microblogList_out, path, id, type);
+            },
+
+            loadMicrobloggingForAllNodes: function (microblogList_out, id, type) {
+                var path = '/.loadMicrobloggingAll/';
+                return addIdTypeAndGetPromise(microblogList_out, path, id, type);
+            },
+
+            loadMicrobloggingForAuthoredNodes: function (microblogList_out, name, id, type) {
+                var path = '/.loadMicrobloggingForAuthoredNodes/' + name + '/';
+                return addIdTypeAndGetPromise(microblogList_out, path, id, type);
+            },
+
+            loadMicrobloggingMentions: function (microblogList_out, name, id, type) {
+                var path = '/.loadMicrobloggingMentions/' + name + '/';
+                return addIdTypeAndGetPromise(microblogList_out, path, id, type);
+            },
+
+            loadMicrobloggingTimeline: function (microblogList_out, name, id, type) {
+                var path = '/.loadMicrobloggingTimeline/' + name + '/';
+                return addIdTypeAndGetPromise(microblogList_out, path, id, type);
+            },
+
+            loadMicrobloggingFromUser: function (microblogList_out, name, id, type) {
+                console.log(name);
+                var path = '/.loadMicrobloggingFromUser/' + name + '/';
+                return addIdTypeAndGetPromise(microblogList_out, path, id, type);
+            },
+
+            loadMicrobloggingForNode: function (microblogList_out, path, id, type) {
+                var url_part = '/.loadMicrobloggingForNode/' + path;
+                return addIdTypeAndGetPromise(microblogList_out, url_part, id, type);
             },
             markNode          : function (nodePath, markType) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
@@ -202,7 +239,7 @@ angular.module('FindecoServices', [])
             }
         };
     })
-    .factory('User', function ($http) {
+    .factory('User', function ($http, $rootScope) {
         var data = {
             userInfo    : false,
             userSettings: false
@@ -217,7 +254,10 @@ angular.module('FindecoServices', [])
             followees  : []
         };
         userInfo.register = function (displayName, password, emailAddress) {
-            return $http.post('/.json_accountRegistration/', {displayName: displayName, password: password, emailAddress: emailAddress});
+            return $http.post('/.json_accountRegistration/', {
+                displayName: displayName,
+                password: password,
+                emailAddress: emailAddress});
         };
         userInfo.activate = function (activationKey) {
             return $http.post('/.json_accountActivation/', {activationKey: activationKey});
@@ -278,6 +318,7 @@ angular.module('FindecoServices', [])
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
                 }
+                $rootScope.$broadcast('UserMarked');
             });
         };
         userInfo.loadSettings = function () {
@@ -333,7 +374,7 @@ angular.module('FindecoServices', [])
         return userInfo;
     })
     .factory('Fesettings', function (Disclaimer, Boxes, Version, Sidebar) {
-        var settings = {}
+        var settings = {};
         settings.version = Version;
         settings.disclaimer = Disclaimer;
         settings.boxes = Boxes;
@@ -389,13 +430,13 @@ angular.module('FindecoServices', [])
 
         var location = {
             path        : "",    // the full path but duplicate slashes are removed
-            prefix      : "",  // things before the node or user path like /create/argumentPro/ or /user/
-            nodePath    : "", // only the node path (parent for arguments, empty for users)
-            argumentPath: "", // the full path to the argument or node if it isn't an argument
-            userName    : "", // user
+            prefix      : "",    // things before the node or user path like /create/argumentPro/ or /user/
+            nodePath    : "",    // only the node path (parent for arguments, empty for users)
+            argumentPath: "",    // the full path to the argument or node if it isn't an argument
+            userName    : "",    // user
             parts       : [],
-            entries     : [],  // contains objects with name and path for every ancestor node
-            type        : "node"  // one of: root, node, arg, user, other
+            entries     : [],    // contains objects with name and path for every ancestor node
+            type        : "node" // one of: root, node, arg, user, other
         };
 
         function normalizeSlashes(path) {
@@ -508,7 +549,7 @@ angular.module('FindecoServices', [])
                     });
                 }
             }
-        }
+        };
         return help;
     })
 ;

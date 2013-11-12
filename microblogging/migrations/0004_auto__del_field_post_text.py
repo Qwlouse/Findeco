@@ -8,42 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Post'
-        db.create_table('microblogging_post', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('text', self.gf('django.db.models.fields.TextField')()),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='microblogging_posts', to=orm['auth.User'])),
-            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('is_reference_to', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='referenced', null=True, to=orm['microblogging.Post'])),
-        ))
-        db.send_create_signal('microblogging', ['Post'])
-
-        # Adding M2M table for field node_references on 'Post'
-        db.create_table('microblogging_post_node_references', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('post', models.ForeignKey(orm['microblogging.post'], null=False)),
-            ('node', models.ForeignKey(orm['node_storage.node'], null=False))
-        ))
-        db.create_unique('microblogging_post_node_references', ['post_id', 'node_id'])
-
-        # Adding M2M table for field mentions on 'Post'
-        db.create_table('microblogging_post_mentions', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('post', models.ForeignKey(orm['microblogging.post'], null=False)),
-            ('user', models.ForeignKey(orm['auth.user'], null=False))
-        ))
-        db.create_unique('microblogging_post_mentions', ['post_id', 'user_id'])
+        # Deleting field 'Post.text'
+        db.delete_column('microblogging_post', 'text')
 
 
     def backwards(self, orm):
-        # Deleting model 'Post'
-        db.delete_table('microblogging_post')
-
-        # Removing M2M table for field node_references on 'Post'
-        db.delete_table('microblogging_post_node_references')
-
-        # Removing M2M table for field mentions on 'Post'
-        db.delete_table('microblogging_post_mentions')
+        # Adding field 'Post.text'
+        db.add_column('microblogging_post', 'text',
+                      self.gf('django.db.models.fields.TextField')(default=''),
+                      keep_default=False)
 
 
     models = {
@@ -85,12 +58,15 @@ class Migration(SchemaMigration):
         },
         'microblogging.post': {
             'Meta': {'object_name': 'Post'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'microblogging_posts'", 'to': "orm['auth.User']"}),
+            'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'microblogging_posts'", 'to': "orm['auth.User']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_reference_to': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'referenced'", 'null': 'True', 'to': "orm['microblogging.Post']"}),
-            'mentions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'mentioning_entries'", 'blank': 'True', 'to': "orm['auth.User']"}),
-            'node_references': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'microblogging_references'", 'blank': 'True', 'to': "orm['node_storage.Node']"}),
-            'text': ('django.db.models.fields.TextField', [], {}),
+            'is_answer_to': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'referenced'", 'null': 'True', 'to': "orm['microblogging.Post']"}),
+            'location': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'microblogging_from_here'", 'to': "orm['node_storage.Node']"}),
+            'mentions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'mentioning_entries'", 'blank': 'True', 'to': "orm['auth.User']"}),
+            'node_references': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'microblogging_references'", 'blank': 'True', 'to': "orm['node_storage.Node']"}),
+            'post_type': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
+            'text_cache': ('django.db.models.fields.TextField', [], {}),
+            'text_template': ('django.db.models.fields.TextField', [], {}),
             'time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
         },
         'node_storage.argument': {
@@ -109,7 +85,7 @@ class Migration(SchemaMigration):
         },
         'node_storage.node': {
             'Meta': {'object_name': 'Node'},
-            'favorite': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'favorite_of'", 'null': 'True', 'to': "orm['node_storage.Node']"}),
+            'favorite': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "u'favorite_of'", 'null': 'True', 'on_delete': 'models.SET_NULL', 'to': "orm['node_storage.Node']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'node_type': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
             'parents': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "u'children'", 'symmetrical': 'False', 'through': "orm['node_storage.NodeOrder']", 'to': "orm['node_storage.Node']"}),

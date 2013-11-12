@@ -26,34 +26,61 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
 from __future__ import division, print_function, unicode_literals
-from django.db import models
 import re
-from findeco.api_validation import USERNAME
-import node_storage as backend
 from django.contrib.auth.models import User
+from django.db import models
 from django.utils.html import escape
+from django.utils.translation import ugettext
+
+import node_storage as backend
 
 WORDSTART = r"(?:(?<=\s)|\A)"
 WORDEND = r"\b"
 
 
+NODE_LINK_TEMPLATE = '<a href="/{}">{}<span class="nodeIndex">{}</span></a>'
+
+
 def keyword(pattern):
     return re.compile(WORDSTART + pattern + WORDEND)
 
-user_ref_pattern = keyword("@" + USERNAME)
-tag_pattern = keyword("#(?P<tagname>\w+)")
-internal_link_pattern = keyword(r"(?P<path>/(?:[a-zA-Z0-9-_]+\.\d+/)*[a-zA-Z0-9-_]+(?:\.\d+)(?:\.(?:pro|neut|con)\.\d+)?/?)")
-
-url_pattern = keyword(r"((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)")
+tag_pattern = keyword(r"#(?P<tagname>\w+)")
+url_pattern = keyword(r"((?:https?://)?[\da-z\.-]+\.[a-z\.]{2,6}"
+                      r"[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)")
 
 
 class Post(models.Model):
+    USER_POST = 'p'
+    NODE_CREATED = 'c'
+    NODE_REFINED = 'r'
+    SPAM_MARKED = 's'
+    SPAM_UNMARKED = 'n'
+    NODE_FOLLOWED = 'f'
+    NODE_UNFOLLOWED = 'u'
+    ARGUMENT_CREATED = 'a'
+    MICROBLOGGING_TYPE = (
+        (USER_POST, 'userpost'),
+        (NODE_CREATED, 'node_created'),
+        (NODE_REFINED, 'node_refined'),
+        (SPAM_MARKED, 'node_spam_marked'),
+        (SPAM_UNMARKED, 'node_spam_unmarked'),
+        (NODE_FOLLOWED, 'node_followed'),
+        (NODE_UNFOLLOWED, 'node_unfollowed'),
+        (ARGUMENT_CREATED, 'argument_created')
+    )
+
     node_references = models.ManyToManyField(
         backend.Node,
         symmetrical=False,
         related_name='microblogging_references',
         blank=True)
-    text = models.TextField()
+    location = models.ForeignKey(
+        backend.Node,
+        related_name='microblogging_from_here',
+        blank=False,
+        null=False)
+    text_cache = models.TextField()
+    text_template = models.TextField()
     author = models.ForeignKey(
         User,
         related_name='microblogging_posts')
@@ -62,80 +89,108 @@ class Post(models.Model):
         related_name='mentioning_entries',
         symmetrical=False,
         blank=True)
-    time = models.DateTimeField('date posted', auto_now=True)
-    is_reference_to = models.ForeignKey(
+    time = models.DateTimeField('date posted', auto_now_add=True)
+    post_type = models.CharField(max_length=1, choices=MICROBLOGGING_TYPE)
+    is_answer_to = models.ForeignKey(
         'self',
         related_name='referenced',
         blank=True,
         null=True)
 
+    @classmethod
+    def short_post_type(cls, arg_type):
+        return {None: cls.USER_POST,
+                'userpost': cls.USER_POST,
+                'node_created': cls.NODE_CREATED,
+                'node_refined': cls.NODE_REFINED,
+                'node_spam_marked': cls.SPAM_MARKED,
+                'node_spam_unmarked': cls.SPAM_UNMARKED,
+                'node_followed': cls.NODE_FOLLOWED,
+                'node_unfollowed': cls.NODE_UNFOLLOWED,
+                cls.USER_POST: cls.USER_POST,
+                cls.NODE_CREATED: cls.NODE_CREATED,
+                cls.NODE_REFINED: cls.NODE_REFINED,
+                cls.SPAM_MARKED: cls.SPAM_MARKED,
+                cls.SPAM_UNMARKED: cls.SPAM_UNMARKED,
+                cls.NODE_FOLLOWED: cls.NODE_FOLLOWED,
+                cls.NODE_UNFOLLOWED: cls.NODE_UNFOLLOWED
+                }[arg_type]
+
+    def render(self):
+        user_dict = {
+            'u' + str(i): '<a href="/user/{0}">@{0}</a>'.format(u.username)
+            for i, u in enumerate(self.mentions.order_by('id'))
+        }
+        node_dict = {
+            'n' + str(i): create_html_for_node(n)
+            for i, n in enumerate(self.node_references.order_by('id'))
+        }
+        format_dict = dict()
+        format_dict.update(user_dict)
+        format_dict.update(node_dict)
+
+        # get template
+        if self.post_type == self.USER_POST:
+            template = preprocess_userpost_template(self.text_template)
+        else:
+            template = SYSTEM_MESSAGE_TEMPLATES[self.post_type]
+
+        # insert references and mentions
+        try:
+            text = template.format(**format_dict)
+        except KeyError:
+            import warnings
+            warnings.warn('corrupted text_template')
+            text = 'CORRUPTED: ' + template
+
+        self.text_cache = text
+        self.save()
+
     def __unicode__(self):
-        if self.is_reference_to:
+        if self.is_answer_to:
             return u'%s references "%s" by %s on %s' % (
                 self.author.username,
-                self.text,
-                self.is_reference_to.author.username,
+                self.text_cache,
+                self.is_answer_to.author.username,
                 self.time)
         else:
             return u'%s says "%s" on %s' % (self.author.username,
-                                            self.text,
+                                            self.text_cache,
                                             self.time)
 
 
-def create_post(text, author, path=None, second_path=None, do_escape=True):
-    if do_escape:
-        text = escape(text)
-    split_text = user_ref_pattern.split(text)
-    mentions = []
-    for i in range(1, len(split_text), 2):
-        username = split_text[i]
-        try:
-            u = User.objects.get(username__iexact=username)
-            split_text[i] = '<a href="/user/{0}">@{0}</a>'.format(u.username)
-            mentions.append(u)
-        except User.DoesNotExist:
-            split_text[i] = '@' + username
-    text = "".join(split_text)
+def create_html_for_node(node):
+    path = node.get_a_path()
+    title = node.title
+    split_path = path.rsplit('.', 1)
+    index = split_path[1] if len(split_path) > 1 else 1
+    return NODE_LINK_TEMPLATE.format(path, title, index)
 
-    split_text = tag_pattern.split(text)
+
+def preprocess_userpost_template(template):
+    # escape html
+    processed_template = escape(template)
+    # replace #hashtags by links to search
+    split_text = tag_pattern.split(processed_template)
     for i in range(1, len(split_text), 2):
         tagname = split_text[i]
         split_text[i] = '<a href="/search/{0}">#{0}</a>'.format(tagname)
-    text = "".join(split_text)
-
-    split_text = internal_link_pattern.split(text)
-    nodes = []
-    if path is not None:
-        nodes.append(backend.get_node_for_path(path))
-    if second_path is not None:
-        nodes.append(backend.get_node_for_path(second_path))
-    for i in range(1, len(split_text), 2):
-        path = split_text[i]
-        try:
-            n = backend.get_node_for_path(path)
-            if n.node_type == backend.Node.SLOT:
-                slot = n
-                n = backend.get_favorite_if_slot(n)
-                position = backend.NodeOrder.objects.filter(child=n).filter(
-                    parent=slot).all()[0].position
-                path += "." + str(position)
-            split_text[i] = '<a href="{0}">{1}</a>'.format(path, n.title)
-            nodes.append(n)
-        except backend.IllegalPath:
-            pass
-    text = "".join(split_text)
-
-    split_text = url_pattern.split(text)
+    processed_template = "".join(split_text)
+    # replace external links
+    split_text = url_pattern.split(processed_template)
     for i in range(1, len(split_text), 2):
         link = split_text[i]
         split_text[i] = '<a href="{0}">{0}</a>'.format(link)
-    text = "".join(split_text)
+    processed_template = "".join(split_text)
+    return processed_template
 
-    post = Post()
-    post.text = text
-    post.author = author
-    post.save()
-    post.mentions.add(*mentions)
-    post.node_references.add(*nodes)
-    post.save()
-    return post
+
+SYSTEM_MESSAGE_TEMPLATES = {
+    Post.NODE_CREATED: ugettext('node_created_message'),
+    Post.NODE_REFINED: ugettext('node_refined_message'),
+    Post.SPAM_MARKED: ugettext('node_flagged_as_spam_message'),
+    Post.SPAM_UNMARKED: ugettext('node_unflagged_as_spam_message'),
+    Post.NODE_FOLLOWED: ugettext('node_followed_message'),
+    Post.NODE_UNFOLLOWED: ugettext('node_unfollowed_message'),
+    Post.ARGUMENT_CREATED: ugettext('argument_created_message'),
+}
