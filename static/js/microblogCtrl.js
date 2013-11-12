@@ -40,13 +40,14 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
         }
         $scope.MicrobloggingIsLoading = false;
     }
+    $scope.$on('UserMarked', setAuthorForAllBlogs);
 
     $scope.microbloggingList = [];
     $scope.user = User;
     $scope.microblogText = "";
 
     $scope.followUser = function (path, type) {
-        return User.markUser(path, type).success(setAuthorForAllBlogs);
+        return User.markUser(path, type);
     };
     $scope.isLoading = function (){
     	return $scope.MicrobloggingIsLoading;

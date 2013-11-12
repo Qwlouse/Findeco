@@ -263,7 +263,7 @@ angular.module('FindecoServices', [])
         };
 
     })
-    .factory('User', function ($http) {
+    .factory('User', function ($http, $rootScope) {
         var data = {
             userInfo : false,
             userSettings : false
@@ -346,6 +346,7 @@ angular.module('FindecoServices', [])
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
                 }
+                $rootScope.$broadcast('UserMarked');
             });
         };
 

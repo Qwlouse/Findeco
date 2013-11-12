@@ -42,12 +42,14 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
         }
     }
 
+    $scope.$on('UserMarked', function () {
+        setAuthorForAllBlogs($scope.timelineList);
+        setAuthorForAllBlogs($scope.mentionsList);
+        setAuthorForAllBlogs($scope.ownPostsList);
+    });
+
     $scope.followUser = function (path, type) {
-        return User.markUser(path, type).success(function() {
-            setAuthorForAllBlogs($scope.timelineList);
-            setAuthorForAllBlogs($scope.mentionsList);
-            setAuthorForAllBlogs($scope.ownPostsList);
-        });
+        return User.markUser(path, type);
     };
 
     $scope.updateTimeline = function (oldType, oldID) {
