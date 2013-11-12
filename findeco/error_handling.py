@@ -69,6 +69,8 @@ InvalidEmailAddress = functools.partial(ViewError, '_InvalidEmailAddress')
 InvalidActivationKey = functools.partial(ViewError, '_InvalidActivationKey')
 InvalidRecoveryKey = functools.partial(ViewError, '_InvalidRecoveryKey')
 InvalidURL = functools.partial(ViewError, '_InvalidURL')
+InvalidMicrobloggingOptions = functools.partial(ViewError,
+                                                '_InvalidMircobloggingOptions')
 
 
 ################### ErrorHandling Decorator ####################################

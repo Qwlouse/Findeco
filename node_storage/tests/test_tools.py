@@ -22,7 +22,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
-from microblogging.models import create_post, Post
+from microblogging.factory import create_post
+from microblogging.models import Post
 from node_storage import Text, Node, Argument, TextCache, IndexCache
 from node_storage.factory import create_slot, create_structureNode, create_vote, create_user, create_spam_flag, create_argument
 from node_storage.models import PathCache
