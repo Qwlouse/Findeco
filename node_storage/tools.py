@@ -22,7 +22,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.core.exceptions import ObjectDoesNotExist
-from microblogging import Post
+from microblogging.models import Post
 from node_storage.models import PathCache, TextCache, Vote, Argument, IndexCache, Node
 
 
