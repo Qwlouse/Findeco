@@ -183,9 +183,11 @@ INSTALLED_APPS = (
     'node_storage',
     'microblogging',
     'south',
-    'libs.django_cron',
-    'integration_tests'
+    'django_nose',
+    'libs.django_cron'
 )
+
+TEST_RUNNER = str('django_nose.NoseTestSuiteRunner')
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -221,10 +223,26 @@ APPEND_SLASH = False
 CRON_POLLING_FREQUENCY = 300  # in seconds
 
 # uncomment this if you don't want unittests to run migrations
-#SOUTH_TESTS_MIGRATE = False
+SOUTH_TESTS_MIGRATE = False
 
 # try to import secret_settings and overwrite some of the default values
 try:
     from local_settings import *
 except ImportError:
     pass
+
+
+# if manage.py test was called, use test settings
+import sys
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': project_path('test_sqlite.db')
+        }
+    }
+
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+        'django.contrib.auth.hashers.SHA1PasswordHasher',
+    )

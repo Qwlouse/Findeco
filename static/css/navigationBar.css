@@ -1,4 +1,4 @@
-/** It's all Svens fault!!1!11 **********************************************************
+/****************************************************************************************
  * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
@@ -13,7 +13,7 @@
  * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
  *                                                                                      *
  * You should have received a copy of the GNU General Public License along with         *
- * BasDeM. If not, see <http://www.gnu.org/licenses/>.                                  *
+ * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
  ****************************************************************************************/
 
 /****************************************************************************************
@@ -67,3 +67,10 @@
 #navigationBar li:last-child a {
     color: #2d7cc4;
 }
+.version{
+    color:white;
+    font-size: 0.5em;
+    position: absolute;
+    top:3px;
+    right:-30px;
+    }

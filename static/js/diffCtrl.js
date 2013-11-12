@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+ * Copyright (c) 2013 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -22,20 +22,57 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-#messageBox {
-    min-height: 50px;
-    width: 600px;
-    position: fixed;
-    left: 50%;
-    top: 130px;
-    margin-left: -300px;
-    z-index: 500;
+'use strict';
+/* Controllers */
+
+function FindecoDiffCtrl($scope, Backend, Navigator) {
+
+    $scope.nav = Navigator;
+    $scope.path1 = Navigator.nodePath;
+    $scope.path2 = Navigator.segments.compare;
+    $scope.text1Loaded = false;
+    $scope.text2Loaded = false;
+    $scope.diffIsLoading = true;
+    $scope.changes = [];
+    if (!$scope.path2) {
+        Navigator.changePath('/')
+
+    }
+    var difftool = new diff_match_patch();
+    difftool.Diff_Timeout = 20.0;
+
+    $scope.loadTexts = function (path1, path2) {
+        $scope.text1 = "";
+        $scope.text2 = "";
+        var text1Paragraphs = [];
+        Backend.loadText(text1Paragraphs, path1).success(function (d) {
+            $scope.text1Loaded = true;
+            for (var i = 0; i < text1Paragraphs.length; i++) {
+                $scope.text1 += text1Paragraphs[i].wikiText + "\n\n";
+            }
+            $scope.createDiff();
+        });
+        var text2Paragraphs = [];
+        Backend.loadText(text2Paragraphs, path2).success(function (d) {
+            $scope.text2Loaded = true;
+            for (var i = 0; i < text2Paragraphs.length; i++) {
+                $scope.text2 += text2Paragraphs[i].wikiText + "\n\n";
+            }
+            $scope.createDiff();
+        });
+    };
+
+    $scope.createDiff = function () {
+        if ($scope.text1Loaded && $scope.text2Loaded) {
+            $scope.changes = difftool.diff_main($scope.text1, $scope.text2);
+            difftool.diff_cleanupSemantic($scope.changes);
+            $scope.diffIsLoading =false;
+        }
+    };
+    $scope.isLoading = function (){
+    	return $scope.diffIsLoading;
+    };
+    $scope.loadTexts($scope.path1, $scope.path2);
 }
 
-button.close {
-    float: right;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-}
+FindecoDiffCtrl.$inject = ['$scope', 'Backend', 'Navigator'];

@@ -9,6 +9,7 @@ Requirements
 * Python 2.7
 * Django 1.4.3
 * Django South 0.7.6
+* Django Nose 1.3.0
 
 Set Up
 ---------------

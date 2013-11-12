@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -22,20 +22,36 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-#messageBox {
-    min-height: 50px;
-    width: 600px;
-    position: fixed;
-    left: 50%;
-    top: 130px;
-    margin-left: -300px;
-    z-index: 500;
+'use strict';
+/* Controllers */
+
+function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
+    $scope.nav = Navigator;
+    $scope.tmp = TMP;
+    $scope.user = User;
+
+    $scope.markNode = Backend.markNode;
+
+    $scope.argumentList = [];
+    
+    $scope.isLoading = function (){
+    	return $scope.argumentIsLoading ;
+    }
+    
+    function amendArguments() {
+        for (var i = 0; i < $scope.argumentList.length; ++i) {
+            var arg = $scope.argumentList[i];
+            arg.path = $scope.nav.getPathForArgument(arg.argType, arg.index);
+        }
+        $scope.argumentIsLoading  = false;
+    }
+
+    $scope.updateArgumentList = function () {
+    	$scope.argumentIsLoading = true;
+        Backend.loadArgument($scope.argumentList , $scope.nav.nodePath).success(amendArguments);
+    };
+
+    $scope.updateArgumentList();
 }
 
-button.close {
-    float: right;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-}
+FindecoArgumentCtrl.$inject = ['$scope', 'Backend', 'User', 'TMP', 'Navigator'];

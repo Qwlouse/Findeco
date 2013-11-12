@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+ * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -22,20 +22,46 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-#messageBox {
-    min-height: 50px;
-    width: 600px;
-    position: fixed;
-    left: 50%;
-    top: 130px;
-    margin-left: -300px;
-    z-index: 500;
+'use strict';
+/* Controllers */
+
+function FindecoHelpCtrl($scope, Backend, User, Navigator) {
+
+    // todo: Is this used at all?
+
+    function setAuthorForAllBlogs() {
+        for (var i = 0; i < $scope.microbloggingList.length; ++i ) {
+            var blog = $scope.microbloggingList[i];
+            blog.author = blog.authorGroup[0];
+            blog.author.isFollowing = User.follows(blog.author.displayName);
+            blog.author.path = blog.author.displayName;
+        }
+    }
+
+    $scope.microbloggingList = [];
+    $scope.user = User;
+    $scope.test =function(e){
+    	$("#foo").html("Highlghted Item " + (e)?e.target.id:window.event.srcElement.id)
+    };
+    
+    $scope.followUser = function (path, type) {
+        return User.markUser(path, type).success(setAuthorForAllBlogs);
+    };
+
+    $scope.updateMicrobloggingList = function () {
+        Backend.loadMicroblogging($scope.microbloggingList, Navigator.path).success(setAuthorForAllBlogs);
+    };
+
+    $scope.submit = function () {
+        // TODO: Cross-site-scripting protection!
+        if ($scope.microblogText.length <= 0) return;
+        Backend.storeMicroblogPost(Navigator.path, $scope.microblogText).success(function () {
+            $scope.updateMicrobloggingList();
+            $scope.microblogText = '';
+        });
+    };
+
+    $scope.updateMicrobloggingList();
 }
 
-button.close {
-    float: right;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-}
+FindecoHelpCtrl.$inject = ['$scope', 'Backend', 'User', 'Navigator'];

@@ -1,6 +1,6 @@
 <div id="contentContainer" class="centeringContainer">
- <div ng-show="!user.isLoggedIn" id="disclaimerBox" class="contentBox" >
-  Die Texte sind Aussagen von einzelnen Benutzern im <a href="http://www.piratenpartei-nrw.de/2013/06/19/die-piraten-sind-im-neuland-zuhause/">#Neuland</a> und sind als Beiträge einer Fortlaufenden Diskussion keine offizielle Aussage der <a href="http://piraten-rlp.de/">Piratenpartei Rheinland-Pfalz.</a>
+ <div ng-show="!user.isLoggedIn&&fesettings.disclaimer.enable" id="disclaimerBox" ng-bind-html-unsafe="fesettings.disclaimer.text" class="contentBox" >
+
  </div>
     <div ng-include src="'/static/partials/argument.html'"  ></div>
 
@@ -79,7 +79,7 @@
 
     <div ng-include src="'/static/partials/microblogging.html'"></div>
     <div style="clear:both; padding-bottom:25px;"></div>
-     <div ng-show="user.isLoggedIn" id="disclaimerBox" class="contentBox" >
-  Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage der <a href="http://piraten-rlp.de/">Piratenpartei Rheinland-Pfalz.</a> 
+     <div ng-show="user.isLoggedIn&&fesettings.disclaimer.enable" id="disclaimerBox" ng-bind-html-unsafe="fesettings.disclaimer.text" class="contentBox" >
+
  </div>
 </div>

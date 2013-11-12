@@ -1,58 +1,35 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
- 	
-    <div class="contentBox startColumn">
-        <h2  >Was ist das?</h2>
-        <div style="clear:both"></div>
-       	Dies ist eine Findeco Instanz. Findeco ist eine Online-Diskussionsplattform, die Diskussionen mit großen Nutzergruppen strukturiert.
-    	<div style="clear:both"></div>
-    	<a style="float:right" href="http://www.findeco.de/extern/was-ist-findeco/">mehr... (extern)</a>
-    </div>
-    <div class="contentBox startColumn">
-        <h2 >Wie funktionierts?</h2>
-        <div style="clear:both"></div>
-        Zur Zeit arbeiten wir an der Hilfe, Tutorials und Videoanleitungen. Der beste Einstieg ist zur Zeit die Hilfe. Wir bieten aber auch Workshops an, wenn du einen organisieren möchtest, melde dich bei uns..  
-        <div style="clear:both"></div>
-        <a style="float:right" href="http://www.findeco.de/hilfe/">Zur Hilfe (extern)</a>
-    </div>
-    <div class="contentBox startColumn">
-        <h2 >RSS-Feeds (Extern)</h2>
-        <div style="clear:both"></div>
-	     <ul style="list-style-type:none; margin-left:-30px;">
-        	<li class="cat-item cat-item-1"><a target="_new" href="http://www.findeco.de/category/allgemein/" title="Alle unter Allgemein abgelegten Beiträge ansehen">Findeco allgemein</a> <a  href="http://www.findeco.de/category/allgemein/feed/"><img style="height:15px" src='/static/images/feed.png' alt="Feed für alle unter Allgemein abgelegten Beiträge" /></a>	</li>			
-        	<li class="cat-item cat-item-2"><a target="_new" href="http://www.findeco.de/category/entwicklung/" title="Alle unter Entwicklung abgelegten Beiträge ansehen">Findeco Entwicklung</a> <a href="http://www.findeco.de/category/entwicklung/feed/"><img style="height:15px" src='/static/images/feed.png' alt="Feed für alle unter Entwicklung abgelegten Beiträge" /></a></li>
-			<li class="cat-item cat-item-3"><a target="_new" href="http://www.findeco.de/category/systembetrieb-rlp/" title="Alle unter piraten-rlp.de abgelegten Beiträge ansehen">Systembetrieb findeco.piraten-rlp.de</a> <a href="http://www.findeco.de/category/systembetrieb-rlp/feed/"><img style="height:15px" src='/static/images/feed.png' alt="Feed für alle unter piraten-rlp.de abgelegten Beiträge" /></a></li>
-			<li class="cat-item cat-item-9"><a target="_new" href="http://www.findeco.de/category/systembetrieb-demo/" title="Alle unter Systembetrieb demo.findeco.de abgelegten Beiträge ansehen">Systembetrieb demo.findeco.de</a> <a href="http://www.findeco.de/category/systembetrieb-demo/feed/"><img style="height:15px" src='/static/images/feed.png' alt="Feed für alle unter Systembetrieb demo.findeco.de abgelegten Beiträge" /></a></li>
-		</ul>	
-        <div style="clear:both"></div>
-        Feeds mit Systeminhalten stehen nach Anmeldung zur Verfügung.
-    </div>
-	<div class="contentBox startColumn" ng-controller="FindecoSyschangeCtrl">
-    	<h2  data-i18n="_SystemNews_"></h2>
-        <ul class="newsList">
-    	    <li ng-repeat="news in newsList">
-        		<a href="{{ news.url }}">{{news.title}} (extern)</a>
-        	</li>
-    	</ul>
-       	<div ng-show="isLoading()" class="deactivateDiv">
-    	</div>
-   		<div ng-show="isLoading()" class="deactivateSpinner">
-    	</div>
+
+
+    <div ng-repeat="box in fesettings.boxes">
+        <div ng-show="!box.special" class="contentBox startColumn">
+            <h2 ng-bind-html-unsafe="box.title"></h2>
+
+            <div style="clear:both"></div>
+            <div ng-bind-html-unsafe="box.content">></div>
+            <div style="clear:both"></div>
+            <a style="float:right" href="{{ box.link }}">{{ box.link_title }}</a>
+        </div>
+
+
+        <div ng-show="box.special == 'news' " class="contentBox startColumn" ng-controller="FindecoSyschangeCtrl">
+            <h2 ng-bind-html-unsafe="box.title"></h2>
+            <ul class="newsList">
+                <li ng-repeat="news in newsList">
+                    <a href="{{ news.url }}">{{ news.title }} (extern)</a>
+                </li>
+            </ul>
+            <div ng-show="isLoading()" class="deactivateDiv">
+            </div>
+            <div ng-show="isLoading()" class="deactivateSpinner">
+            </div>
+
+        </div>
+
 
     </div>
-    <div class="contentBox startColumn">
-        <h2 >Unser Manifest</h2>
-        <div style="clear:both"></div>
-        Findeco lebt von deinen Ideen und deiner Mitarbeit. Ein paar Grundsätze dazu findest du in unserem Manifest.
-        <div style="clear:both"></div>
-        <a style="float:right" href="http://www.findeco.de/extern/unser-manifest/">mehr... (extern)</a>
-    </div>
-    <div class="contentBox startColumn">
-        <h2 >Support</h2>
-		<div style="clear:both"></div>
-		Wir bauen zur Zeit unser Supportsystem auf. Unten findest du den Link zur Hilfe. bleiben Fragen kannst du uns unter Serverbetrieb@manano.de erreichen.
-    	<div style="clear:both"></div>
-    	<a style="float:right" href="http://www.findeco.de/hilfe/">Zur Hilfe (extern)</a>
-    </div>
+
+
 </div>
  	
  	
