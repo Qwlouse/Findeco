@@ -365,7 +365,6 @@ angular.module('FindecoServices', [])
                 if (userInfo.displayName== "admin"){
                     userInfo.isAdmin =true;
                 }
-                
             });
             return promise;
         };
