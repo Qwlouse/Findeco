@@ -418,7 +418,7 @@ angular.module('FindecoServices', [])
     })
     .factory('Navigator', function ($rootScope, $location, Message) {
         var nodePattern = "[a-zA-Z][a-zA-Z0-9_-]{0,19}\\.[0-9]+";
-        // TODO: disallow duplicated slashes
+        // TODO: disallow duplicated slashes.
         var rootPath = new RegExp("^/*$");
         var nodePath = new RegExp("/+(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
         var argumentPath = new RegExp("/+(" + nodePattern + "/+)*(" + nodePattern + ")\\.(pro|neut|con)\\.[0-9]+/*$");
