@@ -99,8 +99,8 @@ class Migration(DataMigration):
 
     def get_location_and_references(self, candidates, references):
         """
-        Findes the one reference which is not mentioned in the text. If all are mentioned in the text it returns the
-        first one.
+        Findes the one reference which is not mentioned in the text. If all are
+        mentioned in the text it returns the first one.
         :rtype : (node, [node])
         """
         try:
@@ -125,7 +125,7 @@ class Migration(DataMigration):
 
             schema = parse_microblogging(text, post.author, '/', get_root_node())
             post.text_template = schema['template_text']
-            post.location.id, post.node_references =\
+            post.location_id, post.node_references =\
                 self.get_location_and_references(list(post.node_references.all()), schema['references'])
             if post.node_references.count() < len(schema['references']):
                 print("Missing reference! Adding location to node references.")
