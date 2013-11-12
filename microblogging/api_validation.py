@@ -9,7 +9,9 @@ microblogNode_schema = {
     'microblogText': string,
     'authorGroup': ["user"],
     'microblogTime': integer,
-    'microblogID': integer
+    'microblogID': integer,
+    'location': integer,
+    'locationPath': string
 }
 loadMicrobloggingResponse_schema = {
     'loadMicrobloggingResponse': [microblogNode_schema, None]
