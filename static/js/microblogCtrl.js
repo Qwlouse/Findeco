@@ -40,13 +40,14 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
         }
         $scope.MicrobloggingIsLoading = false;
     }
+    $scope.$on('UserMarked', setAuthorForAllBlogs);
 
     $scope.microbloggingList = [];
     $scope.user = User;
     $scope.microblogText = "";
 
     $scope.followUser = function (path, type) {
-        return User.markUser(path, type).success(setAuthorForAllBlogs);
+        return User.markUser(path, type);
     };
     $scope.isLoading = function (){
     	return $scope.MicrobloggingIsLoading;
@@ -63,12 +64,18 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
             id = oldID;
         }
         $scope.MicrobloggingIsLoading = true;
-        Backend.loadMicroblogging($scope.microbloggingList, $scope.loadTarget, type, id).success(setAuthorForAllBlogs);
+        if (Navigator.type == 'user') {
+            Backend.loadMicrobloggingFromUser($scope.microbloggingList, Navigator.userName, id, type).
+                success(setAuthorForAllBlogs);
+        } else {
+            Backend.loadMicrobloggingForNode($scope.microbloggingList, $scope.loadTarget, id, type).
+                success(setAuthorForAllBlogs);
+        }
     };
 
     $scope.submit = function () {
         if ($scope.microblogText.length <= 0) return;
-        Backend.storeMicroblogPost(Navigator.argumentPath, $scope.microblogText).success(function () {
+        Backend.storeMicroblogging(Navigator.argumentPath, $scope.microblogText).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });

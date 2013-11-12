@@ -283,6 +283,10 @@ def create_system_user():
         print('system user already exists.')
 
 
+def get_system_user():
+    return auth_models.User.objects.get(username='system')
+
+
 def create_anonymous_user():
     try:
         auth_models.User.objects.get(username='anonymous')

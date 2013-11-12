@@ -24,16 +24,13 @@ from __future__ import division, print_function, unicode_literals
 import json
 import functools
 import re
+
 from django.contrib.auth.models import Permission, User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
-from django.db.models import Q
 from django.http import HttpResponse
 
-from .api_validation import USERNAME
-from .api_validation import validate_response
-from .error_handling import *
-from .paths import parse_suffix
+from microblogging import change_microblogging_authorship
 import node_storage as backend
 from node_storage import get_node_for_path, get_ordered_children_for, parse
 from node_storage import create_structure_from_structure_node_schema
@@ -42,6 +39,11 @@ from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
 from node_storage.structure_parser import turn_into_valid_short_title
+
+from .api_validation import USERNAME
+from .api_validation import validate_response
+from .error_handling import *
+from .paths import parse_suffix
 
 
 def json_response(data):
@@ -219,7 +221,7 @@ def create_paragraph_list_for_node(node, path, depth=1):
 
 
 def create_graph_data_node_for_structure_node(node, slot=None, path=None,
-                                              slot_path=None, title=None):
+                                              slot_path=None):
     if slot_path:
         slot = get_node_for_path(slot_path)
 
@@ -320,10 +322,11 @@ def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
         structure_schema, slot, author,  node, score_tree, arg_type, arg_title,
         arg_text)
 
-    return get_good_path_for_structure_node(new_node, slot, slot_path), path_couples
+    new_path = get_good_path_for_structure_node(new_node, slot, slot_path)
+    return new_path, path_couples
 
 
-def fork_node_and_add_slot(path, user, wikiText):
+def fork_node_and_add_slot(path, user, wiki_text):
     source_node = assert_node_for_path(path)
     authors = list(source_node.text.authors.all()) + [user]
     title = source_node.title
@@ -340,7 +343,7 @@ def fork_node_and_add_slot(path, user, wikiText):
         fork.append_child(slot)
         short_titles.add(slot.title)
     # create new slot plus node
-    schema = parse(wikiText, 'foo')
+    schema = parse(wiki_text, 'foo')
     short_title = turn_into_valid_short_title(schema['title'], short_titles)
     new_slot = create_slot(short_title)
     fork.append_child(new_slot)
@@ -359,14 +362,14 @@ def get_permission(name):
 
 
 def get_is_following(user_id, node):
-    isFollowing = 0
+    is_following = 0
     v = node.votes.filter(user=user_id)
     if v.count() > 0:
         v = v[0]
-        isFollowing = 1  # at least transitive follow
+        is_following = 1  # at least transitive follow
         if v.nodes.order_by('id')[0].id == node.id:
-            isFollowing = 2  # explicit follow
-    return isFollowing
+            is_following = 2  # explicit follow
+    return is_following
 
 
 def get_is_flagging(user_id, node):
@@ -396,12 +399,12 @@ def follow_node(node, user_id):
         mark.user_id = user_id
         mark.save()
         mark.nodes.add(node)
-        for n in node.traverse_derivates(condition=lambda n: n.votes.filter(
+        for n in node.traverse_derivates(condition=lambda x: x.votes.filter(
                 user=user_id).all().count() == 0):
             mark.nodes.add(n)
         mark.save()
         node.update_favorite_for_all_parents()
-        for n in node.traverse_derivates(condition=lambda n: n.votes.filter(
+        for n in node.traverse_derivates(condition=lambda x: x.votes.filter(
                 user=user_id).all().count() == 0):
             n.update_favorite_for_all_parents()
 
@@ -422,42 +425,6 @@ def unfollow_node(node, user_id):
                 mark.delete()
 
 
-def normalize_query(query_string):
-    """
-    Splits the query string in invidual keywords, getting rid of unecessary
-    spaces and grouping quoted words together.
-    Example:
-    >>> normalize_query('  some random  words "with   quotes  " and   spaces')
-    ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
-    """
-    findterms = re.compile(r'"([^"]+)"|(\S+)').findall
-    normspace = re.compile(r'\s{2,}').sub
-    return [normspace(' ', (t[0] or t[1]).strip())
-            for t in findterms(query_string)]
-
-
-def get_query(query_string, search_fields):
-    """
-    Returns a query, that is a combination of Q objects. That combination aims
-    to search keywords within a model by testing the given search fields.
-    """
-    query = None  # Query to search for every search term
-    terms = normalize_query(query_string)
-    for term in terms:
-        or_query = None  # Query to search for a given term in each field
-        for field_name in search_fields:
-            q = Q(**{"%s__icontains" % field_name: term})
-            if or_query is None:
-                or_query = q
-            else:
-                or_query = or_query | q
-        if query is None:
-            query = or_query
-        else:
-            query &= or_query
-    return query
-
-
 def change_authorship_to(old_user, new_user):
     """
     Queries all content and removes old_user from author lists. If new_user is
@@ -471,9 +438,7 @@ def change_authorship_to(old_user, new_user):
             text.authors.add(new_user)
         text.save()
     # Changing authorship in microblogging
-    for post in old_user.microblogging_posts.all():
-        post.author = new_user
-        post.save()
+    change_microblogging_authorship(old_user, new_user)
 
 
 def check_username_sanity(username):

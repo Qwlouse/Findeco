@@ -24,8 +24,9 @@ from __future__ import division, print_function, unicode_literals
 from django.contrib import admin
 from models import Post
 
+
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('text', 'author', 'time', 'is_reference_to')
+    list_display = ('text_cache', 'text_template', 'post_type', 'author', 'time', 'is_answer_to')
 
 
 admin.site.register(Post, PostAdmin)
