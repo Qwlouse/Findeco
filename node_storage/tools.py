@@ -22,8 +22,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from __future__ import division, print_function, unicode_literals
 from django.core.exceptions import ObjectDoesNotExist
-from microblogging.models import Post
-from node_storage.models import PathCache, TextCache, Vote, Argument, IndexCache, Node
+from microblogging import delete_posts_referring_to
+from node_storage.models import PathCache, TextCache, Vote, Argument
+from node_storage.models import IndexCache, Node
 
 
 def delete_node(node):
@@ -31,7 +32,7 @@ def delete_node(node):
     TextCache.objects.filter(path__in=paths).delete()
     IndexCache.objects.filter(path__in=paths).delete()
 
-    Post.objects.filter(node_references=node).delete()
+    delete_posts_referring_to(node)
 
     # delete derivation argument
     Argument.objects.filter(derivation__derivate=node).delete()

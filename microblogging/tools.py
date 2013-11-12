@@ -42,8 +42,7 @@ def change_microblogging_authorship(old_user, new_user):
         post.mentions.add(new_user)
         post.save()
         new_order = [u.id for u in post.mentions.order_by('id')]
-        # [3, 5, 9] "{u0} {u1} {u2}" = "3 5 9"
-        # [1, 3, 9] "{u1} {u0} {u2}" = "3 1 9"
+
         permutation = []
         for user_id in old_order:
             if user_id == old_user.id:
@@ -64,3 +63,6 @@ def change_microblogging_authorship(old_user, new_user):
         post.render()
 
 
+def delete_posts_referring_to(node):
+    Post.objects.filter(node_references=node).delete()
+    Post.objects.filter(location=node).delete()

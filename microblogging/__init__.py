@@ -26,3 +26,4 @@
 ################################################################################
 from tools import search_for_microblogging
 from tools import change_microblogging_authorship
+from tools import delete_posts_referring_to

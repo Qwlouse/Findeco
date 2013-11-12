@@ -23,12 +23,14 @@
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from microblogging.factory import create_post
-from microblogging.models import Post
 from node_storage import Text, Node, Argument, TextCache, IndexCache
-from node_storage.factory import create_slot, create_structureNode, create_vote, create_user, create_spam_flag, create_argument
+from node_storage.factory import create_slot, create_structureNode
+from node_storage.factory import create_vote, create_user, create_spam_flag
+from node_storage.factory import create_argument
 from node_storage.models import PathCache
 from node_storage.tools import delete_node
-from node_storage.path_helpers import get_root_node, get_node_for_path, IllegalPath
+from node_storage.path_helpers import get_root_node, get_node_for_path
+from node_storage.path_helpers import IllegalPath
 
 
 class ToolsTest(TestCase):
@@ -55,10 +57,12 @@ class ToolsTest(TestCase):
         self.root.append_child(self.slot2)
         self.source = create_structureNode('BöserTitel', 'gewöhnlicher text')
         self.slot2.append_child(self.source)
-        self.derivate = create_structureNode('BöserTitel', 'verfassungswiedriger text')
+        self.derivate = create_structureNode('BöserTitel',
+                                             'verfassungswiedriger text')
         self.slot2.append_child(self.derivate)
-        self.source.add_derivate(self.derivate, arg_type='con', title="zu schwach",
-                                 text="muss fieser werden", authors=[self.udo])
+        self.source.add_derivate(self.derivate, arg_type='con',
+                                 title="zu schwach", text="muss fieser werden",
+                                 authors=[self.udo])
 
         self.source_path = 'verfassungswiedrig.1'
         self.derivate_path = 'verfassungswiedrig.2'
@@ -112,10 +116,12 @@ class ToolsTest(TestCase):
         self.assertEqual(Node.objects.filter(title='soon_empty').count(), 0)
 
     def test_delete_node_does_not_remove_non_empty_parent_slot(self):
-        self.assertEqual(Node.objects.filter(title='verfassungswiedrig').count(), 1)
+        self.assertEqual(Node.objects.filter(
+            title='verfassungswiedrig').count(), 1)
         node = get_node_for_path(self.derivate_path)
         delete_node(node)
-        self.assertEqual(Node.objects.filter(title='verfassungswiedrig').count(), 1)
+        self.assertEqual(Node.objects.filter(
+            title='verfassungswiedrig').count(), 1)
 
     def test_delete_node_removes_derivates(self):
         self.assertEqual(Node.objects.filter(title='BöserTitel').count(), 2)
@@ -152,18 +158,6 @@ class ToolsTest(TestCase):
         node = get_node_for_path(self.path)
         delete_node(node)
         self.assertEqual(IndexCache.objects.filter(path=self.path).count(), 0)
-
-    def test_delete_node_removes_referring_posts1(self):
-        self.assertEqual(Post.objects.count(), 1)
-        node = get_node_for_path(self.path)
-        delete_node(node)
-        self.assertEqual(Post.objects.count(), 0)
-
-    def test_delete_node_removes_referring_posts2(self):
-        self.assertEqual(Post.objects.count(), 1)
-        node = get_node_for_path(self.source_path)
-        delete_node(node)
-        self.assertEqual(Post.objects.count(), 0)
 
     def test_delete_node_removes_children(self):
         self.assertEqual(Node.objects.filter(title='or_to_pee').count(), 1)
