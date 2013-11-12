@@ -494,7 +494,6 @@ angular.module('FindecoServices', [])
             },
             setHelpStatus   : function (x) {
                 $rootScope.helpIsActive = x;
-                //$rootScope.$broadcast('change_Help',x);
                 return true;
             },
             successCallback : function (data) {

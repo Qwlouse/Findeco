@@ -1,20 +1,20 @@
 [
     {
-        "key": "f1",
+        "key": "ARG_Pro",
         "title":"Hilfe zu Thema 1",
-        "more": "link1",
+        "more": "*",
         "description": "Der testhifetext1"
     },
     {
-        "key": "2",
+        "key": "ARG_Neut",
         "title": "Hilfe zu Thema 2",
-        "more": "link2",
+        "more": "*",
         "description": "Testhilfetext2"
     },
     {
-        "key": "3",
+        "key": "ARG_Con",
         "title": "Hilfe zu Thema 3",
-        "more": "default",
+        "more": "id",
         "description": "testhilfext3"
     }
 ]

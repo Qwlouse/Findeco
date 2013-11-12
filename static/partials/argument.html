@@ -1,5 +1,5 @@
 <div id="leftColumn"  class="contentBox" ng-controller="FindecoArgumentCtrl">
-    <help hid='f1' htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
+    <help hid='ARG_Pro' htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
 <div style="clear: both"></div>
     <div ng-show="argumentList.length <1 " class="tipp" style="text-align: center">Es gibt zur Zeit keine<br>Pro-Argumente</div>
 
@@ -15,7 +15,7 @@
                ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNewPro_"></a>
         </li>
     </ul>
-    <help hid=2 htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
+    <help hid='ARG_Neut' htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
     <div style="clear: both"></div>
     <div ng-show="argumentList.length <1 " class="tipp" style="text-align: center">Es gibt zur Zeit keine<br>Neutralen Argumente</div>
     <ul class="argumentList">
@@ -30,7 +30,7 @@
                ng-click="tmp.argumentType = 'Neutral'" data-i18n="_argumentsNewNeut_"></a>
         </li>
     </ul>
-    <help hid=3 htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
+    <help hid='ARG_Con' htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
     <div style="clear: both"></div>
     <div ng-show="argumentList.length <1 " class="tipp" style="text-align: center">Es gibt zur Zeit keine<br>Contra-Argumente</div>
     <ul class="argumentList">

@@ -45,7 +45,13 @@ function FindecoHelpCtrl($scope, Help) {
         $scope.panelIsHidden = false;
         $scope.title = Help.helpTitle;
         $scope.helptext = Help.helpText;
-        $scope.more = Help.moreLink;
+        if (Help.moreLink=="*") {
+            $scope.more = "http://help.findeco.de/" + Help.id;
+        }else {
+            if (typeof Help.moreLink == 'undefined'){
+                $scope.more = Help.moreLink;
+            }
+        };
         $scope.$apply();
     });
 }
