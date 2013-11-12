@@ -168,6 +168,7 @@ angular.module('FindecoServices', [])
             },
 
             loadMicrobloggingFromUser: function (microblogList_out, name, id, type) {
+                console.log(name);
                 var path = '/.loadMicrobloggingFromUser/' + name + '/';
                 return addIdTypeAndGetPromise(microblogList_out, path, id, type);
             },
