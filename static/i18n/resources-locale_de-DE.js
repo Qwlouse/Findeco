@@ -156,7 +156,7 @@
     },
     {
         "key"        : "_microblogPlaceholder_",
-        "value"      : "Hier Text eingeben",
+        "value"      : "Dein Microblogpost zum Thema",
         "description": ""
     },
     {

@@ -6,6 +6,7 @@
         </a>
 
         <div style="clear:both"></div>
+        <help hid='MBL_til' htype=1/>
         <ul class="microblogList">
             <li><a class="btn btn-primary" ng-click="updateTimeline()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in timelineList">
@@ -41,6 +42,7 @@
         </a>
 
         <div style="clear:both"></div>
+        <help hid='MBL_men' htype=1/>
         <ul class="microblogList">
             <li><a class="btn btn-primary" ng-click="updateMentions()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in mentionsList">
@@ -80,6 +82,7 @@
                               ng-model="microblogText"></textarea>
                     <input class="btn btn-primary" type="submit" value="{{ '_microblogSendBtn_'|i18n }}"/>
                 </form>
+                <help hid='MBL_col' htype=1/>
             </li>
         </ul>
         <h2 data-i18n="_ownPosts_" style="width:210px; float:left;"></h2>
@@ -88,6 +91,7 @@
         </a>
 
         <div style="clear:both"></div>
+        <help hid='MBL_own' htype=1/>
         <ul class="microblogList">
             <li><a class="btn btn-primary" ng-click="updateOwnPosts()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in ownPostsList">
