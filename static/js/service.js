@@ -179,8 +179,8 @@ angular.module('FindecoServices', [])
                 url = url.replace("//", "/");
                 return $http.get(url);
             },
-            storeMicroblogPost: function (path, microblogText) {
-                var pathComponents = ['/.json_storeMicroblogPost', path];
+            storeMicroblogging: function (path, microblogText) {
+                var pathComponents = ['/.storeMicroblogging', path];
                 var url = pathComponents.join('/');
                 //url = url.replace("//","/");
                 return $http.post(url, {microblogText: microblogText});
