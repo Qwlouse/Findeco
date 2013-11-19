@@ -688,5 +688,10 @@
         "key"        : "_composePost_",
         "value"      : "Post verfassen",
         "description": ""
+    },
+    {
+        "key"        : "_wantEMailLabel_",
+        "value"      : "Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.",
+        "description": ""
     }
 ]

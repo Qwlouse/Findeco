@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License along with         *
  * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
  ****************************************************************************************/
-
 /****************************************************************************************
  * This Source Code Form is subject to the terms of the Mozilla Public                  *
  * License, v. 2.0. If a copy of the MPL was not distributed with this                  *
@@ -23,8 +22,6 @@
  ****************************************************************************************/
 
 'use strict';
-
-
 /**
  *  Backend wraps the the JSON API to the backend.
  *  It provides easy to use functions like logout() or
@@ -62,7 +59,6 @@ angular.module('FindecoServices', [])
         // to rename X-XSRFToken to X-CSRFToken because Django expects it that way
         $httpProvider.defaults.xsrfHeaderName = "X-CSRFToken";
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-
         $httpProvider.responseInterceptors.push('errorHandler');
     })
     .config(function ($locationProvider) {
@@ -177,29 +173,25 @@ angular.module('FindecoServices', [])
                 var url_part = '/.loadMicrobloggingForNode/' + path;
                 return addIdTypeAndGetPromise(microblogList_out, url_part, id, type);
             },
-
-            markNode: function (nodePath, markType) {
+            markNode          : function (nodePath, markType) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 return $http.get(url);
             },
-
             storeMicroblogging: function (path, microblogText) {
                 var pathComponents = ['/.storeMicroblogging', path];
                 var url = pathComponents.join('/');
                 //url = url.replace("//","/");
                 return $http.post(url, {microblogText: microblogText});
             },
-
-            storeText: function (path, params) {
+            storeText         : function (path, params) {
                 var pathComponents = ['/.json_storeText', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 return $http.post(url, params);
             },
-
-            loadArgument: function (indexNodes_out, path) {
+            loadArgument      : function (indexNodes_out, path) {
                 var url = ['/.json_loadArgumentIndex', path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
@@ -207,8 +199,7 @@ angular.module('FindecoServices', [])
                     ['loadArgumentIndexResponse']));
                 return promise;
             },
-
-            loadText: function (paragraphList_out, path) {
+            loadText          : function (paragraphList_out, path) {
                 var url = ['/.json_loadText', path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
@@ -216,14 +207,12 @@ angular.module('FindecoServices', [])
                     ['loadTextResponse', 'paragraphs']));
                 return promise;
             },
-
-            loadUserInfo: function (user) {
+            loadUserInfo      : function (user) {
                 var url = ['/.json_loadUserInfo', user].join('/');
                 url = url.replace("//", "/");
                 return $http.get(url);
             },
-
-            loadNode: function (nodeInfo, path) {
+            loadNode          : function (nodeInfo, path) {
                 var url = ['/.json_loadNode', path].join('/');
                 var promise = $http.get(url);
                 promise.success(function (d) {
@@ -231,78 +220,66 @@ angular.module('FindecoServices', [])
                 });
                 return promise;
             },
-
-            loadGraphData: function (graphData_out, path, graphType) {
+            loadGraphData     : function (graphData_out, path, graphType) {
                 if (graphType == undefined) {
                     graphType = "full";
                 }
                 var url = ['/.json_loadGraphData', graphType, path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
-
                 promise.success(fillArray(graphData_out, ['loadGraphDataResponse', 'graphDataChildren']));
                 return promise;
             },
-
-            search: function (searchResults, search_string) {
+            search            : function (searchResults, search_string) {
                 var searchFields = "user_content_microblogging";
                 var promise = $http.get('/.json_search/' + searchFields + '/' + search_string);
-
                 promise.success(function (d) {
                     angular.copy(d.searchResponse, searchResults);
                 });
             }
         };
-
     })
     .factory('User', function ($http, $rootScope) {
         var data = {
-            userInfo : false,
-            userSettings : false
+            userInfo    : false,
+            userSettings: false
         };
-
         var userInfo = {
-            isLoggedIn: false,
-            isAdmin:false,
+            isLoggedIn : false,
+            isAdmin    : false,
             displayName: "",
             description: "",
-            email: "",
-            rsskey:"",
-            followees: []
+            email      : "",
+            rsskey     : "",
+            followees  : []
         };
-
         userInfo.register = function (displayName, password, emailAddress) {
-            return $http.post('/.json_accountRegistration/', {displayName: displayName, password: password, emailAddress: emailAddress});
+            return $http.post('/.json_accountRegistration/', {
+                displayName: displayName,
+                password: password,
+                emailAddress: emailAddress});
         };
-
         userInfo.activate = function (activationKey) {
             return $http.post('/.json_accountActivation/', {activationKey: activationKey});
         };
-
         userInfo.confirm = function (activationKey) {
             return $http.post('/.json_accountResetConfirmation/', {activationKey: activationKey});
         };
-
         userInfo.confirmEmail = function (activationKey) {
             return $http.post('/.json_emailChangeConfirmation/', {activationKey: activationKey});
         };
-
         userInfo.recoverByMail = function (emailAddress) {
             var promise = $http.post('/.json_accountResetRequestByMail/', {emailAddress: emailAddress});
             promise.success(function (d) {
-
             });
             return promise;
         };
-
         userInfo.recoverByUsername = function (displayName) {
             var promise = $http.post('/.json_accountResetRequestByName/', {displayName: displayName});
             promise.success(function (d) {
-
             });
             return promise;
         };
-
         userInfo.login = function (username, password) {
             var promise = $http.post('/.json_login/', {username: username, password: password});
             promise.success(function (d) {
@@ -313,16 +290,12 @@ angular.module('FindecoServices', [])
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.email = data.userSettings.email;
                 userInfo.followees = data.userSettings.followees;
-
-                if (userInfo.displayName== "admin"){
-                    userInfo.isAdmin =true;
+                if (userInfo.displayName == "admin") {
+                    userInfo.isAdmin = true;
                 }
-
-
             });
             return promise;
         };
-
         userInfo.logout = function () {
             return $http.get('/.json_logout/').success(function () {
                 userInfo.isLoggedIn = false;
@@ -330,12 +303,11 @@ angular.module('FindecoServices', [])
                 userInfo.displayName = "";
                 userInfo.followees = [];
                 userInfo.email = "";
-                userInfo.isAdmin =false;
+                userInfo.isAdmin = false;
                 data.userInfo = false;
                 data.userSettings = false;
             });
         };
-
         userInfo.markUser = function (displayName, markType) {
             var pathComponents = ['/.json_markUser', markType, displayName];
             var url = pathComponents.join('/');
@@ -349,7 +321,6 @@ angular.module('FindecoServices', [])
                 $rootScope.$broadcast('UserMarked');
             });
         };
-
         userInfo.loadSettings = function () {
             var promise = $http.get('/.json_loadUserSettings/');
             promise.success(function (d) {
@@ -358,46 +329,43 @@ angular.module('FindecoServices', [])
                 userInfo.isLoggedIn = true;
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.followees = data.userSettings.followees;
+                userInfo.wantEMail = data.userSettings.wantsMailNotification;
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
                 }
-                if (userInfo.displayName== "admin"){
-                    userInfo.isAdmin =true;
+                if (userInfo.displayName == "admin") {
+                    userInfo.isAdmin = true;
                 }
             });
             return promise;
         };
-
         userInfo.isChanged = function () {
-            if (! userInfo.isLoggedIn || !data.userInfo) {
+            if (!userInfo.isLoggedIn || !data.userInfo) {
                 return false;
             }
             return (userInfo.displayName != data.userInfo.displayName) ||
-                   (userInfo.description != data.userInfo.description) ||
-                   (userInfo.email != data.userSettings.email);
+                (userInfo.description != data.userInfo.description) ||
+                (userInfo.email != data.userSettings.email);
         };
-
         userInfo.resetChanges = function () {
             userInfo.displayName = data.userInfo.displayName;
             userInfo.description = data.userInfo.description;
             userInfo.email = data.userSettings.email;
         };
-
         userInfo.storeSettings = function () {
-            return $http.post('/.json_storeSettings/', {displayName: userInfo.displayName,
-                description: userInfo.description, email: userInfo.email});
+            return $http.post('/.json_storeSettings/', {
+                displayName: userInfo.displayName,
+                description: userInfo.description,
+                wantsMailNotification: userInfo.wantEMail,
+                email: userInfo.email});
         };
-
         userInfo.changePassword = function (newPassword) {
             return $http.post('/.json_changePassword/', {password: newPassword});
         };
-
         userInfo.deleteAccount = function () {
             return $http.post('/.json_deleteUser/');
         };
-
-        
         userInfo.follows = function (name) {
             for (var i = 0; i < userInfo.followees.length; i++) {
                 if (userInfo.followees[i].displayName == name) {
@@ -406,19 +374,16 @@ angular.module('FindecoServices', [])
             }
             return 0;
         };
-
         userInfo.loadSettings();
-
         return userInfo;
     })
-    .factory('Fesettings', function (Disclaimer, Boxes,Version,Sidebar){
-        var settings ={}
+    .factory('Fesettings', function (Disclaimer, Boxes, Version, Sidebar) {
+        var settings = {};
         settings.version = Version;
         settings.disclaimer = Disclaimer;
         settings.boxes = Boxes;
         settings.sidebar = Sidebar;
         return settings;
-
     })
     .factory('TMP', function () {
         var tmp = {};
@@ -427,16 +392,13 @@ angular.module('FindecoServices', [])
     .factory('Message', function ($injector) {
         var tmp = {
             messageList: [],
-            catchList: {}
+            catchList  : {}
         };
-
         tmp.localize = function (string) {
             this.localizer = this.localizer || $injector.get('localize');
             return this.localizer.getLocalizedString(string);
         };
-
-        tmp.send = function (type, message) {     
-        	
+        tmp.send = function (type, message) {
             if (message == "_NotAuthenticated") {
                 return "";
             }
@@ -448,26 +410,21 @@ angular.module('FindecoServices', [])
             } else {
                 this.messageList.push({type: type, msg: message});
             }
-      
-            
         };
-
-        tmp.clear = function (){
+        tmp.clear = function () {
             this.messageList = [];
         }
-		
         tmp.catch = function (message) {
             this.catchList[message] = [];
             return this.catchList[message];
         };
-
         return tmp;
     })
     .factory('Navigator', function ($rootScope, $location, Message) {
         var nodePattern = "[a-zA-Z][a-zA-Z0-9_-]{0,19}\\.[0-9]+";
-        // TODO: disallow duplicated slashes
+        // TODO: disallow duplicated slashes.
         var rootPath = new RegExp("^/*$");
-        var nodePath =     new RegExp("/+(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
+        var nodePath = new RegExp("/+(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
         var argumentPath = new RegExp("/+(" + nodePattern + "/+)*(" + nodePattern + ")\\.(pro|neut|con)\\.[0-9]+/*$");
         var userPath = new RegExp("^/user/[a-zA-Z][a-zA-Z0-9-_]{0,19}/*$");
 
@@ -476,14 +433,14 @@ angular.module('FindecoServices', [])
         }
 
         var location = {
-            path : "",    // the full path but duplicate slashes are removed
-            prefix : "",  // things before the node or user path like /create/argumentPro/ or /user/
-            nodePath : "", // only the node path (parent for arguments, empty for users)
-            argumentPath : "", // the full path to the argument or node if it isn't an argument
-            userName : "", // user
-            parts : [],
-            entries : [],  // contains objects with name and path for every ancestor node
-            type : "node"  // one of: root, node, arg, user, other
+            path        : "",    // the full path but duplicate slashes are removed
+            prefix      : "",    // things before the node or user path like /create/argumentPro/ or /user/
+            nodePath    : "",    // only the node path (parent for arguments, empty for users)
+            argumentPath: "",    // the full path to the argument or node if it isn't an argument
+            userName    : "",    // user
+            parts       : [],
+            entries     : [],    // contains objects with name and path for every ancestor node
+            type        : "node" // one of: root, node, arg, user, other
         };
 
         function normalizeSlashes(path) {
@@ -492,7 +449,6 @@ angular.module('FindecoServices', [])
 
         location.updatePath = function () {
             Message.clear();
-
             var path = $location.path();
             location.segments = $location.search();
             location.parts = path.split("/").filter(isNonEmpty);
@@ -515,7 +471,7 @@ angular.module('FindecoServices', [])
                 location.type = "arg";
                 location.argumentPath = normalizeSlashes(argumentPath.exec(location.path)[0]);
                 location.prefix = normalizeSlashes(location.path.replace(argumentPath, ''));
-                location.nodePath = normalizeSlashes(location.argumentPath.replace(/\.(pro|con|neut)\.\d+\/?$/,''));
+                location.nodePath = normalizeSlashes(location.argumentPath.replace(/\.(pro|con|neut)\.\d+\/?$/, ''));
             } else if (path.match(userPath)) {
                 location.type = "user";
                 location.prefix = "user";
@@ -529,34 +485,75 @@ angular.module('FindecoServices', [])
             var pathSoFar = "";
             for (var i = 0; i < nodes.length; ++i) {
                 pathSoFar += '/' + nodes[i];
-                location.entries.push({name : nodes[i], path : pathSoFar});
+                location.entries.push({name: nodes[i], path: pathSoFar});
             }
             if (location.type == 'arg') {
                 nodes = location.argumentPath.split('/');
                 var arg_parts = nodes[nodes.length - 1].split('.');
-                location.entries.push({name : arg_parts[2] + '.' + arg_parts[3], path : location.argumentPath});
+                location.entries.push({name: arg_parts[2] + '.' + arg_parts[3], path: location.argumentPath});
             }
         };
-
         location.getPathForNode = function (shortTitle, index) {
             return normalizeSlashes(location.nodePath + '/' + shortTitle + '.' + index);
         };
-
         location.getPathForArgument = function (argType, index) {
             return normalizeSlashes(location.nodePath + '.' + argType + '.' + index);
         };
-
         location.getPathForUser = function (username) {
             return 'user/' + username;
         };
-
         location.changePath = function (newPath) {
             $location.path(newPath);
         };
-
         location.updatePath();
         $rootScope.$on('$routeChangeSuccess', location.updatePath);
-
         return location;
+    })
+    .service('Help', function ($rootScope, $http) {
+        $rootScope.helpIsActive = true;
+        var help = {
+            isLoaded        : false,
+            data            : [],
+            helpText        : "",
+            helpTitle       : "",
+            moreLink        : "",
+            setID           : function (x) {
+                help.id = x;
+                help.loadResourceFile();
+                var result = '';
+                if ((help.data !== []) && (help.data.length > 0)) {
+                    var i = 0, len = help.data.length;
+                    for (; i < len; i++) {
+                        if (help.data[i].key == help.id) {
+                            help.helpText = help.data[i].description;
+                            help.moreLink = help.data[i].more;
+                            help.helpTitle = help.data[i].title;
+                        }
+                    }
+                }
+                $rootScope.$broadcast('change_Help', x);
+                return true;
+            },
+            getID           : function (x) {
+                return help.id;
+            },
+            setHelpStatus   : function (x) {
+                $rootScope.helpIsActive = x;
+                return true;
+            },
+            successCallback : function (data) {
+                help.data = data;
+                help.resourceFileLoaded = true;
+            },
+            loadResourceFile: function () {
+                if (help.isLoaded == false) {
+                    var url = '/static/resource-help.js';
+                    $http({ method: "GET", url: url, cache: false }).success(help.successCallback).error(function () {
+                        alert("Helptextfile not found")
+                    });
+                }
+            }
+        };
+        return help;
     })
 ;
