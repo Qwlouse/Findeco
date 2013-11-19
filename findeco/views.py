@@ -348,7 +348,6 @@ def load_user_info(request, name):
 def load_user_settings(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
-    print('Laden: '+str(user.profile.wants_mail_notification))
     return json_response({'loadUserSettingsResponse': {
         'userInfo': create_user_info(user),
         'userSettings': create_user_settings(user)
@@ -429,7 +428,6 @@ def store_settings(request):
             request.POST['wantsMailNotification'].lower() == 'true')
 
     user.save()
-    print(user.profile.wants_mail_notification)
     return json_response({'storeSettingsResponse': {}})
 
 
