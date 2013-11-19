@@ -27,6 +27,7 @@
 #endregion #####################################################################
 from django.test import LiveServerTestCase
 from nose.plugins.attrib import attr
+from test_helper import helper_login_admin
 from selenium import webdriver
 import time
 @attr('selenium')
@@ -39,16 +40,8 @@ class TestFeLocalization(LiveServerTestCase):
         self.driver.quit()
 
     def test_login(self):
-        self.driver.get(self.live_server_url + '/login')
-        self.driver.implicitly_wait(1)
-        body = self.driver.find_element_by_tag_name('body')
-        self.assertIn('Mit dem Login', body.text, "Partial not loaded")
-        self.driver.find_element_by_xpath("//input[@type='password']").send_keys("1234")
-        self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("admin")
-        self.driver.find_element_by_css_selector("input.btn.btn-primary").click()
-        time.sleep(2)
-        body = self.driver.find_element_by_tag_name('body')
-        self.assertIn('admin', body.text, "Login without success")
+        helper_login_admin(self)
+        time.sleep(5)
 
     def test_profile_localizations_loaded(self):
         self.driver.get(self.live_server_url + '/profile')
