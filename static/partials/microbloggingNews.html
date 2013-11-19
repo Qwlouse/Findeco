@@ -1,6 +1,7 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
     <div class="contentBox startColumn">
-        <help hid='MBL_til' htype=1/><h2 data-i18n="_timeline_" style="width:210px; float:left;"></h2>
+        <help hid="MBL_til" htype="1" />
+        <h2 data-i18n="_timeline_" style="width:210px; float:left;"></h2>
         <a class="rss" target="_new" href="/feeds/rss/timeline/{{ user.displayName }}/{{ user.rsskey }}">
             <img alt="RSS-Feed" src="./static/images/feed.png">
         </a>
@@ -32,7 +33,8 @@
     </div>
     <div class="contentBox startColumn">
         <h2 data-i18n="_mentions_" style="width:210px; float:left;"></h2>
-        <help hid='MBL_men' htype=1/><a class="rss" target="_new" href="/feeds/rss/mention/{{ user.displayName }}/{{ user.rsskey }}">
+        <help hid="MBL_men" htype="1" />
+        <a class="rss" target="_new" href="/feeds/rss/mention/{{ user.displayName }}/{{ user.rsskey }}">
             <img alt="RSS-Feed" src="./static/images/feed.png">
         </a>
 
@@ -62,7 +64,8 @@
         </div>
     </div>
     <div class="contentBox startColumn">
-        <help hid='MBL_col' htype=1/><h2 data-i18n="_composePost_" style="width:210px; float:left;"></h2>
+        <help hid="MBL_col" htype="1" />
+        <h2 data-i18n="_composePost_" style="width:210px; float:left;"></h2>
 
         <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
         <ul class="microblogList">
