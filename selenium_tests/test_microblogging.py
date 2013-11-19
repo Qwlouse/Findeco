@@ -4,7 +4,7 @@
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
-# Copyright (c) 2013 Michael Zaspel <michaelzaspel@web.de.de>
+# Copyright (c) 2013 Maik Nauheim <findeco@maik-nauheim.de>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -30,7 +30,7 @@ from nose.plugins.attrib import attr
 from selenium import webdriver
 import time
 @attr('selenium')
-class TestFeLocalization(LiveServerTestCase):
+class TestFeMicroblogging(LiveServerTestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(1)
@@ -52,4 +52,14 @@ class TestFeLocalization(LiveServerTestCase):
 
     def test_profile_localizations_loaded(self):
         self.driver.get(self.live_server_url + '/profile')
-        self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization on profile not done")
+        body = self.driver.find_element_by_tag_name('body')
+        self.assertNotIn('_account_', body.text, "Localization on profile not done")
+        self.assertNotIn('_password_', body.text, "Localization on profile not done")
+        self.assertNotIn('_mailSettings_', body.text, "Localization on profile not done")
+
+
+        # self.driver.get(self.live_server_url + '/login')
+        # body = self.driver.find_element_by_tag_name('body')
+        # self.assertIn('Mit dem Login', body.text, "Partial not loaded")
+        # WebDriverWait(self.selenium, timeout).until(
+        # lambda driver: driver.find_element_by_tag_name('body'))
