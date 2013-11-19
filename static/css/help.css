@@ -2,7 +2,7 @@
 #
 ################################################################################
 # Copyright (c) 2013
-# Maik Nauheim <findeco@maik-nauheim.de>
+# Maik Nauheim <findeco@maik-nauheim.de>, Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -35,7 +35,7 @@
     width:90%;
     margin-left: 5%;
     height: 140px;
-    bottom: 0px;
+    bottom: 0;
     background-color: #000000;
     opacity:0.8;
     padding: 7px;
@@ -48,21 +48,33 @@
   -o-transition:0.5s linear all;
   transition:0.5s linear all;
   display:block!important;
-
-
 }
+
 .helppanel.ng-hide-remove {
     bottom: -150px;
 }
+
 .helppanel.ng-hide-remove.ng-hide-remove-active {
-    bottom: 0px;
+    bottom: 0;
 }
 
 .helppanel.ng-hide-add {
-    bottom: 0px;
+    bottom: 0;
 }
 .helppanel.ng-hide-add.ng-hide-add-active {
     bottom: -150px;
+}
+
+.helppanel .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 30px;
+    float: left;
+    width: 50px;
+    height: 50px;
+    color: #ffffff;
+    cursor: pointer;
 }
 
 
@@ -79,6 +91,7 @@
     margin-top: 9px;
     margin-left: 3px;
     float: right;
+    cursor: help;
 }
 
 .help-small-icon:hover {
@@ -86,7 +99,7 @@
 }
 
 .help-small-b {
-    background-position: 0px 0;
+    background-position: 0 0;
 }
 
 .help-small-a  {
