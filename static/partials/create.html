@@ -18,13 +18,6 @@
                       style="width: 100%; height: 250px; "
                       ng-model="tmp.text">{{ '_editFieldPretext_'|i18n }}</textarea><br>
 
-            <h3 ng-show="showIf(['derivate'])" data-i18n="_textForThisModification_"></h3>
-            <textarea ng-show="showIf(['derivate','opposing'])"
-                      style="width: 100%; height: 250px; "
-                      ng-model="tmp.textAlternative">
-                {{ '_editFieldPretext_'|i18n }}
-            </textarea><br />
-
             <button class="{{getButtonState()}}" ng-if="showIf(['derivate'])"
                     type="button" class="btn btn-primary" ng-model="tmp.argumentType"
                     btn-radio="'neut'" data-i18n="_neut_"></button>
@@ -32,6 +25,13 @@
             <button class="{{getButtonState()}}" ng-if="showIf(['derivate'])"
                     type="button" class="btn btn-primary" ng-model="tmp.argumentType"
                     btn-radio="'con'" data-i18n="_con_"></button>
+
+            <h3 ng-show="showIf(['derivate'])" data-i18n="_textForThisModification_"></h3>
+            <textarea ng-show="showIf(['derivate','opposing'])"
+                      style="width: 100%; height: 250px; "
+                      ng-model="tmp.textAlternative">
+                {{ '_editFieldPretext_'|i18n }}
+            </textarea><br />
 
             <input class="{{getButtonState()}}" ng-if="showIf(['argumentPro','argumentNeut','argumentCon'])"
                    class="btn btn-primary" type="submit"
