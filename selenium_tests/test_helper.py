@@ -25,20 +25,15 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #endregion #####################################################################
-from django.test import LiveServerTestCase
-from nose.plugins.attrib import attr
-from selenium import webdriver
-from test_helper import helper_login_admin
-import time
-@attr('selenium')
-class TestFeMicroblogging(LiveServerTestCase):
-    def setUp(self):
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(1)
 
-    def tearDown(self):
-        self.driver.quit()
 
-    def test_login(self):
-        helper_login_admin(self)
-        time.sleep(5)
+def helper_login_admin(self):
+    self.driver.get(self.live_server_url + '/login')
+    self.driver.implicitly_wait(1)
+    body = self.driver.find_element_by_tag_name('body')
+    self.assertIn('Mit dem Login', body.text, "Partial not loaded")
+    self.driver.find_element_by_xpath("//input[@type='password']").send_keys("1234")
+    self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("admin")
+    self.driver.find_element_by_css_selector("input.btn.btn-primary").click()
+    body = self.driver.find_element_by_tag_name('body')
+    self.assertIn('admin', body.text, "Login without success")
