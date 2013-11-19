@@ -160,13 +160,13 @@ findecoApp
     .directive('help', function (Help, $rootScope) {
         return {
             restrict: 'E',
-            scope   : {
-                help : '=',
+            scope: {
+                help: '=',
                 htype: '=',
-                hid  : '@hid'
+                hid: '@hid'
             },
             template: '<div>Platzhalter</div>',
-            replace : true,
+            replace: true,
             link: function (scope, elem, attr) {
                 $rootScope.$watch('helpIsActive', function (oldVal) {
                     if (oldVal) {
@@ -189,8 +189,7 @@ findecoApp
             }
 
         };
-    }
-)
+    })
     .directive('ngBindHtmlUnsafe', [function () {
         return function (scope, element, attr) {
             element.addClass('ng-binding').data('$binding', attr.ngBindHtmlUnsafe);
@@ -199,4 +198,4 @@ findecoApp
             });
         }
     }]);
-;
+
