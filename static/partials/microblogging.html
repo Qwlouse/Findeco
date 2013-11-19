@@ -1,13 +1,14 @@
 <div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl" style="position: relative;">
     <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
     <ul class="microblogList" >
-        <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0;">
-            <form ng-submit="submit()">
+        <li style="margin: 0; padding: 0;">
+            <form ng-show="user.isLoggedIn" ng-submit="submit()">
                 <textarea class="microblogInput" type="text" placeholder="{{'_microblogPlaceholder_'|i18n}}"
                        ng-model="microblogText"></textarea>
                 <help hid='MBL_col' htype=1 />
                 <input class="btn btn-primary" type="submit" value="{{'_microblogSendBtn_'|i18n}}"/>
             </form>
+            <input class="btn btn-primary" type="button" ng-click="updateMicrobloggingList()" value="{{ '_startScreenUpdateBtn_'|i18n }}"/>
         </li>
         <li ng-repeat="microblogNode in microbloggingList">
             <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
