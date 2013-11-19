@@ -75,7 +75,11 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
 
     $scope.submit = function () {
         if ($scope.microblogText.length <= 0) return;
-        Backend.storeMicroblogging(Navigator.argumentPath, $scope.microblogText).success(function () {
+        var text = $scope.microblogText;
+        if (Navigator.type == 'user') {
+            text = "@" + Navigator.userName + ": " + text;
+        }
+        Backend.storeMicroblogging(Navigator.argumentPath, text).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
         });
