@@ -526,7 +526,7 @@
     },
     {
         "key"        : "_editFieldPretext_",
-        "value"      : "= Eine Überschrift muss angegeben sein =\nNach der Überschrift kann Creole-Syntax verwendet werden, un zu strukturieren und zu //formatieren//.",
+        "value"      : "= Eine Überschrift muss angegeben sein =\nNach der Überschrift kann Creole-Syntax verwendet werden, und zu strukturieren und zu //formatieren//.",
         "description": ""
     },
     {
