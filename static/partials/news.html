@@ -6,7 +6,8 @@
                 <input type="text" placeholder="{{'_MicroblogPlaceholder_'|i18n}}" style="width: 100%;" ng-model="microblogText"><br/>
             </form>
         </li>!-->
-        <help hid='NEWS_all' htype=1/><h2 data-i18n="_newsForAllNodes_" style="width:210px; float:left;"></h2>
+        <help hid="NEWS_all" htype="1" />
+        <h2 data-i18n="_newsForAllNodes_" style="width:210px; float:left;"></h2>
 
         <a class="rss" target="_new" href="/feeds/rss/news/{{ user.displayName }}/{{ user.rsskey }}"><img alt="RSS-Feed" src="./static/images/feed.png"> </a>
       	<div style="clear:both"></div>
@@ -29,13 +30,12 @@
                    ng-click="updateAllNodes('older',allNodesList[allNodesList.length-1].microblogID)"
                    data-i18n="_loadMoreMicroblogging_"></a></li>
         </ul>
-		<div ng-show="isLoading('newsForAllNodes')" class="deactivateDiv">
-    	</div>
-   		<div ng-show="isLoading('newsForAllNodes')" class="deactivateSpinner">
-    	</div>
+		<div ng-show="isLoading('newsForAllNodes')" class="deactivateDiv"></div>
+   		<div ng-show="isLoading('newsForAllNodes')" class="deactivateSpinner"></div>
     </div>
     <div class="contentBox startColumn">
-        <help hid='NEWS_fol' htype=1/><h2 data-i18n="_newsForFollowedNodes_" style="width:210px; float:left;"></h2>
+        <help hid="NEWS_fol" htype="1" />
+        <h2 data-i18n="_newsForFollowedNodes_" style="width:210px; float:left;"></h2>
 
         <a class="rss" target="_new" href="/feeds/rss/newsFollow/{{ user.displayName }}/{{ user.rsskey }}"><img alt="RSS-Feed" src="./static/images/feed.png"> </a>
       	<div style="clear:both"></div>
@@ -65,7 +65,8 @@
     	</div>
     </div>
     <div class="contentBox startColumn">
-        <help hid='NEWS_own' htype=1/><h2  data-i18n="_newsForOwnNodes_" style="width:210px; float:left;"></h2>
+        <help hid="NEWS_own" htype="1" />
+        <h2  data-i18n="_newsForOwnNodes_" style="width:210px; float:left;"></h2>
 
         <a class="rss" target="_new" href="/feeds/rss/newsAuthor/{{ user.displayName }}/{{ user.rsskey }}"><img alt="RSS-Feed" src="./static/images/feed.png"> </a>
 
