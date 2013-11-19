@@ -16,7 +16,7 @@
                  style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
             <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                 microblogNode.authorGroup[0].displayName }}</a>
-            <div ng-switch on="microblogNode.location == nav.nodeID">
+            <div ng-if="microblogNode.location != 1" ng-switch on="microblogNode.location == nav.nodeID">
                 <div ng-switch-when="true">
                     <span class="location-icon location-here"></span>
                 </div>

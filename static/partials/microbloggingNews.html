@@ -15,13 +15,8 @@
                      style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
                 <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                         microblogNode.authorGroup[0].displayName }}</a>
-                <div ng-switch on="{{ microblogNode.locationPath.length == 0 }}">
-                    <div ng-switch-when="true">
-                        <span class="location-icon location-here"></span>
-                    </div>
-                    <div ng-switch-when="false">
-                        <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
-                    </div>
+                <div ng-if="microblogNode.location != 1">
+                    <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
                 </div>
                 <span class="microblogDate">{{ microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
@@ -51,13 +46,8 @@
                      style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
                 <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                         microblogNode.authorGroup[0].displayName }}</a>
-                <div ng-switch on="{{ microblogNode.locationPath.length == 0 }}">
-                    <div ng-switch-when="true">
-                        <span class="location-icon location-here"></span>
-                    </div>
-                    <div ng-switch-when="false">
-                        <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
-                    </div>
+                <div ng-if="microblogNode.location != 1">
+                    <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
                 </div>
                 <span class="microblogDate">{{ microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
@@ -97,13 +87,8 @@
             <li ng-repeat="microblogNode in ownPostsList">
                 <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                         microblogNode.authorGroup[0].displayName }}</a>
-                <div ng-switch on="{{ microblogNode.locationPath.length == 0 }}">
-                    <div ng-switch-when="true">
-                        <span class="location-icon location-here"></span>
-                    </div>
-                    <div ng-switch-when="false">
-                        <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
-                    </div>
+                <div ng-if="microblogNode.location != 1">
+                    <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
                 </div>
                 <span class="microblogDate">{{ microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
                 <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
