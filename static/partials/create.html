@@ -21,7 +21,9 @@
             <h3 ng-show="showIf(['derivate'])" data-i18n="_textForThisModification_"></h3>
             <textarea ng-show="showIf(['derivate','opposing'])"
                       style="width: 100%; height: 250px; "
-                      ng-model="tmp.textAlternative">{{ '_editFieldPretext_'|i18n }}</textarea><br>
+                      ng-model="tmp.textAlternative">
+                {{ '_editFieldPretext_'|i18n }}
+            </textarea><br />
 
             <button class="{{getButtonState()}}" ng-if="showIf(['derivate'])"
                     type="button" class="btn btn-primary" ng-model="tmp.argumentType"
