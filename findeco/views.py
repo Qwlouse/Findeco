@@ -423,6 +423,8 @@ def store_settings(request):
             # This means we can't send mails, so we can't change the mail
             eact.delete()
             raise
+    if 'wantsMailNotification' in request.POST:
+        user.profile.wants_mail_notification = request.POST['wantsMailNotification']
     user.save()
     return json_response({'storeSettingsResponse': {}})
 
