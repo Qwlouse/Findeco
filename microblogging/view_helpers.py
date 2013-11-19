@@ -133,8 +133,8 @@ def send_notification_to(post, mailing_list):
 
 
 def notify_users(post):
-    followers = post.author.profile.followers.filter(wants_mail_notification=True)
+    #followers = post.author.profile.followers.filter(wants_mail_notification=True)
     mentioned = post.mentions.filter(profile__wants_mail_notification=True)
-    mailing_list = [profile.user.email for profile in followers]
-    mailing_list += [user.email for user in mentioned]
+    #mailing_list = [profile.user.email for profile in followers]
+    mailing_list = [user.email for user in mentioned]
     send_notification_to(post, mailing_list)
