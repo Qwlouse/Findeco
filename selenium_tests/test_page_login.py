@@ -25,8 +25,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #endregion #####################################################################
-
-
+from django.test import LiveServerTestCase
+from nose.plugins.attrib import attr
+from selenium import webdriver
+import time
 @attr('selenium')
 class TestFePageLogin(LiveServerTestCase):
     def setUp(self):

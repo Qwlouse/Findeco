@@ -31,6 +31,7 @@ from nose.plugins.attrib import attr
 from selenium import webdriver
 import time
 
+
 @attr('selenium')
 class TestFePageProfile(LiveServerTestCase):
     def setUp(self):
