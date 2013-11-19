@@ -1,5 +1,30 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
+# Findeco is dually licensed under GPLv3 or later and MPLv2.
+#
+################################################################################
+# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# This file is part of Findeco.
+#
+# Findeco is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# Findeco is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+#
+################################################################################
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 from time import mktime
 from findeco.search_tools import get_search_query
@@ -42,8 +67,7 @@ def change_microblogging_authorship(old_user, new_user):
         post.mentions.add(new_user)
         post.save()
         new_order = [u.id for u in post.mentions.order_by('id')]
-        # [3, 5, 9] "{u0} {u1} {u2}" = "3 5 9"
-        # [1, 3, 9] "{u1} {u0} {u2}" = "3 1 9"
+
         permutation = []
         for user_id in old_order:
             if user_id == old_user.id:
@@ -64,3 +88,6 @@ def change_microblogging_authorship(old_user, new_user):
         post.render()
 
 
+def delete_posts_referring_to(node):
+    Post.objects.filter(node_references=node).delete()
+    Post.objects.filter(location=node).delete()

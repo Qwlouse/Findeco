@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
+################################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -16,16 +18,20 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 #
+################################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from microblogging.factory import create_post
 from microblogging.models import Post
 from microblogging.tools import change_microblogging_authorship
-from node_storage.factory import create_user
+from microblogging.tools import delete_posts_referring_to
+from node_storage.factory import create_user, create_nodes_for_path
 
 
 class ViewHelpersTest(TestCase):
@@ -84,3 +90,19 @@ class ViewHelpersTest(TestCase):
         self.assertIn(herbert, post.mentions.all())
 
         self.assertEqual(post.text_template, 'hallo {u0} ich bins {u0}!')
+
+    def test_delete_posts_referring_to_removes_referring_posts1(self):
+        hugo = create_user('hugo')
+        node = create_nodes_for_path("path.1")
+        create_post("foo", hugo, '/path.1')
+        self.assertEqual(Post.objects.count(), 1)
+        delete_posts_referring_to(node)
+        self.assertEqual(Post.objects.count(), 0)
+
+    def test_delete_node_removes_referring_posts2(self):
+        hugo = create_user('hugo')
+        node = create_nodes_for_path("path.1")
+        create_post("foo /path.1", hugo)
+        self.assertEqual(Post.objects.count(), 1)
+        delete_posts_referring_to(node)
+        self.assertEqual(Post.objects.count(), 0)

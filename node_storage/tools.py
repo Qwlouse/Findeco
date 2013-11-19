@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
+################################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -16,14 +18,18 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 #
+################################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 from django.core.exceptions import ObjectDoesNotExist
-from microblogging.models import Post
-from node_storage.models import PathCache, TextCache, Vote, Argument, IndexCache, Node
+from microblogging import delete_posts_referring_to
+from node_storage.models import PathCache, TextCache, Vote, Argument
+from node_storage.models import IndexCache, Node
 
 
 def delete_node(node):
@@ -31,7 +37,7 @@ def delete_node(node):
     TextCache.objects.filter(path__in=paths).delete()
     IndexCache.objects.filter(path__in=paths).delete()
 
-    Post.objects.filter(node_references=node).delete()
+    delete_posts_referring_to(node)
 
     # delete derivation argument
     Argument.objects.filter(derivation__derivate=node).delete()
