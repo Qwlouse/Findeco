@@ -425,7 +425,9 @@ def store_settings(request):
             eact.delete()
             raise
     if 'wantsMailNotification' in request.POST:
-        user.profile.wants_mail_notification = request.POST['wantsMailNotification']
+        user.profile.wants_mail_notification = (
+            request.POST['wantsMailNotification'].lower() == 'true')
+
     user.save()
     print(user.profile.wants_mail_notification)
     return json_response({'storeSettingsResponse': {}})
