@@ -28,7 +28,10 @@
 from __future__ import division, print_function, unicode_literals
 import json
 import re
+from django.core.mail import EmailMessage
 from django.db.models import Q
+from django.utils.translation import ugettext
+from findeco import settings
 from findeco.api_validation import USERNAME
 from findeco.error_handling import InvalidMicrobloggingOptions
 from findeco.paths import RESTRICTED_NONROOT_PATH
@@ -115,3 +118,23 @@ def get_microblogging_for_node_query(node):
 def get_microblogging_for_followed_nodes_query(named_user):
     return (Q(node_references__votes__user=named_user) |
             Q(location__votes__user=named_user))
+
+
+def send_notification_to(post, mailing_list):
+    subject = ugettext('userpost_email_notification_subject').format(
+        author=post.author)
+
+    email = EmailMessage(subject,
+                         post.text_cache,
+                         settings.EMAIL_HOST_USER,
+                         to=[], bcc=mailing_list)
+    print('sending to ', mailing_list)
+    email.send(fail_silently=True)
+
+
+def notify_users(post):
+    followers = post.author.profile.followers.filter(wants_mail_notification=True)
+    mentioned = post.mentions.filter(profile__wants_mail_notification=True)
+    mailing_list = [profile.user.email for profile in followers]
+    mailing_list += [user.email for user in mentioned]
+    send_notification_to(post, mailing_list)
