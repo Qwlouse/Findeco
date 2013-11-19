@@ -102,7 +102,7 @@ class TestFePageRegistration(LiveServerTestCase):
         self.driver.find_element_by_xpath("(//input[@type='password'])[2]").send_keys("password")
         self.driver.find_element_by_xpath("(//input[@type='text'])[2]").send_keys("a@trash-mail.com")
         self.driver.find_element_by_css_selector("input[type=\"submit\"]").click()
-        time.sleep(2)
+
         self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert")))
         tmp = self.driver.find_element_by_tag_name('body').text
         self.assertIn('Benutzername ist nicht verf', tmp , "Message missing - Username already taken")

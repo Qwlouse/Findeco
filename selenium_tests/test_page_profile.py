@@ -31,6 +31,7 @@ from nose.plugins.attrib import attr
 from selenium import webdriver
 import time
 
+
 @attr('selenium')
 class TestFePageProfile(LiveServerTestCase):
     def setUp(self):
@@ -55,7 +56,7 @@ class TestFePageProfile(LiveServerTestCase):
         self.driver.find_element_by_link_text("admin").click()
         time.sleep(1)
         self.driver.find_element_by_xpath("//textarea[@ng-model='user.description']").send_keys("Dies ist die Userbeschreibung")
-        time.sleep(1)
+        time.sleep(2)
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('Dies ist die Userbeschreibung', body.text, "Preview does not work")
         self.driver.find_element_by_css_selector("input[type='submit']").click()
