@@ -27,17 +27,17 @@
 var findecoApp = angular.module('Findeco', ['ngAnimate','ngRoute','FindecoServices', 'localization', 'ui.bootstrap'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
-            when('/create/:type/:param', {templateUrl: '/static/partials/create.html', controller: FindecoCreateCtrl}).
+            when('/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: FindecoCreateCtrl}).
             when('/about', {templateUrl: '/static/partials/about.html', controller: FindecoCustomContentCtrl}).
-            when('/diff/:param', {templateUrl: '/static/partials/diff.html', controller: FindecoDiffCtrl}).
+            when('/diff/:param*', {templateUrl: '/static/partials/diff.html', controller: FindecoDiffCtrl}).
             when('/data_privacy', {templateUrl: '/static/partials/dataPrivacy.html', controller: FindecoCustomContentCtrl}).
             when('/imprint', {templateUrl: '/static/partials/imprint.html', controller: FindecoCustomContentCtrl}).
-            when('/user/:name', {templateUrl: '/static/partials/user.html', controller: FindecoUserInfoCtrl}).
+            when('/user/:name*', {templateUrl: '/static/partials/user.html', controller: FindecoUserInfoCtrl}).
             when('/login', {templateUrl: '/static/partials/userLogin.html', controller: FindecoUserCtrl}).
             when('/register', {templateUrl: '/static/partials/userRegistration.html', controller: FindecoUserCtrl}).
-            when('/activate/:param', {templateUrl: '/static/partials/activate.html', controller: FindecoConfirmationCtrl}).
-            when('/confirm_email/:param', {templateUrl: '/static/partials/activate.html', controller: FindecoConfirmationCtrl}).
-            when('/confirm/:param', {templateUrl: '/static/partials/activate.html', controller: FindecoConfirmationCtrl}).
+            when('/activate/:param*', {templateUrl: '/static/partials/activate.html', controller: FindecoConfirmationCtrl}).
+            when('/confirm_email/:param*', {templateUrl: '/static/partials/activate.html', controller: FindecoConfirmationCtrl}).
+            when('/confirm/:param*', {templateUrl: '/static/partials/activate.html', controller: FindecoConfirmationCtrl}).
             when('/recoverByMail', {templateUrl: '/static/partials/userRecoverByMail.html', controller: FindecoUserCtrl}).
             when('/recoverByUsername', {templateUrl: '/static/partials/userRecoverByUsername.html', controller: FindecoUserCtrl}).
             when('/terms_of_use', {templateUrl: '/static/partials/termsOfUse.html', controller: FindecoCustomContentCtrl}).
@@ -48,7 +48,7 @@ var findecoApp = angular.module('Findeco', ['ngAnimate','ngRoute','FindecoServic
             when('/profile/delete', {templateUrl: '/static/partials/profileDelete.html', controller: FindecoUserCtrl}).
             when('/news', {templateUrl: '/static/partials/news.html', controller: FindecoNewsCtrl}).
             when('/microblogging', {templateUrl: '/static/partials/microbloggingNews.html', controller: FindecoMicrobloggingNewsCtrl}).
-            when('/search/:searchString', {templateUrl: '/static/partials/searchResults.html', controller: FindecoSearchCtrl}).
+            when('/search/:searchString*', {templateUrl: '/static/partials/searchResults.html', controller: FindecoSearchCtrl}).
             when('/', {templateUrl: '/static/partials/start.html', controller: FindecoDefaultCtrl}).
             when('/start', {templateUrl: '/static/partials/start.html', controller: FindecoDefaultCtrl}).
             when('/index', {templateUrl: '/static/partials/startDefault.html', controller: FindecoDefaultCtrl}).

@@ -72,7 +72,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
     	if ( Message.localize('_editFieldPretext_')==$scope.tmp.text ){
     		Message.send('error','_createNotChanged_');  	
     		return;
-        };
+        }
         
         if ( ( $scope.initialAlternative==$scope.tmp.textAlternative) &&  ( $scope.tmp.textAlternative != "")){
         	Message.send('error','_alternativeNotChanged_');  	
