@@ -27,6 +27,7 @@
 function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Navigator) {
     $scope.user = User;
     $scope.displayNameTmp = User.displayName;
+    $scope.wantsEMailTmp = User.wantsEMail;
     $scope.followUser = User.markUser;
 
     // used for login and registration
@@ -78,6 +79,7 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
 
     $scope.storeUserSettings = function () {
         $scope.user.displayName = $scope.displayNameTmp;
+        $scope.user.wantsEMail = $scope.wantsEMailTmp;
         User.storeSettings().error(User.loadSettings).success(function () {
             Message.send("success", "_settingsChanged_");
         });

@@ -329,7 +329,8 @@ angular.module('FindecoServices', [])
                 userInfo.isLoggedIn = true;
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.followees = data.userSettings.followees;
-                userInfo.wantEMail = data.userSettings.wantsMailNotification;
+                userInfo.wantsEMail = data.userSettings.wantsMailNotification;
+                console.log(userInfo);
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
@@ -357,7 +358,7 @@ angular.module('FindecoServices', [])
             return $http.post('/.json_storeSettings/', {
                 displayName: userInfo.displayName,
                 description: userInfo.description,
-                wantsMailNotification: userInfo.wantEMail,
+                wantsMailNotification: userInfo.wantsEMail,
                 email: userInfo.email});
         };
         userInfo.changePassword = function (newPassword) {
