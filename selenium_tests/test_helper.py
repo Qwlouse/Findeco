@@ -25,7 +25,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #endregion #####################################################################
-
+import time
 
 def helper_login_admin(self):
     self.driver.get(self.live_server_url + '/login')
@@ -35,5 +35,6 @@ def helper_login_admin(self):
     self.driver.find_element_by_xpath("//input[@type='password']").send_keys("1234")
     self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("admin")
     self.driver.find_element_by_css_selector("input.btn.btn-primary").click()
+    time.sleep(1)
     body = self.driver.find_element_by_tag_name('body')
     self.assertIn('admin', body.text, "Login without success")

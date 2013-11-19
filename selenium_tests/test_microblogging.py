@@ -39,6 +39,8 @@ class TestFeMicroblogging(LiveServerTestCase):
     def tearDown(self):
         self.driver.quit()
 
-    def test_login(self):
+    def test_complete(self):
         helper_login_admin(self)
-        time.sleep(5)
+        self.driver.get(self.live_server_url + '/microblogging')
+        self.driver.find_element_by_css_selector(".microblogInput").send_keys("testtweet")
+        self.driver.find_element_by_css_selector("input.btn").click()
