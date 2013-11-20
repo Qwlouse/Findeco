@@ -708,5 +708,10 @@
         "key"        : "_passwordHints_",
         "value"      : "Passwort Hinweise",
         "description": ""
+    },
+    {
+        "key"        : "_passwordHint_",
+        "value"      : "Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und Kleinschreibung als auch Sonderzeichen in deinem Passwort.",
+        "description": ""
     }
 ]
