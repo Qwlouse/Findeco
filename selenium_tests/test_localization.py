@@ -39,18 +39,10 @@ class TestFeLocalization(LiveServerTestCase):
     def tearDown(self):
         self.driver.quit()
 
-    def test_login(self):
-        helper_login_admin(self)
-        time.sleep(5)
-
     def test_profile_localizations(self):
+        helper_login_admin(self)
+        time.sleep(1)
         self.driver.get(self.live_server_url + '/profile')
         self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization on profile not done")
-
-    def test_profile_password_localization(self):
         self.driver.get(self.live_server_url + '/profile/password')
-        self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization on profile password not done")
-
-    def test_profile_password_localization(self):
-        self.driver.get(self.live_server_url + '/profile/mail')
         self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization on profile password not done")
