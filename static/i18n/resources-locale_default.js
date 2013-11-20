@@ -688,5 +688,25 @@
         "key"        : "_composePost_",
         "value"      : "Post verfassen",
         "description": ""
+    },
+    {
+        "key"        : "_password_",
+        "value"      : "Passwort",
+        "description": ""
+    },
+    {
+        "key"        : "_account_",
+        "value"      : "Account",
+        "description": ""
+    },
+    {
+        "key"        : "_mailSettings_",
+        "value"      : "E-Mail Einstellungen",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHints_",
+        "value"      : "Passwort Hinweise",
+        "description": ""
     }
 ]
