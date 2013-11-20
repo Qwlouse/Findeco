@@ -161,6 +161,10 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
         	});
     };
 
+    $scope.cancel = function () {
+        history.back();
+    };
+
     $scope.tmp = TMP;
 
     $scope.tmp.text = "";

@@ -90,6 +90,11 @@
         "description": ""
     },
     {
+        "key"        : "_argumentsCancelBtn_",
+        "value"      : "Abbrechen",
+        "description": ""
+    },
+    {
         "key"        : "_createNewText_",
         "value"      : "Neuer Abschnitt",
         "description": ""
