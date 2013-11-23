@@ -90,6 +90,11 @@
         "description": ""
     },
     {
+        "key"        : "_argumentsCancelBtn_",
+        "value"      : "Abbrechen",
+        "description": ""
+    },
+    {
         "key"        : "_createNewText_",
         "value"      : "Neuer Abschnitt",
         "description": ""
@@ -707,6 +712,16 @@
     {
         "key"        : "_passwordHints_",
         "value"      : "Passwort Hinweise",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHint_",
+        "value"      : "Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und Kleinschreibung als auch Sonderzeichen in deinem Passwort.",
+        "description": ""
+    },
+    {
+        "key"        : "_notLoggedIn_",
+        "value"      : "Nicht eingeloggt!",
         "description": ""
     }
 ]

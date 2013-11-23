@@ -45,11 +45,13 @@
             <input class="{{getButtonState()}}" ng-if="showIf(['opposing'])"
                    class="btn btn-primary" type="submit"
                    value="{{'_opposingCreateSendBtn_'|i18n}}">
+            <input class="{{getButtonState()}}" class="btn btn-primary" type="button" ng-click="cancel()"
+                   value="{{'_argumentsCancelBtn_'|i18n}}">
         </form>
-         <div ng-show="getFormLockState()" class="deactivateDiv">
+        <div ng-show="getFormLockState()" class="deactivateDiv">
         </div>
-       <div ng-show="getFormLockState()" class="deactivateSpinner">
-       </div>
+        <div ng-show="getFormLockState()" class="deactivateSpinner">
+        </div>
     </div>
     <div class="contentBox rightWideColumn">
         <h2 ng-show="showIf(['derivate'])" data-i18n="_argumentPreview_"

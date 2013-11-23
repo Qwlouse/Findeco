@@ -61,17 +61,19 @@
                 <div creole wiki-text="paragraph.wikiText"></div>
             </div>
         </div>
-        <div ng-show="nav.type!='arg' && user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/topic')"
-             data-i18n="_createNewText_"></div>
+        <div class="btnBar">
+            <div ng-show="nav.type!='arg' && user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/topic')"
+                 data-i18n="_createNewText_"></div>
 
-        <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
-             data-i18n="_createDerivativeText_"></div>
+            <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
+                 data-i18n="_createDerivativeText_"></div>
 
-        <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
-             data-i18n="_createOpposingText_"></div>
+            <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
+                 data-i18n="_createOpposingText_"></div>
 
-        <div ng-show="nav.type=='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
-             ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
+            <div ng-show="nav.type=='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
+                 ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
+        </div>
   	<div ng-show="isLoading()" class="deactivateDiv">
     </div>
    	<div ng-show="isLoading()" class="deactivateSpinner">
