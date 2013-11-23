@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
+function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator, $location) {
     $scope.loadTarget = Navigator.argumentPath;
     if ( $routeParams.name != undefined ) {
         $scope.loadTarget = $routeParams.name;
@@ -84,6 +84,17 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
             $scope.microblogText = '';
         });
     };
+    $scope.UpdateIntervall = function () {
+        if ($location.path() == $scope.path) {
+            window.setTimeout(function () {
+                $scope.UpdateIntervall();
+                $scope.updateMicrobloggingList()
+                $scope.MicrobloggingIsLoading = false;
+            }, Math.floor((Math.random() * 10000) + 10000));
+        }
+    }
+    $scope.path = $location.path()
+    $scope.UpdateIntervall()
 
     
     $scope.updateMicrobloggingList();
@@ -95,4 +106,4 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator) {
     });
 }
 
-FindecoMicroblogCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'User', 'Navigator'];
+FindecoMicroblogCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'User', 'Navigator','$location'];

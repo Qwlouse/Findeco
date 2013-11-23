@@ -8,7 +8,6 @@
                 <help hid='MBL_col' htype=1 />
                 <input class="btn btn-primary" type="submit" value="{{'_microblogSendBtn_'|i18n}}"/>
             </form>
-            <input class="btn btn-primary" type="button" ng-click="updateMicrobloggingList()" value="{{ '_startScreenUpdateBtn_'|i18n }}"/>
         </li>
         <li ng-repeat="microblogNode in microbloggingList">
             <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
