@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
+function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
     $scope.timelineList = [];
     $scope.mentionsList = [];
     $scope.ownPostsList = [];
@@ -136,6 +136,45 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
         }
     });
 
+    $scope.UpdateIntervallTimeline = function (){
+
+        if ($location.path()=="/microblogging") {
+                 window.setTimeout(function () {
+                    $scope.UpdateIntervallTimeline();
+                    $scope.updateTimeline()
+                    $scope.isLoadingTimeline=false;
+                }, Math.floor((Math.random() * 10000) + 10000) );
+
+        }
+    }
+    $scope.UpdateIntervallTimeline()
+    $scope.UpdateIntervallMentions = function () {
+        if ($location.path() == "/microblogging") {
+            window.setTimeout(function () {
+                $scope.UpdateIntervallMentions();
+                $scope.updateMentions()
+                $scope.isLoadingMentions = false;
+            }, Math.floor((Math.random() * 10000) + 10000));
+        }
+    }
+
+    $scope.UpdateIntervallMentions()
+    $scope.UpdateIntervallOwnPosts = function () {
+        if ($location.path() == "/microblogging") {
+            window.setTimeout(function () {
+                $scope.UpdateIntervallOwnPosts();
+                $scope.updateOwnPosts()
+                $scope.isLoadingOwnPosts = false;
+            }, Math.floor((Math.random() * 10000) + 10000));
+        }
+    }
+    $scope.UpdateIntervallOwnPosts()
+
+
+
+
+
+    ;
     $scope.isLoading = function (col){
     	if (col =="timeline"){
     		return $scope.isLoadingTimeline;	
@@ -157,4 +196,4 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User) {
     });
 }
 
-FindecoMicrobloggingNewsCtrl.$inject = ['$scope', 'Backend', 'User'];
+FindecoMicrobloggingNewsCtrl.$inject = ['$scope', 'Backend', 'User','$location'];

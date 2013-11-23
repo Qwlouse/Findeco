@@ -13,7 +13,6 @@
       	<div style="clear:both"></div>
 
         <ul class="microblogList">
-            <li><a class="btn btn-primary" ng-click="updateAllNodes()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in allNodesList">
                 <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
                      entity="microblogNode.author" mark-func="followUser"
@@ -42,7 +41,6 @@
 
         
         <ul class="microblogList">
-            <li><a class="btn btn-primary" ng-click="updateFollowedNodes()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in followedNodesList">
                 <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
                      entity="microblogNode.author" mark-func="followUser"
@@ -73,7 +71,6 @@
         <div style="clear:both"></div>
 
         <ul class="microblogList">
-            <li><a class="btn btn-primary" ng-click="updateOwnNodes()" data-i18n="_startScreenUpdateBtn_"></a></li>
             <li ng-repeat="microblogNode in ownNodesList">
                 <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
                      entity="microblogNode.author" mark-func="followUser"

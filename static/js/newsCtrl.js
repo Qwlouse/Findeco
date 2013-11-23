@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoNewsCtrl($scope, Backend, User) {
+function FindecoNewsCtrl($scope, Backend, User, $location) {
     $scope.allNodesList = [];
     $scope.followedNodesList = [];
     $scope.ownNodesList = [];
@@ -132,6 +132,36 @@ function FindecoNewsCtrl($scope, Backend, User) {
         }
 
     });
+    $scope.UpdateIntervallAllNodes = function () {
+        if ($location.path() == "/news") {
+            window.setTimeout(function () {
+                $scope.UpdateIntervallAllNodes();
+                $scope.updateAllNodes()
+                $scope.isLoadingNewsForAllNodes = false;
+            }, Math.floor((Math.random() * 10000) + 10000));
+        }
+    }
+    $scope.UpdateIntervallAllNodes()
+    $scope.UpdateIntervallFollowedNodes = function () {
+        if ($location.path() == "/news") {
+            window.setTimeout(function () {
+                $scope.UpdateIntervallFollowedNodes();
+                $scope.updateFollowedNodes()
+                $scope.isLoadingNewsForFollowedNodes = false;
+            }, Math.floor((Math.random() * 10000) + 10000));
+        }
+    }
+    $scope.UpdateIntervallFollowedNodes()
+    $scope.UpdateIntervallOwnNodes = function () {
+        if ($location.path() == "/news") {
+            window.setTimeout(function () {
+                $scope.UpdateIntervallOwnNodes();
+                $scope.updateOwnNodes()
+                $scope.isLoadingNewsForOwnNodes = false;
+            }, Math.floor((Math.random() * 10000) + 10000));
+        }
+    }
+    $scope.UpdateIntervallOwnNodes()
     $scope.isLoading = function (col){
     	if (col =="timeline"){
     		return $scope.isLoadingNewsForAllNodes;
@@ -147,4 +177,4 @@ function FindecoNewsCtrl($scope, Backend, User) {
     }
 }
 
-FindecoNewsCtrl.$inject = ['$scope', 'Backend', 'User'];
+FindecoNewsCtrl.$inject = ['$scope', 'Backend', 'User', '$location'];
