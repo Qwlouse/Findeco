@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-26 21:41+0100\n"
+"POT-Creation-Date: 2013-11-26 21:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: findeco/views.py:514
+#: findeco/views.py:417
+msgid "mail_verification_email_subject"
+msgstr "[Findeco] Please verify this e-mail-address"
+
+#: findeco/views.py:418
+msgid "mail_verification_email_body{url}"
+msgstr ""
+
+
+#: findeco/views.py:515
 msgid "registration_email_subject"
 msgstr "[Findeco] Deine Findeco Registrierung"
 
-#: findeco/views.py:515
+#: findeco/views.py:516
 msgid "registration_email_body{url}"
 msgstr ""
 "Du hast einen Findeco Account mit dieser E-Mail-Adresse registriert. Du "
@@ -30,11 +39,11 @@ msgstr ""
 "Falls du den Account nicht aktivieren möchtest, ignoriere diese E-Mail "
 "einfach."
 
-#: findeco/views.py:552 findeco/views.py:573
+#: findeco/views.py:553 findeco/views.py:574
 msgid "registration_recovery_email_subject"
 msgstr "[Findeco] Passwort wiederherstellen"
 
-#: findeco/views.py:553 findeco/views.py:574
+#: findeco/views.py:554 findeco/views.py:575
 msgid "registration_recovery_email_body{url}"
 msgstr ""
 

@@ -412,10 +412,11 @@ def store_settings(request):
         assert_valid_email(email)
         eact = EmailActivation.create(user, email)
         try:
-            send_mail(settings.EMAIL_VERIFICATION_TITLE,
-                      settings.EMAIL_VERIFICATION_BODY + ' ' +
-                      settings.FINDECO_BASE_URL +
-                      '/confirm_email/' + str(eact.key),
+            confirm_url = settings.FINDECO_BASE_URL + '/confirm_email/' + \
+                str(eact.key)
+            send_mail(ugettext('mail_verification_email_subject'),
+                      ugettext('mail_verification_email_body{url}').format(
+                      url=confirm_url),
                       settings.EMAIL_HOST_USER,
                       [email],
                       fail_silently=False)
