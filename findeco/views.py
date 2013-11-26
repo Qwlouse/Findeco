@@ -512,7 +512,7 @@ def account_registration(request):
         activation_url = settings.FINDECO_BASE_URL + '/activate/' + \
             str(activation.key)
         send_mail(ugettext('registration_email_subject'),
-                  ugettext('registration_email_body_fields_url').format(
+                  ugettext('registration_email_body{url}').format(
                       url=activation_url),
                   settings.EMAIL_HOST_USER,
                   [email_address],
@@ -546,9 +546,12 @@ def account_reset_request_by_name(request):
     user = assert_active_user(display_name)
     recovery = PasswordRecovery.create(user)
     try:
-        send_mail(settings.REGISTRATION_RECOVERY_TITLE,
-                  settings.REGISTRATION_RECOVERY_BODY + ' ' +
-                  settings.FINDECO_BASE_URL + '/confirm/' + str(recovery.key),
+        recovery_url = settings.FINDECO_BASE_URL + '/confirm/' + \
+            str(recovery.key)
+
+        send_mail(ugettext('registration_recovery_email_subject'),
+                  ugettext('registration_recovery_email_body{url}').format(
+                      url=recovery_url),
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
@@ -565,9 +568,11 @@ def account_reset_request_by_mail(request):
     user = assert_active_user(email=email_address)
     recovery = PasswordRecovery.create(user)
     try:
-        send_mail(settings.REGISTRATION_RECOVERY_TITLE,
-                  settings.REGISTRATION_RECOVERY_BODY + ' ' +
-                  settings.FINDECO_BASE_URL + '/confirm/' + str(recovery.key),
+        recovery_url = settings.FINDECO_BASE_URL + '/confirm/' + \
+            str(recovery.key)
+        send_mail(ugettext('registration_recovery_email_subject'),
+                  ugettext('registration_recovery_email_body{url}').format(
+                      url=recovery_url),
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
