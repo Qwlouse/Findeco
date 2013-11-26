@@ -122,7 +122,7 @@ def get_microblogging_for_followed_nodes_query(named_user):
 
 def send_notification_to(post, mailing_list):
     subject = ugettext('userpost_email_notification_subject').format(
-        author=post.author)
+        author=post.author.username)
 
     email = EmailMessage(subject,
                          post.text_cache,

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-22 21:43+0200\n"
+"POT-Creation-Date: 2013-11-26 20:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,30 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: microblogging/models.py:178
+#: microblogging/models.py:189
 msgid "node_created_message"
 msgstr ""
 
-#: microblogging/models.py:179
+#: microblogging/models.py:190
 msgid "node_refined_message"
 msgstr ""
 
-#: microblogging/models.py:180
+#: microblogging/models.py:191
 msgid "node_flagged_as_spam_message"
 msgstr ""
 
-#: microblogging/models.py:181
+#: microblogging/models.py:192
 msgid "node_unflagged_as_spam_message"
 msgstr ""
 
-#: microblogging/models.py:182
+#: microblogging/models.py:193
 msgid "node_followed_message"
 msgstr ""
 
-#: microblogging/models.py:183
+#: microblogging/models.py:194
 msgid "node_unfollowed_message"
 msgstr ""
 
-#: microblogging/models.py:184
+#: microblogging/models.py:195
 msgid "argument_created_message"
+msgstr ""
+
+#: microblogging/view_helpers.py:124
+msgid "userpost_email_notification_subject"
 msgstr ""
