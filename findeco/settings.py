@@ -97,9 +97,6 @@ ACTIVATION_KEY_VALID_FOR = datetime.timedelta(hours=24)
 RECOVERY_KEY_VALID_FOR = datetime.timedelta(hours=24)
 
 
-REGISTRATION_RECOVERY_TITLE_SUCCESS = 'Your new Findeco Password'
-REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
-
 ###############################################################################
 #                    End of Values for Local Settings File
 ###############################################################################

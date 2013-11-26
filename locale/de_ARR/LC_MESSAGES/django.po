@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-26 21:14+0100\n"
+"POT-Creation-Date: 2013-11-26 21:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,11 +35,19 @@ msgid "registration_email_body{url}"
 msgstr ""
 
 #: findeco/views.py:553 findeco/views.py:574
-msgid "registration_recovery_email_subject"
+msgid "password_recovery_email_subject"
 msgstr ""
 
 #: findeco/views.py:554 findeco/views.py:575
-msgid "registration_recovery_email_body{url}"
+msgid "password_recovery_email_body{url}"
+msgstr ""
+
+#: findeco/views.py:593
+msgid "password_recovery_success_email_subject"
+msgstr ""
+
+#: findeco/views.py:594
+msgid "password_recovery_success_email_body{password}"
 msgstr ""
 
 #: microblogging/models.py:189
