@@ -132,8 +132,9 @@ def send_mention_notification(post, mailing_list):
 
 
 def send_notification_to(subject, post, mailing_list):
+    body = convert_local_links_to_absolute(post.text_cache)
     email = EmailMessage(subject,
-                         post.text_cache,
+                         body,
                          settings.EMAIL_HOST_USER,
                          to=[], bcc=mailing_list)
     print('sending to ', mailing_list)
@@ -152,3 +153,7 @@ def notify_derivate(node, post):
     follows_for_notifying = node.votes.filter(user__profile__wants_mail_notification=True).all()
     mailing_list = [vote.user.email for vote in follows_for_notifying]
     send_derivate_notification(post, mailing_list)
+
+
+def convert_local_links_to_absolute(html):
+    return html.replace(' href="/', ' href="' + settings.FINDECO_BASE_URL + '/')
