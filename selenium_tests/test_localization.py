@@ -40,6 +40,10 @@ class TestFeLocalization(LiveServerTestCase):
         self.driver.quit()
 
     def test_profile_localizations(self):
+        """
+        Checks all listed Pages for missing localization strings.
+        @param self:
+        """
         helper_login_admin(self)
         time.sleep(1)
         self.driver.get(self.live_server_url + '/profile')

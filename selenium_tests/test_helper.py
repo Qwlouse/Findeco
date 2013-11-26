@@ -28,6 +28,10 @@
 import time
 
 def helper_login_admin(self):
+    """
+    This function logs you in as the default user
+    @param self:
+    """
     self.driver.get(self.live_server_url + '/login')
     self.driver.implicitly_wait(1)
     body = self.driver.find_element_by_tag_name('body')
@@ -38,3 +42,5 @@ def helper_login_admin(self):
     time.sleep(1)
     body = self.driver.find_element_by_tag_name('body')
     self.assertIn('admin', body.text, "Login without success")
+    
+    
