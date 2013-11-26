@@ -29,6 +29,7 @@
 from __future__ import division, print_function, unicode_literals
 from microblogging.models import Post
 from findeco.models import get_system_user
+from microblogging.view_helpers import notify_derivate
 import node_storage as backend
 
 
@@ -69,6 +70,9 @@ def post_new_derivate_for_node_message(user, original_path, derivate_path):
     post.node_references = [original_node, derivate_node]
     post.mentions = [user]
     post.render()
+
+    # email notification
+    notify_derivate(original_node, post)
     return post
 
 

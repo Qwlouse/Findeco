@@ -120,10 +120,18 @@ def get_microblogging_for_followed_nodes_query(named_user):
             Q(location__votes__user=named_user))
 
 
-def send_notification_to(post, mailing_list):
+def send_derivate_notification(post, mailing_list):
+    subject = ugettext('derivate_email_notification_subject')
+    send_notification_to(subject, post, mailing_list)
+
+
+def send_mention_notification(post, mailing_list):
     subject = ugettext('userpost_email_notification_subject').format(
         author=post.author.username)
+    send_notification_to(subject, post, mailing_list)
 
+
+def send_notification_to(subject, post, mailing_list):
     email = EmailMessage(subject,
                          post.text_cache,
                          settings.EMAIL_HOST_USER,
@@ -137,4 +145,10 @@ def notify_users(post):
     mentioned = post.mentions.filter(profile__wants_mail_notification=True)
     #mailing_list = [profile.user.email for profile in followers]
     mailing_list = [user.email for user in mentioned]
-    send_notification_to(post, mailing_list)
+    send_mention_notification(post, mailing_list)
+
+
+def notify_derivate(node, post):
+    follows_for_notifying = node.votes.filter(user__profile__wants_mail_notification=True).all()
+    mailing_list = [vote.user.email for vote in follows_for_notifying]
+    send_derivate_notification(post, mailing_list)

@@ -221,7 +221,7 @@ def store_text(request, path):
         if len(p['wikiText'].strip()) > 0:
             # fork for additional slot
             new_path = fork_node_and_add_slot(path, user, p['wikiText'])
-            # microblog alert
+            # microblog alert and mail notification
             post_new_derivate_for_node_message(user, path, new_path)
         else:
             raise EmptyText
