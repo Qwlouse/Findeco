@@ -88,6 +88,8 @@ class UserProfile(models.Model):
     verification_key = models.CharField(max_length=64, default=generate_key)
     api_key = models.CharField(max_length=16, default=lambda: generate_key(16))
 
+    wants_mail_notification = models.BooleanField(default=False)
+
     # Override the save method to prevent integrity errors
     # These happen because both the post_save signal and the inlined admin
     # interface try to create the UserProfile. See:

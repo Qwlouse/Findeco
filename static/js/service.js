@@ -173,7 +173,7 @@ angular.module('FindecoServices', [])
                 var url_part = '/.loadMicrobloggingForNode/' + path;
                 return addIdTypeAndGetPromise(microblogList_out, url_part, id, type);
             },
-            markNode          : function (nodePath, markType) {
+            markNode: function (nodePath, markType) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
@@ -185,13 +185,15 @@ angular.module('FindecoServices', [])
                 //url = url.replace("//","/");
                 return $http.post(url, {microblogText: microblogText});
             },
-            storeText         : function (path, params) {
+
+            storeText: function (path, params) {
                 var pathComponents = ['/.json_storeText', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 return $http.post(url, params);
             },
-            loadArgument      : function (indexNodes_out, path) {
+
+            loadArgument: function (indexNodes_out, path) {
                 var url = ['/.json_loadArgumentIndex', path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
@@ -199,7 +201,8 @@ angular.module('FindecoServices', [])
                     ['loadArgumentIndexResponse']));
                 return promise;
             },
-            loadText          : function (paragraphList_out, path) {
+
+            loadText: function (paragraphList_out, path) {
                 var url = ['/.json_loadText', path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
@@ -207,12 +210,14 @@ angular.module('FindecoServices', [])
                     ['loadTextResponse', 'paragraphs']));
                 return promise;
             },
-            loadUserInfo      : function (user) {
+
+            loadUserInfo: function (user) {
                 var url = ['/.json_loadUserInfo', user].join('/');
                 url = url.replace("//", "/");
                 return $http.get(url);
             },
-            loadNode          : function (nodeInfo, path) {
+
+            loadNode: function (nodeInfo, path) {
                 var url = ['/.json_loadNode', path].join('/');
                 var promise = $http.get(url);
                 promise.success(function (d) {
@@ -220,7 +225,8 @@ angular.module('FindecoServices', [])
                 });
                 return promise;
             },
-            loadGraphData     : function (graphData_out, path, graphType) {
+
+            loadGraphData: function (graphData_out, path, graphType) {
                 if (graphType == undefined) {
                     graphType = "full";
                 }
@@ -230,9 +236,11 @@ angular.module('FindecoServices', [])
                 promise.success(fillArray(graphData_out, ['loadGraphDataResponse', 'graphDataChildren']));
                 return promise;
             },
-            search            : function (searchResults, search_string) {
+
+            search: function (searchResults, search_string) {
                 var searchFields = "user_content_microblogging";
                 var promise = $http.get('/.json_search/' + searchFields + '/' + search_string);
+
                 promise.success(function (d) {
                     angular.copy(d.searchResponse, searchResults);
                 });
@@ -293,6 +301,8 @@ angular.module('FindecoServices', [])
                 if (userInfo.displayName == "admin") {
                     userInfo.isAdmin = true;
                 }
+
+
             });
             return promise;
         };
@@ -329,6 +339,8 @@ angular.module('FindecoServices', [])
                 userInfo.isLoggedIn = true;
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.followees = data.userSettings.followees;
+                userInfo.wantsEMail = data.userSettings.wantsMailNotification;
+                console.log(userInfo);
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
@@ -353,8 +365,11 @@ angular.module('FindecoServices', [])
             userInfo.email = data.userSettings.email;
         };
         userInfo.storeSettings = function () {
-            return $http.post('/.json_storeSettings/', {displayName: userInfo.displayName,
-                description                                        : userInfo.description, email: userInfo.email});
+            return $http.post('/.json_storeSettings/', {
+                displayName: userInfo.displayName,
+                description: userInfo.description,
+                wantsMailNotification: userInfo.wantsEMail,
+                email: userInfo.email});
         };
         userInfo.changePassword = function (newPassword) {
             return $http.post('/.json_changePassword/', {password: newPassword});

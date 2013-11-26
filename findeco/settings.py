@@ -97,26 +97,6 @@ ACTIVATION_KEY_VALID_FOR = datetime.timedelta(hours=24)
 RECOVERY_KEY_VALID_FOR = datetime.timedelta(hours=24)
 
 
-# These strings are send on registration and Mail recovery
-# (They will change their place in the near future)
-REGISTRATION_TITLE = 'Your Findeco registration'
-REGISTRATION_BODY = 'You have registred an Findeco Account with this E-Mail ' \
-                    'address. You can activate it with the Link below. If you' \
-                    ' did not register it you just need to ignore this Mail '
-REGISTRATION_RECOVERY_TITLE = 'You requested a Password reset'
-REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco' \
-                             ' Account. You can request it with the Link ' \
-                             'below. If you did not request it you just need' \
-                             ' to ignore this Mail '
-EMAIL_VERIFICATION_TITLE = 'Please verify this e-mail-address'
-EMAIL_VERIFICATION_BODY = 'You requested an e-mail change on your Findeco' \
-                          ' Account. You can complete it with the Link ' \
-                          'below. If you did not request it you just need' \
-                          ' to ignore this Mail '
-
-REGISTRATION_RECOVERY_TITLE_SUCCESS = 'Your new Findeco Password'
-REGISTRATION_RECOVERY_BODY_SUCCESS = 'Your new Findeco password is'
-
 ###############################################################################
 #                    End of Values for Local Settings File
 ###############################################################################

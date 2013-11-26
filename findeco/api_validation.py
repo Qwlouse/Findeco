@@ -46,7 +46,7 @@ user_schema = {
 }
 userInfo_schema = {
     'displayName': string,
-    'description': string,
+    'description': string
 }
 userSettings_schema = {
     'blockedUsers': [user_schema, None],
@@ -54,7 +54,8 @@ userSettings_schema = {
     'followers': [user_schema, None],
     'followees': [user_schema, None],
     'email': string,
-    'rsskey': string
+    'rsskey': string,
+    'wantsMailNotification': boolean
 }
 authorGroup_schema = [userInfo_schema]
 originGroup_schema = ["path", None]
