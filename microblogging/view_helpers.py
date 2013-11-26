@@ -167,4 +167,3 @@ def notify_new_argument(node, post):
 
 def convert_local_links_to_absolute(html):
     return html.replace(' href="/', ' href="' + settings.FINDECO_BASE_URL + '/')
-
