@@ -36,6 +36,7 @@ from django.contrib.auth import logout as django_logout
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.utils.html import escape
+from django.utils.translation import ugettext
 from django.views.decorators.csrf import ensure_csrf_cookie
 from findeco.models import EmailActivation
 from findeco.project_path import project_path
@@ -43,11 +44,10 @@ from findeco.search_tools import get_search_query
 
 from .view_helpers import *
 from microblogging import search_for_microblogging
-from microblogging.system_messages import post_node_was_flagged_message
-from microblogging.system_messages import post_new_derivate_for_node_message
-from microblogging.system_messages import post_new_derivate_for_node_message_list
-from microblogging.system_messages import post_new_argument_for_node_message
-from microblogging.system_messages import post_node_was_unflagged_message
+from microblogging.system_messages import (
+    post_node_was_flagged_message, post_new_derivate_for_node_message,
+    post_new_derivate_for_node_message_list, post_new_argument_for_node_message,
+    post_node_was_unflagged_message)
 from models import UserProfile, Activation, PasswordRecovery
 import node_storage as backend
 from node_storage.factory import create_user
@@ -509,9 +509,11 @@ def account_registration(request):
     user.save()
     activation = Activation.create(user)
     try:
-        send_mail(settings.REGISTRATION_TITLE,
-                  settings.REGISTRATION_BODY + ' ' + settings.FINDECO_BASE_URL +
-                  '/activate/' + str(activation.key),
+        activation_url = settings.FINDECO_BASE_URL + '/activate/' + \
+            str(activation.key)
+        send_mail(ugettext('registration_email_subject'),
+                  ugettext('registration_email_body_fields_url').format(
+                      url=activation_url),
                   settings.EMAIL_HOST_USER,
                   [email_address],
                   fail_silently=False)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-26 21:20+0100\n"
+"POT-Creation-Date: 2013-11-26 20:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: findeco/views.py:514
+msgid "registration_email_subject"
+msgstr "[Findeco] Deine Findeco Registrierung"
+
+#: findeco/views.py:515
+msgid "registration_email_body_fields_url"
+msgstr "Du hast einen Findeco Account mit dieser E-Mail-Adresse registriert."
+       "Du kannst ihn mit diesem link aktivieren: \n"
+       "{url}"
+       "Falls du den Account nicht aktivieren möchtest, ignoriere diese"
+       "E-Mail einfach."
 
 #: microblogging/models.py:189
 msgid "node_created_message"

@@ -99,10 +99,6 @@ RECOVERY_KEY_VALID_FOR = datetime.timedelta(hours=24)
 
 # These strings are send on registration and Mail recovery
 # (They will change their place in the near future)
-REGISTRATION_TITLE = 'Your Findeco registration'
-REGISTRATION_BODY = 'You have registred an Findeco Account with this E-Mail ' \
-                    'address. You can activate it with the Link below. If you' \
-                    ' did not register it you just need to ignore this Mail '
 REGISTRATION_RECOVERY_TITLE = 'You requested a Password reset'
 REGISTRATION_RECOVERY_BODY = 'You requested an Password reset on your Findeco' \
                              ' Account. You can request it with the Link ' \
