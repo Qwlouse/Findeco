@@ -142,15 +142,14 @@ def send_notification_to(subject, post, mailing_list):
 
 
 def notify_users(post):
-    #followers = post.author.profile.followers.filter(wants_mail_notification=True)
     mentioned = post.mentions.filter(profile__wants_mail_notification=True)
-    #mailing_list = [profile.user.email for profile in followers]
     mailing_list = [user.email for user in mentioned]
     send_mention_notification(post, mailing_list)
 
 
 def notify_derivate(node, post):
-    follows_for_notifying = node.votes.filter(user__profile__wants_mail_notification=True).all()
+    follows_for_notifying = node.votes.filter(
+        user__profile__wants_mail_notification=True).all()
     mailing_list = [vote.user.email for vote in follows_for_notifying]
     send_derivate_notification(post, mailing_list)
 
