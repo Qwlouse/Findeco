@@ -690,6 +690,36 @@
         "description": ""
     },
     {
+        "key"        : "_account_",
+        "value"      : "Profil",
+        "description": ""
+    },
+    {
+        "key"        : "_password_",
+        "value"      : "Passworteinstellungen",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHints_",
+        "value"      : "Hinweise zum Passwort",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHint_",
+        "value"      : "Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und Kleinschreibung als auch Sonderzeichen in deinem Passwort.",
+        "description": ""
+    },
+    {
+        "key"        : "_mailSettings_",
+        "value"      : "E-Mail und Benachrichtigung",
+        "description": ""
+    },
+    {
+        "key"        : "_notificationSettings_",
+        "value"      : "Benachrichtigungseinstellungen",
+        "description": ""
+    },
+    {
         "key"        : "_wantEMailLabel_",
         "value"      : "Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.",
         "description": ""

@@ -15,18 +15,12 @@
  
         <h2 data-i18n="_description_">Beschreibung</h2>
         <form ng-submit="storeUserSettings()">
-            <textarea ng-model="user.description" placeholder="Beschreibung" style="width: 100%; resize: vertical;" rows="5">
+            <textarea ng-model="user.description"
+                      placeholder="Beschreibung"
+                      style="width: 100%; resize: vertical;"
+                      rows="5">
 
             </textarea>
-            <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}" />
-        </form>
-
-        <h2 data-i18n="_settings_">Einstellungen</h2>
-        <form ng-submit="storeUserSettings()">
-            <input type="checkbox" id="wantsEMail" ng-model="wantsEMailTmp" />
-            <label for="wantsEMail" data-i18n="_wantEMailLabel_">
-                Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.
-            </label><br />
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}" />
         </form>
 
