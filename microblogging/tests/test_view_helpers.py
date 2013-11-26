@@ -27,12 +27,15 @@
 #endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 import json
+from django.core import mail
 from django.db.models import Q
 from django.test import TestCase
 from microblogging.api_validation import validate_response
 from findeco.error_handling import ViewError
 from microblogging.factory import create_post
-from microblogging.view_helpers import microblogging_response, get_load_type, convert_long_urls
+from microblogging.view_helpers import (
+    microblogging_response, get_load_type, convert_long_urls,
+    send_notification_to)
 from node_storage.factory import create_user
 
 
@@ -144,3 +147,16 @@ class ViewHelpersTest(TestCase):
         text = convert_long_urls("text http://www.hostname.de/ text",
                                  "www.hostname.de")
         self.assertEqual(text, "text http://www.hostname.de/ text")
+
+    ################## send_notification_to ####################################
+
+    def test_send_notification_to_sends_mail_via_bcc(self):
+        hugo = create_user("hugo")
+        post = create_post('my test posttext', hugo)
+        send_notification_to(post, ['foo@bar.de', 'bar@foo.de'])
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['foo@bar.de', 'bar@foo.de'])
+        self.assertIn('my test posttext', m.body)
+        self.assertIn('hugo', m.subject)
