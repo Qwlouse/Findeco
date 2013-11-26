@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-26 21:14+0100\n"
+"POT-Creation-Date: 2013-11-26 21:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,8 +35,9 @@ msgstr "[Findeco] Password recovery"
 #: findeco/views.py:553 findeco/views.py:574
 msgid "registration_recovery_email_body{url}"
 msgstr ""
-"You requested an Password reset on your Findeco Account. "
-"You can request it with this Link:\n {url}\n"
+"You requested an Password reset on your Findeco Account. You can request it "
+"with this Link:\n"
+" {url}\n"
 "If you did not request it you just need to ignore this Mail."
 
 #: microblogging/models.py:189
@@ -72,5 +73,5 @@ msgid "derivate_email_notification_subject"
 msgstr ""
 
 #: microblogging/view_helpers.py:129
-msgid "userpost_email_notification_subject"
+msgid "userpost_email_notification_subject{author}"
 msgstr ""

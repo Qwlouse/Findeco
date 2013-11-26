@@ -126,7 +126,7 @@ def send_derivate_notification(post, mailing_list):
 
 
 def send_mention_notification(post, mailing_list):
-    subject = ugettext('userpost_email_notification_subject').format(
+    subject = ugettext('userpost_email_notification_subject{author}').format(
         author=post.author.username)
     send_notification_to(subject, post, mailing_list)
 

@@ -35,7 +35,8 @@ from findeco.error_handling import ViewError
 from microblogging.factory import create_post
 from microblogging.view_helpers import (
     microblogging_response, get_load_type, convert_long_urls,
-    send_notification_to)
+    send_notification_to, send_derivate_notification,
+    send_mention_notification)
 from node_storage.factory import create_user
 
 
@@ -153,10 +154,32 @@ class ViewHelpersTest(TestCase):
     def test_send_notification_to_sends_mail_via_bcc(self):
         hugo = create_user("hugo")
         post = create_post('my test posttext', hugo)
-        send_notification_to(post, ['foo@bar.de', 'bar@foo.de'])
+        send_notification_to('Mail für hugo!', post, ['foo@bar.de', 'bar@foo.de'])
         self.assertEqual(len(mail.outbox), 1)
         m = mail.outbox[0]
         self.assertEqual(m.to, [])
         self.assertEqual(m.bcc, ['foo@bar.de', 'bar@foo.de'])
         self.assertIn('my test posttext', m.body)
         self.assertIn('hugo', m.subject)
+
+    def test_mail_notify_send_mention(self):
+        hugo = create_user("hugo")
+        post = create_post('my test posttext', hugo)
+        send_mention_notification(post, ['foo@bar.de', 'bar@foo.de'])
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['foo@bar.de', 'bar@foo.de'])
+        self.assertIn('my test posttext', m.body)
+        self.assertIn('hugo', m.subject)
+
+    def test_mail_notify_send_derivate(self):
+        hugo = create_user("hugo")
+        post = create_post('my test posttext', hugo)
+        send_derivate_notification(post, ['foo@bar.de', 'bar@foo.de'])
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['foo@bar.de', 'bar@foo.de'])
+        self.assertIn('my test posttext', m.body)
+        self.assertGreater(len(m.subject),0)
