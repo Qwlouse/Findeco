@@ -125,6 +125,11 @@ def send_derivate_notification(post, mailing_list):
     send_notification_to(subject, post, mailing_list)
 
 
+def send_new_argument_notification(post, mailing_list):
+    subject = ugettext('new_argument_email_notification_subject')
+    send_notification_to(subject, post, mailing_list)
+
+
 def send_mention_notification(post, mailing_list):
     subject = ugettext('userpost_email_notification_subject{author}').format(
         author=post.author.username)
@@ -152,3 +157,9 @@ def notify_derivate(node, post):
     follows_for_notifying = node.votes.filter(user__profile__wants_mail_notification=True).all()
     mailing_list = [vote.user.email for vote in follows_for_notifying]
     send_derivate_notification(post, mailing_list)
+
+
+def notify_new_argument(node, post):
+    follows_for_notifying = node.votes.filter(user__profile__wants_mail_notification=True).all()
+    mailing_list = [vote.user.email for vote in follows_for_notifying]
+    send_new_argument_notification(post, mailing_list)

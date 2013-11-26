@@ -36,8 +36,9 @@ from microblogging.factory import create_post
 from microblogging.view_helpers import (
     microblogging_response, get_load_type, convert_long_urls,
     send_notification_to, send_derivate_notification,
-    send_mention_notification, notify_derivate, notify_users)
-from node_storage.factory import create_user, create_nodes_for_path, create_vote
+    send_mention_notification, notify_derivate, notify_users,
+    notify_new_argument)
+from node_storage.factory import create_user, create_nodes_for_path, create_vote, create_argument
 
 
 class ViewHelpersTest(TestCase):
@@ -228,6 +229,33 @@ class ViewHelpersTest(TestCase):
         derivate = create_nodes_for_path('/foo.2', [hugo])
         node.add_derivate(derivate)
         notify_derivate(node, post)
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['hu@go.info', 'max@imil.ian'])
+        self.assertIn('System Message', m.body)
+        self.assertGreater(len(m.subject), 0)
+
+    def test_mail_notify_new_argument(self):
+        hugo = create_user("hugo")
+        hugo.email = "hu@go.info"
+        hugo.profile.wants_mail_notification = True
+        hugo.save()
+        max = create_user("max")
+        max.email = "max@imil.ian"
+        max.profile.wants_mail_notification = True
+        max.save()
+        berta = create_user("berta")
+        berta.email = "b@er.ta"
+        berta.profile.wants_mail_notification = False
+        berta.save()
+        post = create_post('System Message', hugo)
+        node = create_nodes_for_path('/foo.1', [hugo])
+        create_vote(hugo, [node])
+        create_vote(max, [node])
+        create_vote(berta, [node])
+        create_argument(node, 'n', 'Bla', 'Blubb', [hugo])
+        notify_new_argument(node, post)
         self.assertEqual(len(mail.outbox), 1)
         m = mail.outbox[0]
         self.assertEqual(m.to, [])

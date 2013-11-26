@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-26 21:57+0100\n"
+"POT-Creation-Date: 2013-11-26 22:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,5 +83,9 @@ msgid "derivate_email_notification_subject"
 msgstr ""
 
 #: microblogging/view_helpers.py:129
+msgid "new_argument_email_notification_subject"
+msgstr ""
+
+#: microblogging/view_helpers.py:134
 msgid "userpost_email_notification_subject{author}"
 msgstr ""

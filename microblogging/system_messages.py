@@ -29,7 +29,7 @@
 from __future__ import division, print_function, unicode_literals
 from microblogging.models import Post
 from findeco.models import get_system_user
-from microblogging.view_helpers import notify_derivate
+from microblogging.view_helpers import notify_derivate, notify_new_argument
 import node_storage as backend
 
 
@@ -92,5 +92,8 @@ def post_new_argument_for_node_message(user, path, arg_type, arg_path):
     post.mentions = [user]
     post.node_references = [backend.get_node_for_path(arg_path), post.location]
     post.render()
+
+    # email notification
+    notify_new_argument(post.location, post)
     return post
 
