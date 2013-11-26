@@ -36,7 +36,7 @@ from microblogging.factory import create_post
 from microblogging.view_helpers import (
     microblogging_response, get_load_type, convert_long_urls,
     send_notification_to, send_derivate_notification,
-    send_mention_notification, notify_derivate)
+    send_mention_notification, notify_derivate, notify_users)
 from node_storage.factory import create_user, create_nodes_for_path, create_vote
 
 
@@ -171,6 +171,29 @@ class ViewHelpersTest(TestCase):
         self.assertEqual(m.to, [])
         self.assertEqual(m.bcc, ['foo@bar.de', 'bar@foo.de'])
         self.assertIn('my test posttext', m.body)
+        self.assertIn('hugo', m.subject)
+
+    def test_mail_notify_mentions(self):
+        hugo = create_user("hugo")
+        hugo.email = "hu@go.info"
+        hugo.profile.wants_mail_notification = True
+        hugo.save()
+        max = create_user("max")
+        max.email = "max@imil.ian"
+        max.profile.wants_mail_notification = True
+        max.save()
+        berta = create_user("berta")
+        berta.email = "b@er.ta"
+        berta.profile.wants_mail_notification = False
+        berta.save()
+        post = create_post('Hallo @max und @berta', hugo)
+        notify_users(post)
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['max@imil.ian'])
+        self.assertIn('Hallo', m.body)
+        self.assertIn('max', m.body)
         self.assertIn('hugo', m.subject)
 
     def test_mail_notify_send_derivate(self):
