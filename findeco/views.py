@@ -412,10 +412,11 @@ def store_settings(request):
         assert_valid_email(email)
         eact = EmailActivation.create(user, email)
         try:
-            send_mail(settings.EMAIL_VERIFICATION_TITLE,
-                      settings.EMAIL_VERIFICATION_BODY + ' ' +
-                      settings.FINDECO_BASE_URL +
-                      '/confirm_email/' + str(eact.key),
+            confirm_url = settings.FINDECO_BASE_URL + '/confirm_email/' + \
+                str(eact.key)
+            send_mail(ugettext('mail_verification_email_subject'),
+                      ugettext('mail_verification_email_body{url}').format(
+                      url=confirm_url),
                       settings.EMAIL_HOST_USER,
                       [email],
                       fail_silently=False)
@@ -549,8 +550,8 @@ def account_reset_request_by_name(request):
         recovery_url = settings.FINDECO_BASE_URL + '/confirm/' + \
             str(recovery.key)
 
-        send_mail(ugettext('registration_recovery_email_subject'),
-                  ugettext('registration_recovery_email_body{url}').format(
+        send_mail(ugettext('password_recovery_email_subject'),
+                  ugettext('password_recovery_email_body{url}').format(
                       url=recovery_url),
                   settings.EMAIL_HOST_USER,
                   [user.email])
@@ -570,8 +571,8 @@ def account_reset_request_by_mail(request):
     try:
         recovery_url = settings.FINDECO_BASE_URL + '/confirm/' + \
             str(recovery.key)
-        send_mail(ugettext('registration_recovery_email_subject'),
-                  ugettext('registration_recovery_email_body{url}').format(
+        send_mail(ugettext('password_recovery_email_subject'),
+                  ugettext('password_recovery_email_body{url}').format(
                       url=recovery_url),
                   settings.EMAIL_HOST_USER,
                   [user.email])
@@ -589,9 +590,10 @@ def account_reset_confirmation(request):
     try:
         rec = PasswordRecovery.objects.get(key=recovery_key)
         new_password = rec.resolve()
-        send_mail(settings.REGISTRATION_RECOVERY_TITLE_SUCCESS,
-                  settings.REGISTRATION_RECOVERY_BODY_SUCCESS + ' Password : ' +
-                  str(new_password), settings.EMAIL_HOST_USER,
+        send_mail(ugettext('password_recovery_success_email_subject'),
+                  ugettext('password_recovery_success_email_body{password}'
+                           ).format(password=str(new_password)),
+                  settings.EMAIL_HOST_USER,
                   [rec.user.email])
         return json_response({'accountResetConfirmationResponse': {}})
     except PasswordRecovery.DoesNotExist:

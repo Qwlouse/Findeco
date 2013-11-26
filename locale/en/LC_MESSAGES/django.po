@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-26 21:41+0100\n"
+"POT-Creation-Date: 2013-11-26 21:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,28 +17,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: findeco/views.py:514
+#: findeco/views.py:417
+msgid "mail_verification_email_subject"
+msgstr "[Findeco]"
+
+#: findeco/views.py:418
+msgid "mail_verification_email_body{url}"
+msgstr ""
+"You requested an e-mail change on your Findeco Account.You can complete it "
+"with this link:\n"
+"{url}\n"
+"If you did not request it you just need to ignore this Mail."
+
+#: findeco/views.py:515
 msgid "registration_email_subject"
 msgstr "[Findeco] Your Findeco registration"
 
-#: findeco/views.py:515
+#: findeco/views.py:516
 msgid "registration_email_body{url}"
 msgstr ""
 "You have registered an Findeco account with this e-mail address. You can "
 "activate it with this link: \n"
 "{url}If you did not register it you just need to ignore this mail."
 
-#: findeco/views.py:552 findeco/views.py:573
-msgid "registration_recovery_email_subject"
+#: findeco/views.py:553 findeco/views.py:574
+msgid "password_recovery_email_subject"
 msgstr "[Findeco] Password recovery"
 
-#: findeco/views.py:553 findeco/views.py:574
-msgid "registration_recovery_email_body{url}"
+#: findeco/views.py:554 findeco/views.py:575
+msgid "password_recovery_email_body{url}"
 msgstr ""
 "You requested an Password reset on your Findeco Account. You can request it "
 "with this Link:\n"
 " {url}\n"
 "If you did not request it you just need to ignore this Mail."
+
+#: findeco/views.py:593
+msgid "password_recovery_success_email_subject"
+msgstr "[Findeco] New password"
+
+#: findeco/views.py:594
+#, fuzzy
+msgid "password_recovery_success_email_body{password}"
+msgstr ""
+"Your new Findeco password is:\n{password}"
 
 #: microblogging/models.py:189
 msgid "node_created_message"
@@ -75,3 +97,17 @@ msgstr ""
 #: microblogging/view_helpers.py:129
 msgid "userpost_email_notification_subject{author}"
 msgstr ""
+
+#, fuzzy
+#~ msgid "password_recovery_email_subject{url}"
+#~ msgstr "[Findeco] Password recovery"
+
+#~ msgid "registration_recovery_email_subject"
+#~ msgstr "[Findeco] Password recovery"
+
+#~ msgid "registration_recovery_email_body{url}"
+#~ msgstr ""
+#~ "You requested an Password reset on your Findeco Account. You can request "
+#~ "it with this Link:\n"
+#~ " {url}\n"
+#~ "If you did not request it you just need to ignore this Mail."
