@@ -129,7 +129,7 @@
 
             </div>
             <div id="navigationBar" ng-controller="FindecoNavigationCtrl">
-                <div style="width:700px;float:left;">
+                <div class="centeringContainer">
                     <ul>
                         <li>
                             <a href="/index">
@@ -149,15 +149,15 @@
                             <a href="{{ nav.path }}">{{ nav.name }}</a>
                         </li>
                     </ul>
-                </div>
-                <!--<div class="helpactivator" ng-controller="FindecoHelpCtrl">
+                    <div class="helpactivator" ng-controller="FindecoHelpCtrl">
                     <div ng-click="toogleHelpStatus()" ng-show="helpIsActive">
                         <a href="#"> Hilfe ist aktiv (ändern)</a>
                     </div>
                     <div ng-click="toogleHelpStatus()" ng-show="!helpIsActive">
                         <a href="#"> Hilfe ist inaktiv (ändern) </a>
                     </div>
-                </div>-->
+                </div>
+                </div>
             </div>
         </div>
 
