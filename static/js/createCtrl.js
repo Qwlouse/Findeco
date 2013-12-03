@@ -81,11 +81,12 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
 
         
         var params = {};
+        var test = false;
         switch ($scope.settings.type) {
             case 'argumentPro':
             case 'argumentNeut':
             case 'argumentCon':
-                var test = $scope.checkWikiCompatibility($scope.tmp.text);
+                test = $scope.checkWikiCompatibility($scope.tmp.text);
                 if ( test != true ) {
                     Message.send('error','_argumentText' + test + '_');
                     break;
@@ -96,7 +97,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 params['wikiText'] = $scope.tmp.text;
             break;
             case 'topic':
-                var test = $scope.checkWikiCompatibility($scope.tmp.text);
+                test = $scope.checkWikiCompatibility($scope.tmp.text);
                 if ( test != true ) {
                     Message.send('error','_text' + test + '_');
                     break;
@@ -110,7 +111,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                     Message.send('error','_derivateArgumentMissing_');
                     break;
                 }
-                var test = $scope.checkWikiCompatibility($scope.tmp.text);
+                test = $scope.checkWikiCompatibility($scope.tmp.text);
                 if ( test != true ) {
                     Message.send('error','_derivateText' + test + '_');
                     break;
@@ -127,7 +128,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 params['wikiTextAlternative'] = $scope.tmp.textAlternative;
             break;
             case 'opposing':
-                var test = $scope.checkWikiCompatibility($scope.tmp.textAlternative);
+                test = $scope.checkWikiCompatibility($scope.tmp.textAlternative);
                 if ( test != true ) {
                     Message.send('error','_opposingTextAlternative' + test + '_');
                     break;
