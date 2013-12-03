@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/static/css/footer.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/create.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/start.css" type="text/css"/>
-	<link rel="stylesheet" href="/static/css/profile.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/profile.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/help.css" type="text/css"/>
     <!-- Javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
@@ -36,9 +36,9 @@
     <script type="text/javascript" src="/static/js/lib/codeholicsCreole.js"></script>
     <script type="text/javascript" src="/static/js/lib/moment.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/ui-bootstrap-tpls-0.2.0.min.js"></script>
-	<script type="text/javascript" src="/static/js/lib/modernizr.custom.js"></script>
-	<script type="text/javascript" src="/static/js/lib/localize.js"></script>
-	<script type="text/javascript" src="/static/js/lib/diff_match_patch.js"></script>
+    <script type="text/javascript" src="/static/js/lib/modernizr.custom.js"></script>
+    <script type="text/javascript" src="/static/js/lib/localize.js"></script>
+    <script type="text/javascript" src="/static/js/lib/diff_match_patch.js"></script>
     <!-- Javascript files -->
     <script type="text/javascript" src="/static/js/app.js"></script>
     <script type="text/javascript" src="/static/js/argumentCtrl.js"></script>
@@ -68,7 +68,7 @@
 
     <title data-i18n="_pageTitle_"></title>
 </head>
-<body >
+<body>
 
 <div id="wrap">
     <div id="main">
@@ -78,17 +78,29 @@
                     <div id="headerContent" ng-controller="FindecoMenuCtrl">
 
                         <div class="version">Version: {{ fesettings.version }}</div>
-                        <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">Achtung!! Sie sind als Admin User angemeldet</div>
+                        <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">
+                            Achtung!! Sie sind als Admin User angemeldet
+                        </div>
                         <ul>
-                            <li class="{{getActiveClass('')}} {{getActiveClass('start')}}"><a href="/start" data-i18n="_start_">Start</a></li>
-                            <li></li>
-                            <li class="{{getActiveClass('news')}}" ng-show="user.isLoggedIn"><a href="/news" data-i18n="_news_">News</a></li>
-                            <li class="{{getActiveClass('microblogging')}}" ng-show="user.isLoggedIn"><a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a></li>
-                            <li class="{{ isContentActive() }}"><a href="/index" data-i18n="_content_">Content</a></li>
-                            <li class="{{getActiveClass('search')}}" id="searchTab">
+                            <li class="{{ getActiveClass('')}} {{ getActiveClass('start')}}">
+                                <a href="/start" data-i18n="_start_">Start</a>
+                            </li>
+                            <li class="{{ getActiveClass('news')}}" ng-show="user.isLoggedIn">
+                                <a href="/news" data-i18n="_news_">News</a>
+                            </li>
+                            <li class="{{ getActiveClass('microblogging')}}" ng-show="user.isLoggedIn">
+                                <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
+                            </li>
+                            <li class="{{ isContentActive() }}">
+                                <a href="/index" data-i18n="_content_">Content</a>
+                            </li>
+                            <li class="{{ getActiveClass('search')}}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
-                                        <input id="searchInput" type="search" name="searchField" placeholder="" autocomplete="on" ng-model="searchString" data-i18n-attr="_search_|placeholder"/>
+                                        <input id="searchInput" type="search"
+                                               name="searchField" placeholder=""
+                                               autocomplete="on" ng-model="searchString"
+                                               data-i18n-attr="_search_|placeholder"/>
                                         <button class="searchButton" value=""></button>
                                     </form>
                                 </div>
@@ -96,20 +108,21 @@
                         </ul>
 
                         <ul style="position: absolute; right: 0;">
-                            <li  class="{{getActiveClass('profile')}}" ng-show="user.isLoggedIn">
-                                <a ng-href="/profile">{{user.displayName}}</a>
-
+                            <li class="{{ getActiveClass('profile')}}" ng-show="user.isLoggedIn">
+                                <a ng-href="/profile">{{ user.displayName }}</a>
                             </li>
                             <li ng-show="user.isLoggedIn">
                                 <a ng-click="logout()" style="cursor:pointer; padding: 0;">
                                     <img src="/static/images/logout.png" alt="Logout" height="18"
-                                         style="position: relative; top: 3px; margin: 0 0 0 0;" /></a>
-                                         <!--onmouseover="this.src='/static/images/logout_hover.png';"
-                                         onmouseout="this.src='/static/images/logout.png';"-->
-                                    <!--todo: Reimplemnt without Angularerror-->
+                                         style="position: relative; top: 3px; margin: 0 0 0 0;"/></a>
+                                <!--onmouseover="this.src='/static/images/logout_hover.png';"
+                                onmouseout="this.src='/static/images/logout.png';"-->
+                                <!--todo: Reimplemnt without Angularerror-->
 
                             </li>
-                            <li ng-show="!user.isLoggedIn" style="float:right"><a href="/login" data-i18n="_accountLogin_"></a></li>
+                            <li ng-show="!user.isLoggedIn" style="float:right">
+                                <a href="/login" data-i18n="_accountLogin_"></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -117,29 +130,35 @@
             </div>
             <div id="navigationBar" ng-controller="FindecoNavigationCtrl">
                 <div style="width:700px;float:left;">
-
                     <ul>
-                        <li><a href="/index"><img ng-show="navigation.entries"
-                                               src="/static/images/home.png"
-                                               alt="Home" />
-                                               <!--onmouseover="this.src='/static/images/home_hover.png';"
-                                               onmouseout="this.src='/static/images/home.png';"-->
-                                                <!--todo: Reimplemnt without Angularerror-->
-                               <img
-                                ng-show="navigation.entries.length == 0" src="/static/images/home_hover.png"
-                                alt="Home"/></a></li>
+                        <li>
+                            <a href="/index">
+                                <img ng-show="navigation.entries"
+                                     src="/static/images/home.png"
+                                     alt="Home"/>
+                                <!--onmouseover="this.src='/static/images/home_hover.png';"
+                                onmouseout="this.src='/static/images/home.png';"-->
+                                <!--todo: Reimplemnt without Angularerror-->
+                                <img ng-show="navigation.entries.length == 0"
+                                     src="/static/images/home_hover.png"
+                                     alt="Home"/>
+                            </a>
+                        </li>
 
-                        <li ng-repeat="nav in navigation.entries"><a href="{{ nav.path }}">{{ nav.name }}</a></li>
+                        <li ng-repeat="nav in navigation.entries">
+                            <a href="{{ nav.path }}">{{ nav.name }}</a>
+                        </li>
                     </ul>
                 </div>
-                <div class="helpactivator"   ng-controller="FindecoHelpCtrl">
-                <div ng-click="toogleHelpStatus()" ng-show="helpIsActive"> <a href="#"> Hilfe ist aktiv (ändern)</a></div>
-                <div ng-click="toogleHelpStatus()" ng-show="!helpIsActive"><a href="#">  Hilfe ist inaktiv (ändern) </a></div>
-
-
+                <!--<div class="helpactivator" ng-controller="FindecoHelpCtrl">
+                    <div ng-click="toogleHelpStatus()" ng-show="helpIsActive">
+                        <a href="#"> Hilfe ist aktiv (ändern)</a>
+                    </div>
+                    <div ng-click="toogleHelpStatus()" ng-show="!helpIsActive">
+                        <a href="#"> Hilfe ist inaktiv (ändern) </a>
+                    </div>
+                </div>-->
             </div>
-            </div>
-
         </div>
 
 
@@ -149,7 +168,7 @@
     </div>
     <div id="messageBox" ng-controller="FindecoMessageCtrl" ng-show="service.messageList.length > 0">
         <div alert ng-repeat="message in service.messageList" type="message.type" close="closeMessage($index)">
-            {{message.msg}}
+            {{ message.msg }}
         </div>
     </div>
 </div>
@@ -164,15 +183,17 @@
     </div>
 </div>
 {{ hide }}
-<div class="helppanel" ng-animate="animate"  ng-controller="FindecoHelpCtrl" ng-hide="panelIsHidden" >
+<div class="helppanel" ng-animate="animate" ng-controller="FindecoHelpCtrl" ng-hide="panelIsHidden">
     {{ hide }}
     <a ng-click="hidePanel();" class="close">X</a>
+
     <div style=";width:850px;color:#ffffff;opacity:1">
 
         <h2>{{ title }}</h2>
         {{ helptext }}
 
-        <a ng-show="more" style="position:absolute;right:10px;bottom:5px" href="{{ more }}">Mehr Hilfe zu diesem Thema (Link führt zu Findeco.de)</a>
+        <a ng-show="more" style="position:absolute;right:10px;bottom:5px" href="{{ more }}">Mehr Hilfe zu diesem Thema
+            (Link führt zu Findeco.de)</a>
     </div>
 </div>
 </body>

@@ -44,6 +44,7 @@
     margin-left: 5px; /*optical margin to make rootline appear lined up*/
     height: 14px;
 }
+
 #navigationBar ul{
     padding: 0;
     display: inline;
@@ -56,6 +57,7 @@
     display: inline-block;
     font-size: 12pt;
 }
+
 /* insert slashes between navigation items */
 #navigationBar li + li:before{
     color: #cccccc;
@@ -67,10 +69,11 @@
 #navigationBar li:last-child a {
     color: #2d7cc4;
 }
+
 .version{
     color:white;
     font-size: 0.5em;
     position: absolute;
     top:3px;
     right:-30px;
-    }
+}
