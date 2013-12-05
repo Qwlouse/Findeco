@@ -53,7 +53,7 @@ class MicrobloggingFeed(Feed):
         return item.author.username
 
     def item_link(self, item):
-        return "/" + item.location.get_a_path()
+        return FINDECO_BASE_URL +"/" + item.location.get_a_path()
 
     def item_guid(self, item):
         return str(item.id)
