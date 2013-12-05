@@ -147,6 +147,28 @@ class StoreSettingsTest(TestCase):
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.username, "hans2")
 
+    def test_change_wants_mail_notification_works(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        self.assertEqual(self.hans.profile.wants_mail_notification, False)
+
+        _ = self.client.post(reverse('store_settings'),
+                             dict(description="foo", displayName='hans',
+                                  email='a@bc.de', wantsMailNotification=True))
+
+        hans = User.objects.get(id=self.hans.id)
+        self.assertEqual(hans.profile.wants_mail_notification, True)
+
+    def test_change_wants_no_mail_notification_works(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        self.assertEqual(self.hans.profile.wants_mail_notification, False)
+
+        _ = self.client.post(reverse('store_settings'),
+                             dict(description="foo", displayName='hans',
+                                  email='a@bc.de', wantsMailNotification=False))
+
+        hans = User.objects.get(id=self.hans.id)
+        self.assertEqual(hans.profile.wants_mail_notification, False)
+
 
 class ChangePasswordTest(TestCase):
     def setUp(self):

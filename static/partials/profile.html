@@ -6,19 +6,23 @@
   
     </div>
     <div class="profileCenterWideColumn contentBox" ng-show="user.isLoggedIn">
-          <h2 data-i18n="_username_">Username</h2>
+        <h2 data-i18n="_username_">Username</h2>
         <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ user.displayName }}</p>
         <form ng-submit="storeUserSettings()">
             <input type="text" ng-model="displayNameTmp" /><br />
-            <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
+            <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}" />
         </form>
  
         <h2 data-i18n="_description_">Beschreibung</h2>
         <form ng-submit="storeUserSettings()">
-            <textarea ng-model="user.description" placeholder="Beschreibung" style="width: 100%; resize: vertical;" rows="5">  </textarea>
-            <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}">
+            <textarea ng-model="user.description"
+                      placeholder="Beschreibung"
+                      style="width: 100%; resize: vertical;"
+                      rows="5">
+
+            </textarea>
+            <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}" />
         </form>
-      
 
     </div>
     <div class="profileCenterWideColumn contentBox" ng-hide="user.isLoggedIn">

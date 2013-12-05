@@ -36,6 +36,7 @@ from django.contrib.auth import logout as django_logout
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.utils.html import escape
+from django.utils.translation import ugettext
 from django.views.decorators.csrf import ensure_csrf_cookie
 from findeco.models import EmailActivation
 from findeco.project_path import project_path
@@ -43,11 +44,10 @@ from findeco.search_tools import get_search_query
 
 from .view_helpers import *
 from microblogging import search_for_microblogging
-from microblogging.system_messages import post_node_was_flagged_message
-from microblogging.system_messages import post_new_derivate_for_node_message
-from microblogging.system_messages import post_new_derivate_for_node_message_list
-from microblogging.system_messages import post_new_argument_for_node_message
-from microblogging.system_messages import post_node_was_unflagged_message
+from microblogging.system_messages import (
+    post_node_was_flagged_message, post_new_derivate_for_node_message,
+    post_new_derivate_for_node_message_list, post_new_argument_for_node_message,
+    post_node_was_unflagged_message)
 from models import UserProfile, Activation, PasswordRecovery
 import node_storage as backend
 from node_storage.factory import create_user
@@ -221,7 +221,7 @@ def store_text(request, path):
         if len(p['wikiText'].strip()) > 0:
             # fork for additional slot
             new_path = fork_node_and_add_slot(path, user, p['wikiText'])
-            # microblog alert
+            # microblog alert and mail notification
             post_new_derivate_for_node_message(user, path, new_path)
         else:
             raise EmptyText
@@ -412,10 +412,11 @@ def store_settings(request):
         assert_valid_email(email)
         eact = EmailActivation.create(user, email)
         try:
-            send_mail(settings.EMAIL_VERIFICATION_TITLE,
-                      settings.EMAIL_VERIFICATION_BODY + ' ' +
-                      settings.FINDECO_BASE_URL +
-                      '/confirm_email/' + str(eact.key),
+            confirm_url = settings.FINDECO_BASE_URL + '/confirm_email/' + \
+                str(eact.key)
+            send_mail(ugettext('mail_verification_email_subject'),
+                      ugettext('mail_verification_email_body{url}').format(
+                      url=confirm_url),
                       settings.EMAIL_HOST_USER,
                       [email],
                       fail_silently=False)
@@ -423,6 +424,10 @@ def store_settings(request):
             # This means we can't send mails, so we can't change the mail
             eact.delete()
             raise
+    if 'wantsMailNotification' in request.POST:
+        user.profile.wants_mail_notification = (
+            request.POST['wantsMailNotification'].lower() == 'true')
+
     user.save()
     return json_response({'storeSettingsResponse': {}})
 
@@ -505,9 +510,11 @@ def account_registration(request):
     user.save()
     activation = Activation.create(user)
     try:
-        send_mail(settings.REGISTRATION_TITLE,
-                  settings.REGISTRATION_BODY + ' ' + settings.FINDECO_BASE_URL +
-                  '/activate/' + str(activation.key),
+        activation_url = settings.FINDECO_BASE_URL + '/activate/' + \
+            str(activation.key)
+        send_mail(ugettext('registration_email_subject'),
+                  ugettext('registration_email_body{url}').format(
+                      url=activation_url),
                   settings.EMAIL_HOST_USER,
                   [email_address],
                   fail_silently=False)
@@ -540,9 +547,12 @@ def account_reset_request_by_name(request):
     user = assert_active_user(display_name)
     recovery = PasswordRecovery.create(user)
     try:
-        send_mail(settings.REGISTRATION_RECOVERY_TITLE,
-                  settings.REGISTRATION_RECOVERY_BODY + ' ' +
-                  settings.FINDECO_BASE_URL + '/confirm/' + str(recovery.key),
+        recovery_url = settings.FINDECO_BASE_URL + '/confirm/' + \
+            str(recovery.key)
+
+        send_mail(ugettext('password_recovery_email_subject'),
+                  ugettext('password_recovery_email_body{url}').format(
+                      url=recovery_url),
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
@@ -559,9 +569,11 @@ def account_reset_request_by_mail(request):
     user = assert_active_user(email=email_address)
     recovery = PasswordRecovery.create(user)
     try:
-        send_mail(settings.REGISTRATION_RECOVERY_TITLE,
-                  settings.REGISTRATION_RECOVERY_BODY + ' ' +
-                  settings.FINDECO_BASE_URL + '/confirm/' + str(recovery.key),
+        recovery_url = settings.FINDECO_BASE_URL + '/confirm/' + \
+            str(recovery.key)
+        send_mail(ugettext('password_recovery_email_subject'),
+                  ugettext('password_recovery_email_body{url}').format(
+                      url=recovery_url),
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
@@ -578,9 +590,10 @@ def account_reset_confirmation(request):
     try:
         rec = PasswordRecovery.objects.get(key=recovery_key)
         new_password = rec.resolve()
-        send_mail(settings.REGISTRATION_RECOVERY_TITLE_SUCCESS,
-                  settings.REGISTRATION_RECOVERY_BODY_SUCCESS + ' Password : ' +
-                  str(new_password), settings.EMAIL_HOST_USER,
+        send_mail(ugettext('password_recovery_success_email_subject'),
+                  ugettext('password_recovery_success_email_body{password}'
+                           ).format(password=str(new_password)),
+                  settings.EMAIL_HOST_USER,
                   [rec.user.email])
         return json_response({'accountResetConfirmationResponse': {}})
     except PasswordRecovery.DoesNotExist:

@@ -30,7 +30,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
         type: $routeParams.type
     };
     $scope.radioModel = '';
-    $scope.initialAlternative='';
+    $scope.initialAlternative = '';
 
     $scope.showIf = function (matchArray) {
         for (var m in matchArray) {
@@ -61,63 +61,75 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
         }
     };
     $scope.getFormLockState = function () {
-        return $scope.blockButton ;
+        return $scope.blockButton;
     };
 
     $scope.submit = function () {
-    	if ($scope.blockButton==true){
-    		return;
-    	}
-    	//Check that both fields are modified
-    	if ( Message.localize('_editFieldPretext_')==$scope.tmp.text ){
-    		Message.send('error','_createNotChanged_');  	
-    		return;
+        if ($scope.blockButton == true) {
+            return;
         }
-        
-        if ( ( $scope.initialAlternative==$scope.tmp.textAlternative) &&  ( $scope.tmp.textAlternative != "")){
-        	Message.send('error','_alternativeNotChanged_');  	
-    		return;
+        //Check that both fields are modified
+        if (Message.localize('_editFieldPretext_') == $scope.tmp.text) {
+            Message.send('error', '_createNotChanged_');
+            return;
         }
 
-        
+        if (( $scope.initialAlternative == $scope.tmp.textAlternative ) &&
+            ( $scope.tmp.textAlternative != "")) {
+            Message.send('error', '_alternativeNotChanged_');
+            return;
+        }
+
+        //Check that the heading was modified
+        var h1Regex = new RegExp('^[^=]*=([a-zA-ZÜÖÄüöäß0-9 -_,:;§@]+)=[^=]');
+        var pretextMatches = Message.localize('_editFieldPretext_').match(h1Regex);
+        var inputMatches = $scope.tmp.text.match(h1Regex);
+        if ((pretextMatches.length > 1) && (inputMatches.length > 1) &&
+            (pretextMatches[1].length > 0) &&
+            ((pretextMatches[1] == inputMatches[1]) || (inputMatches[1].length == 0))) {
+            Message.send('error', '_createHeadingNotChanged_');
+            return;
+        }
+
         var params = {};
+        var test = false;
         switch ($scope.settings.type) {
             case 'argumentPro':
             case 'argumentNeut':
             case 'argumentCon':
-                var test = $scope.checkWikiCompatibility($scope.tmp.text);
-                if ( test != true ) {
-                    Message.send('error','_argumentText' + test + '_');
+                test = $scope.checkWikiCompatibility($scope.tmp.text);
+                if (test != true) {
+                    Message.send('error', '_argumentText' + test + '_');
                     break;
                 }
                 // Past watchdog
 
                 params['argumentType'] = $scope.settings.type.toLowerCase().substr(8);
                 params['wikiText'] = $scope.tmp.text;
-            break;
+                break;
             case 'topic':
-                var test = $scope.checkWikiCompatibility($scope.tmp.text);
-                if ( test != true ) {
-                    Message.send('error','_text' + test + '_');
+                test = $scope.checkWikiCompatibility($scope.tmp.text);
+                if (test != true) {
+                    Message.send('error', '_text' + test + '_');
                     break;
                 }
                 // Past watchdog
 
                 params['wikiText'] = $scope.tmp.text;
-            break;
+                break;
             case 'derivate':
-                if ( $scope.tmp.argumentType != 'con' && $scope.tmp.argumentType != 'neut' ) {
-                    Message.send('error','_derivateArgumentMissing_');
+                if ($scope.tmp.argumentType != 'con' && $scope.tmp.argumentType != 'neut') {
+                    Message.send('error', '_derivateArgumentMissing_');
                     break;
                 }
-                var test = $scope.checkWikiCompatibility($scope.tmp.text);
-                if ( test != true ) {
-                    Message.send('error','_derivateText' + test + '_');
+                test = $scope.checkWikiCompatibility($scope.tmp.text);
+                if (test != true) {
+                    Message.send('error', '_derivateText' + test + '_');
                     break;
                 }
                 test = $scope.checkWikiCompatibility($scope.tmp.textAlternative);
-                if ( test != true ) {
-                    Message.send('error','_derivateTextAlternative' + test + '_');
+                if (test != true) {
+                    Message.send('error', '_derivateTextAlternative' + test + '_');
                     break;
                 }
                 // Past watchdog
@@ -125,23 +137,23 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 params['argumentType'] = $scope.tmp.argumentType;
                 params['wikiText'] = $scope.tmp.text;
                 params['wikiTextAlternative'] = $scope.tmp.textAlternative;
-            break;
+                break;
             case 'opposing':
-                var test = $scope.checkWikiCompatibility($scope.tmp.textAlternative);
-                if ( test != true ) {
-                    Message.send('error','_opposingTextAlternative' + test + '_');
+                test = $scope.checkWikiCompatibility($scope.tmp.textAlternative);
+                if (test != true) {
+                    Message.send('error', '_opposingTextAlternative' + test + '_');
                     break;
                 }
                 // Past watchdog
 
                 params['wikiTextAlternative'] = $scope.tmp.textAlternative;
-            break;
+                break;
         }
 
-        if ( angular.equals(params,{}) ) {
+        if (angular.equals(params, {})) {
             return;
         }
-        $scope.blockButton=true;
+        $scope.blockButton = true;
         Backend.storeText(Navigator.nodePath, params)
             .success(function (data) {
                 if (data.storeTextResponse != undefined) {
@@ -153,12 +165,12 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 if (data.errorResponse != undefined) {
                     Message.send('error', data.errorResponse.errorMessage);
                 }
-                $scope.blockButton=false;
-                
+                $scope.blockButton = false;
+
             })
-            .error(function(data){
-        		$scope.blockButton=false;
-        	});
+            .error(function (data) {
+                $scope.blockButton = false;
+            });
     };
 
     $scope.cancel = function () {
@@ -179,16 +191,16 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
     if ($scope.settings.type == 'derivate') {
         var paragraphs = [];
         var wikiText = "";
-        $scope.blockButton=true;
+        $scope.blockButton = true;
         Backend.loadText(paragraphs, Navigator.nodePath).success(function () {
-        	$scope.blockButton=false;
+            $scope.blockButton = false;
             for (var i = 0; i < paragraphs.length; i++) {
                 var tmpText = paragraphs[i]['wikiText'];
-                tmpText = tmpText.replace(/={2}[ ]\[{2}.*\|/,"= ");
-                wikiText += tmpText.replace(/]{2}[ ]={2}/," =") + "\n\n\n";
+                tmpText = tmpText.replace(/={2}[ ]\[{2}.*\|/, "= ");
+                wikiText += tmpText.replace(/]{2}[ ]={2}/, " =") + "\n\n\n";
             }
             $scope.tmp.textAlternative = wikiText;
-            $scope.initialAlternative=wikiText;
+            $scope.initialAlternative = wikiText;
         });
     }
 }

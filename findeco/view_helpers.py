@@ -164,7 +164,8 @@ def create_user_settings(user):
                       user.profile.blocked.all()],
         userRights=rights,
         rsskey=user.profile.api_key,
-        email=user.email
+        email=user.email,
+        wantsMailNotification=user.profile.wants_mail_notification
     )
     return user_settings
 

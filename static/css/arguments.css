@@ -24,20 +24,21 @@
 
 /*===================== Arguments ==========================*/
 ul.argumentList {
-    font-size: 12pt;
+    font-size: 10pt;
     list-style: none;
     color: #999999;
     padding: 5px 0 5px 0;
     margin: 0 0 10px 0;
 }
 
-ul.argumentList li a {
+ul.argumentList li a.btn {
     padding: 5px 0;
     width: 200px;
+    margin-top: 0.9em;
 }
 
 ul.argumentList li {
-    margin-bottom: 10px;
+    margin-bottom: 0.3em;
 }
 
 .argumentHeading {

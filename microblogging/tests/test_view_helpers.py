@@ -27,13 +27,18 @@
 #endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 import json
+from django.core import mail
 from django.db.models import Q
 from django.test import TestCase
 from microblogging.api_validation import validate_response
 from findeco.error_handling import ViewError
 from microblogging.factory import create_post
-from microblogging.view_helpers import microblogging_response, get_load_type, convert_long_urls
-from node_storage.factory import create_user
+from microblogging.view_helpers import (
+    microblogging_response, get_load_type, convert_long_urls,
+    send_notification_to, send_derivate_notification,
+    send_mention_notification, notify_derivate, notify_users,
+    notify_new_argument)
+from node_storage.factory import create_user, create_nodes_for_path, create_vote, create_argument
 
 
 class ViewHelpersTest(TestCase):
@@ -144,3 +149,116 @@ class ViewHelpersTest(TestCase):
         text = convert_long_urls("text http://www.hostname.de/ text",
                                  "www.hostname.de")
         self.assertEqual(text, "text http://www.hostname.de/ text")
+
+    ################## send_notification_to ####################################
+
+    def test_send_notification_to_sends_mail_via_bcc(self):
+        hugo = create_user("hugo")
+        post = create_post('my test posttext', hugo)
+        send_notification_to('Mail für hugo!', post, ['foo@bar.de', 'bar@foo.de'])
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['foo@bar.de', 'bar@foo.de'])
+        self.assertIn('my test posttext', m.body)
+        self.assertIn('hugo', m.subject)
+
+    def test_mail_notify_send_mention(self):
+        hugo = create_user("hugo")
+        post = create_post('my test posttext', hugo)
+        send_mention_notification(post, ['foo@bar.de', 'bar@foo.de'])
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['foo@bar.de', 'bar@foo.de'])
+        self.assertIn('my test posttext', m.body)
+        self.assertIn('hugo', m.subject)
+
+    def test_mail_notify_mentions(self):
+        hugo = create_user("hugo")
+        hugo.email = "hu@go.info"
+        hugo.profile.wants_mail_notification = True
+        hugo.save()
+        max = create_user("max")
+        max.email = "max@imil.ian"
+        max.profile.wants_mail_notification = True
+        max.save()
+        berta = create_user("berta")
+        berta.email = "b@er.ta"
+        berta.profile.wants_mail_notification = False
+        berta.save()
+        post = create_post('Hallo @max und @berta', hugo)
+        notify_users(post)
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['max@imil.ian'])
+        self.assertIn('Hallo', m.body)
+        self.assertIn('max', m.body)
+        self.assertIn('hugo', m.subject)
+
+    def test_mail_notify_send_derivate(self):
+        hugo = create_user("hugo")
+        post = create_post('my test posttext', hugo)
+        send_derivate_notification(post, ['foo@bar.de', 'bar@foo.de'])
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['foo@bar.de', 'bar@foo.de'])
+        self.assertIn('my test posttext', m.body)
+        self.assertGreater(len(m.subject), 0)
+
+    def test_mail_notify_derivate(self):
+        hugo = create_user("hugo")
+        hugo.email = "hu@go.info"
+        hugo.profile.wants_mail_notification = True
+        hugo.save()
+        max = create_user("max")
+        max.email = "max@imil.ian"
+        max.profile.wants_mail_notification = True
+        max.save()
+        berta = create_user("berta")
+        berta.email = "b@er.ta"
+        berta.profile.wants_mail_notification = False
+        berta.save()
+        post = create_post('System Message', hugo)
+        node = create_nodes_for_path('/foo.1', [hugo])
+        create_vote(hugo, [node])
+        create_vote(max, [node])
+        create_vote(berta, [node])
+        derivate = create_nodes_for_path('/foo.2', [hugo])
+        node.add_derivate(derivate)
+        notify_derivate(node, post)
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['hu@go.info', 'max@imil.ian'])
+        self.assertIn('System Message', m.body)
+        self.assertGreater(len(m.subject), 0)
+
+    def test_mail_notify_new_argument(self):
+        hugo = create_user("hugo")
+        hugo.email = "hu@go.info"
+        hugo.profile.wants_mail_notification = True
+        hugo.save()
+        max = create_user("max")
+        max.email = "max@imil.ian"
+        max.profile.wants_mail_notification = True
+        max.save()
+        berta = create_user("berta")
+        berta.email = "b@er.ta"
+        berta.profile.wants_mail_notification = False
+        berta.save()
+        post = create_post('System Message', hugo)
+        node = create_nodes_for_path('/foo.1', [hugo])
+        create_vote(hugo, [node])
+        create_vote(max, [node])
+        create_vote(berta, [node])
+        create_argument(node, 'n', 'Bla', 'Blubb', [hugo])
+        notify_new_argument(node, post)
+        self.assertEqual(len(mail.outbox), 1)
+        m = mail.outbox[0]
+        self.assertEqual(m.to, [])
+        self.assertEqual(m.bcc, ['hu@go.info', 'max@imil.ian'])
+        self.assertIn('System Message', m.body)
+        self.assertGreater(len(m.subject), 0)
