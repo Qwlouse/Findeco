@@ -610,6 +610,11 @@
         "description": ""
     },
     {
+        "key"        : "_createHeadingNotChanged_",
+        "value"      : "Die Überschrift des Arguments wurde nicht geändert. Die Weiterentwicklung kann erst gespeichert werden, wenn ein Argument mit Überschrift eingegeben wurde. ",
+        "description": ""
+    },
+    {
         "key"        : "_alternativeNotChanged_",
         "value"      : "Der Alternativtext wurde nicht geändert und kann daher nicht gespeichert werden.",
         "description": ""
