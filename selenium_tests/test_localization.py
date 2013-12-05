@@ -29,7 +29,11 @@ from django.test import LiveServerTestCase
 from nose.plugins.attrib import attr
 from test_helper import helper_login_admin
 from selenium import webdriver
+from BeautifulSoup import BeautifulSoup, SoupStrainer
+import lxml.html
 import time
+
+
 @attr('selenium')
 class TestFeLocalization(LiveServerTestCase):
     def setUp(self):
@@ -46,7 +50,30 @@ class TestFeLocalization(LiveServerTestCase):
         """
         helper_login_admin(self)
         time.sleep(1)
-        self.driver.get(self.live_server_url + '/profile')
-        self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization on profile not done")
-        self.driver.get(self.live_server_url + '/profile/password')
-        self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization on profile password not done")
+        pages=["/microblogging","/Spielwiese.1"
+            ]
+
+
+        pages_exclude = ["/terms_of_use", "/data_privacy"]
+
+        done=[""]
+        while pages:
+            for page in pages:
+
+                self.driver.get(self.live_server_url + page)
+                time.sleep(2)
+                self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization missing in " + page)
+                pages.remove(page)
+                done.append(page)
+                elem = self.driver.find_element_by_xpath("//*")
+                contents = elem.get_attribute("innerHTML")
+                dom = lxml.html.fromstring(contents)
+                for link in dom.xpath('//a/@href'):
+
+                    if (link <> "#")and(link<>" ") and not ( "http:" in link) and not ( "https:" in link) and not (link in pages) and not (link in done) and not (
+                            link in pages_exclude) and not ("static" in link) and not ("{{"in link):
+                        if (link=="/static/customContent/imprint.html"):
+                            print "foolpage"+page
+                        print link
+
+                        pages.append(link)
