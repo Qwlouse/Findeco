@@ -503,6 +503,8 @@ angular.module('FindecoServices', [])
                 var arg_parts = nodes[nodes.length - 1].split('.');
                 location.entries.push({name: arg_parts[2] + '.' + arg_parts[3], path: location.argumentPath});
             }
+            // empty messages
+            this.messageList = [];
         };
         location.getPathForNode = function (shortTitle, index) {
             return normalizeSlashes(location.nodePath + '/' + shortTitle + '.' + index);
