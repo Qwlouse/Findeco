@@ -32,34 +32,56 @@ from selenium import webdriver
 from BeautifulSoup import BeautifulSoup, SoupStrainer
 import lxml.html
 import time
+from node_storage import get_root_node, Vote, SpamFlag
+from node_storage.factory import create_textNode, create_slot, create_user
+from node_storage.factory import create_vote, create_argument, create_spam_flag
 
 
 @attr('selenium')
-class TestFeLocalization(LiveServerTestCase):
+class TestCrawler(LiveServerTestCase):
+    #fixtures = ['test.json']
     def setUp(self):
+        self.root = get_root_node()
+        self.hugo = create_user("Hugo", password="1234", groups=['voters'])
+        self.permela = create_user("Permela", password="xxx")
+        self.slot = create_slot("Slot")
+        self.root.append_child(self.slot)
+        self.text = create_textNode("Bla", "Blubb", [self.hugo])
+        self.slot.append_child(self.text)
+        self.mid = create_textNode("Bla derivate", "Blubb2", [self.hugo])
+        self.slot.append_child(self.mid)
+        self.text.add_derivate(self.mid, arg_type='n')
+        self.leaf1 = create_textNode("Bla leaf 1", "Blubb3", [self.hugo])
+        self.slot.append_child(self.leaf1)
+        self.mid.add_derivate(self.leaf1, arg_type='n')
+        self.mid2 = create_textNode("Bla derivate 2", "Blubb4", [self.hugo])
+        self.slot.append_child(self.mid2)
+        self.mid.add_derivate(self.mid2, arg_type='n')
+        self.leaf2 = create_textNode("Bla leaf 2", "Blubb5", [self.hugo])
+        self.slot.append_child(self.leaf2)
+        self.mid2.add_derivate(self.leaf2, arg_type='n')
+        self.follow = create_vote(self.hugo, [self.text, self.mid, self.leaf1, self.mid2, self.leaf2])
+
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(1)
+
 
     def tearDown(self):
         self.driver.quit()
 
-    def test_profile_localizations(self):
+    def test_crawl_test(self):
         """
         Checks all listed Pages for missing localization strings.
         @param self:
         """
+
         helper_login_admin(self)
-        time.sleep(1)
-        pages=["/microblogging","/Spielwiese.1"
-            ]
-
-
-        pages_exclude = ["/terms_of_use", "/data_privacy"]
-
+        #time.sleep(1)
+        pages=["/microblogging"]
+        pages_exclude = ["/terms_of_use", "/data_privacy", "/imprint", "/about"]
         done=[""]
         while pages:
             for page in pages:
-
                 self.driver.get(self.live_server_url + page)
                 time.sleep(2)
                 self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization missing in " + page)
@@ -72,8 +94,4 @@ class TestFeLocalization(LiveServerTestCase):
 
                     if (link <> "#")and(link<>" ") and not ( "http:" in link) and not ( "https:" in link) and not (link in pages) and not (link in done) and not (
                             link in pages_exclude) and not ("static" in link) and not ("{{"in link):
-                        if (link=="/static/customContent/imprint.html"):
-                            print "foolpage"+page
-                        print link
-
                         pages.append(link)
