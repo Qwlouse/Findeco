@@ -49,12 +49,12 @@ var findecoApp = angular.module('Findeco', ['ngAnimate','ngRoute','FindecoServic
             when('/news', {templateUrl: '/static/partials/news.html', controller: FindecoNewsCtrl}).
             when('/microblogging', {templateUrl: '/static/partials/microbloggingNews.html', controller: FindecoMicrobloggingNewsCtrl}).
             when('/search/:searchString*', {templateUrl: '/static/partials/searchResults.html', controller: FindecoSearchCtrl}).
-            when('/', {templateUrl: '/static/partials/start.html', controller: FindecoDefaultCtrl}).
-            when('/start', {templateUrl: '/static/partials/start.html', controller: FindecoDefaultCtrl}).
-            when('/index', {templateUrl: '/static/partials/startDefault.html', controller: FindecoDefaultCtrl}).
-            when('/index.htm', {templateUrl: '/static/partials/startDefault.html', controller: FindecoDefaultCtrl}).
-            when('/index.html', {templateUrl: '/static/partials/startDefault.html', controller: FindecoDefaultCtrl}).
-            otherwise({templateUrl: '/static/partials/default.html', controller: FindecoDefaultCtrl});
+            when('/', {templateUrl: '/static/partials/start.html', controller: 'FindecoDefaultCtrl'}).
+            when('/start', {templateUrl: '/static/partials/start.html', controller: 'FindecoDefaultCtrl'}).
+            when('/index', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
+            when('/index.htm', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
+            when('/index.html', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
+            otherwise({templateUrl: '/static/partials/default.html', controller: 'FindecoDefaultCtrl'});
     }]);
 
 findecoApp.constant('Version','0.3.0-alpha');
