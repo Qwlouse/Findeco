@@ -40,6 +40,7 @@ class TestFePageProfile(LiveServerTestCase):
 
     def tearDown(self):
         self.driver.quit()
+
     def login(self):
         self.driver.get(self.live_server_url + '/login')
         self.driver.implicitly_wait(1)
@@ -73,6 +74,9 @@ class TestFePageProfile(LiveServerTestCase):
         self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert")))
         self.driver.find_element_by_css_selector("button.close").click()
         self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("foo@trash-mail.com")
+        self.driver.get(self.live_server_url + '/profile/mail')
+        body = self.driver.find_element_by_tag_name('body')
+        self.assertIn('admin', body.text, "Änderung der E-Mail Adresse wurde bereits angefordert")
 
     def test_change_user_name(self):
         self.login()

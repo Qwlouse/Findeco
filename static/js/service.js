@@ -297,7 +297,13 @@ angular.module('FindecoServices', [])
                 userInfo.description = data.userInfo.description;
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.email = data.userSettings.email;
+                userInfo.emailChangeRequested = data.userSettings.emailChangeRequested;
+                userInfo.wantsEMail = data.userSettings.wantsMailNotification;
                 userInfo.followees = data.userSettings.followees;
+                for (var i = 0; i < userInfo.followees.length; i++) {
+                    userInfo.followees[i].isFollowing = 2;
+                    userInfo.followees[i].path = userInfo.followees[i].displayName;
+                }
                 if (userInfo.displayName == "admin") {
                     userInfo.isAdmin = true;
                 }
@@ -309,10 +315,14 @@ angular.module('FindecoServices', [])
         userInfo.logout = function () {
             return $http.get('/.json_logout/').success(function () {
                 userInfo.isLoggedIn = false;
-                userInfo.description = "";
                 userInfo.displayName = "";
+                userInfo.description = "";
+                userInfo.rsskey = "";
                 userInfo.followees = [];
                 userInfo.email = "";
+                userInfo.emailChangeRequested = 0;
+                userInfo.wantsEMail = false;
+                userInfo.followees = [];
                 userInfo.isAdmin = false;
                 data.userInfo = false;
                 data.userSettings = false;
@@ -337,10 +347,13 @@ angular.module('FindecoServices', [])
                 data = d.loadUserSettingsResponse;
                 userInfo.resetChanges();
                 userInfo.isLoggedIn = true;
+                userInfo.displayName = data.userInfo.displayName;
+                userInfo.description = data.userInfo.description;
                 userInfo.rsskey = data.userSettings.rsskey;
-                userInfo.followees = data.userSettings.followees;
+                userInfo.email = data.userSettings.email;
+                userInfo.emailChangeRequested = data.userSettings.emailChangeRequested;
                 userInfo.wantsEMail = data.userSettings.wantsMailNotification;
-                console.log(userInfo);
+                userInfo.followees = data.userSettings.followees;
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
