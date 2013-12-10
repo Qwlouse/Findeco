@@ -763,5 +763,10 @@
         "key"        : "_wantEMailLabel_",
         "value"      : "Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.",
         "description": ""
+    },
+    {
+        "key"        : "_changeEmailRequested_",
+        "value"      : "Die Änderung der E-Mail Adresse wurde bereits angefordert und eine Bestätigungemail an die neue Adresse versandt. Die Änderung wird wirksam, wenn der Bestätigungslink in der Mail geklickt wird.",
+        "description": ""
     }
 ]
