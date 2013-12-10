@@ -23,45 +23,12 @@
  ****************************************************************************************/
 
 describe("Findeco Module", function() {
-    var m;
+    var module;
     beforeEach(function() {
-      m = angular.module("Findeco");
+      module = angular.module("Findeco");
     });
 
     it("should be registered", function() {
-      expect(m).not.toBe(null);
-        alert(m);
+      expect(module).not.toBe(null);
     });
-
-//    describe("Dependencies:", function() {
-//
-//      var deps;
-//      var hasModule = function(m) {
-//        return deps.indexOf(m) >= 0;
-//      };
-//      before(function() {
-//        deps = module.value('appName').requires;
-//      });
-//
-//      //you can also test the module's dependencies
-//      it("should have App.Controllers as a dependency", function() {
-//        expect(hasModule('App.Controllers')).to.equal(true);
-//      });
-//
-//      it("should have App.Directives as a dependency", function() {
-//        expect(hasModule('App.Directives')).to.equal(true);
-//      });
-//
-//      it("should have App.Filters as a dependency", function() {
-//        expect(hasModule('App.Filters')).to.equal(true);
-//      });
-//
-//      it("should have App.Routes as a dependency", function() {
-//        expect(hasModule('App.Routes')).to.equal(true);
-//      });
-//
-//      it("should have App.Services as a dependency", function() {
-//        expect(hasModule('App.Services')).to.equal(true);
-//      });
-//    });
 });
