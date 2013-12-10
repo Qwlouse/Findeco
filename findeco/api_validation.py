@@ -55,6 +55,7 @@ userSettings_schema = {
     'followees': [user_schema, None],
     'email': string,
     'rsskey': string,
+    'emailChangeRequested': integer,
     'wantsMailNotification': boolean
 }
 authorGroup_schema = [userInfo_schema]
