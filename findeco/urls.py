@@ -31,9 +31,11 @@ from django.contrib import admin
 from findeco.api_validation import USERNAME
 from findeco.paths import PATH, RESTRICTED_PATH
 from microblogging.urls import microblogging_patterns
+import sys
 
 admin.autodiscover()
-django_cron.autodiscover()
+if not 'test' in sys.argv:
+    django_cron.autodiscover()
 
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
