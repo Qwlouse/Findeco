@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoNewsCtrl($scope, Backend, User) {
+function FindecoNewsCtrl($scope, Backend, User, $location) {
     $scope.allNodesList = [];
     $scope.followedNodesList = [];
     $scope.ownNodesList = [];
@@ -63,10 +63,11 @@ function FindecoNewsCtrl($scope, Backend, User) {
             id = oldID;
         }
         $scope.isLoadingNewsForAllNodes = true;
-        Backend.loadMicroblogging($scope.allNodesList, ':collectionAll', type, id).success(function() {
-        	setAuthorForAllBlogs($scope.allNodesList);
+        Backend.loadMicrobloggingForAllNodes($scope.allNodesList, id, type).success(
+            function() {
+            setAuthorForAllBlogs($scope.allNodesList);
         	$scope.isLoadingNewsForAllNodes = false;
-       });
+        });
     };
 
     $scope.updateFollowedNodes = function (oldType, oldID) {
@@ -81,9 +82,9 @@ function FindecoNewsCtrl($scope, Backend, User) {
             id = oldID;
         }
         $scope.isLoadingNewsForFollowedNodes=true;
-        Backend.loadMicroblogging($scope.followedNodesList, ':collection', type, id).success(function() {
+        Backend.loadMicrobloggingForFollowedNodes($scope.followedNodesList, $scope.username, id, type).success(
+            function() {
         	setAuthorForAllBlogs($scope.followedNodesList);
-        	
         	$scope.isLoadingNewsForFollowedNodes=false;
         });
     };
@@ -99,7 +100,8 @@ function FindecoNewsCtrl($scope, Backend, User) {
             id = oldID;
         }
         $scope.isLoadingNewsForOwnNodes=true;
-        Backend.loadMicroblogging($scope.ownNodesList, ':collectionAuthor', type, id).success(function() {
+        Backend.loadMicrobloggingForAuthoredNodes($scope.ownNodesList, $scope.username, id, type).success(
+            function() {
         	setAuthorForAllBlogs($scope.ownNodesList);
         	$scope.isLoadingNewsForOwnNodes=false;	
         });
@@ -116,12 +118,50 @@ function FindecoNewsCtrl($scope, Backend, User) {
 
     $scope.$watch('username', function () {
         if ($scope.username != "") {
- 
             $scope.updateAllNodes();
             $scope.updateFollowedNodes();
             $scope.updateOwnNodes();
+        }else{
+            setTimeout(function(){
+                $scope.updateAllNodes();
+                $scope.updateFollowedNodes();
+                $scope.updateOwnNodes();
+
+            }, 1000);
+
         }
+
     });
+    $scope.UpdateIntervallAllNodes = function () {
+        if ($location.path() == "/news") {
+            window.setTimeout(function () {
+                $scope.UpdateIntervallAllNodes();
+                $scope.updateAllNodes()
+                $scope.isLoadingNewsForAllNodes = false;
+            }, Math.floor((Math.random() * 10000) + 10000));
+        }
+    }
+    $scope.UpdateIntervallAllNodes()
+    $scope.UpdateIntervallFollowedNodes = function () {
+        if ($location.path() == "/news") {
+            window.setTimeout(function () {
+                $scope.UpdateIntervallFollowedNodes();
+                $scope.updateFollowedNodes()
+                $scope.isLoadingNewsForFollowedNodes = false;
+            }, Math.floor((Math.random() * 10000) + 10000));
+        }
+    }
+    $scope.UpdateIntervallFollowedNodes()
+    $scope.UpdateIntervallOwnNodes = function () {
+        if ($location.path() == "/news") {
+            window.setTimeout(function () {
+                $scope.UpdateIntervallOwnNodes();
+                $scope.updateOwnNodes()
+                $scope.isLoadingNewsForOwnNodes = false;
+            }, Math.floor((Math.random() * 10000) + 10000));
+        }
+    }
+    $scope.UpdateIntervallOwnNodes()
     $scope.isLoading = function (col){
     	if (col =="timeline"){
     		return $scope.isLoadingNewsForAllNodes;
@@ -137,4 +177,4 @@ function FindecoNewsCtrl($scope, Backend, User) {
     }
 }
 
-FindecoNewsCtrl.$inject = ['$scope', 'Backend', 'User'];
+FindecoNewsCtrl.$inject = ['$scope', 'Backend', 'User', '$location'];

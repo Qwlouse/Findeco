@@ -1,0 +1,107 @@
+/* Findeco is dually licensed under GPLv3 or later and MPLv2.
+#
+################################################################################
+# Copyright (c) 2013
+# Maik Nauheim <findeco@maik-nauheim.de>, Johannes Merkert <jonny@pinae.net>
+# This file is part of Findeco.
+#
+# Findeco is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# Findeco is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+#
+################################################################################
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+################################################################################
+
+################################################################################
+# Stay within the color scheme! blue (#2d7cc4), green (#336633),
+# orange (#e07b01, ecb40d) and shades of grey are acceptable!
+################################################################################
+*/
+
+.helppanel{
+    position:fixed;
+    width:90%;
+    margin-left: 5%;
+    height: 140px;
+    bottom: 0;
+    background-color: #000000;
+    opacity:0.8;
+    padding: 7px;
+}
+
+.helppanel.ng-hide-add,
+.helppanel.ng-hide-remove {
+  -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
+  transition:0.5s linear all;
+  display:block!important;
+}
+
+.helppanel.ng-hide-remove {
+    bottom: -150px;
+}
+
+.helppanel.ng-hide-remove.ng-hide-remove-active {
+    bottom: 0;
+}
+
+.helppanel.ng-hide-add {
+    bottom: 0;
+}
+.helppanel.ng-hide-add.ng-hide-add-active {
+    bottom: -150px;
+}
+
+.helppanel .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 30px;
+    float: left;
+    width: 50px;
+    height: 50px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+
+.helpactivator{
+   padding-top:5px;
+    float: right;
+    padding-right: 15px;
+}
+
+.help-small-icon {
+    background: url("/static/images/help.png") no-repeat;
+    height: 19px;
+    width: 19px;
+    margin-top: 9px;
+    margin-left: 3px;
+    float: right;
+    cursor: help;
+}
+
+.help-small-icon:hover {
+    background-position: -38px 0;
+}
+
+.help-small-b {
+    background-position: 0 0;
+}
+
+.help-small-a  {
+    background-position: -19px 0;
+}

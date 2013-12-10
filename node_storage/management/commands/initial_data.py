@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
@@ -24,6 +25,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ################################################################################
+import django
 from django.core.management import BaseCommand
 from django.db import transaction
 from findeco.paths import SHORT_TITLE
@@ -37,7 +39,13 @@ import os
 comment_line_pattern = re.compile(r"^\s*#")
 
 
-@transaction.commit_on_success
+if django.VERSION < (1, 6, 0, '', 0):
+    atomic = transaction.commit_on_success
+else:
+    atomic = transaction.atomic
+
+
+@atomic
 def create_initial_data():
     root = get_root_node()
     decided = create_user("Beschlossenes Programm")

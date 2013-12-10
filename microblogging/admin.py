@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
+################################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -16,16 +18,20 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 #
+################################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 from django.contrib import admin
 from models import Post
 
+
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('text', 'author', 'time', 'is_reference_to')
+    list_display = ('text_cache', 'text_template', 'post_type', 'author', 'time', 'is_answer_to')
 
 
 admin.site.register(Post, PostAdmin)

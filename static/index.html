@@ -25,9 +25,12 @@
     <link rel="stylesheet" href="/static/css/create.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/start.css" type="text/css"/>
 	<link rel="stylesheet" href="/static/css/profile.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/help.css" type="text/css"/>
     <!-- Javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-route.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-animate.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/d3.v3.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular-cookies.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/codeholicsCreole.js"></script>
@@ -48,6 +51,7 @@
     <script type="text/javascript" src="/static/js/FE_SETTINGS.js"></script>
     <script type="text/javascript" src="/static/js/filters.js"></script>
     <script type="text/javascript" src="/static/js/graph.js"></script>
+    <script type="text/javascript" src="/static/js/helpCtrl.js"></script>
     <script type="text/javascript" src="/static/js/messageCtrl.js"></script>
     <script type="text/javascript" src="/static/js/menuCtrl.js"></script>
     <script type="text/javascript" src="/static/js/microblogCtrl.js"></script>
@@ -65,16 +69,19 @@
     <title data-i18n="_pageTitle_"></title>
 </head>
 <body >
+
 <div id="wrap">
     <div id="main">
         <div id="topMenu">
             <div id="header">
                 <div id="headerContainer" class="centeringContainer">
                     <div id="headerContent" ng-controller="FindecoMenuCtrl">
-                        <div class="version">Version: {{ fesettings.version }}</div>
 
+                        <div class="version">Version: {{ fesettings.version }}</div>
+                        <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">Achtung!! Sie sind als Admin User angemeldet</div>
                         <ul>
                             <li class="{{getActiveClass('')}} {{getActiveClass('start')}}"><a href="/start" data-i18n="_start_">Start</a></li>
+                            <li></li>
                             <li class="{{getActiveClass('news')}}" ng-show="user.isLoggedIn"><a href="/news" data-i18n="_news_">News</a></li>
                             <li class="{{getActiveClass('microblogging')}}" ng-show="user.isLoggedIn"><a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a></li>
                             <li class="{{ isContentActive() }}"><a href="/index" data-i18n="_content_">Content</a></li>
@@ -87,42 +94,54 @@
                                 </div>
                             </li>
                         </ul>
+
                         <ul style="position: absolute; right: 0;">
                             <li  class="{{getActiveClass('profile')}}" ng-show="user.isLoggedIn">
                                 <a ng-href="/profile">{{user.displayName}}</a>
+
                             </li>
                             <li ng-show="user.isLoggedIn">
                                 <a ng-click="logout()" style="cursor:pointer; padding: 0;">
-                                    <img src="/static/images/logout.png"
-                                         onmouseover="this.src='/static/images/logout_hover.png';"
-                                         onmouseout="this.src='/static/images/logout.png';"
-                                         alt="Logout" height="18"
+                                    <img src="/static/images/logout.png" alt="Logout" height="18"
                                          style="position: relative; top: 3px; margin: 0 0 0 0;" /></a>
+                                         <!--onmouseover="this.src='/static/images/logout_hover.png';"
+                                         onmouseout="this.src='/static/images/logout.png';"-->
+                                    <!--todo: Reimplemnt without Angularerror-->
+
                             </li>
                             <li ng-show="!user.isLoggedIn" style="float:right"><a href="/login" data-i18n="_accountLogin_"></a></li>
                         </ul>
                     </div>
                 </div>
-                
+
             </div>
             <div id="navigationBar" ng-controller="FindecoNavigationCtrl">
-                <div class="centeringContainer">
+                <div style="width:700px;float:left;">
 
                     <ul>
                         <li><a href="/index"><img ng-show="navigation.entries"
                                                src="/static/images/home.png"
-                                               alt="Home"
-                                               onmouseover="this.src='/static/images/home_hover.png';"
-                                               onmouseout="this.src='/static/images/home.png';"
-                                /><img
+                                               alt="Home" />
+                                               <!--onmouseover="this.src='/static/images/home_hover.png';"
+                                               onmouseout="this.src='/static/images/home.png';"-->
+                                                <!--todo: Reimplemnt without Angularerror-->
+                               <img
                                 ng-show="navigation.entries.length == 0" src="/static/images/home_hover.png"
                                 alt="Home"/></a></li>
 
                         <li ng-repeat="nav in navigation.entries"><a href="{{ nav.path }}">{{ nav.name }}</a></li>
                     </ul>
                 </div>
+                <div class="helpactivator"   ng-controller="FindecoHelpCtrl">
+                <div ng-click="toogleHelpStatus()" ng-show="helpIsActive"> <a href="#"> Hilfe ist aktiv (ändern)</a></div>
+                <div ng-click="toogleHelpStatus()" ng-show="!helpIsActive"><a href="#">  Hilfe ist inaktiv (ändern) </a></div>
+
+
             </div>
+            </div>
+
         </div>
+
 
         <div ng-view></div>
 
@@ -133,7 +152,6 @@
             {{message.msg}}
         </div>
     </div>
-
 </div>
 <div id="footerWrap">
     <div id="footer">
@@ -143,6 +161,18 @@
             <li><a href="/data_privacy">Datenschutzerklärung</a></li>
             <li><a href="/about">Über Findeco</a></li>
         </ul>
+    </div>
+</div>
+{{ hide }}
+<div class="helppanel" ng-animate="animate"  ng-controller="FindecoHelpCtrl" ng-hide="panelIsHidden" >
+    {{ hide }}
+    <a ng-click="hidePanel();" class="close">X</a>
+    <div style=";width:850px;color:#ffffff;opacity:1">
+
+        <h2>{{ title }}</h2>
+        {{ helptext }}
+
+        <a ng-show="more" style="position:absolute;right:10px;bottom:5px" href="{{ more }}">Mehr Hilfe zu diesem Thema (Link führt zu Findeco.de)</a>
     </div>
 </div>
 </body>

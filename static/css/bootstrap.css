@@ -71,6 +71,10 @@
     margin-top: 5px;
 }
 
+.btnBar {
+    margin-top: 15px;
+}
+
 .btn {
   display: inline-block;
   *display: inline;

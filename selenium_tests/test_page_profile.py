@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
+################################################################################
 # Copyright (c) 2013 Maik Nauheim <findeco@maik-nauheim.de>
 # This file is part of Findeco.
 #
@@ -16,16 +18,19 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 #
+################################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-# from __future__ import division, print_function, unicode_literals
+#endregion #####################################################################
 
 from django.test import LiveServerTestCase
 from nose.plugins.attrib import attr
 from selenium import webdriver
 import time
+
 
 @attr('selenium')
 class TestFePageProfile(LiveServerTestCase):
@@ -51,7 +56,7 @@ class TestFePageProfile(LiveServerTestCase):
         self.driver.find_element_by_link_text("admin").click()
         time.sleep(1)
         self.driver.find_element_by_xpath("//textarea[@ng-model='user.description']").send_keys("Dies ist die Userbeschreibung")
-        time.sleep(1)
+        time.sleep(2)
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('Dies ist die Userbeschreibung', body.text, "Preview does not work")
         self.driver.find_element_by_css_selector("input[type='submit']").click()

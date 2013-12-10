@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
+################################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -16,10 +18,15 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 #
+################################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#endregion #####################################################################
+
+
 from __future__ import division, print_function, unicode_literals
 import json
 from findeco.jsonvalidator import JSONValidator, JSONValidationError
@@ -39,7 +46,7 @@ user_schema = {
 }
 userInfo_schema = {
     'displayName': string,
-    'description': string,
+    'description': string
 }
 userSettings_schema = {
     'blockedUsers': [user_schema, None],
@@ -47,7 +54,8 @@ userSettings_schema = {
     'followers': [user_schema, None],
     'followees': [user_schema, None],
     'email': string,
-    'rsskey': string
+    'rsskey': string,
+    'wantsMailNotification': boolean
 }
 authorGroup_schema = [userInfo_schema]
 originGroup_schema = ["path", None]
@@ -75,12 +83,6 @@ argumentIndexNode_schema = {
     'isFlagging': integer,
     'authorGroup': authorGroup_schema
 }
-microblogNode_schema = {
-    'microblogText': string,
-    'authorGroup': ["user"],
-    'microblogTime': integer,
-    'microblogID': integer
-}
 textNode_schema = {
     'wikiText': string,
     'path': string,
@@ -100,19 +102,16 @@ loadIndexResponse_schema = {
 loadNodeResponse_schema = {
     'loadNodeResponse': {
         'fullTitle': string,
+        'nodeID': integer,
         'isFollowing': integer,
         'isFlagging': integer,
         'wikiText': string,
         'authors': [string, None],
         'indexList': [indexNode_schema, None]
-    }}
-
-
+    }
+}
 loadArgumentIndexResponse_schema = {
     'loadArgumentIndexResponse': [argumentIndexNode_schema, None]
-}
-loadMicrobloggingResponse_schema = {
-    'loadMicrobloggingResponse': [microblogNode_schema, None]
 }
 loadTextResponse_schema = {
     'loadTextResponse': {
@@ -155,10 +154,6 @@ markNodeResponse_schema = {
     'markNodeResponse': {
     }
 }
-storeMicroblogPostResponse_schema = {
-    'storeMicroblogPostResponse': {
-    }
-}
 storeSettingsResponse_schema = {
     'storeSettingsResponse': {
     }
@@ -191,6 +186,7 @@ ERROR_LIST = [
     "_InvalidEmailAddress",
     "_InvalidActivationKey",
     "_InvalidURL",
+    "_InvalidMircobloggingOptions",
     "_ServerError"
 ]
 
@@ -204,9 +200,8 @@ argumentIndexNodeValidator = JSONValidator(argumentIndexNode_schema)
 loadGraphDataResponseValidator = JSONValidator(loadGraphDataResponse_schema)
 loadIndexResponseValidator = JSONValidator(loadIndexResponse_schema)
 loadNodeResponseValidator = JSONValidator(loadNodeResponse_schema)
-loadArgumentIndexResponseValidator = JSONValidator(loadArgumentIndexResponse_schema)
-loadMicrobloggingResponseValidator = JSONValidator(
-    loadMicrobloggingResponse_schema)
+loadArgumentIndexResponseValidator = JSONValidator(
+    loadArgumentIndexResponse_schema)
 loadTextResponseValidator = JSONValidator(loadTextResponse_schema)
 loadUserInfoResponseValidator = JSONValidator(loadUserInfoResponse_schema)
 loadUserSettingsResponseValidator = JSONValidator(
@@ -216,8 +211,6 @@ logoutResponseValidator = JSONValidator(logoutResponse_schema)
 changePasswordValidator = JSONValidator(changePassword_schema)
 deleteUserValidator = JSONValidator(deleteUser_schema)
 markNodeResponseValidator = JSONValidator(markNodeResponse_schema)
-storeMicroblogPostResponseValidator = JSONValidator(
-    storeMicroblogPostResponse_schema)
 storeSettingsResponseValidator = JSONValidator(storeSettingsResponse_schema)
 storeTextResponseValidator = JSONValidator(storeTextResponse_schema)
 
@@ -229,7 +222,8 @@ class ErrorResponseValidator(object):
     def validate(self, data):
         self.validator.validate(data)
         if not data['errorResponse']['errorID'] in ERROR_LIST:
-            raise JSONValidationError('Invalid errorID "%s"'%data['errorResponse']['errorID'])
+            raise JSONValidationError('Invalid errorID "%s"' %
+                                      data['errorResponse']['errorID'])
 
 errorResponseValidator = ErrorResponseValidator()
 
@@ -237,7 +231,6 @@ view_validators = {
     'load_graph_data': loadGraphDataResponseValidator,
     'load_index': loadIndexResponseValidator,
     'load_argument_index': loadArgumentIndexResponseValidator,
-    'load_microblogging': loadMicrobloggingResponseValidator,
     'load_text': loadTextResponseValidator,
     'load_node': loadNodeResponseValidator,
     'load_user_info': loadUserInfoResponseValidator,
@@ -250,7 +243,6 @@ view_validators = {
     'unflag_node': markNodeResponseValidator,
     'mark_node_follow': markNodeResponseValidator,
     'mark_node_unfollow': markNodeResponseValidator,
-    'store_microblog_post': storeMicroblogPostResponseValidator,
     'store_settings': storeSettingsResponseValidator,
     'store_text': storeTextResponseValidator
 }

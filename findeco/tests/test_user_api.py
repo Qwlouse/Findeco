@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
+################################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -16,22 +18,23 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 #
+################################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext
 from django.test import TestCase
 import json
 from findeco.api_validation import storeSettingsResponseValidator
 from findeco.tests.helpers import assert_is_error_response
 
-from node_storage.factory import create_user, create_slot, create_textNode, create_argument, create_vote
-from microblogging.models import create_post, Post
-from ..api_validation import errorResponseValidator
+from node_storage.factory import create_user, create_slot, create_textNode
+
 from ..api_validation import loadUserInfoResponseValidator
 from ..api_validation import loadUserSettingsResponseValidator
 from ..view_helpers import create_user_info, create_user_settings
@@ -144,6 +147,28 @@ class StoreSettingsTest(TestCase):
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.username, "hans2")
 
+    def test_change_wants_mail_notification_works(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        self.assertEqual(self.hans.profile.wants_mail_notification, False)
+
+        _ = self.client.post(reverse('store_settings'),
+                             dict(description="foo", displayName='hans',
+                                  email='a@bc.de', wantsMailNotification=True))
+
+        hans = User.objects.get(id=self.hans.id)
+        self.assertEqual(hans.profile.wants_mail_notification, True)
+
+    def test_change_wants_no_mail_notification_works(self):
+        self.assertTrue(self.client.login(username="hans", password='1234'))
+        self.assertEqual(self.hans.profile.wants_mail_notification, False)
+
+        _ = self.client.post(reverse('store_settings'),
+                             dict(description="foo", displayName='hans',
+                                  email='a@bc.de', wantsMailNotification=False))
+
+        hans = User.objects.get(id=self.hans.id)
+        self.assertEqual(hans.profile.wants_mail_notification, False)
+
 
 class ChangePasswordTest(TestCase):
     def setUp(self):
@@ -173,8 +198,6 @@ class DeleteUserTest(TestCase):
         self.text4 = create_textNode("Gemeinsamer Text mit anonymous",
                                      "Anonymous wird dabei geholfen haben diesen Text zu erstellen",
                                      [self.hans, self.karl, self.anon])
-        self.post1 = create_post("Bla", self.hans)
-        self.post2 = create_post("Blubb", self.karl)
 
     def test_delete_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
@@ -187,10 +210,6 @@ class DeleteUserTest(TestCase):
         response = self.client.post(reverse('delete_user'))
         self.assertEqual(response.status_code, 200)
         self.assertFalse(self.client.login(username="hans", password='1234'))
-        self.assertEqual(len(Post.objects.filter(author=self.hans).all()), 0)
-        self.assertEqual(len(Post.objects.filter(author=self.anon).all()), 1)
-        self.assertEqual(Post.objects.filter(author=self.anon).all()[0].text, "Bla")
-        self.assertEqual(len(Post.objects.filter(author=self.karl).all()), 1)
         self.assertNotIn(self.hans, self.text1.text.authors.all())
         self.assertNotIn(self.hans, self.text2.text.authors.all())
         self.assertNotIn(self.hans, self.text3.text.authors.all())

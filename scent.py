@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>

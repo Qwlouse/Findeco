@@ -1,5 +1,6 @@
 <div id="leftColumn"  class="contentBox" ng-controller="FindecoArgumentCtrl">
-    <h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
+    <help hid='ARG_Pro' htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsPro_"></h3>
+<div style="clear: both"></div>
     <div ng-show="argumentList.length <1 " class="tipp" style="text-align: center">Es gibt zur Zeit keine<br>Pro-Argumente</div>
 
     <ul class="argumentList">
@@ -14,7 +15,8 @@
                ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNewPro_"></a>
         </li>
     </ul>
-    <h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
+    <help hid='ARG_Neut' htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsNeut_"></h3>
+    <div style="clear: both"></div>
     <div ng-show="argumentList.length <1 " class="tipp" style="text-align: center">Es gibt zur Zeit keine<br>Neutralen Argumente</div>
     <ul class="argumentList">
         <li ng-repeat="argument in argumentList | filter: {argType:'neut'}">
@@ -28,7 +30,8 @@
                ng-click="tmp.argumentType = 'Neutral'" data-i18n="_argumentsNewNeut_"></a>
         </li>
     </ul>
-    <h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
+    <help hid='ARG_Con' htype=1> </help><h3 class="argumentHeading" data-i18n="_argumentsCon_"></h3>
+    <div style="clear: both"></div>
     <div ng-show="argumentList.length <1 " class="tipp" style="text-align: center">Es gibt zur Zeit keine<br>Contra-Argumente</div>
     <ul class="argumentList">
         <li ng-repeat="argument in argumentList | filter: {argType:'con'}">
@@ -55,8 +58,9 @@
     <div class="tipp">In dieser Spalte werden alle <a href="http://www.findeco.de/hilfe/argumente/" class="tippLink">Argumente</a> zum <a href="http://www.findeco.de/hilfe/verortung-von-vorschlagen/" class="tippLink">Thema</a> gesammelt.</div>
 
     <div ng-show="!user.isLoggedIn" class="tipp" style="text-align: center">
-    	Wenn du selbst ein Argument hinzufügen möchtest, kannst du dich hier <a class="link" href="/register/"
-   >Anmelden</a>     
+    	Wenn du selbst ein Argument hinzufügen möchtest, kannst du dich hier  <a class="link" href="/register/"
+   >anmelden</a> oder hier <a class="link" href="/register/"
+   >registrieren</a>
              
 	<div>
 </div>

@@ -8,13 +8,14 @@
     <div id="centerColumn" class="contentBox">
         <div ng-show="nav.type!='arg'" >
             <div class="tipp">
-                <form>
+
                 <span ng-show="graphData.length > 1">Es gibt zu diesem Thema {{ graphData.length }} konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschläge</a>.</span>
+                <!-- <form>
                 Es werden <select name="graph-filter" size="1" style="font-size: 100%; color: gray;">
                     <option disabled>nur relevante</option>
                     <option disabled>alle außer Spam</option>
                     <option selected>alle</option>
-                </select> Vorschläge angezeigt:</form>
+                </select> Vorschläge angezeigt:</form> -->
             </div>
             <div findeco-graph data="graphData" path="nav.nodePath" class="graph"></div>
         </div>
@@ -60,17 +61,19 @@
                 <div creole wiki-text="paragraph.wikiText"></div>
             </div>
         </div>
-        <div ng-show="nav.type!='arg' && user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/topic')"
-             data-i18n="_createNewText_"></div>
+        <div class="btnBar">
+            <div ng-show="nav.type!='arg' && user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/topic')"
+                 data-i18n="_createNewText_"></div>
 
-        <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
-             data-i18n="_createDerivativeText_"></div>
+            <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
+                 data-i18n="_createDerivativeText_"></div>
 
-        <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
-             data-i18n="_createOpposingText_"></div>
+            <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
+                 data-i18n="_createOpposingText_"></div>
 
-        <div ng-show="nav.type=='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
-             ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
+            <div ng-show="nav.type=='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
+                 ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
+        </div>
   	<div ng-show="isLoading()" class="deactivateDiv">
     </div>
    	<div ng-show="isLoading()" class="deactivateSpinner">

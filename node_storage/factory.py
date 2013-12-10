@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
-# Copyright (c) 2012 Johannes Merkert <jonny@pinae.net>
+# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -23,9 +24,11 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-################################################################################
+#endregion #####################################################################
 from django.contrib.auth.models import User, Group
+from findeco.paths import parse_path
 from models import Node, Text, Vote, Argument, SpamFlag
+from node_storage import get_node_for_path, IllegalPath, get_root_node
 
 
 def create_slot(short_title):
@@ -110,3 +113,35 @@ def create_user(username, description="", mail="a@bc.de", password=None,
     new_user.profile.save()
 
     return new_user
+
+
+def create_nodes_for_path(path, authors=()):
+    nodes, last = parse_path(path)
+    current_node = get_root_node()
+    current_path = ""
+    for short_title, index in nodes:
+        # slot
+        current_path += '/' + short_title
+        try:
+            current_slot = get_node_for_path(current_path)
+        except IllegalPath:
+            current_slot = create_slot(short_title)
+            current_node.append_child(current_slot)
+
+        # alternatives
+        current_path += '.' + str(index)
+        try:
+            current_node = get_node_for_path(current_path)
+        except IllegalPath:
+            if current_slot.child_order_set.count() == 0:
+                highest_index = 0
+            else:
+                highest_index = current_slot.child_order_set.order_by(
+                    'position')[0].position
+
+            for i in range(highest_index, index):
+                current_node = create_structureNode(short_title + '_long',
+                                                    authors=authors)
+                current_slot.append_child(current_node)
+
+    return current_node

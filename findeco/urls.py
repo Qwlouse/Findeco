@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
@@ -23,215 +24,155 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-################################################################################
+#endregion #####################################################################
 from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from findeco.api_validation import USERNAME, RSSKEY
-from findeco.feeds import RssFeed, AtomFeed
-from findeco.paths import PATH, RESTRICTED_PATH, ID
+from findeco.api_validation import USERNAME
+from findeco.paths import PATH, RESTRICTED_PATH
+from microblogging.urls import microblogging_patterns
 
 admin.autodiscover()
 django_cron.autodiscover()
 
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
-BLOG_ID = r'(?P<select_id>' + ID + ')'
-BLOG_LOAD_TYPE = r'(?P<microblogging_load_type>(newer)|(older))'
-SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)(_(user|content|microblogging))*))'
-RSSTYPE = r'(?P<rsstype>(timeline)|(mention)|(news)|(newsAuthor)|(newsFollow))'
+SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)' \
+                r'(_(user|content|microblogging))*))'
 
+
+########### Findeco API Calls ###########
 urlpatterns = patterns(
-    '',
-    url(r'^feeds/rss/' + RSSTYPE + '/' + USERNAME + '/' + RSSKEY + '$', RssFeed()),
+    'findeco.views',
 
-    url(r'^\.json_loadUserSettings/?$',
-        'findeco.views.load_user_settings',
-        name='load_user_settings'),
-
-    url(r'^\.json_loadGraphData/' + GRAPH_TYPE + '/' + PATH + '$',
-        'findeco.views.load_graph_data',
-        name='load_graph_data'),
-
-    url(r'^\.json_loadIndex/' + RESTRICTED_PATH + '$',
-        'findeco.views.load_index',
-        name='load_index'),
-
-    url(r'^\.json_loadArgumentIndex/' + RESTRICTED_PATH + '$',
-        'findeco.views.load_argument_index',
-        name='load_argument_index'),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
-        RESTRICTED_PATH + '$',
-        'microblogging.views.load_microblogging',
-        name='load_microblogging'),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/' +
-        RESTRICTED_PATH + '$',
-        'microblogging.views.load_microblogging',
-        name='load_microblogging',
-        kwargs={'select_id': None}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
-        USERNAME + '$',
-        'microblogging.views.load_timeline',
-        name='load_timeline'),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
-        'microblogging.views.load_timeline',
-        name='load_timeline',
-        kwargs={'select_id': None}),
-
-    url(r'^\.json_loadMicroblogging/mentions/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
-        USERNAME + '$',
-        'microblogging.views.load_mentions',
-        name='load_mentions'),
-
-    url(r'^\.json_loadMicroblogging/mentions/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
-        'microblogging.views.load_mentions',
-        name='load_mentions',
-        kwargs={'select_id': None}),
-
-    url(r'^\.json_loadMicroblogging/own/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/' +
-        USERNAME + '$',
-        'microblogging.views.load_own',
-        name='load_own'),
-
-    url(r'^\.json_loadMicroblogging/own/' + BLOG_LOAD_TYPE + '/' + USERNAME + '$',
-        'microblogging.views.load_own',
-        name='load_own',
-        kwargs={'select_id': None}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collection$',
-        'microblogging.views.load_collection',
-        name='load_collection'),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/:collection$',
-        'microblogging.views.load_collection',
-        name='load_collection',
-        kwargs={'select_id': None}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collectionAuthor$',
-        'microblogging.views.load_collection',
-        name='load_collection_author',
-        kwargs={'only_author': True}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/:collectionAuthor$',
-        'microblogging.views.load_collection',
-        name='load_collection_author',
-        kwargs={'select_id': None, 'only_author': True}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_ID + '/' + BLOG_LOAD_TYPE + '/:collectionAll$',
-        'microblogging.views.load_collection',
-        name='load_collection_all',
-        kwargs={'all_nodes': True}),
-
-    url(r'^\.json_loadMicroblogging/' + BLOG_LOAD_TYPE + '/:collectionAll$',
-        'microblogging.views.load_collection',
-        name='load_collection_all',
-        kwargs={'select_id': None, 'all_nodes': True}),
-
-    url(r'^\.json_loadText/' + PATH + '$',
-        'findeco.views.load_text',
-        name='load_text'),
-
-    url(r'^\.json_loadNode/' + RESTRICTED_PATH + '$',
-        'findeco.views.load_node',
-        name='load_node'),
-
-    url(r'^\.json_loadUserInfo/' + USERNAME + '/?$',
-        'findeco.views.load_user_info',
-        name='load_user_info'),
-
+    # ----- User  -----
     url(r'^\.json_login/?$',
-        'findeco.views.login',
+        'login',
         name='login'),
 
     url(r'^\.json_logout/?$',
-        'findeco.views.logout',
+        'logout',
         name='logout'),
 
-    url(r'^\.json_changePassword/?$',
-        'findeco.views.change_password',
-        name='change_password'),
-
-    url(r'^\.json_deleteUser/?$',
-        'findeco.views.delete_user',
-        name='delete_user'),
-
-    url(r'^\.json_markNode/follow/' + PATH + '$',
-        'findeco.views.mark_node_follow',
-        name='mark_node_follow'),
-
-    url(r'^\.json_markNode/unfollow/' + PATH + '$',
-        'findeco.views.mark_node_unfollow',
-        name='mark_node_unfollow'),
-
-    url(r'^\.json_markNode/spam/' + PATH + '$',
-        'findeco.views.flag_node',
-        name='flag_node'),
-
-    url(r'^\.json_markNode/notspam/' + PATH + '$',
-        'findeco.views.unflag_node',
-        name='unflag_node'),
-
-    url(r'^\.json_markUser/follow/' + USERNAME + '$',
-        'findeco.views.mark_user_follow',
-        name='mark_user_follow'),
-
-    url(r'^\.json_markUser/unfollow/' + USERNAME + '$',
-        'findeco.views.mark_user_unfollow',
-        name='mark_user_unfollow'),
-
-    url(r'^\.json_search/'+SEARCH_FIELDS+'/(?P<search_string>(.*))$',
-        'findeco.views.search',
-        name='search'),
-
-    url(r'^\.json_storeMicroblogPost/' + PATH + '$',
-        'microblogging.views.store_microblog_post',
-        name='store_microblog_post'),
+    url(r'^\.json_loadUserSettings/?$',
+        'load_user_settings',
+        name='load_user_settings'),
 
     url(r'^\.json_storeSettings/?$',
-        'findeco.views.store_settings',
+        'store_settings',
         name='store_settings'),
 
-    url(r'^\.json_storeText/' + PATH + '$',
-        'findeco.views.store_text',
-        name='store_text'),
-
     url(r'^\.json_accountRegistration/?$',
-        'findeco.views.account_registration',
+        'account_registration',
         name='account_registration'),
 
     url(r'^\.json_accountActivation/?$',
-        'findeco.views.account_activation',
+        'account_activation',
         name='account_activation'),
 
     url(r'^\.json_accountResetRequestByMail/?$',
-        'findeco.views.account_reset_request_by_mail',
+        'account_reset_request_by_mail',
         name='account_reset_request_by_mail'),
 
     url(r'^\.json_accountResetRequestByName/?$',
-        'findeco.views.account_reset_request_by_name',
+        'account_reset_request_by_name',
         name='account_reset_request_by_name'),
 
     url(r'^\.json_accountResetConfirmation/?$',
-        'findeco.views.account_reset_confirmation',
+        'account_reset_confirmation',
         name='account_reset_confirmation'),
 
     url(r'^\.json_emailChangeConfirmation/?$',
-        'findeco.views.email_change_confirmation',
+        'email_change_confirmation',
         name='email_change_confirmation'),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
+    url(r'^\.json_changePassword/?$',
+        'change_password',
+        name='change_password'),
+
+    url(r'^\.json_deleteUser/?$',
+        'delete_user',
+        name='delete_user'),
+
+    # ----- Interact with other users  -----
+    url(r'^\.json_loadUserInfo/' + USERNAME + '/?$',
+        'load_user_info',
+        name='load_user_info'),
+
+    url(r'^\.json_markUser/follow/' + USERNAME + '$',
+        'mark_user_follow',
+        name='mark_user_follow'),
+
+    url(r'^\.json_markUser/unfollow/' + USERNAME + '$',
+        'mark_user_unfollow',
+        name='mark_user_unfollow'),
+
+    # ----- Load Nodes  -----
+    url(r'^\.json_loadNode/' + RESTRICTED_PATH + '$',
+        'load_node',
+        name='load_node'),
+
+    url(r'^\.json_loadIndex/' + RESTRICTED_PATH + '$',
+        'load_index',
+        name='load_index'),
+
+    url(r'^\.json_loadGraphData/' + GRAPH_TYPE + '/' + PATH + '$',
+        'load_graph_data',
+        name='load_graph_data'),
+
+    url(r'^\.json_loadText/' + PATH + '$',
+        'load_text',
+        name='load_text'),
+
+    url(r'^\.json_loadArgumentIndex/' + RESTRICTED_PATH + '$',
+        'load_argument_index',
+        name='load_argument_index'),
+
+    # ----- Mark Nodes  -----
+    url(r'^\.json_markNode/follow/' + PATH + '$',
+        'mark_node_follow',
+        name='mark_node_follow'),
+
+    url(r'^\.json_markNode/unfollow/' + PATH + '$',
+        'mark_node_unfollow',
+        name='mark_node_unfollow'),
+
+    url(r'^\.json_markNode/spam/' + PATH + '$',
+        'flag_node',
+        name='flag_node'),
+
+    url(r'^\.json_markNode/notspam/' + PATH + '$',
+        'unflag_node',
+        name='unflag_node'),
+
+    # ----- Store Nodes  -----
+    url(r'^\.json_storeText/' + PATH + '$',
+        'store_text',
+        name='store_text'),
+
+    # ----- Search  -----
+    url(r'^\.json_search/'+SEARCH_FIELDS+'/(?P<search_string>(.*))$',
+        'search',
+        name='search')
+)
+
+########### Microblogging API ###########
+urlpatterns += microblogging_patterns
+
+########### Other urls ###########
+urlpatterns += patterns(
+    '',
+
+    # admin docs
     url(r'^\.admin/doc/?', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
+    # admin interface
     url(r'^\.admin/?', include(admin.site.urls)),
 
     url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
 
-    url(r'^[^.].*', 'findeco.views.home', name='home', kwargs={'path': 'wildcard'}),
+    url(r'^[^.].*', 'findeco.views.home', name='home',
+        kwargs={'path': 'wildcard'}),
 )
 
 

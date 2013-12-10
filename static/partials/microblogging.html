@@ -1,15 +1,11 @@
-<div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl"
-     style="position: relative;">
-    <div ng-show="microbloggingList.length > 0 " class="tipp">
-        <a href="http://www.findeco.de/hilfe/microblogging/" class="tippLink">Microblogging</a> zum Thema:
-    </div>
-
+<div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl" style="position: relative;">
     <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
     <ul class="microblogList" >
-        <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0;">
-            <form ng-submit="submit()">
+        <li style="margin: 0; padding: 0;">
+            <form ng-show="user.isLoggedIn" ng-submit="submit()">
                 <textarea class="microblogInput" type="text" placeholder="{{'_microblogPlaceholder_'|i18n}}"
                        ng-model="microblogText"></textarea>
+                <help hid='MBL_col' htype=1 />
                 <input class="btn btn-primary" type="submit" value="{{'_microblogSendBtn_'|i18n}}"/>
             </form>
         </li>
@@ -19,6 +15,14 @@
                  style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
             <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                 microblogNode.authorGroup[0].displayName }}</a>
+            <div ng-if="microblogNode.location != 1" ng-switch on="microblogNode.location == nav.nodeID">
+                <div ng-switch-when="true">
+                    <span class="location-icon location-here"></span>
+                </div>
+                <div ng-switch-when="false">
+                    <a href="/{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
+                </div>
+            </div>
             <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
             <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
         </li>
@@ -29,9 +33,13 @@
     </div>
    	<div ng-show="isLoading()" class="deactivateSpinner">
     </div>
-    <div ng-show="!user.isLoggedIn && microbloggingList.length < 5 "  ><h3 class="argumentHeading" >Mitmachen?</h3></div>
-    <div ng-show="!user.isLoggedIn && microbloggingList.length < 5" class="tipp" style="text-align: center">Melde dich an und du kannst die Themen bearbeiten, Argumente einbringen oder auch zu den bestehenden Vorschlägen Microbloggen.
+    <div ng-show="!user.isLoggedIn && microbloggingList.length < 5"><h3 class="argumentHeading" >Mitmachen?</h3></div>
+    <div ng-show="!user.isLoggedIn && microbloggingList.length < 5" class="tipp" style="text-align: center">
+        Melde dich an und du kannst die Themen bearbeiten, Argumente einbringen oder auch zu den
+        bestehenden Vorschlägen Microbloggen.
         <br />
-        <a class="link" href="/register/">Anmelden</a>
+         <a class="link" href="/register/"
+   >anmelden</a> oder hier <a class="link" href="/register/"
+   >registrieren</a>
     </div>
 </div>

@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License along with         *
  * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
  ****************************************************************************************/
-
 /****************************************************************************************
  * This Source Code Form is subject to the terms of the Mozilla Public                  *
  * License, v. 2.0. If a copy of the MPL was not distributed with this                  *
@@ -24,44 +23,36 @@
 
 'use strict';
 /* Controllers */
-
-function FindecoHelpCtrl($scope, Backend, User, Navigator) {
-
+function FindecoHelpCtrl($scope, Help) {
     // todo: Is this used at all?
-
-    function setAuthorForAllBlogs() {
-        for (var i = 0; i < $scope.microbloggingList.length; ++i ) {
-            var blog = $scope.microbloggingList[i];
-            blog.author = blog.authorGroup[0];
-            blog.author.isFollowing = User.follows(blog.author.displayName);
-            blog.author.path = blog.author.displayName;
-        }
+    // todo: Yes Now it is!!!!! Finally!!!
+    Help.loadResourceFile();
+    $scope.panelIsHidden = true;
+    $scope.helpIsActive = true;
+    Help.setHelpStatus($scope.helpIsActive);
+    $scope.hidePanel = function () {
+        $scope.panelIsHidden = true;
     }
-
-    $scope.microbloggingList = [];
-    $scope.user = User;
-    $scope.test =function(e){
-    	$("#foo").html("Highlghted Item " + (e)?e.target.id:window.event.srcElement.id)
-    };
-    
-    $scope.followUser = function (path, type) {
-        return User.markUser(path, type).success(setAuthorForAllBlogs);
-    };
-
-    $scope.updateMicrobloggingList = function () {
-        Backend.loadMicroblogging($scope.microbloggingList, Navigator.path).success(setAuthorForAllBlogs);
-    };
-
-    $scope.submit = function () {
-        // TODO: Cross-site-scripting protection!
-        if ($scope.microblogText.length <= 0) return;
-        Backend.storeMicroblogPost(Navigator.path, $scope.microblogText).success(function () {
-            $scope.updateMicrobloggingList();
-            $scope.microblogText = '';
-        });
-    };
-
-    $scope.updateMicrobloggingList();
+    $scope.toogleHelpStatus = function () {
+        if ($scope.helpIsActive) {
+            $scope.helpIsActive = false;
+        } else {
+            $scope.helpIsActive = true;
+        }
+        Help.setHelpStatus($scope.helpIsActive);
+    }
+    $scope.$on('change_Help', function (e, num) {
+        $scope.panelIsHidden = false;
+        $scope.title = Help.helpTitle;
+        $scope.helptext = Help.helpText;
+        if (Help.moreLink=="*") {
+            $scope.more = "http://help.findeco.de/" + Help.id;
+        }else {
+            if (typeof Help.moreLink == 'undefined'){
+                $scope.more = Help.moreLink;
+            }
+        };
+        $scope.$apply();
+    });
 }
-
-FindecoHelpCtrl.$inject = ['$scope', 'Backend', 'User', 'Navigator'];
+FindecoHelpCtrl.$inject = ['$scope', 'Help'];

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
@@ -23,11 +24,14 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-################################################################################
+#endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 
-from models import Node, Vote, SpamFlag, Argument, Text, NodeOrder, TextCache, IndexCache
+from models import Node, Vote, SpamFlag, Argument, Text, NodeOrder, TextCache
+from models import IndexCache
 from path_helpers import get_node_for_path, get_favorite_if_slot
 from path_helpers import get_ordered_children_for
 from path_helpers import IllegalPath, get_root_node
-from structure_parser import parse, create_structure_from_structure_node_schema, get_title_from_text, split_title_from_text, create_derivate_from_structure_node_schema
+from structure_parser import parse, create_structure_from_structure_node_schema
+from structure_parser import get_title_from_text, split_title_from_text
+from structure_parser import create_derivate_from_structure_node_schema

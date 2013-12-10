@@ -45,3 +45,13 @@ local_settings.py
 .project
 .settings/
 .metadata/
+
+#venv
+venv
+
+#gitignore
+.gitignore
+
+#setup
+firstSetup.bat
+gitUpdate.bat

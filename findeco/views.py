@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
@@ -24,32 +25,29 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-################################################################################
+#endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
-import json
 import random
 
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
-from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db.models import Q
-from django.http import HttpResponse
 from django.utils.html import escape
+from django.utils.translation import ugettext
 from django.views.decorators.csrf import ensure_csrf_cookie
 from findeco.models import EmailActivation
 from findeco.project_path import project_path
+from findeco.search_tools import get_search_query
 
-from .paths import parse_suffix
 from .view_helpers import *
-import microblogging
-from microblogging.system_messages import post_node_was_flagged_message
-from microblogging.system_messages import post_new_derivate_for_node_message
-from microblogging.system_messages import post_new_derivate_for_node_message_list
-from microblogging.system_messages import post_new_argument_for_node_message
-from microblogging.system_messages import post_node_was_unflagged_message
+from microblogging import search_for_microblogging
+from microblogging.system_messages import (
+    post_node_was_flagged_message, post_new_derivate_for_node_message,
+    post_new_derivate_for_node_message_list, post_new_argument_for_node_message,
+    post_node_was_unflagged_message)
 from models import UserProfile, Activation, PasswordRecovery
 import node_storage as backend
 from node_storage.factory import create_user
@@ -69,48 +67,56 @@ def error_404(request):
 
 @ViewErrorHandling
 def search(request, search_fields, search_string):
+    things_to_search_for = set(search_fields.split('_'))
+
     user_results = []
-    if 'user' in search_fields.split('_'):
+    if 'user' in things_to_search_for:
         exact_username_matches = User.objects.filter(
             username__iexact=search_string.strip())
         for user in exact_username_matches:
             user_results.append({"url": "user/" + user.username,
                                  "title": user.username,
                                  "snippet": "Profil von " + user.username})
-        user_query = get_query(search_string, ['first_name', 'last_name', ])
+        user_query = get_search_query(search_string, ['first_name',
+                                                      'last_name'])
         found_users = User.objects.filter(user_query)
         for user in found_users:
             user_results.append({"url": "user/" + user.username,
                                  "title": user.username,
                                  "snippet": "Profil von " + user.username})
-        user_query = get_query(search_string, ['description', ])
+        user_query = get_search_query(search_string, ['description', ])
         found_profiles = UserProfile.objects.filter(user_query)
         for profile in found_profiles:
-            user_results.append({"url": "user/" + profile.user.username,
-                                 "title": profile.user.username,
-                                 "snippet": profile.description[:min(len(profile.description), 140)]})
+            user_results.append({
+                "url": "user/" + profile.user.username,
+                "title": profile.user.username,
+                "snippet": profile.description[:min(len(profile.description),
+                                                    140)]})
     content_results = []
-    if 'content' in search_fields.split('_'):
-        node_query = get_query(search_string, ['title', ])
-        found_titles = backend.Node.objects.filter(node_query).exclude(node_type=backend.Node.SLOT).order_by("-id")
+    if 'content' in things_to_search_for:
+        node_query = get_search_query(search_string, ['title', ])
+        found_titles = backend.Node.objects.filter(node_query).exclude(
+            node_type=backend.Node.SLOT).order_by("-id")
         for node in found_titles:
-            content_results.append({"url": node.get_a_path(),
-                                    "title": node.title,
-                                    "snippet": node.text.text[:min(len(node.text.text), 140)]})
-        text_query = get_query(search_string, ['text', ])
+            content_results.append({
+                "url": node.get_a_path(),
+                "title": node.title,
+                "snippet": node.text.text[:min(len(node.text.text), 140)]})
+        text_query = get_search_query(search_string, ['text', ])
         found_texts = backend.Text.objects.filter(text_query).order_by("-id")
         for text_node in found_texts:
-            content_results.append({"url": text_node.node.get_a_path(),
-                                    "title": text_node.node.title,
-                                    "snippet": text_node.text[:min(len(text_node.text), 140)]})
+            content_results.append({
+                "url": text_node.node.get_a_path(),
+                "title": text_node.node.title,
+                "snippet": text_node.text[:min(len(text_node.text), 140)]})
     microblogging_results = []
-    if 'microblogging' in search_fields.split('_'):
-        microblogging_query = get_query(search_string, ['text', ])
-        found_posts = microblogging.Post.objects.filter(microblogging_query).order_by("-id")
-        microblogging_results = microblogging.convert_response_list(found_posts)
-    return json_response({'searchResponse': {'userResults': user_results,
-                                             'contentResults': content_results,
-                                             'microbloggingResults': microblogging_results}})
+    if 'microblogging' in things_to_search_for:
+        microblogging_results = search_for_microblogging(search_string)
+
+    return json_response(
+        {'searchResponse': {'userResults': user_results,
+                            'contentResults': content_results,
+                            'microbloggingResults': microblogging_results}})
 
 
 #################### Node Infos ################################################
@@ -138,6 +144,7 @@ def load_node(request, path):
 
     return json_response({'loadNodeResponse': {
         'fullTitle': node.title,
+        'nodeID': node.pk,
         'isFollowing': get_is_following(request.user.id, node),
         'isFlagging': get_is_flagging(request.user.id, node),
         'wikiText': node.text.text,
@@ -214,7 +221,7 @@ def store_text(request, path):
         if len(p['wikiText'].strip()) > 0:
             # fork for additional slot
             new_path = fork_node_and_add_slot(path, user, p['wikiText'])
-            # microblog alert
+            # microblog alert and mail notification
             post_new_derivate_for_node_message(user, path, new_path)
         else:
             raise EmptyText
@@ -224,9 +231,11 @@ def store_text(request, path):
 
         if len(p['wikiText'].strip()) > 0:
             # store argument
-            new_path = store_argument(path, p['wikiText'], p['argumentType'], user)
+            new_path = store_argument(path, p['wikiText'], p['argumentType'],
+                                      user)
             # microblog alert
-            post_new_argument_for_node_message(user, path, p['argumentType'], new_path)
+            post_new_argument_for_node_message(user, path, p['argumentType'],
+                                               new_path)
         else:
             raise EmptyText
 
@@ -235,18 +244,21 @@ def store_text(request, path):
 
         if len(p['wikiTextAlternative'].strip()) > 0:
             # store alternative
-            _, new_path = store_structure_node(path, p['wikiTextAlternative'], user)
+            _, new_path = store_structure_node(path, p['wikiTextAlternative'],
+                                               user)
         else:
             raise EmptyText
 
     elif 'wikiTextAlternative' in p and 'wikiText' in p and 'argumentType' in p:
 
-        if len(p['wikiText'].strip()) > 0 and len(p['wikiTextAlternative'].strip()) > 0:
+        if len(p['wikiText'].strip()) > 0 and \
+                len(p['wikiTextAlternative'].strip()) > 0:
             # store Argument and Derivate of structure Node as alternative
             arg_text = p['wikiText']
             arg_type = p['argumentType']
             derivate_wiki_text = p['wikiTextAlternative']
-            new_path, path_couples = store_derivate(path, arg_text, arg_type, derivate_wiki_text, user)
+            new_path, path_couples = store_derivate(path, arg_text, arg_type,
+                                                    derivate_wiki_text, user)
             # microblog alert
             post_new_derivate_for_node_message_list(user, path_couples)
         else:
@@ -400,9 +412,11 @@ def store_settings(request):
         assert_valid_email(email)
         eact = EmailActivation.create(user, email)
         try:
-            send_mail(settings.EMAIL_VERIFICATION_TITLE,
-                      settings.EMAIL_VERIFICATION_BODY + ' ' + settings.FINDECO_BASE_URL +
-                      '/confirm_email/' + str(eact.key),
+            confirm_url = settings.FINDECO_BASE_URL + '/confirm_email/' + \
+                str(eact.key)
+            send_mail(ugettext('mail_verification_email_subject'),
+                      ugettext('mail_verification_email_body{url}').format(
+                      url=confirm_url),
                       settings.EMAIL_HOST_USER,
                       [email],
                       fail_silently=False)
@@ -410,6 +424,10 @@ def store_settings(request):
             # This means we can't send mails, so we can't change the mail
             eact.delete()
             raise
+    if 'wantsMailNotification' in request.POST:
+        user.profile.wants_mail_notification = (
+            request.POST['wantsMailNotification'].lower() == 'true')
+
     user.save()
     return json_response({'storeSettingsResponse': {}})
 
@@ -434,6 +452,7 @@ def mark_user_unfollow(request, name):
         'followees': [{'displayName': u.user.username}
                       for u in user.profile.followees.all()]}})
 
+
 @ViewErrorHandling
 def change_password(request):
     assert_authentication(request)
@@ -448,7 +467,8 @@ def delete_user(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
     anonymous = User.objects.filter(username='anonymous').all()[0]
-    # prevent cascading deletion of objects with foreign key to this user by changing this foreign key to anonymous
+    # prevent cascading deletion of objects with foreign key to this user by
+    # changing this foreign key to anonymous
     change_authorship_to(user, anonymous)
     # delete the user
     user.delete()
@@ -460,41 +480,43 @@ def delete_user(request):
 def account_registration(request):
     assert_post_parameters(request, ['displayName', 'password', 'emailAddress'])
 
-    emailAddress = request.POST['emailAddress']
+    email_address = request.POST['emailAddress']
     password = request.POST['password']
     if check_username_sanity(request.POST['displayName']):
-        displayName = request.POST['displayName']
+        display_name = request.POST['displayName']
     else:
         raise InvalidUsername(request.POST['displayName'])
 
-    assert_valid_email(emailAddress)
+    assert_valid_email(email_address)
 
     # validate username
-    if not check_username_sanity(displayName):
-        raise InvalidUsername(displayName)
+    if not check_username_sanity(display_name):
+        raise InvalidUsername(display_name)
 
     # Check for already existing Username
-    if User.objects.filter(username__iexact=displayName).count():
-        raise UsernameNotAvailable(displayName)
+    if User.objects.filter(username__iexact=display_name).count():
+        raise UsernameNotAvailable(display_name)
 
     # Check for already existing Mail
-    if User.objects.filter(email__iexact=emailAddress).count():
-        raise EmailAddressNotAvailiable(emailAddress)
+    if User.objects.filter(email__iexact=email_address).count():
+        raise EmailAddressNotAvailiable(email_address)
 
-    user = create_user(displayName,
+    user = create_user(display_name,
                        description="",
-                       mail=emailAddress,
+                       mail=email_address,
                        password=password,
                        groups=['texters', 'voters', 'bloggers'])
     user.is_active = False
     user.save()
     activation = Activation.create(user)
     try:
-        send_mail(settings.REGISTRATION_TITLE,
-                  settings.REGISTRATION_BODY + ' ' + settings.FINDECO_BASE_URL +
-                  '/activate/' + str(activation.key),
+        activation_url = settings.FINDECO_BASE_URL + '/activate/' + \
+            str(activation.key)
+        send_mail(ugettext('registration_email_subject'),
+                  ugettext('registration_email_body{url}').format(
+                      url=activation_url),
                   settings.EMAIL_HOST_USER,
-                  [emailAddress],
+                  [email_address],
                   fail_silently=False)
     except SMTPException:
         # This means we can't send mails, so we can't create users
@@ -517,18 +539,20 @@ def account_activation(request):
         raise InvalidActivationKey()
 
 
-
 @ViewErrorHandling
 def account_reset_request_by_name(request):
     assert_post_parameters(request, ['displayName'])
-    displayName = request.POST['displayName']
+    display_name = request.POST['displayName']
 
-    user = assert_active_user(displayName)
+    user = assert_active_user(display_name)
     recovery = PasswordRecovery.create(user)
     try:
-        send_mail(settings.REGISTRATION_RECOVERY_TITLE,
-                  settings.REGISTRATION_RECOVERY_BODY + ' ' +
-                  settings.FINDECO_BASE_URL + '/confirm/' + str(recovery.key),
+        recovery_url = settings.FINDECO_BASE_URL + '/confirm/' + \
+            str(recovery.key)
+
+        send_mail(ugettext('password_recovery_email_subject'),
+                  ugettext('password_recovery_email_body{url}').format(
+                      url=recovery_url),
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
@@ -538,17 +562,18 @@ def account_reset_request_by_name(request):
         raise
 
 
-
 @ViewErrorHandling
 def account_reset_request_by_mail(request):
     assert_post_parameters(request, ['emailAddress'])
-    emailAddress = request.POST['emailAddress']
-    user = assert_active_user(email=emailAddress)
+    email_address = request.POST['emailAddress']
+    user = assert_active_user(email=email_address)
     recovery = PasswordRecovery.create(user)
     try:
-        send_mail(settings.REGISTRATION_RECOVERY_TITLE,
-                  settings.REGISTRATION_RECOVERY_BODY + ' ' +
-                  settings.FINDECO_BASE_URL + '/confirm/' + str(recovery.key),
+        recovery_url = settings.FINDECO_BASE_URL + '/confirm/' + \
+            str(recovery.key)
+        send_mail(ugettext('password_recovery_email_subject'),
+                  ugettext('password_recovery_email_body{url}').format(
+                      url=recovery_url),
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
@@ -565,9 +590,10 @@ def account_reset_confirmation(request):
     try:
         rec = PasswordRecovery.objects.get(key=recovery_key)
         new_password = rec.resolve()
-        send_mail(settings.REGISTRATION_RECOVERY_TITLE_SUCCESS,
-                  settings.REGISTRATION_RECOVERY_BODY_SUCCESS + ' Password : ' +
-                  str(new_password), settings.EMAIL_HOST_USER,
+        send_mail(ugettext('password_recovery_success_email_subject'),
+                  ugettext('password_recovery_success_email_body{password}'
+                           ).format(password=str(new_password)),
+                  settings.EMAIL_HOST_USER,
                   [rec.user.email])
         return json_response({'accountResetConfirmationResponse': {}})
     except PasswordRecovery.DoesNotExist:

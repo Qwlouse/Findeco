@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 22:31+0100\n"
+"POT-Creation-Date: 2013-11-26 22:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,155 +17,101 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: findeco/views.py:57 findeco/views.py:68 findeco/views.py:82
-#: findeco/tests/test_load_index.py:102 findeco/tests/test_load_index.py:141
-msgid "NonExistingNode"
-msgstr "Nicht-existierender Knoten"
+#: findeco/views.py:417
+msgid "mail_verification_email_subject"
+msgstr "[Findeco] Please verify this e-mail-address"
 
-#: findeco/views.py:57 findeco/views.py:68 findeco/views.py:101
-#: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
-#: findeco/views.py:259
-msgid "Illegal Path: "
-msgstr "Ungültiger Pfad: "
-
-#: findeco/views.py:82
-#, python-format
-msgid "Could not find slot: %(slot_path)s for node %(path)s."
-msgstr "Der Slot: %(slot_path)s für den Knoten %(path)s konnte nicht gefunden werden."
-
-#: findeco/views.py:101 findeco/tests/test_load_index.py:110
-#: findeco/tests/test_load_text.py:124
-msgid "IllegalPath"
-msgstr "Ungültiger Pfad"
-
-#: findeco/views.py:130 findeco/tests/test_user_api.py:56
-msgid "UnknownUser"
-msgstr "Unbekannter Nutzer"
-
-#: findeco/views.py:130
-#, python-format
-msgid "User '%s' not found!"
-msgstr "Der Nutzer '%s' konnte nicht gefunden werden!"
-
-#: findeco/views.py:139 findeco/views.py:179 findeco/views.py:199
-#: findeco/views.py:216 findeco/views.py:252 findeco/views.py:277
-#: findeco/views.py:300 findeco/tests/test_marking.py:60
-#: findeco/tests/test_marking.py:127 findeco/tests/test_marking.py:184
-#: findeco/tests/test_marking.py:235 findeco/tests/test_store_text.py:51
-#: findeco/tests/test_user_api.py:91
-msgid "NotAuthenticated"
+#: findeco/views.py:418
+msgid "mail_verification_email_body{url}"
 msgstr ""
 
-#: findeco/views.py:140
-msgid "You need to be logged in to load user settings."
-msgstr "Um die Nutzereinstellungen zu laden musst du eingeloggt sein."
+#: findeco/views.py:515
+msgid "registration_email_subject"
+msgstr "[Findeco] Deine Findeco Registrierung"
 
-#: findeco/views.py:160
-msgid "DisabledAccount"
-msgstr "Gesperrter Account"
+#: findeco/views.py:516
+msgid "registration_email_body{url}"
+msgstr ""
+"Du hast einen Findeco Account mit dieser E-Mail-Adresse registriert. Du "
+"kannst ihn mit diesem link aktivieren: \n"
+"{url}\n"
+"Falls du den Account nicht aktivieren möchtest, ignoriere diese E-Mail "
+"einfach."
 
-#: findeco/views.py:160
-#, python-format
-msgid "Account '%s' is deactivated"
-msgstr "Der Account '%s' ist deaktiviert."
+#: findeco/views.py:553 findeco/views.py:574
+msgid "password_recovery_email_subject"
+msgstr "[Findeco] Passwort wiederherstellen"
 
-#: findeco/views.py:162
-msgid "InvalidLogin"
-msgstr "Ungültiger Login"
+#: findeco/views.py:554 findeco/views.py:575
+msgid "password_recovery_email_body{url}"
+msgstr ""
+"Du hast einen Findeco Account mit dieser E-Mail-Adresse registriert. Du "
+"kannst ihn mit diesem link aktivieren: \n"
+"{url}\n"
+"Falls du den Account nicht aktivieren möchtest, ignoriere diese E-Mail "
+"einfach."
 
-#: findeco/views.py:162
-msgid "Username or password wrong."
-msgstr "Der Nutzername oder das Passwort ist inkorrekt."
+#: findeco/views.py:593
+msgid "password_recovery_success_email_subject"
+msgstr "[Findeco] Neues Passwort"
 
-#: findeco/views.py:179
-msgid "You need to be authenticated to flag node."
-msgstr "Um den Knoten zu markieren musst du eingeloggt sein."
+#: findeco/views.py:594
+msgid "password_recovery_success_email_body{password}"
+msgstr ""
+"Dein neues Passwort ist:\n"
+"{password}"
 
-#: findeco/views.py:181 findeco/views.py:201 findeco/views.py:218
-#: findeco/views.py:254 findeco/views.py:308 findeco/tests/test_marking.py:66
-#: findeco/tests/test_marking.py:133 findeco/tests/test_marking.py:190
-#: findeco/tests/test_marking.py:241 findeco/tests/test_store_text.py:57
-msgid "PermissionDenied"
-msgstr "Zugang verweigert"
+#: microblogging/models.py:189
+msgid "node_created_message"
+msgstr ""
+"<span style=\"color: gray;\">Hinweis:</span> {u0} hat den Vorschlag {n0} "
+"erstellt."
 
-#: findeco/views.py:181
-msgid "You do not have the permission to flag "
-msgstr "Du hast keine Erlaubnis etwas als Spam zu markieren."
+#: microblogging/models.py:190
+msgid "node_refined_message"
+msgstr ""
+"<span style=\"color: gray;\">Hinweis:</span> {u0} hat {n0} zu {n1} "
+"weiterentwickelt."
 
-#: findeco/views.py:186 findeco/views.py:206 findeco/views.py:223
-#: findeco/views.py:259
-msgid "Illegal Path"
-msgstr "Ungültiger Pfad"
+#: microblogging/models.py:191
+msgid "node_flagged_as_spam_message"
+msgstr ""
+"<span style=\"color: gray;\">Hinweis:</span> {u0} hat {n0} als Spam markiert."
 
-#: findeco/views.py:199
-msgid "You need to be authenticated to unflag node."
-msgstr "Du musst authentifiziert sein um die Markierung des Knotens zu entfernen."
+#: microblogging/models.py:192
+msgid "node_unflagged_as_spam_message"
+msgstr ""
+"<span style=\"color: gray;\">Hinweis:</span> {u0} hat die Spam-Markierung "
+"für {n0} zurückgezogen."
 
-#: findeco/views.py:201
-msgid "You do not have the permission to unflag "
-msgstr "Du hast keine Erlaubnis die Markierung zu entfernen."
+#: microblogging/models.py:193
+msgid "node_followed_message"
+msgstr ""
+"<span style=\"color: gray;\">Hinweis:</span> {u0} folgt dem Knoten {n0}."
 
-#: findeco/views.py:216
-msgid "You need to be authenticated to follow node."
-msgstr "Du musst authentifiziert sein um dem Knoten zu folgen."
+#: microblogging/models.py:194
+msgid "node_unfollowed_message"
+msgstr ""
+"<span style=\"color: gray;\">Hinweis:</span> {u0} folgt dem Knoten {n0}."
 
-#: findeco/views.py:218
-msgid "You do not have the permission to follow "
-msgstr "Du hast keine Erlaubnis zu folgen."
+#: microblogging/models.py:195
+msgid "argument_created_message"
+msgstr ""
+"<span style=\"color: gray;\">Hinweis:</span> {u0} hat dem Vorschlag {n0} das "
+"Argument {n1} hinzugefügt."
 
-#: findeco/views.py:252
-msgid "You need to be authenticated to unfollow node."
-msgstr "Du musst authentifiziert sein um den Knoten zu entfolgen."
+#: microblogging/view_helpers.py:124
+msgid "derivate_email_notification_subject"
+msgstr "[Findeco] Ein Vorschlag, dem du folgst wurde weiterentwickelt."
 
-#: findeco/views.py:254
-msgid "You do not have the permission to unfollow "
-msgstr "Du hast keine Erlaubnis zu entfolgen."
+#: microblogging/view_helpers.py:129
+msgid "new_argument_email_notification_subject"
+msgstr "[Findeco] Einem Vorschlag, dem du folgst wurde ein neues Argument hinzugefügt."
 
-#: findeco/views.py:277
-msgid "You need to be authenticated to store settings."
-msgstr "Du musst authentifziert die Einstellungen zu speichern."
+#: microblogging/view_helpers.py:134
+msgid "userpost_email_notification_subject{author}"
+msgstr "[Findeco] Du wurdest erwähnt in einem Post von {author}!"
 
-#: findeco/views.py:281 findeco/views.py:285
-#: findeco/tests/test_user_api.py:109 findeco/tests/test_user_api.py:116
-msgid "MissingPOSTParameter"
-msgstr "Fehlendes POST-Parameter"
-
-#: findeco/views.py:281
-msgid "The 'description' POST parameter is missing."
-msgstr "Das 'description' POST-Paramter fehlt."
-
-#: findeco/views.py:285
-msgid "The 'displayName' POST parameter is missing."
-msgstr "Das 'displayName' POST-Parameter fehlt."
-
-#: findeco/views.py:290 findeco/tests/test_user_api.py:124
-msgid "NameNotAvailable"
-msgstr "Name nicht verfügbar"
-
-#: findeco/views.py:290
-#, python-format
-msgid "The name '%s' is already taken."
-msgstr "Der Name '%s' ist schon in vergeben."
-
-#: findeco/views.py:300
-msgid "You need to be authenticated to store text."
-msgstr "Du musst authenfiziert sein um Text zu speichern."
-
-#: findeco/views.py:308
-msgid "You do not have the permission to store text."
-msgstr "Du hast keine Erlaubnis um Text zu speichern."
-
-#: findeco/views.py:312 findeco/views.py:317
-#: findeco/tests/test_store_text.py:72 findeco/tests/test_store_text.py:79
-msgid "MissingPostParameter"
-msgstr "Fehlendes POST-Parameter"
-
-#: findeco/views.py:313
-msgid "storeText is missing the 'wikiText' POST parameter!"
-msgstr "storeText fehlt das 'wikiText' POST-Parameter!"
-
-#: findeco/views.py:318
-msgid ""
-"You cannot use storeText to save a wikiTextAlternative without an "
-"argumentType!"
-msgstr "Ohne ein argumentType kannst du keinen storeText nutzen um ein wikiTextAlternative zu speichern!"
+#, fuzzy
+#~ msgid "password_recovery_email_subject{url}"
+#~ msgstr "[Findeco] Passwort wiederherstellen"

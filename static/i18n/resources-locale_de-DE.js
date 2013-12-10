@@ -90,6 +90,11 @@
         "description": ""
     },
     {
+        "key"        : "_argumentsCancelBtn_",
+        "value"      : "Abbrechen",
+        "description": ""
+    },
+    {
         "key"        : "_createNewText_",
         "value"      : "Neuer Abschnitt",
         "description": ""
@@ -156,7 +161,7 @@
     },
     {
         "key"        : "_microblogPlaceholder_",
-        "value"      : "Hier Text eingeben",
+        "value"      : "Dein Microblogpost zum Thema",
         "description": ""
     },
     {
@@ -526,7 +531,7 @@
     },
     {
         "key"        : "_editFieldPretext_",
-        "value"      : "= Eine Überschrift muss angegeben sein =\nNach der Überschrift kann Creole-Syntax verwendet werden, un zu strukturieren und zu //formatieren//.",
+        "value"      : "= Eine Überschrift muss angegeben sein =\nNach der Überschrift kann Creole-Syntax verwendet werden, und zu strukturieren und zu //formatieren//.",
         "description": ""
     },
     {
@@ -687,6 +692,71 @@
     {
         "key"        : "_composePost_",
         "value"      : "Post verfassen",
+        "description": ""
+    },
+    {
+        "key"        : "_password_",
+        "value"      : "Passwort",
+        "description": ""
+    },
+    {
+        "key"        : "_account_",
+        "value"      : "Account",
+        "description": ""
+    },
+    {
+        "key"        : "_mailSettings_",
+        "value"      : "E-Mail Einstellungen",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHints_",
+        "value"      : "Passwort Hinweise",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHint_",
+        "value"      : "Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und Kleinschreibung als auch Sonderzeichen in deinem Passwort.",
+        "description": ""
+    },
+    {
+        "key"        : "_notLoggedIn_",
+        "value"      : "Nicht eingeloggt!",
+        "description": ""
+    },
+    {
+        "key"        : "_account_",
+        "value"      : "Profil",
+        "description": ""
+    },
+    {
+        "key"        : "_password_",
+        "value"      : "Passworteinstellungen",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHints_",
+        "value"      : "Hinweise zum Passwort",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHint_",
+        "value"      : "Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und Kleinschreibung als auch Sonderzeichen in deinem Passwort.",
+        "description": ""
+    },
+    {
+        "key"        : "_mailSettings_",
+        "value"      : "E-Mail und Benachrichtigung",
+        "description": ""
+    },
+    {
+        "key"        : "_notificationSettings_",
+        "value"      : "Benachrichtigungseinstellungen",
+        "description": ""
+    },
+    {
+        "key"        : "_wantEMailLabel_",
+        "value"      : "Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.",
         "description": ""
     }
 ]

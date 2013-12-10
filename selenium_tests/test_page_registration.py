@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
+################################################################################
 # Copyright (c) 2013 Maik Nauheim <findeco@maik-nauheim.de>
 # This file is part of Findeco.
 #
@@ -16,16 +18,18 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 #
+################################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-# from __future__ import division, print_function, unicode_literals
-
+#endregion #####################################################################
+from django.core import mail
 from django.test import LiveServerTestCase
 from nose.plugins.attrib import attr
 from selenium import webdriver
-
+import time
 
 @attr('selenium')
 class TestFePageRegistration(LiveServerTestCase):
@@ -46,7 +50,7 @@ class TestFePageRegistration(LiveServerTestCase):
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('Die Accountregistrierung steht', body.text, "Partial not loaded")
 
-    def test_check_form_valifation(self):
+    def test_check_form_validation(self):
         # Without content
         self.driver.get(self.live_server_url + '/register')
         self.driver.find_element_by_css_selector("input[type=\"submit\"]").click()
@@ -98,7 +102,7 @@ class TestFePageRegistration(LiveServerTestCase):
         self.driver.find_element_by_xpath("(//input[@type='password'])[2]").send_keys("password")
         self.driver.find_element_by_xpath("(//input[@type='text'])[2]").send_keys("a@trash-mail.com")
         self.driver.find_element_by_css_selector("input[type=\"submit\"]").click()
-        time.sleep(2)
+
         self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert")))
         tmp = self.driver.find_element_by_tag_name('body').text
         self.assertIn('Benutzername ist nicht verf', tmp , "Message missing - Username already taken")
@@ -114,20 +118,25 @@ class TestFePageRegistration(LiveServerTestCase):
         self.driver.find_element_by_xpath("//input[@type='checkbox']").click()
         self.driver.find_element_by_xpath("(//input[@type='checkbox'])[2]").click()
         self.driver.find_element_by_css_selector("input[type=\"submit\"]").click()
+        time.sleep(3)
         self.assertEqual(0, len(self.driver.find_elements_by_css_selector(".alert")))
-        # self.assertEqual(0, len(self.driver.find_elements_by_css_selector(".alert")))
-        '''@todo: Registration is not completed thus mail problems in testing env'''
-        '''@todo: Ensure Activation code is invalidated'''
-        # time.sleep(20)
-        # self.driver.get("http://www.trash-mail.com")
-        # self.driver.find_element_by_name("mail").click()
-        # self.driver.find_element_by_name("mail").clear()
-        # self.driver.find_element_by_name("mail").send_keys("fin")
-        # self.driver.find_element_by_name("submit").click()
-        # self.assertTrue(self.is_element_present(By.LINK_TEXT, "Your Findeco registration"))
-        # self.driver.find_element_by_link_text("Your Findeco registration").click()
-        # self.driver.find_element_by_css_selector(".mail_content a").click()
-
-
-
-
+        self.assertEquals(len(mail.outbox), 1)
+        self.driver.get(self.live_server_url + mail.outbox[0].body.split(":8000")[1])
+        tmp = self.driver.find_element_by_tag_name('body').text
+        self.assertIn(' mit Findeco!', tmp,
+                      "Activation Failed")
+        self.driver.get(self.live_server_url + mail.outbox[0].body.split(":8000")[1])
+        tmp = self.driver.find_element_by_tag_name('body').text
+        time.sleep(10)
+        self.assertIn('ltiger Aktivierungscode', tmp, "Activation Key not invalidated")
+        time.sleep(10)
+        self.driver.get(self.live_server_url + '/login')
+        self.driver.implicitly_wait(1)
+        body = self.driver.find_element_by_tag_name('body')
+        self.assertIn('Mit dem Login', body.text, "Partial not loaded")
+        self.driver.find_element_by_xpath("//input[@type='password']").send_keys("password")
+        self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("testuser")
+        self.driver.find_element_by_css_selector("input.btn.btn-primary").click()
+        time.sleep(2)
+        body = self.driver.find_element_by_tag_name('body')
+        self.assertIn('testuser', body.text, "Login without success")

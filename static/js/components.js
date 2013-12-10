@@ -26,41 +26,41 @@
 /*
  <div follow-star entity="data" markFunc="markNode"/>
  */
-
-
 findecoApp
-    .directive('followStar', function( ) {
+    .directive('followStar', function () {
         return {
-            restrict : 'A',
-            scope: {
-                entity: '=',
+            restrict: 'A',
+            scope   : {
+                entity  : '=',
                 markFunc: '=',
-                showIf: '=',
-                width: '@',
-                height: '@'
+                showIf  : '=',
+                width   : '@',
+                height  : '@'
             },
-            replace: true,
+            replace : true,
             template: '<a class="follow-star">' +
-                        '<img ng-src="/static/images/star{{entity.isFollowing}}.png" ' +
-                'alt="Follow" title="Folgen" width="{{width}}" height="{{height}}" ' +
-                'onmouseover="this.src=\'/static/images/star{{entity.isFollowing}}_hover.png\';" ' +
-                'onmouseout="this.src=\'/static/images/star{{entity.isFollowing}}.png\';" ' +
-                '/>' +
-                      '</a>',
-            link : function (scope, element, attrs) {
+                '<img ng-src="/static/images/star{{entity.isFollowing}}.png" ' +
+                'alt="Follow" title="Folgen" width="{{width}}" height="{{height}}" ' + '/>' +
+                '</a>',
+            //       'onmouseover="this.src=\'/static/images/star{{entity.isFollowing}}_hover.png\';" ' +
+            //     'onmouseout="this.src=\'/static/images/star{{entity.isFollowing}}.png\';" ' +
+            // todo: Reimplemnt without Angularerror-->
+            link: function (scope, element, attrs) {
                 if (scope.entity.isFollowing != 0 &&
                     scope.entity.isFollowing != 1 &&
                     scope.entity.isFollowing != 2) {
                     scope.entity.isFollowing = 0;
                 }
                 var link = angular.element(element[0]);
-                scope.$watch('showIf', function(value){
+                scope.$watch('showIf', function (value) {
                     link.css('display', scope.showIf ? '' : 'none');
                 });
                 link.bind('click', toggle);
                 function toggle() {
                     var markType = "follow";
-                    if (scope.entity.isFollowing == 2) {markType = "unfollow";}
+                    if (scope.entity.isFollowing == 2) {
+                        markType = "unfollow";
+                    }
                     scope.markFunc(scope.entity.path, markType).success(function () {
                         if (markType == 'unfollow') {
                             scope.entity.isFollowing = 0;
@@ -69,39 +69,39 @@ findecoApp
                         }
                     });
                 }
-
             }
         }
     })
-    .directive('spamMark', function( ) {
+    .directive('spamMark', function () {
         return {
-            restrict : 'A',
-            scope: {
-                entity: '=',
+            restrict: 'A',
+            scope   : {
+                entity  : '=',
                 markFunc: '=',
-                showIf: '=',
-                width: '@',
-                height: '@'
+                showIf  : '=',
+                width   : '@',
+                height  : '@'
             },
-            replace: true,
+            replace : true,
             template: '<a class="spam-mark">' +
-                        '<img ng-src="/static/images/spam{{entity.isFlagging}}.png" alt="SpamFlag" title="Als Spam markieren" width="{{width}}" height="{{height}}"/>' +
-                      '</a>',
-            link : function (scope, element, attrs) {
+                '<img ng-src="/static/images/spam{{entity.isFlagging}}.png" alt="SpamFlag" title="Als Spam markieren" width="{{width}}" height="{{height}}"/>' +
+                '</a>',
+            link    : function (scope, element, attrs) {
                 if (scope.entity.isFlagging != 0 &&
                     scope.entity.isFlagging != 1 &&
                     scope.entity.isFlagging != 2) {
                     scope.entity.isFlagging = 0;
                 }
-
                 var link = angular.element(element[0]);
-                scope.$watch('showIf', function(value){
+                scope.$watch('showIf', function (value) {
                     link.css('display', scope.showIf ? '' : 'none');
                 });
                 link.bind('click', toggle);
                 function toggle() {
                     var markType = "spam";
-                    if (scope.entity.isFlagging == 1) {markType = "notspam";}
+                    if (scope.entity.isFlagging == 1) {
+                        markType = "notspam";
+                    }
                     scope.markFunc(scope.entity.path, markType).success(function () {
                         if (markType == 'notspam') {
                             scope.entity.isFlagging = 0;
@@ -113,14 +113,14 @@ findecoApp
             }
         }
     })
-    .directive('creole', function() {
+    .directive('creole', function () {
         return {
-            restrict : 'A',
-            scope: {
-                wikiText : '=',
-                updateInterval : '@'
+            restrict: 'A',
+            scope   : {
+                wikiText      : '=',
+                updateInterval: '@'
             },
-            link : function (scope, element, attrs) {
+            link    : function (scope, element, attrs) {
                 function parse() {
                     if (scope.wikiText != undefined) {
                         var html = Parser.parse(scope.wikiText, "unusedShortTitle", true);
@@ -153,8 +153,49 @@ findecoApp
                         setTimeout(check_for_parse_timing, 1000);
                     });
                 }
-
                 parse();
             }
         }
-    });
+    })
+    .directive('help', function (Help, $rootScope) {
+        return {
+            restrict: 'E',
+            scope: {
+                help: '=',
+                htype: '=',
+                hid: '@hid'
+            },
+            template: '<div>Platzhalter</div>',
+            replace: true,
+            link: function (scope, elem, attr) {
+                $rootScope.$watch('helpIsActive', function (oldVal) {
+                    if (oldVal) {
+                        elem.html('<div class="help-small-icon help-small-b "></div>');
+                        if (scope.htype == 1) {
+                            elem.html('<div class="help-small-icon help-small-b " ></div>');
+                        }
+                        if (scope.htype == 3) {
+                            elem.html('<div class="help-small-icon help-small-b "  ></div>');
+                        }
+
+                    } else {
+                        elem.html('');
+                    }
+                });
+                var link = angular.element(elem[0]);
+                link.bind('click', function () {
+                    Help.setID(scope.hid);
+                });
+            }
+
+        };
+    })
+    .directive('ngBindHtmlUnsafe', [function () {
+        return function (scope, element, attr) {
+            element.addClass('ng-binding').data('$binding', attr.ngBindHtmlUnsafe);
+            scope.$watch(attr.ngBindHtmlUnsafe, function ngBindHtmlUnsafeWatchAction(value) {
+                element.html(value || '');
+            });
+        }
+    }]);
+

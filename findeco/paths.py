@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
@@ -23,7 +24,8 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-################################################################################
+#endregion #####################################################################
+
 """
 Pathparser 
 
@@ -49,17 +51,20 @@ Examples:
 from __future__ import division, print_function, unicode_literals
 import re
 
-SHORT_TITLE = r'([a-zA-Z][a-zA-Z0-9-_]{0,19})'
-ID = r'([0-9]+)'
+SHORT_TITLE = r'(?:[a-zA-Z][a-zA-Z0-9-_]{0,19})'
+ID = r'(?:[0-9]+)'
 SLOT = SHORT_TITLE
-NODE = '(' + SLOT + r'\.' + ID + ')'
-ARG_CATEGORY = r'(' + NODE + r'\.' + '(pro|neut|con|all)' + ')'
-ARG = r'(' + NODE + r'\.' + '(pro|neut|con|all)' + r'(\.' + ID + '))'
-SUFFIX = r'(' + ARG + '|' + ARG_CATEGORY + '|' + NODE + '|' + SLOT + ')'
-RESTRICTED_SUFFIX = r'(' + ARG + '|' + NODE + ')'
-PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
-RESTRICTED_PATH = '(?P<path>' + '(' + NODE + '/' + ')*' + RESTRICTED_SUFFIX + \
+NODE = '(?:' + SLOT + r'\.' + ID + ')'
+ARG_CATEGORY = r'(?:' + NODE + r'\.' + '(?:pro|neut|con|all)' + ')'
+ARG = r'(?:' + NODE + r'\.' + '(?:pro|neut|con|all)' + r'(?:\.' + ID + '))'
+SUFFIX = r'(?:' + ARG + '|' + ARG_CATEGORY + '|' + NODE + '|' + SLOT + ')'
+RESTRICTED_SUFFIX = r'(?:' + ARG + '|' + NODE + ')'
+PATH = '(?P<path>' + '(?:' + NODE + '/' + ')*' + SUFFIX + '?' + ')' + '/?'
+RESTRICTED_PATH = '(?P<path>' + '(?:' + NODE + '/' + ')*' + RESTRICTED_SUFFIX +\
                   '?' + ')' + '/?'
+RESTRICTED_NONROOT_PATH = '(?P<path>' + '(?:' + NODE + ')' + \
+                          '(?:' + '/' + NODE + ')*' + \
+                          '(?:' + '/' + RESTRICTED_SUFFIX + ')?' + '/?' + ')'
 pathMatcher = re.compile(PATH)
 
 

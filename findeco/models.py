@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding=utf-8
+# region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
@@ -23,7 +24,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-################################################################################
+#endregion #####################################################################
 """
 This file contains models for the basic Project structure:
   * Add a UserProfile to every User
@@ -86,6 +87,8 @@ class UserProfile(models.Model):
     last_seen = models.DateTimeField(default=datetime.min)
     verification_key = models.CharField(max_length=64, default=generate_key)
     api_key = models.CharField(max_length=16, default=lambda: generate_key(16))
+
+    wants_mail_notification = models.BooleanField(default=False)
 
     # Override the save method to prevent integrity errors
     # These happen because both the post_save signal and the inlined admin
@@ -281,6 +284,10 @@ def create_system_user():
         User.objects.create(username='system')
     else:
         print('system user already exists.')
+
+
+def get_system_user():
+    return auth_models.User.objects.get(username='system')
 
 
 def create_anonymous_user():
