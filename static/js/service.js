@@ -230,6 +230,7 @@ angular.module('FindecoServices', [])
                 if (graphType == undefined) {
                     graphType = "full";
                 }
+                console.log('Graph Type: '+graphType);
                 var url = ['/.json_loadGraphData', graphType, path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);

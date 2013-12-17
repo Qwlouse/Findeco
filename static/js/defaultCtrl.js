@@ -41,15 +41,17 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesetti
     $scope.nodeInfo.path = $scope.nav.argumentPath;
     $scope.sections = [];
 
+    $scope.graphType = 'full';
+
     $scope.relocate = function (target) {
         $location.path(target + '/' + $scope.nav.nodePath);
     };
 
     $scope.markNode = Backend.markNode;
 
-
     $scope.updateGraph = function () {
-        Backend.loadGraphData($scope.graphData, $scope.nav.nodePath).success(function (data) {
+        $scope.isLoadingGraph =true;
+        Backend.loadGraphData($scope.graphData, $scope.nav.nodePath, $scope.graphType).success(function (data) {
             $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
             $scope.isLoadingGraph =false;
         });
@@ -114,7 +116,6 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesetti
 
     $scope.initialize = function () {
         $scope.isLoadingNode =true;
-        $scope.isLoadingGraph =true;
         $scope.updateNode();
         $scope.updateGraph();
        
