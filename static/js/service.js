@@ -81,7 +81,7 @@ angular.module('FindecoServices', [])
             );
         }
     })
-    .factory('Backend', function ($http) {
+    .factory('Backend', function ($http,Navigator,Message) {
         function fillArray(array, attributes) {
             return function (data) {
                 for (var i = 0; i < attributes.length; ++i) {
@@ -218,9 +218,15 @@ angular.module('FindecoServices', [])
             },
 
             loadNode: function (nodeInfo, path) {
+
                 var url = ['/.json_loadNode', path].join('/');
                 var promise = $http.get(url);
                 promise.success(function (d) {
+                    if((d.loadNodeResponse.nodeID=="1")&&(Navigator.path!="/index")){
+                        Message.send('error', 'Die angeforderte Seite existiert nicht');
+                        Navigator.changePath("/");
+                               
+                    }
                     angular.copy(d.loadNodeResponse, nodeInfo);
                 });
                 return promise;
