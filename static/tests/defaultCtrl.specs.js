@@ -1,10 +1,11 @@
 describe('FindecoDefaultCtrl', function () {
 
     var scope = {};
+    var ctrl = null;
     beforeEach(angular.mock.module('Findeco'));
     beforeEach(angular.mock.inject(function ($rootScope, $controller) {
         scope = $rootScope.$new();
-        $controller('FindecoDefaultCtrl', {
+        ctrl = $controller('FindecoDefaultCtrl', {
             $scope: scope,
             Fesettings: {}
       });
@@ -12,9 +13,7 @@ describe('FindecoDefaultCtrl', function () {
 
 
     it('should be registered', inject(function ($rootScope, $injector) {
-
-        expect(true).toBe(true);
-//        expect(module.controller('FindecoDefaultCtrl')).not.toBe(null);
+        expect(ctrl).not.toBe(null);
     }));
 
 });
