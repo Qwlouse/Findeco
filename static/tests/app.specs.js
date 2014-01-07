@@ -22,13 +22,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-describe("Findeco Module", function() {
+describe("Findeco Module", function () {
     var module;
-    beforeEach(function() {
-      module = angular.module("Findeco");
+    beforeEach(function () {
+        module = angular.module("Findeco");
     });
 
-    it("should be registered", function() {
-      expect(module).not.toBe(null);
+    it("should be registered", function () {
+        expect(module).not.toBe(null);
     });
 });
