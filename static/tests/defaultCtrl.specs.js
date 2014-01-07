@@ -4,9 +4,10 @@ describe('FindecoDefaultCtrl', function () {
     beforeEach(angular.mock.module('Findeco'));
     beforeEach(angular.mock.inject(function ($rootScope, $controller) {
         scope = $rootScope.$new();
-//      $controller('FindecoDefaultCtrl', {
-//        $scope: scope
-//      });
+        $controller('FindecoDefaultCtrl', {
+            $scope: scope,
+            Fesettings: {}
+      });
     }));
 
 
