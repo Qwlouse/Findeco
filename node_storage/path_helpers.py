@@ -91,3 +91,7 @@ def get_good_path_for_structure_node(node, slot=None, slot_path=None):
         return slot_path + '.' + str(node.get_index(slot))
     else:
         return node.get_a_path()
+
+
+def get_all_paths_for_node(node):
+    return PathCache.objects.filter(node=node).values_list('path', flat=True)
