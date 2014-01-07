@@ -25,9 +25,9 @@
 'use strict';
 
 findecoApp.controller('FindecoDefaultCtrl',
-    ['$scope', '$location', 'Backend', 'User', 'Navigator', 'Fesettings',
-    function($scope, $location, Backend, User, Navigator, Fesettings) {
+    function($scope, $location, $controller, Backend, User, Navigator, Fesettings) {
 
+    $scope.text = 'Hello World!';
     $scope.nav = Navigator;
     $scope.user = User;
     $scope.fesettings = Fesettings;
@@ -125,4 +125,4 @@ findecoApp.controller('FindecoDefaultCtrl',
     	return $scope.isLoadingNode || $scope.isLoadingGraph;
     };
     $scope.initialize();
-}]);
+});

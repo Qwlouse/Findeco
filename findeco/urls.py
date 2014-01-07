@@ -164,9 +164,12 @@ if settings.DEBUG:
     urlpatterns += patterns(
         '',
         url(r'^.djangojs/', include('djangojs.urls')),
-        url(r'^.jasmine$', JasmineView.as_view(js_files=['js/lib/*.js',
-                                                         'js/app.js',
-                                                         'tests/*.specs.js']),
+        url(r'^.jasmine$', JasmineView.as_view(
+            js_files=['js/lib/*.js',
+                      'js/app.js',
+                      'js/service.js',
+                      'js/*Ctrl.js',
+                      'tests/*.specs.js']),
             name='jasmine_test_runner')
     )
 
