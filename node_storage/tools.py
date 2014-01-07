@@ -28,12 +28,13 @@
 from __future__ import division, print_function, unicode_literals
 from django.core.exceptions import ObjectDoesNotExist
 from microblogging import delete_posts_referring_to
-from node_storage.models import PathCache, TextCache, Vote, Argument
+from node_storage.models import TextCache, Vote, Argument
 from node_storage.models import IndexCache, Node
+from node_storage.path_helpers import get_all_paths_for_node
 
 
 def delete_node(node):
-    paths = PathCache.objects.filter(node=node).all()
+    paths = get_all_paths_for_node(node)
     TextCache.objects.filter(path__in=paths).delete()
     IndexCache.objects.filter(path__in=paths).delete()
 
@@ -56,6 +57,8 @@ def delete_node(node):
     for p in parents:
         try:
             parent = Node.objects.get(id=p.id)
+            parent_paths = get_all_paths_for_node(parent)
+            IndexCache.objects.filter(path__in=parent_paths).delete()
             if parent.children.count() == 0:
                 delete_node(parent)
             else:
