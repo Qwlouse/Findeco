@@ -122,6 +122,8 @@ def poll_all_jobs():
                         job.save()
 
                     except Exception, e:
+                        with open("django_cron.log", 'w') as logfile:
+                            logfile.write(str(e) + '\n')
                         # if the job throws an error, just remove it from
                         # the queue. That way we can find/fix the error and
                         # requeue the job manually

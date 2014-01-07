@@ -65,7 +65,7 @@ angular.module('FindecoServices', [])
         $locationProvider.html5Mode(true);
         $locationProvider.hashPrefix('!');
     })
-    .factory('errorHandler', function ($q, Message) {
+    .factory('errorHandler', function ($q, Message,Navigator) {
         return function (promise) {
             return promise.then(
                 function (response) {
@@ -73,15 +73,21 @@ angular.module('FindecoServices', [])
                 },
                 function (response) {
                     if (response.data.errorResponse != undefined) {
-                        Message.send("error", response.data.errorResponse.errorID);
-                        delete response.data.errorResponse;
+                        if (response.data.errorResponse.errorID== "_UnknownNode") {
+                            Message.send('error', 'Die angeforderte Seite existiert nicht');
+                            Navigator.changePath("/");
+                        }else{
+                            Message.send("error", response.data.errorResponse.errorID);
+                            delete response.data.errorResponse;
+                        }
+
                     }
                     return $q.reject(response);
                 }
             );
         }
     })
-    .factory('Backend', function ($http) {
+    .factory('Backend', function ($http,Navigator,Message) {
         function fillArray(array, attributes) {
             return function (data) {
                 for (var i = 0; i < attributes.length; ++i) {
@@ -218,9 +224,17 @@ angular.module('FindecoServices', [])
             },
 
             loadNode: function (nodeInfo, path) {
+
                 var url = ['/.json_loadNode', path].join('/');
                 var promise = $http.get(url);
-                promise.success(function (d) {
+                promise.success(function (d){
+
+                    if((d.loadNodeResponse.nodeID=="1")&&(Navigator.path!="/index")){
+                        Message.send('error', 'Die angeforderte Seite existiert nicht');
+                        Navigator.changePath("/");
+
+                    }
+
                     angular.copy(d.loadNodeResponse, nodeInfo);
                 });
                 return promise;
