@@ -27,6 +27,7 @@
 findecoApp.controller('FindecoMenuCtrl', function($scope, User, Navigator, Fesettings) {
     $scope.user = User;
     $scope.fesettings = Fesettings;
+
     $scope.logout = function () {
         User.logout().success(function () {
             Navigator.changePath('/');
