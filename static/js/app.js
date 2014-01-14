@@ -24,7 +24,16 @@
 
 'use strict';
 
-var findecoApp = angular.module('Findeco', ['ngAnimate', 'ngRoute', 'FindecoServices', 'FindecoBackendService', 'localization', 'ui.bootstrap'])
+var findecoApp = angular.module(
+        'Findeco',
+        ['ngAnimate',
+         'ngRoute',
+         'FindecoServices',
+         'FindecoBackendService',
+         'FindecoUserService',
+         'localization',
+         'ui.bootstrap']
+    )
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when('/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: FindecoCreateCtrl}).

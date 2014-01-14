@@ -63,6 +63,7 @@
     <script type="text/javascript" src="/static/js/newsCtrl.js"></script>
     <script type="text/javascript" src="/static/js/service.js"></script>
     <script type="text/javascript" src="/static/js/backendService.js"></script>
+    <script type="text/javascript" src="/static/js/userService.js"></script>
     <script type="text/javascript" src="/static/js/structureParser.js"></script>
     <script type="text/javascript" src="/static/js/userCtrl.js"></script>
     <script type="text/javascript" src="/static/js/userInfoCtrl.js"></script>
@@ -89,7 +90,13 @@
                             <li class="{{getActiveClass('search')}}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
-                                        <input id="searchInput" type="search" name="searchField" placeholder="" autocomplete="on" ng-model="searchString" data-i18n-attr="_search_|placeholder"/>
+                                        <input id="searchInput"
+                                               type="search"
+                                               name="searchField"
+                                               placeholder=""
+                                               autocomplete="on"
+                                               ng-model="searchString"
+                                               data-i18n-attr="_search_|placeholder"/>
                                         <button class="searchButton" value=""></button>
                                     </form>
                                 </div>
