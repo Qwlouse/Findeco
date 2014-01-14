@@ -25,7 +25,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #endregion #####################################################################
-from djangojs.views import JasmineView
 from findeco import settings
 from libs import django_cron
 from django.conf.urls import patterns, include, url
