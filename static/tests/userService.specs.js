@@ -26,6 +26,9 @@ describe('FindecoUserService', function () {
             }
         };
 
+    var logoutResponse = {
+        logoutResponse: {}
+    };
 
     //excuted before each "it" is run.
     beforeEach(function (){
@@ -56,12 +59,19 @@ describe('FindecoUserService', function () {
         expect(userService.followees).toEqual(userSettings.followees);
     });
 
-    it('should have a login function', function () {
-        expect(angular.isFunction(userService.login)).toBe(true);
+    it('should have empty user details if loadUserSettings does not succeed', function () {
+        httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+        httpBackend.flush();
+        expect(userService.isLoggedIn).toBe(false);
+        expect(userService.displayName).toBe('');
+        expect(userService.description).toBe('');
+        expect(userService.rsskey).toBe('');
+        expect(userService.email).toBe('');
+        expect(userService.followees).toEqual([]);
     });
 
-    it('should have a logout function', function () {
-        expect(angular.isFunction(userService.logout)).toBe(true);
+    it('should have a login function', function () {
+        expect(angular.isFunction(userService.login)).toBe(true);
     });
 
     it('should set the userInfo details after successful login', function () {
@@ -85,8 +95,21 @@ describe('FindecoUserService', function () {
         expect(userService.followees).toEqual(userSettings.followees);
     });
 
+    it('should have a logout function', function () {
+        expect(angular.isFunction(userService.logout)).toBe(true);
+    });
+
     it('should remove the user details after successful logout', function () {
-        httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+        httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
         httpBackend.flush();
+        httpBackend.expectGET('/.json_logout/').respond(logoutResponse);
+        userService.logout();
+        httpBackend.flush();
+        expect(userService.isLoggedIn).toBe(false);
+        expect(userService.displayName).toBe('');
+        expect(userService.description).toBe('');
+        expect(userService.rsskey).toBe('');
+        expect(userService.email).toBe('');
+        expect(userService.followees).toEqual([]);
     });
 });
