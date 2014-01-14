@@ -16,6 +16,10 @@ describe('FindecoMenuCtrl', function(){
         expect(scope.user).not.toBe(null);
     }));
 
+    it('should have get getActiveClass function', inject(function () {
+        expect(angular.isFunction(scope.getActiveClass)).toBe(true);
+    }));
+
 
 
 });
