@@ -31,8 +31,8 @@ describe('FindecoBackendService', function () {
       angular.mock.module('FindecoBackendService');
 
       //inject your service for testing.
-      angular.mock.inject(function(User) {
-        backendService = User;
+      angular.mock.inject(function(Backend) {
+        backendService = Backend;
       });
     });
 

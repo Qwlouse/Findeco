@@ -63,7 +63,6 @@ describe('FindecoUserService', function () {
         expect(userService.description).toBe('beschreibung');
         expect(userService.rsskey).toBe('abcdefg');
         expect(userService.email).toBe('hugo@abc.de');
-        expect(userService.followees).toBe([]);
     });
 
     it('should have a logout function', function () {
