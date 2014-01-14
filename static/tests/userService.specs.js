@@ -2,6 +2,30 @@
 
 describe('FindecoUserService', function () {
     var userService, httpBackend;
+    var userInfo = {
+        displayName: 'hugo',
+        description: 'beschreibung'
+        };
+    var userSettings = {
+        rsskey: 'abcdefg',
+        email: 'hugo@abc.de',
+        followees: []
+        };
+
+    var loginResponse = {
+            loginResponse: {
+                userInfo: userInfo,
+                userSettings: userSettings
+            }
+        };
+
+    var loadUserSettingsResponse = {
+            loadUserSettingsResponse: {
+                userInfo: userInfo,
+                userSettings: userSettings
+            }
+        };
+
 
     //excuted before each "it" is run.
     beforeEach(function (){
@@ -19,53 +43,50 @@ describe('FindecoUserService', function () {
     it('should initialize with a .json_loadUserSettings call', function () {
         httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
         httpBackend.flush();
-        expect(userService.isLoggedIn).toBe(false);
+    });
+
+    it('should initialize user if loadUserSettings succeeds', function () {
+        httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+        httpBackend.flush();
+        expect(userService.isLoggedIn).toBe(true);
+        expect(userService.displayName).toBe(userInfo.displayName);
+        expect(userService.description).toBe(userInfo.description);
+        expect(userService.rsskey).toBe(userSettings.rsskey);
+        expect(userService.email).toBe(userSettings.email);
+        expect(userService.followees).toEqual(userSettings.followees);
     });
 
     it('should have a login function', function () {
         expect(angular.isFunction(userService.login)).toBe(true);
     });
 
-    it('should set the userInfo details after succesful login', function () {
+    it('should have a logout function', function () {
+        expect(angular.isFunction(userService.logout)).toBe(true);
+    });
+
+    it('should set the userInfo details after successful login', function () {
         //set up some data for the http call to return and test later.
-        var returnData = {
-            loginResponse: {
-                userInfo: {
-                    displayName: 'hugo',
-                    description: 'beschreibung'
-                },
-                userSettings: {
-                    rsskey: 'abcdefg',
-                    email: 'hugo@abc.de',
-                    followees: []
-                }
-            }
-        };
+
         // flush the initial loadUserSettings
         httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
         httpBackend.flush();
 
-        httpBackend.expectPOST('/.json_login/').respond(returnData);
-
-        //create an object with a function to spy on.
-        var test = {
-          handler: function() {}
-        };
-        spyOn(test, 'handler');
+        httpBackend.expectPOST('/.json_login/').respond(loginResponse);
 
         //make the call.
-        userService.login('hugo', '1234').then(test.handler);
+        userService.login('hugo', '1234');
         httpBackend.flush();
 
-        expect(test.handler).toHaveBeenCalled();
         expect(userService.isLoggedIn).toBe(true);
-        expect(userService.displayName).toBe('hugo');
-        expect(userService.description).toBe('beschreibung');
-        expect(userService.rsskey).toBe('abcdefg');
-        expect(userService.email).toBe('hugo@abc.de');
+        expect(userService.displayName).toBe(userInfo.displayName);
+        expect(userService.description).toBe(userInfo.description);
+        expect(userService.rsskey).toBe(userSettings.rsskey);
+        expect(userService.email).toBe(userSettings.email);
+        expect(userService.followees).toEqual(userSettings.followees);
     });
 
-    it('should have a logout function', function () {
-        expect(angular.isFunction(userService.logout)).toBe(true);
+    it('should remove the user details after successful logout', function () {
+        httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+        httpBackend.flush();
     });
 });
