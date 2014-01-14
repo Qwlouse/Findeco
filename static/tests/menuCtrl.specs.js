@@ -15,4 +15,7 @@ describe('FindecoMenuCtrl', function(){
         expect(ctrl).not.toBe(null);
         expect(scope.user).not.toBe(null);
     }));
-})
+
+
+
+});
