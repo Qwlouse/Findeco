@@ -60,6 +60,11 @@ def home(request, path=""):
         return HttpResponse(index_html_file.read(), mimetype='text/html')
 
 
+def jasmine(request, path=""):
+    with open(project_path("static/jasmine.html"), 'r') as index_html_file:
+        return HttpResponse(index_html_file.read(), mimetype='text/html')
+
+
 @ViewErrorHandling
 def error_404(request):
     raise InvalidURL()

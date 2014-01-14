@@ -163,14 +163,7 @@ urlpatterns = patterns(
 if settings.DEBUG:
     urlpatterns += patterns(
         '',
-        url(r'^.djangojs/', include('djangojs.urls')),
-        url(r'^.jasmine$', JasmineView.as_view(
-            js_files=['js/lib/angular.js',
-                      'js/lib/*.js',
-                      'js/app.js',
-                      'js/service.js',
-                      'js/*Ctrl.js',
-                      'tests/*.specs.js']),
+        url(r'^.jasmine$', 'findeco.views.jasmine',
             name='jasmine_test_runner')
     )
 

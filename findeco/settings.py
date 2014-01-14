@@ -167,8 +167,7 @@ INSTALLED_APPS = (
     'microblogging',
     'south',               # Database Migration
     'django_nose',         # Testrunner
-    'libs.django_cron',    # Cron Jobs
-    'djangojs'             # integrate Jasmine tests into django (trial 1)
+    'libs.django_cron'     # Cron Jobs
 )
 
 TEST_RUNNER = str('django_nose.NoseTestSuiteRunner')
