@@ -81,6 +81,8 @@ describe('FindecoUserService', function () {
         expect(userService.rsskey).toBe(userSettings.rsskey);
         expect(userService.email).toBe(userSettings.email);
         expect(userService.followees).toEqual(userSettings.followees);
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
     });
 
     it('should have empty user details if loadUserSettings does not succeed', function () {
@@ -92,6 +94,8 @@ describe('FindecoUserService', function () {
         expect(userService.rsskey).toBe('');
         expect(userService.email).toBe('');
         expect(userService.followees).toEqual([]);
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
     });
 
     ///////////////// Login ////////////////////////////////////////////////////
@@ -116,6 +120,8 @@ describe('FindecoUserService', function () {
         expect(userService.rsskey).toBe(userSettings.rsskey);
         expect(userService.email).toBe(userSettings.email);
         expect(userService.followees).toEqual(userSettings.followees);
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
     });
 
     ///////////////// Logout ///////////////////////////////////////////////////
@@ -136,5 +142,28 @@ describe('FindecoUserService', function () {
         expect(userService.rsskey).toBe('');
         expect(userService.email).toBe('');
         expect(userService.followees).toEqual([]);
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
     });
+
+    ///////////////// Registration /////////////////////////////////////////////
+
+    it('should have a register function', function() {
+        expect(angular.isFunction(userService.register)).toBe(true);
+    });
+
+    it('register should call the .json_accountRegistration api function', function() {
+        // flush the initial loadUserSettings
+        httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+        httpBackend.flush();
+
+        httpBackend.expectPOST('/.json_accountRegistration/').respond({});
+        //make the call.
+        userService.register('albert', '4321', 'alb@rt.de');
+        httpBackend.flush();
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
+    });
+
+    //.json_accountRegistration/
 });
