@@ -1,30 +1,52 @@
-
+/****************************************************************************************
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
+ *                                                                                      *
+ * This file is part of Findeco.                                                        *
+ *                                                                                      *
+ * Findeco is free software; you can redistribute it and/or modify it under             *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * Findeco is distributed in the hope that it will be useful, but WITHOUT ANY           *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
+ ****************************************************************************************/
+/****************************************************************************************
+ * This Source Code Form is subject to the terms of the Mozilla Public                  *
+ * License, v. 2.0. If a copy of the MPL was not distributed with this                  *
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
+ ****************************************************************************************/
 
 describe('FindecoUserService', function () {
     var userService, httpBackend;
     var userInfo = {
         displayName: 'hugo',
         description: 'beschreibung'
-        };
+    };
+
     var userSettings = {
         rsskey: 'abcdefg',
         email: 'hugo@abc.de',
         followees: []
-        };
+    };
 
     var loginResponse = {
-            loginResponse: {
-                userInfo: userInfo,
-                userSettings: userSettings
-            }
-        };
+        loginResponse: {
+            userInfo: userInfo,
+            userSettings: userSettings
+        }
+    };
 
     var loadUserSettingsResponse = {
-            loadUserSettingsResponse: {
-                userInfo: userInfo,
-                userSettings: userSettings
-            }
-        };
+        loadUserSettingsResponse: {
+            userInfo: userInfo,
+            userSettings: userSettings
+        }
+    };
 
     var logoutResponse = {
         logoutResponse: {}
@@ -42,6 +64,8 @@ describe('FindecoUserService', function () {
           httpBackend = $httpBackend
       });
     });
+
+    ///////////////// Initialization ///////////////////////////////////////////
 
     it('should initialize with a .json_loadUserSettings call', function () {
         httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
@@ -70,19 +94,18 @@ describe('FindecoUserService', function () {
         expect(userService.followees).toEqual([]);
     });
 
+    ///////////////// Login ////////////////////////////////////////////////////
+
     it('should have a login function', function () {
         expect(angular.isFunction(userService.login)).toBe(true);
     });
 
     it('should set the userInfo details after successful login', function () {
-        //set up some data for the http call to return and test later.
-
         // flush the initial loadUserSettings
         httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
         httpBackend.flush();
 
         httpBackend.expectPOST('/.json_login/').respond(loginResponse);
-
         //make the call.
         userService.login('hugo', '1234');
         httpBackend.flush();
@@ -94,6 +117,8 @@ describe('FindecoUserService', function () {
         expect(userService.email).toBe(userSettings.email);
         expect(userService.followees).toEqual(userSettings.followees);
     });
+
+    ///////////////// Logout ///////////////////////////////////////////////////
 
     it('should have a logout function', function () {
         expect(angular.isFunction(userService.logout)).toBe(true);
