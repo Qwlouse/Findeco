@@ -83,8 +83,9 @@ angular.module('FindecoUserService', [])
         userInfo.logout = function () {
             return $http.get('/.json_logout/').success(function () {
                 userInfo.isLoggedIn = false;
-                userInfo.description = "";
                 userInfo.displayName = "";
+                userInfo.description = "";
+                userInfo.rsskey = "";
                 userInfo.followees = [];
                 userInfo.email = "";
                 userInfo.isAdmin = false;
