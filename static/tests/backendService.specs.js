@@ -25,15 +25,15 @@ describe('FindecoBackendService', function () {
     var backendService;
 
     //excuted before each "it" is run.
-    beforeEach(function (){
+    beforeEach(function () {
 
-      //load the module.
-      angular.mock.module('FindecoBackendService');
+        //load the module.
+        angular.mock.module('FindecoBackendService');
 
-      //inject your service for testing.
-      angular.mock.inject(function(User) {
-        backendService = User;
-      });
+        //inject your service for testing.
+        angular.mock.inject(function (Backend) {
+            backendService = Backend;
+        });
     });
 
     //check to see if it has the expected function
