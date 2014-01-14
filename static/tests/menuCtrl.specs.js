@@ -21,5 +21,8 @@ describe('FindecoMenuCtrl', function(){
     }));
 
 
+    it('should have a logout function', inject(function () {
+        expect(angular.isFunction(scope.logout)).toBe(true);
+    }));
 
 });
