@@ -8,12 +8,13 @@ describe('FindecoDefaultCtrl', function () {
         ctrl = $controller('FindecoDefaultCtrl', {
             $scope: scope,
             Fesettings: {}
-      });
+        });
     }));
 
 
     it('should be registered', inject(function ($rootScope, $injector) {
         expect(ctrl).not.toBe(null);
+        expect(scope.text).toBe('Hello World!');
     }));
 
 });
