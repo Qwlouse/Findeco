@@ -73,146 +73,151 @@ describe('FindecoUserService', function () {
     });
 
     ///////////////// Initialization ///////////////////////////////////////////
+    describe('Initialization', function() {
+        it('should initialize with a .json_loadUserSettings call', function () {
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.flush();
+        });
 
-    it('should initialize with a .json_loadUserSettings call', function () {
-        httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-        httpBackend.flush();
+        it('should initialize user if loadUserSettings succeeds', function () {
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+            httpBackend.flush();
+            expect(userService.isLoggedIn).toBe(true);
+            expect(userService.displayName).toBe(userInfo.displayName);
+            expect(userService.description).toBe(userInfo.description);
+            expect(userService.rsskey).toBe(userSettings.rsskey);
+            expect(userService.email).toBe(userSettings.email);
+            expect(userService.followees).toEqual(userSettings.followees);
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
+
+        it('should have empty user details if loadUserSettings does not succeed', function () {
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.flush();
+            expect(userService.isLoggedIn).toBe(false);
+            expect(userService.displayName).toBe('');
+            expect(userService.description).toBe('');
+            expect(userService.rsskey).toBe('');
+            expect(userService.email).toBe('');
+            expect(userService.followees).toEqual([]);
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
     });
 
-    it('should initialize user if loadUserSettings succeeds', function () {
-        httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
-        httpBackend.flush();
-        expect(userService.isLoggedIn).toBe(true);
-        expect(userService.displayName).toBe(userInfo.displayName);
-        expect(userService.description).toBe(userInfo.description);
-        expect(userService.rsskey).toBe(userSettings.rsskey);
-        expect(userService.email).toBe(userSettings.email);
-        expect(userService.followees).toEqual(userSettings.followees);
-        httpBackend.verifyNoOutstandingExpectation();
-        httpBackend.verifyNoOutstandingRequest();
-    });
-
-    it('should have empty user details if loadUserSettings does not succeed', function () {
-        httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-        httpBackend.flush();
-        expect(userService.isLoggedIn).toBe(false);
-        expect(userService.displayName).toBe('');
-        expect(userService.description).toBe('');
-        expect(userService.rsskey).toBe('');
-        expect(userService.email).toBe('');
-        expect(userService.followees).toEqual([]);
-        httpBackend.verifyNoOutstandingExpectation();
-        httpBackend.verifyNoOutstandingRequest();
-    });
 
     ///////////////// Login ////////////////////////////////////////////////////
+    describe('the login function', function() {
+        it('should exist', function () {
+            expect(angular.isFunction(userService.login)).toBe(true);
+        });
 
-    it('should have a login function', function () {
-        expect(angular.isFunction(userService.login)).toBe(true);
-    });
+        it('should set the userInfo details after successful login', function () {
+            // flush the initial loadUserSettings
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.flush();
 
-    it('should set the userInfo details after successful login', function () {
-        // flush the initial loadUserSettings
-        httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-        httpBackend.flush();
+            httpBackend.expectPOST('/.json_login/').respond(loginResponse);
+            //make the call.
+            userService.login('hugo', '1234');
+            httpBackend.flush();
 
-        httpBackend.expectPOST('/.json_login/').respond(loginResponse);
-        //make the call.
-        userService.login('hugo', '1234');
-        httpBackend.flush();
-
-        expect(userService.isLoggedIn).toBe(true);
-        expect(userService.displayName).toBe(userInfo.displayName);
-        expect(userService.description).toBe(userInfo.description);
-        expect(userService.rsskey).toBe(userSettings.rsskey);
-        expect(userService.email).toBe(userSettings.email);
-        expect(userService.followees).toEqual(userSettings.followees);
-        httpBackend.verifyNoOutstandingExpectation();
-        httpBackend.verifyNoOutstandingRequest();
+            expect(userService.isLoggedIn).toBe(true);
+            expect(userService.displayName).toBe(userInfo.displayName);
+            expect(userService.description).toBe(userInfo.description);
+            expect(userService.rsskey).toBe(userSettings.rsskey);
+            expect(userService.email).toBe(userSettings.email);
+            expect(userService.followees).toEqual(userSettings.followees);
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
     });
 
     ///////////////// Logout ///////////////////////////////////////////////////
+    describe('the logout function', function() {
+        it('should exist', function () {
+            expect(angular.isFunction(userService.logout)).toBe(true);
+        });
 
-    it('should have a logout function', function () {
-        expect(angular.isFunction(userService.logout)).toBe(true);
-    });
-
-    it('should remove the user details after successful logout', function () {
-        httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
-        httpBackend.flush();
-        httpBackend.expectGET('/.json_logout/').respond(logoutResponse);
-        userService.logout();
-        httpBackend.flush();
-        expect(userService.isLoggedIn).toBe(false);
-        expect(userService.displayName).toBe('');
-        expect(userService.description).toBe('');
-        expect(userService.rsskey).toBe('');
-        expect(userService.email).toBe('');
-        expect(userService.followees).toEqual([]);
-        httpBackend.verifyNoOutstandingExpectation();
-        httpBackend.verifyNoOutstandingRequest();
+        it('should remove the user details after successful logout', function () {
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+            httpBackend.flush();
+            httpBackend.expectGET('/.json_logout/').respond(logoutResponse);
+            userService.logout();
+            httpBackend.flush();
+            expect(userService.isLoggedIn).toBe(false);
+            expect(userService.displayName).toBe('');
+            expect(userService.description).toBe('');
+            expect(userService.rsskey).toBe('');
+            expect(userService.email).toBe('');
+            expect(userService.followees).toEqual([]);
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
     });
 
     ///////////////// Registration /////////////////////////////////////////////
+    describe('Registration', function() {
+        describe('the register function', function() {
+            it('should exist', function() {
+                expect(angular.isFunction(userService.register)).toBe(true);
+            });
 
-    describe('the register function', function() {
-        it('should exist', function() {
-            expect(angular.isFunction(userService.register)).toBe(true);
+            it('should call the .json_accountRegistration api function', function() {
+                // flush the initial loadUserSettings
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+                httpBackend.flush();
+
+                httpBackend.expectPOST('/.json_accountRegistration/', {
+                        displayName: 'albert',
+                        password: '4321',
+                        emailAddress: 'alb@rt.de'})
+                    .respond(accountRegistrationResponse);
+                //make the call.
+                userService.register('albert', '4321', 'alb@rt.de');
+                httpBackend.flush();
+                httpBackend.verifyNoOutstandingExpectation();
+                httpBackend.verifyNoOutstandingRequest();
+            });
+
+            it('should call the .json_accountRegistration api function', function() {
+                // flush the initial loadUserSettings
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+                httpBackend.flush();
+
+                httpBackend.expectPOST('/.json_accountRegistration/', {
+                        displayName: 'albert',
+                        password: '4321',
+                        emailAddress: 'alb@rt.de'})
+                    .respond(accountRegistrationResponse);
+                //make the call.
+                userService.register('albert', '4321', 'alb@rt.de');
+                httpBackend.flush();
+                httpBackend.verifyNoOutstandingExpectation();
+                httpBackend.verifyNoOutstandingRequest();
+            });
         });
 
-        it('should call the .json_accountRegistration api function', function() {
-            // flush the initial loadUserSettings
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-            httpBackend.flush();
+        describe('the activate function', function() {
+            it('should exist', function() {
+                expect(angular.isFunction(userService.activate)).toBe(true);
+            });
 
-            httpBackend.expectPOST('/.json_accountRegistration/', {
-                    displayName: 'albert',
-                    password: '4321',
-                    emailAddress: 'alb@rt.de'})
-                .respond(accountRegistrationResponse);
-            //make the call.
-            userService.register('albert', '4321', 'alb@rt.de');
-            httpBackend.flush();
-            httpBackend.verifyNoOutstandingExpectation();
-            httpBackend.verifyNoOutstandingRequest();
-        });
+            it('should call the .json_accountActivation api function', function() {
+                // flush the initial loadUserSettings
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+                httpBackend.flush();
 
-        it('should call the .json_accountRegistration api function', function() {
-            // flush the initial loadUserSettings
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-            httpBackend.flush();
+                httpBackend.expectPOST('/.json_accountActivation/', {
+                            activationKey: 'ABCDEFG01234567890'})
+                    .respond(accountActivationResponse);
 
-            httpBackend.expectPOST('/.json_accountRegistration/', {
-                    displayName: 'albert',
-                    password: '4321',
-                    emailAddress: 'alb@rt.de'})
-                .respond(accountRegistrationResponse);
-            //make the call.
-            userService.register('albert', '4321', 'alb@rt.de');
-            httpBackend.flush();
-            httpBackend.verifyNoOutstandingExpectation();
-            httpBackend.verifyNoOutstandingRequest();
-        });
-    });
-
-    describe('the activate function', function() {
-        it('should exist', function() {
-            expect(angular.isFunction(userService.activate)).toBe(true);
-        });
-
-        it('should call the .json_accountActivation api function', function() {
-            // flush the initial loadUserSettings
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-            httpBackend.flush();
-
-            httpBackend.expectPOST('/.json_accountActivation/', {
-                        activationKey: 'ABCDEFG01234567890'})
-                .respond(accountActivationResponse);
-
-            userService.activate('ABCDEFG01234567890');
-            httpBackend.flush();
-            httpBackend.verifyNoOutstandingExpectation();
-            httpBackend.verifyNoOutstandingRequest();
+                userService.activate('ABCDEFG01234567890');
+                httpBackend.flush();
+                httpBackend.verifyNoOutstandingExpectation();
+                httpBackend.verifyNoOutstandingRequest();
+            });
         });
     });
 
@@ -240,67 +245,68 @@ describe('FindecoUserService', function () {
     });
 
     ///////////////// Recovery /////////////////////////////////////////////////
+    describe('Recovery', function() {
+        describe('the recoverByMail function', function() {
+            it('should exist', function() {
+                expect(angular.isFunction(userService.recoverByMail)).toBe(true);
+            });
 
-    describe('the recoverByMail function', function() {
-        it('should exist', function() {
-            expect(angular.isFunction(userService.recoverByMail)).toBe(true);
+            it('should call the .json_accountResetRequestByMail api function', function() {
+                // flush the initial loadUserSettings
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+                httpBackend.flush();
+
+                httpBackend.expectPOST('/.json_accountResetRequestByMail/', {
+                            emailAddress: 'alb@rt.de'})
+                    .respond(recoverByMailResponse);
+
+                userService.recoverByMail('alb@rt.de');
+                httpBackend.flush();
+                httpBackend.verifyNoOutstandingExpectation();
+                httpBackend.verifyNoOutstandingRequest();
+            });
         });
 
-        it('should call the .json_accountResetRequestByMail api function', function() {
-            // flush the initial loadUserSettings
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-            httpBackend.flush();
+        describe('the recoverByUsername function', function() {
+            it('should exist', function() {
+                expect(angular.isFunction(userService.recoverByUsername)).toBe(true);
+            });
 
-            httpBackend.expectPOST('/.json_accountResetRequestByMail/', {
-                        emailAddress: 'alb@rt.de'})
-                .respond(recoverByMailResponse);
+            it('should call the .json_accountResetRequestByName api function', function() {
+                // flush the initial loadUserSettings
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+                httpBackend.flush();
 
-            userService.recoverByMail('alb@rt.de');
-            httpBackend.flush();
-            httpBackend.verifyNoOutstandingExpectation();
-            httpBackend.verifyNoOutstandingRequest();
-        });
-    });
+                httpBackend.expectPOST('/.json_accountResetRequestByName/', {
+                            displayName: 'albert'})
+                    .respond(recoverByUsernameResponse);
 
-    describe('the recoverByUsername function', function() {
-        it('should exist', function() {
-            expect(angular.isFunction(userService.recoverByUsername)).toBe(true);
-        });
-
-        it('should call the .json_accountResetRequestByName api function', function() {
-            // flush the initial loadUserSettings
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-            httpBackend.flush();
-
-            httpBackend.expectPOST('/.json_accountResetRequestByName/', {
-                        displayName: 'albert'})
-                .respond(recoverByUsernameResponse);
-
-            userService.recoverByUsername('albert');
-            httpBackend.flush();
-            httpBackend.verifyNoOutstandingExpectation();
-            httpBackend.verifyNoOutstandingRequest();
-        });
-    });
-
-    describe('the confirm function', function() {
-        it('should exist', function() {
-            expect(angular.isFunction(userService.confirm)).toBe(true);
+                userService.recoverByUsername('albert');
+                httpBackend.flush();
+                httpBackend.verifyNoOutstandingExpectation();
+                httpBackend.verifyNoOutstandingRequest();
+            });
         });
 
-        it('should call the .json_accountResetConfirmation api function', function() {
-            // flush the initial loadUserSettings
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-            httpBackend.flush();
+        describe('the confirm function', function() {
+            it('should exist', function() {
+                expect(angular.isFunction(userService.confirm)).toBe(true);
+            });
 
-            httpBackend.expectPOST('/.json_accountResetConfirmation/', {
-                        activationKey: 'ABCDEFG01234567890'})
-                .respond(accountResetConfirmationResponse);
+            it('should call the .json_accountResetConfirmation api function', function() {
+                // flush the initial loadUserSettings
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+                httpBackend.flush();
 
-            userService.confirm('ABCDEFG01234567890');
-            httpBackend.flush();
-            httpBackend.verifyNoOutstandingExpectation();
-            httpBackend.verifyNoOutstandingRequest();
+                httpBackend.expectPOST('/.json_accountResetConfirmation/', {
+                            activationKey: 'ABCDEFG01234567890'})
+                    .respond(accountResetConfirmationResponse);
+
+                userService.confirm('ABCDEFG01234567890');
+                httpBackend.flush();
+                httpBackend.verifyNoOutstandingExpectation();
+                httpBackend.verifyNoOutstandingRequest();
+            });
         });
     });
 
