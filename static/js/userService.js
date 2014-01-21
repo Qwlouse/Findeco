@@ -53,16 +53,12 @@ angular.module('FindecoUserService', [])
             return $http.post('/.json_emailChangeConfirmation/', {activationKey: activationKey});
         };
         userInfo.recoverByMail = function (emailAddress) {
-            var promise = $http.post('/.json_accountResetRequestByMail/', {emailAddress: emailAddress});
-            promise.success(function (d) {
-            });
-            return promise;
+            return $http.post('/.json_accountResetRequestByMail/',
+                {emailAddress: emailAddress});
         };
         userInfo.recoverByUsername = function (displayName) {
-            var promise = $http.post('/.json_accountResetRequestByName/', {displayName: displayName});
-            promise.success(function (d) {
-            });
-            return promise;
+            return $http.post('/.json_accountResetRequestByName/',
+                {displayName: displayName});
         };
         userInfo.login = function (username, password) {
             var promise = $http.post('/.json_login/', {username: username, password: password});
