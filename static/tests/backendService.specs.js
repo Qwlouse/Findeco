@@ -21,6 +21,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
+function isJson(string) {
+    try {
+        JSON.parse(string);
+        return true;
+    } catch (e) {
+        console.log(e);
+        console.log('The error occured in this string:');
+        console.log(string);
+        return false;
+    }
+}
+
 describe('FindecoBackendService', function () {
     var backendService;
 
@@ -36,8 +48,16 @@ describe('FindecoBackendService', function () {
         });
     });
 
-    //check to see if it has the expected function
+    //////////////////////////////// loadAnnounce ///////////////////////////////////
     it('should have an loadAnnounce function', function () {
         expect(angular.isFunction(backendService.loadAnnounce)).toBe(true);
     });
+
+    it('loadAnnounce should return a promise which gives json on success', function () {
+        backendService.loadAnnounce().success(function (data) {
+            expect(isJson(data)).toBe(true);
+        });
+    });
+
+
 });
