@@ -52,6 +52,9 @@ describe('FindecoUserService', function () {
         logoutResponse: {}
     };
 
+    var accountRegistrationResponse = {'accountRegistrationResponse': {}};
+    var accountActivationResponse = {'accountActivationResponse': {}};
+
     //excuted before each "it" is run.
     beforeEach(function (){
 
@@ -161,7 +164,8 @@ describe('FindecoUserService', function () {
             httpBackend.expectPOST('/.json_accountRegistration/', {
                     displayName: 'albert',
                     password: '4321',
-                    emailAddress: 'alb@rt.de'}).respond({});
+                    emailAddress: 'alb@rt.de'})
+                .respond(accountRegistrationResponse);
             //make the call.
             userService.register('albert', '4321', 'alb@rt.de');
             httpBackend.flush();
@@ -177,7 +181,8 @@ describe('FindecoUserService', function () {
             httpBackend.expectPOST('/.json_accountRegistration/', {
                     displayName: 'albert',
                     password: '4321',
-                    emailAddress: 'alb@rt.de'}).respond({});
+                    emailAddress: 'alb@rt.de'})
+                .respond(accountRegistrationResponse);
             //make the call.
             userService.register('albert', '4321', 'alb@rt.de');
             httpBackend.flush();
@@ -189,6 +194,24 @@ describe('FindecoUserService', function () {
     it('should have an activate function', function() {
         expect(angular.isFunction(userService.activate)).toBe(true);
     });
+
+    describe('the activate function', function() {
+        it('should call the .json_accountActivation api function', function() {
+            // flush the initial loadUserSettings
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.flush();
+
+            httpBackend.expectPOST('/.json_accountActivation/', {
+                        activationKey: 'ABCDEFG01234567890'})
+                .respond(accountActivationResponse);
+
+            userService.activate('ABCDEFG01234567890');
+            httpBackend.flush();
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
+    });
+
 
 
 
