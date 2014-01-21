@@ -56,6 +56,10 @@ describe('FindecoBackendService', function () {
     });
 
     it('should call the right path', function () {
-        expect(true).toBe(true);
+        httpBackend.expectGET('/.loadMicrobloggingForFollowedNodes/hugo/?id=-1&type=newer').respond(200, {'call': 1});
+        backendService.loadMicrobloggingForFollowedNodes([], 'hugo').success(function (data) {
+            expect(data['call']).toBe(1);
+        });
+        httpBackend.flush();
     });
 });
