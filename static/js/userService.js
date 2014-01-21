@@ -24,10 +24,12 @@
 'use strict';
 angular.module('FindecoUserService', [])
     .factory('User', function ($http, $rootScope) {
-        var data = {
-            userInfo    : false,
-            userSettings: false
+        var empty_data = {
+            userInfo    : {description: "", displayName: ""},
+            userSettings: {email: "",  rsskey: "", followees: [],
+                           wantsMailNotification:false}
         };
+        var data = empty_data;
         var userInfo = {
             isLoggedIn : false,
             isAdmin    : false,
@@ -85,8 +87,7 @@ angular.module('FindecoUserService', [])
                 userInfo.followees = [];
                 userInfo.email = "";
                 userInfo.isAdmin = false;
-                data.userInfo = false;
-                data.userSettings = false;
+                data = empty_data;
             });
         };
         userInfo.markUser = function (displayName, markType) {
@@ -111,7 +112,7 @@ angular.module('FindecoUserService', [])
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.followees = data.userSettings.followees;
                 userInfo.wantsEMail = data.userSettings.wantsMailNotification;
-                console.log(userInfo);
+
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
@@ -119,6 +120,8 @@ angular.module('FindecoUserService', [])
                 if (userInfo.displayName == "admin") {
                     userInfo.isAdmin = true;
                 }
+
+
             });
             return promise;
         };
