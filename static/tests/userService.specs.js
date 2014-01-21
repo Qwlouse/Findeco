@@ -56,6 +56,8 @@ describe('FindecoUserService', function () {
     var accountActivationResponse = {accountActivationResponse: {}};
     var accountResetConfirmationResponse = {accountResetConfirmationResponse: {}};
     var emailChangeConfirmationResponse = {emailChangeConfirmationResponse: {}};
+    var recoverByMailResponse = {accountResetRequestByMailResponse: {}};
+    var recoverByUsernameResponse = {accountResetRequestByNameResponse: {}};
 
     //excuted before each "it" is run.
     beforeEach(function (){
@@ -214,30 +216,7 @@ describe('FindecoUserService', function () {
         });
     });
 
-    ///////////////// Confirm Passwort Reset ///////////////////////////////////
-
-    describe('the confirm function', function() {
-        it('should exist', function() {
-            expect(angular.isFunction(userService.confirm)).toBe(true);
-        });
-
-        it('should call the .json_accountResetConfirmation api function', function() {
-            // flush the initial loadUserSettings
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-            httpBackend.flush();
-
-            httpBackend.expectPOST('/.json_accountResetConfirmation/', {
-                        activationKey: 'ABCDEFG01234567890'})
-                .respond(accountResetConfirmationResponse);
-
-            userService.confirm('ABCDEFG01234567890');
-            httpBackend.flush();
-            httpBackend.verifyNoOutstandingExpectation();
-            httpBackend.verifyNoOutstandingRequest();
-        });
-    });
-
-    ///////////////// Confirm Passwort Reset ///////////////////////////////////
+    ///////////////// Confirm Email Change /////////////////////////////////////
 
     describe('the confirmEmail function', function() {
         it('should exist', function() {
@@ -260,12 +239,70 @@ describe('FindecoUserService', function () {
         });
     });
 
+    ///////////////// Recovery /////////////////////////////////////////////////
+
+    describe('the recoverByMail function', function() {
+        it('should exist', function() {
+            expect(angular.isFunction(userService.recoverByMail)).toBe(true);
+        });
+
+        it('should call the .json_accountResetRequestByMail api function', function() {
+            // flush the initial loadUserSettings
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.flush();
+
+            httpBackend.expectPOST('/.json_accountResetRequestByMail/', {
+                        emailAddress: 'alb@rt.de'})
+                .respond(recoverByMailResponse);
+
+            userService.recoverByMail('alb@rt.de');
+            httpBackend.flush();
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
+    });
+
+    describe('the recoverByUsername function', function() {
+        it('should exist', function() {
+            expect(angular.isFunction(userService.recoverByUsername)).toBe(true);
+        });
+
+        it('should call the .json_accountResetRequestByName api function', function() {
+            // flush the initial loadUserSettings
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.flush();
+
+            httpBackend.expectPOST('/.json_accountResetRequestByName/', {
+                        displayName: 'albert'})
+                .respond(recoverByUsernameResponse);
+
+            userService.recoverByUsername('albert');
+            httpBackend.flush();
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
+    });
+
+    describe('the confirm function', function() {
+        it('should exist', function() {
+            expect(angular.isFunction(userService.confirm)).toBe(true);
+        });
+
+        it('should call the .json_accountResetConfirmation api function', function() {
+            // flush the initial loadUserSettings
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.flush();
+
+            httpBackend.expectPOST('/.json_accountResetConfirmation/', {
+                        activationKey: 'ABCDEFG01234567890'})
+                .respond(accountResetConfirmationResponse);
+
+            userService.confirm('ABCDEFG01234567890');
+            httpBackend.flush();
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
+    });
 
 
-
-//    userInfo.activate = function (activationKey) {
-//            return $http.post('/.json_accountActivation/', {activationKey: activationKey});
-//        };
-
-    //.json_accountRegistration/
 });

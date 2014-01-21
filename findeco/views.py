@@ -582,7 +582,7 @@ def account_reset_request_by_mail(request):
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
-        return json_response({'accountResetRequestByNameResponse': {}})
+        return json_response({'accountResetRequestByMailResponse': {}})
     except SMTPException:
         recovery.delete()
         raise
