@@ -21,20 +21,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-function isJson(string) {
-    try {
-        JSON.parse(string);
-        return true;
-    } catch (e) {
-        console.log(e);
-        console.log('The error occured in this string:');
-        console.log(string);
-        return false;
-    }
-}
-
 describe('FindecoBackendService', function () {
-    var backendService;
+    var backendService, httpBackend;
 
     //excuted before each "it" is run.
     beforeEach(function () {
@@ -43,21 +31,31 @@ describe('FindecoBackendService', function () {
         angular.mock.module('FindecoBackendService');
 
         //inject your service for testing.
-        angular.mock.inject(function (Backend) {
+        angular.mock.inject(function ($httpBackend, Backend) {
             backendService = Backend;
+            httpBackend = $httpBackend
         });
     });
 
     //////////////////////////////// loadAnnounce ///////////////////////////////////
-    it('should have an loadAnnounce function', function () {
+    it('should have a loadAnnounce function', function () {
         expect(angular.isFunction(backendService.loadAnnounce)).toBe(true);
     });
 
-    it('loadAnnounce should return a promise which gives json on success', function () {
+    it('should return a promise with content', function () {
+        httpBackend.expectGET('/static/externaljson/info.json').respond(200, {'b': 1});
         backendService.loadAnnounce().success(function (data) {
-            expect(isJson(data)).toBe(true);
+            expect(data['b']).toBe(1);
         });
+        httpBackend.flush();
     });
 
+    ///////////////////// loadMicrobloggingForFollowedNodes /////////////////////////
+    it('should have a loadMicrobloggingForFollowedNodes function', function () {
+        expect(angular.isFunction(backendService.loadMicrobloggingForFollowedNodes)).toBe(true);
+    });
 
+    it('should call the right path', function () {
+        expect(true).toBe(true);
+    });
 });
