@@ -152,18 +152,49 @@ describe('FindecoUserService', function () {
         expect(angular.isFunction(userService.register)).toBe(true);
     });
 
-    it('register should call the .json_accountRegistration api function', function() {
-        // flush the initial loadUserSettings
-        httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-        httpBackend.flush();
+    describe('the register function', function() {
+        it('should call the .json_accountRegistration api function', function() {
+            // flush the initial loadUserSettings
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.flush();
 
-        httpBackend.expectPOST('/.json_accountRegistration/').respond({});
-        //make the call.
-        userService.register('albert', '4321', 'alb@rt.de');
-        httpBackend.flush();
-        httpBackend.verifyNoOutstandingExpectation();
-        httpBackend.verifyNoOutstandingRequest();
+            httpBackend.expectPOST('/.json_accountRegistration/', {
+                    displayName: 'albert',
+                    password: '4321',
+                    emailAddress: 'alb@rt.de'}).respond({});
+            //make the call.
+            userService.register('albert', '4321', 'alb@rt.de');
+            httpBackend.flush();
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
+
+        it('should call the .json_accountRegistration api function', function() {
+            // flush the initial loadUserSettings
+            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.flush();
+
+            httpBackend.expectPOST('/.json_accountRegistration/', {
+                    displayName: 'albert',
+                    password: '4321',
+                    emailAddress: 'alb@rt.de'}).respond({});
+            //make the call.
+            userService.register('albert', '4321', 'alb@rt.de');
+            httpBackend.flush();
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
     });
+
+    it('should have an activate function', function() {
+        expect(angular.isFunction(userService.activate)).toBe(true);
+    });
+
+
+
+//    userInfo.activate = function (activationKey) {
+//            return $http.post('/.json_accountActivation/', {activationKey: activationKey});
+//        };
 
     //.json_accountRegistration/
 });
