@@ -27,7 +27,6 @@
 findecoApp.controller('FindecoDefaultCtrl',
     function($scope, $location, $controller, Backend, User, Navigator, Fesettings) {
 
-    $scope.text = 'Hello World!';
     $scope.nav = Navigator;
     $scope.user = User;
     $scope.fesettings = Fesettings;
