@@ -151,7 +151,7 @@ angular.module('FindecoUserService', [])
         userInfo.follows = function (name) {
             for (var i = 0; i < userInfo.followees.length; i++) {
                 if (userInfo.followees[i].displayName == name) {
-                    return 2;
+                    return userInfo.followees[i].isFollowing;
                 }
             }
             return 0;

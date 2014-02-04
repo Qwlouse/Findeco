@@ -365,6 +365,22 @@ describe('FindecoUserService', function() {
             });
         });
 
+        describe('follows function', function() {
+            it('should return true if name is in followees list', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                expect(userService.follows('ben')).toBeTruthy();
+            });
+
+            it('should return false if name is not in followees list', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                expect(userService.follows('paul')).toBeFalsy();
+            });
+        });
+
 
 
     });
