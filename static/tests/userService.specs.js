@@ -90,6 +90,7 @@ describe('FindecoUserService', function() {
                 followees: [{'displayName': 'albert'}, {'displayName': 'ben'}]
             }
         };
+        var deleteUserResponse = {deleteUserResponse: {}};
 
         //////////////// Login ////////////////////////////////////////////////////
         describe('login function', function() {
@@ -342,6 +343,15 @@ describe('FindecoUserService', function() {
                 expect(userService.email).toBe('hugo@abc.de');
             });
 
+        });
+
+        describe('deleteAccount function', function() {
+            it('should call the .json_deleteUser api function', function() {
+                httpBackend.expectPOST('/.json_deleteUser/')
+                    .respond(deleteUserResponse);
+                userService.deleteAccount();
+                httpBackend.flush();
+            });
         });
 
 
