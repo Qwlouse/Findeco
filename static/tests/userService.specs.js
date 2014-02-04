@@ -311,6 +311,47 @@ describe('FindecoUserService', function() {
             });
         });
 
+        describe('isChanged function', function() {
+            it('should return false for not logged-in user', function() {
+                expect(userService.isChanged()).toBeFalsy();
+                userService.displayName = 'herbert';
+                expect(userService.isChanged()).toBeFalsy();
+            });
+
+            it('should return false for logged-in but unchanged user ', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                expect(userService.isChanged()).toBeFalsy();
+            });
+
+            it('should return true for logged-in user with changed name', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.displayName = 'changedName';
+                expect(userService.isChanged()).toBeTruthy();
+            });
+
+            it('should return true for logged-in user with changed description', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.description = 'changedDescription';
+                expect(userService.isChanged()).toBeTruthy();
+            });
+
+            it('should return true for logged-in user with changed email', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.email = 'changedEMail';
+                expect(userService.isChanged()).toBeTruthy();
+            });
+
+
+        });
+
 
 
     });
