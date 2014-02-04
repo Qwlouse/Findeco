@@ -92,6 +92,7 @@ describe('FindecoUserService', function() {
         };
         var deleteUserResponse = {deleteUserResponse: {}};
         var changePasswordResponse = {changePasswordResponse: {}};
+        var storeSettingsResponse = {storeSettingsResponse: {}};
 
         //////////////// Login ////////////////////////////////////////////////////
         describe('login function', function() {
@@ -378,6 +379,29 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 expect(userService.follows('paul')).toBeFalsy();
+            });
+        });
+
+        describe('storeSettings function', function() {
+            it('should call the .json_storeSettings api function', function() {
+                httpBackend.expectPOST('/.json_storeSettings/')
+                    .respond(storeSettingsResponse);
+                userService.storeSettings();
+                httpBackend.flush();
+            });
+
+            it('should POST the current settings', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.displayName = 'mightyHugo';
+                httpBackend.expectPOST('/.json_storeSettings/', {
+                    displayName: 'mightyHugo',
+                    description: 'beschreibung',
+                    email: 'hugo@abc.de'})
+                    .respond(storeSettingsResponse);
+                userService.storeSettings();
+                httpBackend.flush();
             });
         });
 
