@@ -37,7 +37,8 @@ angular.module('FindecoUserService', [])
             description: "",
             email      : "",
             rsskey     : "",
-            followees  : []
+            followees  : [],
+            wantsMailNotification : false
         };
         userInfo.register = function (displayName, password, emailAddress) {
             return $http.post('/.json_accountRegistration/', {
@@ -72,6 +73,7 @@ angular.module('FindecoUserService', [])
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.email = data.userSettings.email;
                 userInfo.followees = data.userSettings.followees;
+                userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
                 if (userInfo.displayName == "admin") {
                     userInfo.isAdmin = true;
                 }
@@ -111,7 +113,7 @@ angular.module('FindecoUserService', [])
                 userInfo.isLoggedIn = true;
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.followees = data.userSettings.followees;
-                userInfo.wantsEMail = data.userSettings.wantsMailNotification;
+                userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
 
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
@@ -128,18 +130,20 @@ angular.module('FindecoUserService', [])
             }
             return (userInfo.displayName != data.userInfo.displayName) ||
                 (userInfo.description != data.userInfo.description) ||
-                (userInfo.email != data.userSettings.email);
+                (userInfo.email != data.userSettings.email) ||
+                (userInfo.wantsMailNotification != data.userSettings.wantsMailNotification);
         };
         userInfo.resetChanges = function () {
             userInfo.displayName = data.userInfo.displayName;
             userInfo.description = data.userInfo.description;
             userInfo.email = data.userSettings.email;
+            userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
         };
         userInfo.storeSettings = function () {
             return $http.post('/.json_storeSettings/', {
                 displayName: userInfo.displayName,
                 description: userInfo.description,
-                wantsMailNotification: userInfo.wantsEMail,
+                wantsMailNotification: userInfo.wantsMailNotification,
                 email: userInfo.email});
         };
         userInfo.changePassword = function (newPassword) {

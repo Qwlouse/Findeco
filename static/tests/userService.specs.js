@@ -31,7 +31,8 @@ describe('FindecoUserService', function() {
     var userSettings = {
         rsskey: 'abcdefg',
         email: 'hugo@abc.de',
-        followees: [{displayName: 'ben'}]
+        followees: [{displayName: 'ben'}],
+        wantsMailNotification:true
     };
 
     var loadUserSettingsResponse = {
@@ -108,6 +109,7 @@ describe('FindecoUserService', function() {
                 expect(userService.rsskey).toBe(userSettings.rsskey);
                 expect(userService.email).toBe(userSettings.email);
                 expect(userService.followees).toEqual(userSettings.followees);
+                expect(userService.wantsMailNotification).toBe(userSettings.wantsMailNotification);
             });
         });
 
@@ -263,6 +265,7 @@ describe('FindecoUserService', function() {
                     isFollowing:2,
                     path:'ben'
                 }]);
+                expect(userService.wantsMailNotification).toBe(userSettings.wantsMailNotification);
             });
 
             it('should have empty user details if loadUserSettings does not succeed', function () {
@@ -315,10 +318,18 @@ describe('FindecoUserService', function() {
                 userService.email = 'changedEMail';
                 expect(userService.isChanged()).toBeTruthy();
             });
+
+            it('should return true for logged-in user with changed wantsMailNotification', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.wantsMailNotification = false;
+                expect(userService.isChanged()).toBeTruthy();
+            });
         });
 
         describe('resetChanges function', function() {
-            it('should undo changes to the displayName', function() {
+            it('should undo changes to displayName', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
@@ -327,7 +338,7 @@ describe('FindecoUserService', function() {
                 expect(userService.displayName).toBe('hugo');
             });
 
-            it('should undo changes to the description', function() {
+            it('should undo changes to description', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
@@ -336,13 +347,22 @@ describe('FindecoUserService', function() {
                 expect(userService.description).toBe('beschreibung');
             });
 
-            it('should undo changes to the email', function() {
+            it('should undo changes to email', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.email = 'changedEmail';
                 userService.resetChanges();
                 expect(userService.email).toBe('hugo@abc.de');
+            });
+
+            it('should undo changes to wantsMailNotification', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.wantsMailNotification = false;
+                userService.resetChanges();
+                expect(userService.wantsMailNotification).toBeTruthy();
             });
 
         });
@@ -398,7 +418,8 @@ describe('FindecoUserService', function() {
                 httpBackend.expectPOST('/.json_storeSettings/', {
                     displayName: 'mightyHugo',
                     description: 'beschreibung',
-                    email: 'hugo@abc.de'})
+                    email: 'hugo@abc.de',
+                    wantsMailNotification: true})
                     .respond(storeSettingsResponse);
                 userService.storeSettings();
                 httpBackend.flush();
