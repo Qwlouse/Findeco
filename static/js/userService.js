@@ -120,10 +120,7 @@ angular.module('FindecoUserService', [])
                 if (userInfo.displayName == "admin") {
                     userInfo.isAdmin = true;
                 }
-
-
             });
-            return promise;
         };
         userInfo.isChanged = function () {
             if (!userInfo.isLoggedIn || !data.userInfo) {

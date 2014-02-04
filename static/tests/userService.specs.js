@@ -31,7 +31,7 @@ describe('FindecoUserService', function() {
     var userSettings = {
         rsskey: 'abcdefg',
         email: 'hugo@abc.de',
-        followees: []
+        followees: [{displayName: 'ben'}]
     };
 
     var loadUserSettingsResponse = {
@@ -59,31 +59,9 @@ describe('FindecoUserService', function() {
 
     ///////////////// Initialization ///////////////////////////////////////////
     describe('Initialization', function() {
-        it('should initialize with a .json_loadUserSettings call', function () {
+        it('should call loadSettings', function () {
             httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
             httpBackend.flush();
-        });
-
-        it('should initialize user if loadUserSettings succeeds', function () {
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
-            httpBackend.flush();
-            expect(userService.isLoggedIn).toBe(true);
-            expect(userService.displayName).toBe(userInfo.displayName);
-            expect(userService.description).toBe(userInfo.description);
-            expect(userService.rsskey).toBe(userSettings.rsskey);
-            expect(userService.email).toBe(userSettings.email);
-            expect(userService.followees).toEqual(userSettings.followees);
-        });
-
-        it('should have empty user details if loadUserSettings does not succeed', function () {
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
-            httpBackend.flush();
-            expect(userService.isLoggedIn).toBe(false);
-            expect(userService.displayName).toBe('');
-            expect(userService.description).toBe('');
-            expect(userService.rsskey).toBe('');
-            expect(userService.email).toBe('');
-            expect(userService.followees).toEqual([]);
         });
     });
 
@@ -295,8 +273,42 @@ describe('FindecoUserService', function() {
                 httpBackend.flush();
                 expect(rootScope.$broadcast).toHaveBeenCalledWith('UserMarked');
             });
+        });
 
+        describe('loadSettings function', function() {
+            it('should initialize with a .json_loadUserSettings call', function () {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+                userService.loadSettings();
+                httpBackend.flush();
+            });
 
+            it('should initialize user if loadUserSettings succeeds', function () {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                expect(userService.isLoggedIn).toBe(true);
+                expect(userService.displayName).toBe(userInfo.displayName);
+                expect(userService.description).toBe(userInfo.description);
+                expect(userService.rsskey).toBe(userSettings.rsskey);
+                expect(userService.email).toBe(userSettings.email);
+                expect(userService.followees).toEqual([{
+                    displayName: 'ben',
+                    isFollowing:2,
+                    path:'ben'
+                }]);
+            });
+
+            it('should have empty user details if loadUserSettings does not succeed', function () {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+                userService.loadSettings();
+                httpBackend.flush();
+                expect(userService.isLoggedIn).toBe(false);
+                expect(userService.displayName).toBe('');
+                expect(userService.description).toBe('');
+                expect(userService.rsskey).toBe('');
+                expect(userService.email).toBe('');
+                expect(userService.followees).toEqual([]);
+            });
         });
 
 
