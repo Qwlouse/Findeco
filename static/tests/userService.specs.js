@@ -163,17 +163,6 @@ describe('FindecoUserService', function() {
                     userService.register('albert', '4321', 'alb@rt.de');
                     httpBackend.flush();
                 });
-
-                it('should call the .json_accountRegistration api function', function() {
-                    httpBackend.expectPOST('/.json_accountRegistration/', {
-                            displayName: 'albert',
-                            password: '4321',
-                            emailAddress: 'alb@rt.de'})
-                        .respond(accountRegistrationResponse);
-                    //make the call.
-                    userService.register('albert', '4321', 'alb@rt.de');
-                    httpBackend.flush();
-                });
             });
 
             describe('the activate function', function() {
