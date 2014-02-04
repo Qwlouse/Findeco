@@ -123,7 +123,7 @@ angular.module('FindecoUserService', [])
             });
         };
         userInfo.isChanged = function () {
-            if (!userInfo.isLoggedIn || !data.userInfo) {
+            if (!userInfo.isLoggedIn) {
                 return false;
             }
             return (userInfo.displayName != data.userInfo.displayName) ||

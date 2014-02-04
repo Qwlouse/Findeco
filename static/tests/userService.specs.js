@@ -348,7 +348,35 @@ describe('FindecoUserService', function() {
                 userService.email = 'changedEMail';
                 expect(userService.isChanged()).toBeTruthy();
             });
+        });
 
+        describe('isChanged function', function() {
+            it('should undo changes to the displayName', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.displayName = 'changedName';
+                userService.resetChanges();
+                expect(userService.displayName).toBe('hugo');
+            });
+
+            it('should undo changes to the description', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.description = 'changedDescription';
+                userService.resetChanges();
+                expect(userService.description).toBe('beschreibung');
+            });
+
+            it('should undo changes to the email', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.email = 'changedEmail';
+                userService.resetChanges();
+                expect(userService.email).toBe('hugo@abc.de');
+            });
 
         });
 
