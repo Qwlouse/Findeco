@@ -92,11 +92,7 @@ describe('FindecoUserService', function() {
         };
 
         //////////////// Login ////////////////////////////////////////////////////
-        describe('the login function', function() {
-            it('should exist', function () {
-                expect(angular.isFunction(userService.login)).toBe(true);
-            });
-
+        describe('login function', function() {
             it('should set the userInfo details after successful login', function () {
                 httpBackend.expectPOST('/.json_login/').respond(loginResponse);
                 //make the call.
@@ -113,11 +109,7 @@ describe('FindecoUserService', function() {
         });
 
         ///////////////// Logout ///////////////////////////////////////////////////
-        describe('the logout function', function() {
-            it('should exist', function () {
-                expect(angular.isFunction(userService.logout)).toBe(true);
-            });
-
+        describe('logout function', function() {
             it('should remove the user details after successful logout', function () {
                 httpBackend.whenGET('/.json_logout/').respond(logoutResponse);
                 userService.logout();
@@ -133,11 +125,7 @@ describe('FindecoUserService', function() {
 
         ///////////////// Registration /////////////////////////////////////////////
         describe('Registration', function() {
-            describe('the register function', function() {
-                it('should exist', function() {
-                    expect(angular.isFunction(userService.register)).toBe(true);
-                });
-
+            describe('register function', function() {
                 it('should call the .json_accountRegistration api function', function() {
                     httpBackend.expectPOST('/.json_accountRegistration/', {
                             displayName: 'albert',
@@ -150,11 +138,7 @@ describe('FindecoUserService', function() {
                 });
             });
 
-            describe('the activate function', function() {
-                it('should exist', function() {
-                    expect(angular.isFunction(userService.activate)).toBe(true);
-                });
-
+            describe('activate function', function() {
                 it('should call the .json_accountActivation api function', function() {
                     httpBackend.expectPOST('/.json_accountActivation/', {
                                 activationKey: 'ABCDEFG01234567890'})
@@ -168,11 +152,7 @@ describe('FindecoUserService', function() {
 
         ///////////////// Confirm Email Change /////////////////////////////////////
 
-        describe('the confirmEmail function', function() {
-            it('should exist', function() {
-                expect(angular.isFunction(userService.confirmEmail)).toBe(true);
-            });
-
+        describe('confirmEmail function', function() {
             it('should call the .json_emailChangeConfirmation api function', function() {
                 httpBackend.expectPOST('/.json_emailChangeConfirmation/', {
                             activationKey: 'ABCDEFG01234567890'})
@@ -185,11 +165,7 @@ describe('FindecoUserService', function() {
 
         ///////////////// Recovery /////////////////////////////////////////////////
         describe('Recovery', function() {
-            describe('the recoverByMail function', function() {
-                it('should exist', function() {
-                    expect(angular.isFunction(userService.recoverByMail)).toBe(true);
-                });
-
+            describe('recoverByMail function', function() {
                 it('should call the .json_accountResetRequestByMail api function', function() {
                     httpBackend.expectPOST('/.json_accountResetRequestByMail/', {
                                 emailAddress: 'alb@rt.de'})
@@ -200,11 +176,7 @@ describe('FindecoUserService', function() {
                 });
             });
 
-            describe('the recoverByUsername function', function() {
-                it('should exist', function() {
-                    expect(angular.isFunction(userService.recoverByUsername)).toBe(true);
-                });
-
+            describe('recoverByUsername function', function() {
                 it('should call the .json_accountResetRequestByName api function', function() {
                     httpBackend.expectPOST('/.json_accountResetRequestByName/', {
                                 displayName: 'albert'})
@@ -215,11 +187,7 @@ describe('FindecoUserService', function() {
                 });
             });
 
-            describe('the confirm function', function() {
-                it('should exist', function() {
-                    expect(angular.isFunction(userService.confirm)).toBe(true);
-                });
-
+            describe('confirm function', function() {
                 it('should call the .json_accountResetConfirmation api function', function() {
                     httpBackend.expectPOST('/.json_accountResetConfirmation/', {
                                 activationKey: 'ABCDEFG01234567890'})
@@ -232,10 +200,6 @@ describe('FindecoUserService', function() {
         });
 
         describe('markUser function', function() {
-            it('should exist', function() {
-                expect(angular.isFunction(userService.markUser)).toBe(true);
-            });
-
             it('should call the .json_markUser api function with markType and displayName', function() {
                 httpBackend.expectPOST('/.json_markUser/follow/albert', {})
                     .respond(markUserResponse);
@@ -350,7 +314,7 @@ describe('FindecoUserService', function() {
             });
         });
 
-        describe('isChanged function', function() {
+        describe('resetChanges function', function() {
             it('should undo changes to the displayName', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
