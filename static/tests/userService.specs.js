@@ -91,6 +91,7 @@ describe('FindecoUserService', function() {
             }
         };
         var deleteUserResponse = {deleteUserResponse: {}};
+        var changePasswordResponse = {changePasswordResponse: {}};
 
         //////////////// Login ////////////////////////////////////////////////////
         describe('login function', function() {
@@ -350,6 +351,16 @@ describe('FindecoUserService', function() {
                 httpBackend.expectPOST('/.json_deleteUser/')
                     .respond(deleteUserResponse);
                 userService.deleteAccount();
+                httpBackend.flush();
+            });
+        });
+
+        describe('changePassword function', function() {
+            it('should call the .json_changePassword api function', function() {
+                httpBackend.expectPOST('/.json_changePassword/', {
+                    password: 'newPassword'
+                }).respond(changePasswordResponse);
+                userService.changePassword('newPassword');
                 httpBackend.flush();
             });
         });
