@@ -22,7 +22,7 @@
  ****************************************************************************************/
 
 describe('FindecoUserService', function() {
-    var userService, httpBackend;
+    var userService, httpBackend, rootScope;
     var userInfo = {
         displayName: 'hugo',
         description: 'beschreibung'
@@ -43,10 +43,12 @@ describe('FindecoUserService', function() {
 
     beforeEach(function (){
         angular.mock.module('FindecoUserService');
-        angular.mock.inject(function($httpBackend, User) {
+        angular.mock.inject(function($httpBackend, $rootScope, User) {
             userService = User;
-            httpBackend = $httpBackend
+            httpBackend = $httpBackend;
+            rootScope = $rootScope;
         });
+        spyOn(rootScope, '$broadcast');
     });
 
     afterEach(function() {
@@ -105,6 +107,11 @@ describe('FindecoUserService', function() {
         var emailChangeConfirmationResponse = {emailChangeConfirmationResponse: {}};
         var recoverByMailResponse = {accountResetRequestByMailResponse: {}};
         var recoverByUsernameResponse = {accountResetRequestByNameResponse: {}};
+        var markUserResponse = {
+            markUserResponse: {
+                followees: [{'displayName': 'albert'}, {'displayName': 'ben'}]
+            }
+        };
 
         //////////////// Login ////////////////////////////////////////////////////
         describe('the login function', function() {
@@ -245,5 +252,54 @@ describe('FindecoUserService', function() {
                 });
             });
         });
+
+        describe('markUser function', function() {
+            it('should exist', function() {
+                expect(angular.isFunction(userService.markUser)).toBe(true);
+            });
+
+            it('should call the .json_markUser api function with markType and displayName', function() {
+                httpBackend.expectPOST('/.json_markUser/follow/albert', {})
+                    .respond(markUserResponse);
+                httpBackend.expectPOST('/.json_markUser/unfollow/ben', {})
+                    .respond(markUserResponse);
+
+                userService.markUser('albert', 'follow');
+                userService.markUser('ben', 'unfollow');
+                httpBackend.flush();
+            });
+
+            it('should update the userInfo with new followees', function() {
+                httpBackend.expectPOST('/.json_markUser/follow/albert', {})
+                    .respond(markUserResponse);
+                userService.markUser('albert', 'follow');
+                httpBackend.flush();
+
+                expect(userService.followees).toEqual([
+                    {
+                        displayName: 'albert',
+                        isFollowing: 2,
+                        path: 'albert'
+                    },
+                    {
+                        displayName: 'ben',
+                        isFollowing: 2,
+                        path: 'ben'
+                    }])
+            });
+
+            it('should broadcast the UserMarked event', function() {
+                httpBackend.expectPOST('/.json_markUser/follow/albert', {})
+                    .respond(markUserResponse);
+                userService.markUser('albert', 'follow');
+                httpBackend.flush();
+                expect(rootScope.$broadcast).toHaveBeenCalledWith('UserMarked');
+            });
+
+
+        });
+
+
+
     });
 });
