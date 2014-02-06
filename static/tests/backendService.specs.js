@@ -38,28 +38,32 @@ describe('FindecoBackendService', function () {
     });
 
     //////////////////////////////// loadAnnounce ///////////////////////////////////
-    it('should have a loadAnnounce function', function () {
-        expect(angular.isFunction(backendService.loadAnnounce)).toBe(true);
-    });
-
-    it('should return a promise with content', function () {
-        httpBackend.expectGET('/static/externaljson/info.json').respond(200, {'b': 1});
-        backendService.loadAnnounce().success(function (data) {
-            expect(data['b']).toBe(1);
+    describe('loadAnnounce', function () {
+        it('should have a loadAnnounce function', function () {
+            expect(angular.isFunction(backendService.loadAnnounce)).toBe(true);
         });
-        httpBackend.flush();
+
+        it('should return a promise with content', function () {
+            httpBackend.expectGET('/static/externaljson/info.json').respond(200, {'b': 1});
+            backendService.loadAnnounce().success(function (data) {
+                expect(data['b']).toBe(1);
+            });
+            httpBackend.flush();
+        });
     });
 
     ///////////////////// loadMicrobloggingForFollowedNodes /////////////////////////
-    it('should have a loadMicrobloggingForFollowedNodes function', function () {
-        expect(angular.isFunction(backendService.loadMicrobloggingForFollowedNodes)).toBe(true);
-    });
-
-    it('should call the right path', function () {
-        httpBackend.expectGET('/.loadMicrobloggingForFollowedNodes/hugo/?id=-1&type=newer').respond(200, {'call': 1});
-        backendService.loadMicrobloggingForFollowedNodes([], 'hugo').success(function (data) {
-            expect(data['call']).toBe(1);
+    describe('loadMicrobloggingForFollowedNodes', function () {
+        it('should have a loadMicrobloggingForFollowedNodes function', function () {
+            expect(angular.isFunction(backendService.loadMicrobloggingForFollowedNodes)).toBe(true);
         });
-        httpBackend.flush();
+
+        it('should call the right path', function () {
+            httpBackend.expectGET('/.loadMicrobloggingForFollowedNodes/hugo/?id=-1&type=newer').respond(200, {'call': 1});
+            backendService.loadMicrobloggingForFollowedNodes([], 'hugo').success(function (data) {
+                expect(data['call']).toBe(1);
+            });
+            httpBackend.flush();
+        });
     });
 });
