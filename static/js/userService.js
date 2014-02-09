@@ -92,7 +92,7 @@ angular.module('FindecoUserService', [])
                 data = empty_data;
             });
         };
-        userInfo.markUser = function (displayName, markType) {
+        userInfo.markUser = function (markType, displayName) {
             var pathComponents = ['/.json_markUser', markType, displayName];
             var url = pathComponents.join('/');
             url = url.replace("//", "/");

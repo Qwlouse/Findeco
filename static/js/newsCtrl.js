@@ -43,8 +43,8 @@ function FindecoNewsCtrl($scope, Backend, User, $location) {
         }
     }
 
-    $scope.followUser = function (path, type) {
-        return User.markUser(path, type).success(function() {
+    $scope.followUser = function (type, path) {
+        return User.markUser(type, path).success(function() {
             setAuthorForAllBlogs($scope.allNodesList);
             setAuthorForAllBlogs($scope.followedNodesList);
             setAuthorForAllBlogs($scope.ownNodesList);

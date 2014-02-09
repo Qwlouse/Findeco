@@ -46,8 +46,8 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator, $l
     $scope.user = User;
     $scope.microblogText = "";
 
-    $scope.followUser = function (path, type) {
-        return User.markUser(path, type);
+    $scope.followUser = function (type, path) {
+        return User.markUser(type, path);
     };
     $scope.isLoading = function (){
     	return $scope.MicrobloggingIsLoading;

@@ -48,8 +48,8 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
         setAuthorForAllBlogs($scope.ownPostsList);
     });
 
-    $scope.followUser = function (path, type) {
-        return User.markUser(path, type);
+    $scope.followUser = function (type, path) {
+        return User.markUser(type, path);
     };
 
     $scope.updateTimeline = function (oldType, oldID) {

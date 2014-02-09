@@ -211,15 +211,15 @@ describe('FindecoUserService', function() {
                 httpBackend.expectPOST('/.json_markUser/unfollow/ben', {})
                     .respond(markUserResponse);
 
-                userService.markUser('albert', 'follow');
-                userService.markUser('ben', 'unfollow');
+                userService.markUser('follow', 'albert');
+                userService.markUser('unfollow', 'ben');
                 httpBackend.flush();
             });
 
             it('should update the userInfo with new followees', function() {
                 httpBackend.expectPOST('/.json_markUser/follow/albert', {})
                     .respond(markUserResponse);
-                userService.markUser('albert', 'follow');
+                userService.markUser('follow', 'albert');
                 httpBackend.flush();
 
                 expect(userService.followees).toEqual([
@@ -238,7 +238,7 @@ describe('FindecoUserService', function() {
             it('should broadcast the UserMarked event', function() {
                 httpBackend.expectPOST('/.json_markUser/follow/albert', {})
                     .respond(markUserResponse);
-                userService.markUser('albert', 'follow');
+                userService.markUser('follow', 'albert');
                 httpBackend.flush();
                 expect(rootScope.$broadcast).toHaveBeenCalledWith('UserMarked');
             });
