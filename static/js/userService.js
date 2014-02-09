@@ -124,7 +124,7 @@ angular.module('FindecoUserService', [])
                 }
             });
         };
-        userInfo.isChanged = function () {
+        userInfo.hasUnsavedChanges = function () {
             if (!userInfo.isLoggedIn) {
                 return false;
             }

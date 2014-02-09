@@ -283,16 +283,16 @@ describe('FindecoUserService', function() {
 
         describe('isChanged function', function() {
             it('should return false for not logged-in user', function() {
-                expect(userService.isChanged()).toBeFalsy();
+                expect(userService.hasUnsavedChanges()).toBeFalsy();
                 userService.displayName = 'herbert';
-                expect(userService.isChanged()).toBeFalsy();
+                expect(userService.hasUnsavedChanges()).toBeFalsy();
             });
 
             it('should return false for logged-in but unchanged user ', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
-                expect(userService.isChanged()).toBeFalsy();
+                expect(userService.hasUnsavedChanges()).toBeFalsy();
             });
 
             it('should return true for logged-in user with changed name', function() {
@@ -300,7 +300,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.displayName = 'changedName';
-                expect(userService.isChanged()).toBeTruthy();
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
 
             it('should return true for logged-in user with changed description', function() {
@@ -308,7 +308,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.description = 'changedDescription';
-                expect(userService.isChanged()).toBeTruthy();
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
 
             it('should return true for logged-in user with changed email', function() {
@@ -316,7 +316,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.email = 'changedEMail';
-                expect(userService.isChanged()).toBeTruthy();
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
 
             it('should return true for logged-in user with changed wantsMailNotification', function() {
@@ -324,7 +324,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.wantsMailNotification = false;
-                expect(userService.isChanged()).toBeTruthy();
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
         });
 

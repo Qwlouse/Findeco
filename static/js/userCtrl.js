@@ -119,7 +119,7 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
     };
 
     $scope.$on('$locationChangeStart', function(event) {
-        if (!event.defaultPrevented && $scope.user.isChanged()) {
+        if (!event.defaultPrevented && $scope.user.hasUnsavedChanges()) {
             var r = window.confirm("Du hast Dinge geändert, aber noch nicht gespeichert\n Wenn du die Seite verlässt gehen dese verloren.\n Verlassen?");
             if (r) {
                 $scope.user.resetChanges();
