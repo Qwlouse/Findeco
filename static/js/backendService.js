@@ -210,6 +210,7 @@ angular.module('FindecoBackendService', [])
                 promise.success(function (d) {
                     angular.copy(d.searchResponse, searchResults);
                 });
+                return promise;
             }
         };
     })
