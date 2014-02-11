@@ -190,4 +190,20 @@ describe('FindecoBackendService', function () {
             httpBackend.flush();
         });
     });
+
+    //////////////////////// storeText ///////////////////////////
+    describe('storeText', function () {
+        it('should have a storeText function', function () {
+            expect(angular.isFunction(backendService.storeText)).toBe(true);
+        });
+
+        it('should call the right path', function () {
+            httpBackend.expectPOST('/.json_storeText/pa.1/th.2', {'param1': "Blupp", 'param2': 14})
+                .respond(200, {'call': 1});
+            backendService.storeText('pa.1/th.2', {'param1': "Blupp", 'param2': 14}).success(function (data) {
+                expect(data['call']).toBe(1);
+            });
+            httpBackend.flush();
+        });
+    });
 });
