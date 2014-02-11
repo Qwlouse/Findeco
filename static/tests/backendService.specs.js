@@ -156,4 +156,22 @@ describe('FindecoBackendService', function () {
             httpBackend.flush();
         });
     });
+
+    ////////////////////////////// markNode ///////////////////////////////
+    describe('markNode', function () {
+        it('should have a markNode function', function () {
+            expect(angular.isFunction(backendService.markNode)).toBe(true);
+        });
+
+        it('should call the right path', function () {
+            var markTypes = ['follow', 'unfollow', 'spam', 'notspam'];
+            for (var n = 0; n < markTypes.length; n++) {
+                httpBackend.expectGET('/.json_markNode/' + markTypes[n] + '/pa.1/th.2').respond(200, {'call': 1});
+                backendService.markNode('pa.1/th.2', markTypes[n]).success(function (data) {
+                    expect(data['call']).toBe(1);
+                });
+            }
+            httpBackend.flush();
+        });
+    });
 });

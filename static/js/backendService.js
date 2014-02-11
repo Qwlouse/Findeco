@@ -129,7 +129,6 @@ angular.module('FindecoBackendService', [])
             },
 
             loadMicrobloggingFromUser: function (microblogList_out, name, id, type) {
-                console.log(name);
                 var path = '/.loadMicrobloggingFromUser/' + name + '/';
                 return addIdTypeAndGetPromise(microblogList_out, path, id, type);
             },
@@ -138,12 +137,14 @@ angular.module('FindecoBackendService', [])
                 var url_part = '/.loadMicrobloggingForNode/' + path;
                 return addIdTypeAndGetPromise(microblogList_out, url_part, id, type);
             },
+
             markNode: function (nodePath, markType) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 return $http.get(url);
             },
+
             storeMicroblogging: function (path, microblogText) {
                 var pathComponents = ['/.storeMicroblogging', path];
                 var url = pathComponents.join('/');
