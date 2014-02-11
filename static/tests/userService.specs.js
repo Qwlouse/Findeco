@@ -28,6 +28,11 @@ describe('FindecoUserService', function() {
         description: 'beschreibung'
     };
 
+    var adminInfo = {
+        displayName: 'admin',
+        description: 'darfalles'
+    };
+
     var userSettings = {
         rsskey: 'abcdefg',
         email: 'hugo@abc.de',
@@ -78,6 +83,18 @@ describe('FindecoUserService', function() {
                 userSettings: userSettings
             }
         };
+        var adminLoginResponse = {
+            loginResponse: {
+                userInfo: adminInfo,
+                userSettings: userSettings
+            }
+        };
+        var loadAdminSettingsResponse = {
+            loadUserSettingsResponse: {
+            userInfo: adminInfo,
+            userSettings: userSettings
+        }
+    };
 
         var logoutResponse = {logoutResponse: {}};
         var accountRegistrationResponse = {accountRegistrationResponse: {}};
@@ -104,12 +121,25 @@ describe('FindecoUserService', function() {
                 httpBackend.flush();
 
                 expect(userService.isLoggedIn).toBe(true);
+                expect(userService.isAdmin).toBe(false);
                 expect(userService.displayName).toBe(userInfo.displayName);
                 expect(userService.description).toBe(userInfo.description);
                 expect(userService.rsskey).toBe(userSettings.rsskey);
                 expect(userService.email).toBe(userSettings.email);
                 expect(userService.followees).toEqual(userSettings.followees);
                 expect(userService.wantsMailNotification).toBe(userSettings.wantsMailNotification);
+            });
+
+            it('should set the userInfo details after successful admin login', function () {
+                httpBackend.expectPOST('/.json_login/').respond(adminLoginResponse);
+                //make the call.
+                userService.login('admin', '1234');
+                httpBackend.flush();
+
+                expect(userService.isLoggedIn).toBe(true);
+                expect(userService.isAdmin).toBe(true);
+                expect(userService.displayName).toBe(adminInfo.displayName);
+                expect(userService.description).toBe(adminInfo.description);
             });
         });
 
@@ -256,6 +286,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 expect(userService.isLoggedIn).toBe(true);
+                expect(userService.isAdmin).toBe(false);
                 expect(userService.displayName).toBe(userInfo.displayName);
                 expect(userService.description).toBe(userInfo.description);
                 expect(userService.rsskey).toBe(userSettings.rsskey);
@@ -266,6 +297,16 @@ describe('FindecoUserService', function() {
                     path:'ben'
                 }]);
                 expect(userService.wantsMailNotification).toBe(userSettings.wantsMailNotification);
+            });
+
+            it('should initialize isAdmin if loadUserSettings for admin succeeds', function () {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadAdminSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                expect(userService.isLoggedIn).toBe(true);
+                expect(userService.isAdmin).toBe(true);
+                expect(userService.displayName).toBe(adminInfo.displayName);
+                expect(userService.description).toBe(adminInfo.description);
             });
 
             it('should have empty user details if loadUserSettings does not succeed', function () {
