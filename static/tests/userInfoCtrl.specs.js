@@ -31,9 +31,16 @@ describe('FindecoUserInfoCtrl', function() {
         catch: function (f) {return this;},
         finally: function (f) {return this;}
     };
+    var UserServiceMock = {
+        display_name: 'Simon',
+        isLoggedIn: true,
+        isFollowing: function () {
+            return true;
+        }
+    };
 
 
-    beforeEach( function(){
+    beforeEach(function() {
         angular.mock.module('Findeco');
         angular.mock.inject(function ($rootScope, $controller) {
             var Backend = {
@@ -44,15 +51,26 @@ describe('FindecoUserInfoCtrl', function() {
             scope = $rootScope.$new();
             ctrl = $controller('FindecoUserInfoCtrl', {
                 $scope: scope,
-                $routeParams: {name:'herbert'},
-                Backend: Backend
+                $routeParams: {name:'herbert/'},
+                Backend: Backend,
+                User: UserServiceMock
             });
         });
     });
 
-
-
     it('should be registered', inject(function () {
         expect(ctrl).not.toBe(null);
     }));
+
+    it('should expose the UserService as scope.user', function() {
+        expect(scope.user).toBe(UserServiceMock);
+    });
+
+    it('should provide a displayUser object', function() {
+        expect(scope.displayUser).toBeDefined();
+        expect(scope.displayUser.name).toBe('herbert');
+        expect(scope.displayUser.path).toBe('herbert');
+        expect(scope.displayUser.isFollowing).toBeTruthy();
+        expect(scope.displayUser.exists).toBeFalsy();
+    });
 });
