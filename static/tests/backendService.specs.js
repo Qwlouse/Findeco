@@ -256,4 +256,19 @@ describe('FindecoBackendService', function () {
             httpBackend.flush();
         });
     });
+
+    ///////////////////////////// loadNode ///////////////////////////////
+    describe('loadNode', function () {
+        it('should have a loadNode function', function () {
+            expect(angular.isFunction(backendService.loadNode)).toBe(true);
+        });
+
+        it('should call the right path', function () {
+            httpBackend.expectGET('/.json_loadNode/pa.1/th.2').respond(200, {'call': 1});
+            backendService.loadNode([], 'pa.1/th.2').success(function (data) {
+                expect(data['call']).toBe(1);
+            });
+            httpBackend.flush();
+        });
+    });
 });
