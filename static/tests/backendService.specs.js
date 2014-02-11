@@ -264,9 +264,11 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.json_loadNode/pa.1/th.2').respond(200, {'call': 1});
-            backendService.loadNode([], 'pa.1/th.2').success(function (data) {
-                expect(data['call']).toBe(1);
+            httpBackend.expectGET('/.json_loadNode/pa.1/th.2').respond(200, {'loadNodeResponse': [1]});
+            var results = [];
+            backendService.loadNode(results, 'pa.1/th.2').success(function (data) {
+                expect(data['loadNodeResponse'][0]).toBe(1);
+                expect(results[0]).toBe(1);
             });
             httpBackend.flush();
         });
