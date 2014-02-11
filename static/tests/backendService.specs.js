@@ -280,20 +280,40 @@ describe('FindecoBackendService', function () {
 
         it('should call the right path', function () {
             httpBackend.expectGET('/.json_loadGraphData/full/pa.1/th.2')
-                .respond(200, {'loadGraphDataResponse': 1, 'graphDataChildren': 3557});
-            backendService.loadGraphData([], 'pa.1/th.2', 'full').success(function (data) {
-                expect(data['loadGraphDataResponse']).toBe(1);
-                expect(data['graphDataChildren']).toBe(3557);
+                .respond(200, {'loadGraphDataResponse': {'graphDataChildren': [3557]}});
+            var results = [];
+            backendService.loadGraphData(results, 'pa.1/th.2', 'full').success(function (data) {
+                expect(data['loadGraphDataResponse']['graphDataChildren'][0]).toBe(3557);
+                expect(results[0]).toBe(3557);
             });
             httpBackend.flush();
         });
 
         it('should work without supplying the type', function () {
             httpBackend.expectGET('/.json_loadGraphData/full/pa.1/th.2')
-                .respond(200, {'loadGraphDataResponse': 1, 'graphDataChildren': 3557});
-            backendService.loadGraphData([], 'pa.1/th.2').success(function (data) {
-                expect(data['loadGraphDataResponse']).toBe(1);
-                expect(data['graphDataChildren']).toBe(3557);
+                .respond(200, {'loadGraphDataResponse': {'graphDataChildren': [3557]}});
+            var results = [];
+            backendService.loadGraphData(results, 'pa.1/th.2').success(function (data) {
+                expect(data['loadGraphDataResponse']['graphDataChildren'][0]).toBe(3557);
+                expect(results[0]).toBe(3557);
+            });
+            httpBackend.flush();
+        });
+    });
+
+    ///////////////////////////// search ///////////////////////////////
+    describe('search', function () {
+        it('should have a search function', function () {
+            expect(angular.isFunction(backendService.search)).toBe(true);
+        });
+
+        it('should call the right path', function () {
+            httpBackend.expectGET('/.json_search/user_content_microblogging/something')
+                .respond(200, {'searchResponse': [12]});
+            var results = [];
+            backendService.search(results, 'something').success(function (data) {
+                expect(data['searchResponse'][0]).toBe(12);
+                expect(results[0]).toBe(12);
             });
             httpBackend.flush();
         });
