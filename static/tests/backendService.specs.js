@@ -59,9 +59,12 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.loadMicrobloggingForFollowedNodes/hugo/?id=-1&type=newer').respond(200, {'call': 1});
-            backendService.loadMicrobloggingForFollowedNodes([], 'hugo').success(function (data) {
-                expect(data['call']).toBe(1);
+            httpBackend.expectGET('/.loadMicrobloggingForFollowedNodes/hugo/?id=-1&type=newer')
+                .respond(200, {'loadMicrobloggingResponse': [1]});
+            var results = [];
+            backendService.loadMicrobloggingForFollowedNodes(results, 'hugo').success(function (data) {
+                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
+                expect(results[0]).toBe(1);
             });
             httpBackend.flush();
         });
@@ -74,9 +77,12 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.loadMicrobloggingAll/?id=-1&type=newer').respond(200, {'call': 1});
-            backendService.loadMicrobloggingForAllNodes([]).success(function (data) {
-                expect(data['call']).toBe(1);
+            httpBackend.expectGET('/.loadMicrobloggingAll/?id=-1&type=newer')
+                .respond(200, {'loadMicrobloggingResponse': [1]});
+            var results = [];
+            backendService.loadMicrobloggingForAllNodes(results).success(function (data) {
+                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
+                expect(results[0]).toBe(1);
             });
             httpBackend.flush();
         });
@@ -89,9 +95,12 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.loadMicrobloggingForAuthoredNodes/hugo/?id=-1&type=newer').respond(200, {'call': 1});
-            backendService.loadMicrobloggingForAuthoredNodes([], 'hugo').success(function (data) {
-                expect(data['call']).toBe(1);
+            httpBackend.expectGET('/.loadMicrobloggingForAuthoredNodes/hugo/?id=-1&type=newer')
+                .respond(200, {'loadMicrobloggingResponse': [1]});
+            var results = [];
+            backendService.loadMicrobloggingForAuthoredNodes(results, 'hugo').success(function (data) {
+                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
+                expect(results[0]).toBe(1);
             });
             httpBackend.flush();
         });
@@ -104,9 +113,12 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.loadMicrobloggingMentions/hugo/?id=-1&type=newer').respond(200, {'call': 1});
-            backendService.loadMicrobloggingMentions([], 'hugo').success(function (data) {
-                expect(data['call']).toBe(1);
+            httpBackend.expectGET('/.loadMicrobloggingMentions/hugo/?id=-1&type=newer')
+                .respond(200, {'loadMicrobloggingResponse': [1]});
+            var results = [];
+            backendService.loadMicrobloggingMentions(results, 'hugo').success(function (data) {
+                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
+                expect(results[0]).toBe(1);
             });
             httpBackend.flush();
         });
@@ -119,9 +131,12 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.loadMicrobloggingTimeline/hugo/?id=-1&type=newer').respond(200, {'call': 1});
-            backendService.loadMicrobloggingTimeline([], 'hugo').success(function (data) {
-                expect(data['call']).toBe(1);
+            httpBackend.expectGET('/.loadMicrobloggingTimeline/hugo/?id=-1&type=newer')
+                .respond(200, {'loadMicrobloggingResponse': [1]});
+            var results = [];
+            backendService.loadMicrobloggingTimeline(results, 'hugo').success(function (data) {
+                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
+                expect(results[0]).toBe(1);
             });
             httpBackend.flush();
         });
@@ -134,9 +149,12 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.loadMicrobloggingFromUser/hugo/?id=-1&type=newer').respond(200, {'call': 1});
-            backendService.loadMicrobloggingFromUser([], 'hugo').success(function (data) {
-                expect(data['call']).toBe(1);
+            httpBackend.expectGET('/.loadMicrobloggingFromUser/hugo/?id=-1&type=newer')
+                .respond(200, {'loadMicrobloggingResponse': [1]});
+            var results = [];
+            backendService.loadMicrobloggingFromUser(results, 'hugo').success(function (data) {
+                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
+                expect(results[0]).toBe(1);
             });
             httpBackend.flush();
         });
