@@ -241,4 +241,19 @@ describe('FindecoBackendService', function () {
             httpBackend.flush();
         });
     });
+
+    ////////////////////////// loadUserInfo /////////////////////////////
+    describe('loadUserInfo', function () {
+        it('should have a loadUserInfo function', function () {
+            expect(angular.isFunction(backendService.loadUserInfo)).toBe(true);
+        });
+
+        it('should call the right path', function () {
+            httpBackend.expectGET('/.json_loadUserInfo/max_mustermann').respond(200, {'call': 1});
+            backendService.loadUserInfo('max_mustermann').success(function (data) {
+                expect(data['call']).toBe(1);
+            });
+            httpBackend.flush();
+        });
+    });
 });
