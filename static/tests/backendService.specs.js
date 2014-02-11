@@ -167,7 +167,7 @@ describe('FindecoBackendService', function () {
             var markTypes = ['follow', 'unfollow', 'spam', 'notspam'];
             for (var n = 0; n < markTypes.length; n++) {
                 httpBackend.expectGET('/.json_markNode/' + markTypes[n] + '/pa.1/th.2').respond(200, {'call': 1});
-                backendService.markNode('pa.1/th.2', markTypes[n]).success(function (data) {
+                backendService.markNode(markTypes[n], 'pa.1/th.2').success(function (data) {
                     expect(data['call']).toBe(1);
                 });
             }
