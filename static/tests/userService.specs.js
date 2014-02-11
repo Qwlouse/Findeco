@@ -329,9 +329,16 @@ describe('FindecoUserService', function() {
                 expect(userService.hasUnsavedChanges()).toBeFalsy();
             });
 
-            it('should return false for logged-in but unchanged user ', function() {
+            it('should return false for logged-in but unchanged user', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
+                httpBackend.flush();
+                expect(userService.hasUnsavedChanges()).toBeFalsy();
+            });
+
+            it('should return false for just logged-in user', function() {
+                httpBackend.expectPOST('/.json_login/').respond(loginResponse);
+                userService.login('hugo', '1234');
                 httpBackend.flush();
                 expect(userService.hasUnsavedChanges()).toBeFalsy();
             });
@@ -470,7 +477,6 @@ describe('FindecoUserService', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
-                console.log(userService.displayName);
                 userService.displayName = 'Simon';
                 expect(userService.hasUnsavedChanges()).toBeTruthy();
                 httpBackend.expectPOST('/.json_storeSettings/')

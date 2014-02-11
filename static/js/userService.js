@@ -66,7 +66,7 @@ angular.module('FindecoUserService', [])
         userInfo.login = function (username, password) {
             var promise = $http.post('/.json_login/', {username: username, password: password});
             promise.success(function (d) {
-                var data = d.loginResponse;
+                data = d.loginResponse;
                 userInfo.isLoggedIn = true;
                 userInfo.displayName = data.userInfo.displayName;
                 userInfo.description = data.userInfo.description;
