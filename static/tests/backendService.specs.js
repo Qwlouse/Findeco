@@ -271,4 +271,31 @@ describe('FindecoBackendService', function () {
             httpBackend.flush();
         });
     });
+
+    /////////////////////////// loadGraphData /////////////////////////////
+    describe('loadGraphData', function () {
+        it('should have a loadGraphData function', function () {
+            expect(angular.isFunction(backendService.loadGraphData)).toBe(true);
+        });
+
+        it('should call the right path', function () {
+            httpBackend.expectGET('/.json_loadGraphData/full/pa.1/th.2')
+                .respond(200, {'loadGraphDataResponse': 1, 'graphDataChildren': 3557});
+            backendService.loadGraphData([], 'pa.1/th.2', 'full').success(function (data) {
+                expect(data['loadGraphDataResponse']).toBe(1);
+                expect(data['graphDataChildren']).toBe(3557);
+            });
+            httpBackend.flush();
+        });
+
+        it('should work without supplying the type', function () {
+            httpBackend.expectGET('/.json_loadGraphData/full/pa.1/th.2')
+                .respond(200, {'loadGraphDataResponse': 1, 'graphDataChildren': 3557});
+            backendService.loadGraphData([], 'pa.1/th.2').success(function (data) {
+                expect(data['loadGraphDataResponse']).toBe(1);
+                expect(data['graphDataChildren']).toBe(3557);
+            });
+            httpBackend.flush();
+        });
+    });
 });
