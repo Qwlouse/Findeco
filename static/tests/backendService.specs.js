@@ -174,4 +174,20 @@ describe('FindecoBackendService', function () {
             httpBackend.flush();
         });
     });
+
+    //////////////////////// storeMicroblogging ///////////////////////////
+    describe('storeMicroblogging', function () {
+        it('should have a storeMicroblogging function', function () {
+            expect(angular.isFunction(backendService.storeMicroblogging)).toBe(true);
+        });
+
+        it('should call the right path', function () {
+            httpBackend.expectPOST('/.storeMicroblogging/pa.1/th.2', {'microblogText': "Blubb"})
+                .respond(200, {'call': 1});
+            backendService.storeMicroblogging('pa.1/th.2', "Blubb").success(function (data) {
+                expect(data['call']).toBe(1);
+            });
+            httpBackend.flush();
+        });
+    });
 });
