@@ -465,6 +465,22 @@ describe('FindecoUserService', function() {
                 userService.storeSettings();
                 httpBackend.flush();
             });
+
+            it('on success there should be no changes', function() {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                console.log(userService.displayName);
+                userService.displayName = 'Simon';
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
+                httpBackend.expectPOST('/.json_storeSettings/')
+                    .respond(storeSettingsResponse);
+                userService.storeSettings();
+                httpBackend.flush();
+                expect(userService.hasUnsavedChanges()).toBeFalsy();
+            });
+
+
         });
 
 

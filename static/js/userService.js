@@ -144,7 +144,12 @@ angular.module('FindecoUserService', [])
                 displayName: userInfo.displayName,
                 description: userInfo.description,
                 wantsMailNotification: userInfo.wantsMailNotification,
-                email: userInfo.email});
+                email: userInfo.email}).success(function () {
+                    data.userInfo.displayName = userInfo.displayName;
+                    data.userInfo.description = userInfo.description;
+                    data.userSettings.email = userInfo.email;
+                    data.userSettings.wantsMailNotification = userInfo.wantsMailNotification;
+            });
         };
         userInfo.changePassword = function (newPassword) {
             return $http.post('/.json_changePassword/', {password: newPassword});
