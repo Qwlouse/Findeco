@@ -221,4 +221,24 @@ describe('FindecoBackendService', function () {
             httpBackend.flush();
         });
     });
+
+    ////////////////////////// loadText /////////////////////////////
+    describe('loadText', function () {
+        it('should have a loadText function', function () {
+            expect(angular.isFunction(backendService.loadText)).toBe(true);
+        });
+
+        it('should call the right path', function () {
+            httpBackend.expectGET('/.json_loadText/pa.1/th.2')
+                .respond(200, {'loadTextResponse': 1, 'paragraphs': ['1','3','4']});
+            backendService.loadText([], 'pa.1/th.2').success(function (data) {
+                expect(data['loadTextResponse']).toBe(1);
+                var paragraphTexts = ['1','3','4'];
+                for (var k = 0; k < data['paragraphs'].length; k++) {
+                    expect(data['paragraphs'][k]).toBe(paragraphTexts[k]);
+                }
+            });
+            httpBackend.flush();
+        });
+    });
 });
