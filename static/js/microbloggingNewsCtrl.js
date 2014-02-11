@@ -37,7 +37,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
         for (var i = 0; i < list.length; ++i ) {
             var blog = list[i];
             blog.author = blog.authorGroup[0];
-            blog.author.isFollowing = User.follows(blog.author.displayName);
+            blog.author.isFollowing = User.isFollowing(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
     }
@@ -48,8 +48,8 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
         setAuthorForAllBlogs($scope.ownPostsList);
     });
 
-    $scope.followUser = function (path, type) {
-        return User.markUser(path, type);
+    $scope.followUser = function (type, path) {
+        return User.markUser(type, path);
     };
 
     $scope.updateTimeline = function (oldType, oldID) {

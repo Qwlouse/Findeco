@@ -38,13 +38,13 @@ function FindecoNewsCtrl($scope, Backend, User, $location) {
         for (var i = 0; i < list.length; ++i ) {
             var blog = list[i];
             blog.author = blog.authorGroup[0];
-            blog.author.isFollowing = User.follows(blog.author.displayName);
+            blog.author.isFollowing = User.isFollowing(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
     }
 
-    $scope.followUser = function (path, type) {
-        return User.markUser(path, type).success(function() {
+    $scope.followUser = function (type, path) {
+        return User.markUser(type, path).success(function() {
             setAuthorForAllBlogs($scope.allNodesList);
             setAuthorForAllBlogs($scope.followedNodesList);
             setAuthorForAllBlogs($scope.ownNodesList);

@@ -28,6 +28,11 @@ describe('FindecoUserService', function() {
         description: 'beschreibung'
     };
 
+    var adminInfo = {
+        displayName: 'admin',
+        description: 'darfalles'
+    };
+
     var userSettings = {
         rsskey: 'abcdefg',
         email: 'hugo@abc.de',
@@ -78,6 +83,18 @@ describe('FindecoUserService', function() {
                 userSettings: userSettings
             }
         };
+        var adminLoginResponse = {
+            loginResponse: {
+                userInfo: adminInfo,
+                userSettings: userSettings
+            }
+        };
+        var loadAdminSettingsResponse = {
+            loadUserSettingsResponse: {
+            userInfo: adminInfo,
+            userSettings: userSettings
+        }
+    };
 
         var logoutResponse = {logoutResponse: {}};
         var accountRegistrationResponse = {accountRegistrationResponse: {}};
@@ -104,12 +121,25 @@ describe('FindecoUserService', function() {
                 httpBackend.flush();
 
                 expect(userService.isLoggedIn).toBe(true);
+                expect(userService.isAdmin).toBe(false);
                 expect(userService.displayName).toBe(userInfo.displayName);
                 expect(userService.description).toBe(userInfo.description);
                 expect(userService.rsskey).toBe(userSettings.rsskey);
                 expect(userService.email).toBe(userSettings.email);
                 expect(userService.followees).toEqual(userSettings.followees);
                 expect(userService.wantsMailNotification).toBe(userSettings.wantsMailNotification);
+            });
+
+            it('should set the userInfo details after successful admin login', function () {
+                httpBackend.expectPOST('/.json_login/').respond(adminLoginResponse);
+                //make the call.
+                userService.login('admin', '1234');
+                httpBackend.flush();
+
+                expect(userService.isLoggedIn).toBe(true);
+                expect(userService.isAdmin).toBe(true);
+                expect(userService.displayName).toBe(adminInfo.displayName);
+                expect(userService.description).toBe(adminInfo.description);
             });
         });
 
@@ -211,15 +241,15 @@ describe('FindecoUserService', function() {
                 httpBackend.expectPOST('/.json_markUser/unfollow/ben', {})
                     .respond(markUserResponse);
 
-                userService.markUser('albert', 'follow');
-                userService.markUser('ben', 'unfollow');
+                userService.markUser('follow', 'albert');
+                userService.markUser('unfollow', 'ben');
                 httpBackend.flush();
             });
 
             it('should update the userInfo with new followees', function() {
                 httpBackend.expectPOST('/.json_markUser/follow/albert', {})
                     .respond(markUserResponse);
-                userService.markUser('albert', 'follow');
+                userService.markUser('follow', 'albert');
                 httpBackend.flush();
 
                 expect(userService.followees).toEqual([
@@ -238,7 +268,7 @@ describe('FindecoUserService', function() {
             it('should broadcast the UserMarked event', function() {
                 httpBackend.expectPOST('/.json_markUser/follow/albert', {})
                     .respond(markUserResponse);
-                userService.markUser('albert', 'follow');
+                userService.markUser('follow', 'albert');
                 httpBackend.flush();
                 expect(rootScope.$broadcast).toHaveBeenCalledWith('UserMarked');
             });
@@ -256,6 +286,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 expect(userService.isLoggedIn).toBe(true);
+                expect(userService.isAdmin).toBe(false);
                 expect(userService.displayName).toBe(userInfo.displayName);
                 expect(userService.description).toBe(userInfo.description);
                 expect(userService.rsskey).toBe(userSettings.rsskey);
@@ -266,6 +297,16 @@ describe('FindecoUserService', function() {
                     path:'ben'
                 }]);
                 expect(userService.wantsMailNotification).toBe(userSettings.wantsMailNotification);
+            });
+
+            it('should initialize isAdmin if loadUserSettings for admin succeeds', function () {
+                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadAdminSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                expect(userService.isLoggedIn).toBe(true);
+                expect(userService.isAdmin).toBe(true);
+                expect(userService.displayName).toBe(adminInfo.displayName);
+                expect(userService.description).toBe(adminInfo.description);
             });
 
             it('should have empty user details if loadUserSettings does not succeed', function () {
@@ -283,16 +324,16 @@ describe('FindecoUserService', function() {
 
         describe('isChanged function', function() {
             it('should return false for not logged-in user', function() {
-                expect(userService.isChanged()).toBeFalsy();
+                expect(userService.hasUnsavedChanges()).toBeFalsy();
                 userService.displayName = 'herbert';
-                expect(userService.isChanged()).toBeFalsy();
+                expect(userService.hasUnsavedChanges()).toBeFalsy();
             });
 
             it('should return false for logged-in but unchanged user ', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
-                expect(userService.isChanged()).toBeFalsy();
+                expect(userService.hasUnsavedChanges()).toBeFalsy();
             });
 
             it('should return true for logged-in user with changed name', function() {
@@ -300,7 +341,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.displayName = 'changedName';
-                expect(userService.isChanged()).toBeTruthy();
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
 
             it('should return true for logged-in user with changed description', function() {
@@ -308,7 +349,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.description = 'changedDescription';
-                expect(userService.isChanged()).toBeTruthy();
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
 
             it('should return true for logged-in user with changed email', function() {
@@ -316,7 +357,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.email = 'changedEMail';
-                expect(userService.isChanged()).toBeTruthy();
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
 
             it('should return true for logged-in user with changed wantsMailNotification', function() {
@@ -324,7 +365,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.wantsMailNotification = false;
-                expect(userService.isChanged()).toBeTruthy();
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
         });
 
@@ -386,19 +427,19 @@ describe('FindecoUserService', function() {
             });
         });
 
-        describe('follows function', function() {
+        describe('isFollowing function', function() {
             it('should return true if name is in followees list', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
-                expect(userService.follows('ben')).toBeTruthy();
+                expect(userService.isFollowing('ben')).toBeTruthy();
             });
 
             it('should return false if name is not in followees list', function() {
                 httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
-                expect(userService.follows('paul')).toBeFalsy();
+                expect(userService.isFollowing('paul')).toBeFalsy();
             });
         });
 

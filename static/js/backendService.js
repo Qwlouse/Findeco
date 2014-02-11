@@ -138,7 +138,7 @@ angular.module('FindecoBackendService', [])
                 return addIdTypeAndGetPromise(microblogList_out, url_part, id, type);
             },
 
-            markNode: function (nodePath, markType) {
+            markNode: function (markType, nodePath) {
                 var pathComponents = ['/.json_markNode', markType, nodePath];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");

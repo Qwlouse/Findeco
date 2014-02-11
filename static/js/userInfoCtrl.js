@@ -32,7 +32,7 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
         name: name,
         path: name,
         exists: false,
-        isFollowing: User.follows(name)
+        isFollowing: User.isFollowing(name)
     };
 
     $scope.followUser = User.markUser;
@@ -42,7 +42,7 @@ function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
         Backend.loadUserInfo(name).success(function (data) {
             $scope.displayUser.exists = true;
             $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
-            $scope.displayUser.isFollowing = User.follows(name);
+            $scope.displayUser.isFollowing = User.isFollowing(name);
         }).error(function () {
             $scope.displayUser.exists = false;
             $scope.displayUser.name = 'User "' + name + '" existiert nicht.';

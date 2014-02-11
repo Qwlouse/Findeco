@@ -92,7 +92,7 @@ angular.module('FindecoUserService', [])
                 data = empty_data;
             });
         };
-        userInfo.markUser = function (displayName, markType) {
+        userInfo.markUser = function (markType, displayName) {
             var pathComponents = ['/.json_markUser', markType, displayName];
             var url = pathComponents.join('/');
             url = url.replace("//", "/");
@@ -124,7 +124,7 @@ angular.module('FindecoUserService', [])
                 }
             });
         };
-        userInfo.isChanged = function () {
+        userInfo.hasUnsavedChanges = function () {
             if (!userInfo.isLoggedIn) {
                 return false;
             }
@@ -152,7 +152,7 @@ angular.module('FindecoUserService', [])
         userInfo.deleteAccount = function () {
             return $http.post('/.json_deleteUser/');
         };
-        userInfo.follows = function (name) {
+        userInfo.isFollowing = function (name) {
             for (var i = 0; i < userInfo.followees.length; i++) {
                 if (userInfo.followees[i].displayName == name) {
                     return userInfo.followees[i].isFollowing;
