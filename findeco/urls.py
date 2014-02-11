@@ -25,6 +25,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #endregion #####################################################################
+from findeco import settings
 from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
@@ -157,6 +158,15 @@ urlpatterns = patterns(
         'search',
         name='search')
 )
+
+
+########### Frontend Testing URLs ###########
+if settings.DEBUG:
+    urlpatterns += patterns(
+        '',
+        url(r'^.jasmine$', 'findeco.views.jasmine',
+            name='jasmine_test_runner')
+    )
 
 ########### Microblogging API ###########
 urlpatterns += microblogging_patterns

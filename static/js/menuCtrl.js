@@ -24,9 +24,10 @@
 
 'use strict';
 
-function FindecoMenuCtrl($scope, User, Navigator, Fesettings) {
+findecoApp.controller('FindecoMenuCtrl', function($scope, User, Navigator, Fesettings) {
     $scope.user = User;
     $scope.fesettings = Fesettings;
+
     $scope.logout = function () {
         User.logout().success(function () {
             Navigator.changePath('/');
@@ -66,6 +67,4 @@ function FindecoMenuCtrl($scope, User, Navigator, Fesettings) {
             $(".searchBox").removeClass("searchActive");
         })
 
-}
-
-FindecoMenuCtrl.$inject = ['$scope', 'User', 'Navigator','Fesettings'];
+});

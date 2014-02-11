@@ -61,7 +61,7 @@ findecoApp
                     if (scope.entity.isFollowing == 2) {
                         markType = "unfollow";
                     }
-                    scope.markFunc(scope.entity.path, markType).success(function () {
+                    scope.markFunc(markType, scope.entity.path).success(function () {
                         if (markType == 'unfollow') {
                             scope.entity.isFollowing = 0;
                         } else {
@@ -102,7 +102,7 @@ findecoApp
                     if (scope.entity.isFlagging == 1) {
                         markType = "notspam";
                     }
-                    scope.markFunc(scope.entity.path, markType).success(function () {
+                    scope.markFunc(markType, scope.entity.path).success(function () {
                         if (markType == 'notspam') {
                             scope.entity.isFlagging = 0;
                         } else {

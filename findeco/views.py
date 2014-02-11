@@ -60,6 +60,11 @@ def home(request, path=""):
         return HttpResponse(index_html_file.read(), mimetype='text/html')
 
 
+def jasmine(request, path=""):
+    with open(project_path("static/jasmine.html"), 'r') as index_html_file:
+        return HttpResponse(index_html_file.read(), mimetype='text/html')
+
+
 @ViewErrorHandling
 def error_404(request):
     raise InvalidURL()
@@ -577,7 +582,7 @@ def account_reset_request_by_mail(request):
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
-        return json_response({'accountResetRequestByNameResponse': {}})
+        return json_response({'accountResetRequestByMailResponse': {}})
     except SMTPException:
         recovery.delete()
         raise

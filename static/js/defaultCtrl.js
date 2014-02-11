@@ -23,9 +23,10 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesettings) {
+findecoApp.controller('FindecoDefaultCtrl',
+    function($scope, $location, $controller, Backend, User, Navigator, Fesettings) {
+
     $scope.nav = Navigator;
     $scope.user = User;
     $scope.fesettings = Fesettings;
@@ -123,6 +124,4 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesetti
     	return $scope.isLoadingNode || $scope.isLoadingGraph;
     };
     $scope.initialize();
-}
-
-FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend', 'User', 'Navigator', 'Fesettings'];
+});

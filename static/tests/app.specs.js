@@ -22,26 +22,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-'use strict';
-
-findecoApp.controller('FindecoUserInfoCtrl', function ($scope, $routeParams, Backend, User) {
-    $scope.user = User;
-    $scope.followUser = User.markUser;
-
-    $scope.displayUser = {
-        name: $routeParams.name.replace(/\//, ''),
-        exists: false,
-        description: '',
-        isFollowing: false
-    };
-
-    Backend.loadUserInfo($scope.displayUser.name).success(function (data) {
-        $scope.displayUser.exists = true;
-        $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
-        $scope.displayUser.isFollowing = User.isFollowing($scope.displayUser.name);
-    }).error(function () {
-        $scope.displayUser.exists = false;
-        $scope.displayUser.name = 'User "' + $scope.displayUser.name + '" existiert nicht.';
+describe("Findeco Module", function () {
+    var module;
+    beforeEach(function () {
+        module = angular.module("Findeco");
     });
 
+    it("should be registered", function () {
+        expect(module).not.toBe(null);
+    });
 });

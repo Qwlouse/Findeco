@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="/static/css/help.css" type="text/css"/>
     <!-- Javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/lib/angular.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular-route.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular-animate.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/d3.v3.min.js"></script>
@@ -62,9 +62,12 @@
     <script type="text/javascript" src="/static/js/parser.js"></script>
     <script type="text/javascript" src="/static/js/newsCtrl.js"></script>
     <script type="text/javascript" src="/static/js/service.js"></script>
+    <script type="text/javascript" src="/static/js/backendService.js"></script>
+    <script type="text/javascript" src="/static/js/userService.js"></script>
     <script type="text/javascript" src="/static/js/structureParser.js"></script>
     <script type="text/javascript" src="/static/js/userCtrl.js"></script>
     <script type="text/javascript" src="/static/js/userInfoCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/navigatorService.js"></script>
 
     <title data-i18n="_pageTitle_"></title>
 </head>
@@ -97,9 +100,13 @@
                             <li class="{{ getActiveClass('search')}}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
-                                        <input id="searchInput" type="search"
-                                               name="searchField" placeholder=""
-                                               autocomplete="on" ng-model="searchString"
+
+                                        <input id="searchInput"
+                                               type="search"
+                                               name="searchField"
+                                               placeholder=""
+                                               autocomplete="on"
+                                               ng-model="searchString"
                                                data-i18n-attr="_search_|placeholder"/>
                                         <button class="searchButton" value=""></button>
                                     </form>

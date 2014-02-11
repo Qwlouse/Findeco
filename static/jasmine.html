@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Jasmine Test Runner</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/tests/libs/jasmine/jasmine.css" />
+    <script type="text/javascript" src="/static/tests/libs/jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="/static/tests/libs/jasmine/jasmine-html.js"></script>
+
+    <script type="text/javascript" src="/static/js/lib/angular.js"></script>
+    <script type="text/javascript" src="/static/js/lib/modernizr.custom.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.socialshareprivacy.js"></script>
+    <script type="text/javascript" src="/static/js/lib/diff_match_patch.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-mocks.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/localize.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-route.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/moment.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/codeholicsCreole.js"></script>
+    <script type="text/javascript" src="/static/js/lib/ui-bootstrap-tpls-0.2.0.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/js/lib/d3.v3.min.js"></script>
+    <script type="text/javascript" src="/static/js/app.js"></script>
+    <script type="text/javascript" src="/static/js/service.js"></script>
+    <script type="text/javascript" src="/static/js/userService.js"></script>
+    <script type="text/javascript" src="/static/js/backendService.js"></script>
+    <script type="text/javascript" src="/static/js/helpCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/userInfoCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/userCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/diffCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/microbloggingNewsCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/confirmationCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/microblogCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/newsCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/searchCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/customContentCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/messageCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/navigationCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/menuCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/defaultCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/syschangeCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/argumentCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/createCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/navigatorService.js"></script>
+
+    <script type="text/javascript" src="/static/tests/app.specs.js"></script>
+    <script type="text/javascript" src="/static/tests/backendService.specs.js"></script>
+    <script type="text/javascript" src="/static/tests/defaultCtrl.specs.js"></script>
+    <script type="text/javascript" src="/static/tests/menuCtrl.specs.js"></script>
+    <script type="text/javascript" src="/static/tests/navigatorService.specs.js"></script>
+    <script type="text/javascript" src="/static/tests/userInfoCtrl.specs.js"></script>
+    <script type="text/javascript" src="/static/tests/userService.specs.js"></script>
+
+</head>
+
+<body>
+  
+  <script type="text/javascript">
+  (function() {
+      var jasmineEnv = jasmine.getEnv();
+
+      jasmineEnv.updateInterval = 1000;
+
+      if (navigator.userAgent.indexOf('PhantomJS') != -1) {
+          jasmineEnv.addReporter(new jasmine.TapReporter());
+      } else {
+          var htmlReporter = new jasmine.HtmlReporter();
+          jasmineEnv.addReporter(htmlReporter);
+          jasmineEnv.specFilter = function(spec) {
+              return htmlReporter.specFilter(spec);
+          };
+      }
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+          if (currentWindowOnload) {
+              currentWindowOnload();
+          }
+          execJasmine();
+      };
+
+      function execJasmine() {
+          jasmineEnv.execute();
+      }
+
+  })();
+</script>
+
+</body>
+</html>
+

@@ -15,33 +15,62 @@
  * You should have received a copy of the GNU General Public License along with         *
  * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
  ****************************************************************************************/
-
 /****************************************************************************************
  * This Source Code Form is subject to the terms of the Mozilla Public                  *
  * License, v. 2.0. If a copy of the MPL was not distributed with this                  *
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-'use strict';
-
-findecoApp.controller('FindecoUserInfoCtrl', function ($scope, $routeParams, Backend, User) {
-    $scope.user = User;
-    $scope.followUser = User.markUser;
-
-    $scope.displayUser = {
-        name: $routeParams.name.replace(/\//, ''),
-        exists: false,
-        description: '',
-        isFollowing: false
+describe('FindecoUserInfoCtrl', function() {
+    var scope = {};
+    var ctrl = null;
+    var promiseMock = {
+        success: function (f) {return this;},
+        error: function (f) {return this;},
+        then: function (f, g, h) {return this;},
+        catch: function (f) {return this;},
+        finally: function (f) {return this;}
+    };
+    var UserServiceMock = {
+        display_name: 'Simon',
+        isLoggedIn: true,
+        isFollowing: function () {
+            return true;
+        }
     };
 
-    Backend.loadUserInfo($scope.displayUser.name).success(function (data) {
-        $scope.displayUser.exists = true;
-        $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
-        $scope.displayUser.isFollowing = User.isFollowing($scope.displayUser.name);
-    }).error(function () {
-        $scope.displayUser.exists = false;
-        $scope.displayUser.name = 'User "' + $scope.displayUser.name + '" existiert nicht.';
+
+    beforeEach(function() {
+        angular.mock.module('Findeco');
+        angular.mock.inject(function ($rootScope, $controller) {
+            var Backend = {
+                loadUserInfo: function(name) {
+                    return promiseMock;
+                }
+            };
+            scope = $rootScope.$new();
+            ctrl = $controller('FindecoUserInfoCtrl', {
+                $scope: scope,
+                $routeParams: {name:'herbert/'},
+                Backend: Backend,
+                User: UserServiceMock
+            });
+        });
     });
 
+    it('should be registered', inject(function () {
+        expect(ctrl).not.toBe(null);
+    }));
+
+    it('should expose the UserService as scope.user', function() {
+        expect(scope.user).toBe(UserServiceMock);
+    });
+
+    it('should provide a displayUser object', function() {
+        expect(scope.displayUser).toBeDefined();
+        expect(scope.displayUser.name).toBe('herbert');
+        expect(scope.displayUser.description).toBe('');
+        expect(scope.displayUser.isFollowing).toBeFalsy();
+        expect(scope.displayUser.exists).toBeFalsy();
+    });
 });

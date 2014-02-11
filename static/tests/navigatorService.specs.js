@@ -15,33 +15,39 @@
  * You should have received a copy of the GNU General Public License along with         *
  * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
  ****************************************************************************************/
-
 /****************************************************************************************
  * This Source Code Form is subject to the terms of the Mozilla Public                  *
  * License, v. 2.0. If a copy of the MPL was not distributed with this                  *
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-'use strict';
+describe('FindecoNavigatorService', function() {
+    var $rootScope, $location, navigatorService;
 
-findecoApp.controller('FindecoUserInfoCtrl', function ($scope, $routeParams, Backend, User) {
-    $scope.user = User;
-    $scope.followUser = User.markUser;
+    beforeEach(function (){
+        angular.mock.module('Findeco'); //For Message
+        angular.mock.module('FindecoNavigatorService');
+        angular.mock.inject(function(_$rootScope_, _$location_, Message, Navigator) {
+            $rootScope = _$rootScope_;
+            $location = _$location_;
+            navigatorService = Navigator;
 
-    $scope.displayUser = {
-        name: $routeParams.name.replace(/\//, ''),
-        exists: false,
-        description: '',
-        isFollowing: false
-    };
-
-    Backend.loadUserInfo($scope.displayUser.name).success(function (data) {
-        $scope.displayUser.exists = true;
-        $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
-        $scope.displayUser.isFollowing = User.isFollowing($scope.displayUser.name);
-    }).error(function () {
-        $scope.displayUser.exists = false;
-        $scope.displayUser.name = 'User "' + $scope.displayUser.name + '" existiert nicht.';
+        });
     });
 
+    it('should have function updatePath', function(){
+        expect(angular.isFunction(navigatorService.updatePath)).toBe(true);
+    });
+
+    it('should have function changePath', function(){
+       expect(angular.isFunction(navigatorService.changePath)).toBe(true);
+    });
+
+    it('should change path to /user', function(){
+        navigatorService.changePath('/user');
+        expect($location.path()).toBe('/user');
+
+        navigatorService.updatePath();
+        expect(navigatorService.path).toBe('/user');
+    });
 });
