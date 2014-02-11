@@ -26,27 +26,22 @@
 
 findecoApp.controller('FindecoUserInfoCtrl', function ($scope, $routeParams, Backend, User) {
     $scope.user = User;
-    var name = $routeParams.name.replace(/\//, '');
-    $scope.displayUser = {
-        name: name,
-        path: name,
-        exists: false,
-        isFollowing: User.isFollowing(name)
-    };
-
     $scope.followUser = User.markUser;
 
-    $scope.loadUserInfo = function () {
-        $scope.userExists = false;
-        var prom = Backend.loadUserInfo(name);
-        prom.success(function (data) {
-            $scope.displayUser.exists = true;
-            $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
-            $scope.displayUser.isFollowing = User.isFollowing(name);
-        }).error(function () {
-            $scope.displayUser.exists = false;
-            $scope.displayUser.name = 'User "' + name + '" existiert nicht.';
-        });
+    $scope.displayUser = {
+        name: $routeParams.name.replace(/\//, ''),
+        exists: false,
+        description: '',
+        isFollowing: false
     };
-    $scope.loadUserInfo();
+
+    Backend.loadUserInfo($scope.displayUser.name).success(function (data) {
+        $scope.displayUser.exists = true;
+        $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
+        $scope.displayUser.isFollowing = User.isFollowing($scope.displayUser.name);
+    }).error(function () {
+        $scope.displayUser.exists = false;
+        $scope.displayUser.name = 'User "' + $scope.displayUser.name + '" existiert nicht.';
+    });
+
 });
