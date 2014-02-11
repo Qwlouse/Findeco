@@ -38,7 +38,7 @@ function FindecoNewsCtrl($scope, Backend, User, $location) {
         for (var i = 0; i < list.length; ++i ) {
             var blog = list[i];
             blog.author = blog.authorGroup[0];
-            blog.author.isFollowing = User.follows(blog.author.displayName);
+            blog.author.isFollowing = User.isFollowing(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
     }

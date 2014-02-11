@@ -35,7 +35,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator, $l
         for (var i = 0; i < $scope.microbloggingList.length; ++i ) {
             var blog = $scope.microbloggingList[i];
             blog.author = blog.authorGroup[0];
-            blog.author.isFollowing = User.follows(blog.author.displayName);
+            blog.author.isFollowing = User.isFollowing(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
         $scope.MicrobloggingIsLoading = false;

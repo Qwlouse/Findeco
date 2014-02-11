@@ -152,7 +152,7 @@ angular.module('FindecoUserService', [])
         userInfo.deleteAccount = function () {
             return $http.post('/.json_deleteUser/');
         };
-        userInfo.follows = function (name) {
+        userInfo.isFollowing = function (name) {
             for (var i = 0; i < userInfo.followees.length; i++) {
                 if (userInfo.followees[i].displayName == name) {
                     return userInfo.followees[i].isFollowing;
