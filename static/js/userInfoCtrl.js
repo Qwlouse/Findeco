@@ -37,11 +37,8 @@ findecoApp.controller('FindecoUserInfoCtrl', function ($scope, $routeParams, Bac
 
     Backend.loadUserInfo($scope.displayUser.name).success(function (data) {
         $scope.displayUser.exists = true;
+        $scope.displayUser.name = data.loadUserInfoResponse.userInfo.displayName;
         $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
         $scope.displayUser.isFollowing = User.isFollowing($scope.displayUser.name);
-    }).error(function () {
-        $scope.displayUser.exists = false;
-        $scope.displayUser.name = 'User "' + $scope.displayUser.name + '" existiert nicht.';
     });
-
 });

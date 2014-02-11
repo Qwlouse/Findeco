@@ -758,5 +758,10 @@
         "key"        : "_wantEMailLabel_",
         "value"      : "Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.",
         "description": ""
+    },
+    {
+        "key"        : "_userDoesNotExist",
+        "value"      : "Der Benutzer '{0}' existiert nicht!",
+        "description": "wird im partial user.html benutzt"
     }
 ]

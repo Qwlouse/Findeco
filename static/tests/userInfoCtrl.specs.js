@@ -25,9 +25,22 @@ describe('FindecoUserInfoCtrl', function() {
     var scope = {};
     var ctrl = null;
     var promiseMock = {
-        success: function (f) {return this;},
-        error: function (f) {return this;},
-        then: function (f, g, h) {return this;},
+        success_func: null,
+        error_func: null,
+
+        success: function (f) {
+            this.success_func = f;
+            return this;
+        },
+        error: function (f) {
+            this.error_func = f;
+            return this;
+        },
+        then: function (f, g, h) {
+            this.success_func = f;
+            this.error_func = g;
+            return this;
+        },
         catch: function (f) {return this;},
         finally: function (f) {return this;}
     };
@@ -38,16 +51,18 @@ describe('FindecoUserInfoCtrl', function() {
             return true;
         }
     };
+    var Backend = {
+        loadUserInfo: function(name) {
+            return promiseMock;
+        }
+    };
+    spyOn(Backend, 'loadUserInfo').andReturn(promiseMock);
+
 
 
     beforeEach(function() {
         angular.mock.module('Findeco');
         angular.mock.inject(function ($rootScope, $controller) {
-            var Backend = {
-                loadUserInfo: function(name) {
-                    return promiseMock;
-                }
-            };
             scope = $rootScope.$new();
             ctrl = $controller('FindecoUserInfoCtrl', {
                 $scope: scope,
@@ -73,4 +88,24 @@ describe('FindecoUserInfoCtrl', function() {
         expect(scope.displayUser.isFollowing).toBeFalsy();
         expect(scope.displayUser.exists).toBeFalsy();
     });
+
+    it('should call the Backend.loadUserInfo function', function() {
+        expect(Backend.loadUserInfo.toHaveBeenCalled);
+    });
+
+    it('on success of Backend.loadUserInfo it should update the displayUser', function() {
+        expect(Backend.loadUserInfo.toHaveBeenCalled);
+        expect(promiseMock.success_func).not.toBeNull();
+        promiseMock.success_func({
+                loadUserInfoResponse: {
+                    userInfo: {
+                        displayName:'Herbert',
+                        description:'not herbert'
+                    }}});
+        expect(scope.displayUser.name).toBe('Herbert');
+        expect(scope.displayUser.description).toBe('not herbert');
+        expect(scope.displayUser.exists).toBeTruthy();
+    });
+
+
 });
