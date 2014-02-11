@@ -191,7 +191,7 @@ describe('FindecoBackendService', function () {
         });
     });
 
-    //////////////////////// storeText ///////////////////////////
+    ///////////////////////////// storeText /////////////////////////////
     describe('storeText', function () {
         it('should have a storeText function', function () {
             expect(angular.isFunction(backendService.storeText)).toBe(true);
@@ -201,6 +201,21 @@ describe('FindecoBackendService', function () {
             httpBackend.expectPOST('/.json_storeText/pa.1/th.2', {'param1': "Blupp", 'param2': 14})
                 .respond(200, {'call': 1});
             backendService.storeText('pa.1/th.2', {'param1': "Blupp", 'param2': 14}).success(function (data) {
+                expect(data['call']).toBe(1);
+            });
+            httpBackend.flush();
+        });
+    });
+
+    ////////////////////////// loadArgument /////////////////////////////
+    describe('loadArgument', function () {
+        it('should have a loadArgument function', function () {
+            expect(angular.isFunction(backendService.loadArgument)).toBe(true);
+        });
+
+        it('should call the right path', function () {
+            httpBackend.expectGET('/.json_loadArgumentIndex/pa.1/th.2').respond(200, {'call': 1});
+            backendService.loadArgument([], 'pa.1/th.2').success(function (data) {
                 expect(data['call']).toBe(1);
             });
             httpBackend.flush();
