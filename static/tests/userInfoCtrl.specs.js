@@ -31,6 +31,13 @@ describe('FindecoUserInfoCtrl', function() {
         catch: function (f) {return this;},
         finally: function (f) {return this;}
     };
+    var UserServiceMock = {
+        display_name: 'Simon',
+        isLoggedIn: true,
+        isFollowing: function () {
+            return true;
+        }
+    };
 
 
     beforeEach( function(){
@@ -45,14 +52,18 @@ describe('FindecoUserInfoCtrl', function() {
             ctrl = $controller('FindecoUserInfoCtrl', {
                 $scope: scope,
                 $routeParams: {name:'herbert'},
-                Backend: Backend
+                Backend: Backend,
+                User: UserServiceMock
             });
+
         });
     });
-
-
 
     it('should be registered', inject(function () {
         expect(ctrl).not.toBe(null);
     }));
+
+    it('should expose the UserService as user', function() {
+        expect(scope.user).toBe(UserServiceMock);
+    });
 });
