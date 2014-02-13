@@ -30,6 +30,7 @@ findecoApp.controller('FindecoUserInfoCtrl', function ($scope, $routeParams, Bac
 
     $scope.displayUser = {
         name: $routeParams.name.replace(/\//, ''),
+        path: $routeParams.name.replace(/\//, ''),
         exists: false,
         description: '',
         isFollowing: false

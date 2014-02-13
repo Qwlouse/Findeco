@@ -84,6 +84,7 @@ describe('FindecoUserInfoCtrl', function() {
     it('should provide a displayUser object', function() {
         expect(scope.displayUser).toBeDefined();
         expect(scope.displayUser.name).toBe('herbert');
+        expect(scope.displayUser.path).toBe('herbert');
         expect(scope.displayUser.description).toBe('');
         expect(scope.displayUser.isFollowing).toBeFalsy();
         expect(scope.displayUser.exists).toBeFalsy();
