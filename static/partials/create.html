@@ -1,10 +1,6 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
     <div class="contentBox leftWideColumn">
-        <h2 ng-show="showIf(['argumentPro'])" data-i18n="_argumentsNewPro_"></h2>
-
-        <h2 ng-show="showIf(['argumentNeut'])" data-i18n="_argumentsNewNeut_"></h2>
-
-        <h2 ng-show="showIf(['argumentCon'])" data-i18n="_argumentsNewCon_"></h2>
+        <h2 ng-show="showIf(['argument'])" data-i18n="_argumentsNew_"></h2>
 
         <h2 ng-show="showIf(['topic'])" data-i18n="_createNewText_"></h2>
 
@@ -15,18 +11,23 @@
         <form ng-submit="submit()">
             <h3 ng-show="showIf(['derivate'])" data-i18n="_argumentForThisModification_"></h3>
 
-            <textarea ng-show="showIf(['argumentPro','argumentNeut','argumentCon','topic','derivate'])"
+            <textarea ng-show="showIf(['argument','topic','derivate'])"
                       style="width: 100%; height: 250px; "
                       ng-model="tmp.text">
                 {{ '_editFieldPretext_'|i18n }}
             </textarea><br/>
 
-            <button class="{{ getButtonState()}}" ng-if="showIf(['derivate'])"
+            <button class="{{ getButtonState()}}" ng-if="showIf(['argument'])"
+                    type="button" class="btn btn-primary"
+                    ng-model="tmp.argumentType"
+                    btn-radio="'pro'" data-i18n="_pro_"></button>
+
+            <button class="{{ getButtonState()}}" ng-if="showIf(['derivate', 'argument'])"
                     type="button" class="btn btn-primary"
                     ng-model="tmp.argumentType"
                     btn-radio="'neut'" data-i18n="_neut_"></button>
 
-            <button class="{{ getButtonState()}}" ng-if="showIf(['derivate'])"
+            <button class="{{ getButtonState()}}" ng-if="showIf(['derivate', 'argument'])"
                     type="button" class="btn btn-primary"
                     ng-model="tmp.argumentType"
                     btn-radio="'con'" data-i18n="_con_"></button>
@@ -39,7 +40,7 @@
             </textarea><br/>
 
             <input class="{{ getButtonState()}}"
-                   ng-if="showIf(['argumentPro','argumentNeut','argumentCon'])"
+                   ng-if="showIf(['argument'])"
                    class="btn btn-primary" type="submit"
                    value="{{ '_argumentsCreateSendBtn_'|i18n }}">
             <input class="{{ getButtonState()}}"

@@ -97,9 +97,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
         var params = {};
         var test = false;
         switch ($scope.settings.type) {
-            case 'argumentPro':
-            case 'argumentNeut':
-            case 'argumentCon':
+            case 'argument':
                 test = $scope.checkWikiCompatibility($scope.tmp.text);
                 if (test != true) {
                     Message.send('error', '_argumentText' + test + '_');
@@ -107,7 +105,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 }
                 // Past watchdog
 
-                params['argumentType'] = $scope.settings.type.toLowerCase().substr(8);
+                params['argumentType'] = 'neut';
                 params['wikiText'] = $scope.tmp.text;
                 break;
             case 'topic':
@@ -205,6 +203,10 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
             $scope.tmp.textAlternative = wikiText;
             $scope.initialAlternative = wikiText;
         });
+    }
+
+    if ($scope.settings.type == 'argument') {
+        $scope.tmp.argumentType = 'neut';
     }
 }
 
