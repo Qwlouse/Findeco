@@ -24,6 +24,14 @@
 describe('FindecoUserCtrl', function() {
     var scope = {};
     var ctrl = null;
+    var loginPromise = new PromiseMock();
+    var UserServiceMock = {
+        displayName: 'hugo',
+        login: function() {
+            return loginPromise;
+        }
+    };
+
     beforeEach(function() {
         angular.mock.module('Findeco');
         angular.mock.inject(function ($rootScope, $controller) {
@@ -32,11 +40,37 @@ describe('FindecoUserCtrl', function() {
                 $scope: scope,
                 Backend: {},
                 Message: {},
-                User: {}
+                User: UserServiceMock
             });
+            spyOn(UserServiceMock, 'login').andReturn(loginPromise);
         });
     });
     it('should be registered', inject(function () {
         expect(ctrl).not.toBe(null);
     }));
+
+    it('should expose the UserService as scope.user', function() {
+        expect(scope.user).toBe(UserServiceMock);
+    });
+
+    it('should provide some fields on scope', function() {
+        expect(scope.displayNameTmp).toBeDefined();
+        expect(scope.username).toBeDefined();
+        expect(scope.password).toBeDefined();
+        expect(scope.password2).toBeDefined();
+        expect(scope.mail).toBeDefined();
+        expect(scope.TOS).toBeDefined();
+        expect(scope.DPR).toBeDefined();
+    });
+
+    describe('the login function', function() {
+        it('should call UserService.login with parameters from scope', function(){
+            scope.username = 'herbert';
+            scope.password = '00000000';
+
+            scope.login();
+            expect(UserServiceMock.login).toHaveBeenCalledWith(scope.username, scope.password);
+        });
+    });
+
 });
