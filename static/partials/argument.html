@@ -15,6 +15,7 @@
             <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
                   style="float:none; top: 0;"></span>
             <span class="followerCount">{{ argument.isFollowing }}</span>
+            <p creole wiki-text="createArgumentSlug(argument.text)"></p>
         </li>
 
         <li ng-show="user.isLoggedIn">

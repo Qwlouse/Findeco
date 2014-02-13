@@ -79,6 +79,7 @@ indexNode_schema = {
 argumentIndexNode_schema = {
     'argType': string,
     'fullTitle': string,
+    'text': string,
     'index': integer,
     'isFollowing': integer,
     'isFlagging': integer,

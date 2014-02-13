@@ -36,7 +36,15 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
     
     $scope.isLoading = function (){
     	return $scope.argumentIsLoading ;
-    }
+    };
+
+    $scope.createArgumentSlug = function (text) {
+        var stringAddition = "";
+        if (text.length > 140) {
+            stringAddition = " ...";
+        }
+        return text.substr(0, 140) + stringAddition;
+    };
     
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {

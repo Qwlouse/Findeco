@@ -187,6 +187,7 @@ def create_index_node_for_argument(argument, user_id):
     index_node = dict(
         argType=Argument.long_arg_type(argument.arg_type),
         fullTitle=argument.title,
+        text=argument.text.text,
         index=argument.index,
         authorGroup=[create_user_info(a) for a in argument.text.authors.all()],
         isFollowing=get_is_following(user_id, argument),
