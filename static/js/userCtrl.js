@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -24,7 +24,7 @@
 
 'use strict';
 
-function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Navigator) {
+findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, User ) {
     $scope.user = User;
     $scope.displayNameTmp = User.displayName;
     $scope.followUser = User.markUser;
@@ -128,4 +128,4 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
             }
         }
     });
-}
+});
