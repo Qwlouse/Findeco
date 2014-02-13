@@ -24,26 +24,7 @@
 describe('FindecoUserInfoCtrl', function() {
     var scope = {};
     var ctrl = null;
-    var promiseMock = {
-        success_func: null,
-        error_func: null,
 
-        success: function (f) {
-            this.success_func = f;
-            return this;
-        },
-        error: function (f) {
-            this.error_func = f;
-            return this;
-        },
-        then: function (f, g, h) {
-            this.success_func = f;
-            this.error_func = g;
-            return this;
-        },
-        catch: function (f) {return this;},
-        finally: function (f) {return this;}
-    };
     var UserServiceMock = {
         display_name: 'Simon',
         isLoggedIn: true,
@@ -51,12 +32,13 @@ describe('FindecoUserInfoCtrl', function() {
             return true;
         }
     };
+    var loadUserInfoPromise = new PromiseMock();
     var Backend = {
         loadUserInfo: function(name) {
-            return promiseMock;
+            return loadUserInfoPromise;
         }
     };
-    spyOn(Backend, 'loadUserInfo').andReturn(promiseMock);
+    spyOn(Backend, 'loadUserInfo').andReturn(loadUserInfoPromise);
 
     beforeEach(function() {
         angular.mock.module('Findeco');
@@ -95,8 +77,8 @@ describe('FindecoUserInfoCtrl', function() {
 
     it('on success of Backend.loadUserInfo it should update the displayUser', function() {
         expect(Backend.loadUserInfo.toHaveBeenCalled);
-        expect(promiseMock.success_func).not.toBeNull();
-        promiseMock.success_func({
+        expect(loadUserInfoPromise.success_func).not.toBeNull();
+        loadUserInfoPromise.success_func({
                 loadUserInfoResponse: {
                     userInfo: {
                         displayName:'Herbert',
