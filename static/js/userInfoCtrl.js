@@ -26,14 +26,13 @@
 
 findecoApp.controller('FindecoUserInfoCtrl', function ($scope, $routeParams, Backend, User) {
     $scope.user = User;
-    $scope.followUser = User.markUser;
 
     $scope.displayUser = {
         name: $routeParams.name.replace(/\//, ''),
         path: $routeParams.name.replace(/\//, ''),
         exists: false,
         description: '',
-        isFollowing: false
+        isFollowing: 0
     };
 
     Backend.loadUserInfo($scope.displayUser.name).success(function (data) {

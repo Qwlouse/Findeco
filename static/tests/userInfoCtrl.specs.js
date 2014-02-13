@@ -58,8 +58,6 @@ describe('FindecoUserInfoCtrl', function() {
     };
     spyOn(Backend, 'loadUserInfo').andReturn(promiseMock);
 
-
-
     beforeEach(function() {
         angular.mock.module('Findeco');
         angular.mock.inject(function ($rootScope, $controller) {
@@ -72,6 +70,7 @@ describe('FindecoUserInfoCtrl', function() {
             });
         });
     });
+
 
     it('should be registered', inject(function () {
         expect(ctrl).not.toBe(null);
@@ -107,6 +106,4 @@ describe('FindecoUserInfoCtrl', function() {
         expect(scope.displayUser.description).toBe('not herbert');
         expect(scope.displayUser.exists).toBeTruthy();
     });
-
-
 });
