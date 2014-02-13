@@ -50,7 +50,6 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
             var arg = $scope.argumentList[i];
             arg.path = $scope.nav.getPathForArgument(arg.argType, arg.index);
-            console.log(arg);
         }
         $scope.argumentIsLoading  = false;
     }
