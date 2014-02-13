@@ -34,7 +34,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.core.mail import send_mail
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -137,7 +137,7 @@ def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     node = assert_node_for_path(prefix)
     data = [create_index_node_for_argument(a, request.user.id) for a in
-            node.arguments.order_by('index')]
+            node.arguments.annotate(num_follows=Count('votes')).order_by('-num_follows')]
     return json_response({'loadArgumentIndexResponse': data})
 
 
