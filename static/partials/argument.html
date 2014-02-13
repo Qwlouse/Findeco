@@ -10,10 +10,11 @@
 
     <ul class="argumentList">
         <li ng-repeat="argument in argumentList">
-                <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
-                      style="float:none; top: 0;"></span>
-            <span class="followerCount">{{ argument.isFollowing }}</span>
+            <span class="argumentIcon argument_{{ argument.argType }}"></span>
             <a href="/{{ argument.path }}">{{ argument.fullTitle }}</a>
+            <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
+                  style="float:none; top: 0;"></span>
+            <span class="followerCount">{{ argument.isFollowing }}</span>
         </li>
 
         <li ng-show="user.isLoggedIn">
