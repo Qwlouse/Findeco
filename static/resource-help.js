@@ -1,21 +1,9 @@
 [
     {
-        "key"        : "ARG_Pro",
-        "title"      : "Pro Argumente",
+        "key"        : "ARG",
+        "title"      : "Argumente",
         "more"       : "*",
-        "description": "Hier werden die Pro Argumente zu diesem Abschnitt aufgeführt. Du kannst jederzeit neue Argumente hinzufügen. Durch einen Klick auf den Stern kannst du einem Argument folgen."
-    },
-    {
-        "key"        : "ARG_Neut",
-        "title"      : "Neutrale Argumente",
-        "more"       : "*",
-        "description": "Hier werden die neutralen Argumente zu diesem Abschnitt aufgeführt. Du kannst jederzeit neue Argumente hinzufügen. Durch einen Klick auf den Stern kannst du einem Argument folgen."
-    },
-    {
-        "key"        : "ARG_Con",
-        "title"      : "Contra Argumente",
-        "more"       : "*",
-        "description": "Hier werden die Contra Argumente zu diesem Abschnitt aufgeführt. Du kannst jederzeit neue Argumente hinzufügen. Durch einen Klick auf den Stern kannst du einem Argument folgen."
+        "description": "Hier werden die Argumente zu diesem Abschnitt aufgeführt. Das Symbol neben den Argumenten sagt dir ob es für oder gegen den Vorschlag ist, oder ihm neutral gegenübersteht. Du kannst jederzeit über den Button unter den Argumenten ein Neues hinzufügen. Durch einen Klick auf den Stern kannst du einem Argument folgen. Je mehr Nutzer einem Argument folgen desto weiter oben wird es angezeigt."
     },
     {
         "key"        : "MBL_col",
