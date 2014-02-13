@@ -105,7 +105,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 }
                 // Past watchdog
 
-                params['argumentType'] = 'neut';
+                params['argumentType'] = $scope.tmp.argumentType;
                 params['wikiText'] = $scope.tmp.text;
                 break;
             case 'topic':
