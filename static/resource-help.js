@@ -33,7 +33,7 @@
         "key"        : "NEWS_fol",
         "title"      : "Gefolgte News",
         "more"       : "*",
-        "description": "Hier werden alle neuen Abschnitte, Verbesserungen und Gegenvorschläge zusammengefasst, die sich auf dinge beziehen denen du folgst."
+        "description": "Hier werden alle neuen Abschnitte, Verbesserungen und Gegenvorschläge zusammengefasst, die sich auf Dinge beziehen denen du folgst."
     },
     {
         "key"        : "NEWS_all",
