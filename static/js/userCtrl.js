@@ -27,7 +27,6 @@
 findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, User ) {
     $scope.user = User;
     $scope.displayNameTmp = User.displayName;
-    $scope.followUser = User.markUser;
 
     // used for login and registration
     $scope.username = "";
@@ -39,12 +38,6 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, U
 
     $scope.login = function () {
         User.login($scope.username, $scope.password).success(function () {
-            Navigator.changePath('/');
-        });
-    };
-
-    $scope.logout = function () {
-        User.logout().success(function () {
             Navigator.changePath('/');
         });
     };
@@ -77,7 +70,7 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, U
     };
 
     $scope.storeUserSettings = function () {
-        $scope.user.displayName = $scope.displayNameTmp;
+        User.displayName = $scope.displayNameTmp;
         User.storeSettings().error(User.loadSettings).success(function () {
             Message.send("success", "_settingsChanged_");
         });
