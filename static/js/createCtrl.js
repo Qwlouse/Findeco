@@ -29,6 +29,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
     $scope.settings = {
         type: $routeParams.type
     };
+
     $scope.radioModel = '';
     $scope.initialAlternative = '';
 
@@ -53,6 +54,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
 
         return true;
     };
+
     $scope.getButtonState = function () {
         if ($scope.blockButton == true) {
             return "btn btn-primary active";
@@ -60,6 +62,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
             return "btn btn-primary inActive";
         }
     };
+
     $scope.getFormLockState = function () {
         return $scope.blockButton;
     };
