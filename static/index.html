@@ -84,7 +84,6 @@
                         <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">Achtung!! Sie sind als Admin User angemeldet</div>
                         <ul>
                             <li class="{{getActiveClass('')}} {{getActiveClass('start')}}"><a href="/start" data-i18n="_start_">Start</a></li>
-                            <li></li>
                             <li class="{{getActiveClass('news')}}" ng-show="user.isLoggedIn"><a href="/news" data-i18n="_news_">News</a></li>
                             <li class="{{getActiveClass('microblogging')}}" ng-show="user.isLoggedIn"><a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a></li>
                             <li class="{{ isContentActive() }}"><a href="/index" data-i18n="_content_">Content</a></li>
@@ -107,8 +106,8 @@
                         <ul style="position: absolute; right: 0;">
                             <li  class="{{getActiveClass('profile')}}" ng-show="user.isLoggedIn">
                                 <a ng-href="/profile">{{user.displayName}}</a>
-
                             </li>
+
                             <li ng-show="user.isLoggedIn">
                                 <a ng-click="logout()" style="cursor:pointer; padding: 0;">
                                     <img src="/static/images/logout.png" alt="Logout" height="18"
@@ -118,6 +117,7 @@
                                     <!--todo: Reimplemnt without Angularerror-->
 
                             </li>
+
                             <li ng-show="!user.isLoggedIn" style="float:right"><a href="/login" data-i18n="_accountLogin_"></a></li>
                         </ul>
                     </div>
@@ -144,17 +144,11 @@
                 <div class="helpactivator"   ng-controller="FindecoHelpCtrl">
                 <div ng-click="toogleHelpStatus()" ng-show="helpIsActive"> <a href="#"> Hilfe ist aktiv (ändern)</a></div>
                 <div ng-click="toogleHelpStatus()" ng-show="!helpIsActive"><a href="#">  Hilfe ist inaktiv (ändern) </a></div>
-
-
             </div>
             </div>
-
         </div>
 
-
         <div ng-view></div>
-
-        <div ng-controller="FindecoUserCtrl" ng-show="false"></div>
     </div>
     <div id="messageBox" ng-controller="FindecoMessageCtrl" ng-show="service.messageList.length > 0">
         <div alert ng-repeat="message in service.messageList" type="message.type" close="closeMessage($index)">
