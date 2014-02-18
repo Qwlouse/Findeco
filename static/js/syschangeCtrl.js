@@ -23,9 +23,7 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
-
-function FindecoSyschangeCtrl($scope, Backend, User, TMP, Navigator) {
+findecoApp.controller('FindecoSyschangeCtrl', function ($scope, Backend) {
 
     $scope.newsList =[];
 
@@ -33,13 +31,8 @@ function FindecoSyschangeCtrl($scope, Backend, User, TMP, Navigator) {
     	 for (var i = 0; i < d["count"]; ++i) {
     		 $scope.newsList[i]=[];
     	
-    		 $scope.newsList[i].title=d["posts"][i]["title"]
-    		 $scope.newsList[i].url=d["posts"][i]["url"]
+    		 $scope.newsList[i].title=d["posts"][i]["title"];
+    		 $scope.newsList[i].url=d["posts"][i]["url"];
     	 }
-    
     });
-   
-    
-}
-
-FindecoSyschangeCtrl.$inject = ['$scope', 'Backend', 'User', 'TMP', 'Navigator'];
+});

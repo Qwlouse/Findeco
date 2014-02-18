@@ -1,70 +1,30 @@
 <div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
-    <help hid='ARG_Pro' htype=1></help>
-    <h2 class="argumentHeading" data-i18n="_argumentsPro_">Pro Arguments</h2>
+    <help hid='ARG' htype=1></help>
+    <h2 class="argumentHeading" data-i18n="_arguments_">Arguments</h2>
 
     <div style="clear: both"></div>
 
-    <div ng-show="(argumentList | filter: {argType:'pro'}).length < 1" class="tipp" style="text-align: center">
-        Es gibt zur Zeit keine<br/>Pro-Argumente
+    <div ng-show="argumentList.length < 1" class="tipp" style="text-align: center">
+        Es gibt noch keine<br/>Argumente
     </div>
 
     <ul class="argumentList">
-        <li ng-repeat="argument in argumentList | filter: {argType:'pro'}">
-                <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
-                      style="float:none; top: 0;"></span>
-            <a href="/{{ argument.path }}">{{ argument.fullTitle }}</a>
+        <li ng-repeat="argument in argumentList" id="argument{{ argument.index }}">
+            <span class="argumentIcon argument_{{ argument.argType }}"></span>
+            <a href="/{{ argument.path }}" class="argumentHeading">
+                {{ argument.fullTitle }}
+            </a>
+            <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
+                  style="float:none; top: 0;"></span>
+            <span class="followerCount">{{ argument.isFollowing }}</span>
+            <p creole wiki-text="argument.wikiText"></p>
+            <a ng-show="argument.index != fullyShow && argument.text.length > 140"
+               ng-click="updateArgumentsWikiText(argument.index)" class="moreLink">... mehr</a>
         </li>
 
         <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/create/argumentPro/{{ nav.nodePath }}"
-               ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNewPro_"></a>
-        </li>
-    </ul>
-
-    <help hid='ARG_Neut' htype=1></help>
-    <h2 class="argumentHeading" data-i18n="_argumentsNeut_">Neut Arguments</h2>
-
-    <div style="clear: both"></div>
-
-    <div ng-show="(argumentList | filter: {argType:'neut'}).length < 1" class="tipp" style="text-align: center">
-        Es gibt zur Zeit keine<br/>Neutralen Argumente
-    </div>
-
-    <ul class="argumentList">
-        <li ng-repeat="argument in argumentList | filter: {argType:'neut'}">
-                <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
-                      style="float:none; top: 0;"></span>
-            <a href="/{{ argument.path }}">{{ argument.fullTitle }}</a>
-        </li>
-
-        <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/create/argumentNeut/{{ nav.nodePath }}"
-               ng-click="tmp.argumentType = 'Neutral'" data-i18n="_argumentsNewNeut_"></a>
-        </li>
-    </ul>
-
-    <help hid='ARG_Con' htype=1></help>
-    <h2 class="argumentHeading" data-i18n="_argumentsCon_">Con Arguments</h2>
-
-    <div style="clear: both"></div>
-
-    <div ng-show="(argumentList | filter: {argType:'con'}).length < 1" class="tipp" style="text-align: center">
-        Es gibt zur Zeit keine<br/>Contra-Argumente
-    </div>
-
-    <ul class="argumentList">
-        <li ng-repeat="argument in argumentList | filter: {argType:'con'}">
-                <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
-                      style="float:none; top: 0;"></span>
-
-
-            <a href="/{{ argument.path }}">{{ argument.fullTitle }}</a>
-        </li>
-
-        <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/create/argumentCon/{{ nav.nodePath }}"
-               ng-click="tmp.argumentType = 'Contra'" data-i18n="_argumentsNewCon_"></a>
-
+            <a class="btn btn-primary" href="/create/argument/{{ nav.nodePath }}"
+               ng-click="tmp.argumentType = 'Neut'" data-i18n="_argumentsNew_"></a>
         </li>
     </ul>
 

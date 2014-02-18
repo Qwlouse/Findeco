@@ -34,7 +34,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.core.mail import send_mail
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -57,6 +57,11 @@ from node_storage.factory import create_user
 @ensure_csrf_cookie
 def home(request, path=""):
     with open(project_path("static/index.html"), 'r') as index_html_file:
+        return HttpResponse(index_html_file.read(), mimetype='text/html')
+
+
+def jasmine(request, path=""):
+    with open(project_path("static/jasmine.html"), 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), mimetype='text/html')
 
 
@@ -132,7 +137,7 @@ def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     node = assert_node_for_path(prefix)
     data = [create_index_node_for_argument(a, request.user.id) for a in
-            node.arguments.order_by('index')]
+            node.arguments.annotate(num_follows=Count('votes')).order_by('-num_follows')]
     return json_response({'loadArgumentIndexResponse': data})
 
 
@@ -578,7 +583,7 @@ def account_reset_request_by_mail(request):
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
-        return json_response({'accountResetRequestByNameResponse': {}})
+        return json_response({'accountResetRequestByMailResponse': {}})
     except SMTPException:
         recovery.delete()
         raise

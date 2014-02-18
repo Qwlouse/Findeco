@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,33 +23,22 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoUserInfoCtrl($scope, Backend, $routeParams, User) {
+findecoApp.controller('FindecoUserInfoCtrl', function ($scope, $routeParams, Backend, User) {
     $scope.user = User;
-    var name = $routeParams.name.replace(/\//, '');
+
     $scope.displayUser = {
-        name: name,
-        path: name,
+        name: $routeParams.name.replace(/\//, ''),
+        path: $routeParams.name.replace(/\//, ''),
         exists: false,
-        isFollowing: User.follows(name)
+        description: '',
+        isFollowing: 0
     };
 
-    $scope.followUser = User.markUser;
-
-    $scope.loadUserInfo = function () {
-        $scope.userExists = false;
-        Backend.loadUserInfo(name).success(function (data) {
-            $scope.displayUser.exists = true;
-            $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
-            $scope.displayUser.isFollowing = User.follows(name);
-        }).error(function () {
-            $scope.displayUser.exists = false;
-            $scope.displayUser.name = 'User "' + name + '" existiert nicht.';
-        });
-    };
-
-    $scope.loadUserInfo();
-}
-
-FindecoUserInfoCtrl.$inject = ['$scope', 'Backend', '$routeParams', 'User'];
+    Backend.loadUserInfo($scope.displayUser.name).success(function (data) {
+        $scope.displayUser.exists = true;
+        $scope.displayUser.name = data.loadUserInfoResponse.userInfo.displayName;
+        $scope.displayUser.description = data.loadUserInfoResponse.userInfo.description;
+        $scope.displayUser.isFollowing = User.isFollowing($scope.displayUser.name);
+    });
+});

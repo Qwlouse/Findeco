@@ -45,33 +45,8 @@
         "description": ""
     },
     {
-        "key"        : "_argumentsPro_",
-        "value"      : "Pro-Argumente",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsNeut_",
-        "value"      : "Neutrale Argumente",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsCon_",
-        "value"      : "Contra-Argumente",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsNewPro_",
-        "value"      : "Neues Pro-Argument",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsNewNeut_",
-        "value"      : "Neues Neutrales Argument",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsNewCon_",
-        "value"      : "Neues Contra-Argument",
+        "key"        : "_arguments_",
+        "value"      : "Argumente",
         "description": ""
     },
     {
@@ -768,5 +743,10 @@
         "key"        : "_changeEmailRequested_",
         "value"      : "Die Änderung der E-Mail Adresse wurde bereits angefordert und eine Bestätigungemail an die neue Adresse versandt. Die Änderung wird wirksam, wenn der Bestätigungslink in der Mail geklickt wird.",
         "description": ""
+    },
+    {
+        "key"        : "_userDoesNotExist",
+        "value"      : "Der Benutzer '{0}' existiert nicht!",
+        "description": "wird im partial user.html benutzt"
     }
 ]

@@ -26,7 +26,6 @@
 ul.argumentList {
     font-size: 10pt;
     list-style: none;
-    color: #999999;
     padding: 5px 0 5px 0;
     margin: 0 0 10px 0;
 }
@@ -38,16 +37,44 @@ ul.argumentList li a.btn {
 }
 
 ul.argumentList li {
-    margin-bottom: 0.3em;
+    margin-bottom: 1.2em;
 }
 
 .argumentHeading {
     font-family: "Monda" sans-serif;
     font-size: 16px;
     font-weight: bolder;
-    color: gray;
-
 }
+
+.moreLink {
+    cursor: pointer;
+}
+
+.followerCount {
+    font-weight: bold;
+    color: #c2c2c2;
+}
+
+.argumentIcon {
+    width: 23px;
+    height: 16px;
+    background: url("../images/ArgumentTypeIconSet.png") no-repeat;
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+.argument_pro {
+    background-position: 0 0;
+}
+
+.argument_neut {
+    background-position: -23px 0;
+}
+
+.argument_con {
+    background-position: -46px 0;
+}
+
 ul.newsList {
     font-size: 10pt;
     list-style: none;

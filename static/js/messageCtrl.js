@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,14 +23,11 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoMessageCtrl($scope, Backend, Message) {
+findecoApp.controller('FindecoMessageCtrl', function ($scope, Message) {
     $scope.service = Message;
 
     $scope.closeMessage = function (index) {
         $scope.service.messageList.splice(index, 1);
     };
-}
-
-FindecoMessageCtrl.$inject = ['$scope', 'Backend', 'Message'];
+});

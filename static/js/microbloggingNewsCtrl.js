@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,9 +23,8 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
+findecoApp.controller('FindecoMicrobloggingNewsCtrl', function ($scope, $location, Backend, User) {
     $scope.timelineList = [];
     $scope.mentionsList = [];
     $scope.ownPostsList = [];
@@ -37,7 +36,7 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
         for (var i = 0; i < list.length; ++i ) {
             var blog = list[i];
             blog.author = blog.authorGroup[0];
-            blog.author.isFollowing = User.follows(blog.author.displayName);
+            blog.author.isFollowing = User.isFollowing(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
     }
@@ -48,8 +47,8 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
         setAuthorForAllBlogs($scope.ownPostsList);
     });
 
-    $scope.followUser = function (path, type) {
-        return User.markUser(path, type);
+    $scope.followUser = function (type, path) {
+        return User.markUser(type, path);
     };
 
     $scope.updateTimeline = function (oldType, oldID) {
@@ -141,40 +140,35 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
         if ($location.path()=="/microblogging") {
                  window.setTimeout(function () {
                     $scope.UpdateIntervallTimeline();
-                    $scope.updateTimeline()
+                    $scope.updateTimeline();
                     $scope.isLoadingTimeline=false;
                 }, Math.floor((Math.random() * 10000) + 10000) );
 
         }
-    }
-    $scope.UpdateIntervallTimeline()
+    };
+    $scope.UpdateIntervallTimeline();
     $scope.UpdateIntervallMentions = function () {
         if ($location.path() == "/microblogging") {
             window.setTimeout(function () {
                 $scope.UpdateIntervallMentions();
-                $scope.updateMentions()
+                $scope.updateMentions();
                 $scope.isLoadingMentions = false;
             }, Math.floor((Math.random() * 10000) + 10000));
         }
-    }
+    };
 
-    $scope.UpdateIntervallMentions()
+    $scope.UpdateIntervallMentions();
     $scope.UpdateIntervallOwnPosts = function () {
         if ($location.path() == "/microblogging") {
             window.setTimeout(function () {
                 $scope.UpdateIntervallOwnPosts();
-                $scope.updateOwnPosts()
+                $scope.updateOwnPosts();
                 $scope.isLoadingOwnPosts = false;
             }, Math.floor((Math.random() * 10000) + 10000));
         }
-    }
-    $scope.UpdateIntervallOwnPosts()
+    };
+    $scope.UpdateIntervallOwnPosts();
 
-
-
-
-
-    ;
     $scope.isLoading = function (col){
     	if (col =="timeline"){
     		return $scope.isLoadingTimeline;	
@@ -185,7 +179,6 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
         if (col =="own"){
     		return $scope.isLoadingOwnPosts;
     	}
-    	
     	return false;
     };
 
@@ -194,6 +187,4 @@ function FindecoMicrobloggingNewsCtrl($scope, Backend, User, $location) {
     }).blur(function(){
         $(this).animate({height:'1.4em'});
     });
-}
-
-FindecoMicrobloggingNewsCtrl.$inject = ['$scope', 'Backend', 'User','$location'];
+});

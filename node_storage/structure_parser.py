@@ -75,14 +75,10 @@ def turn_into_valid_short_title(title, short_title_set=(), max_length=20):
     st = strip_accents(st)
     st = remove_unallowed_chars(st)
     st = remove_and_compress_whitespaces(st)
+    st = st.lstrip('1234567890-_')
     st = st[:min(len(st), max_length)]
     if not st:
-        i = 0
-        while True:
-            i += 1
-            new_st = str(i)
-            if new_st not in short_title_set:
-                return new_st
+        st = 'sub'
     if st not in short_title_set:
         return st
     else:

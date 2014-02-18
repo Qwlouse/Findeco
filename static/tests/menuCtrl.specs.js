@@ -15,61 +15,49 @@
  * You should have received a copy of the GNU General Public License along with         *
  * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
  ****************************************************************************************/
-
 /****************************************************************************************
  * This Source Code Form is subject to the terms of the Mozilla Public                  *
  * License, v. 2.0. If a copy of the MPL was not distributed with this                  *
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-'use strict';
+describe('FindecoMenuCtrl', function(){
+    var scope = {};
+    var ctrl = null;
 
-findecoApp.controller('FindecoDiffCtrl', function ($scope, Backend, Navigator) {
+    beforeEach(angular.mock.module('Findeco'));
 
-    $scope.nav = Navigator;
-    $scope.path1 = Navigator.nodePath;
-    $scope.path2 = Navigator.segments.compare;
-    $scope.text1Loaded = false;
-    $scope.text2Loaded = false;
-    $scope.diffIsLoading = true;
-    $scope.changes = [];
-    if (!$scope.path2) {
-        Navigator.changePath('/')
-
-    }
-    var difftool = new diff_match_patch();
-    difftool.Diff_Timeout = 20.0;
-
-    $scope.loadTexts = function (path1, path2) {
-        $scope.text1 = "";
-        $scope.text2 = "";
-        var text1Paragraphs = [];
-        Backend.loadText(text1Paragraphs, path1).success(function (d) {
-            $scope.text1Loaded = true;
-            for (var i = 0; i < text1Paragraphs.length; i++) {
-                $scope.text1 += text1Paragraphs[i].wikiText + "\n\n";
-            }
-            $scope.createDiff();
+    beforeEach(angular.mock.inject(function ($rootScope, $controller) {
+        scope = $rootScope.$new();
+        ctrl = $controller('FindecoMenuCtrl', {
+            $scope: scope,
+            Fesettings: {}
         });
-        var text2Paragraphs = [];
-        Backend.loadText(text2Paragraphs, path2).success(function (d) {
-            $scope.text2Loaded = true;
-            for (var i = 0; i < text2Paragraphs.length; i++) {
-                $scope.text2 += text2Paragraphs[i].wikiText + "\n\n";
-            }
-            $scope.createDiff();
-        });
-    };
+    }));
 
-    $scope.createDiff = function () {
-        if ($scope.text1Loaded && $scope.text2Loaded) {
-            $scope.changes = difftool.diff_main($scope.text1, $scope.text2);
-            difftool.diff_cleanupSemantic($scope.changes);
-            $scope.diffIsLoading =false;
-        }
-    };
-    $scope.isLoading = function (){
-    	return $scope.diffIsLoading;
-    };
-    $scope.loadTexts($scope.path1, $scope.path2);
+    it('should be registered', inject(function ($rootScope, $injector) {
+        expect(ctrl).not.toBe(null);
+        expect(scope.user).not.toBe(null);
+        expect(scope.fesettings).not.toBe(null);
+    }));
+
+    it('should have a getActiveClass function', inject(function () {
+        expect(angular.isFunction(scope.getActiveClass)).toBe(true);
+    }));
+
+    describe('Logout', function (){
+        it('should have a logout function', inject(function () {
+            expect(angular.isFunction(scope.logout)).toBe(true);
+        }));
+
+        it('expect logout function to be called', inject(function () {
+            spyOn(scope, 'logout');
+            scope.logout();
+            expect(scope.logout).toHaveBeenCalled();
+        }));
+    });
+
+    it('should have a searchSubmit function', inject(function(){
+        expect(angular.isFunction(scope.searchSubmit)).toBe(true);
+    }));
 });

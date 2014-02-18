@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -24,10 +24,9 @@
 
 'use strict';
 
-function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Navigator) {
+findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, User ) {
     $scope.user = User;
     $scope.displayNameTmp = User.displayName;
-    $scope.followUser = User.markUser;
 
     // used for login and registration
     $scope.username = "";
@@ -39,12 +38,6 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
 
     $scope.login = function () {
         User.login($scope.username, $scope.password).success(function () {
-            Navigator.changePath('/');
-        });
-    };
-
-    $scope.logout = function () {
-        User.logout().success(function () {
             Navigator.changePath('/');
         });
     };
@@ -77,7 +70,7 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
     };
 
     $scope.storeUserSettings = function () {
-        $scope.user.displayName = $scope.displayNameTmp;
+        User.displayName = $scope.displayNameTmp;
         User.storeSettings().error(User.loadSettings).success(function () {
             Message.send("success", "_settingsChanged_");
         });
@@ -119,7 +112,7 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
     };
 
     $scope.$on('$locationChangeStart', function(event) {
-        if (!event.defaultPrevented && $scope.user.isChanged()) {
+        if (!event.defaultPrevented && $scope.user.hasUnsavedChanges()) {
             var r = window.confirm("Du hast Dinge geändert, aber noch nicht gespeichert\n Wenn du die Seite verlässt gehen dese verloren.\n Verlassen?");
             if (r) {
                 $scope.user.resetChanges();
@@ -128,4 +121,4 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
             }
         }
     });
-}
+});

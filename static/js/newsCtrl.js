@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,9 +23,8 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoNewsCtrl($scope, Backend, User, $location) {
+findecoApp.controller('FindecoNewsCtrl', function ($scope, $location, Backend, User) {
     $scope.allNodesList = [];
     $scope.followedNodesList = [];
     $scope.ownNodesList = [];
@@ -38,13 +37,13 @@ function FindecoNewsCtrl($scope, Backend, User, $location) {
         for (var i = 0; i < list.length; ++i ) {
             var blog = list[i];
             blog.author = blog.authorGroup[0];
-            blog.author.isFollowing = User.follows(blog.author.displayName);
+            blog.author.isFollowing = User.isFollowing(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
     }
 
-    $scope.followUser = function (path, type) {
-        return User.markUser(path, type).success(function() {
+    $scope.followUser = function (type, path) {
+        return User.markUser(type, path).success(function() {
             setAuthorForAllBlogs($scope.allNodesList);
             setAuthorForAllBlogs($scope.followedNodesList);
             setAuthorForAllBlogs($scope.ownNodesList);
@@ -136,32 +135,32 @@ function FindecoNewsCtrl($scope, Backend, User, $location) {
         if ($location.path() == "/news") {
             window.setTimeout(function () {
                 $scope.UpdateIntervallAllNodes();
-                $scope.updateAllNodes()
+                $scope.updateAllNodes();
                 $scope.isLoadingNewsForAllNodes = false;
             }, Math.floor((Math.random() * 10000) + 10000));
         }
-    }
-    $scope.UpdateIntervallAllNodes()
+    };
+    $scope.UpdateIntervallAllNodes();
     $scope.UpdateIntervallFollowedNodes = function () {
         if ($location.path() == "/news") {
             window.setTimeout(function () {
                 $scope.UpdateIntervallFollowedNodes();
-                $scope.updateFollowedNodes()
+                $scope.updateFollowedNodes();
                 $scope.isLoadingNewsForFollowedNodes = false;
             }, Math.floor((Math.random() * 10000) + 10000));
         }
-    }
-    $scope.UpdateIntervallFollowedNodes()
+    };
+    $scope.UpdateIntervallFollowedNodes();
     $scope.UpdateIntervallOwnNodes = function () {
         if ($location.path() == "/news") {
             window.setTimeout(function () {
                 $scope.UpdateIntervallOwnNodes();
-                $scope.updateOwnNodes()
+                $scope.updateOwnNodes();
                 $scope.isLoadingNewsForOwnNodes = false;
             }, Math.floor((Math.random() * 10000) + 10000));
         }
-    }
-    $scope.UpdateIntervallOwnNodes()
+    };
+    $scope.UpdateIntervallOwnNodes();
     $scope.isLoading = function (col){
     	if (col =="timeline"){
     		return $scope.isLoadingNewsForAllNodes;
@@ -175,6 +174,4 @@ function FindecoNewsCtrl($scope, Backend, User, $location) {
     	
     	return false;
     }
-}
-
-FindecoNewsCtrl.$inject = ['$scope', 'Backend', 'User', '$location'];
+});

@@ -15,61 +15,33 @@
  * You should have received a copy of the GNU General Public License along with         *
  * Findeco. If not, see <http://www.gnu.org/licenses/>.                                 *
  ****************************************************************************************/
-
 /****************************************************************************************
  * This Source Code Form is subject to the terms of the Mozilla Public                  *
  * License, v. 2.0. If a copy of the MPL was not distributed with this                  *
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-'use strict';
+function PromiseMock() {
+    this.success_func = null;
+    this.error_func = null;
 
-findecoApp.controller('FindecoDiffCtrl', function ($scope, Backend, Navigator) {
-
-    $scope.nav = Navigator;
-    $scope.path1 = Navigator.nodePath;
-    $scope.path2 = Navigator.segments.compare;
-    $scope.text1Loaded = false;
-    $scope.text2Loaded = false;
-    $scope.diffIsLoading = true;
-    $scope.changes = [];
-    if (!$scope.path2) {
-        Navigator.changePath('/')
-
-    }
-    var difftool = new diff_match_patch();
-    difftool.Diff_Timeout = 20.0;
-
-    $scope.loadTexts = function (path1, path2) {
-        $scope.text1 = "";
-        $scope.text2 = "";
-        var text1Paragraphs = [];
-        Backend.loadText(text1Paragraphs, path1).success(function (d) {
-            $scope.text1Loaded = true;
-            for (var i = 0; i < text1Paragraphs.length; i++) {
-                $scope.text1 += text1Paragraphs[i].wikiText + "\n\n";
-            }
-            $scope.createDiff();
-        });
-        var text2Paragraphs = [];
-        Backend.loadText(text2Paragraphs, path2).success(function (d) {
-            $scope.text2Loaded = true;
-            for (var i = 0; i < text2Paragraphs.length; i++) {
-                $scope.text2 += text2Paragraphs[i].wikiText + "\n\n";
-            }
-            $scope.createDiff();
-        });
+    this.success = function (f) {
+            this.success_func = f;
+            return this;
     };
 
-    $scope.createDiff = function () {
-        if ($scope.text1Loaded && $scope.text2Loaded) {
-            $scope.changes = difftool.diff_main($scope.text1, $scope.text2);
-            difftool.diff_cleanupSemantic($scope.changes);
-            $scope.diffIsLoading =false;
-        }
+    this.error = function (f) {
+            this.error_func = f;
+            return this;
     };
-    $scope.isLoading = function (){
-    	return $scope.diffIsLoading;
+
+    this.then = function (f, g, h) {
+            this.success_func = f;
+            this.error_func = g;
+            return this;
     };
-    $scope.loadTexts($scope.path1, $scope.path2);
-});
+
+    this.catch = function (f) {return this;};
+
+    this.finally = function (f) {return this;};
+}

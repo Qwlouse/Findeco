@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014  Klaus Greff, Maik Nauheim, Johannes Merkert                      *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,12 +23,12 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigator) {
+findecoApp.controller('FindecoCreateCtrl', function ($scope, $routeParams, Backend, Message, Navigator, TMP) {
     $scope.settings = {
         type: $routeParams.type
     };
+
     $scope.radioModel = '';
     $scope.initialAlternative = '';
 
@@ -53,6 +53,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
 
         return true;
     };
+
     $scope.getButtonState = function () {
         if ($scope.blockButton == true) {
             return "btn btn-primary active";
@@ -60,6 +61,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
             return "btn btn-primary inActive";
         }
     };
+
     $scope.getFormLockState = function () {
         return $scope.blockButton;
     };
@@ -94,9 +96,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
         var params = {};
         var test = false;
         switch ($scope.settings.type) {
-            case 'argumentPro':
-            case 'argumentNeut':
-            case 'argumentCon':
+            case 'argument':
                 test = $scope.checkWikiCompatibility($scope.tmp.text);
                 if (test != true) {
                     Message.send('error', '_argumentText' + test + '_');
@@ -104,7 +104,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 }
                 // Past watchdog
 
-                params['argumentType'] = $scope.settings.type.toLowerCase().substr(8);
+                params['argumentType'] = $scope.tmp.argumentType;
                 params['wikiText'] = $scope.tmp.text;
                 break;
             case 'topic':
@@ -168,7 +168,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 $scope.blockButton = false;
 
             })
-            .error(function (data) {
+            .error(function () {
                 $scope.blockButton = false;
             });
     };
@@ -203,6 +203,8 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
             $scope.initialAlternative = wikiText;
         });
     }
-}
 
-FindecoCreateCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'TMP', 'Message', 'Navigator'];
+    if ($scope.settings.type == 'argument') {
+        $scope.tmp.argumentType = 'neut';
+    }
+});

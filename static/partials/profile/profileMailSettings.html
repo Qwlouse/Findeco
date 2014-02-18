@@ -1,6 +1,6 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
     <div class="contentBox profileLeftWideColumn" ng-show="user.isLoggedIn">
-        <div ng-include src="'/static/partials/profileMenu.html'"></div>
+        <div ng-include src="'/static/partials/profile/profileMenu.html'"></div>
 
 
     </div>
@@ -27,7 +27,7 @@
         <form ng-submit="storeUserSettings()">
             <input type="checkbox"
                    id="wantsEMail"
-                   ng-model="user.wantsEMail"
+                   ng-model="user.wantsMailNotification"
                    ng-change="storeUserSettings()" />
             <label for="wantsEMail" data-i18n="_wantEMailLabel_">
                 Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.
