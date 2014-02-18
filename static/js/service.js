@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -22,29 +22,7 @@
  ****************************************************************************************/
 
 'use strict';
-/**
- *  Backend wraps the the JSON API to the backend.
- *  It provides easy to use functions like logout() or
- *  loadText(paragraphList, path).
- *
- *  Those functions return a $http promise object, on which you can add
- *  callbacks for success and failure like this:
- *
- *  Backend.logout().success( function (data, status, headers, config) {
- *      alert("goodbye");
- *  }).error( function (data, status, headers, config) {
- *      alert("logout failed");
- *  });
- *
- *  Those get called once the request finished.
- *
- *  When there is data to be returned, the first parameter to the function
- *  (typically suffixed with _out) is the object/array the function writes its
- *  results to.
- *
- *  This service is stateless.
- *
- **/
+
 angular.module('FindecoServices', [])
     .config(function ($httpProvider) {
         // This tells the httpProvider to not send JSON in POST requests but
@@ -141,7 +119,6 @@ angular.module('FindecoServices', [])
             setID           : function (x) {
                 help.id = x;
                 help.loadResourceFile();
-                var result = '';
                 if ((help.data !== []) && (help.data.length > 0)) {
                     var i = 0, len = help.data.length;
                     for (; i < len; i++) {
