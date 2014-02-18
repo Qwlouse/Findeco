@@ -38,10 +38,10 @@ var findecoApp = angular.module(
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
             when('/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: 'FindecoCreateCtrl'}).
-            when('/about', {templateUrl: '/static/partials/about.html', controller: FindecoCustomContentCtrl}).
+            when('/about', {templateUrl: '/static/partials/about.html', controller: 'FindecoCustomContentCtrl'}).
             when('/diff/:param*', {templateUrl: '/static/partials/diff.html', controller: FindecoDiffCtrl}).
-            when('/data_privacy', {templateUrl: '/static/partials/dataPrivacy.html', controller: FindecoCustomContentCtrl}).
-            when('/imprint', {templateUrl: '/static/partials/imprint.html', controller: FindecoCustomContentCtrl}).
+            when('/data_privacy', {templateUrl: '/static/partials/dataPrivacy.html', controller: 'FindecoCustomContentCtrl'}).
+            when('/imprint', {templateUrl: '/static/partials/imprint.html', controller: 'FindecoCustomContentCtrl'}).
             when('/user/:name*', {templateUrl: '/static/partials/user.html', controller: 'FindecoUserInfoCtrl'}).
             when('/login', {templateUrl: '/static/partials/userLogin.html', controller: 'FindecoUserCtrl'}).
             when('/register', {templateUrl: '/static/partials/userRegistration.html', controller: 'FindecoUserCtrl'}).
@@ -50,7 +50,7 @@ var findecoApp = angular.module(
             when('/confirm/:param*', {templateUrl: '/static/partials/activate.html', controller: 'FindecoConfirmationCtrl'}).
             when('/recoverByMail', {templateUrl: '/static/partials/userRecoverByMail.html', controller: 'FindecoUserCtrl'}).
             when('/recoverByUsername', {templateUrl: '/static/partials/userRecoverByUsername.html', controller: 'FindecoUserCtrl'}).
-            when('/terms_of_use', {templateUrl: '/static/partials/termsOfUse.html', controller: FindecoCustomContentCtrl}).
+            when('/terms_of_use', {templateUrl: '/static/partials/termsOfUse.html', controller: 'FindecoCustomContentCtrl'}).
             when('/profile', {templateUrl: '/static/partials/profile/profile.html', controller: 'FindecoUserCtrl'}).
             when('/profile/account', {templateUrl: '/static/partials/profile/profile.html', controller: 'FindecoUserCtrl'}).
             when('/profile/password', {templateUrl: '/static/partials/profile/profilePassword.html', controller: 'FindecoUserCtrl'}).

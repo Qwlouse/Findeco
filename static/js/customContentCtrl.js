@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -22,14 +22,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-
 'use strict';
 
-function FindecoCustomContentCtrl($scope, $http, Navigator) {
+findecoApp.controller('FindecoCustomContentCtrl', function ($scope, $http, Navigator) {
     $scope.content = undefined;
     $scope.path = '/static/customContent/' + Navigator.prefix + '.html';
 
     $http.get($scope.path).success(function (d) {
         $scope.content = d;
     });
-}
+});
