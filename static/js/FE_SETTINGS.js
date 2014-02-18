@@ -53,7 +53,7 @@ findecoApp.constant('Boxes',{
     4:{
        title:'Systemnews',
        content:'',
-       link:'fool2',
+       link:'',
        special:'news'
     },
     5:{

@@ -121,9 +121,11 @@ class StructureParserTest(TestCase):
              "viiiiiieeeeeel_zuu10"),
             ("viel )()()(()()( zu {}{}{}{ lang", "viel_zu_lang",
              ["viel_zu_lang"], "viel_zu_lang1"),
-            ("", "1", ["1", "2", "3"], "4"),
+            ("", "sub", ["sub", "sub1", "sub2"], "sub3"),
             ("N0body is as L€€+.a$.m3", "N0body_is_as_Lam3",
-             ["N0body_is_as_Lam3"], "N0body_is_as_Lam31")
+             ["N0body_is_as_Lam3"], "N0body_is_as_Lam31"),
+            ("5 startswithnumber", "startswithnumber",
+             ["startswithnumber"], "startswithnumber1")
         ]
         for t, st, _, _ in titles:
             self.assertEqual(turn_into_valid_short_title(t), st)

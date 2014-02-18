@@ -30,7 +30,7 @@ import json
 import functools
 import re
 
-from django.contrib.auth.models import Permission, User
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.http import HttpResponse
@@ -44,6 +44,7 @@ from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
 from node_storage.structure_parser import turn_into_valid_short_title
+from findeco.models import EmailActivation
 
 from .api_validation import USERNAME
 from .api_validation import validate_response
@@ -165,6 +166,7 @@ def create_user_settings(user):
         userRights=rights,
         rsskey=user.profile.api_key,
         email=user.email,
+        emailChangeRequested=EmailActivation.objects.filter(user=user).count(),
         wantsMailNotification=user.profile.wants_mail_notification
     )
     return user_settings
@@ -360,11 +362,6 @@ def fork_node_and_add_slot(path, user, wiki_text):
     follow_node(fork, user.id)
     follow_node(node, user.id)
     return fork_path
-
-
-def get_permission(name):
-    a, _, n = name.partition('.')
-    return Permission.objects.get(content_type__app_label=a, codename=n)
 
 
 def get_is_following(user_id, node):

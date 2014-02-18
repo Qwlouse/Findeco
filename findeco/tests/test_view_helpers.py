@@ -40,6 +40,7 @@ from ..view_helpers import create_index_node_for_argument, create_user_info
 from ..view_helpers import create_graph_data_node_for_structure_node
 from ..view_helpers import store_structure_node, store_argument, store_derivate
 from ..view_helpers import check_username_sanity
+from ..models import EmailActivation
 
 
 class CreateUsersInfoTest(TestCase):
@@ -138,6 +139,15 @@ class CreateUserSettingsTest(TestCase):
         followees = user_settings['followees']
         self.assertEqual(len(followees), 1)
         self.assertIn({'displayName': 'hans'}, followees)
+
+    def test_contains_correct_email_change_request_count(self):
+        change = EmailActivation()
+        change.user = self.hugo
+        change.save()
+        user_settings = create_user_settings(self.hugo)
+        self.assertEqual(user_settings['emailChangeRequested'], 1)
+        user_settings = create_user_settings(self.hein)
+        self.assertEqual(user_settings['emailChangeRequested'], 0)
 
 
 class CreateIndexNodeForSlotTest(TestCase):

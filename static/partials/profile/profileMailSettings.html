@@ -9,6 +9,13 @@
 
         <p><span data-i18n="_currentAdress_">aktuelle Adresse</span>: {{ user.email }}</p>
 
+        <p ng-show="user.emailChangeRequested" data-i18n="_changeEmailRequested_">
+            Die Änderung der E-Mail Adresse wurde bereits angefordert
+            und eine Bestätigungemail an die neue Adresse versandt.
+            Die Änderung wird wirksam, wenn der Bestätigungslink in
+            der Mail geklickt wird.
+        </p>
+
         <p data-i18n="_changeEMailDescription_"></p>
 
         <form ng-submit="storeUserSettings()">

@@ -67,4 +67,4 @@ var findecoApp = angular.module(
             otherwise({templateUrl: '/static/partials/default.html', controller: 'FindecoDefaultCtrl'});
     }]);
 
-findecoApp.constant('Version','0.3.0-alpha');
+findecoApp.constant('Version','0.4.0-alpha');

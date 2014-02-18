@@ -4,7 +4,7 @@
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
-# Copyright (c) 2013 Michael Zaspel <michaelzaspel@web.de.de>
+# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -25,28 +25,30 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #endregion #####################################################################
-from django.test import LiveServerTestCase
-from nose.plugins.attrib import attr
-from test_helper import helper_login_admin
-from selenium import webdriver
-import time
-@attr('selenium')
-class TestFeLocalization(LiveServerTestCase):
-    def setUp(self):
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(1)
 
-    def tearDown(self):
-        self.driver.quit()
+from __future__ import division, print_function, unicode_literals
 
-    def test_profile_localizations(self):
-        """
-        Checks all listed Pages for missing localization strings.
-        @param self:
-        """
-        helper_login_admin(self)
-        time.sleep(1)
-        self.driver.get(self.live_server_url + '/profile')
-        self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization on profile not done")
-        self.driver.get(self.live_server_url + '/profile/password')
-        self.assertNotIn('_', self.driver.find_element_by_tag_name('body').text, "Localization on profile password not done")
+from django.core.management import BaseCommand
+from node_storage.path_helpers import get_node_for_path
+from node_storage.tools import delete_node
+
+
+class Command(BaseCommand):
+    args = '<NodePath>'
+    help = 'Delete a node and all children, votes, posts, derivates, ' \
+           'cache entries, arguments, and empty parents associated with it. '\
+           'BE CAREFUL: This operation cannot be undone! Backup your Database!'
+
+    def handle(self, *args, **options):
+        if len(args) < 1:
+            print("You have to provide a <NodePath>.")
+
+        if len(args) > 1:
+            print("Please provide exactly one argument!")
+
+        node_path = args[0]
+
+        node = get_node_for_path(node_path)
+        assert node, "Node for path '%s' does not exist." % node_path
+
+        delete_node(node)

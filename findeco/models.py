@@ -42,7 +42,6 @@ from django.db.models import signals
 
 from findeco.settings import ACTIVATION_KEY_VALID_FOR, ADMIN_PASS
 from findeco.settings import RECOVERY_KEY_VALID_FOR
-from .view_helpers import get_permission
 import microblogging.models as microblogging_models
 import node_storage.models as node_storage_models
 from node_storage import Node, Text
@@ -300,6 +299,11 @@ def create_anonymous_user():
         User.objects.create(username='anonymous')
     else:
         print('anonymous user already exists.')
+
+
+def get_permission(name):
+    a, _, n = name.partition('.')
+    return auth_models.Permission.objects.get(content_type__app_label=a, codename=n)
 
 
 def create_groups():

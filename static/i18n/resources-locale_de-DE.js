@@ -45,33 +45,8 @@
         "description": ""
     },
     {
-        "key"        : "_argumentsPro_",
-        "value"      : "Pro-Argumente",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsNeut_",
-        "value"      : "Neutrale Argumente",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsCon_",
-        "value"      : "Contra-Argumente",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsNewPro_",
-        "value"      : "Neues Pro-Argument",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsNewNeut_",
-        "value"      : "Neues Neutrales Argument",
-        "description": ""
-    },
-    {
-        "key"        : "_argumentsNewCon_",
-        "value"      : "Neues Contra-Argument",
+        "key"        : "_arguments_",
+        "value"      : "Argumente",
         "description": ""
     },
     {
@@ -610,6 +585,11 @@
         "description": ""
     },
     {
+        "key"        : "_createHeadingNotChanged_",
+        "value"      : "Die Überschrift des Arguments wurde nicht geändert. Die Weiterentwicklung kann erst gespeichert werden, wenn ein Argument mit Überschrift eingegeben wurde. ",
+        "description": ""
+    },
+    {
         "key"        : "_alternativeNotChanged_",
         "value"      : "Der Alternativtext wurde nicht geändert und kann daher nicht gespeichert werden.",
         "description": ""
@@ -757,6 +737,11 @@
     {
         "key"        : "_wantEMailLabel_",
         "value"      : "Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.",
+        "description": ""
+    },
+    {
+        "key"        : "_changeEmailRequested_",
+        "value"      : "Die Änderung der E-Mail Adresse wurde bereits angefordert und eine Bestätigungemail an die neue Adresse versandt. Die Änderung wird wirksam, wenn der Bestätigungslink in der Mail geklickt wird.",
         "description": ""
     },
     {
