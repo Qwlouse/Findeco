@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,9 +23,8 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
+findecoApp.controller('FindecoArgumentCtrl', function ($scope, Backend,  Navigator, TMP, User) {
     $scope.nav = Navigator;
     $scope.tmp = TMP;
     $scope.user = User;
@@ -35,8 +34,8 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
     $scope.argumentList = [];
     
     $scope.isLoading = function (){
-    	return $scope.argumentIsLoading ;
-    }
+    	return $scope.argumentIsLoading;
+    };
     
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
@@ -53,6 +52,5 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
     };
 
     $scope.updateArgumentList();
-}
+});
 
-FindecoArgumentCtrl.$inject = ['$scope', 'Backend', 'User', 'TMP', 'Navigator'];
