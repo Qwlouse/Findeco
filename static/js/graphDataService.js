@@ -24,6 +24,51 @@
 'use strict';
 angular.module('FindecoGraphDataService', [])
     .factory('GraphData', function ($http, $rootScope) {
-        var graphData = {};
+        var graphData = [];
+
+        graphData.nodesEqual = function (nodeA, nodeB) {
+            return nodeA.path == nodeB.path; // TODO: Use ID instead of path
+        };
+
+        graphData.updateNode = function (node, newNode) {
+            node.authorGroup = newNode.authorGroup;
+            node.follows     = newNode.follows;
+            node.spamFlags   = newNode.spamFlags;
+            node.unFollows   = newNode.unFollows;
+            node.newFollows  = newNode.newFollows;
+            node.title       = newNode.title;
+            node.originGroup = newNode.originGroup;
+            return node;
+        };
+
+        graphData.loadGraphData = function (path, graphType) {
+            if (graphType == undefined) {
+                graphType = "full";
+            }
+            var url = ['/.json_loadGraphData', graphType, path].join('/');
+            url = url.replace("//", "/");
+            var promise = $http.get(url);
+            promise.success(function (data) {
+                var loadedGraph = data.loadGraphDataResponse.graphDataChildren;
+                angular.forEach(graphData, function (node, index) {
+                    var nodeFound = false;
+                    angular.forEach(loadedGraph, function (loadedNode, loadedNodeIndex) {
+                        if (graphData.nodesEqual(node, loadedNode)) {
+                            loadedGraph.splice(loadedNodeIndex, 1);
+                            graphData.updateNode(node, loadedNode);
+                            nodeFound = true;
+                        }
+                    });
+                    if (!nodeFound) {
+                        graphData.splice(index, 1);
+                    }
+                });
+                angular.forEach(loadedGraph, function (loadedNode, loadedNodeIndex) {
+                    graphData.push(loadedNode);
+                });
+            });
+            return promise;
+        };
+
         return graphData;
     });
