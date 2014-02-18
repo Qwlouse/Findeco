@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2013 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,9 +23,8 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoDiffCtrl($scope, Backend, Navigator) {
+findecoApp.controller('FindecoDiffCtrl', function ($scope, Backend, Navigator) {
 
     $scope.nav = Navigator;
     $scope.path1 = Navigator.nodePath;
@@ -73,6 +72,4 @@ function FindecoDiffCtrl($scope, Backend, Navigator) {
     	return $scope.diffIsLoading;
     };
     $scope.loadTexts($scope.path1, $scope.path2);
-}
-
-FindecoDiffCtrl.$inject = ['$scope', 'Backend', 'Navigator'];
+});

@@ -39,7 +39,7 @@ var findecoApp = angular.module(
         $routeProvider.
             when('/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: 'FindecoCreateCtrl'}).
             when('/about', {templateUrl: '/static/partials/about.html', controller: 'FindecoCustomContentCtrl'}).
-            when('/diff/:param*', {templateUrl: '/static/partials/diff.html', controller: FindecoDiffCtrl}).
+            when('/diff/:param*', {templateUrl: '/static/partials/diff.html', controller: 'FindecoDiffCtrl'}).
             when('/data_privacy', {templateUrl: '/static/partials/dataPrivacy.html', controller: 'FindecoCustomContentCtrl'}).
             when('/imprint', {templateUrl: '/static/partials/imprint.html', controller: 'FindecoCustomContentCtrl'}).
             when('/user/:name*', {templateUrl: '/static/partials/user.html', controller: 'FindecoUserInfoCtrl'}).
