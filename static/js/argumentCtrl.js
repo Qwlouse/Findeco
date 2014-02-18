@@ -32,15 +32,43 @@ findecoApp.controller('FindecoArgumentCtrl', function ($scope, Backend,  Navigat
     $scope.markNode = Backend.markNode;
 
     $scope.argumentList = [];
+    $scope.fullyShow = -1;
     
     $scope.isLoading = function (){
     	return $scope.argumentIsLoading;
+    };
+
+    $scope.createArgumentSlug = function (text) {
+        var stringAddition = "";
+        if (text.length > 140) {
+            stringAddition = " ...";
+        }
+        return text.substr(0, 140) + stringAddition;
+    };
+
+    $scope.updateArgumentsWikiText = function (index) {
+        for (var i = 0; i < $scope.argumentList.length; i++) {
+            var arg = $scope.argumentList[i];
+            if (index != arg.index) {
+                arg.wikiText = $scope.createArgumentSlug(arg.text);
+            } else {
+                arg.wikiText = arg.text;
+                $scope.fullyShow = arg.index;
+            }
+        }
+        window.setTimeout(function () {
+            $(document.documentElement).animate(
+                {scrollTop: $('#argument' + index).offset().top},
+                'slow'
+            );
+        }, 0);
     };
     
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
             var arg = $scope.argumentList[i];
             arg.path = $scope.nav.getPathForArgument(arg.argType, arg.index);
+            arg.wikiText = $scope.createArgumentSlug(arg.text);
         }
         $scope.argumentIsLoading  = false;
     }

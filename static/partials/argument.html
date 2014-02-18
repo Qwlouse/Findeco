@@ -9,17 +9,22 @@
     </div>
 
     <ul class="argumentList">
-        <li ng-repeat="argument in argumentList">
+        <li ng-repeat="argument in argumentList" id="argument{{ argument.index }}">
             <span class="argumentIcon argument_{{ argument.argType }}"></span>
-            <a href="/{{ argument.path }}">{{ argument.fullTitle }}</a>
+            <a href="/{{ argument.path }}" class="argumentHeading">
+                {{ argument.fullTitle }}
+            </a>
             <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
                   style="float:none; top: 0;"></span>
             <span class="followerCount">{{ argument.isFollowing }}</span>
+            <p creole wiki-text="argument.wikiText"></p>
+            <a ng-show="argument.index != fullyShow && argument.text.length > 140"
+               ng-click="updateArgumentsWikiText(argument.index)" class="moreLink">... mehr</a>
         </li>
 
         <li ng-show="user.isLoggedIn">
             <a class="btn btn-primary" href="/create/argument/{{ nav.nodePath }}"
-               ng-click="tmp.argumentType = 'Pro'" data-i18n="_argumentsNew_"></a>
+               ng-click="tmp.argumentType = 'Neut'" data-i18n="_argumentsNew_"></a>
         </li>
     </ul>
 
