@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -24,11 +24,11 @@
 
 'use strict';
 
-function FindecoConfirmationCtrl($scope, User, $routeParams, Navigator) {
+findecoApp.controller('FindecoConfirmationCtrl', function ($scope, $routeParams, Navigator, User) {
     $scope.user = User;
     $scope.activationKey = $routeParams.param.replace('/', '');
     $scope.manualEntry = $scope.activationKey.length == 0;
-    console.log($scope.activationKey);
+
     if (Navigator.prefix == "activate") {
         $scope.title = "_accountActivationFormTitle_";
         $scope.text = "_accountActivationText_";
@@ -69,6 +69,4 @@ function FindecoConfirmationCtrl($scope, User, $routeParams, Navigator) {
     if (!$scope.manualEntry) {
         $scope.activate();
     }
-}
-
-FindecoConfirmationCtrl.$inject = ['$scope', 'User', '$routeParams' , 'Navigator'];
+});
