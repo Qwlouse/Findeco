@@ -56,7 +56,6 @@
     <script type="text/javascript" src="/static/js/menuCtrl.js"></script>
     <script type="text/javascript" src="/static/js/microblogCtrl.js"></script>
     <script type="text/javascript" src="/static/js/microbloggingNewsCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/navigationCtrl.js"></script>
     <script type="text/javascript" src="/static/js/searchCtrl.js"></script>
     <script type="text/javascript" src="/static/js/syschangeCtrl.js"></script>
     <script type="text/javascript" src="/static/js/parser.js"></script>
@@ -115,17 +114,17 @@
                         </ul>
 
                         <ul style="position: absolute; right: 0;">
-                            <li class="{{ getActiveClass('profile')}}" ng-show="user.isLoggedIn">
-                                <a ng-href="/profile">{{ user.displayName }}</a>
+                            <li  class="{{getActiveClass('profile')}}" ng-show="user.isLoggedIn">
+                                <a ng-href="/profile">{{user.displayName}}</a>
+
                             </li>
+
                             <li ng-show="user.isLoggedIn">
                                 <a ng-click="logout()" style="cursor:pointer; padding: 0;">
                                     <img src="/static/images/logout.png" alt="Logout" height="18"
-                                         style="position: relative; top: 3px; margin: 0 0 0 0;"/></a>
-                                <!--onmouseover="this.src='/static/images/logout_hover.png';"
-                                onmouseout="this.src='/static/images/logout.png';"-->
-                                <!--todo: Reimplemnt without Angularerror-->
-
+                                         style="position: relative; top: 3px; margin: 0 0 0 0;"
+                                         onmouseover="this.src='/static/images/logout_hover.png';"
+                                         onmouseout="this.src='/static/images/logout.png';"/></a>
                             </li>
                             <li ng-show="!user.isLoggedIn" style="float:right">
                                 <a href="/login" data-i18n="_accountLogin_"></a>
@@ -135,22 +134,17 @@
                 </div>
 
             </div>
-            <div id="navigationBar" ng-controller="FindecoNavigationCtrl">
+            <div id="navigationBar" ng-controller="FindecoMenuCtrl">
                 <div class="centeringContainer">
                     <ul>
-                        <li>
-                            <a href="/index">
-                                <img ng-show="navigation.entries"
-                                     src="/static/images/home.png"
-                                     alt="Home"/>
-                                <!--onmouseover="this.src='/static/images/home_hover.png';"
-                                onmouseout="this.src='/static/images/home.png';"-->
-                                <!--todo: Reimplemnt without Angularerror-->
-                                <img ng-show="navigation.entries.length == 0"
-                                     src="/static/images/home_hover.png"
-                                     alt="Home"/>
-                            </a>
-                        </li>
+                        <li><a href="/index"><img ng-show="navigation.entries"
+                                               src="/static/images/home.png"
+                                               alt="Home"
+                                               onmouseover="this.src='/static/images/home_hover.png';"
+                                               onmouseout="this.src='/static/images/home.png';"/>
+                               <img
+                                ng-show="navigation.entries.length == 0" src="/static/images/home_hover.png"
+                                alt="Home"/></a></li>
 
                         <li ng-repeat="nav in navigation.entries">
                             <a href="{{ nav.path }}">{{ nav.name }}</a>
@@ -168,10 +162,7 @@
             </div>
         </div>
 
-
         <div ng-view></div>
-
-        <div ng-controller="FindecoUserCtrl" ng-show="false"></div>
     </div>
     <div id="messageBox" ng-controller="FindecoMessageCtrl" ng-show="service.messageList.length > 0">
         <div alert ng-repeat="message in service.messageList" type="message.type" close="closeMessage($index)">

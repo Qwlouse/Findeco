@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,9 +23,8 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator, $location) {
+findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $location, Backend, Navigator, User) {
     $scope.loadTarget = Navigator.argumentPath;
     if ( $routeParams.name != undefined ) {
         $scope.loadTarget = $routeParams.name;
@@ -40,6 +39,7 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator, $l
         }
         $scope.MicrobloggingIsLoading = false;
     }
+
     $scope.$on('UserMarked', setAuthorForAllBlogs);
 
     $scope.microbloggingList = [];
@@ -49,9 +49,11 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator, $l
     $scope.followUser = function (type, path) {
         return User.markUser(type, path);
     };
+
     $scope.isLoading = function (){
     	return $scope.MicrobloggingIsLoading;
     };
+
     $scope.updateMicrobloggingList = function (oldType, oldID) {
         var type = 'newer';
         var id = 0;
@@ -84,17 +86,19 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator, $l
             $scope.microblogText = '';
         });
     };
+
     $scope.UpdateIntervall = function () {
         if ($location.path() == $scope.path) {
             window.setTimeout(function () {
                 $scope.UpdateIntervall();
-                $scope.updateMicrobloggingList()
+                $scope.updateMicrobloggingList();
                 $scope.MicrobloggingIsLoading = false;
             }, Math.floor((Math.random() * 10000) + 10000));
         }
-    }
-    $scope.path = $location.path()
-    $scope.UpdateIntervall()
+    };
+
+    $scope.path = $location.path();
+    $scope.UpdateIntervall();
 
     
     $scope.updateMicrobloggingList();
@@ -104,6 +108,4 @@ function FindecoMicroblogCtrl($scope, $routeParams, Backend, User, Navigator, $l
     }).blur(function(){
         $(this).animate({height:'1.4em'});
     });
-}
-
-FindecoMicroblogCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'User', 'Navigator','$location'];
+});

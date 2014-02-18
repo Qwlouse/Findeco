@@ -4,13 +4,15 @@
 
     <div id="centerColumn" class="contentBox">
         <div follow-star show-if="user.isLoggedIn && displayUser.name != user.displayName"
-             entity="displayUser" mark-func="followUser"></div>
-        <h1>{{displayUser.name}}</h1>
-        <div ng-show="displayUser.exists">
+             entity="displayUser" mark-func="user.markUser"></div>
+        <h1 ng-if="displayUser.exists">{{displayUser.name}}</h1>
+        <h1 ng-if="!displayUser.exists" data-i18n="_userDoesNotExist|{{ displayUser.name }}"></h1>
+
+        <div ng-if="displayUser.exists">
             <h2 data-i18n="_description_">Description</h2>
             <div creole wiki-text="displayUser.description"></div>
         </div>
     </div>
 
-    <div ng-show="displayUser.exists" ng-include src="'/static/partials/microblogging.html'"></div>
+    <div ng-if="displayUser.exists" ng-include="'/static/partials/microblogging.html'"></div>
 </div>

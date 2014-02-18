@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014  Klaus Greff, Maik Nauheim, Johannes Merkert                      *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,9 +23,8 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigator) {
+findecoApp.controller('FindecoCreateCtrl', function ($scope, $routeParams, Backend, Message, Navigator, TMP) {
     $scope.settings = {
         type: $routeParams.type
     };
@@ -169,7 +168,7 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
                 $scope.blockButton = false;
 
             })
-            .error(function (data) {
+            .error(function () {
                 $scope.blockButton = false;
             });
     };
@@ -208,6 +207,4 @@ function FindecoCreateCtrl($scope, $routeParams, Backend, TMP, Message, Navigato
     if ($scope.settings.type == 'argument') {
         $scope.tmp.argumentType = 'neut';
     }
-}
-
-FindecoCreateCtrl.$inject = ['$scope', '$routeParams', 'Backend', 'TMP', 'Message', 'Navigator'];
+});

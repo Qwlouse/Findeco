@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Johannes Merkert                                                  *
+ * Copyright (c) 2014 Klaus Greff, Johannes Merkert                                     *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,9 +23,8 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoSearchCtrl($scope, Backend, $routeParams) {
+findecoApp.controller('FindecoSearchCtrl', function ($scope, $routeParams, Backend) {
     $scope.searchResults = {};
 
     $scope.search = function () {
@@ -33,6 +32,4 @@ function FindecoSearchCtrl($scope, Backend, $routeParams) {
     };
     $scope.searchString = $routeParams.searchString;
     $scope.search();
-}
-
-FindecoSearchCtrl.$inject = ['$scope', 'Backend', '$routeParams'];
+});

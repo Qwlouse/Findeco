@@ -24,13 +24,7 @@
 describe('FindecoUserInfoCtrl', function() {
     var scope = {};
     var ctrl = null;
-    var promiseMock = {
-        success: function (f) {return this;},
-        error: function (f) {return this;},
-        then: function (f, g, h) {return this;},
-        catch: function (f) {return this;},
-        finally: function (f) {return this;}
-    };
+
     var UserServiceMock = {
         display_name: 'Simon',
         isLoggedIn: true,
@@ -38,16 +32,17 @@ describe('FindecoUserInfoCtrl', function() {
             return true;
         }
     };
-
+    var loadUserInfoPromise = new PromiseMock();
+    var Backend = {
+        loadUserInfo: function(name) {
+            return loadUserInfoPromise;
+        }
+    };
+    spyOn(Backend, 'loadUserInfo').andReturn(loadUserInfoPromise);
 
     beforeEach(function() {
         angular.mock.module('Findeco');
         angular.mock.inject(function ($rootScope, $controller) {
-            var Backend = {
-                loadUserInfo: function(name) {
-                    return promiseMock;
-                }
-            };
             scope = $rootScope.$new();
             ctrl = $controller('FindecoUserInfoCtrl', {
                 $scope: scope,
@@ -57,6 +52,7 @@ describe('FindecoUserInfoCtrl', function() {
             });
         });
     });
+
 
     it('should be registered', inject(function () {
         expect(ctrl).not.toBe(null);
@@ -69,8 +65,27 @@ describe('FindecoUserInfoCtrl', function() {
     it('should provide a displayUser object', function() {
         expect(scope.displayUser).toBeDefined();
         expect(scope.displayUser.name).toBe('herbert');
+        expect(scope.displayUser.path).toBe('herbert');
         expect(scope.displayUser.description).toBe('');
         expect(scope.displayUser.isFollowing).toBeFalsy();
         expect(scope.displayUser.exists).toBeFalsy();
+    });
+
+    it('should call the Backend.loadUserInfo function', function() {
+        expect(Backend.loadUserInfo.toHaveBeenCalled);
+    });
+
+    it('on success of Backend.loadUserInfo it should update the displayUser', function() {
+        expect(Backend.loadUserInfo.toHaveBeenCalled);
+        expect(loadUserInfoPromise.success_func).not.toBeNull();
+        loadUserInfoPromise.success_func({
+                loadUserInfoResponse: {
+                    userInfo: {
+                        displayName:'Herbert',
+                        description:'not herbert'
+                    }}});
+        expect(scope.displayUser.name).toBe('Herbert');
+        expect(scope.displayUser.description).toBe('not herbert');
+        expect(scope.displayUser.exists).toBeTruthy();
     });
 });

@@ -743,5 +743,10 @@
         "key"        : "_changeEmailRequested_",
         "value"      : "Die Änderung der E-Mail Adresse wurde bereits angefordert und eine Bestätigungemail an die neue Adresse versandt. Die Änderung wird wirksam, wenn der Bestätigungslink in der Mail geklickt wird.",
         "description": ""
+    },
+    {
+        "key"        : "_userDoesNotExist",
+        "value"      : "Der Benutzer '{0}' existiert nicht!",
+        "description": "wird im partial user.html benutzt"
     }
 ]
