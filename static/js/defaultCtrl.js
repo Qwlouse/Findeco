@@ -52,8 +52,7 @@ findecoApp.controller('FindecoDefaultCtrl',
 
     $scope.updateGraph = function () {
         $scope.isLoadingGraph =true;
-        Backend.loadGraphData($scope.graphData, $scope.nav.nodePath, $scope.graphType).success(function (data) {
-            $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
+        Backend.loadGraphData($scope.graphData, $scope.nav.nodePath, $scope.graphType).success(function () {
             $scope.isLoadingGraph =false;
         });
     };

@@ -139,6 +139,14 @@ findecoApp.directive('findecoGraph', function( ) {
                 .attr("stdDeviation", 2);
 
             scope.$watch('data', function (nodes) {
+                //svg.selectAll(".nodeGroup").exit().remove();
+                console.log(svg.selectAll(".nodeGroup"));
+                svg.selectAll(".node").each(function (node) {
+                    //if (node in nodes) {
+                        console.log(999234);
+                    //}
+                });
+                console.log(nodes);
                 if (nodes == undefined) {
                     return;
                 }
