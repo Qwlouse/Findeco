@@ -24,15 +24,16 @@
 'use strict';
 angular.module('FindecoGraphDataService', [])
     .factory('GraphData', function ($http, Navigator) {
-        var svg_width = 580;
-        var svg_height = 180;
-
         var nodes = [];
         var links = [];
 
         var graphData = {
             nodes: nodes,
-            links: links
+            links: links,
+            svg_width: 580,
+            svg_height: 150,
+            svg_minHeight: 150,
+            node_radius: 20
         };
 
 
@@ -75,8 +76,8 @@ angular.module('FindecoGraphDataService', [])
             // add new nodes and set initial position
             for (var i = 0; i < loadedGraph.length; i++) {
                 node = loadedGraph[i];
-                node.x = svg_width/2 + 10 * i * Math.pow(-1, i);
-                node.y = svg_height/2 + i;
+                node.x = graphData.svg_width/2 + 10 * i * Math.pow(-1, i);
+                node.y = graphData.svg_height/2 + i;
                 nodes.push(node);
             }
 
