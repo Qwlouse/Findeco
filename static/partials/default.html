@@ -6,7 +6,7 @@
 
 
     <div id="centerColumn" class="contentBox">
-        <div ng-show="nav.type!='arg'" >
+        <div>
             <div class="tipp">
 
                 <span ng-show="graphData.length > 1">Es gibt zu diesem Thema {{ graphData.length }} konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschläge</a>.</span>
@@ -29,7 +29,7 @@
 
         <p creole wiki-text="nodeInfo.wikiText"></p>
 
-        <div ng-show="sections.length > 0 && nav.type!='arg' " class="tipp">
+        <div ng-show="sections.length > 0" class="tipp">
             Dieser <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschlag</a> hat {{ nodeInfo.indexList.length }} Abschnitte.
             Du kannst hier alle Abschnitte <a ng-hide="allExpanded" ng-click="expandAll()" style="cursor: pointer;">ausklappen.</a>
             <a ng-show="allExpanded" ng-click="collapseAll()" style="cursor: pointer;">einklappen.</a>
@@ -62,16 +62,16 @@
             </div>
         </div>
         <div class="btnBar">
-            <div ng-show="nav.type!='arg' && user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/topic')"
+            <div ng-show="user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/topic')"
                  data-i18n="_createNewText_"></div>
 
-            <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
+            <div ng-show="user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
                  data-i18n="_createDerivativeText_"></div>
 
-            <div ng-show="nav.type!='arg' && user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
+            <div ng-show="user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
                  data-i18n="_createOpposingText_"></div>
 
-            <div ng-show="nav.type=='arg' && nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
+            <div ng-show="nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
                  ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
         </div>
   	<div ng-show="isLoading()" class="deactivateDiv">
