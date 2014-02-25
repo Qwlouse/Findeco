@@ -101,42 +101,28 @@ findecoApp.directive('findecoGraph', function( ) {
         restrict : 'A',
         scope: {
             data: '=',
-            path: '='
+            path: '=',
+            height: '@',
+            width: '@'
         },
 
+        template:
+            '<svg height="{{height}}" width="{{width}}">' +
+                '<defs>' +
+                    '<marker class="arrowHead" orient="auto" markerHeight="5" markerWidth="5" refX="5" viewBox="0 -5 10 10" id="ArrowHead">' +
+                        '<path d="M0,-5L10,0L0,5"></path>' +
+                    '</marker>' +
+                '</defs>'+
+                '<defs>'+
+                    '<filter id="blur">'+
+                        '<feGaussianBlur stdDeviation="2"></feGaussianBlur>'+
+                    '</filter>'+
+                '</defs>'+
+            '</svg>' +
+            '<div id="tooltip" style="position: absolute; top: 0px; left: 0px; visibility: hidden;"></div> ',
+
         link : function (scope, element, attrs) {
-            // create svg container
-            var parent = d3.select(element[0]);
-            var svg = parent.append("svg")
-                .attr("width", svg_width)
-                .attr("height", svg_height);
-
-            var tooltip = parent.append("div")
-                .style("position", "absolute")
-                .style("top", "0px")
-                .style("left", "0px")
-                .attr("id", "tooltip")
-                .style("visibility", "hidden")
-                .html("Ein <b>toller</b> Knoten!");
-
-            // add arrowhead
-            var defs = svg.append("svg:defs");
-            var marker = defs.append("svg:marker")
-                .attr("id", "ArrowHead")
-                .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 5)
-                .attr("markerWidth", 5)
-                .attr("markerHeight", 5)
-                .attr("orient", "auto")
-                .attr("class", "arrowHead")
-                .append("svg:path")
-                .attr("d", "M0,-5L10,0L0,5");
-
-            var filter = svg.append("svg:defs")
-                .append("svg:filter")
-                .attr("id", "blur")
-                .append("svg:feGaussianBlur")
-                .attr("stdDeviation", 2);
+            var svg = d3.select(element[0].children[0]);
 
             scope.$watch('data', function (nodes) {
                 //svg.selectAll(".nodeGroup").exit().remove();
@@ -170,8 +156,6 @@ findecoApp.directive('findecoGraph', function( ) {
                         links.push({"source": node_map.get(n.originGroup[j]), "target": n});
                     }
                 }
-
-
 
                 // start the force layout
                 var force = d3.layout.force()
