@@ -57,7 +57,7 @@ findecoApp.controller('FindecoDefaultCtrl',
     };
 
     $scope.updateNode = function () {
-        Backend.loadNode($scope.nodeInfo, $scope.nav.argumentPath).success(function (d) {
+        Backend.loadNode($scope.nodeInfo, $scope.nav.nodePath).success(function (d) {
             $scope.allExpanded = true;
             $scope.authors = $scope.nodeInfo.authors;
             $scope.nav.nodeID = $scope.nodeInfo.nodeID;
@@ -114,8 +114,8 @@ findecoApp.controller('FindecoDefaultCtrl',
     };
 
     $scope.initialize = function () {
-        $scope.isLoadingNode =true;
-        $scope.isLoadingGraph =true;
+        $scope.isLoadingNode = true;
+        $scope.isLoadingGraph = true;
         $scope.updateNode();
         $scope.updateGraph();
        

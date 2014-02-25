@@ -34,6 +34,15 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
 
     $scope.argumentList = [];
     $scope.fullyShow = -1;
+
+    $scope.showArgumentForPath = function () {
+        for (var i = 0; i < $scope.argumentList.length; i++) {
+            if (Navigator.argumentPath == $scope.argumentList[i].path) {
+                $scope.fullyShow = $scope.argumentList[i].index;
+            }
+        }
+        $scope.updateArgumentsWikiText($scope.fullyShow);
+    };
     
     $scope.isLoading = function (){
     	return $scope.argumentIsLoading ;
@@ -72,6 +81,7 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
             arg.wikiText = $scope.createArgumentSlug(arg.text);
         }
         $scope.argumentIsLoading  = false;
+        $scope.showArgumentForPath();
     }
 
     $scope.updateArgumentList = function () {
@@ -80,6 +90,7 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
     };
 
     $scope.updateArgumentList();
+    $scope.showArgumentForPath();
 }
 
 FindecoArgumentCtrl.$inject = ['$scope', 'Backend', 'User', 'TMP', 'Navigator'];
