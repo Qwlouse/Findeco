@@ -23,8 +23,18 @@
 
 'use strict';
 angular.module('FindecoGraphDataService', [])
-    .factory('GraphData', function ($http) {
-        var graphData = [];
+    .factory('GraphData', function ($http, Navigator) {
+        var svg_width = 580;
+        var svg_height = 180;
+
+        var nodes = [];
+        var links = [];
+
+        var graphData = {
+            nodes: nodes,
+            links: links
+        };
+
 
         graphData.nodesEqual = function (nodeA, nodeB) {
             return nodeA.path == nodeB.path; // TODO: Use ID instead of path
@@ -43,10 +53,9 @@ angular.module('FindecoGraphDataService', [])
 
         graphData.updateGraphData = function (data) {
             var loadedGraph = data.loadGraphDataResponse.graphDataChildren;
-
-            var index = graphData.length;
+            var index = nodes.length;
             while (index--){
-                var node = graphData[index];
+                var node = nodes[index];
                 var nodeFound = false;
                 var loadedNodeIndex = loadedGraph.length;
                 while (loadedNodeIndex--) {
@@ -59,12 +68,36 @@ angular.module('FindecoGraphDataService', [])
                     }
                 }
                 if (!nodeFound) {
-                    graphData.splice(index, 1);
+                    nodes.splice(index, 1);
                 }
             }
-            angular.forEach(loadedGraph, function (loadedNode) {
-                graphData.push(loadedNode);
-            });
+
+            // add new nodes and set initial position
+            for (var i = 0; i < loadedGraph.length; i++) {
+                node = loadedGraph[i];
+                node.x = svg_width/2 + 10 * i * Math.pow(-1, i);
+                node.y = svg_height/2 + i;
+                nodes.push(node);
+            }
+
+            // map paths to nodes
+            var node_map = d3.map({});
+            for (i = 0; i < nodes.length; i++) {
+                nodes[i].active = false;
+                node_map.set(nodes[i].path, nodes[i]);
+            }
+            // currently selected node is active
+            if (node_map.has(Navigator.nodePath)) {
+                node_map.get(Navigator.nodePath).active = true;
+            }
+            // construct the links
+            links.length = 0;
+            for (i = 0; i < nodes.length; i++) {
+                node = nodes[i];
+                for (var j = 0; j < node.originGroup.length; j++) {
+                    links.push({"source": node_map.get(node.originGroup[j]), "target": node});
+                }
+            }
         };
 
         graphData.loadGraphData = function (path, graphType) {

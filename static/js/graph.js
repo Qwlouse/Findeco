@@ -77,7 +77,7 @@ function endy(source, target, r) {
     <div findeco-graph data="data"></div>
 */
 
-findecoApp.directive('findecoGraph', function( ) {
+findecoApp.directive('findecoGraph', function(GraphData) {
     // Parameters
     var svg_width = 580,
         svg_height = minHeight;
@@ -100,8 +100,6 @@ findecoApp.directive('findecoGraph', function( ) {
     return {
         restrict : 'A',
         scope: {
-            data: '=',
-            path: '=',
             height: '@',
             width: '@'
         },
@@ -122,45 +120,27 @@ findecoApp.directive('findecoGraph', function( ) {
             '<div id="tooltip" style="position: absolute; top: 0px; left: 0px; visibility: hidden;"></div> ',
 
         link : function (scope, element, attrs) {
+            scope.nodes = GraphData.nodes;
+
             var svg = d3.select(element[0].children[0]);
+            var tooltip = d3.select(element[0].children[1]);
 
-            scope.$watch('data', function (nodes) {
-                if (nodes == undefined) {
-                    return;
-                }
-                var links = [];
-                // map paths to nodes
-                var node_map = d3.map({});
-                for (var i = 0; i < nodes.length; i++) {
-                    node_map.set(nodes[i].path, nodes[i]);
-                    nodes[i].active = false;
-                    nodes[i].x = svg_width/2 + 10 * i * Math.pow(-1,i);
-                    nodes[i].y = svg_height/2 + i;
-                }
-                // currently selected node is active
-                if (node_map.has(scope.path)) {
-                    node_map.get(scope.path).active = true;
-                }
-                // construct the links
-                for (i = 0; i < nodes.length; i++) {
-                    var n = nodes[i];
-                    for (var j = 0; j < n.originGroup.length; j++) {
-                        links.push({"source": node_map.get(n.originGroup[j]), "target": n});
-                    }
-                }
-
+            scope.$watchCollection('nodes', function (nodes) {
+                console.log('ping');
+                console.log(scope.nodes);
+                console.log(scope.nodes.length);
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
                     .size([svg_width, svg_height])
                     .linkDistance(80)
                     .nodes(nodes)
-                    .links(links)
+                    .links(GraphData.links)
                     .start();
 
                 // add the links first so they will be underneath the nodes
                 var link = svg.selectAll(".link")
-                    .data(links)
+                    .data(GraphData.links)
                     .enter().append("line")
                     .attr("class", "link")
                     .attr("marker-end", "url(#ArrowHead)");
