@@ -31,9 +31,7 @@ angular.module('FindecoGraphDataService', [])
             nodes: nodes,
             links: links,
             svg_width: 580,
-            svg_height: 150,
-            svg_minHeight: 150,
-            node_radius: 20
+            svg_height: 150
         };
 
 
@@ -92,13 +90,14 @@ angular.module('FindecoGraphDataService', [])
                 node_map.get(Navigator.nodePath).active = true;
             }
             // construct the links
-            links.length = 0;
+            links = [];
             for (i = 0; i < nodes.length; i++) {
                 node = nodes[i];
                 for (var j = 0; j < node.originGroup.length; j++) {
                     links.push({"source": node_map.get(node.originGroup[j]), "target": node});
                 }
             }
+            graphData.links = links;
         };
 
         graphData.loadGraphData = function (path, graphType) {
