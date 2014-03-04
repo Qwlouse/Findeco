@@ -152,6 +152,12 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                     .data(nodes);
 
                 var nodegroup = node.enter().append("g")
+                    .attr("class", function (d) {
+                        if (d.path == Navigator.nodePath) {
+                            return "nodeGroup active";
+                        }
+                        else return "nodeGroup inactive";
+                    })
                     .call(force.drag)
                     .on("mouseover", function(d){
                         tooltip.html("<b>" + d.title + "</b>" +
@@ -162,13 +168,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                         return tooltip.style("visibility", "visible");
                     })
                     .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
-                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
-                    .attr("class", function (d) {
-                        if (d.path == Navigator.nodePath) {
-                            return "nodeGroup";
-                        }
-                        else return "nodeGroup inactive";
-                    });
+                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
                 nodegroup.append("circle")  // shadow
                     .attr("r", node_radius)
@@ -180,7 +180,6 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                     .attr("xlink:href", function (d) {return '/diff/' + scope.path + '?compare=' + d.path; })
                     .append("g")
                     .attr('transform', "translate(-" + (node_radius-3) + ", -" + (node_radius-3) + ")");
-
 
                 diff_button_group
                     .append("circle")
@@ -198,17 +197,11 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                   .attr("xlink:href", function (d) {return '/' + d.path; });
 
                 g.append("circle")  // Center Circle
-                    .attr("class", function (d) {
-                        if (d.path == Navigator.nodePath) return "active nodeBackgroundCircle";
-                        else return "nodeBackgroundCircle";
-                    })
+                    .attr("class", "nodeBackgroundCircle")
                     .attr("r", node_radius);
 
                 g.append("text")  // Node number
-                    .attr("class", function (d) {
-                        if (d.path == Navigator.nodePath) return "active nodeLabel";
-                        else return "nodeLabel";
-                    })
+                    .attr("class", "nodeLabel")
                     .attr("dy", ".35em")
                     .attr("text-anchor", "middle")
                     .text(function(d) {           // display only index as text
