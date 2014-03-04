@@ -50,6 +50,12 @@ findecoApp.controller('FindecoDefaultCtrl',
 
     $scope.markNode = Backend.markNode;
 
+    $scope.markMainNode = function(markType, nodePath) {
+        return Backend.markNode(markType, nodePath).success(function() {
+            GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType);
+        });
+    };
+
     $scope.updateGraph = function () {
         $scope.isLoadingGraph =true;
         GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType).success(function () {

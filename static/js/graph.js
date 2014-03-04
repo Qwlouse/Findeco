@@ -125,13 +125,13 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
 
             var tooltip = d3.select(element[0].children[1]);
 
-            scope.$watchCollection('nodes', function (nodes) {
+            scope.$on('updateGraphEvent', function () {
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
                     .size([GraphData.svg_width, GraphData.svg_height])
                     .linkDistance(link_distance)
-                    .nodes(nodes)
+                    .nodes(scope.nodes)
                     .links(GraphData.links)
                     .start();
 
@@ -146,7 +146,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                 link.exit().remove();
                 // add a svg:group for all nodes
                 var node = svg.select('#nodes').selectAll(".nodeGroup")
-                    .data(nodes);
+                    .data(scope.nodes);
 
                 var nodegroup = node.enter().append("g")
                     .attr("class", function (d) {

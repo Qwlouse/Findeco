@@ -23,7 +23,7 @@
 
 'use strict';
 angular.module('FindecoGraphDataService', [])
-    .factory('GraphData', function ($http, Navigator) {
+    .factory('GraphData', function ($http, $rootScope, Navigator) {
         var nodes = [];
         var links = [];
 
@@ -96,6 +96,7 @@ angular.module('FindecoGraphDataService', [])
                 }
             }
             graphData.links = links;
+            $rootScope.$broadcast('updateGraphEvent');
         };
 
         graphData.loadGraphData = function (path, graphType) {
