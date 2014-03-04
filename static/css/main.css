@@ -203,6 +203,24 @@ body:before {
     border-radius: 15px;
     box-shadow: 8px 8px 10px #947109;
     position:relative;
+    display: block;
+}
+
+.paddedContent {
+    padding: 1em;
+    margin: 1em 0;
+}
+
+.half {
+    width: 45%;
+    display: inline-block;
+}
+
+.refersTo {
+    width: 6%;
+    display: inline-block;
+    font-size: 8em;
+    margin: 0 15px;
 }
 
 .contentBoxInvisible {

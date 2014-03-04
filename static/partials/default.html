@@ -1,5 +1,6 @@
 <div id="contentContainer" class="centeringContainer">
- <div ng-show="!user.isLoggedIn&&fesettings.disclaimer.enable" id="disclaimerBox" ng-bind-html-unsafe="fesettings.disclaimer.text" class="contentBox" >
+ <div ng-show="!user.isLoggedIn&&fesettings.disclaimer.enable" id="disclaimerBox"
+      ng-bind-html-unsafe="fesettings.disclaimer.text" class="contentBox" >
 
  </div>
     <div ng-include src="'/static/partials/argument.html'"  ></div>
@@ -9,7 +10,8 @@
         <div>
             <div class="tipp">
 
-                <span ng-show="graphData.length > 1">Es gibt zu diesem Thema {{ graphData.length }} konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschläge</a>.</span>
+                <span ng-show="graphData.length > 1">Es gibt zu diesem Thema {{ graphData.length }} konkurrierende
+                    <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschläge</a>.</span>
                 <!-- <form>
                 Es werden <select name="graph-filter" size="1" style="font-size: 100%; color: gray;">
                     <option disabled>nur relevante</option>
@@ -30,9 +32,10 @@
         <p creole wiki-text="nodeInfo.wikiText"></p>
 
         <div ng-show="sections.length > 0" class="tipp">
-            Dieser <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschlag</a> hat {{ nodeInfo.indexList.length }} Abschnitte.
-            Du kannst hier alle Abschnitte <a ng-hide="allExpanded" ng-click="expandAll()" style="cursor: pointer;">ausklappen.</a>
-            <a ng-show="allExpanded" ng-click="collapseAll()" style="cursor: pointer;">einklappen.</a>
+            Dieser <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschlag</a>
+            hat {{ nodeInfo.indexList.length }} Abschnitte.
+            Du kannst hier alle Abschnitte <a ng-hide="allExpanded" ng-click="expandAll()" style="cursor: pointer;">ausklappen</a>
+            <a ng-show="allExpanded" ng-click="collapseAll()" style="cursor: pointer;">einklappen</a>.
         </div>
         <div ng-repeat="section in nodeInfo.indexList">
            
