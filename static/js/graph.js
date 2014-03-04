@@ -35,7 +35,7 @@ function endx(source, target, r) {
     if (Math.abs(source.x - target.x) < 1e-6) {
         var b = 0;
     } else {
-        ratio = Math.abs((source.y - target.y) / (source.x - target.x));
+        var ratio = Math.abs((source.y - target.y) / (source.x - target.x));
         b = r/Math.sqrt(ratio * ratio + 1);
     }
     if ((source.x - target.x) > 0) {
@@ -113,6 +113,8 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                         '<feGaussianBlur stdDeviation="2"></feGaussianBlur>'+
                     '</filter>'+
                 '</defs>'+
+                '<g id="links"></g>' +
+                '<g id="nodes"></g>' +
             '</svg>' +
             '<div id="tooltip" style="position: absolute; top: 0px; left: 0px; visibility: hidden;"></div> ',
 
@@ -126,6 +128,8 @@ findecoApp.directive('findecoGraph', function(GraphData) {
             var tooltip = d3.select(element[0].children[1]);
 
             scope.$watchCollection('nodes', function (nodes) {
+                console.log('change in nodes!');
+                console.log(nodes);
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
@@ -136,16 +140,22 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                     .start();
 
                 // add the links first so they will be underneath the nodes
-                var link = svg.selectAll(".link")
-                    .data(GraphData.links)
-                    .enter().append("line")
+                var link = svg.select('#links').selectAll(".link")
+                    .data(GraphData.links);
+
+                link.exit().remove();
+
+                link.enter().append("line")
                     .attr("class", "link")
                     .attr("marker-end", "url(#ArrowHead)");
 
                 // add a svg:group for all nodes
-                var node = svg.selectAll(".node")
-                    .data(nodes)
-                    .enter().append("g")
+                var node = svg.select('#nodes').selectAll(".nodeGroup")
+                    .data(nodes);
+
+                node.exit().remove();
+
+                var nodegroup = node.enter().append("g")
                     .attr("class", function (d) {
                         if (d.active) return "nodeGroup";
                         else return "nodeGroup inactive";
@@ -164,13 +174,13 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                     .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
                     .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
-                node.append("circle")  // shadow
+                nodegroup.append("circle")  // shadow
                     .attr("r", node_radius)
                     .attr("class", "nodeShadow")
                     .attr("filter", "url(#blur)")
                     .attr('transform', "translate(2, 2)");
 
-                var diff_button_group = node.append("svg:a")  // diff-button
+                var diff_button_group = nodegroup.append("svg:a")  // diff-button
                     .attr("xlink:href", function (d) {return '/diff/' + scope.path + '?compare=' + d.path; })
                     .append("g")
                     .attr('transform', "translate(-" + (node_radius-3) + ", -" + (node_radius-3) + ")");
@@ -188,7 +198,7 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                     .attr("class", "diffButtonText")
                     .text('diff');
 
-                var g = node.append("g").append("svg:a")  // Node Center Group
+                var g = nodegroup.append("g").append("svg:a")  // Node Center Group
                   .attr("xlink:href", function (d) {return '/' + d.path; });
 
                 g.append("circle")  // Center Circle
@@ -209,7 +219,7 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                         var s = d.path.split(".");
                         return s[s.length - 1]; });
 
-                node.selectAll("path")
+                nodegroup.selectAll("path")
                     .data(function(d) {
                         if (d.active) {
                             return pie([ d.newFollows, d.follows - d.newFollows, d.unFollows, 0, 0, 0]);
@@ -222,10 +232,9 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                     .attr("r", 100)
                     .style("fill", function(d, i) {return pie_chart_colors[i];});
 
-
-                force.on("tick", function(e) {
+                force.on("tick", function() {
                     var svg_height_new = GraphData.svg_height;
-                    node.attr('transform', function(d) {
+                    nodegroup.attr('transform', function(d) {
                         var r = node_radius * scale(d.follows);
                         // make sure nodes don't exit the sides or the top
                         d.x = Math.max(Math.min(d.x, GraphData.svg_width - r - 5), r + 1);
