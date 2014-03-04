@@ -57,12 +57,12 @@ from node_storage.factory import create_user
 @ensure_csrf_cookie
 def home(request, path=""):
     with open(project_path("static/index.html"), 'r') as index_html_file:
-        return HttpResponse(index_html_file.read(), mimetype='text/html')
+        return HttpResponse(index_html_file.read(), content_type='text/html')
 
 
 def jasmine(request, path=""):
     with open(project_path("static/jasmine.html"), 'r') as index_html_file:
-        return HttpResponse(index_html_file.read(), mimetype='text/html')
+        return HttpResponse(index_html_file.read(), content_type='text/html')
 
 
 @ViewErrorHandling

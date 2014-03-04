@@ -54,7 +54,7 @@ from .paths import parse_suffix
 
 def json_response(data):
     return HttpResponse(json.dumps(data),
-                        mimetype='application/json')
+                        content_type='application/json')
 
 
 def ValidPaths(*allowed_path_types):

@@ -39,7 +39,7 @@ def json_error_response(identifier, *args):
         'additionalInfo': args,
     }}
     return HttpResponse(json.dumps(response),
-                        mimetype='application/json',
+                        content_type='application/json',
                         status=406)
 
 
