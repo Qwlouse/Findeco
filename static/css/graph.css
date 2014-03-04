@@ -134,3 +134,27 @@ div #tooltip {
 .diffButtonText:hover{
     fill: #2d7cc4;
 }
+
+.active .pieChartPart.newFollow {
+    fill: #ffffff;
+}
+
+.active .pieChartPart.follow {
+    fill: #999999;
+}
+
+.active .pieChartPart.unfollow {
+    fill: #333333;
+}
+
+.inactive .pieChartPart.newFollow {
+    fill: #EEEEEE;
+}
+
+.inactive .pieChartPart.follow {
+    fill: #BBBBBB;
+}
+
+.inactive .pieChartPart.unfollow {
+    fill: #555555;
+}

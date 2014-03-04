@@ -82,10 +82,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
     var node_innerRadius = 14;
     var link_distance = 80;
 
-    // colors are like this [active.newFollow, active.follow, active.unfollow,
-    //                   inactive.newFollow, inactive.follow, inactive.unfollow]
-    var pie_chart_colors = ["#ffffff", "#999999", "#333333",
-                            "#eeeeee", "#BBBBBB", "#555555"];
+    var pie_chart_classes = ["newFollow", "follow", "unfollow"];
     var scale = d3.scale.log() // scaling of follows to node-size
         .domain([1, 100])
         .range([1, 2])
@@ -210,16 +207,14 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
 
                 nodegroup.selectAll("path")
                     .data(function(d) {
-                        if (d.path == Navigator.nodePath) {
-                            return pie([ d.newFollows, d.follows - d.newFollows, d.unFollows, 0, 0, 0]);
-                        } else {
-                            return pie([ 0, 0, 0, d.newFollows, d.follows - d.newFollows, d.unFollows]);
-                        }
+                        return pie([d.newFollows, d.follows - d.newFollows, d.unFollows]);
                     })
                     .enter().append("svg:path")
                     .attr("d", arc)
                     .attr("r", 100)
-                    .style("fill", function(d, i) {return pie_chart_colors[i];});
+                    .attr("class", function(d, i) {
+                        return "pieChartPart " + pie_chart_classes[i];
+                    });
 
                 node.exit().remove();
 
