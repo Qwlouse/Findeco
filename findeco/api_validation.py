@@ -92,6 +92,10 @@ textNode_schema = {
     'isFlagging': integer,
     'authorGroup': authorGroup_schema
 }
+argumentNewsCard_schema = {
+    'argument': textNode_schema,
+    'node': textNode_schema
+}
 loadGraphDataResponse_schema = {
     'loadGraphDataResponse': {
         'graphDataChildren': [graphDataNode_schema],
@@ -121,6 +125,9 @@ loadTextResponse_schema = {
         'isFollowing': integer,
         'isFlagging': integer
     }
+}
+loadArgumentNewsResponse_schema = {
+    'loadArgumentNewsResponse': [argumentNewsCard_schema, None]
 }
 loadUserInfoResponse_schema = {
     'loadUserInfoResponse': {
@@ -205,6 +212,7 @@ loadNodeResponseValidator = JSONValidator(loadNodeResponse_schema)
 loadArgumentIndexResponseValidator = JSONValidator(
     loadArgumentIndexResponse_schema)
 loadTextResponseValidator = JSONValidator(loadTextResponse_schema)
+loadArgumentNewsResponseValidator = JSONValidator(loadArgumentNewsResponse_schema)
 loadUserInfoResponseValidator = JSONValidator(loadUserInfoResponse_schema)
 loadUserSettingsResponseValidator = JSONValidator(
     loadUserSettingsResponse_schema)
@@ -234,6 +242,7 @@ view_validators = {
     'load_index': loadIndexResponseValidator,
     'load_argument_index': loadArgumentIndexResponseValidator,
     'load_text': loadTextResponseValidator,
+    'load_argument_news': loadArgumentNewsResponseValidator,
     'load_node': loadNodeResponseValidator,
     'load_user_info': loadUserInfoResponseValidator,
     'load_user_settings': loadUserSettingsResponseValidator,

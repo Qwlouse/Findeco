@@ -208,6 +208,31 @@ def load_text(request, path):
             'isFlagging': paragraphs[0]['isFlagging']}})
 
 
+@ViewErrorHandling
+def load_argument_news(request):
+    cards = []
+    for argument in Argument.objects.all().order_by("-id")[:20]:
+        node = argument.concerns
+        cards.append({
+            'argument': {
+                'wikiText': argument.text.text,
+                'path': argument.get_a_path(),
+                'isFollowing': get_is_following(request.user.id, argument),
+                'isFlagging': get_is_flagging(request.user.id, argument),
+                'authorGroup': [author.username for author in argument.text.authors.all()]
+            },
+            'node': {
+                'wikiText': node.text.text,
+                'path': node.get_a_path(),
+                'isFollowing': get_is_following(request.user.id, node),
+                'isFlagging': get_is_flagging(request.user.id, node),
+                'authorGroup': [author.username for author in node.text.authors.all()]
+            }
+        })
+
+    return json_response({'loadArgumentNewsResponse': cards})
+
+
 ###################### Store/Modify Nodes ######################################
 @ValidPaths("StructureNode")
 @ViewErrorHandling
