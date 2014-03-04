@@ -75,11 +75,12 @@ function endy(source, target, r) {
     <div findeco-graph data="data"></div>
 */
 
-findecoApp.directive('findecoGraph', function(GraphData) {
+findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
     //------------------/ Parameters /--------------//
     var svg_minHeight = 150;
     var node_radius = 20;
     var node_innerRadius = 14;
+    var link_distance = 80;
 
     // colors are like this [active.newFollow, active.follow, active.unfollow,
     //                   inactive.newFollow, inactive.follow, inactive.unfollow]
@@ -128,13 +129,11 @@ findecoApp.directive('findecoGraph', function(GraphData) {
             var tooltip = d3.select(element[0].children[1]);
 
             scope.$watchCollection('nodes', function (nodes) {
-                console.log('change in nodes!');
-                console.log(nodes);
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
                     .size([GraphData.svg_width, GraphData.svg_height])
-                    .linkDistance(80)
+                    .linkDistance(link_distance)
                     .nodes(nodes)
                     .links(GraphData.links)
                     .start();
@@ -148,7 +147,6 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                     .attr("marker-end", "url(#ArrowHead)");
 
                 link.exit().remove();
-
                 // add a svg:group for all nodes
                 var node = svg.select('#nodes').selectAll(".nodeGroup")
                     .data(nodes);
@@ -166,7 +164,9 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                     .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
                     .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
                     .attr("class", function (d) {
-                        if (d.active) return "nodeGroup";
+                        if (d.path == Navigator.nodePath) {
+                            return "nodeGroup";
+                        }
                         else return "nodeGroup inactive";
                     });
 
@@ -199,14 +199,14 @@ findecoApp.directive('findecoGraph', function(GraphData) {
 
                 g.append("circle")  // Center Circle
                     .attr("class", function (d) {
-                        if (d.active) return "active nodeBackgroundCircle";
+                        if (d.path == Navigator.nodePath) return "active nodeBackgroundCircle";
                         else return "nodeBackgroundCircle";
                     })
                     .attr("r", node_radius);
 
                 g.append("text")  // Node number
                     .attr("class", function (d) {
-                        if (d.active) return "active nodeLabel";
+                        if (d.path == Navigator.nodePath) return "active nodeLabel";
                         else return "nodeLabel";
                     })
                     .attr("dy", ".35em")
@@ -217,7 +217,7 @@ findecoApp.directive('findecoGraph', function(GraphData) {
 
                 nodegroup.selectAll("path")
                     .data(function(d) {
-                        if (d.active) {
+                        if (d.path == Navigator.nodePath) {
                             return pie([ d.newFollows, d.follows - d.newFollows, d.unFollows, 0, 0, 0]);
                         } else {
                             return pie([ 0, 0, 0, d.newFollows, d.follows - d.newFollows, d.unFollows]);

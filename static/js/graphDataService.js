@@ -78,11 +78,9 @@ angular.module('FindecoGraphDataService', [])
                 node.y = graphData.svg_height/2 + i;
                 nodes.push(node);
             }
-
             // map paths to nodes
             var node_map = d3.map({});
             for (i = 0; i < nodes.length; i++) {
-                nodes[i].active = false;
                 node_map.set(nodes[i].path, nodes[i]);
             }
             // currently selected node is active
