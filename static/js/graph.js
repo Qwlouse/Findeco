@@ -143,25 +143,17 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                 var link = svg.select('#links').selectAll(".link")
                     .data(GraphData.links);
 
-                link.exit().remove();
-
                 link.enter().append("line")
                     .attr("class", "link")
                     .attr("marker-end", "url(#ArrowHead)");
+
+                link.exit().remove();
 
                 // add a svg:group for all nodes
                 var node = svg.select('#nodes').selectAll(".nodeGroup")
                     .data(nodes);
 
-                node.exit().remove();
-
                 var nodegroup = node.enter().append("g")
-                    .attr("class", function (d) {
-                        if (d.active) return "nodeGroup";
-                        else return "nodeGroup inactive";
-                    })
-//                    .attr("class", "nodeGroup")
-                    //.attr("title", function (d) { return d.path; })
                     .call(force.drag)
                     .on("mouseover", function(d){
                         tooltip.html("<b>" + d.title + "</b>" +
@@ -172,7 +164,11 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                         return tooltip.style("visibility", "visible");
                     })
                     .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
-                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+                    .attr("class", function (d) {
+                        if (d.active) return "nodeGroup";
+                        else return "nodeGroup inactive";
+                    });
 
                 nodegroup.append("circle")  // shadow
                     .attr("r", node_radius)
@@ -231,6 +227,8 @@ findecoApp.directive('findecoGraph', function(GraphData) {
                     .attr("d", arc)
                     .attr("r", 100)
                     .style("fill", function(d, i) {return pie_chart_colors[i];});
+
+                node.exit().remove();
 
                 force.on("tick", function() {
                     var svg_height_new = GraphData.svg_height;
