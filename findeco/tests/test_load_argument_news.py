@@ -80,8 +80,10 @@ class LoadArgumentNewsTest(TestCase):
         for number, resultEntry in enumerate(parsed['loadArgumentNewsResponse']):
             self.assertEqual(resultEntry['node']['path'], u'Wahlprogramm.1/Transparenz.1')
             self.assertListEqual(resultEntry['node']['authorGroup'], [u'hans'])
+            self.assertEqual(resultEntry['node']['fullTitle'], u'Traaaansparenz')
             self.assertEqual(resultEntry['argument']['path'], u'Wahlprogramm.1/Transparenz.1.pro.' + str(24 - number))
             self.assertListEqual(resultEntry['argument']['authorGroup'], [u'hans', u'hugo'])
+            self.assertEqual(resultEntry['argument']['fullTitle'], u'Argument' + str(24 - number))
             if number % 2 == 0:
                 self.assertEqual(resultEntry['argument']['followingCount'], 1)
                 self.assertEqual(resultEntry['argument']['flaggingCount'], 0)

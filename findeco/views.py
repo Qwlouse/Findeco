@@ -215,7 +215,8 @@ def load_argument_news(request):
         node = argument.concerns
         cards.append({
             'argument': {
-                'wikiText': argument.text.text,
+                'text': argument.text.text,
+                'fullTitle': argument.title,
                 'path': argument.get_a_path(),
                 'isFollowing': get_is_following(request.user.id, argument),
                 'followingCount': argument.votes.count(),
@@ -224,7 +225,8 @@ def load_argument_news(request):
                 'authorGroup': [author.username for author in argument.text.authors.all()]
             },
             'node': {
-                'wikiText': node.text.text,
+                'text': node.text.text,
+                'fullTitle': node.title,
                 'path': node.get_a_path(),
                 'isFollowing': get_is_following(request.user.id, node),
                 'followingCount': node.votes.count(),

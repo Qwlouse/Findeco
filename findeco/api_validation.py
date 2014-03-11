@@ -94,6 +94,7 @@ textNode_schema = {
 }
 argumentNewsNode_schema = {
     'text': string,
+    'fullTitle': string,
     'path': string,
     'isFollowing': integer,
     'followingCount': integer,

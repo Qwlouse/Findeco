@@ -203,6 +203,14 @@ angular.module('FindecoBackendService', [])
                 return promise;
             },
 
+            loadArgumentNews: function (cards) {
+                var promise = $http.get('/.json_loadArgumentNews');
+                promise.success(function (d) {
+                    angular.copy(d.loadArgumentNewsResponse, cards);
+                });
+                return promise;
+            },
+
             search: function (searchResults, search_string) {
                 var searchFields = "user_content_microblogging";
                 var promise = $http.get('/.json_search/' + searchFields + '/' + search_string);

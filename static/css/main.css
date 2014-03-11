@@ -221,6 +221,8 @@ body:before {
     display: inline-block;
     font-size: 8em;
     margin: 0 15px;
+    position: relative;
+    top: -25px;
 }
 
 .contentBoxInvisible {

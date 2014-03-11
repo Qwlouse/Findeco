@@ -27,50 +27,9 @@
 
 function FindecoArgumentNewsCtrl($scope, Backend, User, $location) {
     $scope.user = User;
-    $scope.cards = [
-        {'argument': {
-            'authors': ["Achim", "Bechim", "Cechim"],
-            'fullTitle': "Testargument",
-            'snippet': "Weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen. Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht – ein geradezu unorthographisches Leben. Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen Semikoli, doch das Blindtextchen ließ sich nicht beirren. Es packte seine sieben Versalien, schob sich sein Initial in den Gürtel und machte sich auf den Weg. Als es die ersten Hügel des Kursivgebirges erklommen hatte, warf es einen letzten Blick zurück auf die Skyline seiner Heimatstadt Buchstabhausen, die Headline von Alphabetdorf und die Subline seiner eigenen Straße, der Zeilengasse. Wehmütig lief ihm eine rhetorische Frage über die Wange, dann setzte es seinen Weg fort. Unterwegs traf es eine Copy. Die Copy warnte das Blindtextchen, da, wo sie herkäme wäre sie...",
-            'path': "/a.1/b.2.neut.4",
-            'isFollowing': 0,
-            'isFlagging': 0},
-        'node': {
-            'authors': ["Hugo", "Karl"],
-            'fullTitle': "Nodetitel",
-            'snippet': "Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben da sind und wie sie aussehen. Manchmal benutzt man Worte wie Hamburgefonts, Rafgenduks oder Handgloves, um Schriften zu testen. Manchmal Sätze, die alle Buchstaben des Alphabets enthalten - man nennt diese Sätze »Pangrams«. Sehr bekannt ist dieser: The quick brown fox jumps over the lazy old dog. Oft werden in Typoblindtexte auch fremdsprachige Satzteile eingebaut (AVAIL® and Wefox™ are testing aussi la Kerning), um die Wirkung in anderen Sprachen zu testen. In Lateinisch sieht zum Beispiel fast jede Schrift gut aus. Quod erat demonstrandum. Seit 1975 fehlen in den meisten Testtexten die Zahlen, weswegen nach TypoGb. 204 § ab dem Jahr 2034 Zahlen in 86 der Texte zur Pflicht werden. Nichteinhaltung wird mit bis zu 245 € oder 368 $ bestraft. Genauso wichtig in sind mittlerweile auch Âçcèñtë, die in neueren Schriften aber fast immer enthalten sind. Ein wichtiges aber schwierig zu integrierendes Feld sind OpenType-Funktionalitäten. Je nach Software und Voreinstellungen können eingebaute Kapitälchen, Kerning oder Ligaturen (sehr pfiffig) nicht richtig dargestellt werden.Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben da sind und wie sie aussehen. Manchmal benutzt man Worte wie Hamburgefonts, Rafgenduks...",
-            'path': "/a.1/b.2",
-            'isFollowing': 0,
-            'isFlagging': 0}},
-        {'argument': {
-            'authors': ["Achim", "Bechim", "Cechim"],
-            'fullTitle': "Testargument2",
-            'snippet': "2 Bla bla bla bla bla...",
-            'path': "/a.1/b.2.neut.4",
-            'isFollowing': 0,
-            'isFlagging': 0},
-        'node': {
-            'authors': ["Achim", "Bechim", "Cechim"],
-            'fullTitle': "Nodetitel2",
-            'snippet': "Blubb 2 blubb blubb blubb...",
-            'path': "/a.1/b.2.neut.4",
-            'isFollowing': 0,
-            'isFlagging': 0}},
-        {'argument': {
-            'authors': ["Achim", "Bechim", "Cechim"],
-            'fullTitle': "Testargument3",
-            'snippet': "3 Bla bla bla bla bla...",
-            'path': "/a.1/b.2",
-            'isFollowing': 0,
-            'isFlagging': 0},
-        'node': {
-            'authors': ["Achim", "Bechim", "Cechim"],
-            'fullTitle': "Nodetitel3",
-            'snippet': "Blubb 3 blubb blubb blubb...",
-            'path': "/a.1/b.2",
-            'isFollowing': 0,
-            'isFlagging': 0}}
-    ];
+    $scope.markNode = Backend.markNode;
+    $scope.cards = [];
+    Backend.loadArgumentNews($scope.cards);
 }
 
 FindecoArgumentNewsCtrl.$inject = ['$scope', 'Backend', 'User', '$location'];
