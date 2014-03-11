@@ -47,6 +47,9 @@ angular.module('FindecoGraphDataService', [])
             node.newFollows  = newNode.newFollows;
             node.title       = newNode.title;
             node.originGroup = newNode.originGroup;
+            node.pieChart[0] = newNode.newFollows;
+            node.pieChart[1] = newNode.follows - newNode.newFollows;
+            node.pieChart[2] = newNode.unFollows;
             return node;
         };
 
@@ -74,6 +77,7 @@ angular.module('FindecoGraphDataService', [])
             // add new nodes and set initial position
             for (var i = 0; i < loadedGraph.length; i++) {
                 node = loadedGraph[i];
+                node.pieChart = [node.newFollows, node.follows - node.newFollows, node.unFollows];
                 node.x = graphData.svg_width/2 + 10 * i * Math.pow(-1, i);
                 node.y = graphData.svg_height/2 + i;
                 nodes.push(node);

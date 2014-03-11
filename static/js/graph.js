@@ -117,7 +117,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
             '<div id="tooltip" style="position: absolute; top: 0px; left: 0px; visibility: hidden;"></div> ',
 
         link : function (scope, element /*, attr*/) {
-            scope.nodes = GraphData.nodes;
+            //scope.nodes = GraphData.nodes;
 
             var svg = d3.select(element[0].children[0])
                 .attr('height', GraphData.svg_height)
@@ -126,12 +126,13 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
             var tooltip = d3.select(element[0].children[1]);
 
             scope.$on('updateGraphEvent', function () {
+                console.log('updateGraphEvent');
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
                     .size([GraphData.svg_width, GraphData.svg_height])
                     .linkDistance(link_distance)
-                    .nodes(scope.nodes)
+                    .nodes(GraphData.nodes)
                     .links(GraphData.links)
                     .start();
 
@@ -146,7 +147,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                 link.exit().remove();
                 // add a svg:group for all nodes
                 var node = svg.select('#nodes').selectAll(".nodeGroup")
-                    .data(scope.nodes);
+                    .data(GraphData.nodes);
 
                 var nodegroup = node.enter().append("g")
                     .attr("class", function (d) {
@@ -205,22 +206,25 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                         var s = d.path.split(".");
                         return s[s.length - 1]; });
 
-                nodegroup.selectAll("path")
+                var pieChart = node.selectAll("path")
                     .data(function(d) {
-                        return pie([d.newFollows, d.follows - d.newFollows, d.unFollows]);
-                    })
-                    .enter().append("svg:path")
-                    .attr("d", arc)
-                    .attr("r", 100)
+                        return pie(d.pieChart);
+                    });
+
+                pieChart.enter().append("svg:path")
                     .attr("class", function(d, i) {
                         return "pieChartPart " + pie_chart_classes[i];
+                    });
+
+                pieChart.attr("d", function(d, i) {
+                        return arc(d, i);
                     });
 
                 node.exit().remove();
 
                 force.on("tick", function() {
                     var svg_height_new = GraphData.svg_height;
-                    nodegroup.attr('transform', function(d) {
+                    node.attr('transform', function(d) {
                         var r = node_radius * scale(d.follows);
                         // make sure nodes don't exit the sides or the top
                         d.x = Math.max(Math.min(d.x, GraphData.svg_width - r - 5), r + 1);
