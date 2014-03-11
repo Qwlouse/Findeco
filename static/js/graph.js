@@ -214,11 +214,21 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                 pieChart.enter().append("svg:path")
                     .attr("class", function(d, i) {
                         return "pieChartPart " + pie_chart_classes[i];
-                    });
+                    })
+                    .each(function(d) { this._current = d; });
 
-                pieChart.attr("d", function(d, i) {
-                        return arc(d, i);
-                    });
+                // Animate the pie chart
+                // taken from here: http://bl.ocks.org/mbostock/1346410
+                function arcTween(a) {
+                    var i = d3.interpolate(this._current, a);
+                    this._current = i(0);
+                    return function(t) {
+                        return arc(i(t));
+                    };
+                }
+
+                pieChart.transition().duration(1000)
+                    .attrTween("d", arcTween);
 
                 node.exit().remove();
 
