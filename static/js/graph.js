@@ -126,7 +126,6 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
             var tooltip = d3.select(element[0].children[1]);
 
             scope.$on('updateGraphEvent', function () {
-                console.log('updateGraphEvent');
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
@@ -235,7 +234,14 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                 force.on("tick", function() {
                     var svg_height_new = GraphData.svg_height;
                     node.attr('transform', function(d) {
-                        var r = node_radius * scale(d.follows + 1);
+                        var s = scale(d.follows + 1);
+                        if (d._current_scale > s) {
+                            d._current_scale = d._current_scale - Math.min(0.005, d._current_scale - s);
+                        } else {
+                            d._current_scale = d._current_scale + Math.min(0.005, s - d._current_scale);
+                        }
+
+                        var r = node_radius * d._current_scale;
                         // make sure nodes don't exit the sides or the top
                         d.x = Math.max(Math.min(d.x, GraphData.svg_width - r - 5), r + 1);
                         d.y = Math.max(d.y, r + 1);
@@ -243,7 +249,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                             svg_height_new += Math.min(d.y + r  + 5 - GraphData.svg_height, 5);
 
                         }
-                        return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows + 1) + ')';
+                        return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + d._current_scale + ')';
                     });
                     if (GraphData.svg_height > svg_minHeight) {
                         svg_height_new -= 1;
@@ -258,8 +264,8 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                     link.attr("x1", function(d) { return d.source.x; })
                         .attr("y1", function(d) { return d.source.y;
                         })
-                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows + 1) + 5)})
-                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows + 1) + 5)});
+                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * d.target._current_scale + 5)})
+                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * d.target._current_scale + 5)});
 
 
                 });

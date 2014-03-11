@@ -86,6 +86,7 @@ angular.module('FindecoGraphDataService', [])
                 }
                 node.x = graphData.svg_width/2 + 10 * i * Math.pow(-1, i);
                 node.y = graphData.svg_height/2 + i;
+                node._current_scale = 1;
                 nodes.push(node);
             }
             // map paths to nodes
