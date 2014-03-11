@@ -211,7 +211,7 @@ def load_text(request, path):
 @ViewErrorHandling
 def load_argument_news(request):
     cards = []
-    for argument in Argument.objects.all().order_by("-id")[:20]:
+    for argument in Argument.objects.filter(sources__isnull=True).order_by("-id")[:20]:
         node = argument.concerns
         cards.append({
             'argument': {
