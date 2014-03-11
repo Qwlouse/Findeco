@@ -218,14 +218,18 @@ def load_argument_news(request):
                 'wikiText': argument.text.text,
                 'path': argument.get_a_path(),
                 'isFollowing': get_is_following(request.user.id, argument),
+                'followingCount': argument.votes.count(),
                 'isFlagging': get_is_flagging(request.user.id, argument),
+                'flaggingCount': argument.spam_flags.count(),
                 'authorGroup': [author.username for author in argument.text.authors.all()]
             },
             'node': {
                 'wikiText': node.text.text,
                 'path': node.get_a_path(),
                 'isFollowing': get_is_following(request.user.id, node),
+                'followingCount': node.votes.count(),
                 'isFlagging': get_is_flagging(request.user.id, node),
+                'flaggingCount': node.spam_flags.count(),
                 'authorGroup': [author.username for author in node.text.authors.all()]
             }
         })

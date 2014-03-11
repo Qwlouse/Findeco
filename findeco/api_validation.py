@@ -92,9 +92,18 @@ textNode_schema = {
     'isFlagging': integer,
     'authorGroup': authorGroup_schema
 }
+argumentNewsNode_schema = {
+    'text': string,
+    'path': string,
+    'isFollowing': integer,
+    'followingCount': integer,
+    'isFlagging': integer,
+    'flaggingCount': integer,
+    'authorGroup': authorGroup_schema
+}
 argumentNewsCard_schema = {
-    'argument': textNode_schema,
-    'node': textNode_schema
+    'argument': argumentNewsNode_schema,
+    'node': argumentNewsNode_schema
 }
 loadGraphDataResponse_schema = {
     'loadGraphDataResponse': {
