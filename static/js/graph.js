@@ -235,7 +235,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                 force.on("tick", function() {
                     var svg_height_new = GraphData.svg_height;
                     node.attr('transform', function(d) {
-                        var r = node_radius * scale(d.follows);
+                        var r = node_radius * scale(d.follows + 1);
                         // make sure nodes don't exit the sides or the top
                         d.x = Math.max(Math.min(d.x, GraphData.svg_width - r - 5), r + 1);
                         d.y = Math.max(d.y, r + 1);
@@ -243,7 +243,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                             svg_height_new += Math.min(d.y + r  + 5 - GraphData.svg_height, 5);
 
                         }
-                        return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')';
+                        return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows + 1) + ')';
                     });
                     if (GraphData.svg_height > svg_minHeight) {
                         svg_height_new -= 1;
@@ -258,8 +258,8 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                     link.attr("x1", function(d) { return d.source.x; })
                         .attr("y1", function(d) { return d.source.y;
                         })
-                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 5)})
-                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 5)});
+                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows + 1) + 5)})
+                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows + 1) + 5)});
 
 
                 });
