@@ -28,7 +28,7 @@ findecoApp.controller('FindecoCreateCtrl', function ($scope, $routeParams, Backe
     $scope.settings = {
         type: $routeParams.type
     };
-
+    $scope.tmp = TMP;
     $scope.radioModel = '';
     $scope.initialAlternative = '';
 
@@ -85,14 +85,13 @@ findecoApp.controller('FindecoCreateCtrl', function ($scope, $routeParams, Backe
         //Check that the heading was modified
         var h1Regex = new RegExp('^[^=]*=([a-zA-ZÜÖÄüöäß0-9 -_,:;§@]+)=[^=]');
         var pretextMatches = Message.localize('_editFieldPretext_').match(h1Regex);
-        var inputMatches = $scope.tmp.text.match(h1Regex);
+        var inputMatches = $scope.tmp.textAlternative.match(h1Regex);
         if ((pretextMatches.length > 1) && (inputMatches.length > 1) &&
             (pretextMatches[1].length > 0) &&
             ((pretextMatches[1] == inputMatches[1]) || (inputMatches[1].length == 0))) {
             Message.send('error', '_createHeadingNotChanged_');
             return;
         }
-
         var params = {};
         var test = false;
         switch ($scope.settings.type) {
@@ -176,8 +175,6 @@ findecoApp.controller('FindecoCreateCtrl', function ($scope, $routeParams, Backe
     $scope.cancel = function () {
         history.back();
     };
-
-    $scope.tmp = TMP;
 
     $scope.tmp.text = "";
     $scope.tmp.textAlternative = "";
