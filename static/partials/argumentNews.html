@@ -14,14 +14,18 @@
         </div>
         <div class="refersTo">}</div>
         <div class="half">
-            <div class="authors">
-                <div ng-repeat="author in card.node.authorGroup" style="display: inline-block">
-                    <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
-                </div>:
+            <div style="position: relative">
+                <div class="authors" style="display: inline-block; position: absolute; top: 0;">
+                    <div ng-repeat="author in card.node.authorGroup" style="display: inline-block">
+                        <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
+                    </div>:
+                </div>
+                <div style="float: none; top: 0; right: 27px; display: inline-block; position: absolute" follow-star
+                     show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
+                     width="21" height="21"></div>
+                <div style="float: none; top: 0; right: 0; display: inline-block; position: absolute" spam-mark
+                     show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
             </div>
-            <div spam-mark show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
-            <div follow-star show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
-                 width="21" height="21"></div>
             <h2><a ng-href="{{ card.node.path }}">{{ card.node.fullTitle }}</a></h2>
             <p style="max-height: 8em; overflow-y: hidden" creole wiki-text="card.node.text"></p>
         </div>

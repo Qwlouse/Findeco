@@ -27,7 +27,45 @@
 
 function FindecoArgumentNewsCtrl($scope, Backend, User, $location) {
     $scope.user = User;
-    $scope.markNode = Backend.markNode;
+
+    $scope.markNode = function(markType, nodePath) {
+        var promise = Backend.markNode(markType, nodePath);
+        promise.success(function () {
+            for (var i = 0; i < $scope.cards.length; i++) {
+                var card = $scope.cards[i];
+                if (card['argument'].path == nodePath) {
+                    if (markType == 'follow') {
+                        card['argument'].isFollowing = 2;
+                    }
+                    if (markType == 'unfollow') {
+                        card['argument'].isFollowing = 0;
+                    }
+                    if (markType == 'spam') {
+                        card['argument'].isFlagging = 1;
+                    }
+                    if (markType == 'notspam') {
+                        card['argument'].isFlagging = 0;
+                    }
+                }
+                if (card['node'].path == nodePath) {
+                    if (markType == 'follow') {
+                        card['node'].isFollowing = 2;
+                    }
+                    if (markType == 'unfollow') {
+                        card['node'].isFollowing = 0;
+                    }
+                    if (markType == 'spam') {
+                        card['node'].isFlagging = 1;
+                    }
+                    if (markType == 'notspam') {
+                        card['node'].isFlagging = 0;
+                    }
+                }
+            }
+        });
+        return promise;
+    };
+
     $scope.cards = [];
     Backend.loadArgumentNews($scope.cards);
 }
