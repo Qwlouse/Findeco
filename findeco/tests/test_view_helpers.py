@@ -415,6 +415,7 @@ class StoreStructureNodeTest(TestCase):
                 0].text.text, "Text 2")
         self.assertIn(self.mustermann,
                       self.slot.children.all()[1].text.authors.all())
+        self.assertEqual(node.votes.count(), 1)
 
     def test_store_non_existent_path(self):
         node, path = store_structure_node("Flopp.4576",

@@ -161,7 +161,6 @@ def load_node(request, path):
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def load_graph_data(request, path, graph_data_type):
-    print(graph_data_type)
     if not path.strip('/'):  # root node!
         nodes = [backend.get_root_node()]
         related_nodes = []
