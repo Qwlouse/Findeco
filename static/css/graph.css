@@ -36,11 +36,11 @@ div.graph .arrowHead {
     fill: #6d6d6d;
 }
 
-div.graph .active.nodeBackgroundCircle {
+div.graph .active .nodeBackgroundCircle {
     fill: #2d7cc4;
 }
 
-div.graph .nodeBackgroundCircle {
+div.graph .inactive .nodeBackgroundCircle {
     fill: #DDD;
 }
 
@@ -48,20 +48,20 @@ div.graph .nodeShadow {
     fill: #999;
 }
 
-div.graph .nodeLabel {
+div.graph .inactive .nodeLabel {
     fill: #e07b01;
     font-weight: bold;
 }
 
-div.graph .nodeGroup:hover .nodeLabel {
+div.graph .inactive.nodeGroup:hover .nodeLabel {
     fill: #2d7cc4;
 }
 
-div.graph .nodeGroup:hover .nodeLabel.active {
+div.graph .active.nodeGroup:hover .nodeLabel {
     fill: #fff;
 }
 
-div.graph .active.nodeLabel {
+div.graph .active .nodeLabel {
     font-weight: bold;
     fill: #fff;
 }
@@ -133,4 +133,28 @@ div #tooltip {
 
 .diffButtonText:hover{
     fill: #2d7cc4;
+}
+
+.active .pieChartPart.newFollow {
+    fill: #ffffff;
+}
+
+.active .pieChartPart.follow {
+    fill: #999999;
+}
+
+.active .pieChartPart.unfollow {
+    fill: #333333;
+}
+
+.inactive .pieChartPart.newFollow {
+    fill: #EEEEEE;
+}
+
+.inactive .pieChartPart.follow {
+    fill: #BBBBBB;
+}
+
+.inactive .pieChartPart.unfollow {
+    fill: #555555;
 }

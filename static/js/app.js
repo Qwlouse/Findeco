@@ -32,6 +32,7 @@ var findecoApp = angular.module(
          'FindecoBackendService',
          'FindecoUserService',
          'FindecoNavigatorService',
+         'FindecoGraphDataService',
          'localization',
          'ui.bootstrap']
     )

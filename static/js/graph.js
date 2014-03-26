@@ -22,8 +22,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-var minHeight = 150;
-
 /////////////////////// Helpers ////////////////////////////////////////////////
 /**
  * Helper function that calculates the x value of an endpoint of a line such
@@ -37,7 +35,7 @@ function endx(source, target, r) {
     if (Math.abs(source.x - target.x) < 1e-6) {
         var b = 0;
     } else {
-        ratio = Math.abs((source.y - target.y) / (source.x - target.x));
+        var ratio = Math.abs((source.y - target.y) / (source.x - target.x));
         b = r/Math.sqrt(ratio * ratio + 1);
     }
     if ((source.x - target.x) > 0) {
@@ -77,120 +75,86 @@ function endy(source, target, r) {
     <div findeco-graph data="data"></div>
 */
 
-findecoApp.directive('findecoGraph', function( ) {
-    // Parameters
-    var svg_width = 580,
-        svg_height = minHeight;
+findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
+    //------------------/ Parameters /--------------//
+    var svg_minHeight = 150;
     var node_radius = 20;
+    var node_innerRadius = 14;
+    var link_distance = 80;
 
-    // colors are like this [active.newFollow, active.follow, active.unfollow,
-    //                   inactive.newFollow, inactive.follow, inactive.unfollow]
-    var pie_chart_colors = ["#ffffff", "#999999", "#333333",
-                            "#eeeeee", "#BBBBBB", "#555555"];
+    var pie_chart_classes = ["newFollow", "follow", "unfollow"];
     var scale = d3.scale.log() // scaling of follows to node-size
-        .domain([1, 1000])
+        .domain([1, 100])
         .range([1, 2])
         .clamp(true);
     var pie = d3.layout.pie() // the pie layout for the nodes
         .sort(null);
     var arc = d3.svg.arc()    // the arc for the pie layout
         .outerRadius(node_radius)
-        .innerRadius(14);
+        .innerRadius(node_innerRadius);
 
+
+    //------------------/ Directive /--------------//
     return {
         restrict : 'A',
         scope: {
-            data: '=',
-            path: '='
         },
+        template:
+            '<svg>' +
+                '<defs>' +
+                    '<marker class="arrowHead" orient="auto" markerHeight="5" markerWidth="5" refX="5" viewBox="0 -5 10 10" id="ArrowHead">' +
+                        '<path d="M0,-5L10,0L0,5"></path>' +
+                    '</marker>' +
+                '</defs>'+
+                '<defs>'+
+                    '<filter id="blur">'+
+                        '<feGaussianBlur stdDeviation="2"></feGaussianBlur>'+
+                    '</filter>'+
+                '</defs>'+
+                '<g id="links"></g>' +
+                '<g id="nodes"></g>' +
+            '</svg>' +
+            '<div id="tooltip" style="position: absolute; top: 0px; left: 0px; visibility: hidden;"></div> ',
 
-        link : function (scope, element, attrs) {
-            // create svg container
-            var parent = d3.select(element[0]);
-            var svg = parent.append("svg")
-                .attr("width", svg_width)
-                .attr("height", svg_height);
+        link : function (scope, element /*, attr*/) {
+            //scope.nodes = GraphData.nodes;
 
-            var tooltip = parent.append("div")
-                .style("position", "absolute")
-                .style("top", "0px")
-                .style("left", "0px")
-                .attr("id", "tooltip")
-                .style("visibility", "hidden")
-                .html("Ein <b>toller</b> Knoten!");
+            var svg = d3.select(element[0].children[0])
+                .attr('height', GraphData.svg_height)
+                .attr('width', GraphData.svg_width);
 
-            // add arrowhead
-            var defs = svg.append("svg:defs");
-            var marker = defs.append("svg:marker")
-                .attr("id", "ArrowHead")
-                .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 5)
-                .attr("markerWidth", 5)
-                .attr("markerHeight", 5)
-                .attr("orient", "auto")
-                .attr("class", "arrowHead")
-                .append("svg:path")
-                .attr("d", "M0,-5L10,0L0,5");
+            var tooltip = d3.select(element[0].children[1]);
 
-            var filter = svg.append("svg:defs")
-                .append("svg:filter")
-                .attr("id", "blur")
-                .append("svg:feGaussianBlur")
-                .attr("stdDeviation", 2);
-
-            scope.$watch('data', function (nodes) {
-                if (nodes == undefined) {
-                    return;
-                }
-                var links = [];
-                // map paths to nodes
-                var node_map = d3.map({});
-                for (var i = 0; i < nodes.length; i++) {
-                    node_map.set(nodes[i].path, nodes[i]);
-                    nodes[i].active = false;
-                    nodes[i].x = svg_width/2 + 10 * i * Math.pow(-1,i);
-                    nodes[i].y = svg_height/2 + i;
-                }
-                // currently selected node is active
-                if (node_map.has(scope.path)) {
-                    node_map.get(scope.path).active = true;
-                }
-                // construct the links
-                for (i = 0; i < nodes.length; i++) {
-                    var n = nodes[i];
-                    for (var j = 0; j < n.originGroup.length; j++) {
-                        links.push({"source": node_map.get(n.originGroup[j]), "target": n});
-                    }
-                }
-
-
-
+            scope.$on('updateGraphEvent', function () {
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
-                    .size([svg_width, svg_height])
-                    .linkDistance(80)
-                    .nodes(nodes)
-                    .links(links)
+                    .size([GraphData.svg_width, GraphData.svg_height])
+                    .linkDistance(link_distance)
+                    .nodes(GraphData.nodes)
+                    .links(GraphData.links)
                     .start();
 
                 // add the links first so they will be underneath the nodes
-                var link = svg.selectAll(".link")
-                    .data(links)
-                    .enter().append("line")
+                var link = svg.select('#links').selectAll(".link")
+                    .data(GraphData.links);
+
+                link.enter().append("line")
                     .attr("class", "link")
                     .attr("marker-end", "url(#ArrowHead)");
 
+                link.exit().remove();
                 // add a svg:group for all nodes
-                var node = svg.selectAll(".node")
-                    .data(nodes)
-                    .enter().append("g")
+                var node = svg.select('#nodes').selectAll(".nodeGroup")
+                    .data(GraphData.nodes);
+
+                var nodegroup = node.enter().append("g")
                     .attr("class", function (d) {
-                        if (d.active) return "nodeGroup";
+                        if (d.path == Navigator.nodePath) {
+                            return "nodeGroup active";
+                        }
                         else return "nodeGroup inactive";
                     })
-//                    .attr("class", "nodeGroup")
-                    //.attr("title", function (d) { return d.path; })
                     .call(force.drag)
                     .on("mouseover", function(d){
                         tooltip.html("<b>" + d.title + "</b>" +
@@ -203,17 +167,16 @@ findecoApp.directive('findecoGraph', function( ) {
                     .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
                     .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
-                node.append("circle")  // shadow
+                nodegroup.append("circle")  // shadow
                     .attr("r", node_radius)
                     .attr("class", "nodeShadow")
                     .attr("filter", "url(#blur)")
                     .attr('transform', "translate(2, 2)");
 
-                var diff_button_group = node.append("svg:a")  // diff-button
+                var diff_button_group = nodegroup.append("svg:a")  // diff-button
                     .attr("xlink:href", function (d) {return '/diff/' + scope.path + '?compare=' + d.path; })
                     .append("g")
                     .attr('transform', "translate(-" + (node_radius-3) + ", -" + (node_radius-3) + ")");
-
 
                 diff_button_group
                     .append("circle")
@@ -227,71 +190,82 @@ findecoApp.directive('findecoGraph', function( ) {
                     .attr("class", "diffButtonText")
                     .text('diff');
 
-                var g = node.append("g").append("svg:a")  // Node Center Group
+                var g = nodegroup.append("g").append("svg:a")  // Node Center Group
                   .attr("xlink:href", function (d) {return '/' + d.path; });
 
                 g.append("circle")  // Center Circle
-                    .attr("class", function (d) {
-                        if (d.active) return "active nodeBackgroundCircle";
-                        else return "nodeBackgroundCircle";
-                    })
+                    .attr("class", "nodeBackgroundCircle")
                     .attr("r", node_radius);
 
                 g.append("text")  // Node number
-                    .attr("class", function (d) {
-                        if (d.active) return "active nodeLabel";
-                        else return "nodeLabel";
-                    })
+                    .attr("class", "nodeLabel")
                     .attr("dy", ".35em")
                     .attr("text-anchor", "middle")
                     .text(function(d) {           // display only index as text
                         var s = d.path.split(".");
                         return s[s.length - 1]; });
 
-                node.selectAll("path")
+                var pieChart = node.selectAll("path")
                     .data(function(d) {
-                        if (d.active) {
-                            return pie([ d.newFollows, d.follows - d.newFollows, d.unFollows, 0, 0, 0]);
-                        } else {
-                            return pie([ 0, 0, 0, d.newFollows, d.follows - d.newFollows, d.unFollows]);
-                        }
+                        return pie(d.pieChart);
+                    });
+
+                pieChart.enter().append("svg:path")
+                    .attr("class", function(d, i) {
+                        return "pieChartPart " + pie_chart_classes[i];
                     })
-                    .enter().append("svg:path")
-                    .attr("d", arc)
-                    .attr("r", 100)
-                    .style("fill", function(d, i) {return pie_chart_colors[i];});
+                    .each(function(d) { this._current = d; });
 
+                // Animate the pie chart
+                // taken from here: http://bl.ocks.org/mbostock/1346410
+                function arcTween(a) {
+                    var i = d3.interpolate(this._current, a);
+                    this._current = i(0);
+                    return function(t) {
+                        return arc(i(t));
+                    };
+                }
 
-                force.on("tick", function(e) {
+                pieChart.transition().duration(1000)
+                    .attrTween("d", arcTween);
 
-                    var svg_height_new = svg_height;
+                node.exit().remove();
+
+                force.on("tick", function() {
+                    var svg_height_new = GraphData.svg_height;
                     node.attr('transform', function(d) {
-                        var r = node_radius * scale(d.follows);
+                        var s = scale(d.follows + 1);
+                        if (d._current_scale > s) {
+                            d._current_scale = d._current_scale - Math.min(0.005, d._current_scale - s);
+                        } else {
+                            d._current_scale = d._current_scale + Math.min(0.005, s - d._current_scale);
+                        }
+
+                        var r = node_radius * d._current_scale;
                         // make sure nodes don't exit the sides or the top
-                        d.x = Math.max(Math.min(d.x, svg_width - r - 5), r + 1);
+                        d.x = Math.max(Math.min(d.x, GraphData.svg_width - r - 5), r + 1);
                         d.y = Math.max(d.y, r + 1);
                         if (d.y + r + 5 > svg_height_new)  {
-                            svg_height_new += Math.min(d.y + r  + 5 - svg_height, 5);
+                            svg_height_new += Math.min(d.y + r  + 5 - GraphData.svg_height, 5);
 
                         }
-                        return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + scale(d.follows) + ')';
+                        return  'translate(' + d.x + ',' + d.y + ')' + ' scale(' + d._current_scale + ')';
                     });
-                    if (svg_height > minHeight) {
+                    if (GraphData.svg_height > svg_minHeight) {
                         svg_height_new -= 1;
-
                     }
-                    if (svg_height_new != svg_height) {
-                        svg_height = svg_height_new;
-                        force.size([svg_width, svg_height]);
-                        svg.attr("height", svg_height);
+                    if (svg_height_new != GraphData.svg_height) {
+                        GraphData.svg_height = svg_height_new;
+                        force.size([GraphData.svg_width, GraphData.svg_height]);
+                        svg.attr("height", GraphData.svg_height);
                     }
 
                     // modify the links and the nodes
                     link.attr("x1", function(d) { return d.source.x; })
                         .attr("y1", function(d) { return d.source.y;
                         })
-                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * scale(d.target.follows) + 5)})
-                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * scale(d.target.follows) + 5)});
+                        .attr("x2", function(d) { return endx(d.source, d.target, node_radius * d.target._current_scale + 5)})
+                        .attr("y2", function(d) { return endy(d.source, d.target, node_radius * d.target._current_scale + 5)});
 
 
                 });

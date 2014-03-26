@@ -170,8 +170,6 @@ INSTALLED_APPS = (
     'libs.django_cron'     # Cron Jobs
 )
 
-TEST_RUNNER = str('django_nose.NoseTestSuiteRunner')
-
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

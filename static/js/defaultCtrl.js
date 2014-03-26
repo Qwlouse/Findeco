@@ -25,7 +25,7 @@
 'use strict';
 
 findecoApp.controller('FindecoDefaultCtrl',
-    function($scope, $location, $controller, Backend, User, Navigator, Fesettings) {
+    function($scope, $location, $controller, Backend, Fesettings, GraphData, Navigator, User) {
 
     $scope.nav = Navigator;
     $scope.user = User;
@@ -42,16 +42,23 @@ findecoApp.controller('FindecoDefaultCtrl',
     $scope.nodeInfo.path = $scope.nav.argumentPath;
     $scope.sections = [];
 
+    $scope.graphType = 'full';
+
     $scope.relocate = function (target) {
         $location.path(target + '/' + $scope.nav.nodePath);
     };
 
     $scope.markNode = Backend.markNode;
 
+    $scope.markMainNode = function(markType, nodePath) {
+        return Backend.markNode(markType, nodePath).success(function() {
+            GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType);
+        });
+    };
 
     $scope.updateGraph = function () {
-        Backend.loadGraphData($scope.graphData, $scope.nav.nodePath).success(function (data) {
-            $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
+        $scope.isLoadingGraph =true;
+        GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType).success(function () {
             $scope.isLoadingGraph =false;
         });
     };
@@ -115,7 +122,6 @@ findecoApp.controller('FindecoDefaultCtrl',
 
     $scope.initialize = function () {
         $scope.isLoadingNode =true;
-        $scope.isLoadingGraph =true;
         $scope.updateNode();
         $scope.updateGraph();
        
@@ -123,5 +129,7 @@ findecoApp.controller('FindecoDefaultCtrl',
     $scope.isLoading = function (){
     	return $scope.isLoadingNode || $scope.isLoadingGraph;
     };
+
     $scope.initialize();
+
 });

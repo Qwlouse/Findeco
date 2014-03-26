@@ -260,17 +260,12 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None,
     return graph_data_node
 
 
-def store_structure_node(path, wiki_text, author, argument=None):
+def store_structure_node(path, wiki_text, author):
     slot_path = path.rsplit('.', 1)[0]
     slot = get_node_for_path(slot_path)
     structure_schema = backend.parse(wiki_text, None)
-    clone_candidates = None
-    if argument:
-        clone_candidates = slot.children.all()
     structure_node = backend.create_structure_from_structure_node_schema(
-        structure_schema, slot, author, clone_candidates)
-    # add auto follow
-    create_vote(author, [structure_node])
+        structure_schema, slot, author)
     return structure_node, get_good_path_for_structure_node(structure_node,
                                                             slot, slot_path)
 
@@ -356,12 +351,11 @@ def fork_node_and_add_slot(path, user, wiki_text):
     short_title = turn_into_valid_short_title(schema['title'], short_titles)
     new_slot = create_slot(short_title)
     fork.append_child(new_slot)
-    node = create_structure_from_structure_node_schema(schema, new_slot, user)
+    create_structure_from_structure_node_schema(schema, new_slot, user)
     arg_title = "Abschnitt über '{0}' fehlt.".format(schema['title'])
     source_node.add_derivate(fork, 'con', arg_title, authors=[user])
     # auto follow
     follow_node(fork, user.id)
-    follow_node(node, user.id)
     return fork_path
 
 
