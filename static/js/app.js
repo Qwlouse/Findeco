@@ -59,8 +59,8 @@ var findecoApp = angular.module(
             when('/news', {templateUrl: '/static/partials/news.html', controller: FindecoNewsCtrl}).
             when('/microblogging', {templateUrl: '/static/partials/microbloggingNews.html', controller: FindecoMicrobloggingNewsCtrl}).
             when('/arguments', {templateUrl: '/static/partials/argumentNews.html', controller: FindecoArgumentNewsCtrl}).
+            when('/', {templateUrl: '/static/partials/argumentNews.html', controller: FindecoArgumentNewsCtrl}).
             when('/search/:searchString*', {templateUrl: '/static/partials/searchResults.html', controller: FindecoSearchCtrl}).
-            when('/', {templateUrl: '/static/partials/start.html', controller: 'FindecoDefaultCtrl'}).
             when('/start', {templateUrl: '/static/partials/start.html', controller: 'FindecoDefaultCtrl'}).
             when('/index', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
             when('/index.htm', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
