@@ -64,6 +64,7 @@ class LoadArgumentNewsTest(TestCase):
         self.textnode13 = create_textNode('Daaatenschutz', authors=[self.hans])
         self.slot13.append_child(self.textnode13)
 
+        self.arguments = []
         for i in range(1, 25):
             arg = create_argument(self.textnode11, 'p', "Argument" + str(i),
                                   "Text of argument no. " + str(i), [self.hugo, self.hans])
@@ -71,6 +72,7 @@ class LoadArgumentNewsTest(TestCase):
             if i % 2 == 1:
                 create_vote(self.hans, [arg])
                 create_spam_flag(self.hugo, [arg])
+            self.arguments.append(arg)
 
     def test_returns_last_arguments(self):
         response = self.client.get(reverse('load_argument_news'))
@@ -90,3 +92,27 @@ class LoadArgumentNewsTest(TestCase):
             else:
                 self.assertEqual(resultEntry['argument']['followingCount'], 2)
                 self.assertEqual(resultEntry['argument']['flaggingCount'], 1)
+
+    def test_derivate_arguments_are_left_out(self):
+        self.arguments[0].add_derivate(self.arguments[1])
+        self.arguments[1].add_derivate(self.arguments[2])
+        self.arguments[3].add_derivate(self.arguments[4])
+        self.arguments[5].add_derivate(self.arguments[6])
+        self.arguments[7].add_derivate(self.arguments[8])
+        self.arguments[9].add_derivate(self.arguments[10])
+
+        response = self.client.get(reverse('load_argument_news'))
+        parsed = json.loads(response.content)
+        self.assertIn('loadArgumentNewsResponse', parsed)
+        self.assertEqual(len(parsed['loadArgumentNewsResponse']), 18)
+        numbers = [24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 10, 8, 6, 4, 1]
+        for number, resultEntry in enumerate(parsed['loadArgumentNewsResponse']):
+            self.assertEqual(resultEntry['node']['path'], u'Wahlprogramm.1/Transparenz.1')
+            self.assertListEqual(resultEntry['node']['authorGroup'], [u'hans'])
+            self.assertEqual(resultEntry['node']['fullTitle'], u'Traaaansparenz')
+            self.assertEqual(
+                resultEntry['argument']['path'],
+                u'Wahlprogramm.1/Transparenz.1.pro.' + str(numbers[number])
+            )
+            self.assertListEqual(resultEntry['argument']['authorGroup'], [u'hans', u'hugo'])
+            self.assertEqual(resultEntry['argument']['fullTitle'], u'Argument' + str(numbers[number]))
