@@ -1,7 +1,7 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
     <div class="contentBox paddedContent" ng-repeat="card in cards">
         <div class="half">
-            <div class="authors">
+            <div class="authors" style="display: inline-block; position: relative; top: 8px;">
                 <div ng-repeat="author in card.argument.authorGroup" style="display: inline-block">
                     <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
                 </div>:
@@ -20,22 +20,20 @@
         </div>
         <div class="refersTo">}</div>
         <div class="half">
-            <div style="position: relative">
-                <div class="authors" style="display: inline-block; position: absolute; top: 0;">
-                    <div ng-repeat="author in card.node.authorGroup" style="display: inline-block">
-                        <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
-                    </div>:
-                </div>
-                <span class="followerCount" style="float: right; position: relative; top: 13px;">
-                    {{ card.node.flaggingCount }}
-                </span>
-                <div spam-mark show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
-                <span class="followerCount" style="float: right; position: relative; top: 13px; margin-right: 8px;">
-                    {{ card.node.followingCount }}
-                </span>
-                <div follow-star show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
-                     width="21" height="21"></div>
+            <div class="authors" style="display: inline-block; position: relative; top: 8px;">
+                <div ng-repeat="author in card.node.authorGroup" style="display: inline-block">
+                    <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
+                </div>:
             </div>
+            <span class="followerCount" style="float: right; position: relative; top: 13px;">
+                {{ card.node.flaggingCount }}
+            </span>
+            <div spam-mark show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
+            <span class="followerCount" style="float: right; position: relative; top: 13px; margin-right: 8px;">
+                {{ card.node.followingCount }}
+            </span>
+            <div follow-star show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
+                 width="21" height="21"></div>
             <h2><a ng-href="{{ card.node.path }}">{{ card.node.fullTitle }}</a></h2>
             <p style="max-height: 8em; overflow-y: hidden" creole wiki-text="card.node.text"></p>
         </div>
