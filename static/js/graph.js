@@ -93,24 +93,13 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
         .outerRadius(node_radius)
         .innerRadius(node_innerRadius);
 
-
     //------------------/ Directive /--------------//
     return {
         restrict : 'A',
         scope: {
         },
         template:
-            '<svg>' +
-                '<defs>' +
-                    '<marker class="arrowHead" orient="auto" markerHeight="5" markerWidth="5" refX="5" viewBox="0 -5 10 10" id="ArrowHead">' +
-                        '<path d="M0,-5L10,0L0,5"></path>' +
-                    '</marker>' +
-                '</defs>'+
-                '<defs>'+
-                    '<filter id="blur">'+
-                        '<feGaussianBlur stdDeviation="2"></feGaussianBlur>'+
-                    '</filter>'+
-                '</defs>'+
+            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
                 '<g id="links"></g>' +
                 '<g id="nodes"></g>' +
             '</svg>' +
@@ -141,7 +130,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
 
                 link.enter().append("line")
                     .attr("class", "link")
-                    .attr("marker-end", "url(#ArrowHead)");
+                    .attr("marker-end", "url(#arrowHead)");
 
                 link.exit().remove();
                 // add a svg:group for all nodes

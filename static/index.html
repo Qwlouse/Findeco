@@ -72,7 +72,6 @@
     <title data-i18n="_pageTitle_"></title>
 </head>
 <body>
-
 <div id="wrap">
     <div id="main">
         <div id="topMenu">
@@ -162,7 +161,22 @@
                 </div>
             </div>
         </div>
-
+        <svg xmlns="http://www.w3.org/2000/svg" height="0" width="0" style="margin: 0; padding:0">
+            <!--
+                Definitions for the graph arrowheads here in a separate svg.
+                This is necessary for correct display in Chrome.
+            -->
+            <defs>
+                <marker id="arrowHead" orient="auto" markerHeight="5"
+                        markerWidth="5" refX="5" viewBox="0 -5 10 10"
+                        class="linkHead">
+                    <path d="M0,-5L10,0L0,5"></path>
+                </marker>
+                <filter id="blur">
+                    <feGaussianBlur stdDeviation="2"></feGaussianBlur>
+                </filter>
+            </defs>
+        </svg>
         <div ng-view></div>
     </div>
     <div id="messageBox" ng-controller="FindecoMessageCtrl" ng-show="service.messageList.length > 0">
