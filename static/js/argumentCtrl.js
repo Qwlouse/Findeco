@@ -84,12 +84,14 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
                 $scope.fullyShow = arg.index;
             }
         }
-        window.setTimeout(function () {
-            $(document.documentElement).animate(
-                {scrollTop: $('#argument' + index).offset().top},
-                'slow'
-            );
-        }, 0);
+        if (index >= 0) {
+            window.setTimeout(function () {
+                $(document.documentElement).animate(
+                    {scrollTop: $('#argument' + index).offset().top},
+                    'slow'
+                );
+            }, 0);
+        }
     };
     
     function amendArguments() {
