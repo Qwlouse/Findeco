@@ -29,14 +29,12 @@
                 <span class="followerCount" style="float: right; position: relative; top: 13px;">
                     {{ card.node.flaggingCount }}
                 </span>
-                <div style="float: none; top: 0; right: 27px; display: inline-block; position: absolute" follow-star
-                     show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
-                     width="21" height="21"></div>
+                <div spam-mark show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
                 <span class="followerCount" style="float: right; position: relative; top: 13px; margin-right: 8px;">
                     {{ card.node.followingCount }}
                 </span>
-                <div style="float: none; top: 0; right: 0; display: inline-block; position: absolute" spam-mark
-                     show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
+                <div follow-star show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
+                     width="21" height="21"></div>
             </div>
             <h2><a ng-href="{{ card.node.path }}">{{ card.node.fullTitle }}</a></h2>
             <p style="max-height: 8em; overflow-y: hidden" creole wiki-text="card.node.text"></p>

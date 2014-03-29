@@ -29,6 +29,17 @@ function FindecoArgumentNewsCtrl($scope, Backend, User, $location) {
     $scope.user = User;
 
     $scope.markNode = function(markType, nodePath) {
+        var markedNode = $scope.cards[0]['argument'];
+        for (var i = 0; i < $scope.cards.length; i++) {
+            if ($scope.cards[i]['argument'].path == nodePath) {
+                markedNode = $scope.cards[i]['argument'];
+            }
+            if ($scope.cards[i]['node'].path == nodePath) {
+                markedNode = $scope.cards[i]['node'];
+            }
+        }
+        var markedNodeOldIsFollowing = markedNode.isFollowing;
+        var markedNodeOldIsFlagging  = markedNode.isFlagging;
         var promise = Backend.markNode(markType, nodePath);
         promise.success(function () {
             for (var i = 0; i < $scope.cards.length; i++) {
@@ -36,29 +47,53 @@ function FindecoArgumentNewsCtrl($scope, Backend, User, $location) {
                 if (card['argument'].path == nodePath) {
                     if (markType == 'follow') {
                         card['argument'].isFollowing = 2;
+                        if (markedNodeOldIsFollowing == 0) {
+                            card['argument'].followingCount += 1;
+                        }
                     }
                     if (markType == 'unfollow') {
                         card['argument'].isFollowing = 0;
+                        if (markedNodeOldIsFollowing > 0) {
+                            card['argument'].followingCount -= 1;
+                        }
                     }
                     if (markType == 'spam') {
                         card['argument'].isFlagging = 1;
+                        if (markedNodeOldIsFlagging == 0) {
+                            card['argument'].flaggingCount += 1;
+                        }
                     }
                     if (markType == 'notspam') {
                         card['argument'].isFlagging = 0;
+                        if (markedNodeOldIsFlagging > 0) {
+                            card['argument'].flaggingCount -= 1;
+                        }
                     }
                 }
                 if (card['node'].path == nodePath) {
                     if (markType == 'follow') {
                         card['node'].isFollowing = 2;
+                        if (markedNodeOldIsFollowing == 0) {
+                            card['node'].followingCount += 1;
+                        }
                     }
                     if (markType == 'unfollow') {
                         card['node'].isFollowing = 0;
+                        if (markedNodeOldIsFollowing > 0) {
+                            card['node'].followingCount -= 1;
+                        }
                     }
                     if (markType == 'spam') {
                         card['node'].isFlagging = 1;
+                        if (markedNodeOldIsFlagging == 0) {
+                            card['node'].flaggingCount += 1;
+                        }
                     }
                     if (markType == 'notspam') {
                         card['node'].isFlagging = 0;
+                        if (markedNodeOldIsFlagging > 0) {
+                            card['node'].flaggingCount -= 1;
+                        }
                     }
                 }
             }
