@@ -218,7 +218,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                 pieChart.transition().duration(1000)
                     .attrTween("d", arcTween);
 
-                node.exit().remove();
+                node.exit().style("opacity", 1).transition().duration(1000).style("opacity", 0).remove();
 
                 force.on("tick", function() {
                     var svg_height_new = GraphData.svg_height;
