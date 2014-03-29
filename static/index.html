@@ -57,6 +57,11 @@
     <script type="text/javascript" src="/static/js/menuCtrl.js"></script>
     <script type="text/javascript" src="/static/js/microblogCtrl.js"></script>
     <script type="text/javascript" src="/static/js/microbloggingNewsCtrl.js"></script>
+<<<<<<< HEAD
+=======
+    <script type="text/javascript" src="/static/js/argumentNewsCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/navigationCtrl.js"></script>
+>>>>>>> feature/argumentSorting
     <script type="text/javascript" src="/static/js/searchCtrl.js"></script>
     <script type="text/javascript" src="/static/js/syschangeCtrl.js"></script>
     <script type="text/javascript" src="/static/js/parser.js"></script>
@@ -84,8 +89,11 @@
                             Achtung!! Sie sind als Admin User angemeldet
                         </div>
                         <ul>
-                            <li class="{{ getActiveClass('')}} {{ getActiveClass('start')}}">
+                            <li class="{{ getActiveClass('start')}}">
                                 <a href="/start" data-i18n="_start_">Start</a>
+                            </li>
+                            <li class="{{ getActiveClass('')}} {{ getActiveClass('arguments')}}">
+                                <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
                             </li>
                             <li class="{{ getActiveClass('news')}}" ng-show="user.isLoggedIn">
                                 <a href="/news" data-i18n="_news_">News</a>

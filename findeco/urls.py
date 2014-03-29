@@ -127,6 +127,10 @@ urlpatterns = patterns(
         'load_text',
         name='load_text'),
 
+    url(r'^\.json_loadArgumentNews/?$',
+        'load_argument_news',
+        name='load_argument_news'),
+
     url(r'^\.json_loadArgumentIndex/' + RESTRICTED_PATH + '$',
         'load_argument_index',
         name='load_argument_index'),
