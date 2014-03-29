@@ -109,10 +109,5 @@ findecoApp.controller('FindecoArgumentCtrl', function ($scope, Backend,  Navigat
     };
 
     $scope.updateArgumentList();
-<<<<<<< HEAD
-});
-=======
     $scope.showArgumentForPath();
-}
->>>>>>> feature/argumentSorting
-
+});

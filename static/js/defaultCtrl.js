@@ -121,12 +121,7 @@ findecoApp.controller('FindecoDefaultCtrl',
     };
 
     $scope.initialize = function () {
-<<<<<<< HEAD
-        $scope.isLoadingNode =true;
-=======
         $scope.isLoadingNode = true;
-        $scope.isLoadingGraph = true;
->>>>>>> feature/argumentSorting
         $scope.updateNode();
         $scope.updateGraph();
        

@@ -191,20 +191,6 @@ angular.module('FindecoBackendService', [])
                 });
                 return promise;
             },
-
-<<<<<<< HEAD
-=======
-            loadGraphData: function (graphData_out, path, graphType) {
-                if (graphType == undefined) {
-                    graphType = "full";
-                }
-                var url = ['/.json_loadGraphData', graphType, path].join('/');
-                url = url.replace("//", "/");
-                var promise = $http.get(url);
-                promise.success(fillArray(graphData_out, ['loadGraphDataResponse', 'graphDataChildren']));
-                return promise;
-            },
-
             loadArgumentNews: function (cards) {
                 var promise = $http.get('/.json_loadArgumentNews');
                 promise.success(function (d) {
@@ -212,8 +198,6 @@ angular.module('FindecoBackendService', [])
                 });
                 return promise;
             },
-
->>>>>>> feature/argumentSorting
             search: function (searchResults, search_string) {
                 var searchFields = "user_content_microblogging";
                 var promise = $http.get('/.json_search/' + searchFields + '/' + search_string);

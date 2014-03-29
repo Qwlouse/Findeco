@@ -25,7 +25,7 @@
 'use strict';
 /* Controllers */
 
-function FindecoArgumentNewsCtrl($scope, Backend, User, $location) {
+findecoApp.controller('FindecoArgumentNewsCtrl', function ($scope, Backend, User, $location) {
     $scope.user = User;
 
     $scope.markNode = function(markType, nodePath) {
@@ -103,6 +103,4 @@ function FindecoArgumentNewsCtrl($scope, Backend, User, $location) {
 
     $scope.cards = [];
     Backend.loadArgumentNews($scope.cards);
-}
-
-FindecoArgumentNewsCtrl.$inject = ['$scope', 'Backend', 'User', '$location'];
+});
