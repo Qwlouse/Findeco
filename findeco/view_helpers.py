@@ -191,6 +191,7 @@ def create_index_node_for_argument(argument, user_id):
         index=argument.index,
         authorGroup=[create_user_info(a) for a in argument.text.authors.all()],
         isFollowing=get_is_following(user_id, argument),
+        followingCount=argument.votes.count(),
         isFlagging=get_is_flagging(user_id, argument)
     )
     return index_node

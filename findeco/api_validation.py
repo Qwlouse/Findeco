@@ -82,6 +82,7 @@ argumentIndexNode_schema = {
     'text': string,
     'index': integer,
     'isFollowing': integer,
+    'followingCount': integer,
     'isFlagging': integer,
     'authorGroup': authorGroup_schema
 }

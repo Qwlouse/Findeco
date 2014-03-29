@@ -30,7 +30,25 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
     $scope.tmp = TMP;
     $scope.user = User;
 
-    $scope.markNode = Backend.markNode;
+    $scope.markNode = function (markType, nodePath) {
+        var argument = $scope.argumentList[0];
+        for (var i = 0; i < $scope.argumentList.length; i++) {
+            if ($scope.argumentList[i].path == nodePath) {
+                argument = $scope.argumentList[i];
+            }
+        }
+        var oldFollowState = argument.isFollowing;
+        var promise = Backend.markNode(markType, nodePath);
+        promise.success(function () {
+            if (markType == 'follow' && oldFollowState == 0) {
+                argument.followingCount += 1;
+            }
+            if (markType == 'unfollow' && oldFollowState > 0) {
+                argument.followingCount -= 1;
+            }
+        });
+        return promise;
+    };
 
     $scope.argumentList = [];
     $scope.fullyShow = -1;

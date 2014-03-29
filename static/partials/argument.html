@@ -4,8 +4,6 @@
 
     <div style="clear: both"></div>
 
-    {{ nav.argumentPath }}
-
     <div ng-show="argumentList.length < 1" class="tipp" style="text-align: center">
         Es gibt noch keine<br/>Argumente
     </div>
@@ -18,7 +16,7 @@
             </a>
             <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
                   style="float:none; top: 0;"></span>
-            <span class="followerCount">{{ argument.isFollowing }}</span>
+            <span class="followerCount">{{ argument.followingCount }}</span>
             <p creole wiki-text="argument.wikiText"></p>
             <a ng-show="argument.index != fullyShow && argument.text.length > 140"
                ng-click="updateArgumentsWikiText(argument.index)" class="moreLink">... mehr</a>
