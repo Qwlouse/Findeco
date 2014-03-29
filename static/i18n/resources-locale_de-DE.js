@@ -50,6 +50,11 @@
         "description": ""
     },
     {
+        "key"        : "_argumentNews_",
+        "value"      : "Neue Argumente",
+        "description": ""
+    },
+    {
         "key"        : "_argumentsNew_",
         "value"      : "Neues Argument",
         "description": ""

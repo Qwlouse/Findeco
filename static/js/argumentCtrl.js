@@ -29,10 +29,37 @@ findecoApp.controller('FindecoArgumentCtrl', function ($scope, Backend,  Navigat
     $scope.tmp = TMP;
     $scope.user = User;
 
-    $scope.markNode = Backend.markNode;
+    $scope.markNode = function (markType, nodePath) {
+        var argument = $scope.argumentList[0];
+        for (var i = 0; i < $scope.argumentList.length; i++) {
+            if ($scope.argumentList[i].path == nodePath) {
+                argument = $scope.argumentList[i];
+            }
+        }
+        var oldFollowState = argument.isFollowing;
+        var promise = Backend.markNode(markType, nodePath);
+        promise.success(function () {
+            if (markType == 'follow' && oldFollowState == 0) {
+                argument.followingCount += 1;
+            }
+            if (markType == 'unfollow' && oldFollowState > 0) {
+                argument.followingCount -= 1;
+            }
+        });
+        return promise;
+    };
 
     $scope.argumentList = [];
     $scope.fullyShow = -1;
+
+    $scope.showArgumentForPath = function () {
+        for (var i = 0; i < $scope.argumentList.length; i++) {
+            if (Navigator.argumentPath == $scope.argumentList[i].path) {
+                $scope.fullyShow = $scope.argumentList[i].index;
+            }
+        }
+        $scope.updateArgumentsWikiText($scope.fullyShow);
+    };
     
     $scope.isLoading = function (){
     	return $scope.argumentIsLoading;
@@ -56,12 +83,14 @@ findecoApp.controller('FindecoArgumentCtrl', function ($scope, Backend,  Navigat
                 $scope.fullyShow = arg.index;
             }
         }
-        window.setTimeout(function () {
-            $(document.documentElement).animate(
-                {scrollTop: $('#argument' + index).offset().top},
-                'slow'
-            );
-        }, 0);
+        if (index >= 0) {
+            window.setTimeout(function () {
+                $(document.documentElement).animate(
+                    {scrollTop: $('#argument' + index).offset().top},
+                    'slow'
+                );
+            }, 0);
+        }
     };
     
     function amendArguments() {
@@ -71,6 +100,7 @@ findecoApp.controller('FindecoArgumentCtrl', function ($scope, Backend,  Navigat
             arg.wikiText = $scope.createArgumentSlug(arg.text);
         }
         $scope.argumentIsLoading  = false;
+        $scope.showArgumentForPath();
     }
 
     $scope.updateArgumentList = function () {
@@ -79,5 +109,10 @@ findecoApp.controller('FindecoArgumentCtrl', function ($scope, Backend,  Navigat
     };
 
     $scope.updateArgumentList();
+<<<<<<< HEAD
 });
+=======
+    $scope.showArgumentForPath();
+}
+>>>>>>> feature/argumentSorting
 
