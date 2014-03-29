@@ -163,20 +163,32 @@ def load_node(request, path):
 def load_graph_data(request, path, graph_data_type):
     if not path.strip('/'):  # root node!
         nodes = [backend.get_root_node()]
-        related_nodes = []
+        # related_nodes = []
     else:
         slot_path = path.rsplit('.', 1)[0]
         slot = assert_node_for_path(slot_path)
-        nodes = backend.get_ordered_children_for(slot)
-        sources = Q(derivates__in=nodes)
-        derivates = Q(sources__in=nodes)
-        related_nodes = backend.Node.objects.filter(sources | derivates). \
-            exclude(id__in=[n.id for n in nodes]).distinct().all()
+        if graph_data_type == "withSpam":
+            # This means display ALL nodes
+            nodes = backend.get_ordered_children_for(slot)
+        else:  # if graph_data_type == 'full':
+            nodes = backend.Node.objects.filter(parents=slot)\
+                .filter(spam_flags__isnull=True).filter(votes__isnull=False).distinct()
+
+        current_node = backend.get_node_for_path(path)
+        nodes = list(nodes)
+        if not current_node in nodes:
+            nodes.append(current_node)
+
+        # sources = Q(derivates__in=nodes)
+        # derivates = Q(sources__in=nodes)
+        # related_nodes = backend.Node.objects.filter(sources | derivates). \
+        #     exclude(id__in=[n.id for n in nodes]).distinct().all()
+
     graph_data_children = map(create_graph_data_node_for_structure_node, nodes)
-    graph_data_related = map(create_graph_data_node_for_structure_node,
-                             related_nodes)
+    # graph_data_related = map(create_graph_data_node_for_structure_node,
+    #                          related_nodes)
     data = {'graphDataChildren': graph_data_children,
-            'graphDataRelated': graph_data_related}
+            'graphDataRelated': []}
     return json_response({'loadGraphDataResponse': data})
 
 

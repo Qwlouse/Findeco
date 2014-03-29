@@ -103,7 +103,10 @@ angular.module('FindecoGraphDataService', [])
             for (i = 0; i < nodes.length; i++) {
                 node = nodes[i];
                 for (var j = 0; j < node.originGroup.length; j++) {
-                    links.push({"source": node_map.get(node.originGroup[j]), "target": node});
+                    var source = node_map.get(node.originGroup[j]);
+                    if (source != undefined) {
+                        links.push({"source": source, "target": node});
+                    }
                 }
             }
             graphData.links = links;
