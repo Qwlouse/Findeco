@@ -44,6 +44,15 @@ svg .inactive .nodeBackgroundCircle {
     fill: #DDD;
 }
 
+svg .inactive .nodeBackgroundCircle.spamCandidate {
+    fill: #dcc;
+}
+
+svg .inactive .nodeBackgroundCircle.spamNode {
+    fill: #daa;
+}
+
+
 svg .nodeShadow {
     fill: #999;
 }

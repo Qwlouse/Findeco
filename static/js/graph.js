@@ -183,7 +183,16 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                   .attr("xlink:href", function (d) {return '/' + d.path; });
 
                 g.append("circle")  // Center Circle
-                    .attr("class", "nodeBackgroundCircle")
+                    .attr("class", function(d) {
+                        if (d.spamFlags == 1 || d.follows == 0) {
+                            return "nodeBackgroundCircle spamCandidate";
+                        } else if (d.spamFlags >= 2 ) {
+                            return "nodeBackgroundCircle spamNode";
+                        } else {
+                            return "nodeBackgroundCircle";
+                        }
+
+                    })
                     .attr("r", node_radius);
 
                 g.append("text")  // Node number
