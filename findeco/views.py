@@ -171,9 +171,8 @@ def load_graph_data(request, path, graph_data_type):
             # This means display ALL nodes
             nodes = backend.get_ordered_children_for(slot)
         else:  # if graph_data_type == 'full':
-            # TODO: For some reason this does not return node id=97 with just 1 spam flag. Why?
             nodes = backend.Node.objects.filter(parents=slot)\
-                .annotate(spam_count=Count('spam_flags'))\
+                .annotate(spam_count=Count('spam_flags', distinct=True))\
                 .filter(spam_count__lt=2)\
                 .filter(votes__isnull=False)
 
