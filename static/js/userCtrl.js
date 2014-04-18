@@ -37,6 +37,8 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, U
     $scope.DPR = false;
 
     $scope.login = function () {
+        $scope.username = document.getElementById('usernameInput').value;
+        $scope.password = document.getElementById('passwordInput').value;
         User.login($scope.username, $scope.password).success(function () {
             Navigator.changePath('/');
         });
