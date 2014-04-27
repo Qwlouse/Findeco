@@ -35,9 +35,17 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
     $scope.TOS = false;
     $scope.DPR = false;
 
-    $scope.login = function () {
+    $scope.force_get_username_password = function() {
+        // HACK to make autofill of browsers work.
+        // This is because browser autofill does not trigger an event, so
+        // Angular does not know about the changes.
+        // therefore we check ourselves to make sure we've got the latest values
         $scope.username = document.getElementById('usernameInput').value;
         $scope.password = document.getElementById('passwordInput').value;
+    };
+
+    $scope.login = function () {
+        $scope.force_get_username_password();
         User.login($scope.username, $scope.password).success(function () {
             Navigator.changePath('/');
         });

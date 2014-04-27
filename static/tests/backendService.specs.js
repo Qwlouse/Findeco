@@ -299,35 +299,6 @@ describe('FindecoBackendService', function () {
         });
     });
 
-    /////////////////////////// loadGraphData /////////////////////////////
-    describe('loadGraphData', function () {
-        it('should have a loadGraphData function', function () {
-            expect(angular.isFunction(backendService.loadGraphData)).toBe(true);
-        });
-
-        it('should call the right path', function () {
-            httpBackend.expectGET('/.loadGraphData/full/pa.1/th.2')
-                .respond(200, {'loadGraphDataResponse': {'graphDataChildren': [3557]}});
-            var results = [];
-            backendService.loadGraphData(results, 'pa.1/th.2', 'full').success(function (data) {
-                expect(data['loadGraphDataResponse']['graphDataChildren'][0]).toBe(3557);
-                expect(results[0]).toBe(3557);
-            });
-            httpBackend.flush();
-        });
-
-        it('should work without supplying the type', function () {
-            httpBackend.expectGET('/.loadGraphData/full/pa.1/th.2')
-                .respond(200, {'loadGraphDataResponse': {'graphDataChildren': [3557]}});
-            var results = [];
-            backendService.loadGraphData(results, 'pa.1/th.2').success(function (data) {
-                expect(data['loadGraphDataResponse']['graphDataChildren'][0]).toBe(3557);
-                expect(results[0]).toBe(3557);
-            });
-            httpBackend.flush();
-        });
-    });
-
     ///////////////////////////// search ///////////////////////////////
     describe('search', function () {
         it('should have a search function', function () {

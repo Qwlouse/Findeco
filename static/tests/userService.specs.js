@@ -347,7 +347,7 @@ describe('FindecoUserService', function() {
                 httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
-                userService.displayName = 'changedName';
+                userService.newDisplayName = 'changedName';
                 expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
 
@@ -477,7 +477,7 @@ describe('FindecoUserService', function() {
                 httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
-                userService.displayName = 'Simon';
+                userService.newDisplayName = 'Simon';
                 expect(userService.hasUnsavedChanges()).toBeTruthy();
                 httpBackend.expectPOST('/.storeSettings/')
                     .respond(storeSettingsResponse);

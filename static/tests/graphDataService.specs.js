@@ -21,56 +21,41 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-describe('FindecoUserCtrl', function() {
-    var scope = {};
-    var ctrl = null;
-    var loginPromise = new PromiseMock();
-    var UserServiceMock = {
-        displayName: 'hugo',
-        login: function() {
-            return loginPromise;
-        }
-    };
+describe('FindecoGraphDataService', function () {
+    var graphDataService, httpBackend;
 
-    beforeEach(function() {
-        angular.mock.module('Findeco');
-        angular.mock.inject(function ($rootScope, $controller) {
-            scope = $rootScope.$new();
-            ctrl = $controller('FindecoUserCtrl', {
-                $scope: scope,
-                Backend: {},
-                Message: {},
-                User: UserServiceMock
-            });
-            // mock out the hack because we don't have correct DOM during tests
-            scope.force_get_username_password = function() {};
-            spyOn(UserServiceMock, 'login').andReturn(loginPromise);
+    //excuted before each "it" is run.
+    beforeEach(function () {
+        //load the module.
+        angular.mock.module('Findeco');  // For Navigator
+        angular.mock.module('FindecoGraphDataService');
+
+        //inject your service for testing.
+        angular.mock.inject(function ($httpBackend, GraphData) {
+            graphDataService = GraphData;
+            httpBackend = $httpBackend
         });
     });
-    it('should be registered', inject(function () {
-        expect(ctrl).not.toBe(null);
-    }));
 
-    it('should expose the UserService as scope.user', function() {
-        expect(scope.user).toBe(UserServiceMock);
-    });
-
-    it('should provide some fields on scope', function() {
-        expect(scope.username).toBeDefined();
-        expect(scope.password).toBeDefined();
-        expect(scope.password2).toBeDefined();
-        expect(scope.mail).toBeDefined();
-        expect(scope.TOS).toBeDefined();
-        expect(scope.DPR).toBeDefined();
-    });
-
-//    describe('the login function', function() {
-        it('should call UserService.login with parameters from scope', function(){
-            scope.username = 'herbert';
-            scope.password = '00000000';
-            scope.login();
-            expect(UserServiceMock.login).toHaveBeenCalledWith(scope.username, scope.password);
+/////////////////////////// loadGraphData /////////////////////////////
+    describe('loadGraphData', function () {
+        it('should have a loadGraphData function', function () {
+            expect(angular.isFunction(graphDataService.loadGraphData)).toBe(true);
         });
-//    });
 
+        it('should call the right path', function () {
+            httpBackend.expectGET('/.loadGraphData/withSpam/pa.1/th.2')
+                .respond(200, {'loadGraphDataResponse': {'graphDataChildren': []}});
+            graphDataService.loadGraphData('pa.1/th.2', 'withSpam');
+            httpBackend.flush();
+        });
+
+        it('should work without supplying the type', function () {
+            httpBackend.expectGET('/.loadGraphData/full/pa.1/th.2')
+                .respond(200, {'loadGraphDataResponse': {'graphDataChildren': []}});
+
+            graphDataService.loadGraphData('pa.1/th.2');
+            httpBackend.flush();
+        });
+    });
 });

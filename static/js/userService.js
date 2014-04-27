@@ -70,6 +70,7 @@ angular.module('FindecoUserService', [])
                 data = d.loginResponse;
                 userInfo.isLoggedIn = true;
                 userInfo.displayName = data.userInfo.displayName;
+                userInfo.newDisplayName = data.userInfo.displayName;
                 userInfo.description = data.userInfo.description;
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.email = data.userSettings.email;
@@ -148,6 +149,7 @@ angular.module('FindecoUserService', [])
                 wantsMailNotification: userInfo.wantsMailNotification,
                 email: userInfo.email}).success(function () {
                     data.userInfo.displayName = userInfo.displayName;
+                    userInfo.newDisplayName = userInfo.displayName;
                     data.userInfo.description = userInfo.description;
                     data.userSettings.email = userInfo.email;
                     data.userSettings.wantsMailNotification = userInfo.wantsMailNotification;
