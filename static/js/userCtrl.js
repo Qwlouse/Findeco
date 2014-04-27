@@ -26,7 +26,6 @@
 
 findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, User ) {
     $scope.user = User;
-    $scope.displayNameTmp = User.displayName;
 
     // used for login and registration
     $scope.username = "";
@@ -72,7 +71,7 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, U
     };
 
     $scope.storeUserSettings = function () {
-        User.displayName = $scope.displayNameTmp;
+        User.displayName = User.newDisplayName;
         User.storeSettings().error(User.loadSettings).success(function () {
             Message.send("success", "_settingsChanged_");
         });

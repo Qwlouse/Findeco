@@ -34,6 +34,7 @@ angular.module('FindecoUserService', [])
             isLoggedIn : false,
             isAdmin    : false,
             displayName: "",
+            newDisplayName: "",
             description: "",
             email      : "",
             rsskey     : "",
@@ -135,6 +136,7 @@ angular.module('FindecoUserService', [])
         };
         userInfo.resetChanges = function () {
             userInfo.displayName = data.userInfo.displayName;
+            userInfo.newDisplayName = data.userInfo.displayName;
             userInfo.description = data.userInfo.description;
             userInfo.email = data.userSettings.email;
             userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
