@@ -41,7 +41,7 @@ class TestFePageStart(LiveServerTestCase):
         self.driver.quit()
 
     def test_check_page_Contents(self):
-        self.driver.get(self.live_server_url)
+        self.driver.get(self.live_server_url + '/start')
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('DisQussion', body.text, "defaut Json file for external content not loaded")
         self.assertNotIn("{", body.text , "Angular not loaded")
