@@ -187,7 +187,7 @@ describe('FindecoBackendService', function () {
         it('should call the right path', function () {
             var markTypes = ['follow', 'unfollow', 'spam', 'notspam'];
             for (var n = 0; n < markTypes.length; n++) {
-                httpBackend.expectGET('/.json_markNode/' + markTypes[n] + '/pa.1/th.2').respond(200, {'call': 1});
+                httpBackend.expectGET('/.markNode/' + markTypes[n] + '/pa.1/th.2').respond(200, {'call': 1});
                 backendService.markNode(markTypes[n], 'pa.1/th.2').success(function (data) {
                     expect(data['call']).toBe(1);
                 });
@@ -219,7 +219,7 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectPOST('/.json_storeText/pa.1/th.2', {'param1': "Blupp", 'param2': 14})
+            httpBackend.expectPOST('/.storeText/pa.1/th.2', {'param1': "Blupp", 'param2': 14})
                 .respond(200, {'call': 1});
             backendService.storeText('pa.1/th.2', {'param1': "Blupp", 'param2': 14}).success(function (data) {
                 expect(data['call']).toBe(1);
@@ -235,7 +235,7 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.json_loadArgumentIndex/pa.1/th.2')
+            httpBackend.expectGET('/.loadArgumentIndex/pa.1/th.2')
                 .respond(200, {'loadArgumentIndexResponse': [1]});
             var results = [];
             backendService.loadArgument(results, 'pa.1/th.2').success(function (data) {
@@ -253,7 +253,7 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.json_loadText/pa.1/th.2')
+            httpBackend.expectGET('/.loadText/pa.1/th.2')
                 .respond(200, {'loadTextResponse': {'paragraphs': ['1','3','4']}});
             var results = [];
             backendService.loadText(results, 'pa.1/th.2').success(function (data) {
@@ -274,7 +274,7 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.json_loadUserInfo/max_mustermann').respond(200, {'call': 1});
+            httpBackend.expectGET('/.loadUserInfo/max_mustermann').respond(200, {'call': 1});
             backendService.loadUserInfo('max_mustermann').success(function (data) {
                 expect(data['call']).toBe(1);
             });
@@ -289,7 +289,7 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.json_loadNode/pa.1/th.2').respond(200, {'loadNodeResponse': [1]});
+            httpBackend.expectGET('/.loadNode/pa.1/th.2').respond(200, {'loadNodeResponse': [1]});
             var results = [];
             backendService.loadNode(results, 'pa.1/th.2').success(function (data) {
                 expect(data['loadNodeResponse'][0]).toBe(1);
@@ -306,7 +306,7 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.json_loadGraphData/full/pa.1/th.2')
+            httpBackend.expectGET('/.loadGraphData/full/pa.1/th.2')
                 .respond(200, {'loadGraphDataResponse': {'graphDataChildren': [3557]}});
             var results = [];
             backendService.loadGraphData(results, 'pa.1/th.2', 'full').success(function (data) {
@@ -317,7 +317,7 @@ describe('FindecoBackendService', function () {
         });
 
         it('should work without supplying the type', function () {
-            httpBackend.expectGET('/.json_loadGraphData/full/pa.1/th.2')
+            httpBackend.expectGET('/.loadGraphData/full/pa.1/th.2')
                 .respond(200, {'loadGraphDataResponse': {'graphDataChildren': [3557]}});
             var results = [];
             backendService.loadGraphData(results, 'pa.1/th.2').success(function (data) {
@@ -335,7 +335,7 @@ describe('FindecoBackendService', function () {
         });
 
         it('should call the right path', function () {
-            httpBackend.expectGET('/.json_search/user_content_microblogging/something')
+            httpBackend.expectGET('/.search/user_content_microblogging/something')
                 .respond(200, {'searchResponse': [12]});
             var results = [];
             backendService.search(results, 'something').success(function (data) {

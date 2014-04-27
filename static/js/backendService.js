@@ -139,7 +139,7 @@ angular.module('FindecoBackendService', [])
             },
 
             markNode: function (markType, nodePath) {
-                var pathComponents = ['/.json_markNode', markType, nodePath];
+                var pathComponents = ['/.markNode', markType, nodePath];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 return $http.get(url);
@@ -153,14 +153,14 @@ angular.module('FindecoBackendService', [])
             },
 
             storeText: function (path, params) {
-                var pathComponents = ['/.json_storeText', path];
+                var pathComponents = ['/.storeText', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
                 return $http.post(url, params);
             },
 
             loadArgument: function (indexNodes_out, path) {
-                var url = ['/.json_loadArgumentIndex', path].join('/');
+                var url = ['/.loadArgumentIndex', path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
                 promise.success(fillArray(indexNodes_out,
@@ -169,7 +169,7 @@ angular.module('FindecoBackendService', [])
             },
 
             loadText: function (paragraphList_out, path) {
-                var url = ['/.json_loadText', path].join('/');
+                var url = ['/.loadText', path].join('/');
                 url = url.replace("//", "/");
                 var promise = $http.get(url);
                 promise.success(fillArray(paragraphList_out,
@@ -178,13 +178,13 @@ angular.module('FindecoBackendService', [])
             },
 
             loadUserInfo: function (user) {
-                var url = ['/.json_loadUserInfo', user].join('/');
+                var url = ['/.loadUserInfo', user].join('/');
                 url = url.replace("//", "/");
                 return $http.get(url);
             },
 
             loadNode: function (nodeInfo, path) {
-                var url = ['/.json_loadNode', path].join('/');
+                var url = ['/.loadNode', path].join('/');
                 var promise = $http.get(url);
                 promise.success(function (d) {
                     angular.copy(d.loadNodeResponse, nodeInfo);
@@ -192,7 +192,7 @@ angular.module('FindecoBackendService', [])
                 return promise;
             },
             loadArgumentNews: function (cards) {
-                var promise = $http.get('/.json_loadArgumentNews');
+                var promise = $http.get('/.loadArgumentNews');
                 promise.success(function (d) {
                     angular.copy(d.loadArgumentNewsResponse, cards);
                 });
@@ -200,7 +200,7 @@ angular.module('FindecoBackendService', [])
             },
             search: function (searchResults, search_string) {
                 var searchFields = "user_content_microblogging";
-                var promise = $http.get('/.json_search/' + searchFields + '/' + search_string);
+                var promise = $http.get('/.search/' + searchFields + '/' + search_string);
 
                 promise.success(function (d) {
                     angular.copy(d.searchResponse, searchResults);

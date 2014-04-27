@@ -66,14 +66,14 @@ describe('FindecoUserService', function() {
     ///////////////// Initialization ///////////////////////////////////////////
     describe('Initialization', function() {
         it('should call loadSettings', function () {
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.expectGET('/.loadUserSettings/').respond(406, '');
             httpBackend.flush();
         });
     });
 
     describe('FindecoUserService', function () {
         beforeEach(function (){
-            httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            httpBackend.expectGET('/.loadUserSettings/').respond(406, '');
             httpBackend.flush();
         });
 
@@ -115,7 +115,7 @@ describe('FindecoUserService', function() {
         //////////////// Login ////////////////////////////////////////////////////
         describe('login function', function() {
             it('should set the userInfo details after successful login', function () {
-                httpBackend.expectPOST('/.json_login/').respond(loginResponse);
+                httpBackend.expectPOST('/.login/').respond(loginResponse);
                 //make the call.
                 userService.login('hugo', '1234');
                 httpBackend.flush();
@@ -131,7 +131,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should set the userInfo details after successful admin login', function () {
-                httpBackend.expectPOST('/.json_login/').respond(adminLoginResponse);
+                httpBackend.expectPOST('/.login/').respond(adminLoginResponse);
                 //make the call.
                 userService.login('admin', '1234');
                 httpBackend.flush();
@@ -146,7 +146,7 @@ describe('FindecoUserService', function() {
         ///////////////// Logout ///////////////////////////////////////////////////
         describe('logout function', function() {
             it('should remove the user details after successful logout', function () {
-                httpBackend.whenGET('/.json_logout/').respond(logoutResponse);
+                httpBackend.whenGET('/.logout/').respond(logoutResponse);
                 userService.logout();
                 httpBackend.flush();
                 expect(userService.isLoggedIn).toBe(false);
@@ -161,8 +161,8 @@ describe('FindecoUserService', function() {
         ///////////////// Registration /////////////////////////////////////////////
         describe('Registration', function() {
             describe('register function', function() {
-                it('should call the .json_accountRegistration api function', function() {
-                    httpBackend.expectPOST('/.json_accountRegistration/', {
+                it('should call the .accountRegistration api function', function() {
+                    httpBackend.expectPOST('/.accountRegistration/', {
                             displayName: 'albert',
                             password: '4321',
                             emailAddress: 'alb@rt.de'})
@@ -174,8 +174,8 @@ describe('FindecoUserService', function() {
             });
 
             describe('activate function', function() {
-                it('should call the .json_accountActivation api function', function() {
-                    httpBackend.expectPOST('/.json_accountActivation/', {
+                it('should call the .accountActivation api function', function() {
+                    httpBackend.expectPOST('/.accountActivation/', {
                                 activationKey: 'ABCDEFG01234567890'})
                         .respond(accountActivationResponse);
 
@@ -188,8 +188,8 @@ describe('FindecoUserService', function() {
         ///////////////// Confirm Email Change /////////////////////////////////////
 
         describe('confirmEmail function', function() {
-            it('should call the .json_emailChangeConfirmation api function', function() {
-                httpBackend.expectPOST('/.json_emailChangeConfirmation/', {
+            it('should call the .emailChangeConfirmation api function', function() {
+                httpBackend.expectPOST('/.emailChangeConfirmation/', {
                             activationKey: 'ABCDEFG01234567890'})
                     .respond(emailChangeConfirmationResponse);
 
@@ -201,8 +201,8 @@ describe('FindecoUserService', function() {
         ///////////////// Recovery /////////////////////////////////////////////////
         describe('Recovery', function() {
             describe('recoverByMail function', function() {
-                it('should call the .json_accountResetRequestByMail api function', function() {
-                    httpBackend.expectPOST('/.json_accountResetRequestByMail/', {
+                it('should call the .accountResetRequestByMail api function', function() {
+                    httpBackend.expectPOST('/.accountResetRequestByMail/', {
                                 emailAddress: 'alb@rt.de'})
                         .respond(recoverByMailResponse);
 
@@ -212,8 +212,8 @@ describe('FindecoUserService', function() {
             });
 
             describe('recoverByUsername function', function() {
-                it('should call the .json_accountResetRequestByName api function', function() {
-                    httpBackend.expectPOST('/.json_accountResetRequestByName/', {
+                it('should call the .accountResetRequestByName api function', function() {
+                    httpBackend.expectPOST('/.accountResetRequestByName/', {
                                 displayName: 'albert'})
                         .respond(recoverByUsernameResponse);
 
@@ -223,8 +223,8 @@ describe('FindecoUserService', function() {
             });
 
             describe('confirm function', function() {
-                it('should call the .json_accountResetConfirmation api function', function() {
-                    httpBackend.expectPOST('/.json_accountResetConfirmation/', {
+                it('should call the .accountResetConfirmation api function', function() {
+                    httpBackend.expectPOST('/.accountResetConfirmation/', {
                                 activationKey: 'ABCDEFG01234567890'})
                         .respond(accountResetConfirmationResponse);
 
@@ -235,10 +235,10 @@ describe('FindecoUserService', function() {
         });
 
         describe('markUser function', function() {
-            it('should call the .json_markUser api function with markType and displayName', function() {
-                httpBackend.expectPOST('/.json_markUser/follow/albert', {})
+            it('should call the .markUser api function with markType and displayName', function() {
+                httpBackend.expectPOST('/.markUser/follow/albert', {})
                     .respond(markUserResponse);
-                httpBackend.expectPOST('/.json_markUser/unfollow/ben', {})
+                httpBackend.expectPOST('/.markUser/unfollow/ben', {})
                     .respond(markUserResponse);
 
                 userService.markUser('follow', 'albert');
@@ -247,7 +247,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should update the userInfo with new followees', function() {
-                httpBackend.expectPOST('/.json_markUser/follow/albert', {})
+                httpBackend.expectPOST('/.markUser/follow/albert', {})
                     .respond(markUserResponse);
                 userService.markUser('follow', 'albert');
                 httpBackend.flush();
@@ -266,7 +266,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should broadcast the UserMarked event', function() {
-                httpBackend.expectPOST('/.json_markUser/follow/albert', {})
+                httpBackend.expectPOST('/.markUser/follow/albert', {})
                     .respond(markUserResponse);
                 userService.markUser('follow', 'albert');
                 httpBackend.flush();
@@ -275,14 +275,14 @@ describe('FindecoUserService', function() {
         });
 
         describe('loadSettings function', function() {
-            it('should initialize with a .json_loadUserSettings call', function () {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+            it('should initialize with a .loadUserSettings call', function () {
+                httpBackend.expectGET('/.loadUserSettings/').respond(406, '');
                 userService.loadSettings();
                 httpBackend.flush();
             });
 
             it('should initialize user if loadUserSettings succeeds', function () {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 expect(userService.isLoggedIn).toBe(true);
@@ -300,7 +300,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should initialize isAdmin if loadUserSettings for admin succeeds', function () {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadAdminSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadAdminSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 expect(userService.isLoggedIn).toBe(true);
@@ -310,7 +310,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should have empty user details if loadUserSettings does not succeed', function () {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(406, '');
+                httpBackend.expectGET('/.loadUserSettings/').respond(406, '');
                 userService.loadSettings();
                 httpBackend.flush();
                 expect(userService.isLoggedIn).toBe(false);
@@ -330,21 +330,21 @@ describe('FindecoUserService', function() {
             });
 
             it('should return false for logged-in but unchanged user', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 expect(userService.hasUnsavedChanges()).toBeFalsy();
             });
 
             it('should return false for just logged-in user', function() {
-                httpBackend.expectPOST('/.json_login/').respond(loginResponse);
+                httpBackend.expectPOST('/.login/').respond(loginResponse);
                 userService.login('hugo', '1234');
                 httpBackend.flush();
                 expect(userService.hasUnsavedChanges()).toBeFalsy();
             });
 
             it('should return true for logged-in user with changed name', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.displayName = 'changedName';
@@ -352,7 +352,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should return true for logged-in user with changed description', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.description = 'changedDescription';
@@ -360,7 +360,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should return true for logged-in user with changed email', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.email = 'changedEMail';
@@ -368,7 +368,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should return true for logged-in user with changed wantsMailNotification', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.wantsMailNotification = false;
@@ -378,7 +378,7 @@ describe('FindecoUserService', function() {
 
         describe('resetChanges function', function() {
             it('should undo changes to displayName', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.displayName = 'changedName';
@@ -387,7 +387,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should undo changes to description', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.description = 'changedDescription';
@@ -396,7 +396,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should undo changes to email', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.email = 'changedEmail';
@@ -405,7 +405,7 @@ describe('FindecoUserService', function() {
             });
 
             it('should undo changes to wantsMailNotification', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.wantsMailNotification = false;
@@ -416,8 +416,8 @@ describe('FindecoUserService', function() {
         });
 
         describe('deleteAccount function', function() {
-            it('should call the .json_deleteUser api function', function() {
-                httpBackend.expectPOST('/.json_deleteUser/')
+            it('should call the .deleteUser api function', function() {
+                httpBackend.expectPOST('/.deleteUser/')
                     .respond(deleteUserResponse);
                 userService.deleteAccount();
                 httpBackend.flush();
@@ -425,8 +425,8 @@ describe('FindecoUserService', function() {
         });
 
         describe('changePassword function', function() {
-            it('should call the .json_changePassword api function', function() {
-                httpBackend.expectPOST('/.json_changePassword/', {
+            it('should call the .changePassword api function', function() {
+                httpBackend.expectPOST('/.changePassword/', {
                     password: 'newPassword'
                 }).respond(changePasswordResponse);
                 userService.changePassword('newPassword');
@@ -436,14 +436,14 @@ describe('FindecoUserService', function() {
 
         describe('isFollowing function', function() {
             it('should return true if name is in followees list', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 expect(userService.isFollowing('ben')).toBeTruthy();
             });
 
             it('should return false if name is not in followees list', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 expect(userService.isFollowing('paul')).toBeFalsy();
@@ -451,19 +451,19 @@ describe('FindecoUserService', function() {
         });
 
         describe('storeSettings function', function() {
-            it('should call the .json_storeSettings api function', function() {
-                httpBackend.expectPOST('/.json_storeSettings/')
+            it('should call the .storeSettings api function', function() {
+                httpBackend.expectPOST('/.storeSettings/')
                     .respond(storeSettingsResponse);
                 userService.storeSettings();
                 httpBackend.flush();
             });
 
             it('should POST the current settings', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.displayName = 'mightyHugo';
-                httpBackend.expectPOST('/.json_storeSettings/', {
+                httpBackend.expectPOST('/.storeSettings/', {
                     displayName: 'mightyHugo',
                     description: 'beschreibung',
                     email: 'hugo@abc.de',
@@ -474,12 +474,12 @@ describe('FindecoUserService', function() {
             });
 
             it('on success there should be no changes', function() {
-                httpBackend.expectGET('/.json_loadUserSettings/').respond(loadUserSettingsResponse);
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.displayName = 'Simon';
                 expect(userService.hasUnsavedChanges()).toBeTruthy();
-                httpBackend.expectPOST('/.json_storeSettings/')
+                httpBackend.expectPOST('/.storeSettings/')
                     .respond(storeSettingsResponse);
                 userService.storeSettings();
                 httpBackend.flush();

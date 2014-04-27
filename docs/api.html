@@ -3,7 +3,7 @@
 <h1>Findeco<a href="#WorkingTitle">*</a> API</h1>
 <h3>General Information</h3>
 The Findeco<a href="#WorkingTitle">*</a> API allows for access to the full scope of functions and data available to the original Findeco<a href="#WorkingTitle">*</a> Client.<br>
-The general API call is setup like this: .json_FUNCTION/DATA<br>
+The general API call is setup like this: .FUNCTION/DATA<br>
 In return you get a JSON response from the server.
 <br>
 <br>
@@ -11,7 +11,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadGraphData">Function::loadGraphData</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadGraphData/graphDataType/path</td></tr>
+    <tr><td>Call Structure:</td><td>.loadGraphData/graphDataType/path</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValueGraphDataType">(String) graphDataType</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValuePath">(String) path</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
@@ -22,7 +22,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadIndex">Function::loadIndex</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadIndex/path</td></tr>
+    <tr><td>Call Structure:</td><td>.loadIndex/path</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>Description:</td><td>Loads the index of the given path to a StructureNode (see <a href="#ValuePath">Value::Path</a>). </td></tr>
@@ -32,7 +32,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadArgumentIndex">Function::loadArgumentIndex</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadIndex/path</td></tr>
+    <tr><td>Call Structure:</td><td>.loadIndex/path</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>Description:</td><td>Loads the argument index for the given path to a StructureNode (see <a href="#ValuePath">Value::Path</a>).</td></tr>
@@ -42,7 +42,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadNode">Function::loadNode</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadNode/path</td></tr>
+    <tr><td>Call Structure:</td><td>.loadNode/path</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>Description:</td><td>Loads the fullTitle, index, and some additional information of the given path to a StructureNode (see <a href="#ValuePath">Value::Path</a>)</td></tr>
@@ -52,7 +52,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadMicroblogging">Function::loadMicroblogging</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadMicroblogging/selectID/microbloggingLoadType/[path|displayName]</td></tr>
+    <tr><td>Call Structure:</td><td>.loadMicroblogging/selectID/microbloggingLoadType/[path|displayName]</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueDisplayName">(String) displayName</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueSelectID">(Integer) selectID</a></td></tr>
@@ -65,7 +65,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadText">Function::loadText</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadText/path</td></tr>
+    <tr><td>Call Structure:</td><td>.loadText/path</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>Description:</td><td>Loads the textview of the given path to a StructureNode or an Argument(see <a href="#ValuePath">Value::Path</a>).</td></tr>
@@ -75,7 +75,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadUserInfo">Function::loadUserInfo</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadUserInfo/displayName</td></tr>
+    <tr><td>Call Structure:</td><td>.loadUserInfo/displayName</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValueDisplayName">(String) displayName</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>Description:</td><td>Loads infos to the requested user. </td></tr>
@@ -85,7 +85,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLoadUserSettings">Function::loadUserSettings</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_loadUserSettings</td></tr>
+    <tr><td>Call Structure:</td><td>.loadUserSettings</td></tr>
     <tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>Description:</td><td>Loads the settings for the currently logged in user. </td></tr>
@@ -95,7 +95,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLogin">Function::login</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_login</td></tr>
+    <tr><td>Call Structure:</td><td>.login</td></tr>
     <tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>POST Parameters:</td><td><a href="#ValueUsername">(String) username</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValuePassword">(String) password</a></td></tr>
@@ -106,7 +106,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionLogout">Function::logout</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_logout</td></tr>
+    <tr><td>Call Structure:</td><td>.logout</td></tr>
     <tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>Description:</td><td>Logout function.</td></tr>
@@ -116,7 +116,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionSearch">Function::search</a></b>
 <table><tbody>
-<tr><td>Call Structure:</td><td>.json_search/searchField/searchString</td></tr>
+<tr><td>Call Structure:</td><td>.search/searchField/searchString</td></tr>
 <tr><td>GET Parameters:</td><td><a href="#ValueSearchField">(String) searchFields</a></td></tr>
 <tr><td>&nbsp;</td><td>(String) searchString</td></tr>
 <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
@@ -127,7 +127,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionMarkNode">Function::markNode</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_markNode/markType/path</td></tr>
+    <tr><td>Call Structure:</td><td>.markNode/markType/path</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueMarkType">(String) markType</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
@@ -138,7 +138,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionStoreMicroblogPost">Function::storeMicroblogPost</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_storeMicroblogPost/[path|microblogID]</td></tr>
+    <tr><td>Call Structure:</td><td>.storeMicroblogPost/[path|microblogID]</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
     <tr><td>or</td><td><a href="#ValueMicroblogID">(int) microblogID</a></td></tr>
     <tr><td>POST Parameters:</td><td><a href="#ValueMicroblogText">(String) microblogText</a></td></tr>
@@ -149,7 +149,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionStoreMicroblogReference">Function::storeMicroblogReference</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_storeMicroblogReference/microblogID</td></tr>
+    <tr><td>Call Structure:</td><td>.storeMicroblogReference/microblogID</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValueMicroblogID">(int) microblogID</a></td></tr>
     <tr><td>POST Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>Description:</td><td>Show the Microblogpost referenced by <a href="#ValueMicroblogID">Value::microblogID</a> as a post within the timeline of the loggedin user. The post does not get duplicated, if it is removed the reference will also vanish. </td></tr>
@@ -159,7 +159,7 @@ In return you get a JSON response from the server.
 <br>
 <b><a name="FunctionStoreSettings">Function::storeSettings</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_storeSettings</td></tr>
+    <tr><td>Call Structure:</td><td>.storeSettings</td></tr>
     <tr><td>GET Parameters:</td><td>&nbsp;</td></tr>
     <tr><td>POST Parameters:</td><td><a href="#ValueDisplayName">(String) displayName</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueDescription">(String) description</a></td></tr>
@@ -171,7 +171,7 @@ Store a new Textnode or Argument in the hierarchy attached to a StructureNode (s
 <br>
 <b><a name="FunctionStoreText">Function::storeText</a></b>
 <table><tbody>
-    <tr><td>Call Structure:</td><td>.json_storeText/path</td></tr>
+    <tr><td>Call Structure:</td><td>.storeText/path</td></tr>
     <tr><td>GET Parameters:</td><td><a href="#ValuePath">(String) path</a></td></tr>
     <tr><td>POST Parameters:</td><td><a href="#ValueWikiText">(String) wikiText</a></td></tr>
     <tr><td>&nbsp;</td><td><a href="#ValueArgumentType">(String) argumentType</a></td></tr>
