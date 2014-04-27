@@ -29,12 +29,11 @@ from django.test import LiveServerTestCase
 from nose.plugins.attrib import attr
 from test_helper import helper_login_admin
 from selenium import webdriver
-from bs4 import BeautifulSoup, SoupStrainer
 import lxml.html
 import time
-from node_storage import get_root_node, Vote, SpamFlag
+from node_storage import get_root_node
 from node_storage.factory import create_textNode, create_slot, create_user
-from node_storage.factory import create_vote, create_argument, create_spam_flag
+from node_storage.factory import create_vote
 
 
 @attr('selenium')
@@ -65,7 +64,6 @@ class TestCrawler(LiveServerTestCase):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(1)
 
-
     def tearDown(self):
         self.driver.quit()
 
@@ -77,9 +75,9 @@ class TestCrawler(LiveServerTestCase):
 
         helper_login_admin(self)
         #time.sleep(1)
-        pages=["/microblogging"]
+        pages = ["/microblogging"]
         pages_exclude = ["/terms_of_use", "/data_privacy", "/imprint", "/about"]
-        done=[""]
+        done = [""]
         while pages:
             for page in pages:
                 self.driver.get(self.live_server_url + page)
@@ -91,7 +89,7 @@ class TestCrawler(LiveServerTestCase):
                 contents = elem.get_attribute("innerHTML")
                 dom = lxml.html.fromstring(contents)
                 for link in dom.xpath('//a/@href'):
-
-                    if (link <> "#")and(link<>" ") and not ( "http:" in link) and not ( "https:" in link) and not (link in pages) and not (link in done) and not (
-                            link in pages_exclude) and not ("static" in link) and not ("{{"in link):
+                    if (link != "#") and (link != " ") and not ("http:" in link) and not ("https:" in link) and \
+                            not (link in pages) and not (link in done) and not (link in pages_exclude) and \
+                            not ("static" in link) and not ("{{" in link):
                         pages.append(link)
