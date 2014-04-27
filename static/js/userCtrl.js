@@ -24,7 +24,7 @@
 
 'use strict';
 
-findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, User ) {
+findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator, Message, User ) {
     $scope.user = User;
 
     // used for login and registration
@@ -64,8 +64,11 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, Navigator, Message, U
         }
         if (fields_filled_correctly) {
             User.register($scope.username, $scope.password, $scope.mail).success(function () {
+                var msg = $rootScope.$on('$routeChangeSuccess', function() {
+                    Message.send("success", "_accountCheckEmails_");
+                    msg();
+                });
                 Navigator.changePath('/');
-                Message.send("success", "_accountCheckEmails_");
             });
         }
     };
