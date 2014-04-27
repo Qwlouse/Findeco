@@ -36,7 +36,7 @@ findecoApp.controller('FindecoDefaultCtrl',
 
     $scope.graphData = [];
     $scope.paragraphList = [];
-    $scope.nodeInfo = [];
+    $scope.nodeInfo = {};
     $scope.nodeInfo.indexList = [];
     $scope.authors = [];
     $scope.nodeInfo.path = $scope.nav.argumentPath;
