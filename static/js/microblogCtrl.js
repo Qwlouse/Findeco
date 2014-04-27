@@ -24,7 +24,7 @@
 
 'use strict';
 
-findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $location, Backend, Navigator, User) {
+findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $location, $interval, Backend, Navigator, User) {
     $scope.loadTarget = Navigator.argumentPath;
     if ( $routeParams.name != undefined ) {
         $scope.loadTarget = $routeParams.name;
@@ -37,7 +37,6 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
             blog.author.isFollowing = User.isFollowing(blog.author.displayName);
             blog.author.path = blog.author.displayName;
         }
-        $scope.MicrobloggingIsLoading = false;
     }
 
     $scope.$on('UserMarked', setAuthorForAllBlogs);
@@ -45,18 +44,29 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
     $scope.microbloggingList = [];
     $scope.user = User;
     $scope.microblogText = "";
+    $scope.submitting = false;
+    $scope.showspinner = false;
+    $scope.showLoadindicator = false;
 
     $scope.followUser = function (type, path) {
         return User.markUser(type, path);
     };
 
     $scope.isLoading = function (){
-    	return $scope.MicrobloggingIsLoading;
+    	return $scope.showLoadindicator;
     };
 
     $scope.updateMicrobloggingList = function (oldType, oldID) {
+        $scope.MicrobloggingIsLoading = true;
+        $interval(function () {
+            if ($scope.MicrobloggingIsLoading) {
+                $scope.showLoadindicator = true;
+            }
+        }, 300, 1);
+
         var type = 'newer';
         var id = 0;
+
         if ($scope.microbloggingList[0] != undefined) {
             id = $scope.microbloggingList[0].microblogID;
         }
@@ -65,13 +75,21 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
             type = oldType;
             id = oldID;
         }
-        $scope.MicrobloggingIsLoading = true;
+
         if (Navigator.type == 'user') {
             Backend.loadMicrobloggingFromUser($scope.microbloggingList, Navigator.userName, id, type).
-                success(setAuthorForAllBlogs);
+                success(function () {
+                    setAuthorForAllBlogs();
+                    $scope.MicrobloggingIsLoading = false;
+                    $scope.showLoadindicator = false;
+                });
         } else {
             Backend.loadMicrobloggingForNode($scope.microbloggingList, $scope.loadTarget, id, type).
-                success(setAuthorForAllBlogs);
+                success(function () {
+                    setAuthorForAllBlogs();
+                    $scope.MicrobloggingIsLoading = false;
+                    $scope.showLoadindicator = false;
+                });
         }
     };
 
@@ -81,9 +99,17 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
         if (Navigator.type == 'user') {
             text = "@" + Navigator.userName + ": " + text;
         }
+        $scope.submitting = true;
+        $interval(function () {
+            if ($scope.submitting) {
+                $scope.showspinner = true;
+            }
+        }, 300, 1);
         Backend.storeMicroblogging(Navigator.argumentPath, text).success(function () {
             $scope.updateMicrobloggingList();
             $scope.microblogText = '';
+            $scope.showspinner = false;
+            $scope.submitting = false;
         });
     };
 
@@ -106,6 +132,6 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
     $('.microblogInput').focus(function(){
         $(this).animate({height:'6em'});
     }).blur(function(){
-        $(this).animate({height:'1.4em'});
+        $(this).animate({height:'2.4em'});
     });
 });
