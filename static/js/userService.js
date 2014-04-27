@@ -129,7 +129,7 @@ angular.module('FindecoUserService', [])
             if (!userInfo.isLoggedIn) {
                 return false;
             }
-            return (userInfo.displayName != data.userInfo.displayName) ||
+            return (userInfo.newDisplayName != userInfo.displayName) ||
                 (userInfo.description != data.userInfo.description) ||
                 (userInfo.email != data.userSettings.email) ||
                 (userInfo.wantsMailNotification != data.userSettings.wantsMailNotification);
