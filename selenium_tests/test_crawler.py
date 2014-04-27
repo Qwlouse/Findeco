@@ -29,7 +29,7 @@ from django.test import LiveServerTestCase
 from nose.plugins.attrib import attr
 from test_helper import helper_login_admin
 from selenium import webdriver
-from BeautifulSoup import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup, SoupStrainer
 import lxml.html
 import time
 from node_storage import get_root_node, Vote, SpamFlag
