@@ -93,8 +93,8 @@ def ViewErrorHandling(f):
         except ViewError, e:
             return json_error_response(e.identifier, *e.additional_info)
         except InvalidWikiStructure, e:
-            return json_error_response('_InvalidWikiStructure', e.message)
+            return json_error_response('_InvalidWikiStructure', e.args[0])
         except SMTPException, e:
-            return json_error_response('_ServerError', 'SMTPError', e.message)
+            return json_error_response('_ServerError', 'SMTPError', e.args[0])
 
     return wrapped
