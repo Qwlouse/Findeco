@@ -49,116 +49,116 @@ urlpatterns = patterns(
     'findeco.views',
 
     # ----- User  -----
-    url(r'^\.json_login/?$',
+    url(r'^\.login/?$',
         'login',
         name='login'),
 
-    url(r'^\.json_logout/?$',
+    url(r'^\.logout/?$',
         'logout',
         name='logout'),
 
-    url(r'^\.json_loadUserSettings/?$',
+    url(r'^\.loadUserSettings/?$',
         'load_user_settings',
         name='load_user_settings'),
 
-    url(r'^\.json_storeSettings/?$',
+    url(r'^\.storeSettings/?$',
         'store_settings',
         name='store_settings'),
 
-    url(r'^\.json_accountRegistration/?$',
+    url(r'^\.accountRegistration/?$',
         'account_registration',
         name='account_registration'),
 
-    url(r'^\.json_accountActivation/?$',
+    url(r'^\.accountActivation/?$',
         'account_activation',
         name='account_activation'),
 
-    url(r'^\.json_accountResetRequestByMail/?$',
+    url(r'^\.accountResetRequestByMail/?$',
         'account_reset_request_by_mail',
         name='account_reset_request_by_mail'),
 
-    url(r'^\.json_accountResetRequestByName/?$',
+    url(r'^\.accountResetRequestByName/?$',
         'account_reset_request_by_name',
         name='account_reset_request_by_name'),
 
-    url(r'^\.json_accountResetConfirmation/?$',
+    url(r'^\.accountResetConfirmation/?$',
         'account_reset_confirmation',
         name='account_reset_confirmation'),
 
-    url(r'^\.json_emailChangeConfirmation/?$',
+    url(r'^\.emailChangeConfirmation/?$',
         'email_change_confirmation',
         name='email_change_confirmation'),
 
-    url(r'^\.json_changePassword/?$',
+    url(r'^\.changePassword/?$',
         'change_password',
         name='change_password'),
 
-    url(r'^\.json_deleteUser/?$',
+    url(r'^\.deleteUser/?$',
         'delete_user',
         name='delete_user'),
 
     # ----- Interact with other users  -----
-    url(r'^\.json_loadUserInfo/' + USERNAME + '/?$',
+    url(r'^\.loadUserInfo/' + USERNAME + '/?$',
         'load_user_info',
         name='load_user_info'),
 
-    url(r'^\.json_markUser/follow/' + USERNAME + '$',
+    url(r'^\.markUser/follow/' + USERNAME + '$',
         'mark_user_follow',
         name='mark_user_follow'),
 
-    url(r'^\.json_markUser/unfollow/' + USERNAME + '$',
+    url(r'^\.markUser/unfollow/' + USERNAME + '$',
         'mark_user_unfollow',
         name='mark_user_unfollow'),
 
     # ----- Load Nodes  -----
-    url(r'^\.json_loadNode/' + RESTRICTED_PATH + '$',
+    url(r'^\.loadNode/' + RESTRICTED_PATH + '$',
         'load_node',
         name='load_node'),
 
-    url(r'^\.json_loadIndex/' + RESTRICTED_PATH + '$',
+    url(r'^\.loadIndex/' + RESTRICTED_PATH + '$',
         'load_index',
         name='load_index'),
 
-    url(r'^\.json_loadGraphData/' + GRAPH_TYPE + '/' + PATH + '$',
+    url(r'^\.loadGraphData/' + GRAPH_TYPE + '/' + PATH + '$',
         'load_graph_data',
         name='load_graph_data'),
 
-    url(r'^\.json_loadText/' + PATH + '$',
+    url(r'^\.loadText/' + PATH + '$',
         'load_text',
         name='load_text'),
 
-    url(r'^\.json_loadArgumentNews/?$',
+    url(r'^\.loadArgumentNews/?$',
         'load_argument_news',
         name='load_argument_news'),
 
-    url(r'^\.json_loadArgumentIndex/' + RESTRICTED_PATH + '$',
+    url(r'^\.loadArgumentIndex/' + RESTRICTED_PATH + '$',
         'load_argument_index',
         name='load_argument_index'),
 
     # ----- Mark Nodes  -----
-    url(r'^\.json_markNode/follow/' + PATH + '$',
+    url(r'^\.markNode/follow/' + PATH + '$',
         'mark_node_follow',
         name='mark_node_follow'),
 
-    url(r'^\.json_markNode/unfollow/' + PATH + '$',
+    url(r'^\.markNode/unfollow/' + PATH + '$',
         'mark_node_unfollow',
         name='mark_node_unfollow'),
 
-    url(r'^\.json_markNode/spam/' + PATH + '$',
+    url(r'^\.markNode/spam/' + PATH + '$',
         'flag_node',
         name='flag_node'),
 
-    url(r'^\.json_markNode/notspam/' + PATH + '$',
+    url(r'^\.markNode/notspam/' + PATH + '$',
         'unflag_node',
         name='unflag_node'),
 
     # ----- Store Nodes  -----
-    url(r'^\.json_storeText/' + PATH + '$',
+    url(r'^\.storeText/' + PATH + '$',
         'store_text',
         name='store_text'),
 
     # ----- Search  -----
-    url(r'^\.json_search/'+SEARCH_FIELDS+'/(?P<search_string>(.*))$',
+    url(r'^\.search/'+SEARCH_FIELDS+'/(?P<search_string>(.*))$',
         'search',
         name='search')
 )

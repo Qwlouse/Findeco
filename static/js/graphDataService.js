@@ -117,7 +117,7 @@ angular.module('FindecoGraphDataService', [])
             if (graphType == undefined) {
                 graphType = "full";
             }
-            var url = ['/.json_loadGraphData', graphType, path].join('/');
+            var url = ['/.loadGraphData', graphType, path].join('/');
             url = url.replace("//", "/");
             var promise = $http.get(url);
             promise.success(graphData.updateGraphData);

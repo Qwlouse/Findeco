@@ -34,6 +34,7 @@ angular.module('FindecoUserService', [])
             isLoggedIn : false,
             isAdmin    : false,
             displayName: "",
+            newDisplayName: "",
             description: "",
             email      : "",
             rsskey     : "",
@@ -41,30 +42,30 @@ angular.module('FindecoUserService', [])
             wantsMailNotification : false
         };
         userInfo.register = function (displayName, password, emailAddress) {
-            return $http.post('/.json_accountRegistration/', {
+            return $http.post('/.accountRegistration/', {
                 displayName: displayName,
                 password: password,
                 emailAddress: emailAddress});
         };
         userInfo.activate = function (activationKey) {
-            return $http.post('/.json_accountActivation/', {activationKey: activationKey});
+            return $http.post('/.accountActivation/', {activationKey: activationKey});
         };
         userInfo.confirm = function (activationKey) {
-            return $http.post('/.json_accountResetConfirmation/', {activationKey: activationKey});
+            return $http.post('/.accountResetConfirmation/', {activationKey: activationKey});
         };
         userInfo.confirmEmail = function (activationKey) {
-            return $http.post('/.json_emailChangeConfirmation/', {activationKey: activationKey});
+            return $http.post('/.emailChangeConfirmation/', {activationKey: activationKey});
         };
         userInfo.recoverByMail = function (emailAddress) {
-            return $http.post('/.json_accountResetRequestByMail/',
+            return $http.post('/.accountResetRequestByMail/',
                 {emailAddress: emailAddress});
         };
         userInfo.recoverByUsername = function (displayName) {
-            return $http.post('/.json_accountResetRequestByName/',
+            return $http.post('/.accountResetRequestByName/',
                 {displayName: displayName});
         };
         userInfo.login = function (username, password) {
-            var promise = $http.post('/.json_login/', {username: username, password: password});
+            var promise = $http.post('/.login/', {username: username, password: password});
             promise.success(function (d) {
                 data = d.loginResponse;
                 userInfo.isLoggedIn = true;
@@ -81,7 +82,7 @@ angular.module('FindecoUserService', [])
             return promise;
         };
         userInfo.logout = function () {
-            return $http.get('/.json_logout/').success(function () {
+            return $http.get('/.logout/').success(function () {
                 userInfo.isLoggedIn = false;
                 userInfo.displayName = "";
                 userInfo.description = "";
@@ -93,7 +94,7 @@ angular.module('FindecoUserService', [])
             });
         };
         userInfo.markUser = function (markType, displayName) {
-            var pathComponents = ['/.json_markUser', markType, displayName];
+            var pathComponents = ['/.markUser', markType, displayName];
             var url = pathComponents.join('/');
             url = url.replace("//", "/");
             return $http.post(url, {}).success(function (d) {
@@ -106,7 +107,7 @@ angular.module('FindecoUserService', [])
             });
         };
         userInfo.loadSettings = function () {
-            var promise = $http.get('/.json_loadUserSettings/');
+            var promise = $http.get('/.loadUserSettings/');
             promise.success(function (d) {
                 data = d.loadUserSettingsResponse;
                 userInfo.resetChanges();
@@ -128,19 +129,20 @@ angular.module('FindecoUserService', [])
             if (!userInfo.isLoggedIn) {
                 return false;
             }
-            return (userInfo.displayName != data.userInfo.displayName) ||
+            return (userInfo.newDisplayName != userInfo.displayName) ||
                 (userInfo.description != data.userInfo.description) ||
                 (userInfo.email != data.userSettings.email) ||
                 (userInfo.wantsMailNotification != data.userSettings.wantsMailNotification);
         };
         userInfo.resetChanges = function () {
             userInfo.displayName = data.userInfo.displayName;
+            userInfo.newDisplayName = data.userInfo.displayName;
             userInfo.description = data.userInfo.description;
             userInfo.email = data.userSettings.email;
             userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
         };
         userInfo.storeSettings = function () {
-            return $http.post('/.json_storeSettings/', {
+            return $http.post('/.storeSettings/', {
                 displayName: userInfo.displayName,
                 description: userInfo.description,
                 wantsMailNotification: userInfo.wantsMailNotification,
@@ -152,10 +154,10 @@ angular.module('FindecoUserService', [])
             });
         };
         userInfo.changePassword = function (newPassword) {
-            return $http.post('/.json_changePassword/', {password: newPassword});
+            return $http.post('/.changePassword/', {password: newPassword});
         };
         userInfo.deleteAccount = function () {
-            return $http.post('/.json_deleteUser/');
+            return $http.post('/.deleteUser/');
         };
         userInfo.isFollowing = function (name) {
             for (var i = 0; i < userInfo.followees.length; i++) {
