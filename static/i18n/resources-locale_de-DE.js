@@ -753,5 +753,15 @@
         "key"        : "_userDoesNotExist",
         "value"      : "Der Benutzer '{0}' existiert nicht!",
         "description": "wird im partial user.html benutzt"
+    },
+    {
+        "key"        : "_invalidPathHeading_",
+        "value"      : "Ungültiger Pfad",
+        "description": "Überschrift der Fehlerseite falls ein ungültiger Pfad aufgerufen wurde."
+    },
+    {
+        "key"        : "_invalidPathText_",
+        "value"      : "Diese Seite wurde nicht gefunden. Überprüfen Sie bitte die URL.",
+        "description": "Überschrift der Fehlerseite falls ein ungültiger Pfad aufgerufen wurde."
     }
 ]

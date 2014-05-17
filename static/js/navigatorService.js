@@ -73,6 +73,9 @@ angular.module('FindecoNavigatorService', [])
             } else if (path.match(userPath)) {
                 location.type = "user";
                 location.userName = location.parts[1];
+            } else if (location.parts.length == 1 && location.parts[0] == 'index') {
+                location.type = 'node';
+                location.nodePath = '';  // ROOT node (exception)
             } else {
                 location.type = location.parts[0];
             }

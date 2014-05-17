@@ -31,6 +31,7 @@ findecoApp.controller('FindecoDefaultCtrl',
     $scope.user = User;
     $scope.fesettings = Fesettings;
     $scope.allExpanded = false;
+    $scope.validPath = true;
 
     $scope.isTextLoaded = false;
 
@@ -121,10 +122,14 @@ findecoApp.controller('FindecoDefaultCtrl',
     };
 
     $scope.initialize = function () {
-        $scope.isLoadingNode = true;
-        $scope.updateNode();
-        $scope.updateGraph();
-       
+        if (Navigator.type != 'node' && Navigator.type != 'argument') {
+            $scope.validPath = false;
+        } else {
+            $scope.validPath = true;
+            $scope.isLoadingNode = true;
+            $scope.updateNode();
+            $scope.updateGraph();
+        }
     };
     $scope.isLoading = function (){
     	return $scope.isLoadingNode || $scope.isLoadingGraph;
