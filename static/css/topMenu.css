@@ -113,7 +113,7 @@ div.searchBox.searchActive {
     border: 0;
 }
 
-/* Format for browsers that dont support placeholder attribute*/
+/* Format for browsers that do not support placeholder attribute*/
 .head input.placeholder {
     color: #999999;
     font-size: 9pt;

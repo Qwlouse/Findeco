@@ -1,16 +1,29 @@
-<div id="contentContainer" class="centeringContainer">
- <div ng-show="!user.isLoggedIn&&fesettings.disclaimer.enable" id="disclaimerBox"
-      ng-bind-html-unsafe="fesettings.disclaimer.text" class="contentBox" >
+<div class="graph row">
+    <div ng-include src="'/static/partials/navigationBar.html'"></div>
 
- </div>
-    <div ng-include src="'/static/partials/argument.html'"  ></div>
+    <svg xmlns="http://www.w3.org/2000/svg" height="0" width="0" style="margin: 0; padding:0">
+        <!--
+            Definitions for the graph arrowheads here in a separate svg.
+            This is necessary for correct display in Chrome.
+        -->
+        <defs>
+            <marker id="arrowHead" orient="auto" markerHeight="5"
+                    markerWidth="5" refX="5" viewBox="0 -5 10 10"
+                    class="linkHead">
+                <path d="M0,-5L10,0L0,5"></path>
+            </marker>
+            <filter id="blur">
+                <feGaussianBlur stdDeviation="2"></feGaussianBlur>
+            </filter>
+        </defs>
+    </svg>
 
-
-    <div id="centerColumn" class="contentBox">
-        <div>
+    <div style="position: relative; left: -50%; float: right; overflow: visible;">
+        <div style="position: relative; left: 50%;">
             <div class="tipp">
 
-                <span ng-show="graphData.length > 1">Es gibt zu diesem Thema {{ graphData.length }} konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschläge</a>.</span>
+                <span ng-if="graphData.length > 1">Es gibt zu diesem Thema {{ graphData.length }} konkurrierende
+                    <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschläge</a>.</span>
                 <form>
                     Es werden
                     <select name="graph-filter" size="1" style="font-size: 100%; color: gray;"
@@ -23,6 +36,17 @@
                 </form>
             </div>
             <div findeco-graph data="graphData" path="nav.nodePath" height='180' width='580' class="graph"></div>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="content row">
+    <div ng-include src="'/static/partials/argument.html'"></div>
+    <div ng-include src="'/static/partials/microblogging.html'"></div>
+    <div class="textColumn left">
+        <div ng-if="!user.isLoggedIn&&fesettings.disclaimer.enable"
+             ng-bind-html-unsafe="fesettings.disclaimer.text"
+             class="disclaimer box">
         </div>
 
         <div class="authors">
@@ -41,7 +65,7 @@
             <a ng-show="allExpanded" ng-click="collapseAll()" style="cursor: pointer;">einklappen</a>.
         </div>
         <div ng-repeat="section in nodeInfo.indexList">
-           
+
             <a ng-show="!section.isExpanded" ng-hide="nav.type=='root'" ng-click="expandSection(section)"
                style="float:left;position: relative; top: 8px; margin-right: 5px;"
                title="{{'_expandSection_'|i18n}}">
@@ -80,15 +104,20 @@
             <div ng-show="nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
                  ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
         </div>
-  	<div ng-show="isLoading()" class="deactivateDiv">
-    </div>
-   	<div ng-show="isLoading()" class="deactivateSpinner">
-    </div>
+
+        <div ng-show="isLoading()" class="deactivateDiv">
+        </div>
+        <div ng-show="isLoading()" class="deactivateSpinner">
+        </div>
+
+        <div style="clear:both; padding-bottom:25px;"></div>
+        <div ng-if="user.isLoggedIn&&fesettings.disclaimer.enable"
+             ng-bind-html-unsafe="fesettings.disclaimer.text"
+             class="disclaimer box" >
+        </div>
+
+        <div ng-include src="'/static/partials/messagebox.html'"></div>
     </div>
 
-    <div ng-include src="'/static/partials/microblogging.html'"></div>
-    <div style="clear:both; padding-bottom:25px;"></div>
-     <div ng-show="user.isLoggedIn&&fesettings.disclaimer.enable" id="disclaimerBox" ng-bind-html-unsafe="fesettings.disclaimer.text" class="contentBox" >
-
- </div>
+    <div class="clearer"></div>
 </div>

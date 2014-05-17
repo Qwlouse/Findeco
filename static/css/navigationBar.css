@@ -25,6 +25,7 @@
  /* Rootline */
 #navigationBar {
     position: relative;
+    top: -3px;
     height: 28px;
     background: #333333;
 }
