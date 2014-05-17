@@ -184,50 +184,5 @@ body:before {
 	border-radius: 15px 15px 15px 15px;
 }
 
-.tipp {
-    color: gray;
-    font-size: 75%;
-}
 
-.tipp a.tippLink {
-    color: gray;
-    text-decoration: underline;
-}
 
-.authors {
-    font-size: 75%;
-    color: gray;
-}
-
-.rss {
-    padding-top: 10px;
-    float: right;
-}
-
-.rss img {
-    width: 16px;
-    height: 16px;
-}
-
-.diff {
-    white-space: pre-wrap;
-    display: inline;
-}
-
-.diff del {
-    background-color: #ff8080;
-    text-decoration: none;
-}
-
-.red {
-    background-color: #ff8080;
-}
-
-.diff ins {
-    background-color: #80ff80;
-    text-decoration: none;
-}
-
-.green {
-    background-color: #80ff80;
-}
