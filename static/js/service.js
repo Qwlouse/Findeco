@@ -43,7 +43,7 @@ angular.module('FindecoServices', [])
         $locationProvider.html5Mode(true);
         $locationProvider.hashPrefix('!');
     })
-    .factory('errorHandler', function ($q, Message,Navigator) {
+    .factory('errorHandler', function ($q, Message) {
         return function (promise) {
             return promise.then(
                 function (response) {
@@ -51,14 +51,8 @@ angular.module('FindecoServices', [])
                 },
                 function (response) {
                     if (response.data.errorResponse != undefined) {
-                        if (response.data.errorResponse.errorID== "_UnknownNode") {
-                            Message.send('error', 'Die angeforderte Seite existiert nicht');
-                            Navigator.changePath("/");
-                        }else{
-                            Message.send("error", response.data.errorResponse.errorID);
-                            delete response.data.errorResponse;
-                        }
-
+                        Message.send("error", response.data.errorResponse.errorID);
+                        delete response.data.errorResponse;
                     }
                     return $q.reject(response);
                 }

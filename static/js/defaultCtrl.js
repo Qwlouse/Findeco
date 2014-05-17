@@ -79,7 +79,8 @@ findecoApp.controller('FindecoDefaultCtrl',
                 indexNode.isExpanded = false;
             }
             $scope.isLoadingNode =false;
-           
+        }).error(function (d) {
+            $scope.validPath = false;
         });
     };
 
