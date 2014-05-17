@@ -33,30 +33,25 @@
 	background-color: #101010;
 }
 
-#headerContainer {
+#logo {
     background: url("../images/logo.png") no-repeat 0 5px;
-    background-size:200px;
-    position: relative;
-    height: 100%;
-}
-
-#headerContent {
-    position: relative;
-    margin-left: 250px;
-    display: block;
-    width: 950px;
-    height: 100%;
-}
-
-#headerContent ul {
-    font-size: 0; /* get rid of the single space in inline*/
+    background-size: 141px;
+    display: inline-block;
     position: absolute;
-    bottom: 0;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 141px;
+}
+
+.head ul {
+    display: block;
+    list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-#headerContent ul li{
+.head ul li{
     float: left;
     list-style: none;
     display: inline-block;
@@ -64,7 +59,7 @@
     height: 27px;
 }
 
-#headerContent form{
+.head form{
     display:inline-block;
 }
 
@@ -120,7 +115,7 @@ div.searchBox.searchActive {
     background: url("../images/search_hover.png");
 }
 
-#headerContent input{
+.head input{
     position: relative;
     top: 2px;
     height: 18px;
@@ -130,12 +125,12 @@ div.searchBox.searchActive {
 }
 
 /* Format for browsers that dont support placeholder attribute*/
-#headerContent input.placeholder {
+.head input.placeholder {
     color: #999999;
     font-size: 9pt;
 }
 
-#headerContent ul li a{
+.head ul li a{
     color: #ecb40d;
     font-weight: bold;
     font-size: 12pt;
@@ -143,15 +138,15 @@ div.searchBox.searchActive {
     text-decoration: none;
 }
 
-#headerContent ul li a:hover{
+.head ul li a:hover{
     color: #2d7cc4;
 }
 
-#headerContent ul li.activeTab {
+.head ul li.activeTab {
     background: #333333;
     border-radius: 6px 6px 0 0;
 }
 
-#headerContent ul li.activeTab a{
+.head ul li.activeTab a{
     color:  #2d7cc4;
 }
