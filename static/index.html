@@ -83,39 +83,39 @@
     </div>
     <div id="logo"></div>
     <div style="position: absolute; bottom: 0; width: 100%">
-        <div style="margin-left: 50%; overflow: visible;">
-        <ul style="margin-left: -50%;">
-            <li class="{{ getActiveClass('start')}}">
-                <a href="/start" data-i18n="_start_">Start</a>
-            </li>
-            <li class="{{ getActiveClass('')}} {{ getActiveClass('arguments')}}">
-                <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
-            </li>
-            <li class="{{ getActiveClass('news')}}" ng-if="user.isLoggedIn">
-                <a href="/news" data-i18n="_news_">News</a>
-            </li>
-            <li class="{{ getActiveClass('microblogging')}}" ng-if="user.isLoggedIn">
-                <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
-            </li>
-            <li class="{{ isContentActive() }}">
-                <a href="/index" data-i18n="_content_">Content</a>
-            </li>
-            <li class="{{ getActiveClass('search')}}" id="searchTab">
-                <div class="searchBox">
-                    <form action="" ng-submit="searchSubmit()">
+        <div style="position: relative; left: -50%; float: right; overflow: visible;">
+            <ul style="position: relative; left: 50%;">
+                <li class="{{ getActiveClass('start')}}">
+                    <a href="/start" data-i18n="_start_">Start</a>
+                </li>
+                <li class="{{ getActiveClass('')}} {{ getActiveClass('arguments')}}">
+                    <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
+                </li>
+                <li class="{{ getActiveClass('news')}}" ng-if="user.isLoggedIn">
+                    <a href="/news" data-i18n="_news_">News</a>
+                </li>
+                <li class="{{ getActiveClass('microblogging')}}" ng-if="user.isLoggedIn">
+                    <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
+                </li>
+                <li class="{{ isContentActive() }}">
+                    <a href="/index" data-i18n="_content_">Content</a>
+                </li>
+                <li class="{{ getActiveClass('search')}}" id="searchTab">
+                    <div class="searchBox">
+                        <form action="" ng-submit="searchSubmit()">
 
-                        <input id="searchInput"
-                               type="search"
-                               name="searchField"
-                               placeholder=""
-                               autocomplete="on"
-                               ng-model="searchString"
-                               data-i18n-attr="_search_|placeholder"/>
-                        <button class="searchButton" value=""></button>
-                    </form>
-                </div>
-            </li>
-        </ul>
+                            <input id="searchInput"
+                                   type="search"
+                                   name="searchField"
+                                   placeholder=""
+                                   autocomplete="on"
+                                   ng-model="searchString"
+                                   data-i18n-attr="_search_|placeholder"/>
+                            <button class="searchButton" value=""></button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 
