@@ -35,21 +35,9 @@ findecoApp.controller('FindecoMenuCtrl', function($scope, User, Navigator, Feset
         });
     };
 
-    $scope.getActiveClass = function (pathPrefix) {
-        if (pathPrefix.length == 0 && Navigator.prefix == 0 && Navigator.nodePath == 0) {
-            return "activeTab";
-        } else if (pathPrefix.length > 0 &&
-            Navigator.prefix == pathPrefix) {
-            return "activeTab";
-        } else {
-            return "";
-        }
-    };
-
-    $scope.isContentActive = function () {
-        if (Navigator.prefix.length == 0 && Navigator.nodePath.length > 0) {
-            return "activeTab";
-        } else if (Navigator.prefix.substr(0, 5) == 'index') {
+    $scope.getActiveClass = function (pathType) {
+        if (pathType.length > 0  && Navigator.type == pathType)
+        {
             return "activeTab";
         } else {
             return "";

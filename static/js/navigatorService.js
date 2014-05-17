@@ -36,14 +36,13 @@ angular.module('FindecoNavigatorService', [])
         }
 
         var location = {
-            path        : "",    // the full path but duplicate slashes are removed
-            prefix      : "",    // things before the node or user path like /create/argumentPro/ or /user/
-            nodePath    : "",    // only the node path (parent for arguments, empty for users)
-            argumentPath: "",    // the full path to the argument or node if it isn't an argument
-            userName    : "",    // user
+            path        : "",  // the full path but duplicate slashes are removed
+            nodePath    : "",  // only the node path (parent for arguments, empty for users)
+            argumentPath: "",  // the full path to the argument or node if it isn't an argument
+            userName    : "",  // user
             parts       : [],
-            entries     : [],    // contains objects with name and path for every ancestor node
-            type        : "node" // one of: root, node, arg, user, other
+            entries     : [],  // contains objects with name and path for every ancestor node
+            type        : "/"  // contains the path prefix or '/' or 'node' or 'argument'
         };
 
         function normalizeSlashes(path) {
@@ -56,7 +55,6 @@ angular.module('FindecoNavigatorService', [])
             location.segments = $location.search();
             location.parts = path.split("/").filter(isNonEmpty);
             location.path = '/' + location.parts.join("/");
-            location.prefix = "";
             location.nodePath = "";
             location.argumentPath = "";
             location.userName = "";
@@ -64,24 +62,19 @@ angular.module('FindecoNavigatorService', [])
             location.type = "";
             // find out the type of path
             if (path.match(rootPath)) {
-                location.type = "root";
+                location.type = "/";
             } else if (path.match(nodePath)) {
                 location.type = "node";
-                location.prefix = normalizeSlashes(location.path.replace(nodePath, ''));
                 location.nodePath = normalizeSlashes(nodePath.exec(location.path)[0]);
-                location.argumentPath = location.nodePath;
             } else if (path.match(argumentPath)) {
-                location.type = "node";
+                location.type = "argument";
                 location.argumentPath = normalizeSlashes(argumentPath.exec(location.path)[0]);
-                location.prefix = normalizeSlashes(location.path.replace(argumentPath, ''));
                 location.nodePath = normalizeSlashes(location.argumentPath.replace(/\.(pro|con|neut)\.\d+\/?$/, ''));
             } else if (path.match(userPath)) {
                 location.type = "user";
-                location.prefix = "user";
                 location.userName = location.parts[1];
             } else {
-                location.type = "other";
-                location.prefix = location.parts[0];
+                location.type = location.parts[0];
             }
             // calculate entries
             var nodes = location.nodePath.split('/');
@@ -90,7 +83,7 @@ angular.module('FindecoNavigatorService', [])
                 pathSoFar += '/' + nodes[i];
                 location.entries.push({name: nodes[i], path: pathSoFar});
             }
-            if (location.type == 'arg') {
+            if (location.type == 'argument') {
                 nodes = location.argumentPath.split('/');
                 var arg_parts = nodes[nodes.length - 1].split('.');
                 location.entries.push({name: arg_parts[2] + '.' + arg_parts[3], path: location.argumentPath});

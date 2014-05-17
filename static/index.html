@@ -88,19 +88,19 @@
                             <li class="{{ getActiveClass('start')}}">
                                 <a href="/start" data-i18n="_start_">Start</a>
                             </li>
-                            <li class="{{ getActiveClass('')}} {{ getActiveClass('arguments')}}">
+                            <li class="{{ getActiveClass('/') }} {{ getActiveClass('arguments')}}">
                                 <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
                             </li>
-                            <li class="{{ getActiveClass('news')}}" ng-show="user.isLoggedIn">
+                            <li class="{{ getActiveClass('news') }}" ng-show="user.isLoggedIn">
                                 <a href="/news" data-i18n="_news_">News</a>
                             </li>
-                            <li class="{{ getActiveClass('microblogging')}}" ng-show="user.isLoggedIn">
+                            <li class="{{ getActiveClass('microblogging') }}" ng-show="user.isLoggedIn">
                                 <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
                             </li>
-                            <li class="{{ isContentActive() }}">
+                            <li class="{{ getActiveClass('node') }} {{ getActiveClass('index') }}">
                                 <a href="/index" data-i18n="_content_">Content</a>
                             </li>
-                            <li class="{{ getActiveClass('search')}}" id="searchTab">
+                            <li class="{{ getActiveClass('search') }}" id="searchTab">
                                 <div class="searchBox">
                                     <form action="" ng-submit="searchSubmit()">
 
