@@ -12,7 +12,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico">
 
     <!-- CSS files -->
-    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/typography.css" type="text/css" />
+
     <link rel="stylesheet" href="/static/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/topMenu.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/navigationBar.css" type="text/css"/>
@@ -73,6 +75,68 @@
     <title data-i18n="_pageTitle_"></title>
 </head>
 <body>
+<div class="head row" ng-controller="FindecoMenuCtrl">
+    <div class="version">Version: {{ fesettings.version }}</div>
+    <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">
+        Achtung!! Sie sind als Admin User angemeldet
+    </div>
+    <ul>
+        <li class="{{ getActiveClass('start')}}">
+            <a href="/start" data-i18n="_start_">Start</a>
+        </li>
+        <li class="{{ getActiveClass('')}} {{ getActiveClass('arguments')}}">
+            <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
+        </li>
+        <li class="{{ getActiveClass('news')}}" ng-show="user.isLoggedIn">
+            <a href="/news" data-i18n="_news_">News</a>
+        </li>
+        <li class="{{ getActiveClass('microblogging')}}" ng-show="user.isLoggedIn">
+            <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
+        </li>
+        <li class="{{ isContentActive() }}">
+            <a href="/index" data-i18n="_content_">Content</a>
+        </li>
+        <li class="{{ getActiveClass('search')}}" id="searchTab">
+            <div class="searchBox">
+                <form action="" ng-submit="searchSubmit()">
+
+                    <input id="searchInput"
+                           type="search"
+                           name="searchField"
+                           placeholder=""
+                           autocomplete="on"
+                           ng-model="searchString"
+                           data-i18n-attr="_search_|placeholder"/>
+                    <button class="searchButton" value=""></button>
+                </form>
+            </div>
+        </li>
+    </ul>
+
+    <ul style="position: absolute; right: 0;">
+        <li class="{{ getActiveClass('profile')}}" ng-show="user.isLoggedIn">
+            <a ng-href="/profile">{{ user.displayName }}</a>
+
+        </li>
+
+        <li ng-show="user.isLoggedIn">
+            <a ng-click="logout()" style="cursor:pointer; padding: 0;">
+                <img src="/static/images/logout.png" alt="Logout" height="18"
+                     style="position: relative; top: 3px; margin: 0 0 0 0;"
+                     onmouseover="this.src='/static/images/logout_hover.png';"
+                     onmouseout="this.src='/static/images/logout.png';"/></a>
+        </li>
+        <li ng-show="!user.isLoggedIn" style="float:right">
+            <a href="/login" data-i18n="_accountLogin_"></a>
+        </li>
+    </ul>
+</div>
+<div class="graph row"></div>
+<div class="content row">
+    <div class="smallColumn left"></div>
+    <div class="textColumn"></div>
+    <div class="smallColumn right"></div>
+</div>
 <div id="wrap">
     <div id="main">
         <div id="topMenu">
@@ -80,60 +144,7 @@
                 <div id="headerContainer" class="centeringContainer">
                     <div id="headerContent" ng-controller="FindecoMenuCtrl">
 
-                        <div class="version">Version: {{ fesettings.version }}</div>
-                        <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">
-                            Achtung!! Sie sind als Admin User angemeldet
-                        </div>
-                        <ul>
-                            <li class="{{ getActiveClass('start')}}">
-                                <a href="/start" data-i18n="_start_">Start</a>
-                            </li>
-                            <li class="{{ getActiveClass('')}} {{ getActiveClass('arguments')}}">
-                                <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
-                            </li>
-                            <li class="{{ getActiveClass('news')}}" ng-show="user.isLoggedIn">
-                                <a href="/news" data-i18n="_news_">News</a>
-                            </li>
-                            <li class="{{ getActiveClass('microblogging')}}" ng-show="user.isLoggedIn">
-                                <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
-                            </li>
-                            <li class="{{ isContentActive() }}">
-                                <a href="/index" data-i18n="_content_">Content</a>
-                            </li>
-                            <li class="{{ getActiveClass('search')}}" id="searchTab">
-                                <div class="searchBox">
-                                    <form action="" ng-submit="searchSubmit()">
 
-                                        <input id="searchInput"
-                                               type="search"
-                                               name="searchField"
-                                               placeholder=""
-                                               autocomplete="on"
-                                               ng-model="searchString"
-                                               data-i18n-attr="_search_|placeholder"/>
-                                        <button class="searchButton" value=""></button>
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
-
-                        <ul style="position: absolute; right: 0;">
-                            <li  class="{{getActiveClass('profile')}}" ng-show="user.isLoggedIn">
-                                <a ng-href="/profile">{{user.displayName}}</a>
-
-                            </li>
-
-                            <li ng-show="user.isLoggedIn">
-                                <a ng-click="logout()" style="cursor:pointer; padding: 0;">
-                                    <img src="/static/images/logout.png" alt="Logout" height="18"
-                                         style="position: relative; top: 3px; margin: 0 0 0 0;"
-                                         onmouseover="this.src='/static/images/logout_hover.png';"
-                                         onmouseout="this.src='/static/images/logout.png';"/></a>
-                            </li>
-                            <li ng-show="!user.isLoggedIn" style="float:right">
-                                <a href="/login" data-i18n="_accountLogin_"></a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
 
