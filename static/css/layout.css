@@ -31,7 +31,7 @@
 
 /* Background image and basic font */
 body {
-    background-color: #d9cdc1;
+    background-color: #c1c1c1;
     font-family: "Verdana", sans-serif;
 }
 
@@ -66,26 +66,38 @@ body {
     border-bottom: 3px solid #333333;
 }
 
+.graph {
+    float: left;
+}
+
+.toggle {
+    float: left;
+    background-color: #e6e6e6;
+    color: #000000;
+    vertical-align: middle;
+}
+
 .content {
+    float: left;
     background-color: #212121;
     color: #f0f0f0;
 }
 
-.content .smallColumn {
+.smallColumn {
     width: 300px;
     padding: 1em;
     margin: 0;
     vertical-align: top;
 }
 
-.content .textColumn {
+.textColumn {
     max-width: calc(100% - 600px - 6em);
     padding: 1em;
     margin: 0;
     vertical-align: top;
 }
 
-.content .disclaimer {
+.disclaimer {
 	text-align: center;
 	padding: 10px;
 	margin-bottom: 25px;

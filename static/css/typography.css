@@ -119,6 +119,10 @@ input:focus, textarea:focus {
     box-shadow: 0 0 5px #2d7cc4;
 }
 
+.padded {
+    padding: 1em;
+}
+
 /*Special elements*/
 .tipp {
     color: gray;
