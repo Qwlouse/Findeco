@@ -91,7 +91,8 @@ body {
 }
 
 .textColumn {
-    max-width: calc(100% - 600px - 6em);
+    /*max-width: calc(100% - 600px - 6em);*/
+    max-width: 42em;
     padding: 1em;
     margin: 0;
     vertical-align: top;

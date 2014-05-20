@@ -87,9 +87,19 @@ h5 {
 
 /* paragraphs */
 p {
-    margin: 0 0 0.5em;
+    margin: 0 0 0.5em 0;
+    line-height: 150%;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
 }
 
+@-moz-document url-prefix() {
+    p {
+        text-align: justify;
+    }
+}
 /* general style for links */
 a {
     color: #e07b01;
