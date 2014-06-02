@@ -26,7 +26,6 @@
 #navigationBar {
     position: relative;
     top: -3px;
-    height: 28px;
     background: #333333;
 }
 
@@ -54,7 +53,7 @@
 }
 
 #navigationBar ul li {
-    padding-top: 4px;
+    padding: 4px 0;
     display: inline-block;
     font-size: 12pt;
 }

@@ -53,6 +53,10 @@ body {
     clear: both;
 }
 
+.fullwidth {
+    width: 100%;
+}
+
 .box {
     border: 1px dotted #000000;
     background-color: rgba(255, 255, 255, 0.7);

@@ -92,7 +92,7 @@
     margin-left: 5px;
 }
 
-@media (max-width: 67em) and (min-width: 50em) {
+@media (max-width: 72em) and (min-width: 55em) {
     .head {
         height: 5.125em;
     }
@@ -104,7 +104,7 @@
     }
 }
 
-@media (max-width: 50em) {
+@media (max-width: 55em) {
     .head {
         height: auto;
         min-height: 5.125em;
