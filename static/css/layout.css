@@ -60,12 +60,6 @@ body {
     padding: 0.5em;
 }
 
-.head {
-    background-color: rgba(0,0,0,0.6);
-    height: 50px;
-    border-bottom: 3px solid #333333;
-}
-
 .graph {
     float: left;
 }
@@ -84,10 +78,11 @@ body {
 }
 
 .smallColumn {
-    width: 300px;
+    width: 19em;
     padding: 1em;
     margin: 0;
     vertical-align: top;
+    box-shadow: 3px 5px 12px #000000;
 }
 
 .textColumn {
@@ -98,16 +93,22 @@ body {
     vertical-align: top;
 }
 
+@media (min-width: 88em) {
+    .contentText {
+        margin-left: calc(50% - 43em);
+    }
+}
+
 .disclaimer {
 	text-align: center;
-	padding: 10px;
-	margin-bottom: 25px;
+	padding: 1em;
+	margin-bottom: 1.5em;
 }
 
 .version{
-    color:white;
+    color: #ffffff;
     font-size: 0.5em;
     position: absolute;
-    top:3px;
-    right:3px;
+    top: 0.2em;
+    right: 0.2em;
 }

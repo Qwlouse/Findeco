@@ -22,6 +22,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
+.head {
+    background-color: rgba(0,0,0,0.6);
+    height: 3.125em;
+    border-bottom: 0.2em solid #333333;
+}
+
 #logo {
     background: url("../images/logo.png") no-repeat 0 5px;
     background-size: 141px;
@@ -52,8 +58,106 @@
     display:inline-block;
 }
 
+.head .userControls {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.head .fullwidthContainer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.head .centeringTrickContainer {
+    position: relative;
+    left: -50%;
+    float: right;
+    overflow: visible;
+}
+
+.head .topMenu {
+    position: relative;
+    left: 50%;
+}
+
+.head ul li.activeTab {
+    background: #333333;
+    border-radius: 6px 6px 0 0;
+}
+
 #searchTab {
     margin-left: 5px;
+}
+
+@media (max-width: 67em) and (min-width: 50em) {
+    .head {
+        height: 5.125em;
+    }
+
+    .head .userControls {
+        position: absolute;
+        right: 0;
+        bottom: 2em;
+    }
+}
+
+@media (max-width: 50em) {
+    .head {
+        height: auto;
+        min-height: 5.125em;
+    }
+
+    .head .userControls {
+        position: absolute;
+        right: 0;
+        bottom: auto;
+        top: 1.5em;
+    }
+
+    .head .fullwidthContainer {
+        position: relative;
+        top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .head .centeringTrickContainer {
+        float: none;
+    }
+
+    .head ul li {
+        padding: 0 1em;
+    }
+
+    .head .topMenu {
+        width: 100%;
+    }
+
+    .head .topMenu li {
+        width: calc(100% - 2em);
+    }
+
+    .head ul li.activeTab {
+        border-radius: 11px 11px 11px 11px;
+    }
+
+    div.searchBox {
+        width: calc(100% - 1em);
+    }
+
+    div.searchBox form {
+        width: 100%;
+    }
+
+    div.searchBox form input {
+        width: calc(100% - 22px);
+    }
+
+    #searchTab {
+        margin-left: 0;
+    }
 }
 
 div.searchBox {
@@ -129,11 +233,6 @@ div.searchBox.searchActive {
 
 .head ul li a:hover{
     color: #2d7cc4;
-}
-
-.head ul li.activeTab {
-    background: #333333;
-    border-radius: 6px 6px 0 0;
 }
 
 .head ul li.activeTab a{

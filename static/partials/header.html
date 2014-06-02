@@ -5,9 +5,28 @@
         Achtung!! Sie sind als Admin User angemeldet
     </div>
     <div id="logo"></div>
-    <div style="position: absolute; bottom: 0; width: 100%">
-        <div style="position: relative; left: -50%; float: right; overflow: visible;">
-            <ul style="position: relative; left: 50%;">
+
+    <ul class="userControls" style="z-index: 2;">
+        <li class="{{ getActiveClass('profile')}}" ng-show="user.isLoggedIn">
+            <a ng-href="/profile">{{ user.displayName }}</a>
+
+        </li>
+
+        <li ng-show="user.isLoggedIn">
+            <a ng-click="logout()" style="cursor:pointer; padding: 0;">
+                <img src="/static/images/logout.png" alt="Logout" height="18"
+                     style="position: relative; top: 3px; margin: 0 0 0 0;"
+                     onmouseover="this.src='/static/images/logout_hover.png';"
+                     onmouseout="this.src='/static/images/logout.png';"/></a>
+        </li>
+        <li ng-show="!user.isLoggedIn" style="float:right">
+            <a href="/login" data-i18n="_accountLogin_"></a>
+        </li>
+    </ul>
+
+    <div class="fullwidthContainer">
+        <div class="centeringTrickContainer">
+            <ul class="topMenu">
                 <li class="{{ getActiveClass('start')}}">
                     <a href="/start" data-i18n="_start_">Start</a>
                 </li>
@@ -39,24 +58,7 @@
                     </div>
                 </li>
             </ul>
+            <div style="clear: both;"></div>
         </div>
     </div>
-
-    <ul style="position: absolute; right: 0; bottom: 0;">
-        <li class="{{ getActiveClass('profile')}}" ng-show="user.isLoggedIn">
-            <a ng-href="/profile">{{ user.displayName }}</a>
-
-        </li>
-
-        <li ng-show="user.isLoggedIn">
-            <a ng-click="logout()" style="cursor:pointer; padding: 0;">
-                <img src="/static/images/logout.png" alt="Logout" height="18"
-                     style="position: relative; top: 3px; margin: 0 0 0 0;"
-                     onmouseover="this.src='/static/images/logout_hover.png';"
-                     onmouseout="this.src='/static/images/logout.png';"/></a>
-        </li>
-        <li ng-show="!user.isLoggedIn" style="float:right">
-            <a href="/login" data-i18n="_accountLogin_"></a>
-        </li>
-    </ul>
 </div>

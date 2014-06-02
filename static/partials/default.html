@@ -52,7 +52,7 @@
 <div class="content row">
     <div ng-include src="'/static/partials/argument.html'"></div>
     <div ng-include src="'/static/partials/microblogging.html'"></div>
-    <div class="textColumn left">
+    <div class="textColumn left contentText">
         <div ng-if="!user.isLoggedIn&&fesettings.disclaimer.enable"
              ng-bind-html-unsafe="fesettings.disclaimer.text"
              class="disclaimer box">
