@@ -41,17 +41,30 @@
 </div>
 <div class="clearer"></div>
 <div class="toggle row">
-    <div class="padded left">
-        <a href="" class="left">Argumente zeigen</a>
+    <div class="padded left" style="width: calc(50% - 2em);" ng-click="showArguments = !showArguments">
+        <a href="" class="left">
+            <span ng-if="!showArguments">Argumente zeigen</span>
+            <span ng-if="showArguments">Argumente verbergen</span>
+        </a>
     </div>
-    <div class="padded right">
-        <a href="" class="right">Microblogging zeigen</a>
+    <div class="padded right" style="width: calc(50% - 2em);" ng-click="showMicroblogging = !showMicroblogging">
+        <a href="" class="right">
+            <span ng-if="!showMicroblogging">Microblogging zeigen</span>
+            <span ng-if="showMicroblogging">Microblogging verbergen</span>
+        </a>
     </div>
 </div>
 <div class="clearer"></div>
 <div class="content row">
-    <div ng-include src="'/static/partials/argument.html'"></div>
-    <div ng-include src="'/static/partials/microblogging.html'"></div>
+    <div ng-style="{'left': argumentsPosition + 'em', 'position': 'absolute'}"
+         class="smallColumn left animateArguments">
+        <div ng-include src="'/static/partials/argument.html'"></div>
+    </div>
+    <div ng-style="{'right': microbloggingPosition + 'em', 'position': 'absolute'}"
+         class="smallColumn right" style="position: absolute; right: 0;">
+        <div ng-include src="'/static/partials/microblogging.html'"></div>
+    </div>
+
     <div class="textColumn left contentText">
         <div ng-if="!user.isLoggedIn&&fesettings.disclaimer.enable"
              ng-bind-html-unsafe="fesettings.disclaimer.text"
