@@ -58,7 +58,7 @@ body {
 }
 
 .box {
-    border: 1px dotted #000000;
+    border: 1px solid rgba(0, 0, 0, 0.7);
     background-color: rgba(255, 255, 255, 0.7);
     color: #000000;
     padding: 0.5em;
@@ -87,17 +87,39 @@ body {
     padding: 1em;
     margin: 0 0 4em 0;
     vertical-align: top;
+    color: #f0f0f0;
     background-color: #212121;
     box-shadow: 3px 5px 12px #000000;
     z-index: 1;
 }
 
 .textColumn {
-    /*max-width: calc(100% - 600px - 6em);*/
     max-width: 42em;
     padding: 1em;
     margin: 0;
     vertical-align: top;
+}
+
+.shadowed {
+    background-color: #212121;
+    color: #f0f0f0;
+    box-shadow: 3px 5px 12px #000000;
+}
+
+.balloon {
+    -moz-border-radius: 3em;
+    -webkit-border-radius: 3em;
+    border-radius: 3em;
+    min-height: 8em;
+    min-width: 8em;
+}
+
+.balloon-source {
+    width: 71px;
+    height: 69px;
+    position: absolute;
+    background-image: url("../images/bubble-arrows.png");
+    top: 2em;
 }
 
 @media (min-width: 42em) {

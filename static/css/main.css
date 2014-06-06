@@ -120,15 +120,6 @@ body:before {
     display: inline-block;
 }
 
-.refersTo {
-    width: 6%;
-    display: inline-block;
-    font-size: 8em;
-    margin: 0 15px;
-    position: relative;
-    top: -25px;
-}
-
 .contentBoxInvisible {
     background: transparent;
 }

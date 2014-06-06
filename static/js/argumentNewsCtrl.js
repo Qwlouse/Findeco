@@ -103,4 +103,6 @@ findecoApp.controller('FindecoArgumentNewsCtrl', function ($scope, Backend, User
 
     $scope.cards = [];
     Backend.loadArgumentNews($scope.cards);
+
+    setTimeout(function () {console.log($scope.cards);}, 1000);
 });

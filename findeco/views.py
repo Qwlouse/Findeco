@@ -237,7 +237,8 @@ def load_argument_news(request):
                 'followingCount': argument.votes.count(),
                 'isFlagging': get_is_flagging(request.user.id, argument),
                 'flaggingCount': argument.spam_flags.count(),
-                'authorGroup': [author.username for author in argument.text.authors.all()]
+                'authorGroup': [author.username for author in argument.text.authors.all()],
+                'type': argument.arg_type
             },
             'node': {
                 'text': node.text.text,
