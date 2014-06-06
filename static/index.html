@@ -74,7 +74,9 @@
     <script type="text/javascript">
         function footerPosition() {
             document.getElementById('footer').style.bottom = '-' +
-                String(document.body.scrollHeight - document.body.clientHeight - document.body.scrollTop) + 'px';
+                String(Math.floor(
+                    (document.body.scrollHeight - document.body.clientHeight - document.body.scrollTop)
+                    / 2)) + 'px';
         }
 
         var didScroll = false;
