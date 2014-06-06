@@ -1,105 +1,110 @@
-<div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
-    <div class="contentBox startColumn">
-        <help hid="MBL_til" htype="1" />
-        <h2 data-i18n="_timeline_" style="width:210px; float:left;"></h2>
-        <a class="rss" target="_new" href="/feeds/rss/timeline/{{ user.displayName }}/{{ user.rsskey }}">
-            <img alt="RSS-Feed" src="./static/images/feed.png">
-        </a>
+<div class="row" xmlns="http://www.w3.org/1999/html">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
+        <div style="position: relative; left: 50%;">
+            <div class="smallColumn left spaced" style="margin-bottom: 4em;">
+                <help hid="MBL_til" htype="1" />
+                <h2 data-i18n="_timeline_" style="width:210px; float:left;"></h2>
+                <a class="rss" target="_new" href="/feeds/rss/timeline/{{ user.displayName }}/{{ user.rsskey }}">
+                    <img alt="RSS-Feed" src="./static/images/feed.png">
+                </a>
 
-        <div style="clear:both"></div>
+                <div style="clear:both"></div>
 
-        <ul class="microblogList">
-            <li ng-repeat="microblogNode in timelineList">
-                <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
-                     entity="microblogNode.author" mark-func="followUser"
-                     style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
-                <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
-                        microblogNode.authorGroup[0].displayName }}</a>
-                <div ng-if="microblogNode.location != 1">
-                    <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
+                <ul class="microblogList">
+                    <li ng-repeat="microblogNode in timelineList">
+                        <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
+                             entity="microblogNode.author" mark-func="followUser"
+                             style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
+                        <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
+                                microblogNode.authorGroup[0].displayName }}</a>
+                        <div ng-if="microblogNode.location != 1">
+                            <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
+                        </div>
+                        <span class="microblogDate">{{ microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
+                        <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
+                    </li>
+                    <li><a ng-show="timelineList.length >= 20" class="btn btn-primary"
+                           ng-click="updateTimeline('older',timelineList[timelineList.length-1].microblogID)"
+                           data-i18n="_loadMoreMicroblogging_"></a></li>
+                </ul>
+                <div ng-show="isLoading('timeline')" class="deactivateDiv">
                 </div>
-                <span class="microblogDate">{{ microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
-                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
-            </li>
-            <li><a ng-show="timelineList.length >= 20" class="btn btn-primary"
-                   ng-click="updateTimeline('older',timelineList[timelineList.length-1].microblogID)"
-                   data-i18n="_loadMoreMicroblogging_"></a></li>
-        </ul>
-        <div ng-show="isLoading('timeline')" class="deactivateDiv">
-        </div>
-        <div ng-show="isLoading('timeline')" class="deactivateSpinner">
-        </div>
-    </div>
-    <div class="contentBox startColumn">
-        <h2 data-i18n="_mentions_" style="width:210px; float:left;"></h2>
-        <help hid="MBL_men" htype="1" />
-        <a class="rss" target="_new" href="/feeds/rss/mention/{{ user.displayName }}/{{ user.rsskey }}">
-            <img alt="RSS-Feed" src="./static/images/feed.png">
-        </a>
-
-        <div style="clear:both"></div>
-
-        <ul class="microblogList">
-            <li ng-repeat="microblogNode in mentionsList">
-                <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
-                     entity="microblogNode.author" mark-func="followUser"
-                     style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
-                <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
-                        microblogNode.authorGroup[0].displayName }}</a>
-                <div ng-if="microblogNode.location != 1">
-                    <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
+                <div ng-show="isLoading('timeline')" class="deactivateSpinner">
                 </div>
-                <span class="microblogDate">{{ microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
-                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
-            </li>
-            <li><a ng-show="followedNodesList.length >= 20" class="btn btn-primary"
-                   ng-click="updateMentions('older',mentionsList[mentionsList.length-1].microblogID)"
-                   data-i18n="_loadMoreMicroblogging_"></a></li>
-        </ul>
-        <div ng-show="isLoading('mentions')" class="deactivateDiv">
-        </div>
-        <div ng-show="isLoading('mentions')" class="deactivateSpinner">
-        </div>
-    </div>
-    <div class="contentBox startColumn">
-        <help hid="MBL_col" htype="1" />
-        <h2 data-i18n="_composePost_" style="width:210px; float:left;"></h2>
+            </div>
+            <div class="smallColumn left spaced" style="margin-bottom: 4em;">
+                <h2 data-i18n="_mentions_" style="width:210px; float:left;"></h2>
+                <help hid="MBL_men" htype="1" />
+                <a class="rss" target="_new" href="/feeds/rss/mention/{{ user.displayName }}/{{ user.rsskey }}">
+                    <img alt="RSS-Feed" src="./static/images/feed.png">
+                </a>
 
-        <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
-        <ul class="microblogList">
-            <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0 0 2em 0;">
-                <form ng-submit="submit()">
-                    <textarea class="microblogInput" type="text" placeholder="{{ '_microblogPlaceholder_'|i18n }}"
-                              ng-model="microblogText"></textarea>
-                    <input class="btn btn-primary" type="submit" value="{{ '_microblogSendBtn_'|i18n }}"/>
-                </form>
+                <div style="clear:both"></div>
 
-            </li>
-        </ul>
-            <help hid='MBL_own' htype=1/><h2 data-i18n="_ownPosts_" style="width:210px; float:left;"></h2>
-        <a class="rss" target="_new" href="/feeds/rss/newsAuthor/{{ user.displayName }}/{{ user.rsskey }}">
-            <img alt="RSS-Feed" src="./static/images/feed.png">
-        </a>
-
-        <div style="clear:both"></div>
-
-        <ul class="microblogList">
-            <li ng-repeat="microblogNode in ownPostsList">
-                <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
-                        microblogNode.authorGroup[0].displayName }}</a>
-                <div ng-if="microblogNode.location != 1">
-                    <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
+                <ul class="microblogList">
+                    <li ng-repeat="microblogNode in mentionsList">
+                        <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
+                             entity="microblogNode.author" mark-func="followUser"
+                             style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
+                        <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
+                                microblogNode.authorGroup[0].displayName }}</a>
+                        <div ng-if="microblogNode.location != 1">
+                            <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
+                        </div>
+                        <span class="microblogDate">{{ microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
+                        <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
+                    </li>
+                    <li><a ng-show="followedNodesList.length >= 20" class="btn btn-primary"
+                           ng-click="updateMentions('older',mentionsList[mentionsList.length-1].microblogID)"
+                           data-i18n="_loadMoreMicroblogging_"></a></li>
+                </ul>
+                <div ng-show="isLoading('mentions')" class="deactivateDiv">
                 </div>
-                <span class="microblogDate">{{ microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
-                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
-            </li>
-            <li><a ng-show="followedNodesList.length >= 20" class="btn btn-primary"
-                   ng-click="updateMentions('older',mentionsList[mentionsList.length-1].microblogID)"
-                   data-i18n="_loadMoreMicroblogging_"></a></li>
-        </ul>
-        <div ng-show="isLoading('own')" class="deactivateDiv">
-        </div>
-        <div ng-show="isLoading('own')" class="deactivateSpinner">
+                <div ng-show="isLoading('mentions')" class="deactivateSpinner">
+                </div>
+            </div>
+            <div class="smallColumn left spaced" style="margin-bottom: 4em;">
+                <help hid="MBL_col" htype="1" />
+                <h2 data-i18n="_composePost_" style="width:210px; float:left;"></h2>
+
+                <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
+                <ul class="microblogList">
+                    <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0 0 2em 0;">
+                        <form ng-submit="submit()">
+                            <textarea class="microblogInput" type="text" placeholder="{{ '_microblogPlaceholder_'|i18n }}"
+                                      ng-model="microblogText"></textarea>
+                            <input class="btn btn-primary" type="submit" value="{{ '_microblogSendBtn_'|i18n }}"/>
+                        </form>
+
+                    </li>
+                </ul>
+                    <help hid='MBL_own' htype=1/><h2 data-i18n="_ownPosts_" style="width:210px; float:left;"></h2>
+                <a class="rss" target="_new" href="/feeds/rss/newsAuthor/{{ user.displayName }}/{{ user.rsskey }}">
+                    <img alt="RSS-Feed" src="./static/images/feed.png">
+                </a>
+
+                <div style="clear:both"></div>
+
+                <ul class="microblogList">
+                    <li ng-repeat="microblogNode in ownPostsList">
+                        <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
+                                microblogNode.authorGroup[0].displayName }}</a>
+                        <div ng-if="microblogNode.location != 1">
+                            <a href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
+                        </div>
+                        <span class="microblogDate">{{ microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
+                        <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
+                    </li>
+                    <li><a ng-show="followedNodesList.length >= 20" class="btn btn-primary"
+                           ng-click="updateMentions('older',mentionsList[mentionsList.length-1].microblogID)"
+                           data-i18n="_loadMoreMicroblogging_"></a></li>
+                </ul>
+                <div ng-show="isLoading('own')" class="deactivateDiv">
+                </div>
+                <div ng-show="isLoading('own')" class="deactivateSpinner">
+                </div>
+            </div>
+            <div style="clear: both;"></div>
         </div>
     </div>
 </div>
