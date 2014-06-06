@@ -35,6 +35,10 @@ angular.module('FindecoGraphDataService', [])
         };
 
 
+        graphData.setWidth = function (newWidth) {
+            graphData.svg_width = newWidth;
+        };
+
         graphData.nodesEqual = function (nodeA, nodeB) {
             return nodeA.path == nodeB.path; // TODO: Use ID instead of path
         };

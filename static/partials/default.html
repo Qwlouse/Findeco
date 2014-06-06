@@ -1,4 +1,4 @@
-<div class="graph row">
+<div class="graph row" id="graphSpace">
     <div ng-include src="'/static/partials/navigationBar.html'"></div>
 
     <svg xmlns="http://www.w3.org/2000/svg" height="0" width="0" style="margin: 0; padding:0">
@@ -18,7 +18,7 @@
         </defs>
     </svg>
 
-    <div style="position: relative; left: -50%; float: right; overflow: visible;">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
         <div style="position: relative; left: 50%;">
             <div class="tipp">
 
@@ -35,7 +35,11 @@
                     Vorschläge angezeigt:
                 </form>
             </div>
-            <div findeco-graph data="graphData" path="nav.nodePath" height='180' width='580' class="graph"></div>
+        </div>
+    </div>
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
+        <div style="position: relative; left: 50%;">
+            <div findeco-graph data="graphData" path="nav.nodePath" height="180" width="graphWidth" class="graph"></div>
         </div>
     </div>
 </div>

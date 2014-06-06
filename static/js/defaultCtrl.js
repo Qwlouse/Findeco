@@ -35,6 +35,8 @@ findecoApp.controller('FindecoDefaultCtrl',
     $scope.argumentsPosition = -22;
     $scope.showMicroblogging = false;
     $scope.microbloggingPosition = -22;
+    $scope.graphWidth = document.getElementById('graphSpace').scrollWidth;
+    GraphData.setWidth($scope.graphWidth);
 
     $scope.$watch('showArguments', function (newValue) {
         var animationSteps = 30;
