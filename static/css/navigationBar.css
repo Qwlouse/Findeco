@@ -27,6 +27,7 @@
     position: relative;
     top: -3px;
     background: #333333;
+    z-index: 1000;
 }
 
 #navigationBar a {

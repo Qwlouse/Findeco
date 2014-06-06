@@ -72,6 +72,21 @@
     <script type="text/javascript" src="/static/js/userInfoCtrl.js"></script>
     <script type="text/javascript" src="/static/js/navigatorService.js"></script>
     <script type="text/javascript">
+        function headerPosition() {
+            var navigationBar = document.getElementById('navigationBar');
+            if (navigationBar) {
+                if (document.body.scrollTop > document.getElementById('headerSpace').scrollHeight) {
+                    navigationBar.style.position = 'fixed';
+                    navigationBar.style.top = '0';
+                    navigationBar.style.width = '100%';
+                } else {
+                    navigationBar.style.position = 'relative';
+                    navigationBar.style.top = '-3px';
+                    navigationBar.style.width = 'auto';
+                }
+            }
+        }
+
         function footerPosition() {
             document.getElementById('footer').style.bottom = '-' +
                 String(Math.floor(
@@ -90,6 +105,7 @@
             if(didScroll) {
                 didScroll = false;
                 footerPosition();
+                headerPosition();
             }
         }, 30);
     </script>
