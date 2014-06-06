@@ -22,21 +22,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 .footer {
-    position: relative;
-    height: 30px;
-    clear:both;
-    margin: -30px 0 0 0;/* negative value of footer height */
-}
-
-#footer {
-    position: absolute;
-    width: 100%;
-    margin: 0;
-    height: 23px;
-    background: linear-gradient(top, #333333 0%, #212121 100%);
-    background: -moz-linear-gradient(top, #333333 0%, #212121 100%);
-    background: -webkit-linear-gradient(top, #333333 0%, #212121 100%);
-    padding: 7px 0 0 0;
+    clear: both;
+    position: fixed;
+    bottom: 0;
+    padding: 0.5em;
+    background-color: #212121;
 }
 
 #footer ul {

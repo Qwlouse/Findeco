@@ -79,15 +79,17 @@ body {
     float: left;
     background-color: #212121;
     color: #f0f0f0;
+    margin-bottom: 4em;
 }
 
 .smallColumn {
     width: 19em;
     padding: 1em;
-    margin: 0;
+    margin: 0 0 4em 0;
     vertical-align: top;
     background-color: #212121;
     box-shadow: 3px 5px 12px #000000;
+    z-index: 1;
 }
 
 .textColumn {
@@ -98,7 +100,7 @@ body {
     vertical-align: top;
 }
 
-@media (min-width: 88em) {
+@media (min-width: 42em) {
     .contentText {
         margin-left: calc(50% - 21em);
     }

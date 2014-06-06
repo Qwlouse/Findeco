@@ -71,23 +71,41 @@
     <script type="text/javascript" src="/static/js/userCtrl.js"></script>
     <script type="text/javascript" src="/static/js/userInfoCtrl.js"></script>
     <script type="text/javascript" src="/static/js/navigatorService.js"></script>
+    <script type="text/javascript">
+        function footerPosition() {
+            document.getElementById('footer').style.bottom = '-' +
+                String(document.body.scrollHeight - document.body.clientHeight - document.body.scrollTop) + 'px';
+        }
+
+        var didScroll = false;
+        setTimeout(footerPosition, 1);
+
+        window.onscroll = function () {
+            didScroll = true;
+        };
+
+        setInterval(function() {
+            if(didScroll) {
+                didScroll = false;
+                footerPosition();
+            }
+        }, 30);
+    </script>
 
     <title data-i18n="_pageTitle_"></title>
 </head>
 <body>
 <div ng-include src="'/static/partials/header.html'"></div>
-<div style="min-height: calc(100% - 50px); padding-bottom: 30px;">
+<div style="min-height: calc(100% - 30px); padding-bottom: 30px;">
     <div ng-view></div>
 </div>
-<div class="footer row">
-    <div id="footer">
-        <ul>
-            <li><a href="/terms_of_use">Nutzungsbedingungen</a></li>
-            <li><a href="/imprint">Impressum</a></li>
-            <li><a href="/data_privacy">Datenschutzerklärung</a></li>
-            <li><a href="/about">Über Findeco</a></li>
-        </ul>
-    </div>
+<div class="footer row" id="footer">
+    <ul>
+        <li><a href="/terms_of_use">Nutzungsbedingungen</a></li>
+        <li><a href="/imprint">Impressum</a></li>
+        <li><a href="/data_privacy">Datenschutzerklärung</a></li>
+        <li><a href="/about">Über Findeco</a></li>
+    </ul>
 </div>
 {{ hide }}
 <div class="helppanel" ng-animate="animate" ng-controller="FindecoHelpCtrl" ng-hide="panelIsHidden">
