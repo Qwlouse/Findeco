@@ -35,7 +35,11 @@ findecoApp.controller('FindecoDefaultCtrl',
     $scope.argumentsPosition = -22;
     $scope.showMicroblogging = false;
     $scope.microbloggingPosition = -22;
-    $scope.graphWidth = document.getElementById('graphSpace').scrollWidth;
+    $scope.graphWidth = 550;
+    var graphSpace = document.getElementById('graphSpace');
+    if (graphSpace) {
+        $scope.graphWidth = graphSpace.scrollWidth;
+    }
     GraphData.setWidth($scope.graphWidth);
 
     $scope.$watch('showArguments', function (newValue) {
