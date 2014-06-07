@@ -23,13 +23,12 @@
  ****************************************************************************************/
 
 .startColumn {
-    min-height: 170px;
-    width: 280px;
-    padding: 10px 25px 10px 10px;
-    float: left;
-    margin-left: 50px;
-    margin-bottom:30px;
-    font-size:13px;
+    min-height: 11em;
+    width: 17em;
+    padding: 1em;
+    margin: 1em;
+    font-size: 85%;
+    line-height: 130%;
 }
 .startColumn h2{
 	color:grey;
