@@ -119,7 +119,40 @@ body {
     height: 69px;
     position: absolute;
     background-image: url("../images/bubble-arrows.png");
+    background-size: auto 69px;
     top: 2em;
+}
+
+@media (max-width: 95em) {
+    .side-arrows {
+        visibility: hidden;
+    }
+
+    .balloon {
+        max-width: 42em;
+        width: calc(100% - 2em);
+        margin-bottom: 50px;
+    }
+
+    .proposal-box {
+        clear: both;
+        max-width: 42em;
+        width: calc(100% - 2em);
+    }
+}
+
+@media (min-width: 95em) {
+    .bottom-arrows {
+        visibility: hidden;
+    }
+
+    .balloon {
+        width: 42em;
+    }
+
+    .proposal-box {
+        width: 42em;
+    }
 }
 
 @media (min-width: 42em) {
