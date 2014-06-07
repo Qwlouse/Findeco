@@ -10,6 +10,7 @@
                     <div ng-bind-html-unsafe="box.content">></div>
                     <div style="clear:both"></div>
                     <a style="float:right" href="{{ box.link }}">{{ box.link_title }}</a>
+                    <div style="clear:both"></div>
                 </div>
 
                 <div ng-if="box.special == 'news' "
@@ -25,7 +26,7 @@
                     </div>
                     <div ng-show="isLoading()" class="deactivateSpinner">
                     </div>
-
+                    <div style="clear:both"></div>
                 </div>
 
             </div>
