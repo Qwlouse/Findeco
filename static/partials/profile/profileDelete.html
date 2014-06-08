@@ -1,14 +1,26 @@
-<div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
-	<div class="contentBox profileLeftWideColumn" ng-show="user.isLoggedIn">
-	<div ng-include src="'/static/partials/profile/profileMenu.html'"  ></div>
-</ngInclude>
-  
+<div class="row" xmlns="http://www.w3.org/1999/html">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
+        <div style="position: relative; left: 50%; max-width: 86em; width: 100%;">
+            <div class="smallColumn left profile-menu" ng-show="user.isLoggedIn">
+                <div ng-include src="'/static/partials/profile/profileMenu.html'"  ></div>
+            </div>
+            <div class="left profile-content">
+                <div class="textColumn shadowed left profile-box" ng-show="user.isLoggedIn">
+                    <h2 data-i18n="_deleteAccount_">delete Account</h2>
+                    <p data-i18n="_deleteAccountExplanation_"></p>
+                    <form ng-submit="deleteAccount()">
+                        <input class="btn btn-primary" type="submit" value="{{'_deleteAccount_'|i18n}}">
+                    </form>
+                </div>
+                <div class="textColumn shadowed left profile-box" ng-show="user.isLoggedIn">
+                    <h2 data-i18n="_accountDeleteHints_">Hinweise zum Löschen von Accounts</h2>
+
+                    <div data-i18n="_accountDeleteHint_" class="tipp"></div>
+
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="profile-clearer"></div>
+        </div>
     </div>
-    <div class="profileCenterWideColumn contentBox" ng-show="user.isLoggedIn">
-        <h2 data-i18n="_deleteAccount_">delete Account</h2>
-        <p data-i18n="_deleteAccountExplanation_"></p>
-        <form ng-submit="deleteAccount()">
-            <input class="btn btn-primary" type="submit" value="{{'_deleteAccount_'|i18n}}">
-        </form>
-   	</div>
 </div>

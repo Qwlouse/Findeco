@@ -1,51 +1,57 @@
-<div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
-    <div class="contentBox profileLeftWideColumn" ng-show="user.isLoggedIn">
-        <div ng-include src="'/static/partials/profile/profileMenu.html'"></div>
+<div class="row" xmlns="http://www.w3.org/1999/html">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
+        <div style="position: relative; left: 50%; padding: 1em; max-width: 86em; width: 100%;">
+            <div class="smallColumn left profile-menu" ng-show="user.isLoggedIn">
+                <div ng-include src="'/static/partials/profile/profileMenu.html'"></div>
+            </div>
 
+            <div class="left profile-content">
+                <div class="textColumn shadowed left profile-box" ng-if="user.isLoggedIn">
+                    <h2 data-i18n="_email_">E-Mail</h2>
 
-    </div>
-    <div class="profileCenterWideColumn contentBox" ng-show="user.isLoggedIn">
-        <h2 data-i18n="_email_">E-Mail</h2>
+                    <p><span data-i18n="_currentAdress_">aktuelle Adresse</span>: {{ user.email }}</p>
 
-        <p><span data-i18n="_currentAdress_">aktuelle Adresse</span>: {{ user.email }}</p>
+                    <p ng-show="user.emailChangeRequested" data-i18n="_changeEmailRequested_">
+                        Die Änderung der E-Mail Adresse wurde bereits angefordert
+                        und eine Bestätigungemail an die neue Adresse versandt.
+                        Die Änderung wird wirksam, wenn der Bestätigungslink in
+                        der Mail geklickt wird.
+                    </p>
 
-        <p ng-show="user.emailChangeRequested" data-i18n="_changeEmailRequested_">
-            Die Änderung der E-Mail Adresse wurde bereits angefordert
-            und eine Bestätigungemail an die neue Adresse versandt.
-            Die Änderung wird wirksam, wenn der Bestätigungslink in
-            der Mail geklickt wird.
-        </p>
+                    <p data-i18n="_changeEMailDescription_"></p>
 
-        <p data-i18n="_changeEMailDescription_"></p>
+                    <form ng-submit="storeUserSettings()">
+                        <input type="text" ng-model="user.email"/><br/>
+                        <input class="btn btn-primary" type="submit" value="{{ '_save_'|i18n }}">
+                    </form>
 
-        <form ng-submit="storeUserSettings()">
-            <input type="text" ng-model="user.email"/><br/>
-            <input class="btn btn-primary" type="submit" value="{{ '_save_'|i18n }}">
-        </form>
+                    <h2 data-i18n="_notificationSettings_">Benachrichtigungseinstellungen</h2>
+                    <form ng-submit="storeUserSettings()">
+                        <input type="checkbox"
+                               id="wantsEMail"
+                               ng-model="user.wantsMailNotification"
+                               ng-change="storeUserSettings()" />
+                        <label for="wantsEMail" data-i18n="_wantEMailLabel_">
+                            Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.
+                        </label>
+                    </form>
 
-        <h2 data-i18n="_notificationSettings_">Benachrichtigungseinstellungen</h2>
-        <form ng-submit="storeUserSettings()">
-            <input type="checkbox"
-                   id="wantsEMail"
-                   ng-model="user.wantsMailNotification"
-                   ng-change="storeUserSettings()" />
-            <label for="wantsEMail" data-i18n="_wantEMailLabel_">
-                Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.
-            </label>
-        </form>
+                </div>
+                <div class="textColumn shadowed left profile-box" ng-if="!user.isLoggedIn">
+                    <h1 data-i18n="_notLoggedIn_">Du bist nicht angemeldet</h1>
+                </div>
+                <div class="textColumn shadowed left profile-box" ng-show="user.isLoggedIn">
+                    <h2 data-i18n="_emailHints_">E-Mail Hinweise</h2>
 
-    </div>
-    <div class="profileCenterWideColumn contentBox" ng-hide="user.isLoggedIn">
-        <h1 data-i18n="_notLoggedIn_">Du bist nicht angemeldet</h1>
-    </div>
-    <div class="contentBox profileRightWideColumn" ng-show="user.isLoggedIn">
-        <h2 data-i18n="_passwordHints_">Passwort Hinweise</h2>
+                    <div data-i18n="_emailHint_" class="tipp">
+                        Wenn du benachrichtigungen aktivierst, bekommst du E-Mails bei Weiterentwicklungen deiner
+                        Vorschläge, bei neuen Argumenten zu deinen Vorschlägen und bei Erwähnungen im Microblogging.
+                    </div>
 
-        <div data-i18n="_passwordHint_" class="tipp">
-            Wir empfehlen ein Passwort mit 8 oder mehr Zeichen.
-            Bitte verwende sowohl Groß- und Kleinschreibung als
-            auch Sonderzeichen in deinem Passwort.
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="profile-clearer"></div>
         </div>
-
     </div>
 </div>

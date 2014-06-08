@@ -172,10 +172,38 @@ body {
 	margin-bottom: 1.5em;
 }
 
-.version{
+.version {
     color: #ffffff;
     font-size: 0.5em;
     position: absolute;
     top: 0.2em;
     right: 0.2em;
+}
+
+.profile-clearer {
+    clear: both;
+    padding: 1em 0;
+}
+
+@media (min-width: 86em) {
+    .profile-clearer {
+        width: 86em;
+    }
+}
+
+.profile-box {
+    margin: 1em;
+    width: calc(100% - 8em);
+    max-width: 30em;
+}
+
+.profile-menu {
+    margin: 1em;
+    max-width: 14em;
+}
+
+@media (min-width: 68em) {
+    .profile-content {
+        width: 68em;
+    }
 }
