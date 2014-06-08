@@ -15,6 +15,7 @@
                 <div style="clear:both"></div>
 
                 <ul class="microblogList">
+                    <li></li>
                     <li ng-repeat="microblogNode in allNodesList">
                         <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
                              entity="microblogNode.author" mark-func="followUser"
@@ -43,6 +44,7 @@
 
 
                 <ul class="microblogList">
+                    <li></li>
                     <li ng-repeat="microblogNode in followedNodesList">
                         <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
                              entity="microblogNode.author" mark-func="followUser"
@@ -73,6 +75,7 @@
                 <div style="clear:both"></div>
 
                 <ul class="microblogList">
+                    <li></li>
                     <li ng-repeat="microblogNode in ownNodesList">
                         <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
                              entity="microblogNode.author" mark-func="followUser"

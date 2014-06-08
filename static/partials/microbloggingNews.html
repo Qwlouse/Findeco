@@ -11,6 +11,7 @@
                 <div style="clear:both"></div>
 
                 <ul class="microblogList">
+                    <li></li>
                     <li ng-repeat="microblogNode in timelineList">
                         <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
                              entity="microblogNode.author" mark-func="followUser"
@@ -42,6 +43,7 @@
                 <div style="clear:both"></div>
 
                 <ul class="microblogList">
+                    <li></li>
                     <li ng-repeat="microblogNode in mentionsList">
                         <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
                              entity="microblogNode.author" mark-func="followUser"
@@ -69,6 +71,7 @@
 
                 <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
                 <ul class="microblogList">
+                    <li></li>
                     <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0 0 2em 0;">
                         <form ng-submit="submit()">
                             <textarea class="microblogInput" type="text" placeholder="{{ '_microblogPlaceholder_'|i18n }}"
@@ -86,6 +89,7 @@
                 <div style="clear:both"></div>
 
                 <ul class="microblogList">
+                    <li></li>
                     <li ng-repeat="microblogNode in ownPostsList">
                         <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
                                 microblogNode.authorGroup[0].displayName }}</a>

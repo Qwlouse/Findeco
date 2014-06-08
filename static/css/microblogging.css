@@ -25,21 +25,23 @@
 ul.microblogList {
     margin: 0 0 0 0;
     padding: 0;
-    color: #333;
+    font-size: 10pt;
 }
 
 ul.microblogList li {
     display: block;
     list-style: none;
-    margin: 10px 0 0 0;
-    padding: 0;
+    margin: 0;
+    padding: 0.75em 0 0.25em 0;
+    line-height: 130%;
 }
 
 ul.microblogList li + li + li{
-    border-top: 1px solid #CCC;
+    border-top: 1px solid #2f2f2f;
 }
 
 a.microblogAuthor {
+    float: left;
     font-weight: bold;
 }
 
@@ -47,6 +49,12 @@ span.microblogDate {
     float: right;
     font-size: 9pt;
     color: #999;
+}
+
+span.microblogText {
+    margin: 0.25em 0;
+    clear: both;
+    display: block;
 }
 
 .characterCountdown {
