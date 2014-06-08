@@ -32,6 +32,10 @@
 /* Background image and basic font */
 body {
     background-color: #c1c1c1;
+    background-image: url("../images/agora.jpg");
+    background-repeat: repeat-y;
+    background-size: 100%;
+    background-attachment: fixed;
     font-family: "Verdana", sans-serif;
 }
 
