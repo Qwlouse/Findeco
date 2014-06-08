@@ -211,3 +211,14 @@ body {
         width: 68em;
     }
 }
+
+.userpage-clearer {
+    clear: both;
+    padding: 1.5em 0;
+}
+
+@media (min-width: 70em) {
+    .userpage-clearer {
+        width: 70em;
+    }
+}
