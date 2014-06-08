@@ -1,0 +1,20 @@
+<div class="row" xmlns="http://www.w3.org/1999/html" style="margin-bottom: 2em;"
+     ng-if="fesettings.greetingbox.enabled">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
+        <div style="position: relative; left: 50%;">
+            <div class="textColumn shadowed">
+                <div ng-bind-html-unsafe="fesettings.greetingbox.html"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear: both;"></div>
+<div class="row">
+    <div style="position: relative; left: -50%; float: right; overflow: visible;">
+        <div style="position: relative; left: 50%;">
+            <h1 style="width: 42em; max-width: 100%; margin-bottom: 0;" data-i18n="_argumentNews_">New Arguments</h1>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div ng-include="'/static/partials/argumentNews.html'"></div>
+</div>

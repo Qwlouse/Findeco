@@ -65,12 +65,13 @@ angular.module('FindecoServices', [])
             );
         }
     })
-    .factory('Fesettings', function (Disclaimer, Boxes, Version, Sidebar) {
+    .factory('Fesettings', function (Disclaimer, Boxes, Version, Sidebar, Greetingbox) {
         var settings = {};
         settings.version = Version;
         settings.disclaimer = Disclaimer;
         settings.boxes = Boxes;
         settings.sidebar = Sidebar;
+        settings.greetingbox = Greetingbox;
         return settings;
     })
     .factory('TMP', function () {
