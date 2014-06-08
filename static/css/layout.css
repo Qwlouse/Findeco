@@ -166,6 +166,10 @@ body {
     margin: 1em;
 }
 
+.nodot {
+	list-style: none;
+}
+
 .disclaimer {
 	text-align: center;
 	padding: 1em;
