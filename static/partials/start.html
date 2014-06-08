@@ -3,7 +3,7 @@
         <div style="position: relative; left: 50%; padding: 1em 1em 4em 1em;">
 
             <div ng-repeat="box in fesettings.boxes" class="left">
-                <div ng-if="!box.special" class="box shadowed startColumn">
+                <div ng-if="!box.special" class="shadowed startColumn">
                     <h2 ng-bind-html-unsafe="box.title"></h2>
 
                     <div style="clear:both"></div>
@@ -14,7 +14,7 @@
                 </div>
 
                 <div ng-if="box.special == 'news' "
-                     class="box shadowed left startColumn"
+                     class="shadowed startColumn"
                      ng-controller="FindecoSyschangeCtrl">
                     <h2 ng-bind-html-unsafe="box.title"></h2>
                     <ul class="newsList">
@@ -33,6 +33,6 @@
         </div>
     </div>
 </div>
- 	
+<div style="clear: both; padding: 1em 0;"></div>
  	
  	
