@@ -95,3 +95,28 @@ ul.newsList li {
     font-size: 10pt;
 }
 
+/* -------------- Animations -------------------------------------------------*/
+
+.argumentAnimate {
+    left: 0;
+}
+
+.argumentAnimate.ng-hide-remove { /* start for showing animation */
+    -webkit-transition: 0.5s linear all;
+    transition: 0.5s linear all;
+    left: -22em;
+}
+
+.argumentAnimate.ng-hide-remove-active { /* stop for showing animation */
+    left: 0;
+}
+
+.argumentAnimate.ng-hide-add { /* start for hiding animation */
+    -webkit-transition: 0.5s linear all;
+    transition: 0.5s linear all;
+    left: 0;
+}
+
+.argumentAnimate.ng-hide-add-active { /* stop for hiding animation */
+    left: -22em;
+}

@@ -32,59 +32,13 @@ findecoApp.controller('FindecoDefaultCtrl',
     $scope.fesettings = Fesettings;
     $scope.allExpanded = false;
     $scope.showArguments = false;
-    $scope.argumentsPosition = -22;
     $scope.showMicroblogging = false;
-    $scope.microbloggingPosition = -22;
     $scope.graphWidth = 550;
     var graphSpace = document.getElementById('graphSpace');
     if (graphSpace) {
         $scope.graphWidth = graphSpace.scrollWidth;
     }
     GraphData.setWidth($scope.graphWidth);
-
-    $scope.$watch('showArguments', function (newValue) {
-        var animationSteps = 30;
-        if (newValue && $scope.argumentsPosition < 0) {
-            $interval(function () {
-                if ($scope.argumentsPosition < 0) {
-                    $scope.argumentsPosition += 22/animationSteps * ($scope.argumentsPosition - 1) * -0.2;
-                } else {
-                    $scope.argumentsPosition = 0;
-                }
-            }, 20, animationSteps);
-        }
-        if (!newValue && $scope.argumentsPosition > -22) {
-            $interval(function () {
-                if ($scope.argumentsPosition > -22) {
-                    $scope.argumentsPosition -= 22/animationSteps * ($scope.argumentsPosition - 1) * -0.2;
-                } else {
-                    $scope.argumentsPosition = -22;
-                }
-            }, 20, animationSteps);
-        }
-    });
-
-    $scope.$watch('showMicroblogging', function (newValue) {
-        var animationSteps = 30;
-        if (newValue && $scope.microbloggingPosition < 0) {
-            $interval(function () {
-                if ($scope.microbloggingPosition < 0) {
-                    $scope.microbloggingPosition += 22/animationSteps * ($scope.microbloggingPosition - 1) * -0.2;
-                } else {
-                    $scope.microbloggingPosition = 0;
-                }
-            }, 20, animationSteps);
-        }
-        if (!newValue && $scope.microbloggingPosition > -22) {
-            $interval(function () {
-                if ($scope.microbloggingPosition > -22) {
-                    $scope.microbloggingPosition -= 22/animationSteps * ($scope.microbloggingPosition - 1) * -0.2;
-                } else {
-                    $scope.microbloggingPosition = -22;
-                }
-            }, 20, animationSteps);
-        }
-    });
 
     $scope.isTextLoaded = false;
 

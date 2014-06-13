@@ -60,16 +60,15 @@
 </div>
 <div class="clearer"></div>
 <div class="content row" style="overflow: visible;">
-    <div ng-style="{'left': argumentsPosition + 'em', 'position': 'absolute'}"
-         class="smallColumn left animateArguments" style="position: relative;">
-        <div ng-include src="'/static/partials/argument.html'" style="position: relative;"></div>
+    <div style="position: absolute;"
+         class="smallColumn argumentAnimate"
+         ng-show="showArguments"
+         ng-include src="'/static/partials/argument.html'">
     </div>
-    <div style="position: absolute; overflow-x: hidden; padding: 0; margin: 0;"
-         ng-style="{'right': microbloggingPosition + 'em', 'width': 'calc(22em + ' + microbloggingPosition + 'em'}">
-        <div ng-style="{'right': microbloggingPosition + 'em'}"
-             class="smallColumn right" style="position: relative;">
-            <div ng-include src="'/static/partials/microblogging.html'"></div>
-        </div>
+    <div style="position: absolute;"
+         class="smallColumn microblogAnimate"
+         ng-show="showMicroblogging"
+         ng-include src="'/static/partials/microblogging.html'">
     </div>
 
     <div class="textColumn left contentText">
