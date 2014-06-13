@@ -31,8 +31,8 @@
 
 /* Background image and basic font */
 body {
-    background-size: 100%;
-    background: #c1c1c1 url("../images/agora.jpg") repeat-y fixed;
+    background: #c1c1c1 url("../images/epidauros.jpg") repeat-y center top fixed;
+    background-size: cover;
     font-family: "Verdana", sans-serif;
 }
 
