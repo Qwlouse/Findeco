@@ -9,7 +9,7 @@
                     <div style="position: relative; width: 0; height: 0; overflow: visible;" class="side-arrows"
                          ng-class="{'left': card.argument.type === 'c', 'right': card.argument.type != 'c'}">
                         <div class="balloon-source"
-                             ng-style="{'background-position-x': card.argument.type != 'c' ? '0': '-71px', 'left': card.argument.type != 'c' ? 'calc(1em - 10px)' : 'calc(-1em - 64px)'}"></div>
+                             ng-style="{'background-position': card.argument.type != 'c' ? '0, 0': '-71px, 0', 'left': card.argument.type != 'c' ? 'calc(1em - 10px)' : 'calc(-1em - 64px)'}"></div>
                     </div>
 
                     <div class="authors" style="display: inline-block; position: relative; top: 8px;">
@@ -35,7 +35,7 @@
                          ng-class="{'left': card.argument.type === 'c', 'right': card.argument.type != 'c'}">
                         <div class="balloon-source"
                              ng-style="{'left': card.argument.type != 'c' ? 'calc(6em - 45px)' : 'calc(-4em - 50px)'}"
-                             style="top: calc(1em - 24px); background-position-x: -144px; width: 68px;"></div>
+                             style="top: calc(1em - 24px); background-position: -144px, 0; width: 68px;"></div>
                     </div>
                 </div>
                 <div ng-class="{'left': card.argument.type != 'c', 'right': card.argument.type === 'c'}"
