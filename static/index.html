@@ -89,7 +89,7 @@
         function footerPosition() {
             document.getElementById('footer').style.bottom = '-' +
                 String(Math.floor(
-                    (document.body.scrollHeight - document.body.clientHeight - document.body.scrollTop)
+                    Math.max(0, (document.body.scrollHeight - document.body.clientHeight - window.scrollY))
                     / 2)) + 'px';
         }
 
