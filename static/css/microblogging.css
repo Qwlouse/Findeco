@@ -115,3 +115,29 @@ content:"(";
 {
 content:")";
 }
+
+/* -------------- Animations -------------------------------------------------*/
+
+.microblogAnimate {
+    right: 0;
+}
+
+.microblogAnimate.ng-hide-remove { /* start for showing animation */
+    -webkit-transition: 0.5s linear all;
+    transition: 0.5s linear all;
+    right: -22em;
+}
+
+.microblogAnimate.ng-hide-remove-active { /* stop for showing animation */
+    right: 0;
+}
+
+.microblogAnimate.ng-hide-add { /* start for hiding animation */
+    -webkit-transition: 0.5s linear all;
+    transition: 0.5s linear all;
+    right: 0;
+}
+
+.microblogAnimate.ng-hide-add-active { /* stop for hiding animation */
+    right: -22em;
+}
