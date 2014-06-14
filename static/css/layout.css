@@ -65,10 +65,6 @@ body {
     padding: 0.5em;
 }
 
-.graph {
-    float: left;
-}
-
 .toggle {
     float: left;
     background-color: #e6e6e6;

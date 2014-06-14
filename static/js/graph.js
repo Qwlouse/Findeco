@@ -133,9 +133,48 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                     .attr("marker-end", "url(#arrowHead)");
 
                 link.exit().remove();
+
+
+                // Animate the pie chart
+                // taken from here: http://bl.ocks.org/mbostock/1346410
+                function arcTween(a) {
+                    var i = d3.interpolate(this._current, a);
+                    this._current = i(0);
+                    return function(t) {
+                        return arc(i(t));
+                    };
+                }
+
                 // add a svg:group for all nodes
                 var node = svg.select('#nodes').selectAll(".nodeGroup")
-                    .data(GraphData.nodes);
+                    .data(GraphData.nodes, function(d) { return d.path; })
+                    .each(function(node_data) {
+                        var group = d3.select(this);
+                        // update active or not
+                        group.attr("class", node_data.path == Navigator.nodePath ? "nodeGroup active" : "nodeGroup inactive");
+
+                        // update background circle
+                        var c = group.select('.nodeBackgroundCircle');
+                        if (node_data.spamFlags == 1 || node_data.follows == 0) {
+                            c.attr('class', "nodeBackgroundCircle spamCandidate")
+                        } else if (node_data.spamFlags >= 2 ) {
+                            c.attr('class', "nodeBackgroundCircle spamNode")
+                        } else {
+                            c.attr('class', "nodeBackgroundCircle")
+                        }
+
+                        // update Pie Chart
+                        group.selectAll("path")
+                            .data(pie(node_data.pieChart))
+                            .attr("class", function(d, i) {
+                                return "pieChartPart " + pie_chart_classes[i];
+                            })
+                            .transition().duration(1000)
+                            .attrTween("d", arcTween);
+
+                        group.select("a")
+                            .attr("xlink:href", '/diff/' + Navigator.nodePath + '?compare=' + node_data.path);
+                    });
 
                 var nodegroup = node.enter().append("g")
                     .attr("class", function (d) {
@@ -154,80 +193,72 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                         return tooltip.style("visibility", "visible");
                     })
                     .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
-                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+                    .each(function(node_data) {
+                        var group = d3.select(this);
+                        // ------------  shadow  ---------------
+                        group.append("circle")
+                            .attr("r", node_radius)
+                            .attr("class", "nodeShadow")
+                            .attr("filter", "url(#blur)")
+                            .attr('transform', "translate(2, 2)");
 
-                nodegroup.append("circle")  // shadow
-                    .attr("r", node_radius)
-                    .attr("class", "nodeShadow")
-                    .attr("filter", "url(#blur)")
-                    .attr('transform', "translate(2, 2)");
+                        // ------------  diff-button  -----------
+                        var diff_button_group = group.append("svg:a")
+                            .attr("xlink:href", '/diff/' + Navigator.nodePath + '?compare=' + node_data.path)
+                            .append("g")
+                            .attr('transform', "translate(-" + (node_radius-3) + ", -" + (node_radius-3) + ")");
 
-                var diff_button_group = nodegroup.append("svg:a")  // diff-button
-                    .attr("xlink:href", function (d) {return '/diff/' + scope.path + '?compare=' + d.path; })
-                    .append("g")
-                    .attr('transform', "translate(-" + (node_radius-3) + ", -" + (node_radius-3) + ")");
+                        diff_button_group
+                            .append("circle")
+                            .attr("r", 13)
+                            .attr("class", "diffButton");
 
-                diff_button_group
-                    .append("circle")
-                    .attr("r", 13)
-                    .attr("class", "diffButton")
-                    .on('click', function() {alert('ha!');});
+                        diff_button_group
+                            .append("text")
+                            .attr("text-anchor", "middle")
+                            .attr("class", "diffButtonText")
+                            .text('diff');
 
-                diff_button_group
-                    .append("text")
-                    .attr("text-anchor", "middle")
-                    .attr("class", "diffButtonText")
-                    .text('diff');
+                        // ------------  Node Center  -----------
+                        var g = group.append("g").append("svg:a")
+                          .attr("xlink:href", '/' + node_data.path);
 
-                var g = nodegroup.append("g").append("svg:a")  // Node Center Group
-                  .attr("xlink:href", function (d) {return '/' + d.path; });
+                        var c = g.append("circle").attr("r", node_radius);
 
-                g.append("circle")  // Center Circle
-                    .attr("class", function(d) {
-                        if (d.spamFlags == 1 || d.follows == 0) {
-                            return "nodeBackgroundCircle spamCandidate";
-                        } else if (d.spamFlags >= 2 ) {
-                            return "nodeBackgroundCircle spamNode";
+                        if (node_data.spamFlags == 1 || node_data.follows == 0) {
+                            c.attr('class', "nodeBackgroundCircle spamCandidate")
+                        } else if (node_data.spamFlags >= 2 ) {
+                            c.attr('class', "nodeBackgroundCircle spamNode")
                         } else {
-                            return "nodeBackgroundCircle";
+                            c.attr('class', "nodeBackgroundCircle")
                         }
 
-                    })
-                    .attr("r", node_radius);
+                        var path_split = node_data.path.split(".");
+                        var node_nr = path_split[path_split.length - 1];
 
-                g.append("text")  // Node number
-                    .attr("class", "nodeLabel")
-                    .attr("dy", ".35em")
-                    .attr("text-anchor", "middle")
-                    .text(function(d) {           // display only index as text
-                        var s = d.path.split(".");
-                        return s[s.length - 1]; });
+                        // -----------  Node number  -------------
+                        g.append("text")
+                            .attr("class", "nodeLabel")
+                            .attr("dy", ".35em")
+                            .attr("text-anchor", "middle")
+                            .text(node_nr);
 
-                var pieChart = node.selectAll("path")
-                    .data(function(d) {
-                        return pie(d.pieChart);
+
+                        // -----------  Pie Chart  -------------
+                        group.selectAll("path")
+                            .data(pie(node_data.pieChart))
+                            .enter().append("svg:path")
+                            .attr("class", function(d, i) {
+                                return "pieChartPart " + pie_chart_classes[i];
+                            })
+                            .each(function(d) { this._current = d; })
+                            .transition().duration(1000)
+                            .attrTween("d", arcTween);
                     });
 
-                pieChart.enter().append("svg:path")
-                    .attr("class", function(d, i) {
-                        return "pieChartPart " + pie_chart_classes[i];
-                    })
-                    .each(function(d) { this._current = d; });
-
-                // Animate the pie chart
-                // taken from here: http://bl.ocks.org/mbostock/1346410
-                function arcTween(a) {
-                    var i = d3.interpolate(this._current, a);
-                    this._current = i(0);
-                    return function(t) {
-                        return arc(i(t));
-                    };
-                }
-
-                pieChart.transition().duration(1000)
-                    .attrTween("d", arcTween);
-
                 node.exit().style("opacity", 1).transition().duration(1000).style("opacity", 0).remove();
+
 
                 force.on("tick", function() {
                     var svg_height_new = GraphData.svg_height;

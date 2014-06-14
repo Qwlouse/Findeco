@@ -36,6 +36,11 @@ svg .linkHead {
     fill: #6d6d6d;
 }
 
+svg .nodeBackgroundCircle {
+    transition: fill 0.5s;
+    -webkit-transition: fill 0.5s;
+}
+
 svg .active .nodeBackgroundCircle {
     fill: #2d7cc4;
 }
@@ -55,6 +60,11 @@ svg .inactive .nodeBackgroundCircle.spamNode {
 
 svg .nodeShadow {
     fill: #999;
+}
+
+svg .nodeLabel {
+    transition: fill 0.5s;
+    -webkit-transition: fill 0.5s;
 }
 
 svg .inactive .nodeLabel {

@@ -25,119 +25,96 @@
 'use strict';
 
 findecoApp.controller('FindecoDefaultCtrl',
-    function($scope, $location, $controller, $interval, Backend, Fesettings, GraphData, Navigator, User) {
+    function ($scope, $location, $controller, $interval, Backend, Fesettings, GraphData, Navigator, User) {
 
-    $scope.nav = Navigator;
-    $scope.user = User;
-    $scope.fesettings = Fesettings;
-    $scope.allExpanded = false;
-    $scope.showArguments = false;
-    $scope.showMicroblogging = false;
-    $scope.graphWidth = 550;
-    var graphSpace = document.getElementById('graphSpace');
-    if (graphSpace) {
-        $scope.graphWidth = graphSpace.scrollWidth;
-    }
-    GraphData.setWidth($scope.graphWidth);
-
-    $scope.isTextLoaded = false;
-
-    $scope.graphData = [];
-    $scope.paragraphList = [];
-    $scope.nodeInfo = [];
-    $scope.nodeInfo.indexList = [];
-    $scope.authors = [];
-    $scope.nodeInfo.path = $scope.nav.argumentPath;
-    $scope.sections = [];
-
-    $scope.graphType = 'full';
-
-    $scope.relocate = function (target) {
-        $location.path(target + '/' + $scope.nav.nodePath);
-    };
-
-    $scope.markNode = Backend.markNode;
-
-    $scope.markMainNode = function(markType, nodePath) {
-        return Backend.markNode(markType, nodePath).success(function() {
-            GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType);
-        });
-    };
-
-    $scope.updateGraph = function () {
-        $scope.isLoadingGraph =true;
-        GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType).success(function () {
-            $scope.isLoadingGraph =false;
-        });
-    };
-
-    $scope.updateNode = function () {
-        Backend.loadNode($scope.nodeInfo, $scope.nav.nodePath).success(function (d) {
-            $scope.allExpanded = true;
-            $scope.authors = $scope.nodeInfo.authors;
-            $scope.nav.nodeID = $scope.nodeInfo.nodeID;
-            $scope.sections = $scope.nodeInfo.indexList;
-            for (var i in $scope.sections) {
-                var indexNode = $scope.sections[i];
-                $scope.allExpanded = false;
-                indexNode.paragraphs = [];
-                indexNode.path = $scope.nav.getPathForNode(indexNode.shortTitle, indexNode.index);
-                indexNode.isLoaded = false;
-                indexNode.isExpanded = false;
-            }
-            $scope.isLoadingNode =false;
-           
-        });
-    };
-
-    $scope.expandAll = function () {
-        for (var i = 0; i < $scope.sections.length; ++i) {
-            $scope.expandSection($scope.sections[i]);
-        }
-        $scope.allExpanded = true;
-    };
-
-    $scope.collapseAll = function () {
-        for (var i = 0; i < $scope.sections.length; ++i) {
-            $scope.collapseSection($scope.sections[i]);
-        }
+        $scope.nav = Navigator;
+        $scope.user = User;
+        $scope.fesettings = Fesettings;
         $scope.allExpanded = false;
-    };
+        $scope.showArguments = false;
+        $scope.showMicroblogging = false;
+        $scope.isTextLoaded = false;
 
-    $scope.expandSection = function (section) {
-        if (!section.isLoaded) {
-            Backend.loadText(section.paragraphs, section.path).success(function (d) {
-                section.isFollowing = d.loadTextResponse.isFollowing;
-                section.isFlagging = d.loadTextResponse.isFlagging;
-                section.isLoaded = true;
-                section.isExpanded = true;
+        $scope.paragraphList = [];
+        $scope.nodeInfo = [];
+        $scope.nodeInfo.indexList = [];
+        $scope.authors = [];
+        $scope.nodeInfo.path = $scope.nav.argumentPath;
+        $scope.sections = [];
+
+        $scope.relocate = function (target) {
+            $location.path(target + '/' + $scope.nav.nodePath);
+        };
+
+        $scope.markNode = Backend.markNode;
+
+        $scope.markMainNode = function (markType, nodePath) {
+            return Backend.markNode(markType, nodePath).success(function () {
+                GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType);
             });
-        } else {
-            section.isExpanded = true;
-        }
-        $scope.allExpanded = true;
+        };
 
-        for (var i = 0; i < $scope.sections.length; ++i) {
-            $scope.allExpanded &= $scope.sections[i].isExpanded
-        }
+        $scope.updateNode = function () {
+            $scope.isLoadingNode = true;
+            Backend.loadNode($scope.nodeInfo, $scope.nav.nodePath).success(function (d) {
+                $scope.allExpanded = true;
+                $scope.authors = $scope.nodeInfo.authors;
+                $scope.nav.nodeID = $scope.nodeInfo.nodeID;
+                $scope.sections = $scope.nodeInfo.indexList;
+                for (var i in $scope.sections) {
+                    var indexNode = $scope.sections[i];
+                    $scope.allExpanded = false;
+                    indexNode.paragraphs = [];
+                    indexNode.path = $scope.nav.getPathForNode(indexNode.shortTitle, indexNode.index);
+                    indexNode.isLoaded = false;
+                    indexNode.isExpanded = false;
+                }
+                $scope.isLoadingNode = false;
 
-    };
+            });
+        };
 
-    $scope.collapseSection = function (section) {
-        section.isExpanded = false;
-        $scope.allExpanded = false;
-    };
+        $scope.expandAll = function () {
+            for (var i = 0; i < $scope.sections.length; ++i) {
+                $scope.expandSection($scope.sections[i]);
+            }
+            $scope.allExpanded = true;
+        };
 
-    $scope.initialize = function () {
-        $scope.isLoadingNode = true;
+        $scope.collapseAll = function () {
+            for (var i = 0; i < $scope.sections.length; ++i) {
+                $scope.collapseSection($scope.sections[i]);
+            }
+            $scope.allExpanded = false;
+        };
+
+        $scope.expandSection = function (section) {
+            if (!section.isLoaded) {
+                Backend.loadText(section.paragraphs, section.path).success(function (d) {
+                    section.isFollowing = d.loadTextResponse.isFollowing;
+                    section.isFlagging = d.loadTextResponse.isFlagging;
+                    section.isLoaded = true;
+                    section.isExpanded = true;
+                });
+            } else {
+                section.isExpanded = true;
+            }
+            $scope.allExpanded = true;
+
+            for (var i = 0; i < $scope.sections.length; ++i) {
+                $scope.allExpanded &= $scope.sections[i].isExpanded
+            }
+
+        };
+
+        $scope.collapseSection = function (section) {
+            section.isExpanded = false;
+            $scope.allExpanded = false;
+        };
+
+        $scope.isLoading = function () {
+            return $scope.isLoadingNode;
+        };
+
         $scope.updateNode();
-        $scope.updateGraph();
-       
-    };
-    $scope.isLoading = function (){
-    	return $scope.isLoadingNode || $scope.isLoadingGraph;
-    };
-
-    $scope.initialize();
-
-});
+    });
