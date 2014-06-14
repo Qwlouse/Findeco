@@ -88,7 +88,7 @@ body:before {
     min-height: 100px;
     margin-top: 30px;
     font-size: 10pt;
-    color: rgb(51, 51, 51);
+    color: #f0f0f0;
     /*font-family: sans-serif;*/
 }
 
@@ -101,11 +101,11 @@ body:before {
 }
 
 .contentBox {
-    background: #e6e6e6;
+    background: #2c2c2c;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 15px;
-    box-shadow: 8px 8px 10px #947109;
+    box-shadow: 8px 8px 10px #353630;
     position:relative;
     display: block;
 }
@@ -177,13 +177,12 @@ body:before {
 }
 .slide.ng-enter,
 .slide.ng-leave {
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    transition: all 1s ease;
+    -webkit-transition: left 1s ease;
+    -moz-transition: left 1s ease;
+    -o-transition: left 1s ease;
+    transition: left 1s ease;
 }
 .slide.ng-enter {
-    position: absolute;
     left: 100%;
 }
 .slide.ng-enter-active {

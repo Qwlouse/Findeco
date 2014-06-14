@@ -49,6 +49,10 @@ svg .inactive .nodeBackgroundCircle {
     fill: #DDD;
 }
 
+svg .compared-to .nodeBackgroundCircle {
+    fill: #1c873a;
+}
+
 svg .inactive .nodeBackgroundCircle.spamCandidate {
     fill: #dcc;
 }
@@ -68,6 +72,11 @@ svg .nodeLabel {
 }
 
 svg .inactive .nodeLabel {
+    fill: #e07b01;
+    font-weight: bold;
+}
+
+svg .compared-to .nodeLabel {
     fill: #e07b01;
     font-weight: bold;
 }
@@ -175,5 +184,17 @@ div #tooltip {
 }
 
 .inactive .pieChartPart.unfollow {
+    fill: #555555;
+}
+
+.compared-to .pieChartPart.newFollow {
+    fill: #EEEEEE;
+}
+
+.compared-to .pieChartPart.follow {
+    fill: #BBBBBB;
+}
+
+.compared-to .pieChartPart.unfollow {
     fill: #555555;
 }

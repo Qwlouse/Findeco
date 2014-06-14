@@ -1,19 +1,19 @@
 <div id="contentContainer" class="centeringContainer">
-    <div id="leftColumn"  class="contentBox">
+    <div id="leftColumn"  class="contentBox" style="visibility: hidden"><!--
         <div class="tipp">Hier werden die Texte der Vorschläge <a href="/{{ path1 }}">{{ path1 }}</a> und
             <a href="/{{ path2 }}">{{ path2 }}</a> verglichen.</div>
         <div class="tipp" style="padding-top: 1em; padding-bottom: 1em;">Der Vergleich wird als
             <a href="http://de.wikipedia.org/wiki/Diff">Diff</a> angezeigt. Worte die in beiden Texten vorkommen werden
             normal angezeigt. Worte die nur in <a href="/{{ path1 }}">{{ path1 }}</a> aber nicht in
-            <a href="/{{ path2 }}">{{ path2 }}</a> vorkommen werden <span class="green">grün</span> hinterlegt. Worte die in
+            <a href="/{{ path2 }}">{{ path2 }}</a> vorkommen werden <ins>grün</ins> hinterlegt. Worte die in
             <a href="/{{ path2 }}">{{ path2 }}</a> vorkommen, aber nicht in <a href="/{{ path1 }}">{{ path1 }}</a> werden
-            <span class="red">rot</span> hinterlegt.</div>
+            <del>rot</del> hinterlegt.</div>
         <div class="tipp">Um Argumente oder Microblogging zu diesen Vorschlägen zu sehen, musst du einen der Vorschläge
-            auswählen.</div>
+            auswählen.</div>-->
     </div>
     <div id="centerColumn" class="contentBox">
-        <h2 style="line-height: 150%">Vergleiche <span class="red"><a href="/{{ path1 }}">{{ path1 }}</a></span> mit
-            <span class="green"><a href="/{{ path2 }}">{{ path2 }}</a></span></h2>
+        <h2 style="line-height: 150%">Vergleiche <del>{{ path1 }}</del> mit
+            <ins>{{ path2 }}</ins></h2>
         <span style="" ng-repeat="change in changes"><pre
                 ng-show="change[0] == 0" class="diff">{{ change[1] }}</pre><pre
                 ng-show="change[0] == 1" class="diff"><ins>{{ change[1] }}</ins></pre><pre

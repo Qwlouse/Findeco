@@ -114,7 +114,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
 
             var tooltip = d3.select(element[0].children[1]);
 
-            scope.$on('updateGraphEvent', function () {
+            function updateGraph() {
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
@@ -151,7 +151,14 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                     .each(function(node_data) {
                         var group = d3.select(this);
                         // update active or not
-                        group.attr("class", node_data.path == Navigator.nodePath ? "nodeGroup active" : "nodeGroup inactive");
+                        if (node_data.path == Navigator.nodePath) {
+                            group.attr("class", "nodeGroup active");
+                        }
+                        else if (node_data.path == Navigator.segments.compare) {
+                            group.attr("class", "nodeGroup compared-to");
+                        } else {
+                            group.attr("class", "nodeGroup inactive");
+                        }
 
                         // update background circle
                         var c = group.select('.nodeBackgroundCircle');
@@ -181,7 +188,11 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                         if (d.path == Navigator.nodePath) {
                             return "nodeGroup active";
                         }
-                        else return "nodeGroup inactive";
+                        else if (d.path == Navigator.segments.compare) {
+                            return "nodeGroup compared-to";
+                        } else {
+                            return "nodeGroup inactive";
+                        }
                     })
                     .call(force.drag)
                     .on("mouseover", function(d){
@@ -298,7 +309,9 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
 
 
                 });
-            });
+            }
+
+            scope.$on('updateGraphEvent', updateGraph);
         }
     }
 });

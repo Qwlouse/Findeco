@@ -165,19 +165,21 @@ input:focus, textarea:focus {
 }
 
 .diff del {
-    background-color: #ff8080;
+    background-color: #2d7cc4;
     text-decoration: none;
 }
 
-.red {
-    background-color: #ff8080;
+h2 del {
+    color: #2d7cc4;
+    text-decoration: none;
 }
 
 .diff ins {
-    background-color: #80ff80;
+    background-color: #1c873a;
     text-decoration: none;
 }
 
-.green {
-    background-color: #80ff80;
+h2 ins {
+    color: #1c873a;
+    text-decoration: none;
 }
