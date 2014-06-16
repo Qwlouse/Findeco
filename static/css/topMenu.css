@@ -54,8 +54,25 @@
     height: 27px;
 }
 
-.head form{
-    display:inline-block;
+.head ul li a{
+    color: #ecb40d;
+    font-weight: bold;
+    font-size: 12pt;
+    font-family: 'Monda', sans-serif;
+    text-decoration: none;
+}
+
+.head ul li.activeTab a{
+    color:  #2d7cc4;
+}
+
+.head ul li a:hover{
+    color: #2d7cc4;
+}
+
+.head ul li.activeTab {
+    background: #333333;
+    border-radius: 6px 6px 0 0;
 }
 
 .head .userControls {
@@ -83,14 +100,7 @@
     left: 50%;
 }
 
-.head ul li.activeTab {
-    background: #333333;
-    border-radius: 6px 6px 0 0;
-}
 
-#searchTab {
-    margin-left: 5px;
-}
 
 @media (max-width: 72em) and (min-width: 55em) {
     .head {
@@ -143,40 +153,25 @@
         border-radius: 11px 11px 11px 11px;
     }
 
-    div.searchBox {
+    #searchBox {
         width: calc(100% - 1em);
     }
-
-    div.searchBox form {
-        width: 100%;
-    }
-
-    div.searchBox form input {
-        width: calc(100% - 22px);
-    }
-
-    #searchTab {
-        margin-left: 0;
-    }
 }
 
-div.searchBox {
+#searchBox {
     position: relative;
+    top: 4px;
     border: 1px solid #ecb40d;
-    -moz-border-radius: 11px;
-    -webkit-border-radius: 11px;
-    border-radius: 11px;
-    height: 23px;
-    padding: 0 6px 0 6px;
+    height: 21px;
+    padding: 0 2px 0 2px;
     background: #000;
-    overflow: hidden; /* I don't know why exactly, but this removes the gap between the ul li elements and the bottom of the header */
 }
 
-div.searchBox:hover {
+#searchBox:hover {
     border-color: #2d7cc4;
 }
 
-div.searchBox.searchActive {
+#searchBox.searchActive {
     border-color: #2d7cc4;
     -webkit-box-shadow:0 0 5px #2d7cc4;
     -moz-box-shadow:0 0 5px #2d7cc4;
@@ -184,57 +179,32 @@ div.searchBox.searchActive {
 }
 
 #searchInput {
-    border: 0;
-    outline: none;
     -webkit-appearance: none;
-    box-shadow: 0 0 0;
-}
-
-.searchBox input {
-	float:left;
-}
-
-.searchButton {
-	float:left;
-    border: 0;
-    height: 18px;
-    width: 18px;
-    background: url("../images/search.png");
-    position: relative;
-    top: 2px;
-}
-
-.searchButton:hover {
-    background: url("../images/search_hover.png");
-}
-
-.head input{
-    position: relative;
-    top: 2px;
-    height: 18px;
+    float:left;
+    box-shadow: none;
+    width: calc(100% - 22px);
     color: #cccccc;
     background: #000;
     border: 0;
 }
 
 /* Format for browsers that do not support placeholder attribute*/
-.head input.placeholder {
+#searchInput.placeholder {
     color: #999999;
     font-size: 9pt;
 }
 
-.head ul li a{
-    color: #ecb40d;
-    font-weight: bold;
-    font-size: 12pt;
-    font-family: 'Monda', sans-serif;
-    text-decoration: none;
+#searchButton {
+	float:left;
+    border: 0;
+    height: 18px;
+    width: 18px;
+    background: url("../images/search.svg") 0 0;
+    background-repeat: no-repeat;
+    position: relative;
+    top: 2px;
 }
 
-.head ul li a:hover{
-    color: #2d7cc4;
-}
-
-.head ul li.activeTab a{
-    color:  #2d7cc4;
+#searchButton:hover {
+    background-position: 100% 0;
 }
