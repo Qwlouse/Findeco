@@ -72,7 +72,7 @@
 
 .head ul li.activeTab {
     background: #333333;
-    border-radius: 6px 6px 0 0;
+    box-shadow: 5px 2px 0 -2px rgba(0, 0, 0, 0.5);
 }
 
 .head .userControls {
@@ -140,6 +140,9 @@
     .head ul li {
         padding: 0 1em;
     }
+    .head ul li.activeTab{
+        box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+    }
 
     .head .topMenu {
         width: 100%;
@@ -147,10 +150,6 @@
 
     .head .topMenu li {
         width: calc(100% - 2em);
-    }
-
-    .head ul li.activeTab {
-        border-radius: 11px 11px 11px 11px;
     }
 
     #searchBox {
