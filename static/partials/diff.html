@@ -1,5 +1,5 @@
 <div id="contentContainer" class="centeringContainer">
-    <div id="leftColumn"  class="contentBox" style="visibility: hidden"><!--
+    <div id="leftColumn" style="visibility: hidden"><!--
         <div class="tipp">Hier werden die Texte der Vorschläge <a href="/{{ path1 }}">{{ path1 }}</a> und
             <a href="/{{ path2 }}">{{ path2 }}</a> verglichen.</div>
         <div class="tipp" style="padding-top: 1em; padding-bottom: 1em;">Der Vergleich wird als
@@ -11,7 +11,7 @@
         <div class="tipp">Um Argumente oder Microblogging zu diesen Vorschlägen zu sehen, musst du einen der Vorschläge
             auswählen.</div>-->
     </div>
-    <div id="centerColumn" class="contentBox">
+    <div id="centerColumn" class="shadowed">
         <h2 style="line-height: 150%">Vergleiche <del>{{ path1 }}</del> mit
             <ins>{{ path2 }}</ins></h2>
         <span style="" ng-repeat="change in changes"><pre
