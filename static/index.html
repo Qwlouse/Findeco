@@ -12,6 +12,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico">
 
     <!-- CSS files -->
+    <link rel="stylesheet" href="/static/css/reset.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/layout.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/typography.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/navigationBar.css" type="text/css"/>
@@ -27,6 +28,7 @@
     <link rel="stylesheet" href="/static/css/create.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/start.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/help.css" type="text/css"/>
+
     <!-- Javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular.js"></script>
@@ -173,20 +175,6 @@
         <li><a href="/data_privacy">Datenschutzerklärung</a></li>
         <li><a href="/about">Über Findeco</a></li>
     </ul>
-</div>
-{{ hide }}
-<div class="helppanel" ng-animate="animate" ng-controller="FindecoHelpCtrl" ng-hide="panelIsHidden">
-    {{ hide }}
-    <a ng-click="hidePanel();" class="close">X</a>
-
-    <div style=";width:850px;color:#ffffff;opacity:1">
-
-        <h2>{{ title }}</h2>
-        {{ helptext }}
-
-        <a ng-show="more" style="position:absolute;right:10px;bottom:5px" href="{{ more }}">Mehr Hilfe zu diesem Thema
-            (Link führt zu Findeco.de)</a>
-    </div>
 </div>
 </body>
 </html>
