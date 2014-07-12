@@ -1,0 +1,93 @@
+<div class="row" style="margin-bottom: 1em;">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
+        <div style="position: relative; left: 50%;">
+            <div class="textColumn shadowed" ng-if="step == 1">
+
+                <h2 data-i18n="_proposalTypeQuestion_"></h2>
+
+                 <div style="clear: both;">
+                    <div class="button orange left" data-i18n="_newParagraphButton_"
+                         style="margin-right: 1em;" ng-click="setProposalType('paragraph')"></div>
+                    <div class="button orange left" data-i18n="_newRefinementButton_"
+                         style="margin-right: 1em;" ng-click="setProposalType('refinement')"></div>
+                    <div class="button orange left" data-i18n="_newProposalButton_"
+                         ng-click="setProposalType('proposal')"></div>
+                </div>
+
+                <div style="clear: both;"></div>
+
+                <p class="tipp" data-i18n="_ProposalTypeHelp_" style="margin-top: 1em;"></p>
+
+                <div style="clear: both;"></div>
+            </div>
+
+            <div ng-if="step == 2">
+                <div class="textColumn shadowed left" style="margin-right: 1em;">
+
+                    <h2 data-i18n="_proposalTextQuestion_"></h2>
+
+                    <textarea style="width: 100%; height: 250px;" ng-model="text"></textarea>
+
+                    <div style="clear: both;"></div>
+
+                    <p class="tipp" data-i18n="_proposalTextHelp_" style="margin-top: 1em;"></p>
+
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="textColumn shadowed left">
+                    <h2 data-i18n="_previewHeading_"></h2>
+                    <div creole wiki-text="text" update-interval="5000"></div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+
+            <div ng-if="step == 3">
+                <div class="textColumn shadowed left" style="margin-right: 1em;">
+
+                    <h2 data-i18n="_argumentTextQuestion_"></h2>
+
+                    <textarea style="width: 100%; height: 250px;" ng-model="ArgumentText"></textarea>
+
+                    <div style="clear: both;"></div>
+
+                    <p class="tipp" data-i18n="_argumentTextHelp_" style="margin-top: 1em;"></p>
+
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="textColumn shadowed left">
+                    <h2 data-i18n="_previewHeading_"></h2>
+                    <div creole wiki-text="argumentText" update-interval="5000"></div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+
+
+
+            <div class="textColumn shadowed" style="margin-right: 1em;" ng-if="step == 4">
+
+                    <h2 data-i18n="_summaryHeading_"></h2>
+
+                    <h3 data-i18n="_proposalText_"></h3>
+                    <div creole wiki-text="text" update-interval="5000"></div>
+                    <h3 data-i18n="_argumentText_"></h3>
+                    <div creole wiki-text="argumentText" update-interval="5000"></div>
+
+                    <div style="clear: both;"></div>
+            </div>
+
+
+
+            <div style="clear: both; margin-top: 1em;">
+                <div class="button orange right" data-i18n="_nextButton_"
+                     style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></div>
+                <div class="button orange right" data-i18n="_createButton_"
+                     style="margin-left: 1em;" ng-click="submit();" ng-if="step == 4"></div>
+                <div class="button orange right" data-i18n="_backButton_"
+                     style="margin-left: 1em;" ng-click="previousStep();"
+                     ng-if="step > 1"></div>
+                <div class="button orange right" data-i18n="_cancelButton_"
+                     ng-if="step == 1"></div>
+            </div>
+        </div>
+    </div>
+</div>

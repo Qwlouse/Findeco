@@ -755,6 +755,46 @@
         "description": "wird im partial user.html benutzt"
     },
     {
+        "key"        : "_proposalTypeQuestion_",
+        "value"      : "Welchen Typ hat deine Änderung?",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newParagraphButton_",
+        "value"      : "Abschnitt einfügen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newRefinementButton_",
+        "value"      : "Vorschlag weiterentwickeln",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newProposalButton_",
+        "value"      : "Gegenvorschlag erstellen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_backButton_",
+        "value"      : "Zurück",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_cancelButton_",
+        "value"      : "Abbrechen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_nextButton_",
+        "value"      : "Weiter",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_createButton_",
+        "value"      : "Erstellen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
         "key"        : "_changeUsername_",
         "value"      : "Benutzername Ändern",
         "description": ""

@@ -38,7 +38,7 @@ var findecoApp = angular.module(
     )
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
-            when('/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: 'FindecoCreateCtrl'}).
+            //when('/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: 'FindecoCreateCtrl'}).
             when('/about', {templateUrl: '/static/partials/about.html', controller: 'FindecoCustomContentCtrl'}).
             when('/diff/:param*', {templateUrl: '/static/partials/diff.html', controller: 'FindecoDiffCtrl'}).
             when('/data_privacy', {templateUrl: '/static/partials/dataPrivacy.html', controller: 'FindecoCustomContentCtrl'}).
@@ -62,6 +62,7 @@ var findecoApp = angular.module(
             when('/index', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
             when('/index.htm', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
             when('/index.html', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
+            when('/create/proposal', {templateUrl: '/static/partials/create/proposalWizzard.html', controller: 'FindecoCreateProposalCtrl'}).
             otherwise({templateUrl: '/static/partials/default.html', controller: 'FindecoDefaultCtrl'});
     }]);
 
