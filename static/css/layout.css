@@ -29,11 +29,9 @@
 ################################################################################
 */
 
-/* Background image and basic font */
 body {
     background: #c1c1c1 url("../images/epidauros.jpg") repeat-y center top fixed;
     background-size: cover;
-    font-family: "Verdana", sans-serif;
 }
 
 .row {
@@ -42,179 +40,171 @@ body {
     width: 100%;
 }
 
-.left {
-    float: left;
-}
+/*.left {*/
+    /*float: left;*/
+/*}*/
 
-.right {
-    float: right;
-}
+/*.right {*/
+    /*float: right;*/
+/*}*/
 
-.clearer {
-    clear: both;
-}
+/*.clearer {*/
+    /*clear: both;*/
+/*}*/
 
-.fullwidth {
-    width: 100%;
-}
+/*.fullwidth {*/
+    /*width: 100%;*/
+/*}*/
 
-.box {
-    border: 1px solid rgba(0, 0, 0, 0.7);
-    background-color: rgba(255, 255, 255, 0.7);
-    color: #000000;
-    padding: 0.5em;
-}
+/*.box {*/
+    /*border: 1px solid rgba(0, 0, 0, 0.7);*/
+    /*background-color: rgba(255, 255, 255, 0.7);*/
+    /*color: #000000;*/
+    /*padding: 0.5em;*/
+/*}*/
 
-.toggle {
-    float: left;
-    background-color: #e6e6e6;
-    color: #000000;
-    vertical-align: middle;
-}
+/*.toggle {*/
+    /*float: left;*/
+    /*background-color: #e6e6e6;*/
+    /*color: #000000;*/
+    /*vertical-align: middle;*/
+/*}*/
 
-.content {
-    float: left;
-    background-color: #212121;
-    color: #f0f0f0;
-    margin-bottom: 4em;
-}
+/*.content {*/
+    /*float: left;*/
+    /*background-color: #212121;*/
+    /*color: #f0f0f0;*/
+    /*margin-bottom: 4em;*/
+/*}*/
 
-.smallColumn {
-    width: 19em;
-    padding: 1em;
-    margin: 0 0 4em 0;
-    vertical-align: top;
-    color: #f0f0f0;
-    background-color: #212121;
-    box-shadow: 3px 5px 12px #000000;
-    z-index: 1;
-}
+/*.smallColumn {*/
+    /*width: 19em;*/
+    /*padding: 1em;*/
+    /*margin: 0 0 4em 0;*/
+    /*vertical-align: top;*/
+    /*color: #f0f0f0;*/
+    /*background-color: #212121;*/
+    /*box-shadow: 3px 5px 12px #000000;*/
+    /*z-index: 1;*/
+/*}*/
 
-.textColumn {
-    max-width: 42em;
-    padding: 1em;
-    margin: 0;
-    vertical-align: top;
-}
+/*.textColumn {*/
+    /*max-width: 42em;*/
+    /*padding: 1em;*/
+    /*margin: 0;*/
+    /*vertical-align: top;*/
+/*}*/
 
-.shadowed {
-    background-color: #212121;
-    color: #f0f0f0;
-    box-shadow: 3px 5px 12px #000000;
-}
+/*.shadowed {*/
+    /*background-color: #212121;*/
+    /*color: #f0f0f0;*/
+    /*box-shadow: 3px 5px 12px #000000;*/
+/*}*/
 
-.balloon {
-    -moz-border-radius: 3em;
-    -webkit-border-radius: 3em;
-    border-radius: 3em;
-    min-height: 8em;
-    min-width: 8em;
-}
+/*.balloon {*/
+    /*-moz-border-radius: 3em;*/
+    /*-webkit-border-radius: 3em;*/
+    /*border-radius: 3em;*/
+    /*min-height: 8em;*/
+    /*min-width: 8em;*/
+/*}*/
 
-.balloon-source {
-    width: 71px;
-    height: 69px;
-    position: absolute;
-    background-image: url("../images/bubble-arrows.png");
-    background-size: auto 69px;
-    top: 2em;
-}
+/*.balloon-source {*/
+    /*width: 71px;*/
+    /*height: 69px;*/
+    /*position: absolute;*/
+    /*background-image: url("../images/bubble-arrows.png");*/
+    /*background-size: auto 69px;*/
+    /*top: 2em;*/
+/*}*/
 
-@media (max-width: 95em) {
-    .side-arrows {
-        visibility: hidden;
-    }
+/*@media (max-width: 95em) {*/
+    /*.side-arrows {*/
+        /*visibility: hidden;*/
+    /*}*/
 
-    .balloon {
-        max-width: 42em;
-        width: calc(100% - 2em);
-        margin-bottom: 50px;
-    }
+    /*.balloon {*/
+        /*max-width: 42em;*/
+        /*width: calc(100% - 2em);*/
+        /*margin-bottom: 50px;*/
+    /*}*/
 
-    .proposal-box {
-        clear: both;
-        max-width: 42em;
-        width: calc(100% - 2em);
-    }
-}
+    /*.proposal-box {*/
+        /*clear: both;*/
+        /*max-width: 42em;*/
+        /*width: calc(100% - 2em);*/
+    /*}*/
+/*}*/
 
-@media (min-width: 95em) {
-    .bottom-arrows {
-        visibility: hidden;
-    }
+/*@media (min-width: 95em) {*/
+    /*.bottom-arrows {*/
+        /*visibility: hidden;*/
+    /*}*/
 
-    .balloon {
-        width: 42em;
-    }
+    /*.balloon {*/
+        /*width: 42em;*/
+    /*}*/
 
-    .proposal-box {
-        width: 42em;
-    }
-}
+    /*.proposal-box {*/
+        /*width: 42em;*/
+    /*}*/
+/*}*/
 
-@media (min-width: 42em) {
-    .contentText {
-        margin-left: calc(50% - 21em);
-    }
-}
+/*@media (min-width: 42em) {*/
+    /*.contentText {*/
+        /*margin-left: calc(50% - 21em);*/
+    /*}*/
+/*}*/
 
-.spaced {
-    margin: 1em;
-}
+/*.spaced {*/
+    /*margin: 1em;*/
+/*}*/
 
-.nodot {
-	list-style: none;
-}
+/*.nodot {*/
+	/*list-style: none;*/
+/*}*/
 
-.disclaimer {
-	text-align: center;
-	padding: 1em;
-	margin-bottom: 1.5em;
-}
+/*.disclaimer {*/
+	/*text-align: center;*/
+	/*padding: 1em;*/
+	/*margin-bottom: 1.5em;*/
+/*}*/
 
-.version {
-    color: #ffffff;
-    font-size: 0.5em;
-    position: absolute;
-    top: 0.2em;
-    right: 0.2em;
-}
+/*.profile-clearer {*/
+    /*clear: both;*/
+    /*padding: 1em 0;*/
+/*}*/
 
-.profile-clearer {
-    clear: both;
-    padding: 1em 0;
-}
+/*@media (min-width: 86em) {*/
+    /*.profile-clearer {*/
+        /*width: 86em;*/
+    /*}*/
+/*}*/
 
-@media (min-width: 86em) {
-    .profile-clearer {
-        width: 86em;
-    }
-}
+/*.profile-box {*/
+    /*margin: 1em;*/
+    /*width: calc(100% - 8em);*/
+    /*max-width: 30em;*/
+/*}*/
 
-.profile-box {
-    margin: 1em;
-    width: calc(100% - 8em);
-    max-width: 30em;
-}
+/*.profile-menu {*/
+    /*margin: 1em;*/
+    /*max-width: 14em;*/
+/*}*/
 
-.profile-menu {
-    margin: 1em;
-    max-width: 14em;
-}
+/*@media (min-width: 68em) {*/
+    /*.profile-content {*/
+        /*width: 68em;*/
+    /*}*/
+/*}*/
 
-@media (min-width: 68em) {
-    .profile-content {
-        width: 68em;
-    }
-}
+/*.userpage-clearer {*/
+    /*clear: both;*/
+    /*padding: 1.5em 0;*/
+/*}*/
 
-.userpage-clearer {
-    clear: both;
-    padding: 1.5em 0;
-}
-
-@media (min-width: 70em) {
-    .userpage-clearer {
-        width: 70em;
-    }
-}
+/*@media (min-width: 70em) {*/
+    /*.userpage-clearer {*/
+        /*width: 70em;*/
+    /*}*/
+/*}*/

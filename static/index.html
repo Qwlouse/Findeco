@@ -13,10 +13,12 @@
 
     <!-- CSS files -->
     <link rel="stylesheet" href="/static/css/reset.css" type="text/css" />
-    <link rel="stylesheet" href="/static/css/layout.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/typography.css" type="text/css" />
-    <link rel="stylesheet" href="/static/css/navigationBar.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/layout.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/topMenu.css" type="text/css"/>
+
+    <!--<link rel="stylesheet" href="/static/css/navigationBar.css" type="text/css"/>
+
 
     <link rel="stylesheet" href="/static/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/textColumn.css" type="text/css"/>
@@ -27,7 +29,7 @@
     <link rel="stylesheet" href="/static/css/footer.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/create.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/start.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/help.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/help.css" type="text/css"/>-->
 
     <!-- Javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
@@ -77,7 +79,7 @@
         function headerPosition() {
             var navigationBar = document.getElementById('navigationBar');
             if (navigationBar) {
-                if (window.scrollY > document.getElementById('headerSpace').scrollHeight) {
+                if (window.scrollY > document.getElementById('header').scrollHeight) {
                     navigationBar.style.position = 'fixed';
                     navigationBar.style.top = '0';
                     navigationBar.style.width = '100%';
@@ -115,7 +117,7 @@
     <title data-i18n="_pageTitle_"></title>
 </head>
 <body>
-<div ng-include src="'/static/partials/header.html'"></div>
+<div ng-include="'/static/partials/header.html'" id="header" class="row" ng-controller="FindecoMenuCtrl" ></div>
 
 <div style="padding-bottom: 2em;">
     <div class="graph row" id="graphSpace" ng-controller="FindecoGraphRowCtrl" >

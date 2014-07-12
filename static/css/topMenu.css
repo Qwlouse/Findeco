@@ -22,10 +22,57 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-.head {
+#header {
     background-color: rgba(0,0,0,0.85);
     height: 3.125em;
     border-bottom: 0.2em solid #333333;
+}
+
+#version {
+    color: #ffffff;
+    font-size: 0.5em;
+    position: absolute;
+    top: 0.2em;
+    right: 0.2em;
+}
+
+#admin-warning {
+    position: absolute;
+    left: calc(50% - 300px);
+    background-color: red;
+    width: 600px;
+    text-align: center;
+}
+
+
+#header .centeringTrickContainer {
+    position: relative;
+    left: -50%;
+    float: right;
+    overflow: visible;
+    top: 100%;
+}
+
+.topMenu {
+    position: relative;
+    left: 50%;
+    height: 23px;
+    top: -23px;
+}
+
+.topMenu li{
+    float: left;
+    padding: 3px 15px 0 15px;
+    height: 20px;
+}
+
+.topMenu li.activeTab {
+    background: #333333;
+    box-shadow: 5px 2px 0 -2px rgba(0, 0, 0, 0.5);
+}
+
+.activeTab a{
+    color:  #2d7cc4;
 }
 
 #logo {
@@ -33,135 +80,30 @@
     background-size: 141px;
     display: inline-block;
     position: absolute;
-    top: 0;
-    left: 0;
     height: 50px;
     width: 141px;
 }
 
-.head ul {
-    display: block;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.head ul li{
-    float: left;
-    list-style: none;
-    display: inline-block;
-    padding: 0 15px 0 15px;
-    height: 27px;
-}
-
-.head ul li a{
-    color: #ecb40d;
-    font-weight: bold;
-    font-size: 12pt;
-    font-family: 'Monda', sans-serif;
-    text-decoration: none;
-}
-
-.head ul li.activeTab a{
-    color:  #2d7cc4;
-}
-
-.head ul li a:hover{
-    color: #2d7cc4;
-}
-
-.head ul li.activeTab {
-    background: #333333;
-    box-shadow: 5px 2px 0 -2px rgba(0, 0, 0, 0.5);
-}
-
-.head .userControls {
+#header  .userControls {
     position: absolute;
     right: 0;
     bottom: 0;
+    z-index: 2;
 }
 
-.head .fullwidthContainer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    z-index: 1;
+.logoutButton {
+    height: 18px;
+    width: 18px;
+    display: block;
+    background: url("../images/logout.svg") no-repeat 0 0;
+    cursor: pointer
 }
 
-.head .centeringTrickContainer {
-    position: relative;
-    left: -50%;
-    float: right;
-    overflow: visible;
-}
-
-.head .topMenu {
-    position: relative;
-    left: 50%;
-}
-
-
-
-@media (max-width: 72em) and (min-width: 55em) {
-    .head {
-        height: 5.125em;
-    }
-
-    .head .userControls {
-        position: absolute;
-        right: 0;
-        bottom: 2em;
-    }
-}
-
-@media (max-width: 55em) {
-    .head {
-        height: auto;
-        min-height: 5.125em;
-    }
-
-    .head .userControls {
-        position: absolute;
-        right: 0;
-        bottom: auto;
-        top: 1.5em;
-    }
-
-    .head .fullwidthContainer {
-        position: relative;
-        top: 50px;
-        padding-bottom: 50px;
-    }
-
-    .head .centeringTrickContainer {
-        float: none;
-    }
-
-    .head ul li {
-        padding: 0 1em;
-    }
-    .head ul li.activeTab{
-        box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
-    }
-
-    .head .topMenu {
-        width: 100%;
-    }
-
-    .head .topMenu li {
-        width: calc(100% - 2em);
-    }
-
-    #searchBox {
-        width: calc(100% - 1em);
-    }
-}
 
 #searchBox {
     position: relative;
-    top: 4px;
     border: 1px solid #ecb40d;
-    height: 21px;
+    height: 16px;
     padding: 0 2px 0 2px;
     background: #000;
 }
@@ -185,6 +127,8 @@
     color: #cccccc;
     background: #000;
     border: 0;
+    height: 14px;
+    font-size: 9pt;
 }
 
 /* Format for browsers that do not support placeholder attribute*/
@@ -193,17 +137,75 @@
     font-size: 9pt;
 }
 
+
+/* ----------------------------- optimized until here ----------------------- */
 #searchButton {
-	float:left;
+	float:right;
     border: 0;
-    height: 18px;
-    width: 18px;
-    background: url("../images/search.svg") 0 0;
-    background-repeat: no-repeat;
+    height: 14px;
+    width: 14px;
+    background: url("../images/search.svg") no-repeat 0 0;
+    background-size: 43px;
     position: relative;
     top: 2px;
 }
 
 #searchButton:hover {
     background-position: 100% 0;
+}
+
+
+@media (max-width: 72em) and (min-width: 55em) {
+    #header {
+        height: 5.125em;
+    }
+
+    #header .userControls {
+        position: absolute;
+        right: 0;
+        bottom: 2em;
+    }
+}
+
+@media (max-width: 55em) {
+    #header {
+        height: auto;
+        min-height: 5.125em;
+    }
+
+    #header .userControls {
+        position: absolute;
+        right: 0;
+        bottom: auto;
+        top: 1.5em;
+    }
+
+    #header .fullwidthContainer {
+        position: relative;
+        top: 50px;
+        padding-bottom: 50px;
+    }
+
+    #header .centeringTrickContainer {
+        float: none;
+    }
+
+    #header ul li {
+        padding: 0 1em;
+    }
+    #header ul li.activeTab{
+        box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+    }
+
+    #header .topMenu {
+        width: 100%;
+    }
+
+    #header .topMenu li {
+        width: calc(100% - 2em);
+    }
+
+    #searchBox {
+        width: calc(100% - 1em);
+    }
 }

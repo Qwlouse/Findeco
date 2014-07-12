@@ -29,157 +29,199 @@
 ################################################################################
 */
 
-@font-face {
-  font-family: 'Monda';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Monda Regular'), local('Monda-Regular'), url(Monda-Regular.woff) format('woff');
-}
-@font-face {
-  font-family: 'Monda';
-  font-style: normal;
-  font-weight: 800;
-  src: local('Monda Bold'), local('Monda-Bold'), url(Monda-Regular.woff) format('woff');
-}
-/*Clear some margins and paddings */
-body, h1, h2, h3, h4, h5, h6, form, button, input{
-    margin: 0;
-    padding: 0;
-}
 
-/* Font for all the headings */
-h1, h2, h3, h4, h5, h6 {
-    font-family: "Monda", sans-serif;
-    margin-bottom: 0.2em;
-    line-height: 120%;
-}
+/* I suggest a new palette */
+/* http://paletton.com/#uid=70K270kw0w0gSWikBNLUEhPZPd3 */
 
-h1 {
-    font-size: 24pt;
-    margin-top: 1.1em;
-    margin-bottom: 0.7em;
-}
+/* Main Primary color */
+.color-primary-0 { color: #FF9500 }	/* links */
+.color-primary-1 { color: #FFC779 }
+.color-primary-2 { color: #FFBB5B }
+.color-primary-3 { color: #8E5300 }
+.color-primary-4 { color: #683D00 }
 
-h2 {
-    margin-top: 1em;
-    margin-bottom: 0.6em;
-    font-size: 18pt;
-}
+/* Main Secondary color (1) */
+.color-secondary-1-0 { color: #FF0D00 }
+.color-secondary-1-1 { color: #FF7F79 }
+.color-secondary-1-2 { color: #FF635B }
+.color-secondary-1-3 { color: #8E0700 } /* spam? */
+.color-secondary-1-4 { color: #680500 }
 
-h3 {
-    margin-top: 0.9em;
-    margin-bottom: 0.5em;
-    font-size: 15pt;
-}
+/* Main Secondary color (2) */
+.color-secondary-2-0 { color: #00C618 }
+.color-secondary-2-1 { color: #75F785 }
+.color-secondary-2-2 { color: #52E765 }
+.color-secondary-2-3 { color: #006E0E } /* diff? */
+.color-secondary-2-4 { color: #00510A }
 
-h4 {
-    margin-top: 0.8em;
-    margin-bottom: 0.5em;
-    font-size: 13pt;
-}
+/* Main Complement color */
+.color-complement-0 { color: #0C5DA5 }	/* active */
+.color-complement-1 { color: #7BBAF2 }
+.color-complement-2 { color: #589CDA }
+.color-complement-3 { color: #01315C }
+.color-complement-4 { color: #002443 }
 
-h5 {
-    margin-top: 0.7em;
-    margin-bottom: 0.5em;
-    font-size: 12pt;
-    font-style: italic;
-}
 
-/* paragraphs */
-p {
-    margin: 0 0 0.5em 0;
-    line-height: 150%;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
-}
-
-@-moz-document url-prefix() {
-    p {
-        text-align: justify;
-    }
-}
-/* general style for links */
 a {
-    color: #e07b01;
+    color: #FF9500;
     text-decoration: none;
 }
 
 a:hover {
-    color: #2d7cc4;
+    color: #128FFF;
 }
+
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Regular.eot'); /* IE9 Compat Modes */
+    src: url('Lato-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Lato-Regular.woff') format('woff'), /* Modern Browsers */
+         url('Lato-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Bold.eot'); /* IE9 Compat Modes */
+    src: url('Lato-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Lato-Bold.woff') format('woff'), /* Modern Browsers */
+         url('Lato-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: bold;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
+}
+
+/* Font for all the headings */
+/*h1, h2, h3, h4, h5, h6 {*/
+    /*font-family: "Monda", sans-serif;*/
+    /*margin-bottom: 0.2em;*/
+    /*line-height: 120%;*/
+/*}*/
+
+/*h1 {*/
+    /*font-size: 24pt;*/
+    /*margin-top: 1.1em;*/
+    /*margin-bottom: 0.7em;*/
+/*}*/
+
+/*h2 {*/
+    /*margin-top: 1em;*/
+    /*margin-bottom: 0.6em;*/
+    /*font-size: 18pt;*/
+/*}*/
+
+/*h3 {*/
+    /*margin-top: 0.9em;*/
+    /*margin-bottom: 0.5em;*/
+    /*font-size: 15pt;*/
+/*}*/
+
+/*h4 {*/
+    /*margin-top: 0.8em;*/
+    /*margin-bottom: 0.5em;*/
+    /*font-size: 13pt;*/
+/*}*/
+
+/*h5 {*/
+    /*margin-top: 0.7em;*/
+    /*margin-bottom: 0.5em;*/
+    /*font-size: 12pt;*/
+    /*font-style: italic;*/
+/*}*/
+
+/* paragraphs */
+/*p {*/
+    /*margin: 0 0 0.5em 0;*/
+    /*line-height: 150%;*/
+    /*-webkit-hyphens: auto;*/
+    /*-moz-hyphens: auto;*/
+    /*-ms-hyphens: auto;*/
+    /*hyphens: auto;*/
+/*}*/
+
+/*@-moz-document url-prefix() {*/
+    /*p {*/
+        /*text-align: justify;*/
+    /*}*/
+/*}*/
 
 /* general style for forms */
-input, textarea {
-    border: 1px solid #999;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    margin: 2px;
-}
+/*input, textarea {*/
+    /*border: 1px solid #999;*/
+    /*-moz-border-radius: 5px;*/
+    /*-webkit-border-radius: 5px;*/
+    /*border-radius: 5px;*/
+    /*margin: 2px;*/
+/*}*/
 
-input:hover, textarea:hover {
-    border-color: #2d7cc4;
-}
+/*input:hover, textarea:hover {*/
+    /*border-color: #2d7cc4;*/
+/*}*/
 
-input:focus, textarea:focus {
-    border-color: #2d7cc4;
-    -moz-box-shadow: 0 0 5px #2d7cc4;
-    box-shadow: 0 0 5px #2d7cc4;
-}
+/*input:focus, textarea:focus {*/
+    /*border-color: #2d7cc4;*/
+    /*-moz-box-shadow: 0 0 5px #2d7cc4;*/
+    /*box-shadow: 0 0 5px #2d7cc4;*/
+/*}*/
 
-.padded {
-    padding: 1em;
-}
+/*.padded {*/
+    /*padding: 1em;*/
+/*}*/
 
 /*Special elements*/
-.tipp {
-    color: gray;
-    font-size: 75%;
-}
+/*.tipp {*/
+    /*color: gray;*/
+    /*font-size: 75%;*/
+/*}*/
 
-.tipp a.tippLink {
-    color: gray;
-    text-decoration: underline;
-}
+/*.tipp a.tippLink {*/
+    /*color: gray;*/
+    /*text-decoration: underline;*/
+/*}*/
 
-.authors {
-    font-size: 75%;
-    color: gray;
-}
+/*.authors {*/
+    /*font-size: 75%;*/
+    /*color: gray;*/
+/*}*/
 
-.rss {
-    padding-top: 10px;
-    float: right;
-}
+/*.rss {*/
+    /*padding-top: 10px;*/
+    /*float: right;*/
+/*}*/
 
-.rss img {
-    width: 16px;
-    height: 16px;
-}
+/*.rss img {*/
+    /*width: 16px;*/
+    /*height: 16px;*/
+/*}*/
 
-.diff {
-    white-space: pre-wrap;
-    display: inline;
-}
+/*.diff {*/
+    /*white-space: pre-wrap;*/
+    /*display: inline;*/
+/*}*/
 
-.diff del {
-    background-color: #2d7cc4;
-    text-decoration: none;
-}
+/*.diff del {*/
+    /*background-color: #2d7cc4;*/
+    /*text-decoration: none;*/
+/*}*/
 
-h2 del {
-    color: #2d7cc4;
-    text-decoration: none;
-}
+/*h2 del {*/
+    /*color: #2d7cc4;*/
+    /*text-decoration: none;*/
+/*}*/
 
-.diff ins {
-    background-color: #1c873a;
-    text-decoration: none;
-}
+/*.diff ins {*/
+    /*background-color: #1c873a;*/
+    /*text-decoration: none;*/
+/*}*/
 
-h2 ins {
-    color: #1c873a;
-    text-decoration: none;
-}
+/*h2 ins {*/
+    /*color: #1c873a;*/
+    /*text-decoration: none;*/
+/*}*/
