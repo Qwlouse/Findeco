@@ -1,29 +1,28 @@
-<div id="navigationBar" ng-controller="FindecoMenuCtrl">
-    <div class="fullwidth">
-        <div class="helpactivator" ng-controller="FindecoHelpCtrl">
-            <div ng-click="toogleHelpStatus()" ng-show="helpIsActive">
-                <a href="#"> Hilfe ist aktiv (ändern)</a>
-            </div>
-            <div ng-click="toogleHelpStatus()" ng-show="!helpIsActive">
-                <a href="#"> Hilfe ist inaktiv (ändern) </a>
-            </div>
+
+<div class="row">
+    <div class="helpactivator" ng-controller="FindecoHelpCtrl">
+        <div ng-click="toogleHelpStatus()" ng-show="helpIsActive">
+            <a href="#"> Hilfe ist aktiv (ändern)</a>
         </div>
-
-        <ul>
-            <li><a href="/index">
-                <img ng-show="navigation.entries"
-                     src="/static/images/home.png"
-                     alt="Home"
-                     onmouseover="this.src='/static/images/home_hover.png';"
-                     onmouseout="this.src='/static/images/home.png';"/>
-                <img ng-show="navigation.entries.length == 0"
-                     src="/static/images/home_hover.png"
-                     alt="Home"/>
-            </a></li>
-
-            <li ng-repeat="nav in navigation.entries">
-                <a href="{{ nav.path }}">{{ nav.name }}</a>
-            </li>
-        </ul>
+        <div ng-click="toogleHelpStatus()" ng-show="!helpIsActive">
+            <a href="#"> Hilfe ist inaktiv (ändern) </a>
+        </div>
     </div>
+
+    <ul>
+        <li><a href="/index">
+            <img ng-show="navigation.entries"
+                 src="/static/images/home.png"
+                 alt="Home"
+                 onmouseover="this.src='/static/images/home_hover.png';"
+                 onmouseout="this.src='/static/images/home.png';"/>
+            <img ng-show="navigation.entries.length == 0"
+                 src="/static/images/home_hover.png"
+                 alt="Home"/>
+        </a></li>
+
+        <li ng-repeat="nav in navigation.entries">
+            <a href="{{ nav.path }}">{{ nav.name }}</a>
+        </li>
+    </ul>
 </div>

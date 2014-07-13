@@ -78,12 +78,6 @@
 }
 
 
-.helpactivator{
-   padding-top:5px;
-    float: right;
-    padding-right: 15px;
-}
-
 .help-small-icon {
     background: url("/static/images/help.png") no-repeat;
     height: 19px;

@@ -22,9 +22,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-div.graph {
+#graph {
     overflow: visible;
-    position: relative;
+}
+
+#graph svg {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
 }
 
 svg .link {
@@ -197,4 +202,11 @@ div #tooltip {
 
 .compared-to .pieChartPart.unfollow {
     fill: #555555;
+}
+
+/*Special elements*/
+.tipp {
+    color: gray;
+    font-size: 75%;
+    text-align: center;
 }

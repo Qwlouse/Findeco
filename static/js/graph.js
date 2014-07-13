@@ -109,8 +109,8 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
             //scope.nodes = GraphData.nodes;
 
             var svg = d3.select(element[0].children[0])
-                .attr('height', GraphData.svg_height)
-                .attr('width', GraphData.svg_width);
+                .attr('height', GraphData.svg_height);
+//                .attr('width', GraphData.svg_width);
 
             var tooltip = d3.select(element[0].children[1]);
 

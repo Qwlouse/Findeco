@@ -30,16 +30,6 @@
     z-index: 1000;
 }
 
-#navigationBar a {
-    color: #ecb40d;
-    text-decoration: none;
-    font-size: 10pt;
-}
-
-#navigationBar a:hover {
-    color: #2d7cc4;
-}
-
 #navigationBar img {
     display: inline;
     margin-left: 5px; /*optical margin to make rootline appear lined up*/
@@ -56,7 +46,6 @@
 #navigationBar ul li {
     padding: 4px 0;
     display: inline-block;
-    font-size: 12pt;
 }
 
 /* insert slashes between navigation items */
@@ -69,4 +58,11 @@
 
 #navigationBar li:last-child a {
     color: #2d7cc4;
+}
+
+.helpactivator{
+    padding-top:5px;
+    float: right;
+    padding-right: 15px;
+    font-size: 12px;
 }

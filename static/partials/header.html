@@ -8,36 +8,35 @@
 <div id="version">Version: {{ fesettings.version }}</div>
 
 
-<div class="centeringTrickContainer">
-    <ul class="topMenu">
-        <li class="{{ getActiveClass('start')}}">
-            <a href="/start" data-i18n="_start_">Start</a>
-        </li>
-        <li class="{{ getActiveClass('')}} {{ getActiveClass('arguments')}}">
-            <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
-        </li>
-        <li class="{{ getActiveClass('news')}}" ng-if="user.isLoggedIn">
-            <a href="/news" data-i18n="_news_">News</a>
-        </li>
-        <li class="{{ getActiveClass('microblogging')}}" ng-if="user.isLoggedIn">
-            <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
-        </li>
-        <li class="{{ isContentActive() }}">
-            <a href="/index" data-i18n="_content_">Content</a>
-        </li>
-        <li class="{{ getActiveClass('search')}}" >
-            <form action="" ng-submit="searchSubmit()" id="searchBox">
-                <input id="searchInput"
-                       type="search"
-                       name="searchField"
-                       autocomplete="on"
-                       ng-model="searchString"
-                       data-i18n-attr="_search_|placeholder"/>
-                <button id="searchButton" value=""/>
-            </form>
-        </li>
-    </ul>
-</div>
+<ul class="topMenu">
+    <li class="{{ getActiveClass('start')}}">
+        <a href="/start" data-i18n="_start_">Start</a>
+    </li>
+    <li class="{{ getActiveClass('')}} {{ getActiveClass('arguments')}}">
+        <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
+    </li>
+    <li class="{{ getActiveClass('news')}}" ng-if="user.isLoggedIn">
+        <a href="/news" data-i18n="_news_">News</a>
+    </li>
+    <li class="{{ getActiveClass('microblogging')}}" ng-if="user.isLoggedIn">
+        <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
+    </li>
+    <li class="{{ isContentActive() }}">
+        <a href="/index" data-i18n="_content_">Content</a>
+    </li>
+    <li class="{{ getActiveClass('search')}}" >
+        <form action="" ng-submit="searchSubmit()" id="searchBox">
+            <input id="searchInput"
+                   type="search"
+                   name="searchField"
+                   autocomplete="on"
+                   ng-model="searchString"
+                   data-i18n-attr="_search_|placeholder"/>
+            <button id="searchButton" value=""/>
+        </form>
+    </li>
+</ul>
+
 
 <ul class="userControls">
     <li class="{{ getActiveClass('profile')}}" ng-show="user.isLoggedIn">

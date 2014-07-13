@@ -25,25 +25,30 @@
 'use strict';
 
 findecoApp.controller('FindecoGraphRowCtrl',
-    function($scope, GraphData, Navigator) {
+    function($scope, $window, GraphData, Navigator) {
 
     $scope.nav = Navigator;
-    $scope.graphWidth = 550;
 
-    var graphSpace = document.getElementById('graphSpace');
-    if (graphSpace) {
-        $scope.graphWidth = graphSpace.scrollWidth;
-    }
-    GraphData.setWidth($scope.graphWidth);
-
-    $scope.graphData = [];
+    $scope.graphData = GraphData;
     $scope.graphType = 'full';
+
+
 
     $scope.updateGraph = function () {
         if ($scope.nav.type == 'node') {
             GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType);
         }
     };
+
+
+    function updateGraphWidth() {
+        var graphSpace = document.getElementById('graph');
+        if (graphSpace) {
+            GraphData.setWidth(graphSpace.scrollWidth);
+        }
+    }
+    updateGraphWidth();
+    angular.element($window).bind("resize", updateGraphWidth);
 
     $scope.updateGraph();
 

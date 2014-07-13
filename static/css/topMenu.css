@@ -45,7 +45,7 @@
 }
 
 
-#header .centeringTrickContainer {
+.centeringTrickContainer {
     position: relative;
     left: -50%;
     float: right;
@@ -54,10 +54,12 @@
 }
 
 .topMenu {
-    position: relative;
-    left: 50%;
-    height: 23px;
-    top: -23px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 700px;
+    margin: 0 auto;
 }
 
 .topMenu li{
@@ -155,57 +157,57 @@
 }
 
 
-@media (max-width: 72em) and (min-width: 55em) {
-    #header {
-        height: 5.125em;
-    }
+/*@media (max-width: 72em) and (min-width: 55em) {*/
+    /*#header {*/
+        /*height: 5.125em;*/
+    /*}*/
 
-    #header .userControls {
-        position: absolute;
-        right: 0;
-        bottom: 2em;
-    }
-}
+    /*#header .userControls {*/
+        /*position: absolute;*/
+        /*right: 0;*/
+        /*bottom: 2em;*/
+    /*}*/
+/*}*/
 
-@media (max-width: 55em) {
-    #header {
-        height: auto;
-        min-height: 5.125em;
-    }
+/*@media (max-width: 55em) {*/
+    /*#header {*/
+        /*height: auto;*/
+        /*min-height: 5.125em;*/
+    /*}*/
 
-    #header .userControls {
-        position: absolute;
-        right: 0;
-        bottom: auto;
-        top: 1.5em;
-    }
+    /*#header .userControls {*/
+        /*position: absolute;*/
+        /*right: 0;*/
+        /*bottom: auto;*/
+        /*top: 1.5em;*/
+    /*}*/
 
-    #header .fullwidthContainer {
-        position: relative;
-        top: 50px;
-        padding-bottom: 50px;
-    }
+    /*#header .fullwidthContainer {*/
+        /*position: relative;*/
+        /*top: 50px;*/
+        /*padding-bottom: 50px;*/
+    /*}*/
 
-    #header .centeringTrickContainer {
-        float: none;
-    }
+    /*#header .centeringTrickContainer {*/
+        /*float: none;*/
+    /*}*/
 
-    #header ul li {
-        padding: 0 1em;
-    }
-    #header ul li.activeTab{
-        box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
-    }
+    /*#header ul li {*/
+        /*padding: 0 1em;*/
+    /*}*/
+    /*#header ul li.activeTab{*/
+        /*box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);*/
+    /*}*/
 
-    #header .topMenu {
-        width: 100%;
-    }
+    /*#header .topMenu {*/
+        /*width: 100%;*/
+    /*}*/
 
-    #header .topMenu li {
-        width: calc(100% - 2em);
-    }
+    /*#header .topMenu li {*/
+        /*width: calc(100% - 2em);*/
+    /*}*/
 
-    #searchBox {
-        width: calc(100% - 1em);
-    }
-}
+    /*#searchBox {*/
+        /*width: calc(100% - 1em);*/
+    /*}*/
+/*}*/
