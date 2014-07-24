@@ -1,38 +1,13 @@
-<div class="row" xmlns="http://www.w3.org/1999/html">
-    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
-        <div style="position: relative; left: 50%; padding: 1em 1em 4em 1em;">
+<div ng-repeat="box in fesettings.boxes" class="backgroundBox startColumn">
+    <h2 ng-bind-html-unsafe="box.title"></h2>
+    <div ng-bind-html-unsafe="box.content"></div>
+    <a class="startBoxLink" href="{{ box.link }}">{{ box.link_title }}</a>
 
-            <div ng-repeat="box in fesettings.boxes" class="left">
-                <div ng-if="!box.special" class="shadowed startColumn">
-                    <h2 ng-bind-html-unsafe="box.title"></h2>
-
-                    <div style="clear:both"></div>
-                    <div ng-bind-html-unsafe="box.content">></div>
-                    <div style="clear:both"></div>
-                    <a style="float:right" href="{{ box.link }}">{{ box.link_title }}</a>
-                    <div style="clear:both"></div>
-                </div>
-
-                <div ng-if="box.special == 'news' "
-                     class="shadowed startColumn"
-                     ng-controller="FindecoSyschangeCtrl">
-                    <h2 ng-bind-html-unsafe="box.title"></h2>
-                    <ul class="newsList">
-                        <li ng-repeat="news in newsList">
-                            <a href="{{ news.url }}">{{ news.title }} (extern)</a>
-                        </li>
-                    </ul>
-                    <div ng-show="isLoading()" class="deactivateDiv">
-                    </div>
-                    <div ng-show="isLoading()" class="deactivateSpinner">
-                    </div>
-                    <div style="clear:both"></div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    <ul ng-if="box.special == 'news' " class="newsList" ng-controller="FindecoSyschangeCtrl">
+        <li ng-repeat="news in newsList">
+            <a href="{{ news.url }}">{{ news.title }} (extern)</a>
+        </li>
+    </ul>
 </div>
-<div style="clear: both; padding: 1em 0;"></div>
  	
  	

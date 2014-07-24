@@ -40,6 +40,13 @@ body {
     width: 100%;
 }
 
+.backgroundBox {
+    background-color: #212121;
+    box-shadow: 3px 5px 12px #000000;
+    padding: 1em 1.5em 2em;
+    margin: 1em;
+}
+
 /*.left {*/
     /*float: left;*/
 /*}*/
@@ -92,11 +99,7 @@ body {
     /*vertical-align: top;*/
 /*}*/
 
-/*.shadowed {*/
-    /*background-color: #212121;*/
-    /*color: #f0f0f0;*/
-    /*box-shadow: 3px 5px 12px #000000;*/
-/*}*/
+
 
 /*.balloon {*/
     /*-moz-border-radius: 3em;*/

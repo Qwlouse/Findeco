@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+ * Copyright (c) 2014 Klaus Greff, Johannes Merkert, Maik Nauheim                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -25,11 +25,14 @@
 .startColumn {
     min-height: 11em;
     width: 17em;
-    padding: 1em;
-    margin: 1em;
-    font-size: 85%;
-    line-height: 130%;
+    display: inline-block;
+    vertical-align: top;
 }
+
 .startColumn h2{
 	color:grey;
+}
+
+.startBoxLink {
+    float: right;
 }

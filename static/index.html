@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="/static/css/navigationBar.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/graph.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/footer.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/start.css" type="text/css"/>
+
     <!--
     <link rel="stylesheet" href="/static/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/textColumn.css" type="text/css"/>
@@ -27,7 +29,7 @@
     <link rel="stylesheet" href="/static/css/microblogging.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/message.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/create.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/start.css" type="text/css"/>
+
     <link rel="stylesheet" href="/static/css/help.css" type="text/css"/>-->
 
     <!-- Javascript libraries -->
@@ -100,12 +102,7 @@
                     html.scrollHeight,
                     html.offsetHeight);
             document.getElementById('footer').style.bottom = '-' + String(
-                    Math.floor(
-                            Math.max(
-                                    0,
-                                    (documentHeight - window.innerHeight - window.scrollY)
-                            ) / 2
-                    )
+                    Math.floor(Math.max(0,(documentHeight - window.innerHeight - window.scrollY)) / 2)
             ) + 'px';
         }
 
@@ -132,45 +129,45 @@
 <div ng-include="'/static/partials/header.html'" id="header" class="row" ng-controller="FindecoMenuCtrl" ></div>
 
 <div class="row" id="graph" ng-controller="FindecoGraphRowCtrl" >
-    <div id="navigationBar"
-         ng-include src="'/static/partials/navigationBar.html'"
-         ng-if="nav.type=='node'"  ng-controller="FindecoMenuCtrl"></div>
+    <div ng-if="nav.type=='node'">
+        <div id="navigationBar"
+             ng-include src="'/static/partials/navigationBar.html'"
+             ng-controller="FindecoMenuCtrl"></div>
 
-    <form class="row tipp" action="updateGraph()">
-            Es gibt zu diesem Thema {{ graphData.nodes.length }}
-            konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/">Vorschläge</a>.
-            Es werden
-            <select name="graph-filter" size="1" ng-model="graphType" ng-change="updateGraph()">
-                <option value="default" disabled>nur relevante</option>
-                <option value="full" selected>alle außer Spam</option>
-                <option value="withSpam">alle</option>
-            </select>
-            angezeigt:
-        </form>
+        <form class="row tipp" action="updateGraph()">
+                Es gibt zu diesem Thema {{ graphData.nodes.length }}
+                konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/">Vorschläge</a>.
+                Es werden
+                <select name="graph-filter" size="1" ng-model="graphType" ng-change="updateGraph()">
+                    <option value="default" disabled>nur relevante</option>
+                    <option value="full" selected>alle außer Spam</option>
+                    <option value="withSpam">alle</option>
+                </select>
+                angezeigt:
+            </form>
 
-    <svg xmlns="http://www.w3.org/2000/svg" height="0" width="0" style="display:block;">
-        <!--
-            Definitions for the graph arrowheads here in a separate svg.
-            This is necessary for correct display in Chrome.
-        -->
-        <defs>
-            <marker id="arrowHead" orient="auto" markerHeight="5"
-                    markerWidth="5" refX="5" viewBox="0 -5 10 10"
-                    class="linkHead">
-                <path d="M0,-5L10,0L0,5"></path>
-            </marker>
-            <filter id="blur">
-                <feGaussianBlur stdDeviation="2"></feGaussianBlur>
-            </filter>
-        </defs>
-    </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" height="0" width="0" style="display:block;">
+            <!--
+                Definitions for the graph arrowheads here in a separate svg.
+                This is necessary for correct display in Chrome.
+            -->
+            <defs>
+                <marker id="arrowHead" orient="auto" markerHeight="5"
+                        markerWidth="5" refX="5" viewBox="0 -5 10 10"
+                        class="linkHead">
+                    <path d="M0,-5L10,0L0,5"></path>
+                </marker>
+                <filter id="blur">
+                    <feGaussianBlur stdDeviation="2"></feGaussianBlur>
+                </filter>
+            </defs>
+        </svg>
 
-    <div findeco-graph data="graphData" path="nav.nodePath" height="180" class="graph" style="width:100%"></div>
+        <div findeco-graph data="graphData" path="nav.nodePath" height="180" class="graph" style="width:100%"></div>
+    </div>
 </div>
 
-<div style="overflow: visible">
-    <div ng-view class='slide' style="position: absolute; width: 100%;"></div>
-</div>
+<div ng-view class='slide' style="position: absolute; width: 100%; padding-bottom: 3em"></div>
 
 
 <div class="row" id="footer">

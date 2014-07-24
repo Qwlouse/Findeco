@@ -96,7 +96,22 @@ a:hover {
 body {
     font-family: "Lato", sans-serif;
     font-size: 14px;
+    color: #f0f0f0;
+    line-height: 130%;
 }
+
+
+h2 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    font-size: 140%;
+}
+
+h3 {
+    font-size: 120%;
+}
+
+
 
 /* Font for all the headings */
 /*h1, h2, h3, h4, h5, h6 {*/
@@ -111,11 +126,7 @@ body {
     /*margin-bottom: 0.7em;*/
 /*}*/
 
-/*h2 {*/
-    /*margin-top: 1em;*/
-    /*margin-bottom: 0.6em;*/
-    /*font-size: 18pt;*/
-/*}*/
+
 
 /*h3 {*/
     /*margin-top: 0.9em;*/
