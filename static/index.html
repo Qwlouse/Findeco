@@ -91,14 +91,27 @@
         }
 
         function footerPosition() {
-            document.getElementById('footer').style.bottom = '-' +
-                String(Math.floor(
-                    Math.max(0, (document.body.scrollHeight - document.body.clientHeight - window.scrollY))
-                    / 2)) + 'px';
+            var body = document.body;
+            var html = document.documentElement;
+            var documentHeight = Math.max(
+                    body.scrollHeight,
+                    body.offsetHeight,
+                    html.clientHeight,
+                    html.scrollHeight,
+                    html.offsetHeight);
+            document.getElementById('footer').style.bottom = '-' + String(
+                    Math.floor(
+                            Math.max(
+                                    0,
+                                    (documentHeight - window.innerHeight - window.scrollY)
+                            ) / 2
+                    )
+            ) + 'px';
         }
 
         var didScroll = false;
         setTimeout(footerPosition, 1);
+        setInterval(function () {didScroll = true;}, 500);
 
         window.onscroll = function () {
             didScroll = true;
