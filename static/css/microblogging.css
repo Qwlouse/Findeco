@@ -22,122 +22,127 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-ul.microblogList {
-    margin: 0 0 0 0;
-    padding: 0;
-    font-size: 10pt;
+.microblogColumn {
+    float:left;
+    width: 19em;
 }
 
-ul.microblogList li {
-    display: block;
-    list-style: none;
-    margin: 0;
-    padding: 0.75em 0 0.25em 0;
-    line-height: 130%;
-}
+/*ul.microblogList {*/
+    /*margin: 0 0 0 0;*/
+    /*padding: 0;*/
+    /*font-size: 10pt;*/
+/*}*/
 
-ul.microblogList li + li + li{
-    border-top: 1px solid #2f2f2f;
-}
+/*ul.microblogList li {*/
+    /*display: block;*/
+    /*list-style: none;*/
+    /*margin: 0;*/
+    /*padding: 0.75em 0 0.25em 0;*/
+    /*line-height: 130%;*/
+/*}*/
 
-a.microblogAuthor {
-    float: left;
-    font-weight: bold;
-}
+/*ul.microblogList li + li + li{*/
+    /*border-top: 1px solid #2f2f2f;*/
+/*}*/
 
-span.microblogDate {
-    float: right;
-    font-size: 9pt;
-    color: #999;
-}
+/*a.microblogAuthor {*/
+    /*float: left;*/
+    /*font-weight: bold;*/
+/*}*/
 
-span.microblogText {
-    margin: 0.25em 0;
-    clear: both;
-    display: block;
-}
+/*span.microblogDate {*/
+    /*float: right;*/
+    /*font-size: 9pt;*/
+    /*color: #999;*/
+/*}*/
 
-.characterCountdown {
-    font-size: 9pt;
-    position: absolute;
-    top: 5px;
-    right: 25px;
-    color: #999;
-}
+/*span.microblogText {*/
+    /*margin: 0.25em 0;*/
+    /*clear: both;*/
+    /*display: block;*/
+/*}*/
 
-.microblogInput {
-    width: 100%;
-    height: 2.4em;
-    margin: 3px 0 5px 0;
-    padding: 0 3px 0 3px;
-    resize: none;
-    border: 1px solid #999;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
+/*.characterCountdown {*/
+    /*font-size: 9pt;*/
+    /*position: absolute;*/
+    /*top: 5px;*/
+    /*right: 25px;*/
+    /*color: #999;*/
+/*}*/
 
-.microblogInput:hover {
-    border-color: #2d7cc4;
-}
+/*.microblogInput {*/
+    /*width: 100%;*/
+    /*height: 2.4em;*/
+    /*margin: 3px 0 5px 0;*/
+    /*padding: 0 3px 0 3px;*/
+    /*resize: none;*/
+    /*border: 1px solid #999;*/
+    /*-moz-border-radius: 5px;*/
+    /*-webkit-border-radius: 5px;*/
+    /*border-radius: 5px;*/
+/*}*/
 
-.microblogInput:focus {
-    border-color: #2d7cc4;
-    outline: none;
-    -webkit-box-shadow:0 0 5px #2d7cc4;
-    -moz-box-shadow:0 0 5px #2d7cc4;
-    box-shadow:0 0 5px #2d7cc4;
-}
+/*.microblogInput:hover {*/
+    /*border-color: #2d7cc4;*/
+/*}*/
 
-.location-icon {
-    background: url("../images/location.png") no-repeat;
-    height: 12px;
-    width: 8px;
-    margin-top: 2px;
-    margin-left: 3px;
-    float: right;
-}
+/*.microblogInput:focus {*/
+    /*border-color: #2d7cc4;*/
+    /*outline: none;*/
+    /*-webkit-box-shadow:0 0 5px #2d7cc4;*/
+    /*-moz-box-shadow:0 0 5px #2d7cc4;*/
+    /*box-shadow:0 0 5px #2d7cc4;*/
+/*}*/
 
-.location-here {
-    background-position: -8px 0;
-}
+/*.location-icon {*/
+    /*background: url("../images/location.png") no-repeat;*/
+    /*height: 12px;*/
+    /*width: 8px;*/
+    /*margin-top: 2px;*/
+    /*margin-left: 3px;*/
+    /*float: right;*/
+/*}*/
 
-.location-there {
-    background-position: 0 0;
-}
+/*.location-here {*/
+    /*background-position: -8px 0;*/
+/*}*/
 
-.nodeIndex:before
-{
-content:"(";
-}
+/*.location-there {*/
+    /*background-position: 0 0;*/
+/*}*/
 
-.nodeIndex:after
-{
-content:")";
-}
+/*.nodeIndex:before*/
+/*{*/
+/*content:"(";*/
+/*}*/
+
+/*.nodeIndex:after*/
+/*{*/
+/*content:")";*/
+/*}*/
 
 /* -------------- Animations -------------------------------------------------*/
 
-.microblogAnimate {
-    right: 0;
-}
+/*.microblogAnimate {*/
+    /*right: 0;*/
+/*}*/
 
-.microblogAnimate.ng-hide-remove { /* start for showing animation */
-    -webkit-transition: 0.5s linear all;
-    transition: 0.5s linear all;
-    right: -22em;
-}
+/*.microblogAnimate.ng-hide-remove { *//* start for showing animation */
+    /*-webkit-transition: 0.5s linear all;*/
+    /*transition: 0.5s linear all;*/
+    /*right: -22em;*/
+/*}*/
 
-.microblogAnimate.ng-hide-remove-active { /* stop for showing animation */
-    right: 0;
-}
+/*.microblogAnimate.ng-hide-remove-active { *//* stop for showing animation */
+    /*right: 0;*/
+/*}*/
 
-.microblogAnimate.ng-hide-add { /* start for hiding animation */
-    -webkit-transition: 0.5s linear all;
-    transition: 0.5s linear all;
-    right: 0;
-}
+/*.microblogAnimate.ng-hide-add { *//* start for hiding animation */
+    /*-webkit-transition: 0.5s linear all;*/
+    /*transition: 0.5s linear all;*/
+    /*right: 0;*/
+/*}*/
 
-.microblogAnimate.ng-hide-add-active { /* stop for hiding animation */
-    right: -22em;
-}
+/*.microblogAnimate.ng-hide-add-active { *//* stop for hiding animation */
+    /*right: -22em;*/
+/*}*/

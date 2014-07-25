@@ -1,7 +1,7 @@
-<div class="row" xmlns="http://www.w3.org/1999/html">
-    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
-        <div style="position: relative; left: 50%;">
-            <div class="smallColumn left spaced" style="margin-bottom: 4em;">
+
+    <div style="position: relative; left: -50%; float: right; overflow: visible;">
+        <div  style="position: relative; left: 50%; margin-bottom: 4em;">
+            <div class="backgroundBox microblogColumn" >
                 <!--<div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
                 <li ng-show="user.isLoggedIn" style="margin: 0; padding: 0;">
                     <form ng-submit="submit()">
@@ -35,7 +35,7 @@
                 <div ng-show="isLoading('newsForAllNodes')" class="deactivateDiv"></div>
                 <div ng-show="isLoading('newsForAllNodes')" class="deactivateSpinner"></div>
             </div>
-            <div class="smallColumn left spaced" style="margin-bottom: 4em;">
+            <div class="backgroundBox microblogColumn" style="float:left; width: 19em;" >
                 <help hid="NEWS_fol" htype="1" />
                 <h2 data-i18n="_newsForFollowedNodes_" style="width:210px; float:left;"></h2>
 
@@ -66,7 +66,7 @@
                 <div ng-show="isLoading('newsForFollowedNodes')" class="deactivateSpinner">
                 </div>
             </div>
-            <div class="smallColumn left spaced" style="margin-bottom: 4em;">
+            <div class="backgroundBox microblogColumn" style="float:left; width: 19em;">
                 <help hid="NEWS_own" htype="1" />
                 <h2  data-i18n="_newsForOwnNodes_" style="width:210px; float:left;"></h2>
 
@@ -99,4 +99,3 @@
             </div>
         </div>
     </div>
-</div>
