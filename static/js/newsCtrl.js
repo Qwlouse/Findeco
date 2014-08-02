@@ -50,6 +50,18 @@ findecoApp.controller('FindecoNewsCtrl', function ($scope, $location, Backend, U
         });
     };
 
+    $scope.extendAllNodesList = function() {
+        $scope.updateAllNodes('older', $scope.allNodesList[$scope.allNodesList.length-1].microblogID)
+    };
+
+    $scope.extendFollowedNodesList = function() {
+        $scope.updateFollowedNodes('older', $scope.followedNodesList[$scope.followedNodesList.length-1].microblogID)
+    };
+
+    $scope.extendOwnNodesList = function() {
+        $scope.updateOwnNodes('older', $scope.ownNodesList[$scope.ownNodesList.length-1].microblogID)
+    };
+
     $scope.updateAllNodes = function (oldType, oldID) {
         var type = 'newer';
         var id = 0;
