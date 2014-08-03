@@ -82,10 +82,8 @@
     background: url("/static/images/help.png") no-repeat;
     height: 19px;
     width: 19px;
-    margin-top: 9px;
-    margin-left: 3px;
-    float: right;
     cursor: help;
+    display: inline-block;
 }
 
 .help-small-icon:hover {

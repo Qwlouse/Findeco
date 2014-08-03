@@ -51,6 +51,18 @@ findecoApp.controller('FindecoMicrobloggingNewsCtrl', function ($scope, $locatio
         return User.markUser(type, path);
     };
 
+    $scope.extendTimelineList = function () {
+        $scope.updateTimeline('older',timelineList[timelineList.length-1].microblogID)
+    };
+
+    $scope.extendMentionsList = function () {
+        $scope.updateMentions('older',mentionsList[mentionsList.length-1].microblogID)
+    };
+
+    $scope.extendOwnPostsList = function () {
+        $scope.updateOwnPosts('older',ownPostsList[ownPostsList.length-1].microblogID)
+    };
+
     $scope.updateTimeline = function (oldType, oldID) {
         var type = 'newer';
         var id = -1;

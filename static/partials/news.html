@@ -1,36 +1,29 @@
+<div style="position: relative; left: -50%; float: right; overflow: visible;">
+    <div  style="position: relative; left: 50%; margin-bottom: 4em;">
+        <div class="backgroundBox microblogColumn" >
 
-    <div style="position: relative; left: -50%; float: right; overflow: visible;">
-        <div  style="position: relative; left: 50%; margin-bottom: 4em;">
-            <div class="backgroundBox microblogColumn" >
-                <help hid="NEWS_all" htype="1" />
-                <h2 data-i18n="_newsForAllNodes_"></h2>
+            <help hid="NEWS_all" htype="1"/>
+            <h2 data-i18n="_newsForAllNodes_"></h2>
 
-                <a class="rss" target="_new" href="/feeds/rss/news/{{ user.displayName }}/{{ user.rsskey }}"></a>
+            <a class="rss" target="_new" href="/feeds/rss/news/{{ user.displayName }}/{{ user.rsskey }}"></a>
 
-                <div microblog-list bloglist="allNodesList" updatecall="extendAllNodesList" follow-user="followUser"></div>
-                <div ng-show="isLoading('newsForAllNodes')" class="deactivateDiv"></div>
-                <div ng-show="isLoading('newsForAllNodes')" class="deactivateSpinner"></div>
-            </div>
+            <div microblog-list bloglist="allNodesList" updatecall="extendAllNodesList" follow-user="followUser"></div>
+        </div>
 
-            <div class="backgroundBox microblogColumn">
-                <help hid="NEWS_fol" htype="1" />
-                <h2 data-i18n="_newsForFollowedNodes_"></h2>
-                <a class="rss" target="_new" href="/feeds/rss/newsFollow/{{ user.displayName }}/{{ user.rsskey }}"></a>
+        <div class="backgroundBox microblogColumn">
+            <help hid="NEWS_fol" htype="1" />
+            <h2 data-i18n="_newsForFollowedNodes_"></h2>
+            <a class="rss" target="_new" href="/feeds/rss/newsFollow/{{ user.displayName }}/{{ user.rsskey }}"></a>
 
-                <div microblog-list bloglist="followedNodesList" updatecall="extendFollowedNodesList" follow-user="followUser"></div>
-                <div ng-show="isLoading('newsForFollowedNodes')" class="deactivateDiv"></div>
-                <div ng-show="isLoading('newsForFollowedNodes')" class="deactivateSpinner"></div>
-            </div>
+            <div microblog-list bloglist="followedNodesList" updatecall="extendFollowedNodesList" follow-user="followUser"></div>
+        </div>
 
-            <div class="backgroundBox microblogColumn">
-                <help hid="NEWS_own" htype="1" />
-                <h2  data-i18n="_newsForOwnNodes_"></h2>
-                <a class="rss" target="_new" href="/feeds/rss/newsAuthor/{{ user.displayName }}/{{ user.rsskey }}"></a>
+        <div class="backgroundBox microblogColumn">
+            <help hid="NEWS_own" htype="1" />
+            <h2  data-i18n="_newsForOwnNodes_"></h2>
+            <a class="rss" target="_new" href="/feeds/rss/newsAuthor/{{ user.displayName }}/{{ user.rsskey }}"></a>
 
-                <div microblog-list bloglist="ownNodesList" updatecall="extendOwnNodesList" follow-user="followUser"></div>
-
-                <div ng-show="isLoading('newsForOwnNodes')" class="deactivateDiv"></div>
-                <div ng-show="isLoading('newsForOwnNodes')" class="deactivateSpinner"></div>
-            </div>
+            <div microblog-list bloglist="ownNodesList" updatecall="extendOwnNodesList" follow-user="followUser"></div>
         </div>
     </div>
+</div>
