@@ -108,6 +108,12 @@ h2 {
     color:grey;
 }
 
+/*Special elements*/
+.tipp {
+    color: gray;
+    font-size: 75%;
+    text-align: center;
+}
 
 
 /* Font for all the headings */

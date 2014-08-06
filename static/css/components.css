@@ -1,0 +1,28 @@
+
+.sectionExpander {
+    background: url('../images/expand.png');
+    display: block;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    float: left;
+    margin-right: 4px;
+}
+
+.sectionExpander:hover {
+    background: url('../images/expand_hover.png');
+}
+
+.sectionCollapser {
+    background: url('../images/collapse.png');
+    display: block;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    float: left;
+    margin-right: 4px;
+}
+
+.sectionCollapser:hover {
+    background: url('../images/collapse_hover.png');
+}

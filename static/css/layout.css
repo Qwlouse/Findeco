@@ -30,7 +30,7 @@
 */
 
 body {
-    background: #c1c1c1 url("../images/epidauros.jpg") repeat-y center top fixed;
+    background: url("../images/epidauros.jpg") repeat-y center top fixed;
     background-size: cover;
 }
 
@@ -47,32 +47,39 @@ body {
     margin: 1em;
 }
 
-/*.left {*/
-    /*float: left;*/
-/*}*/
+.toggleRow {
+    background-color: #e6e6e6;
+    width: 100%;
+}
 
-/*.right {*/
-    /*float: right;*/
-/*}*/
+.toggleArguments {
+    float: left;
+    width: calc(50% - 2em);
+    padding: 1em;
+}
 
-/*.clearer {*/
-    /*clear: both;*/
-/*}*/
+.toggleMicroblogging {
+    float: right;
+    width: calc(50% - 2em);
+    padding: 1em;
+    text-align: right;
+}
 
+.contentRow {
+    background-color: #212121;
+    width: 100%;
+}
 
-/*.box {*/
-    /*border: 1px solid rgba(0, 0, 0, 0.7);*/
-    /*background-color: rgba(255, 255, 255, 0.7);*/
-    /*color: #000000;*/
-    /*padding: 0.5em;*/
-/*}*/
+.textColumn {
+    max-width: 45em;
+    padding: 1em 1.5em 2em;
+    margin: 0 auto;
+}
 
-/*.toggle {*/
-    /*float: left;*/
-    /*background-color: #e6e6e6;*/
-    /*color: #000000;*/
-    /*vertical-align: middle;*/
-/*}*/
+.textColumn .follow-star, .textColumn .spam-mark {
+    float: right;
+    cursor: pointer;
+}
 
 /*.content {*/
     /*float: left;*/
@@ -81,25 +88,11 @@ body {
     /*margin-bottom: 4em;*/
 /*}*/
 
-/*.smallColumn {*/
-    /*width: 19em;*/
-    /*padding: 1em;*/
-    /*margin: 0 0 4em 0;*/
-    /*vertical-align: top;*/
-    /*color: #f0f0f0;*/
-    /*background-color: #212121;*/
-    /*box-shadow: 3px 5px 12px #000000;*/
-    /*z-index: 1;*/
-/*}*/
-
-/*.textColumn {*/
-    /*max-width: 42em;*/
-    /*padding: 1em;*/
-    /*margin: 0;*/
-    /*vertical-align: top;*/
-/*}*/
-
-
+.smallColumn {
+    width: 19em;
+    z-index: 1;
+    margin: 0 0 4em;
+}
 
 /*.balloon {*/
     /*-moz-border-radius: 3em;*/

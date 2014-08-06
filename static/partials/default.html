@@ -1,28 +1,27 @@
 
-<div class="clearer"></div>
-<div class="toggle row">
-    <div class="padded left" style="width: calc(50% - 2em);" ng-click="showArguments = !showArguments">
+<div class="toggleRow">
+    <div class="toggleArguments" ng-click="showArguments = !showArguments">
         <a href="" class="left">
             <span ng-if="!showArguments">Argumente zeigen</span>
             <span ng-if="showArguments">Argumente verbergen</span>
         </a>
     </div>
-    <div class="padded right" style="width: calc(50% - 2em);" ng-click="showMicroblogging = !showMicroblogging">
+    <div class="toggleMicroblogging" ng-click="showMicroblogging = !showMicroblogging">
         <a href="" class="right">
             <span ng-if="!showMicroblogging">Microblogging zeigen</span>
             <span ng-if="showMicroblogging">Microblogging verbergen</span>
         </a>
     </div>
+    <div style="clear: both;"></div>
 </div>
-<div class="clearer"></div>
-<div class="content row" style="overflow: visible;">
-    <div style="position: absolute;"
-         class="smallColumn argumentAnimate"
+
+
+<div class="contentRow">
+    <div class="smallColumn backgroundBox argumentAnimate"
          ng-show="showArguments"
          ng-include src="'/static/partials/argument.html'">
     </div>
-    <div style="position: absolute;"
-         class="smallColumn microblogAnimate"
+    <div class="smallColumn backgroundBox microblogAnimate"
          ng-show="showMicroblogging"
          ng-include src="'/static/partials/microblogging.html'">
     </div>
@@ -36,9 +35,12 @@
         <div class="authors">
             Autoren des Vorschlags: <div ng-repeat="author in authors"><a ng-href="/user/{{ author }}">{{ author }}</a> </div>
         </div>
-        <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
-        <div follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markMainNode" width="21" height="21"></div>
-        <h1 >{{ nodeInfo.fullTitle }}</h1>
+
+
+        <h1 >{{ nodeInfo.fullTitle }}
+            <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
+            <div follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markMainNode" width="21" height="21"></div>
+        </h1>
 
         <p creole wiki-text="nodeInfo.wikiText"></p>
 
@@ -48,23 +50,10 @@
             Du kannst hier alle Abschnitte <a ng-hide="allExpanded" ng-click="expandAll()" style="cursor: pointer;">ausklappen</a>
             <a ng-show="allExpanded" ng-click="collapseAll()" style="cursor: pointer;">einklappen</a>.
         </div>
+
         <div ng-repeat="section in nodeInfo.indexList">
-
-            <a ng-show="!section.isExpanded" ng-hide="nav.type=='root'" ng-click="expandSection(section)"
-               style="float:left;position: relative; top: 8px; margin-right: 5px;"
-               title="{{'_expandSection_'|i18n}}">
-                <img src="/static/images/expand.png"
-                     onmouseover="this.src='/static/images/expand_hover.png';"
-                     onmouseout="this.src='/static/images/expand.png';">
-            </a>
-            <a ng-show="section.isExpanded" ng-click="collapseSection(section)"
-               style="float:left;position: relative; top: 8px; margin-right: 5px;"
-               title="{{'_collapseSection_'|i18n}}">
-                <img src="/static/images/collapse.png"
-                     onmouseover="this.src='/static/images/collapse_hover.png';"
-                     onmouseout="this.src='/static/images/collapse.png';">
-            </a>
-
+            <a class="sectionExpander" ng-show="!section.isExpanded" ng-click="expandSection(section)"></a>
+            <a class="sectionCollapser" ng-show="section.isExpanded" ng-click="collapseSection(section)"></a>
             <h2 ng-show="!section.isExpanded">
                 <a href="/{{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{section.fullTitle}}</a>
             </h2>
