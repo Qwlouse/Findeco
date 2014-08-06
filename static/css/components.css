@@ -1,6 +1,6 @@
 
 .sectionExpander {
-    background: url('../images/expand.png');
+    background: url('../images/expand_collapse.svg') no-repeat 0 0;
     display: block;
     height: 16px;
     width: 16px;
@@ -10,11 +10,11 @@
 }
 
 .sectionExpander:hover {
-    background: url('../images/expand_hover.png');
+    background-position: 0 -20px;
 }
 
 .sectionCollapser {
-    background: url('../images/collapse.png');
+    background: url('../images/expand_collapse.svg') no-repeat -20px 0;
     display: block;
     height: 16px;
     width: 16px;
@@ -24,5 +24,5 @@
 }
 
 .sectionCollapser:hover {
-    background: url('../images/collapse_hover.png');
+    background-position: -20px -20px;
 }
