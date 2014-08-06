@@ -32,7 +32,7 @@
     color: #ffffff;
     font-size: 0.5em;
     position: absolute;
-    top: 0.2em;
+    top: 0.1em;
     right: 0.2em;
 }
 
@@ -73,34 +73,50 @@
     box-shadow: 5px 2px 0 -2px rgba(0, 0, 0, 0.5);
 }
 
-.activeTab a{
-    color:  #2d7cc4;
+.activeTab a {
+    color:  #0C5DA5;
+}
+
+.activeTab a:hover {
+    color:  #589CDA;
 }
 
 #logo {
-    background: url("../images/logo.png") no-repeat 0 5px;
-    background-size: 141px;
+    background: url("../images/Logo.svg") no-repeat 0 0;
+    background-size: 400px;
     display: inline-block;
     position: absolute;
-    height: 50px;
-    width: 141px;
+    left: 6px;
+    top: 4px;
+    height: 65px;
+    width: 200px;
+    z-index: 1001;
 }
 
-#header  .userControls {
+#header .userControls {
     position: absolute;
     right: 0;
     bottom: 0;
     z-index: 2;
+    white-space: nowrap;
+}
+
+#header .userControls li {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .logoutButton {
-    height: 18px;
-    width: 18px;
+    height: 15px;
+    width: 15px;
     display: block;
     background: url("../images/logout.svg") no-repeat 0 0;
     cursor: pointer
 }
 
+.logoutButton:hover {
+    background-position: -15px 0;
+}
 
 #searchBox {
     position: relative;
@@ -111,14 +127,14 @@
 }
 
 #searchBox:hover {
-    border-color: #2d7cc4;
+    border-color: #589CDA;
 }
 
 #searchBox.searchActive {
-    border-color: #2d7cc4;
-    -webkit-box-shadow:0 0 5px #2d7cc4;
-    -moz-box-shadow:0 0 5px #2d7cc4;
-    box-shadow:0 0 5px #2d7cc4;
+    border-color: #589CDA;
+    -webkit-box-shadow:0 0 5px #589CDA;
+    -moz-box-shadow:0 0 5px #589CDA;
+    box-shadow:0 0 5px #589CDA;
 }
 
 #searchInput {
@@ -131,6 +147,8 @@
     border: 0;
     height: 14px;
     font-size: 9pt;
+    position: relative;
+    top: 1px;
 }
 
 /* Format for browsers that do not support placeholder attribute*/
@@ -139,75 +157,128 @@
     font-size: 9pt;
 }
 
-
-/* ----------------------------- optimized until here ----------------------- */
 #searchButton {
 	float:right;
     border: 0;
     height: 14px;
     width: 14px;
     background: url("../images/search.svg") no-repeat 0 0;
-    background-size: 43px;
     position: relative;
     top: 2px;
 }
 
 #searchButton:hover {
-    background-position: 100% 0;
+    background-position: -14px 0;
 }
 
+ /* Rootline */
+#navigationBar {
+    position: relative;
+    top: -3px;
+    background: #333333;
+    z-index: 1000;
+}
 
-/*@media (max-width: 72em) and (min-width: 55em) {*/
-    /*#header {*/
-        /*height: 5.125em;*/
-    /*}*/
+#navigationBar img {
+    display: inline;
+    margin-left: 5px; /*optical margin to make rootline appear lined up*/
+    height: 14px;
+}
 
-    /*#header .userControls {*/
-        /*position: absolute;*/
-        /*right: 0;*/
-        /*bottom: 2em;*/
-    /*}*/
-/*}*/
+#navigationBar ul {
+    padding: 0;
+    display: inline;
+    list-style: circle;
+    margin: auto 0;
+}
 
-/*@media (max-width: 55em) {*/
-    /*#header {*/
-        /*height: auto;*/
-        /*min-height: 5.125em;*/
-    /*}*/
+#navigationBar ul li {
+    padding: 4px 0;
+    display: inline-block;
+}
 
-    /*#header .userControls {*/
-        /*position: absolute;*/
-        /*right: 0;*/
-        /*bottom: auto;*/
-        /*top: 1.5em;*/
-    /*}*/
+/* insert slashes between navigation items */
+#navigationBar li + li:before{
+    color: #cccccc;
+    font-weight: bold;
+    content: " / ";
+    padding: 0 2px 0 5px;
+}
 
-    /*#header .fullwidthContainer {*/
-        /*position: relative;*/
-        /*top: 50px;*/
-        /*padding-bottom: 50px;*/
-    /*}*/
+#navigationBar li:last-child a {
+    color: #2d7cc4;
+}
 
-    /*#header .centeringTrickContainer {*/
-        /*float: none;*/
-    /*}*/
+.helpactivator{
+    padding-top:5px;
+    float: right;
+    padding-right: 15px;
+    font-size: 12px;
+}
 
-    /*#header ul li {*/
-        /*padding: 0 1em;*/
-    /*}*/
-    /*#header ul li.activeTab{*/
-        /*box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);*/
-    /*}*/
+@media (min-width: 70em) {
+    #navigationBar ul {
+        padding-left: 70px;
+    }
+}
 
-    /*#header .topMenu {*/
-        /*width: 100%;*/
-    /*}*/
+@media (max-width: 70em) and (min-width: 53em) {
+    #header {
+        height: 5.125em;
+    }
 
-    /*#header .topMenu li {*/
-        /*width: calc(100% - 2em);*/
-    /*}*/
+    #header .userControls {
+        position: absolute;
+        right: 0;
+        bottom: 2em;
+    }
+}
 
-    /*#searchBox {*/
-        /*width: calc(100% - 1em);*/
-    /*}*/
-/*}*/
+@media (max-width: 53em) {
+    #header {
+        height: auto;
+        min-height: 5.125em;
+    }
+
+    #header .userControls {
+        position: absolute;
+        right: 0;
+        bottom: auto;
+        top: 1.5em;
+    }
+
+    #header .fullwidthContainer {
+        position: relative;
+        top: 50px;
+        padding-bottom: 50px;
+    }
+
+    #header .centeringTrickContainer {
+        float: none;
+    }
+
+    #header ul li {
+        padding: 0 1em;
+    }
+    #header ul li.activeTab{
+        box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+    }
+
+    #header .topMenu {
+        width: 100%;
+        position: inherit;
+        padding-top: 42px;
+    }
+
+    #header .topMenu li {
+        width: calc(100% - 2em);
+    }
+
+    #searchBox {
+        width: calc(100% - 1em);
+    }
+
+    #logo {
+        background-position: -200px 0;
+    }
+}
