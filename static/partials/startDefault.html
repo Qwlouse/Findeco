@@ -1,60 +1,57 @@
-<div class="row" style="margin-bottom: 1em;">
-    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
-        <div style="position: relative; left: 50%;">
+<div style="position: relative; left: -50%; float: right; overflow: visible;">
+    <div style="position: relative; left: 50%;">
 
-            <div ng-show="!user.isLoggedIn&&fesettings.disclaimer.enable"
-                 id="disclaimerBox"
+        <div ng-show="!user.isLoggedIn && fesettings.disclaimer.enable"
+             id="disclaimerBox"
+             ng-bind-html-unsafe="fesettings.disclaimer.text"
+             class="backgroundBox" >
+        </div>
+
+        <div ng-if="fesettings.sidebar.enable==true"
+             ng-include="'/static/partials/syschanges.html'">
+        </div>
+
+        <div class="backgroundBox">
+            <h1 data-i18n="_rootCaption_"></h1>
+            <p data-i18n="_rootText_"></p>
+
+            <div ng-repeat="section in nodeInfo.indexList">
+                <a ng-show="!section.isExpanded"
+                   ng-hide="nav.type=='root'"
+                   ng-click="expandSection(section)"
+                   style="float:left;position: relative; top: 8px; margin-right: 5px;">
+                    <img src="/static/images/expand.png"
+                         onmouseover="this.src='/static/images/expand_hover.png';"
+                         onmouseout="this.src='/static/images/expand.png';"></a>
+                <a ng-show="section.isExpanded"
+                   ng-click="collapseSection(section)"
+                   style="float:left;position: relative; top: 8px; margin-right: 5px;">
+                    <img src="/static/images/collapse.png"
+                         onmouseover="this.src='/static/images/collapse_hover.png';"
+                         onmouseout="this.src='/static/images/collapse.png';"></a>
+
+                <h2 ng-show="!section.isExpanded">
+                    <a href="/{{ nav.getPathForNode(section.shortTitle,  section.index) }}">
+                        {{section.fullTitle}}
+                    </a>
+                </h2>
+
+                <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
+                    <div spam-mark show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
+                    <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode" width="21" height="21"></div>
+                    <div creole wiki-text="paragraph.wikiText"></div>
+                </div>
+            </div>
+
+            <div ng-show="isLoading()" class="deactivateDiv"></div>
+            <div ng-show="isLoading()" class="deactivateSpinner"></div>
+
+            <div style="clear: both; padding-bottom: 2em;"></div>
+
+            <div ng-if="user.isLoggedIn"
                  ng-bind-html-unsafe="fesettings.disclaimer.text"
-                 class="box" >
-            </div>
-
-            <div ng-if="fesettings.sidebar.enable==true"
-                 ng-include="'/static/partials/syschanges.html'">
-            </div>
-
-            <div class="textColumn shadowed">
-                <h1 data-i18n="_rootCaption_"></h1>
-                <p  data-i18n="_rootText_"></p>
-
-                <div ng-repeat="section in nodeInfo.indexList">
-                    <a ng-show="!section.isExpanded"
-                       ng-hide="nav.type=='root'"
-                       ng-click="expandSection(section)"
-                       style="float:left;position: relative; top: 8px; margin-right: 5px;">
-                        <img src="/static/images/expand.png"
-                             onmouseover="this.src='/static/images/expand_hover.png';"
-                             onmouseout="this.src='/static/images/expand.png';"></a>
-                    <a ng-show="section.isExpanded"
-                       ng-click="collapseSection(section)"
-                       style="float:left;position: relative; top: 8px; margin-right: 5px;">
-                        <img src="/static/images/collapse.png"
-                             onmouseover="this.src='/static/images/collapse_hover.png';"
-                             onmouseout="this.src='/static/images/collapse.png';"></a>
-
-                    <h2 ng-show="!section.isExpanded">
-                        <a href="/{{ nav.getPathForNode(section.shortTitle,  section.index) }}">
-                            {{section.fullTitle}}
-                        </a>
-                    </h2>
-
-                    <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
-                        <div spam-mark show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
-                        <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode" width="21" height="21"></div>
-                        <div creole wiki-text="paragraph.wikiText"></div>
-                    </div>
-                </div>
-
-                <div ng-show="isLoading()" class="deactivateDiv"></div>
-                <div ng-show="isLoading()" class="deactivateSpinner"></div>
-
-                <div style="clear: both; padding-bottom: 2em;"></div>
-
-                <div ng-if="user.isLoggedIn"
-                     ng-bind-html-unsafe="fesettings.disclaimer.text"
-                     class="box">
-                </div>
+                 class="box">
             </div>
         </div>
     </div>
 </div>
-<div style="clear: both; padding: 1em 0;"></div>

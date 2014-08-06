@@ -94,6 +94,12 @@ body {
     line-height: 130%;
 }
 
+h1 {
+    font-size: 200%;
+    margin-top: 1.0em;
+    margin-bottom: 0.5em;
+    color:grey;
+}
 
 h2 {
     margin-top: 0.5em;
@@ -111,11 +117,7 @@ h2 {
     /*line-height: 120%;*/
 /*}*/
 
-/*h1 {*/
-    /*font-size: 24pt;*/
-    /*margin-top: 1.1em;*/
-    /*margin-bottom: 0.7em;*/
-/*}*/
+
 
 
 
