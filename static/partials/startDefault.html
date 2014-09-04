@@ -1,5 +1,5 @@
-<div style="position: relative; left: -50%; float: right; overflow: visible;">
-    <div style="position: relative; left: 50%;">
+<div class="preCentering">
+    <div class="centered">
 
         <div ng-show="!user.isLoggedIn && fesettings.disclaimer.enable"
              id="disclaimerBox"
@@ -11,7 +11,7 @@
              ng-include="'/static/partials/syschanges.html'">
         </div>
 
-        <div class="backgroundBox" style="max-width: 45em">
+        <div class="backgroundBox textContainer" style="max-width: 45em">
             <h1 data-i18n="_rootCaption_"></h1>
             <p data-i18n="_rootText_"></p>
             <h2 ng-repeat="section in nodeInfo.indexList">
