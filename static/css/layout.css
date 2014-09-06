@@ -34,6 +34,14 @@ body {
     background-size: cover;
 }
 
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
 .row {
     position: relative;
     display: block;
@@ -45,6 +53,13 @@ body {
     box-shadow: 3px 5px 12px #000000;
     padding: 1em 1.5em 2em;
     margin: 1em;
+}
+
+.headingBox {
+    background-color: #212121;
+    box-shadow: 0 5px 12px #000000;
+    margin: 3em 0 0 0;
+    padding: 0.5em 0 1.5em 0;
 }
 
 .toggleRow {
@@ -141,6 +156,15 @@ body {
     .proposal-box {
         width: 42em;
     }
+}
+
+.padded-content {
+    padding: 1em;
+    margin: 1em 0;
+}
+
+.followerCount {
+    font-weight: bold;
 }
 
 /*@media (min-width: 42em) {*/

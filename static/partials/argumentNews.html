@@ -1,7 +1,7 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
     <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 4em;">
         <div style="position: relative; left: 50%;">
-            <div class="spaced paddedContent" ng-repeat="card in cards">
+            <div class="spaced padded-content" ng-repeat="card in cards">
                 <div ng-class="{'left': card.argument.type != 'c', 'right': card.argument.type === 'c'}"
                      class="textColumn backgroundBox balloon"
                      style="position: relative;"
@@ -9,7 +9,7 @@
                     <div style="position: relative; width: 0; height: 0; overflow: visible;" class="side-arrows"
                          ng-class="{'left': card.argument.type === 'c', 'right': card.argument.type != 'c'}">
                         <div class="balloon-source"
-                             ng-style="{'background-position': card.argument.type != 'c' ? '0, 0': '-71px, 0', 'left': card.argument.type != 'c' ? 'calc(1em - 10px)' : 'calc(-1em - 64px)'}"></div>
+                             ng-style="{'background-position': card.argument.type != 'c' ? '0, 0': '-71px, 0', 'left': card.argument.type != 'c' ? 'calc(1.5em - 10px)' : 'calc(-1.5em - 64px)'}"></div>
                     </div>
 
                     <div class="authors" style="display: inline-block; position: relative; top: 8px;">
@@ -17,11 +17,11 @@
                             <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
                         </div>:
                     </div>
-                    <span class="followerCount" style="float: right; position: relative; top: 13px;">
+                    <span class="followerCount" style="float: right; position: relative; top: 2px;">
                         {{ card.argument.flaggingCount }}
                     </span>
                     <div spam-mark show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode"></div>
-                    <span class="followerCount" style="float: right; position: relative; top: 13px; margin-right: 8px;">
+                    <span class="followerCount" style="float: right; position: relative; top: 2px; margin-right: 8px;">
                         {{ card.argument.followingCount }}
                     </span>
                     <div follow-star show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode"
@@ -45,11 +45,11 @@
                             <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
                         </div>:
                     </div>
-                    <span class="followerCount" style="float: right; position: relative; top: 13px;">
+                    <span class="followerCount" style="float: right; position: relative; top: 2px;">
                         {{ card.node.flaggingCount }}
                     </span>
                     <div spam-mark show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
-                    <span class="followerCount" style="float: right; position: relative; top: 13px; margin-right: 8px;">
+                    <span class="followerCount" style="float: right; position: relative; top: 2px; margin-right: 8px;">
                         {{ card.node.followingCount }}
                     </span>
                     <div follow-star show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
