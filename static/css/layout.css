@@ -109,6 +109,19 @@ body {
     margin: 0 0 4em;
 }
 
+.preCentering {
+    position: relative;
+    left: -50%;
+    float: right;
+    overflow: visible;
+}
+
+.centered {
+   position: relative;
+   left: 50%;
+   max-width: 45em;
+}
+
 .balloon {
     -moz-border-radius: 3em;
     -webkit-border-radius: 3em;

@@ -1,16 +1,10 @@
-<div id="contentContainer" class="centeringContainer">
-    <div id="leftColumn" class="contentBoxInvisible">
-
-    </div>
-
-    <div id="centerColumn" class="shadowed">
+<div class="preCentering">
+    <div class="centered backgroundBox textContainer">
         <div ng-show="content!=undefined" ng-bind-html-unsafe="content"></div>
         <div ng-show="content==undefined">
             <h1>Hier sollte ein Impressum stehen!</h1>
             <br>
             Falls nicht, fehlt auf dem Server vermutlich die Datei <a href="{{ path }}">"{{ path }}"</a>.
         </div>
-    </div>
-    <div id="rightColumn" class="contentBoxInvisible">
     </div>
 </div>
