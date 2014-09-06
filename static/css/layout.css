@@ -62,6 +62,13 @@ body {
     padding: 0.5em 0 1.5em 0;
 }
 
+.fullwidthBox {
+    background-color: #212121;
+    box-shadow: 0 5px 12px #000000;
+    padding: 1em;
+    margin: 0;
+}
+
 .toggleRow {
     background-color: #e6e6e6;
     width: 100%;
