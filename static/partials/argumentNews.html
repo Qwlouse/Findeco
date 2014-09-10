@@ -1,5 +1,5 @@
 
-<div class="preCentering" style="width:100%; max-width: 100em;">
+<div class="preCentering argument-background-pane">
     <div style="position: relative; left: 50%; width: 100%;">
         <div class="padded-content" ng-repeat="card in cards">
             <div ng-class="{'left-argument-box': card.argument.type != 'c', 'right-argument-box': card.argument.type === 'c'}"
@@ -15,11 +15,11 @@
                 </div>
                 <span class="followerCount">{{ card.argument.flaggingCount }}</span>
 
-                <div spam-mark show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode"></div>
+                <div spam-mark show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode" style="float:right"></div>
 
                 <span class="followerCount" style="margin-right: 8px;">{{ card.argument.followingCount }}</span>
 
-                <div follow-star show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode" width="21" height="21"></div>
+                <div follow-star show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode" width="21" height="21" style="float:right"></div>
 
 
                 <h2><a ng-href="/{{ card.argument.path }}">{{ card.argument.fullTitle }}</a></h2>
@@ -40,11 +40,11 @@
                 <span class="followerCount" style="float: right; position: relative; top: 2px;">
                     {{ card.node.flaggingCount }}
                 </span>
-                <div spam-mark show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
+                <div spam-mark show-if="user.isLoggedIn" entity="card.node" mark-func="markNode" style="float:right"></div>
                 <span class="followerCount" style="float: right; position: relative; top: 2px; margin-right: 8px;">
                     {{ card.node.followingCount }}
                 </span>
-                <div follow-star show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
+                <div follow-star show-if="user.isLoggedIn" entity="card.node" mark-func="markNode" style="float:right"
                      width="21" height="21"></div>
                 <h2><a ng-href="/{{ card.node.path }}">{{ card.node.fullTitle }}</a></h2>
                 <p style="max-height: 8em; overflow-y: hidden" creole wiki-text="card.node.text"></p>
