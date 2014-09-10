@@ -149,18 +149,22 @@ input, textarea {
 }
 
 input[type=submit], input[type=reset] {
-    padding: 0.7em;
-    color: black;
+    padding: 0.4em;
     border: 0 solid black;
     cursor: pointer;
+    box-shadow: 2px 3px 6px #000000;
+}
+
+input[type=submit]:active, input[type=reset]:active {
+    box-shadow: 0 0 2px #000000;
 }
 
 input[type=submit] {
-    background-color: #00C618;
+    background-color: #00510A;
 }
 
 input[type=reset] {
-    background-color: #FF0D00;
+    background-color: #680500;
 }
 
 /*Special elements*/
