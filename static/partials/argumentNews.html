@@ -1,64 +1,55 @@
-<div class="row" xmlns="http://www.w3.org/1999/html">
-    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 4em;">
-        <div style="position: relative; left: 50%;">
-            <div class="spaced padded-content" ng-repeat="card in cards">
-                <div ng-class="{'left': card.argument.type != 'c', 'right': card.argument.type === 'c'}"
-                     class="textColumn backgroundBox balloon"
-                     style="position: relative;"
-                     ng-style="{'margin-right': card.argument.type != 'c' ? '50px': '0', 'margin-left': card.argument.type != 'c' ? '0' : '50px'}">
-                    <div style="position: relative; width: 0; height: 0; overflow: visible;" class="side-arrows"
-                         ng-class="{'left': card.argument.type === 'c', 'right': card.argument.type != 'c'}">
-                        <div class="balloon-source"
-                             ng-style="{'background-position': card.argument.type != 'c' ? '0, 0': '-71px, 0', 'left': card.argument.type != 'c' ? 'calc(1.5em - 10px)' : 'calc(-1.5em - 64px)'}"></div>
-                    </div>
 
-                    <div class="authors" style="display: inline-block; position: relative; top: 8px;">
-                        <div ng-repeat="author in card.argument.authorGroup" style="display: inline-block">
-                            <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
-                        </div>:
-                    </div>
-                    <span class="followerCount" style="float: right; position: relative; top: 2px;">
-                        {{ card.argument.flaggingCount }}
-                    </span>
-                    <div spam-mark show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode"></div>
-                    <span class="followerCount" style="float: right; position: relative; top: 2px; margin-right: 8px;">
-                        {{ card.argument.followingCount }}
-                    </span>
-                    <div follow-star show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode"
-                         width="21" height="21"></div>
-                    <h2><a ng-href="/{{ card.argument.path }}">{{ card.argument.fullTitle }}</a></h2>
-                    <p style="max-height: 8em; overflow-y: hidden" creole wiki-text="card.argument.text"></p>
+<div class="preCentering" style="width:100%; max-width: 100em;">
+    <div style="position: relative; left: 50%; width: 100%;">
+        <div class="padded-content" ng-repeat="card in cards">
+            <div ng-class="{'left-argument-box': card.argument.type != 'c', 'right-argument-box': card.argument.type === 'c'}"
+                 class="backgroundBox argument-box">
 
-                    <div style="position: absolute; bottom: 0; width: 0; height: 0; overflow: visible;"
-                         ng-style="{'left': card.argument.type != 'c' ? '0' : 'auto', 'right': card.argument.type != 'c' ? 'auto' : '0'}"
-                         class="bottom-arrows"
-                         ng-class="{'left': card.argument.type === 'c', 'right': card.argument.type != 'c'}">
-                        <div class="balloon-source"
-                             ng-style="{'left': card.argument.type != 'c' ? 'calc(6em - 45px)' : 'calc(-4em - 50px)'}"
-                             style="top: calc(1em - 24px); background-position: -144px, 0; width: 68px;"></div>
-                    </div>
+                <div class="argument-source" ng-class="{'argument-source-left': card.argument.type != 'c', 'argument-source-right': card.argument.type == 'c'}">
                 </div>
-                <div ng-class="{'left': card.argument.type != 'c', 'right': card.argument.type === 'c'}"
-                     class="textColumn backgroundBox proposal-box">
-                    <div class="authors" style="display: inline-block; position: relative; top: 8px;">
-                        <div ng-repeat="author in card.node.authorGroup" style="display: inline-block">
-                            <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
-                        </div>:
-                    </div>
-                    <span class="followerCount" style="float: right; position: relative; top: 2px;">
-                        {{ card.node.flaggingCount }}
-                    </span>
-                    <div spam-mark show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
-                    <span class="followerCount" style="float: right; position: relative; top: 2px; margin-right: 8px;">
-                        {{ card.node.followingCount }}
-                    </span>
-                    <div follow-star show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
-                         width="21" height="21"></div>
-                    <h2><a ng-href="/{{ card.node.path }}">{{ card.node.fullTitle }}</a></h2>
-                    <p style="max-height: 8em; overflow-y: hidden" creole wiki-text="card.node.text"></p>
+
+                <div class="authors">
+                    <div ng-repeat="author in card.argument.authorGroup" style="display: inline-block">
+                        <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
+                    </div>:
                 </div>
-                <div style="clear: both;"></div>
+                <span class="followerCount">{{ card.argument.flaggingCount }}</span>
+
+                <div spam-mark show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode"></div>
+
+                <span class="followerCount" style="margin-right: 8px;">{{ card.argument.followingCount }}</span>
+
+                <div follow-star show-if="user.isLoggedIn" entity="card.argument" mark-func="markNode" width="21" height="21"></div>
+
+
+                <h2><a ng-href="/{{ card.argument.path }}">{{ card.argument.fullTitle }}</a></h2>
+
+                <p style="max-height: 8em; overflow-y: hidden" creole wiki-text="card.argument.text"></p>
+
+                <div class="argument-source argument-source-bottom"
+                     ng-style="{'left': card.argument.type != 'c' ? '4em' : 'auto', 'right': card.argument.type != 'c' ? 'auto' : '4em'}">
+                </div>
             </div>
+
+            <div class="backgroundBox proposal-box" ng-style="{'float': card.argument.type === 'c'? 'right' : 'left'}">
+                <div class="authors" style="display: inline-block; position: relative; top: 8px;">
+                    <div ng-repeat="author in card.node.authorGroup" style="display: inline-block">
+                        <a ng-href="/user/{{ author }}">{{ author }}</a><span ng-if="!$last">,&nbsp;</span>
+                    </div>:
+                </div>
+                <span class="followerCount" style="float: right; position: relative; top: 2px;">
+                    {{ card.node.flaggingCount }}
+                </span>
+                <div spam-mark show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"></div>
+                <span class="followerCount" style="float: right; position: relative; top: 2px; margin-right: 8px;">
+                    {{ card.node.followingCount }}
+                </span>
+                <div follow-star show-if="user.isLoggedIn" entity="card.node" mark-func="markNode"
+                     width="21" height="21"></div>
+                <h2><a ng-href="/{{ card.node.path }}">{{ card.node.fullTitle }}</a></h2>
+                <p style="max-height: 8em; overflow-y: hidden" creole wiki-text="card.node.text"></p>
+            </div>
+            <div style="clear: both;"></div>
         </div>
     </div>
 </div>
