@@ -753,5 +753,15 @@
         "key"        : "_userDoesNotExist",
         "value"      : "Der Benutzer '{0}' existiert nicht!",
         "description": "wird im partial user.html benutzt"
+    },
+    {
+        "key"        : "_changeUsername_",
+        "value"      : "Benutzername Ändern",
+        "description": ""
+    },
+    {
+        "key"        : "_preview_",
+        "value"      : "Vorschau",
+        "description": "Heading vom Preview"
     }
 ]

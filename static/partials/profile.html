@@ -1,0 +1,90 @@
+<div class="row" xmlns="http://www.w3.org/1999/html">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 3em;">
+        <div style="position: relative; left: 50%; padding: 1em; max-width: 45em; width: 100%;">
+            <div class="backgroundBox" ng-if="user.isLoggedIn">
+
+                <form ng-submit="storeUserSettings()">
+                    <h2 data-i18n="_description_">Beschreibung</h2>
+                    <textarea ng-model="user.description"
+                              placeholder="Beschreibung"
+                              style="width: 100%; resize: vertical;"
+                              rows="8">
+
+                    </textarea>
+
+                    <h3 data-i18n="_preview_">Vorschau</h3>
+                    <div creole wiki-text="user.description" update-interval="2000"></div>
+
+                    <div style="clear: both;"></div>
+                    <input type="submit" style="margin-top: 1em;" value="{{'_save_'|i18n}}" />
+                </form>
+
+                <h2 data-i18n="_followees_" style="padding-bottom: 0; margin-top: 3em;">Ich folge:</h2>
+                <ul>
+                    <li ng-repeat="followee in user.followees">
+                        <a href="/user/{{ followee.path }}">{{ followee.displayName }}</a>
+                        <div follow-star show-if="true" entity="followee" mark-func="user.markUser"
+                             style="float: none; top: 0;" width="12pt" height="12pt"></div>
+                    </li>
+                </ul>
+
+                <h2 data-i18n="_email_" style="margin-top: 3em;">E-Mail</h2>
+                <p><span data-i18n="_currentAdress_">aktuelle Adresse</span>: {{ user.email }}</p>
+
+                <p ng-show="user.emailChangeRequested" data-i18n="_changeEmailRequested_">
+                    Die Änderung der E-Mail Adresse wurde bereits angefordert
+                    und eine Bestätigungemail an die neue Adresse versandt.
+                    Die Änderung wird wirksam, wenn der Bestätigungslink in
+                    der Mail geklickt wird.
+                </p>
+                <p data-i18n="_changeEMailDescription_"></p>
+
+                <form ng-submit="storeUserSettings()">
+                    <input type="text" ng-model="user.email"/><br/>
+                    <input type="submit" value="{{ '_save_'|i18n }}">
+                </form>
+
+                <h2 data-i18n="_notificationSettings_">Benachrichtigungseinstellungen</h2>
+                <form ng-submit="storeUserSettings()">
+                    <input type="checkbox"
+                           id="wantsEMail"
+                           ng-model="user.wantsMailNotification"
+                           ng-change="storeUserSettings()" />
+                    <label for="wantsEMail" data-i18n="_wantEMailLabel_">
+                        Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.
+                    </label>
+                </form>
+
+                <h2 data-i18n="_changeUsername_" style="margin-top: 3em;">Username</h2>
+                <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ displayNameTmp }}</p>
+                <form ng-submit="storeUserSettings()">
+                    <input type="text" ng-model="user.newDisplayName" /><br />
+                    <input type="submit" value="{{'_save_'|i18n}}" />
+                </form>
+
+                <h2 data-i18n="_changePassword_">change Password</h2>
+                <p data-i18n="_changePasswordDescription_"></p>
+                <form ng-submit="changePassword()">
+                    <input type="password" ng-model="password" /><br />
+                    <input type="password" ng-model="password2" /><br />
+                    <input type="submit" value="{{'_save_'|i18n}}">
+                </form>
+                <div data-i18n="_passwordHints_" class="passwordHint" >
+                    Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und
+                    Kleinschreibung als auch Sonderzeichen in deinem Passwort.
+                </div>
+
+                <h2 data-i18n="_deleteAccount_" style="margin-top: 3em;">delete Account</h2>
+                <p data-i18n="_deleteAccountExplanation_"></p>
+                <form ng-submit="deleteAccount()">
+                    <input type="submit" value="{{'_deleteAccount_'|i18n}}">
+                </form>
+
+            </div>
+            <div class="backgroundBox" ng-if="!user.isLoggedIn">
+                <h1 data-i18n="_notLoggedIn_"></h1>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+</div>

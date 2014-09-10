@@ -142,6 +142,27 @@ strong {
     font-weight: bold;
 }
 
+input, textarea {
+    background-color: #393939;
+    color: #d2d2d2;
+    border: 1px solid black;
+}
+
+input[type=submit], input[type=reset] {
+    padding: 0.7em;
+    color: black;
+    border: 0 solid black;
+    cursor: pointer;
+}
+
+input[type=submit] {
+    background-color: #00C618;
+}
+
+input[type=reset] {
+    background-color: #FF0D00;
+}
+
 /*Special elements*/
 .tipp {
     color: gray;

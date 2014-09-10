@@ -723,5 +723,15 @@
         "key"        : "_notLoggedIn_",
         "value"      : "Nicht eingeloggt!",
         "description": ""
+    },
+    {
+        "key"        : "_changeUsername_",
+        "value"      : "Change Username",
+        "description": ""
+    },
+    {
+        "key"        : "_preview_",
+        "value"      : "Preview",
+        "description": "Heading vom Preview"
     }
 ]

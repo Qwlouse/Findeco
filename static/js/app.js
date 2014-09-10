@@ -52,11 +52,7 @@ var findecoApp = angular.module(
             when('/recoverByMail', {templateUrl: '/static/partials/userRecoverByMail.html', controller: 'FindecoUserCtrl'}).
             when('/recoverByUsername', {templateUrl: '/static/partials/userRecoverByUsername.html', controller: 'FindecoUserCtrl'}).
             when('/terms_of_use', {templateUrl: '/static/partials/termsOfUse.html', controller: 'FindecoCustomContentCtrl'}).
-            when('/profile', {templateUrl: '/static/partials/profile/profile.html', controller: 'FindecoUserCtrl'}).
-            when('/profile/account', {templateUrl: '/static/partials/profile/profile.html', controller: 'FindecoUserCtrl'}).
-            when('/profile/password', {templateUrl: '/static/partials/profile/profilePassword.html', controller: 'FindecoUserCtrl'}).
-            when('/profile/mail', {templateUrl: '/static/partials/profile/profileMailSettings.html', controller: 'FindecoUserCtrl'}).
-            when('/profile/delete', {templateUrl: '/static/partials/profile/profileDelete.html', controller: 'FindecoUserCtrl'}).
+            when('/profile', {templateUrl: '/static/partials/profile.html', controller: 'FindecoUserCtrl'}).
             when('/news', {templateUrl: '/static/partials/news.html', controller: 'FindecoNewsCtrl'}).
             when('/microblogging', {templateUrl: '/static/partials/microbloggingNews.html', controller: 'FindecoMicrobloggingNewsCtrl'}).
             when('/arguments', {templateUrl: '/static/partials/argumentNews.html', controller: 'FindecoArgumentNewsCtrl'}).

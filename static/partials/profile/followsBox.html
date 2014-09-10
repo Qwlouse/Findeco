@@ -1,7 +1,0 @@
-<h2 data-i18n="_followees_" style="padding-bottom: 0;">Ich folge:</h2>
-<ul>
-    <li ng-repeat="followee in user.followees">
-        <a href="/user/{{ followee.path }}">{{ followee.displayName }}</a>
-        <div follow-star show-if="true" entity="followee" mark-func="user.markUser" style="float: none; top: 0;" width="12pt" height="12pt"></div>
-    </li>
-</ul>
