@@ -34,14 +34,6 @@ body {
     background-size: cover;
 }
 
-.right {
-    float: right;
-}
-
-.left {
-    float: left;
-}
-
 .row {
     position: relative;
     display: block;
@@ -129,62 +121,137 @@ body {
    max-width: 45em;
 }
 
-.balloon {
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+
+/*  ==================== New Argument page styling ========================== */
+
+.padded-content {
+    padding: 3em 2em;
+}
+
+.followerCount {
+    font-weight: bold;
+    float: right;
+    position: relative;
+    top: 2px;
+}
+
+.authors {
+    display: inline-block;
+    position: relative;
+    top: 8px;
+}
+
+
+div.right-argument-box {
+    float: right;
+    margin-left: 50px;
+}
+
+div.left-argument-box {
+    float: left;
+    margin-right: 50px;
+}
+
+.argument-box {
+    position: relative;
     -moz-border-radius: 3em;
     -webkit-border-radius: 3em;
     border-radius: 3em;
     min-height: 8em;
     min-width: 8em;
+    margin: 0;
 }
 
-.balloon-source {
+.proposal-box {
+    position: relative;
+    min-height: 8em;
+    min-width: 8em;
+    margin: 0;
+}
+
+.argument-source {
+    position: absolute;
+    top: 3em;
     width: 71px;
     height: 69px;
-    position: absolute;
-    background-image: url("../images/bubble-arrows.png");
     background-size: auto 69px;
-    top: 2em;
+    background-image: url("../images/bubble-arrows.png")
 }
 
-@media (max-width: 95em) {
-    .side-arrows {
+.argument-source-left {
+    background-position: 0 center, 0 center;
+    right: calc(-1.5em - 41px);
+}
+
+.argument-source-right {
+    background-position: -71px center, 0 center;
+    left: calc(-1.5em - 41px);
+}
+
+.argument-source-bottom {
+    top: auto;
+    bottom: calc(-1em - 48px);
+    background-position: -144px, 0;
+    width: 68px;
+}
+
+
+
+@media (min-width: 88em) {
+    .argument-source-left, .argument-source-right {
+        visibility: visible;
+    }
+
+    .argument-source-bottom {
         visibility: hidden;
     }
 
-    .balloon {
+    .argument-box {
+        width: 42em;
+    }
+
+    .proposal-box {
+        width: 42em;
+    }
+}
+
+
+@media (max-width: 88em) {
+    .argument-source-left, .argument-source-right {
+        visibility: hidden;
+    }
+
+    .argument-source-bottom {
+        visibility: visible;
+    }
+
+
+    div.right-argument-box {
+        margin: 0 0 50px 0;
+    }
+
+    div.left-argument-box {
+        margin: 0 0 50px 0;
+    }
+
+    .argument-box {
         max-width: 42em;
-        width: calc(100% - 2em);
-        margin-bottom: 50px;
+        width: calc(100% - 6em);
     }
 
     .proposal-box {
         clear: both;
         max-width: 42em;
-        width: calc(100% - 2em);
+        width: calc(100% - 6em);
     }
-}
-
-@media (min-width: 95em) {
-    .bottom-arrows {
-        visibility: hidden;
-    }
-
-    .balloon {
-        width: 42em;
-    }
-
-    .proposal-box {
-        width: 42em;
-    }
-}
-
-.padded-content {
-    padding: 1em;
-    margin: 1em 0;
-}
-
-.followerCount {
-    font-weight: bold;
 }
 
 /*@media (min-width: 42em) {*/
