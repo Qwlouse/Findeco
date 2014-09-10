@@ -134,6 +134,14 @@ h5 {
     color:grey;
 }
 
+em {
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
 /*Special elements*/
 .tipp {
     color: gray;
