@@ -95,13 +95,6 @@ body {
     cursor: pointer;
 }
 
-/*.content {*/
-    /*float: left;*/
-    /*background-color: #212121;*/
-    /*color: #f0f0f0;*/
-    /*margin-bottom: 4em;*/
-/*}*/
-
 .smallColumn {
     width: 19em;
     z-index: 1;
@@ -264,61 +257,13 @@ div.left-argument-box {
     }
 }
 
-/*@media (min-width: 42em) {*/
-    /*.contentText {*/
-        /*margin-left: calc(50% - 21em);*/
-    /*}*/
-/*}*/
+.startColumn {
+    min-height: 11em;
+    width: 17em;
+    display: inline-block;
+    vertical-align: top;
+}
 
-/*.spaced {*/
-    /*margin: 1em;*/
-/*}*/
-
-/*.nodot {*/
-	/*list-style: none;*/
-/*}*/
-
-/*.disclaimer {*/
-	/*text-align: center;*/
-	/*padding: 1em;*/
-	/*margin-bottom: 1.5em;*/
-/*}*/
-
-/*.profile-clearer {*/
-    /*clear: both;*/
-    /*padding: 1em 0;*/
-/*}*/
-
-/*@media (min-width: 86em) {*/
-    /*.profile-clearer {*/
-        /*width: 86em;*/
-    /*}*/
-/*}*/
-
-/*.profile-box {*/
-    /*margin: 1em;*/
-    /*width: calc(100% - 8em);*/
-    /*max-width: 30em;*/
-/*}*/
-
-/*.profile-menu {*/
-    /*margin: 1em;*/
-    /*max-width: 14em;*/
-/*}*/
-
-/*@media (min-width: 68em) {*/
-    /*.profile-content {*/
-        /*width: 68em;*/
-    /*}*/
-/*}*/
-
-/*.userpage-clearer {*/
-    /*clear: both;*/
-    /*padding: 1.5em 0;*/
-/*}*/
-
-/*@media (min-width: 70em) {*/
-    /*.userpage-clearer {*/
-        /*width: 70em;*/
-    /*}*/
-/*}*/
+.startBoxLink {
+    float: right;
+}
