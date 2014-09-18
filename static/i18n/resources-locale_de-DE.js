@@ -765,6 +765,11 @@
         "description": "Heading vom Preview"
     },
     {
+        "key"        : "_searchNoContentResults_",
+        "value"      : "Keine Ergebnisse für die Suche nach '{0}' gefunden",
+        "description": "Notice informing the user that no microblogging could be found for the search"
+    },
+    {
         "key"        : "_searchNoMicrobloggingResults_",
         "value"      : "Keine Microbloggingbeiträge gefunden",
         "description": "Notice informing the user that no microblogging could be found for the search"

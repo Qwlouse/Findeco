@@ -2,9 +2,7 @@
     <div style="position: relative; left: 50%;">
         <div class="textColumn backgroundBox">
             <help hid='SEA_res' htype=1></help><h1 data-i18n="_searchContentResults_" >Suchergebnisse</h1>
-            <span ng-hide="searchResults.contentResults">
-                Keine Ergebnisse für die Suche nach "{{ searchString }}" gefunden
-            </span>
+            <span ng-hide="searchResults.contentResults" data-i18n="_searchNoContentResults_|{{ searchString }}"></span>
             <ul class="searchResults">
                 <li ng-repeat="result in searchResults.contentResults">
                     <h4><a href="/{{ result.url }}">{{result.title}}</a></h4>
