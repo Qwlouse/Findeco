@@ -56,16 +56,16 @@ findecoApp.controller('FindecoMenuCtrl', function($scope, User, Navigator, Feset
         }
     };
 
-    $scope.searchSubmit = function () {
-        if ($scope.searchString.match(/\S/)) {
-            Navigator.changePath('search/' + $scope.searchString);
+    $scope.searchSubmit = function (searchString) {
+        if (searchString.match(/\S/)) {
+            Navigator.changePath('search/' + searchString);
         }
     };
 
     $("#searchInput").focus(function() {
-            $(".searchBox").addClass("searchActive");
-        }).blur(function() {
-            $(".searchBox").removeClass("searchActive");
-        })
+        $(".searchBox").addClass("searchActive");
+    }).blur(function() {
+        $(".searchBox").removeClass("searchActive");
+    })
 
 });
