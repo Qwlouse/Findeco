@@ -763,5 +763,70 @@
         "key"        : "_invalidPathText_",
         "value"      : "Diese Seite wurde nicht gefunden. Überprüfen Sie bitte die URL.",
         "description": "Überschrift der Fehlerseite falls ein ungültiger Pfad aufgerufen wurde."
+    },
+    {
+        "key"        : "_proposalTypeQuestion_",
+        "value"      : "Welchen Typ hat deine Änderung?",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newParagraphButton_",
+        "value"      : "Abschnitt einfügen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newRefinementButton_",
+        "value"      : "Vorschlag weiterentwickeln",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newProposalButton_",
+        "value"      : "Gegenvorschlag erstellen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_backButton_",
+        "value"      : "Zurück",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_cancelButton_",
+        "value"      : "Abbrechen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_nextButton_",
+        "value"      : "Weiter",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_createButton_",
+        "value"      : "Erstellen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_changeUsername_",
+        "value"      : "Benutzername Ändern",
+        "description": ""
+    },
+    {
+        "key"        : "_preview_",
+        "value"      : "Vorschau",
+        "description": "Heading vom Preview"
+    },
+    {
+        "key"        : "_searchNoContentResults_",
+        "value"      : "Keine Ergebnisse für die Suche nach '{0}' gefunden",
+        "description": "Notice informing the user that no microblogging could be found for the search"
+    },
+    {
+        "key"        : "_searchNoMicrobloggingResults_",
+        "value"      : "Keine Microbloggingbeiträge gefunden",
+        "description": "Notice informing the user that no microblogging could be found for the search"
+    },
+    {
+        "key"        : "_searchNuUserResults_",
+        "value"      : "Kein Benutzer gefunden",
+        "description": "Notice informing the user that no users could be found matching the search"
     }
 ]

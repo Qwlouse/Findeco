@@ -1,126 +1,100 @@
-<div id="contentContainer" class="centeringContainer">
-    <div ng-show="!user.isLoggedIn&&fesettings.disclaimer.enable && validPath"
-         id="disclaimerBox"
-         ng-bind-html-unsafe="fesettings.disclaimer.text" class="contentBox">
 
+<div class="toggleRow">
+    <div class="toggleArguments" ng-click="showArguments = !showArguments">
+        <a href="" class="left">
+            <span ng-if="!showArguments">Argumente zeigen</span>
+            <span ng-if="showArguments">Argumente verbergen</span>
+        </a>
     </div>
-    <!-------------------- Left Column ---------------------------------------->
-    <div ng-show="validPath" ng-include
-         src="'/static/partials/argument.html'"></div>
-    <div ng-hide="validPath" id="leftColumn"></div>
-
-    <!------------------ Center Column ---------------------------------------->
-    <div id="centerColumn" class="contentBox" ng-if="validPath">
-        <div>
-            <div class="tipp">
-
-                <span ng-show="graphData.length > 1">Es gibt zu diesem Thema {{ graphData.length }} konkurrierende <a
-                        href="http://www.findeco.de/hilfe/vorschlage/"
-                        class="tippLink">Vorschläge</a>.</span>
-
-                <form>
-                    Es werden
-                    <select name="graph-filter" size="1"
-                            style="font-size: 100%; color: gray;"
-                            ng-model="graphType" ng-change="updateGraph()">
-                        <option value="default" disabled>nur relevante</option>
-                        <option value="full" selected>alle außer Spam</option>
-                        <option value="withSpam">alle</option>
-                    </select>
-                    Vorschläge angezeigt:
-                </form>
-            </div>
-            <div findeco-graph data="graphData" path="nav.nodePath" height='180'
-                 width='580' class="graph"></div>
-        </div>
-
-        <div class="authors">
-            Autoren des Vorschlags:
-            <div ng-repeat="author in authors"><a
-                    ng-href="/user/{{ author }}">{{ author }}</a></div>
-        </div>
-        <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo"
-             mark-func="markNode"></div>
-        <div follow-star show-if="user.isLoggedIn" entity="nodeInfo"
-             mark-func="markMainNode" width="21" height="21"></div>
-        <h1>{{ nodeInfo.fullTitle }}</h1>
-
-        <p creole wiki-text="nodeInfo.wikiText"></p>
-
-        <div ng-show="sections.length > 0" class="tipp">
-            Dieser <a href="http://www.findeco.de/hilfe/vorschlage/"
-                      class="tippLink">Vorschlag</a>
-            hat {{ nodeInfo.indexList.length }} Abschnitte.
-            Du kannst hier alle Abschnitte <a ng-hide="allExpanded"
-                                              ng-click="expandAll()"
-                                              style="cursor: pointer;">ausklappen</a>
-            <a ng-show="allExpanded" ng-click="collapseAll()"
-               style="cursor: pointer;">einklappen</a>.
-        </div>
-        <div ng-repeat="section in nodeInfo.indexList">
-
-            <a ng-show="!section.isExpanded" ng-hide="nav.type=='root'"
-               ng-click="expandSection(section)"
-               style="float:left;position: relative; top: 8px; margin-right: 5px;"
-               title="{{ '_expandSection_'|i18n }}">
-                <img src="/static/images/expand.png"
-                     onmouseover="this.src='/static/images/expand_hover.png';"
-                     onmouseout="this.src='/static/images/expand.png';">
-            </a>
-            <a ng-show="section.isExpanded" ng-click="collapseSection(section)"
-               style="float:left;position: relative; top: 8px; margin-right: 5px;"
-               title="{{ '_collapseSection_'|i18n }}">
-                <img src="/static/images/collapse.png"
-                     onmouseover="this.src='/static/images/collapse_hover.png';"
-                     onmouseout="this.src='/static/images/collapse.png';">
-            </a>
-
-            <h2 ng-show="!section.isExpanded">
-                <a href="/
-                        {{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{ section.fullTitle }}</a>
-            </h2>
-
-            <div class="sectionText" ng-show="section.isExpanded"
-                 ng-repeat="paragraph in section.paragraphs">
-                <div spam-mark show-if="user.isLoggedIn" entity="paragraph"
-                     mark-func="markNode"></div>
-                <div follow-star show-if="user.isLoggedIn" entity="paragraph"
-                     mark-func="markNode" width="21" height="21"></div>
-                <div creole wiki-text="paragraph.wikiText"></div>
-            </div>
-        </div>
-        <div class="btnBar">
-            <div ng-show="user.isLoggedIn " class="btn btn-primary"
-                 ng-click="relocate('create/topic')"
-                 data-i18n="_createNewText_"></div>
-
-            <div ng-show="user.isLoggedIn" class="btn btn-primary"
-                 ng-click="relocate('create/derivate')"
-                 data-i18n="_createDerivativeText_"></div>
-
-            <div ng-show="user.isLoggedIn" class="btn btn-primary"
-                 ng-click="relocate('create/opposing')"
-                 data-i18n="_createOpposingText_"></div>
-        </div>
-        <div ng-show="isLoading()" class="deactivateDiv">
-        </div>
-        <div ng-show="isLoading()" class="deactivateSpinner">
-        </div>
+    <div class="toggleMicroblogging" ng-click="showMicroblogging = !showMicroblogging">
+        <a href="" class="right">
+            <span ng-if="!showMicroblogging">Microblogging zeigen</span>
+            <span ng-if="showMicroblogging">Microblogging verbergen</span>
+        </a>
     </div>
-
-    <div id="centerColumn" class="contentBox" ng-if="!validPath">
-        <h1>{{ '_invalidPathHeading_'|i18n }}</h1>
-        {{ '_invalidPathText_'|i18n }}
-    </div>
-
-    <!------------------- Right Column ---------------------------------------->
-    <div ng-include src="'/static/partials/microblogging.html'"
-         ng-show="validPath"></div>
-    <div style="clear:both; padding-bottom:25px;"></div>
-    <div ng-show="user.isLoggedIn && fesettings.disclaimer.enable && validPath"
-         id="disclaimerBox"
-         ng-bind-html-unsafe="fesettings.disclaimer.text"
-         class="contentBox">
-
-    </div>
+    <div style="clear: both;"></div>
 </div>
+
+
+<div class="contentRow fullwidthBox">
+    <div class="smallColumn backgroundBox argumentAnimate"
+         ng-show="showArguments"
+         ng-include src="'/static/partials/argument.html'">
+    </div>
+    <div class="smallColumn backgroundBox microblogAnimate"
+         ng-show="showMicroblogging"
+         ng-include src="'/static/partials/microblogging.html'">
+    </div>
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 4em;">
+        <div style="position: relative; left: 50%;">
+            <div class="textColumn left contentText">
+                <div ng-if="!user.isLoggedIn&&fesettings.disclaimer.enable"
+                     ng-bind-html-unsafe="fesettings.disclaimer.text"
+                     class="disclaimer box">
+                </div>
+
+                <div class="authors">
+                    Autoren des Vorschlags: <div ng-repeat="author in authors"><a ng-href="/user/{{ author }}">{{ author }}</a> </div>
+                </div>
+
+
+                <h1 >{{ nodeInfo.fullTitle }}
+                    <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markNode"></div>
+                    <div follow-star show-if="user.isLoggedIn" entity="nodeInfo" mark-func="markMainNode" width="21" height="21"></div>
+                </h1>
+
+                <p creole wiki-text="nodeInfo.wikiText"></p>
+
+                <div ng-show="sections.length > 0" class="tipp">
+                    Dieser <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschlag</a>
+                    hat {{ nodeInfo.indexList.length }} Abschnitte.
+                    Du kannst hier alle Abschnitte <a ng-hide="allExpanded" ng-click="expandAll()" style="cursor: pointer;">ausklappen</a>
+                    <a ng-show="allExpanded" ng-click="collapseAll()" style="cursor: pointer;">einklappen</a>.
+                </div>
+
+                <div ng-repeat="section in nodeInfo.indexList">
+                    <a class="sectionExpander" ng-show="!section.isExpanded" ng-click="expandSection(section)"></a>
+                    <a class="sectionCollapser" ng-show="section.isExpanded" ng-click="collapseSection(section)"></a>
+                    <h2 ng-show="!section.isExpanded">
+                        <a href="/{{ nav.getPathForNode(section.shortTitle,  section.index) }}">{{section.fullTitle}}</a>
+                    </h2>
+
+                    <div class="sectionText" ng-show="section.isExpanded" ng-repeat="paragraph in section.paragraphs">
+                        <div spam-mark show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode"></div>
+                        <div follow-star show-if="user.isLoggedIn" entity="paragraph" mark-func="markNode" width="21" height="21"></div>
+                        <div creole wiki-text="paragraph.wikiText"></div>
+                    </div>
+                </div>
+                <div class="btnBar">
+                    <div ng-show="user.isLoggedIn " class="btn btn-primary" ng-click="relocate('create/topic')"
+                         data-i18n="_createNewText_"></div>
+
+                    <div ng-show="user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/derivate')"
+                         data-i18n="_createDerivativeText_"></div>
+
+                    <div ng-show="user.isLoggedIn" class="btn btn-primary" ng-click="relocate('create/opposing')"
+                         data-i18n="_createOpposingText_"></div>
+
+                    <div ng-show="nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
+                         ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
+                </div>
+
+                <div ng-show="isLoading()" class="deactivateDiv">
+                </div>
+                <div ng-show="isLoading()" class="deactivateSpinner">
+                </div>
+
+                <div style="clear:both; padding-bottom:25px;"></div>
+                <div ng-if="user.isLoggedIn&&fesettings.disclaimer.enable"
+                     ng-bind-html-unsafe="fesettings.disclaimer.text"
+                     class="disclaimer box" >
+                </div>
+
+                <div ng-include src="'/static/partials/messagebox.html'"></div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+<div style="clear: both; margin-bottom: 3em;"></div>

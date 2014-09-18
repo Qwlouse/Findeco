@@ -1,0 +1,269 @@
+/* Findeco is dually licensed under GPLv3 or later and MPLv2.
+#
+################################################################################
+# Copyright (c) 2014 Johannes Merkert <jonny@pinae.net>
+# This file is part of Findeco.
+#
+# Findeco is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# Findeco is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+#
+################################################################################
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+################################################################################
+
+################################################################################
+# Stay within the color scheme! blue (#2d7cc4), green (#336633),
+# orange (#e07b01, ecb40d) and shades of grey are acceptable!
+################################################################################
+*/
+
+body {
+    background: url("../images/epidauros.jpg") repeat-y center top fixed;
+    background-size: cover;
+}
+
+.row {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.backgroundBox {
+    background-color: #212121;
+    box-shadow: 3px 5px 12px #000000;
+    padding: 1em 1.5em 2em;
+    margin: 1em;
+}
+
+.headingBox {
+    background-color: #212121;
+    box-shadow: 0 5px 12px #000000;
+    margin: 3em 0 0 0;
+    padding: 0.5em 0 1.5em 0;
+}
+
+.fullwidthBox {
+    background-color: #212121;
+    box-shadow: 0 5px 12px #000000;
+    padding: 1em;
+    margin: 0;
+}
+
+.toggleRow {
+    background-color: #e6e6e6;
+    width: 100%;
+}
+
+.toggleArguments {
+    float: left;
+    width: calc(50% - 2em);
+    padding: 1em;
+}
+
+.toggleMicroblogging {
+    float: right;
+    width: calc(50% - 2em);
+    padding: 1em;
+    text-align: right;
+}
+
+.contentRow {
+    background-color: #212121;
+    width: 100%;
+}
+
+.textColumn {
+    max-width: 45em;
+    padding: 1em 1.5em 2em;
+    margin: 0 auto;
+}
+
+.textColumn .follow-star, .textColumn .spam-mark {
+    float: right;
+    cursor: pointer;
+}
+
+.smallColumn {
+    width: 19em;
+    z-index: 1;
+    margin: 0 0 4em;
+}
+
+.preCentering {
+    position: relative;
+    left: -50%;
+    float: right;
+    overflow: visible;
+}
+
+.centered {
+   position: relative;
+   left: 50%;
+   max-width: 45em;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+
+/*  ==================== New Argument page styling ========================== */
+
+.padded-content {
+    padding: 3em 0.3em;
+}
+
+.argument-background-pane {
+    width: 100%;
+    max-width: 98em;
+}
+
+.followerCount {
+    font-weight: bold;
+    float: right;
+    position: relative;
+    top: 2px;
+}
+
+.authors {
+    display: inline-block;
+    position: relative;
+    top: 8px;
+}
+
+
+div.right-argument-box {
+    float: right;
+    margin-left: 50px;
+}
+
+div.left-argument-box {
+    float: left;
+    margin-right: 50px;
+}
+
+.argument-box {
+    position: relative;
+    -moz-border-radius: 3em;
+    -webkit-border-radius: 3em;
+    border-radius: 3em;
+    min-height: 8em;
+    min-width: 8em;
+    margin: 0;
+}
+
+.proposal-box {
+    position: relative;
+    min-height: 8em;
+    min-width: 8em;
+    margin: 0;
+}
+
+.argument-source {
+    position: absolute;
+    top: 3em;
+    width: 71px;
+    height: 69px;
+    background-size: auto 69px;
+    background-image: url("../images/bubble-arrows.png")
+}
+
+.argument-source-left {
+    background-position: 0 center, 0 center;
+    right: calc(-1.5em - 41px);
+}
+
+.argument-source-right {
+    background-position: -71px center, 0 center;
+    left: calc(-1.5em - 44px);
+}
+
+.argument-source-bottom {
+    top: auto;
+    bottom: calc(-1em - 48px);
+    background-position: -144px, 0;
+    width: 68px;
+}
+
+
+
+@media (min-width: 84em) {
+    .argument-source-left, .argument-source-right {
+        visibility: visible;
+    }
+
+    .argument-source-bottom {
+        visibility: hidden;
+    }
+
+    .argument-box {
+        width: 42em;
+    }
+
+    .proposal-box {
+        width: 42em;
+    }
+}
+
+
+@media (max-width: 84em) {
+    .argument-background-pane {
+        width: 100%;
+        max-width: 60em;
+    }
+
+    .argument-source-left, .argument-source-right {
+        visibility: hidden;
+    }
+
+    .argument-source-bottom {
+        visibility: visible;
+    }
+
+
+    div.right-argument-box {
+        margin: 0 0 50px 0;
+    }
+
+    div.left-argument-box {
+        margin: 0 0 50px 0;
+    }
+
+    .argument-box {
+        max-width: 42em;
+        width: calc(100% - 4em);
+    }
+
+    .proposal-box {
+        clear: both;
+        max-width: 42em;
+        width: calc(100% - 4em);
+    }
+}
+
+.startColumn {
+    min-height: 11em;
+    width: 17em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.startBoxLink {
+    float: right;
+}

@@ -1,0 +1,206 @@
+/* Findeco is dually licensed under GPLv3 or later and MPLv2.
+#
+################################################################################
+# Copyright (c) 2014 Johannes Merkert <jonny@pinae.net>
+# This file is part of Findeco.
+#
+# Findeco is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# Findeco is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Findeco. If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+#
+################################################################################
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+################################################################################
+
+################################################################################
+# Stay within the color scheme! blue (#2d7cc4), green (#336633),
+# orange (#e07b01, ecb40d) and shades of grey are acceptable!
+################################################################################
+*/
+
+
+/* I suggest a new palette */
+/* http://paletton.com/#uid=70K270kw0w0gSWikBNLUEhPZPd3 */
+
+/* Main Primary color */
+.color-primary-0 { color: #FF9500 }	/* links */
+.color-primary-1 { color: #FFC779 }
+.color-primary-2 { color: #FFBB5B }
+.color-primary-3 { color: #8E5300 }
+.color-primary-4 { color: #683D00 }
+
+/* Main Secondary color (1) */
+.color-secondary-1-0 { color: #FF0D00 }
+.color-secondary-1-1 { color: #FF7F79 }
+.color-secondary-1-2 { color: #FF635B }
+.color-secondary-1-3 { color: #8E0700 } /* spam? */
+.color-secondary-1-4 { color: #680500 }
+
+/* Main Secondary color (2) */
+.color-secondary-2-0 { color: #00C618 }
+.color-secondary-2-1 { color: #75F785 }
+.color-secondary-2-2 { color: #52E765 }
+.color-secondary-2-3 { color: #006E0E } /* diff? */
+.color-secondary-2-4 { color: #00510A }
+
+/* Main Complement color */
+.color-complement-0 { color: #0C5DA5 }	/* active */
+.color-complement-1 { color: #7BBAF2 }
+.color-complement-2 { color: #589CDA }
+.color-complement-3 { color: #01315C }
+.color-complement-4 { color: #002443 }
+
+
+a {
+    color: #FF9500;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #589CDA;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Bold.woff') format('woff');
+    font-style: normal;
+    font-weight: bold;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
+    color: #d2d2d2;
+    line-height: 130%;
+}
+
+h1 {
+    font-size: 200%;
+    line-height: 140%;
+    margin-top: 1.0em;
+    margin-bottom: 0.5em;
+    color:grey;
+}
+
+h2 {
+    margin-top: 0.8em;
+    margin-bottom: 0.5em;
+    font-size: 140%;
+    line-height: 130%;
+    color:grey;
+}
+
+h3 {
+    margin-top: 0.8em;
+    margin-bottom: 0.5em;
+    font-size: 120%;
+    line-height: 110%;
+    color:grey;
+}
+
+h4 {
+    margin-top: 0.8em;
+    margin-bottom: 0.5em;
+    font-size: 110%;
+    line-height: 105%;
+    color:grey;
+}
+
+h5 {
+    margin-top: 0.8em;
+    margin-bottom: 0.5em;
+    font-size: 100%;
+    line-height: 100%;
+    color:grey;
+}
+
+em {
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
+input, textarea {
+    background-color: #393939;
+    color: #d2d2d2;
+    border: 1px solid black;
+}
+
+input[type=submit], input[type=reset] {
+    padding: 0.4em;
+    border: 0 solid black;
+    cursor: pointer;
+    box-shadow: 2px 3px 6px #000000;
+}
+
+input[type=submit]:active, input[type=reset]:active {
+    box-shadow: 0 0 2px #000000;
+}
+
+input[type=submit] {
+    background-color: #00510A;
+}
+
+input[type=reset] {
+    background-color: #680500;
+}
+
+/*Special elements*/
+.tipp {
+    color: gray;
+    font-size: 75%;
+    text-align: center;
+}
+
+/* Styling for the diff page */
+
+pre.diff {
+    display: inline;
+    white-space: pre-wrap;   /* allow breaking lines within pre tag */
+}
+
+ins {
+    color: #006E0E;
+    text-decoration: none;
+}
+
+del {
+    color: #8E0700;
+}
+
+
+.textContainer ul {
+    list-style: disc inside;
+    margin-left: 0.5em;
+}
+
+.textColumn p {
+    text-align: justify;
+    -moz-hyphens: auto;
+    -o-hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}

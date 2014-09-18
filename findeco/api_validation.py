@@ -101,7 +101,8 @@ argumentNewsNode_schema = {
     'followingCount': integer,
     'isFlagging': integer,
     'flaggingCount': integer,
-    'authorGroup': authorGroup_schema
+    'authorGroup': authorGroup_schema,
+    'type': string
 }
 argumentNewsCard_schema = {
     'argument': argumentNewsNode_schema,

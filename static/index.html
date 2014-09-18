@@ -12,20 +12,17 @@
     <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico">
 
     <!-- CSS files -->
-    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/main.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/topMenu.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/navigationBar.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/textColumn.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/graph.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/arguments.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/microblogging.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/message.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/animations.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/components.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/footer.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/create.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/start.css" type="text/css"/>
-    <link rel="stylesheet" href="/static/css/profile.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/graph.css" type="text/css"/>
     <link rel="stylesheet" href="/static/css/help.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/microblogging.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/reset.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/topMenu.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/typography.css" type="text/css" />
+
     <!-- Javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular.js"></script>
@@ -41,131 +38,107 @@
     <script type="text/javascript" src="/static/js/lib/diff_match_patch.js"></script>
     <!-- Javascript files -->
     <script type="text/javascript" src="/static/js/app.js"></script>
-    <script type="text/javascript" src="/static/js/argumentCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/createCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/argumentCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/createCtrl.js"></script>
     <script type="text/javascript" src="/static/js/components.js"></script>
-    <script type="text/javascript" src="/static/js/confirmationCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/customContentCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/defaultCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/diffCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/confirmationCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/customContentCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/defaultCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/diffCtrl.js"></script>
     <script type="text/javascript" src="/static/js/FE_SETTINGS.js"></script>
     <script type="text/javascript" src="/static/js/filters.js"></script>
     <script type="text/javascript" src="/static/js/graph.js"></script>
-    <script type="text/javascript" src="/static/js/graphDataService.js"></script>
-    <script type="text/javascript" src="/static/js/helpCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/messageCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/menuCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/microblogCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/microbloggingNewsCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/argumentNewsCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/searchCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/syschangeCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/graphRowCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/services/graphDataService.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/helpCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/messageCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/menuCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/microblogCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/microbloggingNewsCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/argumentNewsCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/searchCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/syschangeCtrl.js"></script>
     <script type="text/javascript" src="/static/js/parser.js"></script>
-    <script type="text/javascript" src="/static/js/newsCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/service.js"></script>
-    <script type="text/javascript" src="/static/js/backendService.js"></script>
-    <script type="text/javascript" src="/static/js/userService.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/newsCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/services/service.js"></script>
+    <script type="text/javascript" src="/static/js/services/backendService.js"></script>
+    <script type="text/javascript" src="/static/js/services/userService.js"></script>
     <script type="text/javascript" src="/static/js/structureParser.js"></script>
-    <script type="text/javascript" src="/static/js/userCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/userInfoCtrl.js"></script>
-    <script type="text/javascript" src="/static/js/navigatorService.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/userCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/userInfoCtrl.js"></script>
+    <script type="text/javascript" src="/static/js/services/navigatorService.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/createProposalCtrl.js"></script>
+    <script type="text/javascript">
+        function headerPosition() {
+            var navigationBar = document.getElementById('navigationBar');
+            if (navigationBar) {
+                if (window.scrollY > document.getElementById('header').scrollHeight - 27) {
+                    navigationBar.style.position = 'fixed';
+                    navigationBar.style.top = '0';
+                    navigationBar.style.width = '100%';
+                } else {
+                    navigationBar.style.position = 'relative';
+                    navigationBar.style.top = '-3px';
+                    navigationBar.style.width = 'auto';
+                }
+            }
+        }
+
+        function footerPosition() {
+            var body = document.body;
+            var html = document.documentElement;
+            var documentHeight = Math.max(
+                    body.scrollHeight,
+                    body.offsetHeight,
+                    html.clientHeight,
+                    html.scrollHeight,
+                    html.offsetHeight);
+            document.getElementById('footer').style.bottom = '-' + String(
+                    Math.floor(Math.max(0,(documentHeight - window.innerHeight - window.scrollY)) / 2)
+            ) + 'px';
+        }
+
+        var didScroll = false;
+        setTimeout(footerPosition, 1);
+        setInterval(function () {didScroll = true;}, 500);
+
+        window.onscroll = function () {
+            didScroll = true;
+        };
+
+        setInterval(function() {
+            if(didScroll) {
+                didScroll = false;
+                footerPosition();
+                headerPosition();
+            }
+        }, 30);
+    </script>
 
     <title data-i18n="_pageTitle_"></title>
 </head>
 <body>
-<div id="wrap">
-    <div id="main">
-        <div id="topMenu">
-            <div id="header">
-                <div id="headerContainer" class="centeringContainer">
-                    <div id="headerContent" ng-controller="FindecoMenuCtrl">
+<div ng-include="'/static/partials/header.html'" id="header" class="row" ng-controller="FindecoMenuCtrl" ></div>
 
-                        <div class="version">Version: {{ fesettings.version }}</div>
-                        <div style=" background-color:red;width: 600px;text-align: center; " ng-show="user.isAdmin">
-                            Achtung!! Sie sind als Admin User angemeldet
-                        </div>
-                        <ul>
-                            <li class="{{ getActiveClass('start')}}">
-                                <a href="/start" data-i18n="_start_">Start</a>
-                            </li>
-                            <li class="{{ getActiveClass('/') }} {{ getActiveClass('arguments')}}">
-                                <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
-                            </li>
-                            <li class="{{ getActiveClass('news') }}" ng-show="user.isLoggedIn">
-                                <a href="/news" data-i18n="_news_">News</a>
-                            </li>
-                            <li class="{{ getActiveClass('microblogging') }}" ng-show="user.isLoggedIn">
-                                <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
-                            </li>
-                            <li class="{{ getActiveClass('node') }} {{ getActiveClass('index') }}">
-                                <a href="/index" data-i18n="_content_">Content</a>
-                            </li>
-                            <li class="{{ getActiveClass('search') }}" id="searchTab">
-                                <div class="searchBox">
-                                    <form action="" ng-submit="searchSubmit()">
+<div class="row" id="graph" ng-controller="FindecoGraphRowCtrl" >
+    <div ng-if="nav.type=='node'">
+        <div id="navigationBar"
+             ng-include src="'/static/partials/navigationBar.html'"
+             ng-controller="FindecoMenuCtrl"></div>
 
-                                        <input id="searchInput"
-                                               type="search"
-                                               name="searchField"
-                                               placeholder=""
-                                               autocomplete="on"
-                                               ng-model="searchString"
-                                               data-i18n-attr="_search_|placeholder"/>
-                                        <button class="searchButton" value=""></button>
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
+        <form class="row tipp" action="updateGraph()">
+            Es gibt zu diesem Thema {{ graphData.nodes.length }}
+            konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/">Vorschläge</a>.
+            Es werden
+            <select name="graph-filter" size="1" ng-model="graphType" ng-change="updateGraph()">
+                <option value="default" disabled>nur relevante</option>
+                <option value="full" selected>alle außer Spam</option>
+                <option value="withSpam">alle</option>
+            </select>
+            angezeigt:
+        </form>
 
-                        <ul style="position: absolute; right: 0;">
-                            <li  class="{{getActiveClass('profile')}}" ng-show="user.isLoggedIn">
-                                <a ng-href="/profile">{{user.displayName}}</a>
-
-                            </li>
-
-                            <li ng-show="user.isLoggedIn">
-                                <a ng-click="logout()" style="cursor:pointer; padding: 0;">
-                                    <img src="/static/images/logout.png" alt="Logout" height="18"
-                                         style="position: relative; top: 3px; margin: 0 0 0 0;"
-                                         onmouseover="this.src='/static/images/logout_hover.png';"
-                                         onmouseout="this.src='/static/images/logout.png';"/></a>
-                            </li>
-                            <li ng-show="!user.isLoggedIn" style="float:right">
-                                <a href="/login" data-i18n="_accountLogin_"></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-            <div id="navigationBar" ng-controller="FindecoMenuCtrl">
-                <div class="centeringContainer">
-                    <ul>
-                        <li><a href="/index"><img ng-show="navigation.entries"
-                                               src="/static/images/home.png"
-                                               alt="Home"
-                                               onmouseover="this.src='/static/images/home_hover.png';"
-                                               onmouseout="this.src='/static/images/home.png';"/>
-                               <img
-                                ng-show="navigation.entries.length == 0" src="/static/images/home_hover.png"
-                                alt="Home"/></a></li>
-
-                        <li ng-repeat="nav in navigation.entries">
-                            <a href="{{ nav.path }}">{{ nav.name }}</a>
-                        </li>
-                    </ul>
-                    <div class="helpactivator" ng-controller="FindecoHelpCtrl">
-                        <div ng-click="toogleHelpStatus()" ng-show="helpIsActive">
-                            <a href="#"> Hilfe ist aktiv (ändern)</a>
-                        </div>
-                        <div ng-click="toogleHelpStatus()" ng-show="!helpIsActive">
-                            <a href="#"> Hilfe ist inaktiv (ändern) </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" height="0" width="0" style="margin: 0; padding:0">
+        <svg xmlns="http://www.w3.org/2000/svg" height="0" width="0" style="display:block;">
             <!--
                 Definitions for the graph arrowheads here in a separate svg.
                 This is necessary for correct display in Chrome.
@@ -181,37 +154,32 @@
                 </filter>
             </defs>
         </svg>
-        <div ng-view></div>
-    </div>
-    <div id="messageBox" ng-controller="FindecoMessageCtrl" ng-show="service.messageList.length > 0">
-        <div alert ng-repeat="message in service.messageList" type="message.type" close="closeMessage($index)">
-            {{ message.msg }}
-        </div>
+
+        <div findeco-graph data="graphData" path="nav.nodePath" height="180" class="graph" style="width:100%"></div>
     </div>
 </div>
-<div id="footerWrap">
-    <div id="footer">
-        <ul>
-            <li><a href="/terms_of_use">Nutzungsbedingungen</a></li>
-            <li><a href="/imprint">Impressum</a></li>
-            <li><a href="/data_privacy">Datenschutzerklärung</a></li>
-            <li><a href="/about">Über Findeco</a></li>
-        </ul>
-    </div>
+
+<div ng-view class='slide' style="width: 100%; padding-bottom: 3em"></div>
+
+
+<div class="row" id="footer">
+    <ul>
+        <li><a href="/terms_of_use">Nutzungsbedingungen</a></li>
+        <li><a href="/imprint">Impressum</a></li>
+        <li><a href="/data_privacy">Datenschutzerklärung</a></li>
+        <li><a href="/about">Über Findeco</a></li>
+    </ul>
 </div>
-{{ hide }}
+
 <div class="helppanel" ng-animate="animate" ng-controller="FindecoHelpCtrl" ng-hide="panelIsHidden">
-    {{ hide }}
     <a ng-click="hidePanel();" class="close">X</a>
 
-    <div style=";width:850px;color:#ffffff;opacity:1">
+    <h2>{{ title }}</h2>
+    {{ helptext }}
 
-        <h2>{{ title }}</h2>
-        {{ helptext }}
-
-        <a ng-show="more" style="position:absolute;right:10px;bottom:5px" href="{{ more }}">Mehr Hilfe zu diesem Thema
-            (Link führt zu Findeco.de)</a>
-    </div>
+    <a ng-show="more" style="position:absolute; right:1em; bottom:1em" href="{{ more }}">Mehr Hilfe zu diesem Thema
+        (Link führt zu Findeco.de)</a>
 </div>
+
 </body>
 </html>

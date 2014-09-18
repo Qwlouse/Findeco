@@ -197,5 +197,44 @@ findecoApp
                 element.html(value || '');
             });
         }
-    }]);
+    }])
+    .directive('microblogList', function () {
+        return {
+            restrict: 'A',
+            scope   : {
+                bloglist  : '=',
+                updatecall : '=',
+                followUser: '='
+            },
+            replace : true,
+            template:
+                '<ul class="microblogList">' +
+                    '<li ng-repeat="microblogNode in bloglist">' +
+                        '<div class="microblogAuthor">' +
+                            '<div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName" entity="microblogNode.author" mark-func="followUser" width="14" height="14"></div>' +
+                            '<a href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{microblogNode.authorGroup[0].displayName }}</a>' +
+                        '</div>' +
+                        '<div style="float:right;">' +
+                            '<a ng-if="microblogNode.location != 1" href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>' +
+                            '<span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span>' +
+                        '</div>' +
+                        '<br/>' +
+                        '<span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>' +
+                    '</li>' +
+                    '<li ng-show="bloglist.length % 20 == 0">' +
+                        '<a ng-click="updatecall()" data-i18n="_loadMoreMicroblogging_"></a>' +
+                    '</li>' +
+                '</ul>',
+            controller: function ($scope, $element, User) {
+                $scope.user = User;
+            }
+        }
+    });
+
+
+
+
+
+
+
 

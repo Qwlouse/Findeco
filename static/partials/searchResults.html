@@ -1,40 +1,44 @@
-<div id="contentContainer" class="centeringContainer">
-    <div id="leftColumn" class="contentBox" ng-controller="FindecoArgumentCtrl">
-        <help hid='SEA_user' htype=1/><h1 data-i18n="_searchUserResults_">Suchergebnisse zu Usern</h1>
+<div style="position: relative; left: -50%; float: right; overflow: visible; margin: 2em 0;">
+    <div style="position: relative; left: 50%;">
+        <div class="textColumn backgroundBox">
+            <div style="float: right; position: relative; top: 2.8em;">
+                <help hid='SEA_res' htype=1></help>
+            </div>
+            <h1 data-i18n="_searchContentResults_" >Suchergebnisse</h1>
+            <span ng-hide="searchResults.contentResults" data-i18n="_searchNoContentResults_|{{ searchString }}"></span>
+            <ul class="searchResults">
+                <li ng-repeat="result in searchResults.contentResults">
+                    <h4><a href="/{{ result.url }}">{{result.title}}</a></h4>
+                    <p>{{ result.snippet }}</p>
+                </li>
+            </ul>
 
-        <span ng-show="searchResults.userResults==''">Kein Benutzer gefunden</span>
-        <ul class="searchResults">
-            <li ng-repeat="result in searchResults.userResults">
-                <h4><a href="/{{ result.url }}">{{result.title}}</a></h4>
-                <p>{{ result.snippet }}</p>
-            </li>
-        </ul>
-    </div>
+            <div style="float: right; position: relative; top: 2.8em;">
+                <help hid='SEA_mbl' htype=1></help>
+            </div>
+            <h1 data-i18n="_searchMicrobloggingResults_">Suchergebnisse im Microblogging</h1>
+            <span ng-hide="searchResults.microbloggingResults" data-i18n="_searchNoMicrobloggingResults_"></span>
+            <ul class="microblogList">
+                <li ng-repeat="microblogNode in searchResults.microbloggingResults">
+                    <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
+                            microblogNode.authorGroup[0].displayName }}</a>
+                    <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
+                    <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
+                </li>
+            </ul>
 
-    <div id="centerColumn" class="contentBox">
-        <help hid='SEA_res' htype=1/><h1 data-i18n="_searchContentResults_" >Suchergebnisse
-            </h1>
-
-        <ul class="searchResults">
-            <span ng-show="searchResults.contentResults==''">Keine Ergebnisse für die Suche nach "{{ searchString }}" gefunden</span>
-            <li ng-repeat="result in searchResults.contentResults">
-                <h4><a href="/{{ result.url }}">{{result.title}}</a></h4>
-                <p>{{ result.snippet }}</p>
-            </li>
-        </ul>
-    </div>
-
-    <div  id="rightColumn" class="contentBox" style="position: relative;">
-        <help hid='SEA_mbl' htype=1/><h1 data-i18n="_searchMicrobloggingResults_">Suchergebnisse im Microblogging</h1>
-
-        <span ng-show="searchResults.microbloggingResults==''">Keine Microbloggingbeiträge gefunden</span>
-        <ul class="microblogList">
-            <li ng-repeat="microblogNode in searchResults.microbloggingResults">
-                <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
-                        microblogNode.authorGroup[0].displayName }}</a>
-                <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
-                <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
-            </li>
-        </ul>
+            <div style="float: right; position: relative; top: 2.8em;">
+                <help hid='SEA_user' htype=1></help>
+            </div>
+            <h1 data-i18n="_searchUserResults_">Suchergebnisse zu Usern</h1>
+            <span ng-hide="searchResults.userResults" data-i18n="_searchNuUserResults_">Kein Benutzer gefunden</span>
+            <ul class="searchResults">
+                <li ng-repeat="result in searchResults.userResults">
+                    <h4><a href="/{{ result.url }}">{{result.title}}</a></h4>
+                    <p>{{ result.snippet }}</p>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
+<div style="clear: both;"></div>

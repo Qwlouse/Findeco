@@ -46,7 +46,7 @@ findecoApp.constant('Boxes',{
     },
     3:{
        title:'RSS-Feeds (Extern)',
-       content:'\<ul style="list-style-type:none; margin-left:-30px;"> <li class="cat-item cat-item-1"><a target="_new" href="http://www.findeco.de/category/allgemein/" title="Alle unter Allgemein abgelegten Beiträge ansehen">Findeco allgemein</a> <a  href="http://www.findeco.de/category/allgemein/feed/"><img style="height:15px" src="/static/images/feed.png" alt="Feed für alle unter Allgemein abgelegten Beiträge" /></a>	</li>        	<li class="cat-item cat-item-2"><a target="_new" href="http://www.findeco.de/category/entwicklung/" title="Alle unter Entwicklung abgelegten Beiträge ansehen">Findeco Entwicklung</a> <a href="http://www.findeco.de/category/entwicklung/feed/"><img style="height:15px" src="/static/images/feed.png" alt="Feed für alle unter Entwicklung abgelegten Beiträge" /></a></li>		<li class="cat-item cat-item-3"><a target="_new" href="http://www.findeco.de/category/systembetrieb-rlp/" title="Alle unter piraten-rlp.de abgelegten Beiträge ansehen">Systembetrieb findeco.piraten-rlp.de</a> <a href="http://www.findeco.de/category/systembetrieb-rlp/feed/"><img style="height:15px" src="/static/images/feed.png" alt="Feed für alle unter piraten-rlp.de abgelegten Beiträge" /></a></li>		<li class="cat-item cat-item-9"><a target="_new" href="http://www.findeco.de/category/systembetrieb-demo/" title="Alle unter Systembetrieb demo.findeco.de abgelegten Beiträge ansehen">Systembetrieb demo.findeco.de</a> <a href="http://www.findeco.de/category/systembetrieb-demo/feed/"><img style="height:15px" src="/static/images/feed.png" alt="Feed für alle unter Systembetrieb demo.findeco.de abgelegten Beiträge" /></a></li>	</ul>Feeds mit Systeminhalten stehen nach Anmeldung zur Verfügung.' ,
+       content:'<ul> <li><a target="_new" href="http://www.findeco.de/category/allgemein/" title="Alle unter Allgemein abgelegten Beiträge ansehen">Findeco allgemein</a> <a  href="http://www.findeco.de/category/allgemein/feed/"><img style="height:15px" src="/static/images/feed.png" alt="Feed für alle unter Allgemein abgelegten Beiträge" /></a>	</li>        	<li class="cat-item cat-item-2"><a target="_new" href="http://www.findeco.de/category/entwicklung/" title="Alle unter Entwicklung abgelegten Beiträge ansehen">Findeco Entwicklung</a> <a href="http://www.findeco.de/category/entwicklung/feed/"><img style="height:15px" src="/static/images/feed.png" alt="Feed für alle unter Entwicklung abgelegten Beiträge" /></a></li>		<li class="cat-item cat-item-3"><a target="_new" href="http://www.findeco.de/category/systembetrieb-rlp/" title="Alle unter piraten-rlp.de abgelegten Beiträge ansehen">Systembetrieb findeco.piraten-rlp.de</a> <a href="http://www.findeco.de/category/systembetrieb-rlp/feed/"><img style="height:15px" src="/static/images/feed.png" alt="Feed für alle unter piraten-rlp.de abgelegten Beiträge" /></a></li>		<li class="cat-item cat-item-9"><a target="_new" href="http://www.findeco.de/category/systembetrieb-demo/" title="Alle unter Systembetrieb demo.findeco.de abgelegten Beiträge ansehen">Systembetrieb demo.findeco.de</a> <a href="http://www.findeco.de/category/systembetrieb-demo/feed/"><img style="height:15px" src="/static/images/feed.png" alt="Feed für alle unter Systembetrieb demo.findeco.de abgelegten Beiträge" /></a></li>	</ul>Feeds mit Systeminhalten stehen nach Anmeldung zur Verfügung.' ,
        link:'',
        link_title:''
     },
@@ -71,6 +71,27 @@ findecoApp.constant('Boxes',{
     }
 
 
+});
+
+findecoApp.constant('Greetingbox', {
+    enabled: true,
+    html: "<h1>Willkommen bei Findeco</h1>\n" +
+        '<p>Findeco ist eine Diskussionsplattform und dient der Meinungsfindung. Du kannst hier Ideen in Form von ' +
+        '<a href="http://www.findeco.de/hilfe/vorschlage/">Vorschlägen</a> abspeichern. Du und alle anderen können ' +
+        'dann Kommentare in Form von <a href="http://www.findeco.de/hilfe/microblogging/">Microblogging</a> dazu ' +
+        'schreiben und <a href="http://www.findeco.de/hilfe/argumente/">Argumente</a> dazu verfassen.</p>' + "\n" +
+        '<p>Die Diskussion zu einem Thema hat immer einen ' +
+        '<a href="http://www.findeco.de/hilfe/verortung-von-vorschlagen/">Ort</a>. Der Ort wird durch den Pfad am ' +
+        'oberen Bildschirmrand immer angezeigt. Bitte achte darauf dir immer zuerst den richtigen Ort für deine ' +
+        'Idee, dein Argument oder deinen Kommentar zu suchen. Die Faustregel dafür ist: Wenn du dich zu etwas ' +
+        'äußern willst, was unter einer Überschrift steht, die man anklicken kann, dann klicke dort zuerst.</p>' +
+        "\n" + '<p>Du kannst Vorschlägen, Benutzern und Argumenten <em>folgen</em>. Das bedeutet, dass du über ' +
+        'Neuigkeiten dazu in <a href="/news">News</a> (Vorschläge und Argumente denen du folgst) und ' +
+        '<a href"/microblogging">Microblogging</a> (User denen du folgst) informiert wirst. Außerdem sprichst du ' +
+        'Vorschlägen und Argumenten damit deine Unterstützung aus. Folgen kannst du jeweils über den Stern neben ' +
+        'einem Beitrag oder User. Beiträge kannst du auch als Spam markieren. Wenn genug Leute das machen werden ' +
+        'sie ausgeblendet. Infos dazu, wie du diese Funktionen für produktive Diskussionen nutzen solltest, findest ' +
+        'du im <a href="http://www.findeco.de/extern/unser-manifest/">Manifest<a>.</p>' + "\n"
 });
 
 
