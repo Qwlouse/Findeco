@@ -179,17 +179,13 @@
 </div>
 
 <div class="helppanel" ng-animate="animate" ng-controller="FindecoHelpCtrl" ng-hide="panelIsHidden">
-
     <a ng-click="hidePanel();" class="close">X</a>
 
-    <div style="width:850px;color:#ffffff;opacity:1">
+    <h2>{{ title }}</h2>
+    {{ helptext }}
 
-        <h2>{{ title }}</h2>
-        {{ helptext }}
-
-        <a ng-show="more" style="position:absolute;right:10px;bottom:5px" href="{{ more }}">Mehr Hilfe zu diesem Thema
-            (Link führt zu Findeco.de)</a>
-    </div>
+    <a ng-show="more" style="position:absolute; right:1em; bottom:1em" href="{{ more }}">Mehr Hilfe zu diesem Thema
+        (Link führt zu Findeco.de)</a>
 </div>
 
 </body>
