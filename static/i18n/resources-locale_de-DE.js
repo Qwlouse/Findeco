@@ -763,5 +763,15 @@
         "key"        : "_preview_",
         "value"      : "Vorschau",
         "description": "Heading vom Preview"
+    },
+    {
+        "key"        : "_searchNoMicrobloggingResults_",
+        "value"      : "Keine Microbloggingbeiträge gefunden",
+        "description": "Notice informing the user that no microblogging could be found for the search"
+    },
+    {
+        "key"        : "_searchNuUserResults_",
+        "value"      : "Kein Benutzer gefunden",
+        "description": "Notice informing the user that no users could be found matching the search"
     }
 ]
