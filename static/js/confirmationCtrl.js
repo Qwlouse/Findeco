@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -24,40 +24,40 @@
 
 'use strict';
 
-function FindecoConfirmationCtrl($scope, User, $routeParams, Navigator) {
+findecoApp.controller('FindecoConfirmationCtrl', function ($scope, $routeParams, Navigator, User) {
     $scope.user = User;
     $scope.activationKey = $routeParams.param.replace('/', '');
     $scope.manualEntry = $scope.activationKey.length == 0;
-    console.log($scope.activationKey);
-    if (Navigator.prefix == "activate") {
+
+    if (Navigator.type == "activate") {
         $scope.title = "_accountActivationFormTitle_";
         $scope.text = "_accountActivationText_";
         $scope.submitButton = "_accountActivateBtn_";
-    } else if (Navigator.prefix == "confirm") {
+    } else if (Navigator.type == "confirm") {
         $scope.title = "_accountConfirmFormTitle_";
         $scope.text = "_accountConfirmText_";
         $scope.submitButton = "_accountRecoverBtn_";
-    } else if (Navigator.prefix == "confirm_email") {
+    } else if (Navigator.type == "confirm_email") {
         $scope.title = "_accountConfirmEmailFormTitle_";
         $scope.text = "_accountConfirmEmailText_";
         $scope.submitButton = "_accountConfirmEmailBtn_";
     }
 
     $scope.activate = function () {
-        if (Navigator.prefix == "activate") {
+        if (Navigator.type == "activate") {
             User.activate($scope.activationKey).success(function () {
                 $scope.text = "_accountActivationFinished_";
             }).error(function () {
                 $scope.manualEntry = true;
             });
 
-        } else if (Navigator.prefix == "confirm") {
+        } else if (Navigator.type == "confirm") {
             User.confirm($scope.activationKey).success(function () {
                 $scope.text = "_accountRecoveryConfirmed_";
             }).error(function () {
                 $scope.manualEntry = true;
             });
-        } else if (Navigator.prefix == "confirm_email") {
+        } else if (Navigator.type == "confirm_email") {
             User.confirmEmail($scope.activationKey).success(function () {
                 $scope.text = "_accountEmailConfirmed_";
             }).error(function () {
@@ -69,6 +69,4 @@ function FindecoConfirmationCtrl($scope, User, $routeParams, Navigator) {
     if (!$scope.manualEntry) {
         $scope.activate();
     }
-}
-
-FindecoConfirmationCtrl.$inject = ['$scope', 'User', '$routeParams' , 'Navigator'];
+});

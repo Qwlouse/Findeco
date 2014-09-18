@@ -64,6 +64,8 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 24pt;
+    margin-top: 1.1em;
+    margin-bottom: 0.7em;
 }
 
 #leftColumn h1, #rightColumn h1 {
@@ -71,23 +73,27 @@ h1 {
 }
 
 h2 {
-    margin-top: 0.5em;
+    margin-top: 1em;
+    margin-bottom: 0.6em;
     font-size: 18pt;
 }
 
 h3 {
-    margin-top: 0.4em;
-    font-size: 14pt;
+    margin-top: 0.9em;
+    margin-bottom: 0.5em;
+    font-size: 15pt;
 }
 
 h4 {
-    margin-top: 0.3em;
-    font-size: 12pt;
+    margin-top: 0.8em;
+    margin-bottom: 0.5em;
+    font-size: 13pt;
 }
 
 h5 {
-    margin-top: 0.2em;
-    font-size: 10pt;
+    margin-top: 0.7em;
+    margin-bottom: 0.5em;
+    font-size: 12pt;
     font-style: italic;
 }
 
@@ -197,6 +203,26 @@ body:before {
     border-radius: 15px;
     box-shadow: 8px 8px 10px #947109;
     position:relative;
+    display: block;
+}
+
+.paddedContent {
+    padding: 1em;
+    margin: 1em 0;
+}
+
+.half {
+    width: 45%;
+    display: inline-block;
+}
+
+.refersTo {
+    width: 6%;
+    display: inline-block;
+    font-size: 8em;
+    margin: 0 15px;
+    position: relative;
+    top: -25px;
 }
 
 .contentBoxInvisible {
@@ -233,8 +259,8 @@ body:before {
 }
 .deactivateDiv{
 	position:absolute; 
-	left:0px;
-	top:0px;
+	left:0;
+	top:0;
 	height:100%; 
 	width:100%; 
 	background-color:grey; 

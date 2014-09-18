@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -24,10 +24,8 @@
 
 'use strict';
 
-function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Navigator) {
+findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator, Message, User ) {
     $scope.user = User;
-    $scope.displayNameTmp = User.displayName;
-    $scope.followUser = User.markUser;
 
     // used for login and registration
     $scope.username = "";
@@ -37,14 +35,18 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
     $scope.TOS = false;
     $scope.DPR = false;
 
-    $scope.login = function () {
-        User.login($scope.username, $scope.password).success(function () {
-            Navigator.changePath('/');
-        });
+    $scope.force_get_username_password = function() {
+        // HACK to make autofill of browsers work.
+        // This is because browser autofill does not trigger an event, so
+        // Angular does not know about the changes.
+        // therefore we check ourselves to make sure we've got the latest values
+        $scope.username = document.getElementById('usernameInput').value;
+        $scope.password = document.getElementById('passwordInput').value;
     };
 
-    $scope.logout = function () {
-        User.logout().success(function () {
+    $scope.login = function () {
+        $scope.force_get_username_password();
+        User.login($scope.username, $scope.password).success(function () {
             Navigator.changePath('/');
         });
     };
@@ -70,14 +72,17 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
         }
         if (fields_filled_correctly) {
             User.register($scope.username, $scope.password, $scope.mail).success(function () {
+                var msg = $rootScope.$on('$routeChangeSuccess', function() {
+                    Message.send("success", "_accountCheckEmails_");
+                    msg();
+                });
                 Navigator.changePath('/');
-                Message.send("success", "_accountCheckEmails_");
             });
         }
     };
 
     $scope.storeUserSettings = function () {
-        $scope.user.displayName = $scope.displayNameTmp;
+        User.displayName = User.newDisplayName;
         User.storeSettings().error(User.loadSettings).success(function () {
             Message.send("success", "_settingsChanged_");
         });
@@ -119,7 +124,7 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
     };
 
     $scope.$on('$locationChangeStart', function(event) {
-        if (!event.defaultPrevented && $scope.user.isChanged()) {
+        if (!event.defaultPrevented && $scope.user.hasUnsavedChanges()) {
             var r = window.confirm("Du hast Dinge geändert, aber noch nicht gespeichert\n Wenn du die Seite verlässt gehen dese verloren.\n Verlassen?");
             if (r) {
                 $scope.user.resetChanges();
@@ -128,4 +133,4 @@ function FindecoUserCtrl($scope, User, $rootScope, $routeParams, Message, Naviga
             }
         }
     });
-}
+});

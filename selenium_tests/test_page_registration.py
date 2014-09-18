@@ -119,12 +119,12 @@ class TestFePageRegistration(LiveServerTestCase):
         self.driver.find_element_by_xpath("(//input[@type='checkbox'])[2]").click()
         self.driver.find_element_by_css_selector("input[type=\"submit\"]").click()
         time.sleep(3)
-        self.assertEqual(0, len(self.driver.find_elements_by_css_selector(".alert")))
+        self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert-success")))
         self.assertEquals(len(mail.outbox), 1)
-        self.driver.get(self.live_server_url + mail.outbox[0].body.split(":8000")[1])
+        activation_url = mail.outbox[0].body.split(':8000')[1].split()[0]
+        self.driver.get(self.live_server_url + activation_url)
         tmp = self.driver.find_element_by_tag_name('body').text
-        self.assertIn(' mit Findeco!', tmp,
-                      "Activation Failed")
+        self.assertIn('Dein Account wurde aktiviert.', tmp, "Activation Failed")
         self.driver.get(self.live_server_url + mail.outbox[0].body.split(":8000")[1])
         tmp = self.driver.find_element_by_tag_name('body').text
         time.sleep(10)

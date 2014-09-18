@@ -1,10 +1,6 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
     <div class="contentBox leftWideColumn">
-        <h2 ng-show="showIf(['argumentPro'])" data-i18n="_argumentsNewPro_"></h2>
-
-        <h2 ng-show="showIf(['argumentNeut'])" data-i18n="_argumentsNewNeut_"></h2>
-
-        <h2 ng-show="showIf(['argumentCon'])" data-i18n="_argumentsNewCon_"></h2>
+        <h2 ng-show="showIf(['argument'])" data-i18n="_argumentsNew_"></h2>
 
         <h2 ng-show="showIf(['topic'])" data-i18n="_createNewText_"></h2>
 
@@ -14,16 +10,26 @@
 
         <form ng-submit="submit()">
             <h3 ng-show="showIf(['derivate'])" data-i18n="_argumentForThisModification_"></h3>
-            <textarea ng-show="showIf(['argumentPro','argumentNeut','argumentCon','topic','derivate'])"
-                      style="width: 100%; height: 250px; "
-                      ng-model="tmp.text">{{ '_editFieldPretext_'|i18n }}</textarea><br>
 
-            <button class="{{getButtonState()}}" ng-if="showIf(['derivate'])"
-                    type="button" class="btn btn-primary" ng-model="tmp.argumentType"
+            <textarea ng-show="showIf(['argument','topic','derivate'])"
+                      style="width: 100%; height: 250px; "
+                      ng-model="tmp.text">
+                {{ '_editFieldPretext_'|i18n }}
+            </textarea><br/>
+
+            <button class="{{ getButtonState()}}" ng-if="showIf(['argument'])"
+                    type="button" class="btn btn-primary"
+                    ng-model="tmp.argumentType"
+                    btn-radio="'pro'" data-i18n="_pro_"></button>
+
+            <button class="{{ getButtonState()}}" ng-if="showIf(['derivate', 'argument'])"
+                    type="button" class="btn btn-primary"
+                    ng-model="tmp.argumentType"
                     btn-radio="'neut'" data-i18n="_neut_"></button>
 
-            <button class="{{getButtonState()}}" ng-if="showIf(['derivate'])"
-                    type="button" class="btn btn-primary" ng-model="tmp.argumentType"
+            <button class="{{ getButtonState()}}" ng-if="showIf(['derivate', 'argument'])"
+                    type="button" class="btn btn-primary"
+                    ng-model="tmp.argumentType"
                     btn-radio="'con'" data-i18n="_con_"></button>
 
             <h3 ng-show="showIf(['derivate'])" data-i18n="_textForThisModification_"></h3>
@@ -31,46 +37,63 @@
                       style="width: 100%; height: 250px; "
                       ng-model="tmp.textAlternative">
                 {{ '_editFieldPretext_'|i18n }}
-            </textarea><br />
+            </textarea><br/>
 
-            <input class="{{getButtonState()}}" ng-if="showIf(['argumentPro','argumentNeut','argumentCon'])"
+            <input class="{{ getButtonState()}}"
+                   ng-if="showIf(['argument'])"
                    class="btn btn-primary" type="submit"
-                   value="{{'_argumentsCreateSendBtn_'|i18n}}">
-            <input class="{{getButtonState()}}" ng-if="showIf(['topic'])"
+                   value="{{ '_argumentsCreateSendBtn_'|i18n }}">
+            <input class="{{ getButtonState()}}"
+                   ng-if="showIf(['topic'])"
                    class="btn btn-primary" type="submit"
-                   value="{{'_topicCreateSendBtn_'|i18n}}">
-            <input class="{{getButtonState()}}" ng-if="showIf(['derivate'])"
+                   value="{{ '_topicCreateSendBtn_'|i18n }}">
+            <input class="{{ getButtonState()}}"
+                   ng-if="showIf(['derivate'])"
                    class="btn btn-primary" type="submit"
-                   value="{{'_derivateCreateSendBtn_'|i18n}}">
-            <input class="{{getButtonState()}}" ng-if="showIf(['opposing'])"
+                   value="{{ '_derivateCreateSendBtn_'|i18n }}">
+            <input class="{{ getButtonState()}}"
+                   ng-if="showIf(['opposing'])"
                    class="btn btn-primary" type="submit"
-                   value="{{'_opposingCreateSendBtn_'|i18n}}">
-            <input class="{{getButtonState()}}" class="btn btn-primary" type="button" ng-click="cancel()"
-                   value="{{'_argumentsCancelBtn_'|i18n}}">
+                   value="{{ '_opposingCreateSendBtn_'|i18n }}">
+            <input class="{{ getButtonState()}} btn btn-primary"
+                   type="button" ng-click="cancel()"
+                   value="{{ '_argumentsCancelBtn_'|i18n }}">
         </form>
+
         <div ng-show="getFormLockState()" class="deactivateDiv">
         </div>
         <div ng-show="getFormLockState()" class="deactivateSpinner">
         </div>
     </div>
+
     <div class="contentBox rightWideColumn">
         <h2 ng-show="showIf(['derivate'])" data-i18n="_argumentPreview_"
             style="border-bottom: 1px dotted gray;"></h2>
+
         <div creole wiki-text="tmp.text" update-interval="5000"></div>
         <h2 ng-show="showIf(['derivate'])" data-i18n="_textPreview_"
             style="border-bottom: 1px dotted gray; border-top: 2px dotted black;"></h2>
+
         <div creole wiki-text="tmp.textAlternative" update-interval="5000"></div>
-        
-       
     </div>
-    <div class="contentBox rightWideColumn" style ="margin-top:20px;">
-		<h2 data-i18n="_editorHintTitle_"></h2>
 
-        <p>{{ '_editorHintBeginning_'|i18n }}<a href='http://wikicreole.org/wiki/Creole1.0'>
-        {{ '_editorHintCreoleLink_'|i18n }}</a>{{ '_editorHintEnd_'|i18n }}</p>
+    <div class="contentBox rightWideColumn" style="margin-top:20px;">
+        <h2 data-i18n="_editorHintTitle_"></h2>
 
-        <p>{{ '_editorLicenseHintBeginning_'|i18n }}
+        <p>
+            {{ '_editorHintBeginning_'|i18n }}
+            <a href='http://wikicreole.org/wiki/Creole1.0'>
+                {{ '_editorHintCreoleLink_'|i18n }}
+            </a>
+            {{ '_editorHintEnd_'|i18n }}
+        </p>
+
+        <p>
+            {{ '_editorLicenseHintBeginning_'|i18n }}
             <a href='http://creativecommons.org/licenses/by-sa/3.0/de/'>
-                {{ '_editorLicenseHintLink_'|i18n }}</a>{{ '_editorLicenseHintEnd_'|i18n }}</p>
+                {{ '_editorLicenseHintLink_'|i18n }}
+            </a>
+            {{ '_editorLicenseHintEnd_'|i18n }}
+        </p>
     </div>
 </div>

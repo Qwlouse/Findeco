@@ -23,9 +23,10 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesettings) {
+findecoApp.controller('FindecoDefaultCtrl',
+    function($scope, $location, $controller, Backend, Fesettings, GraphData, Navigator, User) {
+
     $scope.nav = Navigator;
     $scope.user = User;
     $scope.fesettings = Fesettings;
@@ -35,11 +36,13 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesetti
 
     $scope.graphData = [];
     $scope.paragraphList = [];
-    $scope.nodeInfo = [];
+    $scope.nodeInfo = {};
     $scope.nodeInfo.indexList = [];
     $scope.authors = [];
     $scope.nodeInfo.path = $scope.nav.argumentPath;
     $scope.sections = [];
+
+    $scope.graphType = 'full';
 
     $scope.relocate = function (target) {
         $location.path(target + '/' + $scope.nav.nodePath);
@@ -47,16 +50,21 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesetti
 
     $scope.markNode = Backend.markNode;
 
+    $scope.markMainNode = function(markType, nodePath) {
+        return Backend.markNode(markType, nodePath).success(function() {
+            GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType);
+        });
+    };
 
     $scope.updateGraph = function () {
-        Backend.loadGraphData($scope.graphData, $scope.nav.nodePath).success(function (data) {
-            $scope.graphData = data.loadGraphDataResponse.graphDataChildren;
+        $scope.isLoadingGraph =true;
+        GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType).success(function () {
             $scope.isLoadingGraph =false;
         });
     };
 
     $scope.updateNode = function () {
-        Backend.loadNode($scope.nodeInfo, $scope.nav.argumentPath).success(function (d) {
+        Backend.loadNode($scope.nodeInfo, $scope.nav.nodePath).success(function (d) {
             $scope.allExpanded = true;
             $scope.authors = $scope.nodeInfo.authors;
             $scope.nav.nodeID = $scope.nodeInfo.nodeID;
@@ -113,8 +121,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesetti
     };
 
     $scope.initialize = function () {
-        $scope.isLoadingNode =true;
-        $scope.isLoadingGraph =true;
+        $scope.isLoadingNode = true;
         $scope.updateNode();
         $scope.updateGraph();
        
@@ -122,7 +129,7 @@ function FindecoDefaultCtrl($scope, $location, Backend, User, Navigator, Fesetti
     $scope.isLoading = function (){
     	return $scope.isLoadingNode || $scope.isLoadingGraph;
     };
-    $scope.initialize();
-}
 
-FindecoDefaultCtrl.$inject = ['$scope', '$location', 'Backend', 'User', 'Navigator', 'Fesettings'];
+    $scope.initialize();
+
+});

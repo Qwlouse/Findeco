@@ -1,15 +1,13 @@
 <div id="contentContainer" class="centeringContainer" xmlns="http://www.w3.org/1999/html">
-	<div class="contentBox profileLeftWideColumn" ng-show="user.isLoggedIn">
-	<div ng-include src="'/static/partials/profileMenu.html'"  ></div>
-	<div ng-include src="'/static/partials/boxFollow.html'"  ></div>
-</ngInclude>
-  
+	<div class="contentBox profileLeftWideColumn" ng-if="user.isLoggedIn">
+        <div ng-include src="'/static/partials/profile/profileMenu.html'"></div>
+        <div ng-include src="'/static/partials/profile/followsBox.html'"></div>
     </div>
-    <div class="profileCenterWideColumn contentBox" ng-show="user.isLoggedIn">
+    <div class="profileCenterWideColumn contentBox" ng-if="user.isLoggedIn">
         <h2 data-i18n="_username_">Username</h2>
-        <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ user.displayName }}</p>
+        <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ displayNameTmp }}</p>
         <form ng-submit="storeUserSettings()">
-            <input type="text" ng-model="displayNameTmp" /><br />
+            <input type="text" ng-model="user.newDisplayName" /><br />
             <input class="btn btn-primary" type="submit" value="{{'_save_'|i18n}}" />
         </form>
  
@@ -25,10 +23,10 @@
         </form>
 
     </div>
-    <div class="profileCenterWideColumn contentBox" ng-hide="user.isLoggedIn">
+    <div class="profileCenterWideColumn contentBox" ng-if="!user.isLoggedIn">
         <h1 data-i18n="_notLoggedIn_"></h1>
     </div>
-    <div class="contentBox profileRightWideColumn" ng-show="user.isLoggedIn">      
+    <div class="contentBox profileRightWideColumn" ng-if="user.isLoggedIn">
         <div>
             <h2 data-i18n="_description_">Description</h2>
             <div creole wiki-text="user.description" update-interval="2000"></div>

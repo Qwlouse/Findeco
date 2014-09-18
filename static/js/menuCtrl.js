@@ -24,30 +24,20 @@
 
 'use strict';
 
-function FindecoMenuCtrl($scope, User, Navigator, Fesettings) {
+findecoApp.controller('FindecoMenuCtrl', function($scope, User, Navigator, Fesettings) {
     $scope.user = User;
     $scope.fesettings = Fesettings;
+    $scope.navigation = Navigator;
+
     $scope.logout = function () {
         User.logout().success(function () {
             Navigator.changePath('/');
         });
     };
 
-    $scope.getActiveClass = function (pathPrefix) {
-        if (pathPrefix.length == 0 && Navigator.prefix == 0 && Navigator.nodePath == 0) {
-            return "activeTab";
-        } else if (pathPrefix.length > 0 &&
-            Navigator.prefix == pathPrefix) {
-            return "activeTab";
-        } else {
-            return "";
-        }
-    };
-
-    $scope.isContentActive = function () {
-        if (Navigator.prefix.length == 0 && Navigator.nodePath.length > 0) {
-            return "activeTab";
-        } else if (Navigator.prefix.substr(0, 5) == 'index') {
+    $scope.getActiveClass = function (pathType) {
+        if (pathType.length > 0  && Navigator.type == pathType)
+        {
             return "activeTab";
         } else {
             return "";
@@ -66,6 +56,4 @@ function FindecoMenuCtrl($scope, User, Navigator, Fesettings) {
             $(".searchBox").removeClass("searchActive");
         })
 
-}
-
-FindecoMenuCtrl.$inject = ['$scope', 'User', 'Navigator','Fesettings'];
+});

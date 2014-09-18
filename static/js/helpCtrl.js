@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014  Klaus Greff, Maik Nauheim, Johannes Merkert                      *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -22,37 +22,32 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
-function FindecoHelpCtrl($scope, Help) {
-    // todo: Is this used at all?
-    // todo: Yes Now it is!!!!! Finally!!!
+
+findecoApp.controller('FindecoHelpCtrl', function ($scope, Help) {
     Help.loadResourceFile();
     $scope.panelIsHidden = true;
     $scope.helpIsActive = true;
     Help.setHelpStatus($scope.helpIsActive);
     $scope.hidePanel = function () {
         $scope.panelIsHidden = true;
-    }
+    };
+
     $scope.toogleHelpStatus = function () {
-        if ($scope.helpIsActive) {
-            $scope.helpIsActive = false;
-        } else {
-            $scope.helpIsActive = true;
-        }
+        $scope.helpIsActive = !$scope.helpIsActive;
         Help.setHelpStatus($scope.helpIsActive);
-    }
+    };
+
     $scope.$on('change_Help', function (e, num) {
         $scope.panelIsHidden = false;
         $scope.title = Help.helpTitle;
         $scope.helptext = Help.helpText;
         if (Help.moreLink=="*") {
             $scope.more = "http://help.findeco.de/" + Help.id;
-        }else {
+        } else {
             if (typeof Help.moreLink == 'undefined'){
                 $scope.more = Help.moreLink;
             }
-        };
+        }
         $scope.$apply();
     });
-}
-FindecoHelpCtrl.$inject = ['$scope', 'Help'];
+});

@@ -160,19 +160,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'findeco',
     'node_storage',
     'microblogging',
-    'south',
-    'django_nose',
-    'libs.django_cron'
+    'south',               # Database Migration
+    'django_nose',         # Testrunner
+    'libs.django_cron'     # Cron Jobs
 )
-
-TEST_RUNNER = str('django_nose.NoseTestSuiteRunner')
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

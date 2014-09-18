@@ -42,6 +42,7 @@ views = [('load_index', dict(path='')),
          ('load_graph_data', dict(graph_data_type='full', path='')),
          ('load_graph_data', dict(graph_data_type='withSpam', path='')),
          ('load_text', dict(path='')),
+         ('load_argument_news', dict()),
          ('load_user_info', dict(name='admin')),
          ('logout', dict()),
          ('flag_node', dict(path='')),
@@ -95,6 +96,10 @@ class ViewTest(TestCase):
             response = self.client.get(
                 reverse('load_text', kwargs=dict(path=p)))
             validate_response(response.content, 'load_text')
+
+    def test_load_argument_news_response_is_valid(self):
+        response = self.client.get(reverse('load_argument_news'))
+        validate_response(response.content, 'load_argument_news')
 
     def test_mark_node_response_is_valid(self):
         paths = structure_node_paths + argument_paths

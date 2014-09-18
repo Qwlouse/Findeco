@@ -34,7 +34,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.core.mail import send_mail
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -57,7 +57,12 @@ from node_storage.factory import create_user
 @ensure_csrf_cookie
 def home(request, path=""):
     with open(project_path("static/index.html"), 'r') as index_html_file:
-        return HttpResponse(index_html_file.read(), mimetype='text/html')
+        return HttpResponse(index_html_file.read(), content_type='text/html')
+
+
+def jasmine(request, path=""):
+    with open(project_path("static/jasmine.html"), 'r') as index_html_file:
+        return HttpResponse(index_html_file.read(), content_type='text/html')
 
 
 @ViewErrorHandling
@@ -132,7 +137,7 @@ def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     node = assert_node_for_path(prefix)
     data = [create_index_node_for_argument(a, request.user.id) for a in
-            node.arguments.order_by('index')]
+            node.arguments.annotate(num_follows=Count('votes')).order_by('-num_follows')]
     return json_response({'loadArgumentIndexResponse': data})
 
 
@@ -158,20 +163,35 @@ def load_node(request, path):
 def load_graph_data(request, path, graph_data_type):
     if not path.strip('/'):  # root node!
         nodes = [backend.get_root_node()]
-        related_nodes = []
+        # related_nodes = []
     else:
         slot_path = path.rsplit('.', 1)[0]
         slot = assert_node_for_path(slot_path)
-        nodes = backend.get_ordered_children_for(slot)
-        sources = Q(derivates__in=nodes)
-        derivates = Q(sources__in=nodes)
-        related_nodes = backend.Node.objects.filter(sources | derivates). \
-            exclude(id__in=[n.id for n in nodes]).distinct().all()
+        if graph_data_type == "withSpam":
+            # This means display ALL nodes
+            nodes = backend.get_ordered_children_for(slot)
+        else:  # if graph_data_type == 'full':
+            nodes = backend.Node.objects.filter(parents=slot)\
+                .annotate(spam_count=Count('spam_flags', distinct=True))\
+                .filter(spam_count__lt=2)\
+                .filter(votes__isnull=False)
+
+
+        current_node = backend.get_node_for_path(path)
+        nodes = list(nodes)
+        if not current_node in nodes:
+            nodes.append(current_node)
+
+        # sources = Q(derivates__in=nodes)
+        # derivates = Q(sources__in=nodes)
+        # related_nodes = backend.Node.objects.filter(sources | derivates). \
+        #     exclude(id__in=[n.id for n in nodes]).distinct().all()
+
     graph_data_children = map(create_graph_data_node_for_structure_node, nodes)
-    graph_data_related = map(create_graph_data_node_for_structure_node,
-                             related_nodes)
+    # graph_data_related = map(create_graph_data_node_for_structure_node,
+    #                          related_nodes)
     data = {'graphDataChildren': graph_data_children,
-            'graphDataRelated': graph_data_related}
+            'graphDataRelated': []}
     return json_response({'loadGraphDataResponse': data})
 
 
@@ -201,6 +221,37 @@ def load_text(request, path):
             'paragraphs': paragraphs,
             'isFollowing': paragraphs[0]['isFollowing'],
             'isFlagging': paragraphs[0]['isFlagging']}})
+
+
+@ViewErrorHandling
+def load_argument_news(request):
+    cards = []
+    for argument in Argument.objects.filter(sources__isnull=True).order_by("-id")[:20]:
+        node = argument.concerns
+        cards.append({
+            'argument': {
+                'text': argument.text.text,
+                'fullTitle': argument.title,
+                'path': argument.get_a_path(),
+                'isFollowing': get_is_following(request.user.id, argument),
+                'followingCount': argument.votes.count(),
+                'isFlagging': get_is_flagging(request.user.id, argument),
+                'flaggingCount': argument.spam_flags.count(),
+                'authorGroup': [author.username for author in argument.text.authors.all()]
+            },
+            'node': {
+                'text': node.text.text,
+                'fullTitle': node.title,
+                'path': node.get_a_path(),
+                'isFollowing': get_is_following(request.user.id, node),
+                'followingCount': node.votes.count(),
+                'isFlagging': get_is_flagging(request.user.id, node),
+                'flaggingCount': node.spam_flags.count(),
+                'authorGroup': [author.username for author in node.text.authors.all()]
+            }
+        })
+
+    return json_response({'loadArgumentNewsResponse': cards})
 
 
 ###################### Store/Modify Nodes ######################################
@@ -577,7 +628,7 @@ def account_reset_request_by_mail(request):
                   settings.EMAIL_HOST_USER,
                   [user.email])
 
-        return json_response({'accountResetRequestByNameResponse': {}})
+        return json_response({'accountResetRequestByMailResponse': {}})
     except SMTPException:
         recovery.delete()
         raise

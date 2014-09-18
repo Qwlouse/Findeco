@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -23,27 +23,84 @@
  ****************************************************************************************/
 
 'use strict';
-/* Controllers */
 
-function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
+findecoApp.controller('FindecoArgumentCtrl', function ($scope, Backend,  Navigator, TMP, User) {
     $scope.nav = Navigator;
     $scope.tmp = TMP;
     $scope.user = User;
 
-    $scope.markNode = Backend.markNode;
+    $scope.markNode = function (markType, nodePath) {
+        var argument = $scope.argumentList[0];
+        for (var i = 0; i < $scope.argumentList.length; i++) {
+            if ($scope.argumentList[i].path == nodePath) {
+                argument = $scope.argumentList[i];
+            }
+        }
+        var oldFollowState = argument.isFollowing;
+        var promise = Backend.markNode(markType, nodePath);
+        promise.success(function () {
+            if (markType == 'follow' && oldFollowState == 0) {
+                argument.followingCount += 1;
+            }
+            if (markType == 'unfollow' && oldFollowState > 0) {
+                argument.followingCount -= 1;
+            }
+        });
+        return promise;
+    };
 
     $scope.argumentList = [];
+    $scope.fullyShow = -1;
+
+    $scope.showArgumentForPath = function () {
+        for (var i = 0; i < $scope.argumentList.length; i++) {
+            if (Navigator.argumentPath == $scope.argumentList[i].path) {
+                $scope.fullyShow = $scope.argumentList[i].index;
+            }
+        }
+        $scope.updateArgumentsWikiText($scope.fullyShow);
+    };
     
     $scope.isLoading = function (){
-    	return $scope.argumentIsLoading ;
-    }
+    	return $scope.argumentIsLoading;
+    };
+
+    $scope.createArgumentSlug = function (text) {
+        var stringAddition = "";
+        if (text.length > 140) {
+            stringAddition = " ...";
+        }
+        return text.substr(0, 140) + stringAddition;
+    };
+
+    $scope.updateArgumentsWikiText = function (index) {
+        for (var i = 0; i < $scope.argumentList.length; i++) {
+            var arg = $scope.argumentList[i];
+            if (index != arg.index) {
+                arg.wikiText = $scope.createArgumentSlug(arg.text);
+            } else {
+                arg.wikiText = arg.text;
+                $scope.fullyShow = arg.index;
+            }
+        }
+        if (index >= 0) {
+            window.setTimeout(function () {
+                $(document.documentElement).animate(
+                    {scrollTop: $('#argument' + index).offset().top},
+                    'slow'
+                );
+            }, 0);
+        }
+    };
     
     function amendArguments() {
         for (var i = 0; i < $scope.argumentList.length; ++i) {
             var arg = $scope.argumentList[i];
             arg.path = $scope.nav.getPathForArgument(arg.argType, arg.index);
+            arg.wikiText = $scope.createArgumentSlug(arg.text);
         }
         $scope.argumentIsLoading  = false;
+        $scope.showArgumentForPath();
     }
 
     $scope.updateArgumentList = function () {
@@ -52,6 +109,5 @@ function FindecoArgumentCtrl($scope, Backend, User, TMP, Navigator) {
     };
 
     $scope.updateArgumentList();
-}
-
-FindecoArgumentCtrl.$inject = ['$scope', 'Backend', 'User', 'TMP', 'Navigator'];
+    $scope.showArgumentForPath();
+});

@@ -57,7 +57,7 @@ def create_initial_data():
                 continue
 
             slot_name, src_file = l.split()
-            assert re.match(SHORT_TITLE, slot_name), \
+            assert re.match('^' + SHORT_TITLE + '$', slot_name), \
                 "Invalid short title '%s'." % slot_name
 
             src_path = project_path(os.path.join('initial_data', src_file))

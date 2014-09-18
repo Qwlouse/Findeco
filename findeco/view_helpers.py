@@ -30,7 +30,7 @@ import json
 import functools
 import re
 
-from django.contrib.auth.models import Permission, User
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.http import HttpResponse
@@ -44,6 +44,7 @@ from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
 from node_storage.structure_parser import turn_into_valid_short_title
+from findeco.models import EmailActivation
 
 from .api_validation import USERNAME
 from .api_validation import validate_response
@@ -53,7 +54,7 @@ from .paths import parse_suffix
 
 def json_response(data):
     return HttpResponse(json.dumps(data),
-                        mimetype='application/json')
+                        content_type='application/json')
 
 
 def ValidPaths(*allowed_path_types):
@@ -165,6 +166,7 @@ def create_user_settings(user):
         userRights=rights,
         rsskey=user.profile.api_key,
         email=user.email,
+        emailChangeRequested=EmailActivation.objects.filter(user=user).count(),
         wantsMailNotification=user.profile.wants_mail_notification
     )
     return user_settings
@@ -185,9 +187,11 @@ def create_index_node_for_argument(argument, user_id):
     index_node = dict(
         argType=Argument.long_arg_type(argument.arg_type),
         fullTitle=argument.title,
+        text=argument.text.text,
         index=argument.index,
         authorGroup=[create_user_info(a) for a in argument.text.authors.all()],
         isFollowing=get_is_following(user_id, argument),
+        followingCount=argument.votes.count(),
         isFlagging=get_is_flagging(user_id, argument)
     )
     return index_node
@@ -257,17 +261,12 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None,
     return graph_data_node
 
 
-def store_structure_node(path, wiki_text, author, argument=None):
+def store_structure_node(path, wiki_text, author):
     slot_path = path.rsplit('.', 1)[0]
     slot = get_node_for_path(slot_path)
     structure_schema = backend.parse(wiki_text, None)
-    clone_candidates = None
-    if argument:
-        clone_candidates = slot.children.all()
     structure_node = backend.create_structure_from_structure_node_schema(
-        structure_schema, slot, author, clone_candidates)
-    # add auto follow
-    create_vote(author, [structure_node])
+        structure_schema, slot, author)
     return structure_node, get_good_path_for_structure_node(structure_node,
                                                             slot, slot_path)
 
@@ -353,18 +352,12 @@ def fork_node_and_add_slot(path, user, wiki_text):
     short_title = turn_into_valid_short_title(schema['title'], short_titles)
     new_slot = create_slot(short_title)
     fork.append_child(new_slot)
-    node = create_structure_from_structure_node_schema(schema, new_slot, user)
+    create_structure_from_structure_node_schema(schema, new_slot, user)
     arg_title = "Abschnitt über '{0}' fehlt.".format(schema['title'])
     source_node.add_derivate(fork, 'con', arg_title, authors=[user])
     # auto follow
     follow_node(fork, user.id)
-    follow_node(node, user.id)
     return fork_path
-
-
-def get_permission(name):
-    a, _, n = name.partition('.')
-    return Permission.objects.get(content_type__app_label=a, codename=n)
 
 
 def get_is_following(user_id, node):

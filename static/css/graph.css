@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim                         *
+ * Copyright (c) 2014 Klaus Greff, Johannes Merkert, Maik Nauheim                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -27,46 +27,55 @@ div.graph {
     position: relative;
 }
 
-div.graph .link {
+svg .link {
     stroke: #6d6d6d;
     stroke-width: 2px;
 }
 
-div.graph .arrowHead {
+svg .linkHead {
     fill: #6d6d6d;
 }
 
-div.graph .active.nodeBackgroundCircle {
+svg .active .nodeBackgroundCircle {
     fill: #2d7cc4;
 }
 
-div.graph .nodeBackgroundCircle {
+svg .inactive .nodeBackgroundCircle {
     fill: #DDD;
 }
 
-div.graph .nodeShadow {
+svg .inactive .nodeBackgroundCircle.spamCandidate {
+    fill: #dcc;
+}
+
+svg .inactive .nodeBackgroundCircle.spamNode {
+    fill: #daa;
+}
+
+
+svg .nodeShadow {
     fill: #999;
 }
 
-div.graph .nodeLabel {
+svg .inactive .nodeLabel {
     fill: #e07b01;
     font-weight: bold;
 }
 
-div.graph .nodeGroup:hover .nodeLabel {
+svg .inactive.nodeGroup:hover .nodeLabel {
     fill: #2d7cc4;
 }
 
-div.graph .nodeGroup:hover .nodeLabel.active {
+svg .active.nodeGroup:hover .nodeLabel {
     fill: #fff;
 }
 
-div.graph .active.nodeLabel {
+svg .active .nodeLabel {
     font-weight: bold;
     fill: #fff;
 }
 
-div.graph .nodeGroup {
+svg .nodeGroup {
 }
 
 div #tooltip {
@@ -133,4 +142,28 @@ div #tooltip {
 
 .diffButtonText:hover{
     fill: #2d7cc4;
+}
+
+.active .pieChartPart.newFollow {
+    fill: #ffffff;
+}
+
+.active .pieChartPart.follow {
+    fill: #999999;
+}
+
+.active .pieChartPart.unfollow {
+    fill: #333333;
+}
+
+.inactive .pieChartPart.newFollow {
+    fill: #EEEEEE;
+}
+
+.inactive .pieChartPart.follow {
+    fill: #BBBBBB;
+}
+
+.inactive .pieChartPart.unfollow {
+    fill: #555555;
 }
