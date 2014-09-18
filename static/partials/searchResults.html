@@ -1,7 +1,10 @@
 <div style="position: relative; left: -50%; float: right; overflow: visible; margin: 2em 0;">
     <div style="position: relative; left: 50%;">
         <div class="textColumn backgroundBox">
-            <help hid='SEA_res' htype=1></help><h1 data-i18n="_searchContentResults_" >Suchergebnisse</h1>
+            <div style="float: right; position: relative; top: 2.8em;">
+                <help hid='SEA_res' htype=1></help>
+            </div>
+            <h1 data-i18n="_searchContentResults_" >Suchergebnisse</h1>
             <span ng-hide="searchResults.contentResults" data-i18n="_searchNoContentResults_|{{ searchString }}"></span>
             <ul class="searchResults">
                 <li ng-repeat="result in searchResults.contentResults">
@@ -10,7 +13,10 @@
                 </li>
             </ul>
 
-            <help hid='SEA_mbl' htype=1></help><h1 data-i18n="_searchMicrobloggingResults_">Suchergebnisse im Microblogging</h1>
+            <div style="float: right; position: relative; top: 2.8em;">
+                <help hid='SEA_mbl' htype=1></help>
+            </div>
+            <h1 data-i18n="_searchMicrobloggingResults_">Suchergebnisse im Microblogging</h1>
             <span ng-hide="searchResults.microbloggingResults" data-i18n="_searchNoMicrobloggingResults_"></span>
             <ul class="microblogList">
                 <li ng-repeat="microblogNode in searchResults.microbloggingResults">
@@ -21,7 +27,10 @@
                 </li>
             </ul>
 
-            <help hid='SEA_user' htype=1></help><h1 data-i18n="_searchUserResults_">Suchergebnisse zu Usern</h1>
+            <div style="float: right; position: relative; top: 2.8em;">
+                <help hid='SEA_user' htype=1></help>
+            </div>
+            <h1 data-i18n="_searchUserResults_">Suchergebnisse zu Usern</h1>
             <span ng-hide="searchResults.userResults" data-i18n="_searchNuUserResults_">Kein Benutzer gefunden</span>
             <ul class="searchResults">
                 <li ng-repeat="result in searchResults.userResults">
