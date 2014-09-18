@@ -1,11 +1,11 @@
 <div class="preCentering">
     <div class="centered backgroundBox textContainer">
-        <h2 style="line-height: 150%">Vergleiche <del>{{ path1 }}</del> mit
-            <ins>{{ path2 }}</ins></h2>
+        <h2 style="line-height: 150%">Vergleiche <ins>{{ path1 }}</ins> mit
+            <del>{{ path2 }}</del></h2>
 
         <pre class="diff" ng-repeat="change in changes" ng-switch="change[0]"><span
                 ng-switch-when="0">{{ change[1] }}</span><ins
-                ng-switch-when="1">{{ change[1] }}</ins><del
-                ng-switch-when="-1">{{ change[1] }}</del></pre>
+                ng-switch-when="-1">{{ change[1] }}</ins><del
+                ng-switch-when="1">{{ change[1] }}</del></pre>
     </div>
 </div>
