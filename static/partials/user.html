@@ -1,8 +1,8 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
-    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin: 2em 0;">
         <div style="position: relative; left: 50%;">
 
-            <div class="textColumn shadowed left spaced" style="width: calc(100% - 8em); max-width: 42em;">
+            <div class="textColumn backgroundBox" style="max-width: 42em;">
                 <div follow-star show-if="user.isLoggedIn && displayUser.name != user.displayName"
                      entity="displayUser" mark-func="user.markUser"></div>
                 <h1 ng-if="displayUser.exists">{{displayUser.name}}</h1>
@@ -12,15 +12,17 @@
                     <h2 data-i18n="_description_">Description</h2>
                     <div creole wiki-text="displayUser.description"></div>
                 </div>
-            </div>
 
-            <div ng-if="displayUser.exists"
-                 ng-include="'/static/partials/microblogging.html'"
-                 class="smallColumn left spaced">
-            </div>
 
-            <div class="userpage-clearer"></div>
+                <div ng-if="displayUser.exists">
+                    <h2 data-i18n="_microbloggingNews_">Microblogging</h2>
+                    <div ng-include="'/static/partials/microblogging.html'"></div>
+                </div>
+
+                <div style="clear: both; width: 100%;"></div>
+            </div>
 
         </div>
     </div>
+    <div style="clear: both;"></div>
 </div>
