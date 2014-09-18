@@ -55,7 +55,7 @@ svg .inactive .nodeBackgroundCircle {
 }
 
 svg .compared-to .nodeBackgroundCircle {
-    fill: #1c873a;
+    fill: #006E0E;
 }
 
 svg .inactive .nodeBackgroundCircle.spamCandidate {
