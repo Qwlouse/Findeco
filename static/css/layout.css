@@ -210,7 +210,7 @@ div.left-argument-box {
 
 
 
-@media (min-width: 83em) {
+@media (min-width: 84em) {
     .argument-source-left, .argument-source-right {
         visibility: visible;
     }
@@ -229,7 +229,7 @@ div.left-argument-box {
 }
 
 
-@media (max-width: 83em) {
+@media (max-width: 84em) {
     .argument-background-pane {
         width: 100%;
         max-width: 60em;
