@@ -1,12 +1,13 @@
-<div id="contentContainer" class="centeringContainer">
-    <div id="centerColumn" class="shadowed">
-    <h1> {{'_accountRecoverByUsernameTitle_'|i18n}} </h1>
-        <form ng-submit="recoverByUsername()">
-            <input type="text" placeholder="{{'_accountUsername_'|i18n}}" ng-model="username"><br/>
-            <input type="submit" value="{{'_accountRecoverBtn_'|i18n}}">
-        </form>
-        <a href="/register">{{'_accountRegistrationFormLink_'|i18n}}</a><br/>
-        <a href="/recoverByMail">{{'_accountRecoverPasswordByMailLink_'|i18n}}</a><br/>
-        
+<div style="position: relative; left: -50%; float: right; overflow: visible; margin: 2em 0;">
+    <div style="position: relative; left: 50%;">
+        <div class="textColumn backgroundBox">
+            <h1> {{'_accountRecoverByUsernameTitle_'|i18n}} </h1>
+            <form ng-submit="recoverByUsername()">
+                <input type="text" placeholder="{{'_accountUsername_'|i18n}}" ng-model="username"><br/>
+                <input type="submit" value="{{'_accountRecoverBtn_'|i18n}}">
+            </form>
+            <a href="/register">{{'_accountRegistrationFormLink_'|i18n}}</a><br/>
+            <a href="/recoverByMail">{{'_accountRecoverPasswordByMailLink_'|i18n}}</a>
+        </div>
     </div>
 </div>

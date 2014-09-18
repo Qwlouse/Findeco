@@ -1,17 +1,19 @@
-<div id="contentContainer" class="centeringContainer">
-    <div id="centerColumn" class="shadowed">
-    <h1> {{'_accountRegistrationFormTitle_'|i18n}} </h1>
-    	{{'_accountRegistrationText_'|i18n}}
-        <form ng-submit="register()">
-            <input type="text" placeholder="{{'_accountUsername_'|i18n}}" ng-model="username"><br/>
-            <input type="password" placeholder="{{'_accountPassword_'|i18n}}" ng-model="password"><br/>
-            <input type="password" placeholder="{{'_accountPasswordRepeat_'|i18n}}" ng-model="password2"><br/>
-            <input type="text" placeholder="{{'_accountEmail_'|i18n}}" ng-model="mail"><br/>
-            <input type="checkbox" ng-model="TOS" id="TOS_checkbox">
-            <label for="TOS_checkbox">{{ '_accountReadTOSBeginning_'|i18n }}<a href="/terms_of_use">{{ '_accountReadTOSLink_'|i18n }}</a>{{ '_accountReadTOSEnd_'|i18n }}</label><br/>
-            <input type="checkbox" ng-model="DPR" id="DPR_Checkbox">
-            <label for="DPR_Checkbox">{{ '_accountReadDPRBeginning_'|i18n }}<a href="/data_privacy">{{ '_accountReadDPRLink_'|i18n }}</a>{{ '_accountReadDPREnd_'|i18n }}</label><br/>
-            <input type="submit" value="{{'_accountRegistrationBtn_'|i18n}}">
-        </form>
+<div style="position: relative; left: -50%; float: right; overflow: visible; margin: 2em 0;">
+    <div style="position: relative; left: 50%;">
+        <div class="textColumn backgroundBox">
+            <h1> {{'_accountRegistrationFormTitle_'|i18n}} </h1>
+            {{'_accountRegistrationText_'|i18n}}
+            <form ng-submit="register()">
+                <input type="text" placeholder="{{'_accountUsername_'|i18n}}" ng-model="username"><br/>
+                <input type="password" placeholder="{{'_accountPassword_'|i18n}}" ng-model="password"><br/>
+                <input type="password" placeholder="{{'_accountPasswordRepeat_'|i18n}}" ng-model="password2"><br/>
+                <input type="text" placeholder="{{'_accountEmail_'|i18n}}" ng-model="mail"><br/>
+                <input type="checkbox" ng-model="TOS" id="TOS_checkbox">
+                <label for="TOS_checkbox">{{ '_accountReadTOSBeginning_'|i18n }}<a href="/terms_of_use">{{ '_accountReadTOSLink_'|i18n }}</a>{{ '_accountReadTOSEnd_'|i18n }}</label><br/>
+                <input type="checkbox" ng-model="DPR" id="DPR_Checkbox">
+                <label for="DPR_Checkbox">{{ '_accountReadDPRBeginning_'|i18n }}<a href="/data_privacy">{{ '_accountReadDPRLink_'|i18n }}</a>{{ '_accountReadDPREnd_'|i18n }}</label><br/>
+                <input type="submit" value="{{'_accountRegistrationBtn_'|i18n}}">
+            </form>
+        </div>
     </div>
 </div>
