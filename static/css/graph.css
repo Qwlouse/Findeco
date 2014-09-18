@@ -103,11 +103,11 @@ svg .nodeGroup {
 }
 
 div #tooltip {
-    padding: 5px;
+    padding: 1em;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    background: rgba(255, 255, 255, 1);
+    background: rgba(33, 33, 33, 0.85);
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
     width: 20em;
