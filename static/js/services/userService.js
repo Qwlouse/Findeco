@@ -26,8 +26,12 @@ angular.module('FindecoUserService', [])
     .factory('User', function ($http, $rootScope) {
         var empty_data = {
             userInfo    : {description: "", displayName: ""},
-            userSettings: {email: "",  rsskey: "", followees: [],
-                           wantsMailNotification:false}
+            userSettings: {
+                email: "",
+                rsskey: "",
+                followees: [],
+                wantsMailNotification:false,
+                helpEnabled: true}
         };
         var data = empty_data;
         var userInfo = {
@@ -39,7 +43,8 @@ angular.module('FindecoUserService', [])
             email      : "",
             rsskey     : "",
             followees  : [],
-            wantsMailNotification : false
+            wantsMailNotification : false,
+            helpEnabled: true
         };
         userInfo.register = function (displayName, password, emailAddress) {
             return $http.post('/.accountRegistration/', {
@@ -76,6 +81,7 @@ angular.module('FindecoUserService', [])
                 userInfo.email = data.userSettings.email;
                 userInfo.followees = data.userSettings.followees;
                 userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
+                userInfo.helpEnabled = data.userSettings.helpEnabled;
                 if (userInfo.displayName == "admin") {
                     userInfo.isAdmin = true;
                 }
@@ -116,7 +122,7 @@ angular.module('FindecoUserService', [])
                 userInfo.rsskey = data.userSettings.rsskey;
                 userInfo.followees = data.userSettings.followees;
                 userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
-
+                userInfo.helpEnabled = data.userSettings.helpEnabled;
                 for (var i = 0; i < userInfo.followees.length; i++) {
                     userInfo.followees[i].isFollowing = 2;
                     userInfo.followees[i].path = userInfo.followees[i].displayName;
@@ -133,7 +139,8 @@ angular.module('FindecoUserService', [])
             return (userInfo.newDisplayName != userInfo.displayName) ||
                 (userInfo.description != data.userInfo.description) ||
                 (userInfo.email != data.userSettings.email) ||
-                (userInfo.wantsMailNotification != data.userSettings.wantsMailNotification);
+                (userInfo.wantsMailNotification != data.userSettings.wantsMailNotification) ||
+                (userInfo.helpEnabled != data.userSettings.helpEnabled);
         };
         userInfo.resetChanges = function () {
             userInfo.displayName = data.userInfo.displayName;
@@ -141,18 +148,21 @@ angular.module('FindecoUserService', [])
             userInfo.description = data.userInfo.description;
             userInfo.email = data.userSettings.email;
             userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
+            userInfo.helpEnabled = data.userSettings.helpEnabled;
         };
         userInfo.storeSettings = function () {
             return $http.post('/.storeSettings/', {
                 displayName: userInfo.displayName,
                 description: userInfo.description,
                 wantsMailNotification: userInfo.wantsMailNotification,
+                helpEnabled: userInfo.helpEnabled,
                 email: userInfo.email}).success(function () {
                     data.userInfo.displayName = userInfo.displayName;
                     userInfo.newDisplayName = userInfo.displayName;
                     data.userInfo.description = userInfo.description;
                     data.userSettings.email = userInfo.email;
                     data.userSettings.wantsMailNotification = userInfo.wantsMailNotification;
+                    data.userSettings.helpEnabled = userInfo.helpEnabled;
             });
         };
         userInfo.changePassword = function (newPassword) {

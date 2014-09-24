@@ -480,6 +480,10 @@ def store_settings(request):
         user.profile.wants_mail_notification = (
             request.POST['wantsMailNotification'].lower() == 'true')
 
+    if 'helpEnabled' in request.POST:
+        user.profile.help_enabled = (
+            request.POST['helpEnabled'].lower() == 'true')
+
     user.save()
     return json_response({'storeSettingsResponse': {}})
 

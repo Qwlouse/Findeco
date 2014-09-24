@@ -23,18 +23,19 @@
 
 'use strict';
 
-findecoApp.controller('FindecoHelpCtrl', function ($scope, Help) {
+findecoApp.controller('FindecoHelpCtrl', function ($scope, Help, User) {
     Help.loadResourceFile();
     $scope.panelIsHidden = true;
-    $scope.helpIsActive = true;
-    Help.setHelpStatus($scope.helpIsActive);
+    $scope.helpIsActive = User.helpEnabled;
+    Help.setHelpStatus(User.helpEnabled);
     $scope.hidePanel = function () {
         $scope.panelIsHidden = true;
     };
 
     $scope.toogleHelpStatus = function () {
-        $scope.helpIsActive = !$scope.helpIsActive;
-        Help.setHelpStatus($scope.helpIsActive);
+        User.helpEnabled = !User.helpEnabled;
+        Help.setHelpStatus(User.helpEnabled);
+        User.storeSettings();
     };
 
     $scope.$on('change_Help', function (e, num) {

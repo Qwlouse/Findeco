@@ -55,6 +55,17 @@
                     </label>
                 </form>
 
+                <h2 data-i18n="_helpSettings_">Hilfeeinstellungen</h2>
+                <form ng-submit="storeUserSettings()">
+                    <input type="checkbox"
+                           id="helpActivated"
+                           ng-model="user.helpEnabled"
+                           ng-change="storeUserSettings()" />
+                    <label for="helpActivated" data-i18n="_helpActivated_">
+                        Hilfe-Symbole anzeigen
+                    </label>
+                </form>
+
                 <h2 data-i18n="_changeUsername_" style="margin-top: 3em;">Username</h2>
                 <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ displayNameTmp }}</p>
                 <form ng-submit="storeUserSettings()">

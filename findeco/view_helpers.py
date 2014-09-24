@@ -167,7 +167,8 @@ def create_user_settings(user):
         rsskey=user.profile.api_key,
         email=user.email,
         emailChangeRequested=EmailActivation.objects.filter(user=user).count(),
-        wantsMailNotification=user.profile.wants_mail_notification
+        wantsMailNotification=user.profile.wants_mail_notification,
+        helpEnabled=user.profile.help_enabled
     )
     return user_settings
 
