@@ -64,8 +64,7 @@ angular.module('FindecoNavigatorService', [])
             if (path.match(rootPath)) {
                 location.type = "/";
             } else if (location.parts.length == 1 && location.parts[0] == 'index') {
-                location.type = '/';
-                location.nodePath = '';  // ROOT node (exception)
+                location.type = 'index';
             } else if (path.match(nodePath)) {
                 location.type = "node";
                 location.nodePath = normalizeSlashes(nodePath.exec(location.path)[0]);
