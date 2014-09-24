@@ -11,7 +11,7 @@
     <li class="{{ getActiveClass('start') }}">
         <a href="/start" data-i18n="_start_">Start</a>
     </li>
-    <li class="{{ getActiveClass('') }} {{ getActiveClass('arguments')}}">
+    <li class="{{ getActiveClass('arguments')}} {{ getActiveClass('/') }}">
         <a href="/arguments" data-i18n="_argumentNews_">New Arguments</a>
     </li>
     <li class="{{ getActiveClass('news') }}" ng-if="user.isLoggedIn">
@@ -20,7 +20,7 @@
     <li class="{{ getActiveClass('microblogging') }}" ng-if="user.isLoggedIn">
         <a href="/microblogging" data-i18n="_microbloggingNews_">Microblogging</a>
     </li>
-    <li class="{{ isContentActive() }}">
+    <li class="{{ getActiveClass('index') }} {{ getActiveClass('node') }}">
         <a href="/index" data-i18n="_content_">Content</a>
     </li>
     <li class="{{ getActiveClass('search') }}" >
