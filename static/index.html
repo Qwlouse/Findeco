@@ -82,7 +82,7 @@
              ng-include src="'/static/partials/navigationBar.html'"
              ng-controller="FindecoMenuCtrl"></div>
 
-        <form class="row tipp" action="updateGraph()">
+        <form class="row tipp" action="updateGraph()" ng-controller="FindecoGraphRowCtrl">
             Es gibt zu diesem Thema {{ graphData.nodes.length }}
             konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/">Vorschläge</a>.
             Es werden

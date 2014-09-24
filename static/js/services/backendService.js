@@ -188,6 +188,7 @@ angular.module('FindecoBackendService', [])
                 var promise = $http.get(url);
                 promise.success(function (d) {
                     angular.copy(d.loadNodeResponse, nodeInfo);
+                    nodeInfo.path = path
                 });
                 return promise;
             },

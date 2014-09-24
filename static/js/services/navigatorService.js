@@ -68,6 +68,7 @@ angular.module('FindecoNavigatorService', [])
             } else if (path.match(nodePath)) {
                 location.type = "node";
                 location.nodePath = normalizeSlashes(nodePath.exec(location.path)[0]);
+                location.argumentPath = location.nodePath
             } else if (path.match(argumentPath)) {
                 location.type = "argument";
                 location.argumentPath = normalizeSlashes(argumentPath.exec(location.path)[0]);
