@@ -63,6 +63,9 @@ angular.module('FindecoNavigatorService', [])
             // find out the type of path
             if (path.match(rootPath)) {
                 location.type = "/";
+            } else if (location.parts.length == 1 && location.parts[0] == 'index') {
+                location.type = '/';
+                location.nodePath = '';  // ROOT node (exception)
             } else if (path.match(nodePath)) {
                 location.type = "node";
                 location.nodePath = normalizeSlashes(nodePath.exec(location.path)[0]);
@@ -73,10 +76,7 @@ angular.module('FindecoNavigatorService', [])
             } else if (path.match(userPath)) {
                 location.type = "user";
                 location.userName = location.parts[1];
-            } else if (location.parts.length == 1 && location.parts[0] == 'index') {
-                location.type = 'node';
-                location.nodePath = '';  // ROOT node (exception)
-            } else {
+            }  else {
                 location.type = location.parts[0];
             }
             // calculate entries
