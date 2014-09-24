@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2012 Justus Wingert, Klaus Greff, Maik Nauheim, Johannes Merkert       *
+ * Copyright (c) 2014 Klaus Greff, Maik Nauheim, Johannes Merkert                       *
  *                                                                                      *
  * This file is part of Findeco.                                                        *
  *                                                                                      *
@@ -36,10 +36,9 @@ findecoApp.controller('FindecoDefaultCtrl',
         $scope.isTextLoaded = false;
 
         $scope.paragraphList = [];
-        $scope.nodeInfo = [];
+        $scope.nodeInfo = {};
         $scope.nodeInfo.indexList = [];
         $scope.authors = [];
-        $scope.nodeInfo.path = $scope.nav.argumentPath;
         $scope.sections = [];
 
         $scope.relocate = function (target) {
