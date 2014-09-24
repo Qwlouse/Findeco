@@ -32,14 +32,11 @@ findecoApp.controller('FindecoGraphRowCtrl',
     $scope.graphData = GraphData;
     $scope.graphType = 'full';
 
-
-
     $scope.updateGraph = function () {
         if ($scope.nav.type == 'node') {
             GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType);
         }
     };
-
 
     function updateGraphWidth() {
         var graphSpace = document.getElementById('graph');
