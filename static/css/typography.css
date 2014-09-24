@@ -148,22 +148,22 @@ input, textarea {
     border: 1px solid black;
 }
 
-input[type=submit], input[type=reset] {
+input[type=submit], input[type=reset], button {
     padding: 0.4em;
     border: 0 solid black;
     cursor: pointer;
     box-shadow: 2px 3px 6px #000000;
 }
 
-input[type=submit]:active, input[type=reset]:active {
+input[type=submit]:active, input[type=reset]:active, button:active {
     box-shadow: 0 0 2px #000000;
 }
 
-input[type=submit] {
+input[type=submit], button.green {
     background-color: #00510A;
 }
 
-input[type=reset] {
+input[type=reset], button.red {
     background-color: #680500;
 }
 

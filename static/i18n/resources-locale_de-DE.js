@@ -828,5 +828,15 @@
         "key"        : "_searchNuUserResults_",
         "value"      : "Kein Benutzer gefunden",
         "description": "Notice informing the user that no users could be found matching the search"
+    },
+    {
+        "key"        : "_ProposalTypeHelp_",
+        "value"      : "Egal ob du eine Weiterentwicklung oder einen Gegenvorschlag erstellst, der neue Vorschlag wird immer mit den anderen Vorschlägen konkurrieren. Gegenvorschläge erscheinen als eigenständige Kreise im Graphen, während es bei Weiterentwicklungen einen Pfeil vom Original zur Weiterentwicklung gibt.",
+        "description": "Help text about when to write a new proposal and when to refine an existing one"
+    },
+    {
+        "key"        : "_ProposalTypeHelpTactics_",
+        "value"      : "Bei Weiterentwicklungen werden Unterstützer des Originals davon ausgehen, dass der neue Vorschlag die gleiche Idee verbessert. Erstellst du eine Weiterentwicklung, übernimmt diese die Folgen-Markierungen des Originals, was deinem Vorschlag zunächst viel Zustimmung gibt. Schlägt dein neuer Vorschlag aber eine Idee vor, die deutlich vom Original abweicht, solltest du einen Gegenvorschlag erstellen. Da die Unterstützer des Originals dich im Fall eines als Weiterentwicklung getarnten Gegenvorschlags mit Entfolgungen abstrafen würden und dein Vorschlag durch diese schnell ausgeblendet wird, ist es in so einem Fall besser, mit einem Gegenvorschlag einen neuen Kreis von Unterstützern aufzubauen.",
+        "description": "Help text about when to write a new proposal and when to refine an existing one"
     }
 ]

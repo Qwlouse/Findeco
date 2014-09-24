@@ -25,6 +25,9 @@
 'use strict';
 
 findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParams, Backend, Message, Navigator, TMP) {
+    $scope.getNodePath = function () {
+        return Navigator.nodePath;
+    };
     $scope.step = 1;
     $scope.setProposalType = function (type) {
         $scope.proposalType = type;
@@ -43,7 +46,7 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
         }
     };
     $scope.submit = function () {
-        alert({{"_proposalSubmittedAlert_"|i18n}});
+        alert("_proposalSubmittedAlert_");
     };
 });
 

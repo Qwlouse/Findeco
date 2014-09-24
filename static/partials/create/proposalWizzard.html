@@ -1,28 +1,28 @@
 <div class="row" style="margin-bottom: 1em;">
     <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
         <div style="position: relative; left: 50%;">
-            <div class="textColumn shadowed" ng-if="step == 1">
+            <div class="textColumn backgroundBox" ng-if="step == 1">
 
                 <h2 data-i18n="_proposalTypeQuestion_"></h2>
 
                  <div style="clear: both;">
-                    <div class="button orange left" data-i18n="_newParagraphButton_"
-                         style="margin-right: 1em;" ng-click="setProposalType('paragraph')"></div>
-                    <div class="button orange left" data-i18n="_newRefinementButton_"
-                         style="margin-right: 1em;" ng-click="setProposalType('refinement')"></div>
-                    <div class="button orange left" data-i18n="_newProposalButton_"
-                         ng-click="setProposalType('proposal')"></div>
+                    <button class="green" data-i18n="_newRefinementButton_"
+                         style="margin-right: 1em;" ng-click="setProposalType('refinement')"></button>
+                    <button class="green" data-i18n="_newProposalButton_"
+                         ng-click="setProposalType('proposal')"></button>
                 </div>
 
                 <div style="clear: both;"></div>
 
                 <p class="tipp" data-i18n="_ProposalTypeHelp_" style="margin-top: 1em;"></p>
+                <p class="tipp" data-i18n="_ProposalTypeHelpTactics_"></p>
+                {{ getNodePath() }}
 
                 <div style="clear: both;"></div>
             </div>
 
             <div ng-if="step == 2">
-                <div class="textColumn shadowed left" style="margin-right: 1em;">
+                <div class="textColumn backgroundBox" style="margin-right: 1em;">
 
                     <h2 data-i18n="_proposalTextQuestion_"></h2>
 
@@ -34,7 +34,7 @@
 
                     <div style="clear: both;"></div>
                 </div>
-                <div class="textColumn shadowed left">
+                <div class="textColumn backgroundBox">
                     <h2 data-i18n="_previewHeading_"></h2>
                     <div creole wiki-text="text" update-interval="5000"></div>
                     <div style="clear: both;"></div>
@@ -42,7 +42,7 @@
             </div>
 
             <div ng-if="step == 3">
-                <div class="textColumn shadowed left" style="margin-right: 1em;">
+                <div class="textColumn backgroundBox" style="margin-right: 1em;">
 
                     <h2 data-i18n="_argumentTextQuestion_"></h2>
 
@@ -54,16 +54,14 @@
 
                     <div style="clear: both;"></div>
                 </div>
-                <div class="textColumn shadowed left">
+                <div class="textColumn backgroundBox">
                     <h2 data-i18n="_previewHeading_"></h2>
                     <div creole wiki-text="argumentText" update-interval="5000"></div>
                     <div style="clear: both;"></div>
                 </div>
             </div>
 
-
-
-            <div class="textColumn shadowed" style="margin-right: 1em;" ng-if="step == 4">
+            <div class="textColumn backgroundBox" style="margin-right: 1em;" ng-if="step == 4">
 
                     <h2 data-i18n="_summaryHeading_"></h2>
 
@@ -78,15 +76,15 @@
 
 
             <div style="clear: both; margin-top: 1em;">
-                <div class="button orange right" data-i18n="_nextButton_"
-                     style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></div>
-                <div class="button orange right" data-i18n="_createButton_"
-                     style="margin-left: 1em;" ng-click="submit();" ng-if="step == 4"></div>
-                <div class="button orange right" data-i18n="_backButton_"
+                <button class="green right" data-i18n="_nextButton_"
+                     style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></button>
+                <button class="green right" data-i18n="_createButton_"
+                     style="margin-left: 1em;" ng-click="submit();" ng-if="step == 4"></button>
+                <button class="red right" data-i18n="_backButton_"
                      style="margin-left: 1em;" ng-click="previousStep();"
-                     ng-if="step > 1"></div>
-                <div class="button orange right" data-i18n="_cancelButton_"
-                     ng-if="step == 1"></div>
+                     ng-if="step > 1"></button>
+                <button class="red right" data-i18n="_cancelButton_"
+                     ng-if="step == 1"></button>
             </div>
         </div>
     </div>
