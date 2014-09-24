@@ -5,11 +5,14 @@
 
                 <h2 data-i18n="_proposalTypeQuestion_"></h2>
 
-                 <div style="clear: both;">
+                <div style="clear: both; text-align: justify; margin-top: 2em;">
                     <button class="green" data-i18n="_newRefinementButton_"
-                         style="margin-right: 1em;" ng-click="setProposalType('refinement')"></button>
+                            style="margin-right: 1em; display: inline-block;"
+                            ng-click="setProposalType('refinement')"></button>
                     <button class="green" data-i18n="_newProposalButton_"
-                         ng-click="setProposalType('proposal')"></button>
+                            style="display: inline-block;"
+                            ng-click="setProposalType('proposal')"></button>
+                    <div style="display: inline-block; width: 100%; height: 0;"></div>
                 </div>
 
                 <div style="clear: both;"></div>
@@ -33,8 +36,7 @@
                     <p class="tipp" data-i18n="_proposalTextHelp_" style="margin-top: 1em;"></p>
 
                     <div style="clear: both;"></div>
-                </div>
-                <div class="textColumn backgroundBox">
+
                     <h2 data-i18n="_previewHeading_"></h2>
                     <div creole wiki-text="text" update-interval="5000"></div>
                     <div style="clear: both;"></div>
@@ -53,8 +55,7 @@
                     <p class="tipp" data-i18n="_argumentTextHelp_" style="margin-top: 1em;"></p>
 
                     <div style="clear: both;"></div>
-                </div>
-                <div class="textColumn backgroundBox">
+
                     <h2 data-i18n="_previewHeading_"></h2>
                     <div creole wiki-text="argumentText" update-interval="5000"></div>
                     <div style="clear: both;"></div>
