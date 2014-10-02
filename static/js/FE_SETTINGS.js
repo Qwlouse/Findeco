@@ -23,7 +23,7 @@
  ****************************************************************************************/
 
 /* Here you can set your Frontend settings. Please be aware that this file may be overwritten on Git updates.
- We suggest to store it outsite
+ We suggest to store it outside
   */
 
 findecoApp.constant('Disclaimer',{
@@ -73,29 +73,11 @@ findecoApp.constant('Boxes',{
 
 });
 
-findecoApp.constant('Greetingbox', {
-    enabled: true,
-    html: "<h1>Willkommen bei Findeco</h1>\n" +
-        '<p>Findeco ist eine Diskussionsplattform und dient der Meinungsfindung. Du kannst hier Ideen in Form von ' +
-        '<a href="http://www.findeco.de/hilfe/vorschlage/">Vorschlägen</a> abspeichern. Du und alle anderen können ' +
-        'dann Kommentare in Form von <a href="http://www.findeco.de/hilfe/microblogging/">Microblogging</a> dazu ' +
-        'schreiben und <a href="http://www.findeco.de/hilfe/argumente/">Argumente</a> dazu verfassen.</p>' + "\n" +
-        '<p>Die Diskussion zu einem Thema hat immer einen ' +
-        '<a href="http://www.findeco.de/hilfe/verortung-von-vorschlagen/">Ort</a>. Der Ort wird durch den Pfad am ' +
-        'oberen Bildschirmrand immer angezeigt. Bitte achte darauf dir immer zuerst den richtigen Ort für deine ' +
-        'Idee, dein Argument oder deinen Kommentar zu suchen. Die Faustregel dafür ist: Wenn du dich zu etwas ' +
-        'äußern willst, was unter einer Überschrift steht, die man anklicken kann, dann klicke dort zuerst.</p>' +
-        "\n" + '<p>Du kannst Vorschlägen, Benutzern und Argumenten <em>folgen</em>. Das bedeutet, dass du über ' +
-        'Neuigkeiten dazu in <a href="/news">News</a> (Vorschläge und Argumente denen du folgst) und ' +
-        '<a href"/microblogging">Microblogging</a> (User denen du folgst) informiert wirst. Außerdem sprichst du ' +
-        'Vorschlägen und Argumenten damit deine Unterstützung aus. Folgen kannst du jeweils über den Stern neben ' +
-        'einem Beitrag oder User. Beiträge kannst du auch als Spam markieren. Wenn genug Leute das machen werden ' +
-        'sie ausgeblendet. Infos dazu, wie du diese Funktionen für produktive Diskussionen nutzen solltest, findest ' +
-        'du im <a href="http://www.findeco.de/extern/unser-manifest/">Manifest<a>.</p>' + "\n"
-});
-
-
 /*Please don't touch things below these Line except you know exactly what you are doing */
+
+findecoApp.constant('Greetingbox', {
+    enabled: true
+});
 
 findecoApp.constant('Sidebar',{
     enable: false

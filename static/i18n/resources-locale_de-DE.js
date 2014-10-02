@@ -899,4 +899,94 @@
         "value"      : "nur relevante",
         "description": ""
     },
+    {
+        "key"        : "_greetingboxHeading_",
+        "value"      : "Willkommen bei Findeco",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text1_",
+        "value"      : "Findeco ist eine Diskussionsplattform und dient der Meinungsfindung. Du kannst hier Ideen in Form von ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxProposalsHelpLink_",
+        "value"      : "Vorschlägen",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text2_",
+        "value"      : " abspeichern. Du und alle anderen können dann Kommentare in Form von ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxMicrobloggingHelpLink_",
+        "value"      : "Microblogging",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text3_",
+        "value"      : " dazu schreiben und ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxArgumentsHelpLink_",
+        "value"      : "Argumente",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text4_",
+        "value"      : " dazu verfassen.",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph2Text1_",
+        "value"      : "Die Diskussion zu einem Thema hat immer einen ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxPlaceHelpLink_",
+        "value"      : "Ort",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph2Text2_",
+        "value"      : ". Der Ort wird durch den Pfad am oberen Bildschirmrand immer angezeigt. Bitte achte darauf dir immer zuerst den richtigen Ort für deine Idee, dein Argument oder deinen Kommentar zu suchen. Die Faustregel dafür ist: Wenn du dich zu etwas äußern willst, was unter einer Überschrift steht, die man anklicken kann, dann klicke dort zuerst.",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text1_",
+        "value"      : "Du kannst Vorschlägen, Benutzern und Argumenten ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxFollowEmphasized_",
+        "value"      : "folgen",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text2_",
+        "value"      : ". Das bedeutet, dass du über Neuigkeiten dazu in ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text3_",
+        "value"      : " (Vorschläge und Argumente denen du folgst) und ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text4_",
+        "value"      : " (User denen du folgst) informiert wirst. Außerdem sprichst du Vorschlägen und Argumenten damit deine Unterstützung aus. Folgen kannst du jeweils über den Stern neben einem Beitrag oder User. Beiträge kannst du auch als Spam markieren. Wenn genug Leute das machen werden sie ausgeblendet. Infos dazu, wie du diese Funktionen für produktive Diskussionen nutzen solltest, findest du im ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxManifestLink_",
+        "value"      : "Manifest",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text5_",
+        "value"      : ".",
+        "description": ""
+    }
 ]
