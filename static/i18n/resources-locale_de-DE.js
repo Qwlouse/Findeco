@@ -838,5 +838,60 @@
         "key"        : "_ProposalTypeHelpTactics_",
         "value"      : "Bei Weiterentwicklungen werden Unterstützer des Originals davon ausgehen, dass der neue Vorschlag die gleiche Idee verbessert. Erstellst du eine Weiterentwicklung, übernimmt diese die Folgen-Markierungen des Originals, was deinem Vorschlag zunächst viel Zustimmung gibt. Schlägt dein neuer Vorschlag aber eine Idee vor, die deutlich vom Original abweicht, solltest du einen Gegenvorschlag erstellen. Da die Unterstützer des Originals dich im Fall eines als Weiterentwicklung getarnten Gegenvorschlags mit Entfolgungen abstrafen würden und dein Vorschlag durch diese schnell ausgeblendet wird, ist es in so einem Fall besser, mit einem Gegenvorschlag einen neuen Kreis von Unterstützern aufzubauen.",
         "description": "Help text about when to write a new proposal and when to refine an existing one"
-    }
+    },
+    {
+        "key"        : "_siteNoticeFooter_",
+        "value"      : "Impressum",
+        "description": ""
+    },
+    {
+        "key"        : "_termsOfUseFooter_",
+        "value"      : "Nutzungsbedingungen",
+        "description": ""
+    },
+    {
+        "key"        : "_privacyPolicyFooter_",
+        "value"      : "Datenschutzerklärung",
+        "description": ""
+    },
+    {
+        "key"        : "_aboutFooter_",
+        "value"      : "Über Findeco",
+        "description": ""
+    },
+    {
+        "key"        : "_textAuthorHint_",
+        "value"      : "Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage des Betreibers.",
+        "description": ""
+    },
+    {
+        "key"        : "_helpIndexSite_",
+        "value"      : "Mehr Hilfe zu diesem Thema (Link führt zu Findeco.de)",
+        "description": ""
+    },
+    {
+        "key"        : "_showArguments_",
+        "value"      : "Argumente zeigen",
+        "description": ""
+    },
+    {
+        "key"        : "_hideArguments_",
+        "value"      : "Argumente verbergen",
+        "description": ""
+    },
+    {
+        "key"        : "_showAllKnots_",
+        "value"      : "alle",
+        "description": ""
+    },
+    {
+        "key"        : "_showNoSpam_",
+        "value"      : "Alle außer Spam",
+        "description": ""
+    },
+    {
+        "key"        : "_showRelevant_",
+        "value"      : "nur relevante",
+        "description": ""
+    },
 ]

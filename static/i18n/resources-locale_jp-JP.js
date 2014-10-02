@@ -1,17 +1,17 @@
 [
     {
         "key"        : "_pageTitle_",
-        "value"      : "ラインラント･プファルツの海賊党のFindeco.",
+        "value"      : "Findeco",
         "description": ""
     },
     {
         "key"        : "_accountLogout_",
-        "value"      : "ログ･アウト",
+        "value"      : "ログアウト",
         "description": ""
     },
     {
         "key"        : "_accountLogin_",
-        "value"      : "ログ･イン",
+        "value"      : "ログイン",
         "description": ""
     },
     {
@@ -26,12 +26,12 @@
     },
     {
         "key"        : "_accountPasswordBtn_",
-        "value"      : "パス･ワード",
+        "value"      : "パスワード",
         "description": ""
     },
     {
         "key"        : "_accountLoginBtn_",
-        "value"      : "ログ･イン",
+        "value"      : "ログイン",
         "description": ""
     },
     {
@@ -151,7 +151,7 @@
     },
     {
         "key"        : "_accountLoginFormTitle_",
-        "value"      : "ログ･オン",
+        "value"      : "ログイン",
         "description": ""
     },
     {
@@ -171,12 +171,12 @@
     },
     {
         "key"        : "_follow_",
-        "value"      : "Folgen",
+        "value"      : "フォロー",
         "description": ""
     },
     {
         "key"        : "_unfollow_",
-        "value"      : "Entfolgen",
+        "value"      : "アンフォロー",
         "description": ""
     },
     {
@@ -793,5 +793,70 @@
         "key"        : "_createButton_",
         "value"      : "送信",
         "description": "Is used in the proposal wizzard"
+    },
+        {
+        "key"        : "_changeUsername_",
+        "value"      : "ユーザー名を変更する",
+        "description": ""
+    },
+    {
+        "key"        : "_preview_",
+        "value"      : "ピーブイ",
+        "description": "Heading vom Preview"
+    },
+    {
+        "key"        : "_searchNoContentResults_",
+        "value"      : "No results for the search for '{0}' found",
+        "description": "Notice informing the user that no microblogging could be found for the search"
+    },
+    {
+        "key"        : "_searchNoMicrobloggingResults_",
+        "value"      : "No microblogging results found",
+        "description": "Notice informing the user that no microblogging could be found for the search"
+    },
+    {
+        "key"        : "_searchNuUserResults_",
+        "value"      : "No user found",
+        "description": "Notice informing the user that no users could be found matching the search"
+    },
+    {
+        "key"        : "_ProposalTypeHelp_",
+        "value"      : "Whether you are entering a refinement or proposal, a new post wil always compete with others.  Proposals will be displayed in own circles in the graph, refinements will be linked by an arrow to their root note.",
+        "description": "Help text about when to write a new proposal and when to refine an existing one"
+    },
+    {
+        "key"        : "_ProposalTypeHelpTactics_",
+        "value"      : "Supporter of the original will assume that a refinement is  improving the original's idea. Refinements get the origal's follows, which builds an initial approval. But if your refinement actually shows a different idea, please write a proposal instead. If a wrong positioned refinement loses follows it will quickly not be displayed anymore.",
+        "description": "Help text about when to write a new proposal and when to refine an existing one"
+    },
+    {
+        "key"        : "_siteNoticeFooter_",
+        "value"      : "奥付",
+        "description": ""
+    },
+    {
+        "key"        : "_termsOfUseFooter_",
+        "value"      : "利用条件",
+        "description": ""
+    },
+    {
+        "key"        : "_privacyPolicyFooter_",
+        "value"      : "プライバシー ポリシー",
+        "description": ""
+    },
+    {
+        "key"        : "_aboutFooter_",
+        "value"      : "About Findeco",
+        "description": ""
+    },
+    {
+        "key"        : "_textAuthorHint_",
+        "value"      : "All texts are written by users and are no statement of the homepage's maintainer.",
+        "description": ""
+    },
+    {
+        "key"        : "_helpIndexSite_",
+        "value"      : "More help on this topic (link leads to Findeco.de)",
+        "description": ""
     }
 ]

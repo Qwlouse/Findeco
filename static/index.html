@@ -87,9 +87,9 @@
             konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/">Vorschläge</a>.
             Es werden
             <select name="graph-filter" size="1" ng-model="graphType" ng-change="updateGraph()">
-                <option value="default" disabled>nur relevante</option>
-                <option value="full" selected>alle außer Spam</option>
-                <option value="withSpam">alle</option>
+                <option value="default" disabled data-i18n="_showRelevant_">nur relevante</option>
+                <option value="full" selected data-i18n="_showNoSpam_">alle außer Spam</option>
+                <option value="withSpam" data-i18n="_showAllKnots_">alle</option>
             </select>
             angezeigt:
         </form>
@@ -120,10 +120,10 @@
 
 <div class="row" id="footer">
     <ul>
-        <li><a href="/terms_of_use">Nutzungsbedingungen</a></li>
-        <li><a href="/imprint">Impressum</a></li>
-        <li><a href="/data_privacy">Datenschutzerklärung</a></li>
-        <li><a href="/about">Über Findeco</a></li>
+        <li><a href="/terms_of_use" data-i18n="_termsOfUseFooter_">Nutzungsbedingungen</a></li>
+        <li><a href="/imprint" data-i18n="_siteNoticeFooter_">Impressum</a></li>
+        <li><a href="/data_privacy" data-i18n="_privacyPolicyFooter_">Datenschutzerklärung</a></li>
+        <li><a href="/about" data-i18n="_aboutFooter_">Über Findeco</a></li>
     </ul>
 </div>
 
@@ -133,7 +133,7 @@
     <h2>{{ title }}</h2>
     {{ helptext }}
 
-    <a ng-show="more" style="position:absolute; right:1em; bottom:1em" href="{{ more }}">Mehr Hilfe zu diesem Thema
+    <a ng-show="more" style="position:absolute; right:1em; bottom:1em" href="{{ more }}" data-i18n="_helpIndexSite_">Mehr Hilfe zu diesem Thema
         (Link führt zu Findeco.de)</a>
 </div>
 
