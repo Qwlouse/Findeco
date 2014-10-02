@@ -1,0 +1,797 @@
+[
+    {
+        "key"        : "_pageTitle_",
+        "value"      : "ラインラント･プファルツの海賊党のFindeco.",
+        "description": ""
+    },
+    {
+        "key"        : "_accountLogout_",
+        "value"      : "ログ･アウト",
+        "description": ""
+    },
+    {
+        "key"        : "_accountLogin_",
+        "value"      : "ログ･イン",
+        "description": ""
+    },
+    {
+        "key"        : "_accountLoggedInAs_",
+        "value"      : "Eingeloggt als",
+        "description": ""
+    },
+    {
+        "key"        : "_accountUsernameBtn_",
+        "value"      : "ユーザー名",
+        "description": ""
+    },
+    {
+        "key"        : "_accountPasswordBtn_",
+        "value"      : "パス･ワード",
+        "description": ""
+    },
+    {
+        "key"        : "_accountLoginBtn_",
+        "value"      : "ログ･イン",
+        "description": ""
+    },
+    {
+        "key"        : "_startScreenUpdateBtn_",
+        "value"      : "アップデート",
+        "description": ""
+    },
+    {
+        "key"        : "_textLoad_",
+        "value"      : "テキストをロードする",
+        "description": ""
+    },
+    {
+        "key"        : "_arguments_",
+        "value"      : "議論",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentNews_",
+        "value"      : "新しい議論",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentsNew_",
+        "value"      : "新しい議論",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentsNewTextHere_",
+        "value"      : "ここに新しい議論が書けます...",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentsCreateSendBtn_",
+        "value"      : "送信",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentsCancelBtn_",
+        "value"      : "キャンセル",
+        "description": ""
+    },
+    {
+        "key"        : "_createNewText_",
+        "value"      : "新しい条",
+        "description": ""
+    },
+    {
+        "key"        : "_createDerivativeText_",
+        "value"      : "新しい推敲",
+        "description": ""
+    },
+    {
+        "key"        : "_createOpposingText_",
+        "value"      : "新しい対案",
+        "description": ""
+    },
+    {
+        "key"        : "_alternativesNewTextHere_",
+        "value"      : "ここに新しいテキストが書けます...",
+        "description": ""
+    },
+    {
+        "key"        : "_textNewTextHere_",
+        "value"      : "ここに新しいテキストが書けます...",
+        "description": ""
+    },
+    {
+        "key"        : "_topicCreateSendBtn_",
+        "value"      : "送信",
+        "description": ""
+    },
+    {
+        "key"        : "_derivateArgumentMissing_",
+        "value"      : "議論は反対論不偏な論かですか。決めてください。",
+        "description": ""
+    },
+    {
+        "key"        : "_derivateCreateSendBtn_",
+        "value"      : "送信",
+        "description": ""
+    },
+    {
+        "key"        : "_opposingCreateSendBtn_",
+        "value"      : "送信",
+        "description": ""
+    },
+    {
+        "key"        : "_expandAllSections_",
+        "value"      : "表示",
+        "description": ""
+    },
+    {
+        "key"        : "_pro_",
+        "value"      : "賛成論",
+        "description": ""
+    },
+    {
+        "key"        : "_con_",
+        "value"      : "反対論",
+        "description": ""
+    },
+    {
+        "key"        : "_neut_",
+        "value"      : "不偏な論",
+        "description": ""
+    },
+    {
+        "key"        : "_microblogPlaceholder_",
+        "value"      : "あなたのマイクロブログ",
+        "description": ""
+    },
+    {
+        "key"        : "_microblogSendBtn_",
+        "value"      : "送信",
+        "description": ""
+    },
+    {
+        "key"        : "_accountLoginFormTitle_",
+        "value"      : "ログ･オン",
+        "description": ""
+    },
+    {
+        "key"        : "_searchUserResults_",
+        "value"      : "ユーザー",
+        "description": ""
+    },
+    {
+        "key"        : "_searchContentResults_",
+        "value"      : "検索結果",
+        "description": ""
+    },
+    {
+        "key"        : "_searchMicrobloggingResults_",
+        "value"      : "マイクロブログ",
+        "description": ""
+    },
+    {
+        "key"        : "_follow_",
+        "value"      : "Folgen",
+        "description": ""
+    },
+    {
+        "key"        : "_unfollow_",
+        "value"      : "Entfolgen",
+        "description": ""
+    },
+    {
+        "key"        : "_description_",
+        "value"      : "説明",
+        "description": ""
+    },
+    {
+        "key"        : "_InvalidLogin",
+        "value"      : "ログインは無効です。",
+        "description": ""
+    } ,
+    {
+        "key"        : "_NotAuthenticated",
+        "value"      : "ロクインまだしていません",
+        "description": ""
+    },
+    {
+        "key"        : "_previewHeading_",
+        "value"      : "ピーブイ:",
+        "description": ""
+    },
+    {
+        "key"        : "_accountDprNotChecked_",
+        "value"      : "プライバシー ポリシーに同意してください。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountTosNotChecked_",
+        "value"      : "利用規約に同意してください。!",
+        "description": ""
+    },
+    {
+        "key"        : "_accountPasswordsNotMatching_",
+        "value"      : "パスワードが一致しません。もう一度入力してください。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountFieldsMissing_",
+        "value"      : "必須項目に書き込んでください。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountCheckEmails_",
+        "value"      : "作成が終わりました。E-メールを見てください。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountActivationFinished_",
+        "value"      : ".アカウントを作り終わりました。どうぞ、Findecoを楽しみください。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountLoginText_",
+        "value"      : "ログインをすると利用条件とプライバシー ポリシーに受諾します。Findecoを使うのにクッキーが必要です。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRegistrationFormLink_",
+        "value"      : "ここにアカウントを作成",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRecoverPasswordByMailLink_",
+        "value"      : "パスワードがわかりませんか? E-メールで再設定する",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRecoverPasswordByUsernameLink_",
+        "value"      : "パスワードがわかりませんか? ここにユーザー名で再設定する",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRegistrationFormTitle_",
+        "value"      : "アカウントを作成",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRegistrationText_",
+        "value"      : "　",
+        "description": "Die Accountregistrierung steht im Rahmen der Nutzungs- und Datenschutzbestimmungen jedem offen."
+    },
+    {
+        "key"        : "_accountUsername_",
+        "value"      : "ユーザー名",
+        "description": ""
+    },
+    {
+        "key"        : "_accountPassword_",
+        "value"      : "パスワード",
+        "description": ""
+    },
+    {
+        "key"        : "_accountPasswordRepeat_",
+        "value"      : "パスワードの再入力",
+        "description": ""
+    },
+    {
+        "key"        : "_accountEmail_",
+        "value"      : "E-メール",
+        "description": ""
+    },
+    {
+        "key"        : "_accountReadTOSBeginning_",
+        "value"      : " ",
+        "description": ""
+    },
+    {
+        "key"        : "_accountReadTOSLink_",
+        "value"      : "利用条件",
+        "description": ""
+    },
+    {
+        "key"        : "_accountReadTOSEnd_",
+        "value"      : "を読んで、受諾します。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountReadDPRBeginning_",
+        "value"      : " ",
+        "description": ""
+    },
+    {
+        "key"        : "_accountReadDPRLink_",
+        "value"      : "プライバシー ポリシー",
+        "description": ""
+    },
+    {
+        "key"        : "_accountReadDPREnd_",
+        "value"      : " を読んで、受諾します。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRecoverByMailTitle_",
+        "value"      : "アカウントを再設定する (メールで)",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRecoverByUsernameTitle_",
+        "value"      : "アカウントを再設定する (ユーザー名で)",
+        "description": ""
+    },
+    {
+        "key"        : "_settings_",
+        "value"      : "設定",
+        "description": ""
+    },
+    {
+        "key"        : "_email_",
+        "value"      : "E-メール",
+        "description": ""
+    },
+    {
+        "key"        : "_followees_",
+        "value"      : "フォロワー...",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRecoveryFinished_",
+        "value"      : "アカウントの再設定が終わりました。 E-メールを見てください。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRecoveryConfirmed_",
+        "value"      : "アカウントの再設定が終わりました。 E-メールを見て、指示を読んでください。",
+        "description": ""
+    },
+    {
+        "key"        : "_currentAdress_",
+        "value"      : "今の住所",
+        "description": ""
+    },
+    {
+        "key"        : "_username_",
+        "value"      : "ユーザー名",
+        "description": ""
+    },
+    {
+        "key"        : "_currentUsername_",
+        "value"      : "今のユーザー名",
+        "description": ""
+    },
+    {
+        "key"        : "_changePassword_",
+        "value"      : "パスワードの変更",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordChanged_",
+        "value"      : "パスワードの変更ができました。",
+        "description": ""
+    },
+    {
+        "key"        : "_changePasswordDescription_",
+        "value"      : "パスワードを間違いないように二回入れてください:",
+        "description": ""
+    },
+    {
+        "key"        : "_changeEMailDescription_",
+        "value"      : "パスワードを変更する場合は認定が必要で、メールのリンクをあげた後で、変更ができます。",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordsDidNotMatch_",
+        "value"      : "パスワードが一致しません。もう一度入力してください。",
+        "description": ""
+    },
+    {
+        "key"        : "_settingsChanged_",
+        "value"      : "アカウントの設定が更新しました。",
+        "description": ""
+    },
+    {
+        "key"        : "_deleteAccount_",
+        "value"      : "アカウントを削除する",
+        "description": ""
+    },
+    {
+        "key"        : "_deleteAccountExplanation_",
+        "value"      : "アカウントを削除すると投稿記事は削除しませんが、匿名化します。すパームとフォローを削除します。",
+        "description": ""
+    },
+    {
+        "key"        : "_deleteAccountQuestion_",
+        "value"      : "本当に、アカウントを削除したいですか。再設定はできません。",
+        "description": ""
+    },
+    {
+        "key"        : "_save_",
+        "value"      : "保存する",
+        "description": ""
+    },
+    {
+        "key"        : "_createTextExplanation_",
+        "value"      : "ここに Creole-Markup の形てのテキストが書けます。テキストの初めは題目が必要です。 題目は '=' の中に書きます。組織化するためにHeading2から使ってください。",
+        "description": ""
+    },
+    {
+        "key"        : "_previewNotice_",
+        "value"      : "右の表に書いているテキストのピーブイがあります。",
+        "description": ""
+    },
+    {
+        "key"        : "_appendNewParagraphExplanation_",
+        "value"      : "今の書いているテキストは新しい文段になります。",
+        "description": ""
+    },
+    {
+        "key"        : "_newTextExplanation_",
+        "value"      : "今の書いているテキストは新しい代替になって、前のテキストを入れ替えます。 ",
+        "description": ""
+    },
+    {
+        "key"        : "_editorHintTitle_",
+        "value"      : "ヒント:",
+        "description": ""
+    },
+    {
+        "key"        : "_editorHintBeginning_",
+        "value"      : "投稿記事の初めは = が必要です。 = タイテル = は例の題目です。その以外で、 ",
+        "description": ""
+    },
+    {
+        "key"        : "_editorHintCreoleLink_",
+        "value"      : "CreoleのWiki-Syntax",
+        "description": ""
+    },
+    {
+        "key"        : "_editorHintEnd_",
+        "value"      : " を使わないといけない。ピーブイを使って、してみてください。",
+        "description": ""
+    },
+    {
+        "key"        : "_editorLicenseHintBeginning_",
+        "value"      : "全部の稿記事は",
+        "description": ""
+    },
+    {
+        "key"        : "_editorLicenseHintLink_",
+        "value"      : "Creative-Commons CC-BY-SA 3.0",
+        "description": ""
+    },
+    {
+        "key"        : "_editorLicenseHintEnd_",
+        "value"      : " になります。",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentForThisModification_",
+        "value"      : "議論:　どうして模様替は必要ですか。",
+        "description": ""
+    },
+    {
+        "key"        : "_textForThisModification_",
+        "value"      : "進展したのてきすと：",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPreview_",
+        "value"      : "議論のピーブイ",
+        "description": ""
+    },
+    {
+        "key"        : "_textPreview_",
+        "value"      : "テキストのピーブイ",
+        "description": ""
+    },
+    {
+        "key"        : "_loadMoreMicroblogging_",
+        "value"      : "load　more...",
+        "description": ""
+    },
+    {
+        "key"        : "_search_",
+        "value"      : "ここに探す...",
+        "description": ""
+    },
+    {
+        "key"        : "_start_",
+        "value"      : "スタート",
+        "description": ""
+    },
+    {
+        "key"        : "_news_",
+        "value"      : "ニュース",
+        "description": ""
+    },
+    {
+        "key"        : "_content_",
+        "value"      : "内容",
+        "description": ""
+    },
+    {
+        "key"        : "_editFieldPretext_",
+        "value"      : "= 題目が必要です。=\n　の後でCreole-Syntaxが使います。",
+        "description": ""
+    },
+    {
+        "key"        : "_rootCaption_",
+        "value"      : "概説",
+        "description": ""
+    },
+    {
+        "key"        : "_rootText_",
+        "value"      : "今、トップレベルにいます。 始めてですか。Spielwiese か demo.findeco.de にFindecoを使ってみてください。",
+        "description": ""
+    },
+    {
+        "key"        : "_InvalidActivationKey",
+        "value"      : "認証コードはありません",
+        "description": ""
+    },
+    {
+        "key"        : "_accountActivationFormTitle_",
+        "value"      : "アカウントの認定",
+        "description": ""
+    },
+    {
+        "key"        : "_accountActivationText_",
+        "value"      : "ここにアカウントの認定ができます",
+        "description": ""
+    },
+    {
+        "key"        : "_accountActivationKey_",
+        "value"      : "認証コード",
+        "description": ""
+    },
+    {
+        "key"        : "_accountActivateBtn_",
+        "value"      : "認定する",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRecoverBtn_",
+        "value"      : "再設定する",
+        "description": ""
+    },
+    {
+        "key"        : "_accountRegistrationBtn_",
+        "value"      : "アカウントを作成",
+        "description": ""
+    },
+    {
+        "key"        : "_timeline_",
+        "value"      : "Timeline",
+        "description": ""
+    },
+    {
+        "key"        : "_newsForFollowedNodes_",
+        "value"      : "フォローのニュース",
+        "description": ""
+    },
+    {
+        "key"        : "_newsForOwnNodes_",
+        "value"      : "発起のニュース",
+        "description": ""
+    },
+    {
+        "key"        : "_newsForAllNodes_",
+        "value"      : "全部のニュース",
+        "description": ""
+    },
+    {
+        "key"        : "_derivateTextAlternativeParseError_",
+        "value"      : "テキストに間違いがあります。よく間違ったのは題目を忘れることです。 ",
+        "description": ""
+    },
+    {
+        "key"        : "_createNotChanged_",
+        "value"      : "内容は前と同じなので、変更はできません。 ",
+        "description": ""
+    },
+    {
+        "key"        : "_createHeadingNotChanged_",
+        "value"      : "議論の題目は前と同じなので、保存することはできません。保存するのに必要なのは題目です。 ",
+        "description": ""
+    },
+    {
+        "key"        : "_alternativeNotChanged_",
+        "value"      : "テキストは前と同じなので、保存することはできません。",
+        "description": ""
+    },
+    {
+        "key"        : "_UsernameNotAvailable",
+        "value"      : "ユーザー名もう使われていますから、ほうかの決めてください。",
+        "description": ""
+    },
+    {
+        "key"        : "_InvalidEmailAddress",
+        "value"      : "E-メールは無効です。",
+        "description": ""
+    },
+    {
+        "key"        : "_UnknownUser",
+        "value"      : "ユーザーが分かりません。",
+        "description": ""
+    },
+    {
+        "key"        : "_accountConfirmEmailFormTitle_",
+        "value"      : "E-メールの認定",
+        "description": ""
+    },
+    {
+        "key"        : "_accountEmailConfirmed_",
+        "value"      : "E-メールの認定ができました。",
+        "description": ""
+    },
+    {
+        "key"        : "_SystemNews_",
+        "value"      : "Findecoのニュース",
+        "description": ""
+    },
+    {
+        "key"        : "_externalLink_",
+        "value"      : "(外付けの)",
+        "description": ""
+    },
+    {
+        "key"        : "_mentions_",
+        "value"      : "言及",
+        "description": ""
+    },
+    {
+        "key"        : "_empty_",
+        "value"      : "空",
+        "description": ""
+    },
+    {
+        "key"        : "_contactDevelopersForIdeasWhatToPutHere_",
+        "value"      : "　",
+        "description": "Wenn du Ideen hast, was in dieser Spalte stehen könnte, dann kontaktiere die Entwickler und teile deine Idee mit."
+    },
+    {
+        "key"        : "_microbloggingNews_",
+        "value"      : "マイクロブログ",
+        "description": ""
+    },
+    {
+        "key"        : "_newsForAllNode_",
+        "value"      : "ニュース",
+        "description": ""
+    },
+    {
+        "key"        : "_expandSection_",
+        "value"      : "表示",
+        "description": ""
+    },
+    {
+        "key"        : "_collapseSection_",
+        "value"      : "表示しない",
+        "description": ""
+    },
+    {
+        "key"        : "_ownPosts_",
+        "value"      : "あなたの投稿記事",
+        "description": ""
+    },
+    {
+        "key"        : "_composePost_",
+        "value"      : "投稿記事書く",
+        "description": ""
+    },
+    {
+        "key"        : "_password_",
+        "value"      : "パスワード",
+        "description": ""
+    },
+    {
+        "key"        : "_account_",
+        "value"      : "アカウント",
+        "description": ""
+    },
+    {
+        "key"        : "_mailSettings_",
+        "value"      : "E-メール設定",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHints_",
+        "value"      : "パスワードヒント",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHint_",
+        "value"      : "８字以上のパスワードをすすめます。数字も特殊記号も使ってください。",
+        "description": ""
+    },
+    {
+        "key"        : "_notLoggedIn_",
+        "value"      : "Nicht eingeloggt!",
+        "description": ""
+    },
+    {
+        "key"        : "_account_",
+        "value"      : "プロファイル",
+        "description": ""
+    },
+    {
+        "key"        : "_password_",
+        "value"      : "パスワードの設定",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHints_",
+        "value"      : "パスワードヒント",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordHint_",
+        "value"      : "８字以上のパスワードをすすめます。数字も特殊記号も使ってください。",
+        "description": ""
+    },
+    {
+        "key"        : "_mailSettings_",
+        "value"      : "E-メールとお知らせ",
+        "description": ""
+    },
+    {
+        "key"        : "_notificationSettings_",
+        "value"      : "お知らせの設定",
+        "description": ""
+    },
+    {
+        "key"        : "_wantEMailLabel_",
+        "value"      : "メールでFindecoのニュースをもらっていいです。",
+        "description": ""
+    },
+    {
+        "key"        : "_changeEmailRequested_",
+        "value"      : "E-メールの変更もう頼みました。新しいE-メールにメールが届けました。認定してください。",
+        "description": ""
+    },
+    {
+        "key"        : "_userDoesNotExist",
+        "value"      : "ユーザー '{0}' はいません",
+        "description": "wird im partial user.html benutzt"
+    },
+    {
+        "key"        : "_proposalTypeQuestion_",
+        "value"      : "変更のタイプは何ですか",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newParagraphButton_",
+        "value"      : "文段を入れる",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newRefinementButton_",
+        "value"      : "発起を改める",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newProposalButton_",
+        "value"      : "対案する",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_backButton_",
+        "value"      : "戻る",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_cancelButton_",
+        "value"      : "キャンセル",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_nextButton_",
+        "value"      : "次へ",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_createButton_",
+        "value"      : "送信",
+        "description": "Is used in the proposal wizzard"
+    }
+]
