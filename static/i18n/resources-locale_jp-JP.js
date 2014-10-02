@@ -858,5 +858,30 @@
         "key"        : "_helpIndexSite_",
         "value"      : "More help on this topic (link leads to Findeco.de)",
         "description": ""
-    }
+    },
+        {
+        "key"        : "_showArguments_",
+        "value"      : "議論表示",
+        "description": ""
+    },
+    {
+        "key"        : "_hideArguments_",
+        "value"      : "議論表示しない",
+        "description": ""
+    },
+    {
+        "key"        : "_showAllKnots_",
+        "value"      : "全部",
+        "description": ""
+    },
+    {
+        "key"        : "_showNoSpam_",
+        "value"      : "スパーム表示しない",
+        "description": ""
+    },
+    {
+        "key"        : "_showRelevant_",
+        "value"      : "大切なのだけ",
+        "description": ""
+    },
 ]

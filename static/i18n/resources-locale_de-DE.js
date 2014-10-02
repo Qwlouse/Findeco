@@ -894,4 +894,9 @@
         "value"      : "nur relevante",
         "description": ""
     },
+    {
+        "key"        : "_showRelevant_",
+        "value"      : "nur relevante",
+        "description": ""
+    },
 ]
