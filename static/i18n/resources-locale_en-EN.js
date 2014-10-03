@@ -1084,5 +1084,45 @@
         "key"        : "_hideMicroblogging_",
         "value"      : "Hide Microblogging",
         "description": ""
+    },
+    {
+        "key"        : "_authors_",
+        "value"      : "Authors: ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText1_",
+        "value"      : "This ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText2_",
+        "value"      : "proposal",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText3_",
+        "value"      : " has ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText4_",
+        "value"      : "paragraphs. ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText5_",
+        "value"      : "Here paragraphs can be ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText6_",
+        "value"      : "shown",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText7_",
+        "value"      : "hidden",
+        "description": ""
     }
 ]

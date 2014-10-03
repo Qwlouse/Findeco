@@ -1082,5 +1082,45 @@
         "key"        : "_hideMicroblogging_",
         "value"      : "マイクロブログ表示しない",
         "description": ""
+    },
+    {
+        "key"        : "_authors_",
+        "value"      : "著作家: ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText1_",
+        "value"      : "この ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText2_",
+        "value"      : "投稿記事",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText3_",
+        "value"      : "は文段が",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText4_",
+        "value"      : "あります。",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText5_",
+        "value"      : "全部の文段を",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText6_",
+        "value"      : "表示する",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText7_",
+        "value"      : "表示しない",
+        "description": ""
     }
 ]

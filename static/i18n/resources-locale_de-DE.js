@@ -1098,5 +1098,45 @@
         "key"        : "_hideMicroblogging_",
         "value"      : "Microblogging ausblenden",
         "description": ""
+    },
+    {
+        "key"        : "_authors_",
+        "value"      : "Autoren des Vorschlags: ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText1_",
+        "value"      : "Dieser ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText2_",
+        "value"      : "Vorschlag",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText3_",
+        "value"      : " hat ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText4_",
+        "value"      : "Abschnitte. ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText5_",
+        "value"      : "Du kannst hier alle Abschnitte ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText6_",
+        "value"      : "ausklappen",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText7_",
+        "value"      : "einklappen",
+        "description": ""
     }
 ]

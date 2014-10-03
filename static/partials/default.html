@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="authors">
-                    Autoren des Vorschlags: <div ng-repeat="author in authors"><a ng-href="/user/{{ author }}">{{ author }}</a> </div>
+                    <span data-i18n="_authors_">Autoren des Vorschlags: </span><div ng-repeat="author in authors"><a ng-href="/user/{{ author }}">{{ author }}</a> </div>
                 </div>
 
 
@@ -46,10 +46,10 @@
                 <p creole wiki-text="nodeInfo.wikiText"></p>
 
                 <div ng-show="sections.length > 0" class="tipp">
-                    Dieser <a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink">Vorschlag</a>
-                    hat {{ nodeInfo.indexList.length }} Abschnitte.
-                    Du kannst hier alle Abschnitte <a ng-hide="allExpanded" ng-click="expandAll()" style="cursor: pointer;">ausklappen</a>
-                    <a ng-show="allExpanded" ng-click="collapseAll()" style="cursor: pointer;">einklappen</a>.
+                    <span data-i18n="_proposalText1_">Dieser </span><a href="http://www.findeco.de/hilfe/vorschlage/" class="tippLink" data-i18n="_proposalText2_">Vorschlag</a>
+                    <span data-i18n="_proposalText3_">hat</span> {{ nodeInfo.indexList.length }} <span data-i18n="_proposalText4_">Abschnitte. </span>
+                    <span data-i18n="_proposalText5_">Du kannst hier alle Abschnitte </span><a ng-hide="allExpanded" ng-click="expandAll()" style="cursor: pointer;"  data-i18n="_proposalText6_">ausklappen</a>
+                    <a ng-show="allExpanded" ng-click="collapseAll()" style="cursor: pointer;" data-i18n="_proposalText7_">einklappen</a>.
                 </div>
 
                 <div ng-repeat="section in nodeInfo.indexList">
