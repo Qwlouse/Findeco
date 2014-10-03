@@ -988,5 +988,25 @@
         "key"        : "_greetingboxParagraph3Text5_",
         "value"      : ".",
         "description": ""
+    },
+    {
+        "key"        : "_default_",
+        "value"      : "Standardeinstellung",
+        "description": ""
+    },
+    {
+        "key"        : "_helpSettings_",
+        "value"      : "Hilfeeinstellungen",
+        "description": ""
+    },
+    {
+        "key"        : "_helpActivated_",
+        "value"      : "Hilfe-Symbole anzeigen",
+        "description": ""
+    },
+    {
+        "key"        : "_languageSettings_",
+        "value"      : "Spracheinstellungen",
+        "description": ""
     }
 ]
