@@ -1,11 +1,10 @@
-<div id="logo"></div>
+<a id="logo" ng-href="/"></a>
 
 <div id="admin-warning" ng-show="user.isAdmin" >
     Achtung!! Sie sind als Admin User angemeldet
 </div>
 
 <div id="version">Version: {{ fesettings.version }}</div>
-
 
 <ul class="topMenu">
     <li class="{{ getActiveClass('start') }}">
