@@ -977,7 +977,7 @@
     },
     {
         "key"        : "_default_",
-        "value"      : "Default settings",
+        "value"      : "default",
         "description": ""
     },
     {
