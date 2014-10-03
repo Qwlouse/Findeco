@@ -956,12 +956,12 @@
     },
     {
         "key"        : "_greetingboxParagraph3Text3_",
-        "value"      : " (followeg proposals and arguments) and ",
+        "value"      : " (フォローしている投稿記事と議論) と ",
         "description": ""
     },
     {
         "key"        : "_greetingboxParagraph3Text4_",
-        "value"      : " (followed users). You also support followed arguments and proposals. If you would like to follow a user or proposals you can do this by clicking the star next to the user or proposal. You can also mark proposals as Spam and if enough people are doing so it will not be displayed anymore. Information how this functions could be used for a productive discussion can be found in the ",
+        "value"      : " (フォローしているユーザー)のニュースをもらいます。フォローしたら、応援もします。小さい星を使って下さい。スパームがあったら、 小さい流星を使ってください。たくさんスパームをもらったら、投稿記事が見えなくなります。ティップスを読みたい人は",
         "description": ""
     },
     {
@@ -971,7 +971,7 @@
     },
     {
         "key"        : "_greetingboxParagraph3Text5_",
-        "value"      : ".",
+        "value"      : "を見てください。",
         "description": ""
     },
     {
