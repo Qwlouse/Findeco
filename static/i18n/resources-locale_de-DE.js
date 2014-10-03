@@ -1088,5 +1088,15 @@
         "key"        : "_headingMicroblogging_",
         "value"      : "Wanna participate?",
         "description": ""
+    },
+    {
+        "key"        : "_showMicroblogging_",
+        "value"      : "Microblogging zeigen",
+        "description": ""
+    },
+    {
+        "key"        : "_hideMicroblogging_",
+        "value"      : "Microblogging ausblenden",
+        "description": ""
     }
 ]

@@ -1072,5 +1072,15 @@
         "key"        : "_headingMicroblogging_",
         "value"      : "参列する?",
         "description": ""
+    },
+    {
+        "key"        : "_showMicroblogging_",
+        "value"      : "マイクロブログ表示",
+        "description": ""
+    },
+    {
+        "key"        : "_hideMicroblogging_",
+        "value"      : "マイクロブログ表示しない",
+        "description": ""
     }
 ]

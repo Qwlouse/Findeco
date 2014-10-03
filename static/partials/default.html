@@ -2,14 +2,14 @@
 <div class="toggleRow">
     <div class="toggleArguments" ng-click="showArguments = !showArguments">
         <a href="" class="left">
-            <span ng-if="!showArguments">Argumente zeigen</span>
-            <span ng-if="showArguments">Argumente verbergen</span>
+            <span ng-if="!showArguments" data-i18n="_showArguments_">Argumente zeigen</span>
+            <span ng-if="showArguments" data-i18n="_hideArguments_">Argumente verbergen</span>
         </a>
     </div>
     <div class="toggleMicroblogging" ng-click="showMicroblogging = !showMicroblogging">
         <a href="" class="right">
-            <span ng-if="!showMicroblogging">Microblogging zeigen</span>
-            <span ng-if="showMicroblogging">Microblogging verbergen</span>
+            <span ng-if="!showMicroblogging" data-i18n="_showMicroblogging_">Microblogging zeigen</span>
+            <span ng-if="showMicroblogging" data-i18n="_hideMicroblogging_">Microblogging verbergen</span>
         </a>
     </div>
     <div style="clear: both;"></div>
