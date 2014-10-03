@@ -346,7 +346,7 @@
     },
     {
         "key"        : "_currentAdress_",
-        "value"      : "今の住所",
+        "value"      : "今のE-メール",
         "description": ""
     },
     {
