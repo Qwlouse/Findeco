@@ -15,7 +15,7 @@ angular.module('localization', [])
         var localize = {
             // TODO: Make the language config work in a non insane way.
             // use the $window service to get the language of the user's browser
-            language:'en-EN',//$window.navigator.userLanguage || $window.navigator.language,
+            language:'de-DE',//$window.navigator.userLanguage || $window.navigator.language,
             
             // array to hold the localized resource string entries
             dictionary:[],
