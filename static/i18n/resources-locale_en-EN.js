@@ -888,4 +888,114 @@
         "value"      : "Only relevant ones",
         "description": ""
     },
+    {
+        "key"        : "_greetingboxHeading_",
+        "value"      : "Welcome to Findeco",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text1_",
+        "value"      : "Findeco is a platform for discussion and helps in finding opinions. You can contribute your ideas by ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxProposalsHelpLink_",
+        "value"      : "proposals.",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text2_",
+        "value"      : " And all others can add comments by ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxMicrobloggingHelpLink_",
+        "value"      : "Microblogging",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text3_",
+        "value"      : " and add ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxArgumentsHelpLink_",
+        "value"      : "arguments",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text4_",
+        "value"      : " regarding the posts.",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph2Text1_",
+        "value"      : "A discussion always has a ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxPlaceHelpLink_",
+        "value"      : "place",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph2Text2_",
+        "value"      : " which is displayed at the top of the page. Please always check whether you are in the right place before posting a proposal or argument. A rough-and-ready rule: If you intend to change something which has a clickable heading, please click on it first.",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text1_",
+        "value"      : "Proposals, users and arguments can be ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxFollowEmphasized_",
+        "value"      : "followed",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text2_",
+        "value"      : ". Which means that that you will be informed on news about ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text3_",
+        "value"      : " (followe proposals and arguments) and ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text4_",
+        "value"      : " (followed users). You also support followed arguments and proposals. If you would like to follow a user or proposals you can do this by clicking the star next to the user or proposal. You can also mark proposals as Spam and if enough people are doing so it will not be displayed anymore. Information how this functions could be used for a productive discussion can be found in the ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxManifestLink_",
+        "value"      : "Manifest",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text5_",
+        "value"      : ".",
+        "description": ""
+    },
+    {
+        "key"        : "_default_",
+        "value"      : "Default settings",
+        "description": ""
+    },
+    {
+        "key"        : "_helpSettings_",
+        "value"      : "Help settings",
+        "description": ""
+    },
+    {
+        "key"        : "_helpActivated_",
+        "value"      : "Display help symbols",
+        "description": ""
+    },
+    {
+        "key"        : "_languageSettings_",
+        "value"      : "Language settings",
+        "description": ""
+    }
 ]
