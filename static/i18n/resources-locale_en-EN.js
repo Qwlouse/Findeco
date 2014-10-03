@@ -1,6 +1,3 @@
-/**
- * Created by yonjuni on 10/2/14.
- */
 [
     {
         "key"        : "_pageTitle_",
