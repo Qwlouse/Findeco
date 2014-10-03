@@ -884,4 +884,114 @@
         "value"      : "大切なのだけ",
         "description": ""
     },
+    {
+        "key"        : "_greetingboxHeading_",
+        "value"      : "Welcome to Findeco",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text1_",
+        "value"      : "Findecoは討論会のソフトです。意見を探すために助けます。",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxProposalsHelpLink_",
+        "value"      : "投稿記事",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text2_",
+        "value"      : "を書いて、アイディアを送ることができます。ほかの人々は",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxMicrobloggingHelpLink_",
+        "value"      : "マイクロブログ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text3_",
+        "value"      : " を使って、評します。そして、",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxArgumentsHelpLink_",
+        "value"      : "議論",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text4_",
+        "value"      : " も書けます。",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph2Text1_",
+        "value"      : "討論会はいつも",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxPlaceHelpLink_",
+        "value"      : "場所",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph2Text2_",
+        "value"      : "開催されています。どくにいるのかページの上に読めます。投稿記事を書く前にいつも場所をチェックしてください。クリッカブルな題目があったら、そこにクリックしてください。",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text1_",
+        "value"      : "投稿記事も議論もユーザーも",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxFollowEmphasized_",
+        "value"      : "フォロー",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text2_",
+        "value"      : "ができます。フォローした後で",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text3_",
+        "value"      : " (followeg proposals and arguments) and ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text4_",
+        "value"      : " (followed users). You also support followed arguments and proposals. If you would like to follow a user or proposals you can do this by clicking the star next to the user or proposal. You can also mark proposals as Spam and if enough people are doing so it will not be displayed anymore. Information how this functions could be used for a productive discussion can be found in the ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxManifestLink_",
+        "value"      : "Manifest",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text5_",
+        "value"      : ".",
+        "description": ""
+    },
+    {
+        "key"        : "_default_",
+        "value"      : "標準設定",
+        "description": ""
+    },
+    {
+        "key"        : "_helpSettings_",
+        "value"      : "ヘルプ設定",
+        "description": ""
+    },
+    {
+        "key"        : "_helpActivated_",
+        "value"      : "ヘルプサイン表示",
+        "description": ""
+    },
+    {
+        "key"        : "_languageSettings_",
+        "value"      : "言語設定",
+        "description": ""
+    }
 ]
