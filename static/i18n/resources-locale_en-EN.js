@@ -1049,5 +1049,30 @@
         "key"        : "_argumentLogIn4_",
         "value"      : "register",
         "description": ""
+    },
+    {
+        "key"        : "_microbloggingPanel_",
+        "value"      : "If you log in you can work on topics, write arguments or use microblogging",
+        "description": ""
+    },
+    {
+        "key"        : "_loginMicrobloggingPanel_",
+        "value"      : "log in",
+        "description": ""
+    },
+    {
+        "key"        : "_microbloggingPanel2_",
+        "value"      : " or ",
+        "description": ""
+    },
+    {
+        "key"        : "_registerMicrobloggingPanel_",
+        "value"      : "register",
+        "description": ""
+    },
+    {
+        "key"        : "_headingMicroblogging_",
+        "value"      : "Mitmachen?",
+        "description": ""
     }
 ]

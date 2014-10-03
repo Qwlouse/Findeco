@@ -1048,5 +1048,29 @@
         "key"        : "_argumentLogIn4_",
         "value"      : "アカウントを作成",
         "description": ""
+    },    {
+        "key"        : "_microbloggingPanel_",
+        "value"      : "ロクインをしたら、マイクロブログを使うことができます。",
+        "description": ""
+    },
+    {
+        "key"        : "_loginMicrobloggingPanel_",
+        "value"      : "ログイン",
+        "description": ""
+    },
+    {
+        "key"        : "_microbloggingPanel2_",
+        "value"      : " か",
+        "description": ""
+    },
+    {
+        "key"        : "_registerMicrobloggingPanel_",
+        "value"      : "アカウントを作成",
+        "description": ""
+    },
+    {
+        "key"        : "_headingMicroblogging_",
+        "value"      : "参列する?",
+        "description": ""
     }
 ]

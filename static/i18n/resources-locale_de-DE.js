@@ -1083,5 +1083,10 @@
         "key"        : "_registerMicrobloggingPanel_",
         "value"      : "registieren",
         "description": ""
+    },
+    {
+        "key"        : "_headingMicroblogging_",
+        "value"      : "Wanna participate?",
+        "description": ""
     }
 ]
