@@ -5,7 +5,7 @@
     <div style="clear: both"></div>
 
     <div ng-show="argumentList.length < 1" class="tipp" style="text-align: center">
-        Es gibt noch keine<br/>Argumente
+        <span data-i18n="_noArgumentsYet_">Es gibt noch keine</span><br/><span data-i18n="_noArgumentsYet2_">Argumente</span>
     </div>
 
     <ul class="argumentList">
@@ -35,12 +35,12 @@
         <span data-i18n="_argumentPanelText_">In dieser Spalte werden alle</span>
         <a href="http://www.findeco.de/hilfe/argumente/" class="tippLink" data-i18n="_argumentPanelText2_">Argumente</a><span data-i18n="_argumentPanelText3_"> zum </span>
         <a href="http://www.findeco.de/hilfe/verortung-von-vorschlagen/" class="tippLink" data-i18n="_argumentPanelText4_">Thema</a>
-        <span data-i18n="_argumentPanelText_">gesammelt.</span>
+        <span data-i18n="_argumentPanelText5_">gesammelt.</span>
     </div>
 
     <div ng-show="!user.isLoggedIn" class="tipp" style="text-align: center">
-        Wenn du selbst ein Argument hinzufügen möchtest, kannst du dich hier
-        <a class="link" href="/register/">anmelden</a> oder hier
-        <a class="link" href="/register/">registrieren</a>
+        <span data-i18n="_argumentLogIn_">Wenn du selbst ein Argument hinzufügen möchtest, kannst du dich hier</span>
+        <a class="link" href="/register/" data-i18n="_argumentLogIn2_">anmelden</a> <span data-i18n="_argumentLogIn3_">oder hier</span>
+        <a class="link" href="/register/" data-i18n="_argumentLogIn4_">registrieren</a>
     </div>
 </div>

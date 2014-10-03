@@ -1006,7 +1006,7 @@
     },
     {
         "key"        : "_argumentPanelText3_",
-        "value"      : "",
+        "value"      : " ",
         "description": ""
     },
     {
@@ -1017,6 +1017,36 @@
     {
         "key"        : "_argumentPanelText5_",
         "value"      : "についてがあります。",
+        "description": ""
+    },
+    {
+        "key"        : "_noArgumentsYet_",
+        "value"      : "議論は",
+        "description": ""
+    },
+    {
+        "key"        : "_noArgumentsYet2_",
+        "value"      : "ありません。",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn_",
+        "value"      : "議論を書きたい場合は",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn2_",
+        "value"      : "ログイン",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn3_",
+        "value"      : "か",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn4_",
+        "value"      : "アカウントを作成",
         "description": ""
     }
 ]

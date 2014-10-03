@@ -1019,5 +1019,35 @@
         "key"        : "_argumentPanelText5_",
         "value"      : " are collected. ",
         "description": ""
+    },
+        {
+        "key"        : "_noArgumentsYet_",
+        "value"      : "There are no",
+        "description": ""
+    },
+    {
+        "key"        : "_noArgumentsYet2_",
+        "value"      : "arguments, yet.",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn_",
+        "value"      : "If you would like to add an argument, please ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn2_",
+        "value"      : "log in",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn3_",
+        "value"      : "or ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn4_",
+        "value"      : "register",
+        "description": ""
     }
 ]

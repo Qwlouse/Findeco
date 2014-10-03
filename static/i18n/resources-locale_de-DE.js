@@ -1033,5 +1033,35 @@
         "key"        : "_argumentPanelText5_",
         "value"      : " gesammelt. ",
         "description": ""
+    },
+    {
+        "key"        : "_noArgumentsYet_",
+        "value"      : "Es gibt noch keine",
+        "description": ""
+    },
+    {
+        "key"        : "_noArgumentsYet2_",
+        "value"      : "Argumente",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn_",
+        "value"      : "Wenn du selbst ein Argument hinzufügen möchtest, kannst du dich hier ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn2_",
+        "value"      : "anmelden",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn3_",
+        "value"      : "oder hier ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn4_",
+        "value"      : "registieren",
+        "description": ""
     }
 ]
