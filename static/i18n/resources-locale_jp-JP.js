@@ -993,5 +993,30 @@
         "key"        : "_languageSettings_",
         "value"      : "言語設定",
         "description": ""
-    }
+    },
+            {
+        "key"        : "_argumentPanelText_",
+        "value"      : "ここに全部の",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText2_",
+        "value"      : "議論",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText3_",
+        "value"      : "",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText4_",
+        "value"      : "テーマ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText5_",
+        "value"      : "についてがあります。",
+        "description": ""
+    },
 ]

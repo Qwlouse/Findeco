@@ -1008,5 +1008,30 @@
         "key"        : "_languageSettings_",
         "value"      : "Spracheinstellungen",
         "description": ""
-    }
+    },
+    {
+        "key"        : "_argumentPanelText_",
+        "value"      : "In dieser Spalte werden alle ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText2_",
+        "value"      : "Argumente",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText3_",
+        "value"      : " zum ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText4_",
+        "value"      : "Thema",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText5_",
+        "value"      : " gesammelt. ",
+        "description": ""
+    },
 ]

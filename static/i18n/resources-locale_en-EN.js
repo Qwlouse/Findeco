@@ -997,5 +997,30 @@
         "key"        : "_languageSettings_",
         "value"      : "Language settings",
         "description": ""
-    }
+    },
+        {
+        "key"        : "_argumentPanelText_",
+        "value"      : "In this column all ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText2_",
+        "value"      : "arguments",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText3_",
+        "value"      : " regarding the ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText4_",
+        "value"      : "topic",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText5_",
+        "value"      : " are collected. ",
+        "description": ""
+    },
 ]
