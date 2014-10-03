@@ -1018,5 +1018,5 @@
         "key"        : "_argumentPanelText5_",
         "value"      : "についてがあります。",
         "description": ""
-    },
+    }
 ]

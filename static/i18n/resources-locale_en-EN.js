@@ -1022,5 +1022,5 @@
         "key"        : "_argumentPanelText5_",
         "value"      : " are collected. ",
         "description": ""
-    },
+    }
 ]

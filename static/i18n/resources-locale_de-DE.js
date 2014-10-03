@@ -1033,5 +1033,5 @@
         "key"        : "_argumentPanelText5_",
         "value"      : " gesammelt. ",
         "description": ""
-    },
+    }
 ]
