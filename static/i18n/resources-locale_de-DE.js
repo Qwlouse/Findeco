@@ -1138,5 +1138,30 @@
         "key"        : "_proposalText7_",
         "value"      : "einklappen",
         "description": ""
+    },
+    {
+        "key"        : "_headerProposal1_",
+        "value"      : "Es gibt zu diesem Thema ",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal2_",
+        "value"      : " konkurrierende ",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal3_",
+        "value"      : "Vorschläge",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal4_",
+        "value"      : "Es werden ",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal5_",
+        "value"      : "angezeigt.",
+        "description": ""
     }
 ]

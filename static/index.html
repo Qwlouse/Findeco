@@ -83,15 +83,15 @@
              ng-controller="FindecoMenuCtrl"></div>
 
         <form class="row tipp" action="updateGraph()" ng-controller="FindecoGraphRowCtrl">
-            Es gibt zu diesem Thema {{ graphData.nodes.length }}
-            konkurrierende <a href="http://www.findeco.de/hilfe/vorschlage/">Vorschläge</a>.
-            Es werden
+            <span data-i18n="_headerProposal1_">Es gibt zu diesem Thema </span>{{ graphData.nodes.length }}
+            <span data-i18n="_headerProposal2_">konkurrierende </span><a href="http://www.findeco.de/hilfe/vorschlage/" data-i18n="_headerProposal3_">Vorschläge</a>.
+            <span data-i18n="_headerProposal4_">Es werden</span>
             <select name="graph-filter" size="1" ng-model="graphType" ng-change="updateGraph()">
                 <option value="default" disabled data-i18n="_showRelevant_">nur relevante</option>
                 <option value="full" selected data-i18n="_showNoSpam_">alle außer Spam</option>
                 <option value="withSpam" data-i18n="_showAllKnots_">alle</option>
             </select>
-            angezeigt:
+            <span data-i18n="_headerProposal5_">angezeigt:</span>
         </form>
 
         <svg xmlns="http://www.w3.org/2000/svg" height="0" width="0" style="display:block;">
