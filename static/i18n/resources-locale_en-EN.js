@@ -1124,5 +1124,30 @@
         "key"        : "_proposalText7_",
         "value"      : "hidden",
         "description": ""
+    },
+    {
+        "key"        : "_headerProposal1_",
+        "value"      : "Regarding this topic ",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal2_",
+        "value"      : " competing ",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal3_",
+        "value"      : "Proposals",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal4_",
+        "value"      : " exist. Shown are",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal5_",
+        "value"      : ".",
+        "description": ""
     }
 ]

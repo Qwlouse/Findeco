@@ -84,7 +84,7 @@
 
         <form class="row tipp" action="updateGraph()" ng-controller="FindecoGraphRowCtrl">
             <span data-i18n="_headerProposal1_">Es gibt zu diesem Thema </span>{{ graphData.nodes.length }}
-            <span data-i18n="_headerProposal2_">konkurrierende </span><a href="http://www.findeco.de/hilfe/vorschlage/" data-i18n="_headerProposal3_">Vorschläge</a>.
+            <span data-i18n="_headerProposal2_">konkurrierende </span><a href="http://www.findeco.de/hilfe/vorschlage/" data-i18n="_headerProposal3_">Vorschläge</a>
             <span data-i18n="_headerProposal4_">Es werden</span>
             <select name="graph-filter" size="1" ng-model="graphType" ng-change="updateGraph()">
                 <option value="default" disabled data-i18n="_showRelevant_">nur relevante</option>

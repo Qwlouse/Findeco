@@ -876,7 +876,7 @@
     },
     {
         "key"        : "_showNoSpam_",
-        "value"      : "スパーム表示しない",
+        "value"      : "スパームなし",
         "description": ""
     },
     {
@@ -1121,6 +1121,31 @@
     {
         "key"        : "_proposalText7_",
         "value"      : "表示しない",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal1_",
+        "value"      : "このテーマについて",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal2_",
+        "value"      : "の",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal3_",
+        "value"      : "発起",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal4_",
+        "value"      : "があります。",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal5_",
+        "value"      : "見せる。",
         "description": ""
     }
 ]
