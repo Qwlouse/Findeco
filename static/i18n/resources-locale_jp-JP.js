@@ -181,7 +181,7 @@
     },
     {
         "key"        : "_description_",
-        "value"      : "説明",
+        "value"      : "About",
         "description": ""
     },
     {
@@ -576,7 +576,7 @@
     },
     {
         "key"        : "_newsForAllNodes_",
-        "value"      : "全部のニュース",
+        "value"      : "ニュース",
         "description": ""
     },
     {
