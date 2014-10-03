@@ -73,6 +73,8 @@ findecoApp.constant('Boxes',{
 
 });
 
+findecoApp.constant('ActivatedLanguages', ['de_DE', 'en_EN', 'jp_JP']);
+
 /*Please don't touch things below these Line except you know exactly what you are doing */
 
 findecoApp.constant('Greetingbox', {

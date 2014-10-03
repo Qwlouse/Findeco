@@ -24,8 +24,9 @@
 
 'use strict';
 
-findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator, Message, User ) {
+findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator, Message, User, Fesettings ) {
     $scope.user = User;
+    $scope.fesettings = Fesettings;
 
     // used for login and registration
     $scope.username = "";

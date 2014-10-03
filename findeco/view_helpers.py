@@ -168,7 +168,8 @@ def create_user_settings(user):
         email=user.email,
         emailChangeRequested=EmailActivation.objects.filter(user=user).count(),
         wantsMailNotification=user.profile.wants_mail_notification,
-        helpEnabled=user.profile.help_enabled
+        helpEnabled=user.profile.help_enabled,
+        preferredLanguage=user.profile.preferred_language
     )
     return user_settings
 

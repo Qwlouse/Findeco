@@ -66,6 +66,14 @@
                     </label>
                 </form>
 
+                <h2 data-i18n="_languageSettings_">Spracheinstellungen</h2>
+                <form ng-submit="storeUserSettings()">
+                    <select ng-model="user.preferredLanguage" ng-change="storeUserSettings()"
+                            ng-options="lang for lang in fesettings.activatedLanguages">
+                        <option value="" data-i18n="_default_"></option>
+                    </select>
+                </form>
+
                 <h2 data-i18n="_changeUsername_" style="margin-top: 3em;">Username</h2>
                 <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ displayNameTmp }}</p>
                 <form ng-submit="storeUserSettings()">

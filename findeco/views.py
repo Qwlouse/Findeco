@@ -484,6 +484,9 @@ def store_settings(request):
         user.profile.help_enabled = (
             request.POST['helpEnabled'].lower() == 'true')
 
+    if 'preferredLanguage' in request.POST:
+        user.profile.preferred_language = request.POST['preferredLanguage']
+
     user.save()
     return json_response({'storeSettingsResponse': {}})
 
