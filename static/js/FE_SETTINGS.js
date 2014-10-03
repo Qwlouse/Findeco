@@ -73,7 +73,7 @@ findecoApp.constant('Boxes',{
 
 });
 
-findecoApp.constant('ActivatedLanguages', ['de_DE', 'en_EN', 'jp_JP']);
+findecoApp.constant('ActivatedLanguages', ['de-DE', 'en-EN', 'jp-JP']);
 
 /*Please don't touch things below these Line except you know exactly what you are doing */
 

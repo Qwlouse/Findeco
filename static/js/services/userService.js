@@ -23,7 +23,7 @@
 
 'use strict';
 angular.module('FindecoUserService', [])
-    .factory('User', function ($http, $rootScope) {
+    .factory('User', function ($http, $rootScope, Fesettings) {
         var empty_data = {
             userInfo    : {description: "", displayName: ""},
             userSettings: {
@@ -86,6 +86,14 @@ angular.module('FindecoUserService', [])
                 userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
                 userInfo.helpEnabled = data.userSettings.helpEnabled;
                 userInfo.preferredLanguage = data.userSettings.preferredLanguage;
+                if (userInfo.preferredLanguage) {
+                    $rootScope.language = userInfo.preferredLanguage;
+                } else {
+                    if (angular.isArray(Fesettings.activatedLanguages) &&
+                        (Fesettings.activatedLanguages.length > 0)) {
+                        $rootScope.language = Fesettings.activatedLanguages[0];
+                    }
+                }
                 if (userInfo.displayName == "admin") {
                     userInfo.isAdmin = true;
                 }
@@ -129,6 +137,9 @@ angular.module('FindecoUserService', [])
                     userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
                     userInfo.helpEnabled = data.userSettings.helpEnabled;
                     userInfo.preferredLanguage = data.userSettings.preferredLanguage;
+                    if (userInfo.preferredLanguage) {
+                        $rootScope.language = userInfo.preferredLanguage;
+                    }
                     for (var i = 0; i < userInfo.followees.length; i++) {
                         userInfo.followees[i].isFollowing = 2;
                         userInfo.followees[i].path = userInfo.followees[i].displayName;
@@ -158,6 +169,14 @@ angular.module('FindecoUserService', [])
             userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
             userInfo.helpEnabled = data.userSettings.helpEnabled;
             userInfo.preferredLanguage = data.userSettings.preferredLanguage;
+            if (userInfo.preferredLanguage) {
+                $rootScope.language = userInfo.preferredLanguage;
+            } else {
+                if (angular.isArray(Fesettings.activatedLanguages) &&
+                    (Fesettings.activatedLanguages.length > 0)) {
+                    $rootScope.language = Fesettings.activatedLanguages[0];
+                }
+            }
         };
         userInfo.storeSettings = function () {
             return $http.post('/.storeSettings/', {
@@ -174,6 +193,14 @@ angular.module('FindecoUserService', [])
                     data.userSettings.wantsMailNotification = userInfo.wantsMailNotification;
                     data.userSettings.helpEnabled = userInfo.helpEnabled;
                     data.userSettings.preferredLanguage = userInfo.preferredLanguage;
+                    if (userInfo.preferredLanguage) {
+                        $rootScope.language = userInfo.preferredLanguage;
+                    } else {
+                        if (angular.isArray(Fesettings.activatedLanguages) &&
+                            (Fesettings.activatedLanguages.length > 0)) {
+                            $rootScope.language = Fesettings.activatedLanguages[0];
+                        }
+                    }
             });
         };
         userInfo.changePassword = function (newPassword) {
