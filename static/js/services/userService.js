@@ -30,8 +30,10 @@ angular.module('FindecoUserService', [])
                 email: "",
                 rsskey: "",
                 followees: [],
-                wantsMailNotification:false,
-                helpEnabled: true}
+                wantsMailNotification: false,
+                helpEnabled: true,
+                preferredLanguage: ""
+            }
         };
         var data = empty_data;
         var userInfo = {
@@ -43,8 +45,9 @@ angular.module('FindecoUserService', [])
             email      : "",
             rsskey     : "",
             followees  : [],
-            wantsMailNotification : false,
-            helpEnabled: true
+            wantsMailNotification: false,
+            helpEnabled: true,
+            preferredLanguage: ""
         };
         userInfo.register = function (displayName, password, emailAddress) {
             return $http.post('/.accountRegistration/', {
@@ -82,6 +85,7 @@ angular.module('FindecoUserService', [])
                 userInfo.followees = data.userSettings.followees;
                 userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
                 userInfo.helpEnabled = data.userSettings.helpEnabled;
+                userInfo.preferredLanguage = data.userSettings.preferredLanguage;
                 if (userInfo.displayName == "admin") {
                     userInfo.isAdmin = true;
                 }
@@ -124,6 +128,7 @@ angular.module('FindecoUserService', [])
                     userInfo.followees = data.userSettings.followees;
                     userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
                     userInfo.helpEnabled = data.userSettings.helpEnabled;
+                    userInfo.preferredLanguage = data.userSettings.preferredLanguage;
                     for (var i = 0; i < userInfo.followees.length; i++) {
                         userInfo.followees[i].isFollowing = 2;
                         userInfo.followees[i].path = userInfo.followees[i].displayName;
@@ -142,7 +147,8 @@ angular.module('FindecoUserService', [])
                 (userInfo.description != data.userInfo.description) ||
                 (userInfo.email != data.userSettings.email) ||
                 (userInfo.wantsMailNotification != data.userSettings.wantsMailNotification) ||
-                (userInfo.helpEnabled != data.userSettings.helpEnabled);
+                (userInfo.helpEnabled != data.userSettings.helpEnabled) ||
+                (userInfo.preferredLanguage != data.userSettings.preferredLanguage);
         };
         userInfo.resetChanges = function () {
             userInfo.displayName = data.userInfo.displayName;
@@ -151,6 +157,7 @@ angular.module('FindecoUserService', [])
             userInfo.email = data.userSettings.email;
             userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
             userInfo.helpEnabled = data.userSettings.helpEnabled;
+            userInfo.preferredLanguage = data.userSettings.preferredLanguage;
         };
         userInfo.storeSettings = function () {
             return $http.post('/.storeSettings/', {
@@ -158,6 +165,7 @@ angular.module('FindecoUserService', [])
                 description: userInfo.description,
                 wantsMailNotification: userInfo.wantsMailNotification,
                 helpEnabled: userInfo.helpEnabled,
+                preferredLanguage: userInfo.preferredLanguage,
                 email: userInfo.email}).success(function () {
                     data.userInfo.displayName = userInfo.displayName;
                     userInfo.newDisplayName = userInfo.displayName;
@@ -165,6 +173,7 @@ angular.module('FindecoUserService', [])
                     data.userSettings.email = userInfo.email;
                     data.userSettings.wantsMailNotification = userInfo.wantsMailNotification;
                     data.userSettings.helpEnabled = userInfo.helpEnabled;
+                    data.userSettings.preferredLanguage = userInfo.preferredLanguage;
             });
         };
         userInfo.changePassword = function (newPassword) {

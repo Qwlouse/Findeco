@@ -89,6 +89,7 @@ class UserProfile(models.Model):
 
     wants_mail_notification = models.BooleanField(default=False)
     help_enabled = models.BooleanField(default=True)
+    preferred_language = models.CharField(max_length=20, default="")
 
     # Override the save method to prevent integrity errors
     # These happen because both the post_save signal and the inlined admin
