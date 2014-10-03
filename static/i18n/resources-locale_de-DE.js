@@ -1063,5 +1063,25 @@
         "key"        : "_argumentLogIn4_",
         "value"      : "registieren",
         "description": ""
+    },
+    {
+        "key"        : "_microbloggingPanel_",
+        "value"      : "Melde dich an und du kannst die Themen bearbeiten, Argumente einbringen oder auch zu den bestehenden Vorschlägen Microbloggen.",
+        "description": ""
+    },
+    {
+        "key"        : "_loginMicrobloggingPanel_",
+        "value"      : "anmelden",
+        "description": ""
+    },
+    {
+        "key"        : "_microbloggingPanel2_",
+        "value"      : " oder hier ",
+        "description": ""
+    },
+    {
+        "key"        : "_registerMicrobloggingPanel_",
+        "value"      : "registieren",
+        "description": ""
     }
 ]
