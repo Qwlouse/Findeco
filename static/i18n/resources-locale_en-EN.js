@@ -521,7 +521,7 @@
     },
     {
         "key"        : "_rootText_",
-        "value"      : "You are in the top level. If you are new to Findeco, please try the functions at the section Spielwiese or on demo.findeco.de.",
+        "value"      : "You are in the top level. If you are new to Findeco, please try the functions at the section sandbox or on demo.findeco.de.",
         "description": ""
     },
     {
