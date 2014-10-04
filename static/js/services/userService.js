@@ -126,29 +126,27 @@ angular.module('FindecoUserService', [])
             });
         };
         userInfo.loadSettings = function () {
-            if (userInfo.isLoggedIn) {
-                var promise = $http.get('/.loadUserSettings/');
-                promise.success(function (d) {
-                    data = d.loadUserSettingsResponse;
-                    userInfo.resetChanges();
-                    userInfo.isLoggedIn = true;
-                    userInfo.rsskey = data.userSettings.rsskey;
-                    userInfo.followees = data.userSettings.followees;
-                    userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
-                    userInfo.helpEnabled = data.userSettings.helpEnabled;
-                    userInfo.preferredLanguage = data.userSettings.preferredLanguage;
-                    if (userInfo.preferredLanguage) {
-                        $rootScope.language = userInfo.preferredLanguage;
-                    }
-                    for (var i = 0; i < userInfo.followees.length; i++) {
-                        userInfo.followees[i].isFollowing = 2;
-                        userInfo.followees[i].path = userInfo.followees[i].displayName;
-                    }
-                    if (userInfo.displayName == "admin") {
-                        userInfo.isAdmin = true;
-                    }
-                });
-            }
+            var promise = $http.get('/.loadUserSettings/');
+            promise.success(function (d) {
+                data = d.loadUserSettingsResponse;
+                userInfo.resetChanges();
+                userInfo.isLoggedIn = true;
+                userInfo.rsskey = data.userSettings.rsskey;
+                userInfo.followees = data.userSettings.followees;
+                userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
+                userInfo.helpEnabled = data.userSettings.helpEnabled;
+                userInfo.preferredLanguage = data.userSettings.preferredLanguage;
+                if (userInfo.preferredLanguage) {
+                    $rootScope.language = userInfo.preferredLanguage;
+                }
+                for (var i = 0; i < userInfo.followees.length; i++) {
+                    userInfo.followees[i].isFollowing = 2;
+                    userInfo.followees[i].path = userInfo.followees[i].displayName;
+                }
+                if (userInfo.displayName == "admin") {
+                    userInfo.isAdmin = true;
+                }
+            });
         };
         userInfo.hasUnsavedChanges = function () {
             if (!userInfo.isLoggedIn) {
