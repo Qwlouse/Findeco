@@ -1163,5 +1163,15 @@
         "key"        : "_headerProposal5_",
         "value"      : "angezeigt.",
         "description": ""
+    },
+    {
+        "key"        : "_proposalTextQuestion_",
+        "value"      : "Nudel",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalTextHelp_",
+        "value"      : "Jonny ist eine davon",
+        "description": ""
     }
 ]

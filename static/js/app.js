@@ -62,7 +62,7 @@ var findecoApp = angular.module(
             when('/index', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
             when('/index.htm', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
             when('/index.html', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
-            when('/create/proposal', {templateUrl: '/static/partials/create/proposalWizzard.html', controller: 'FindecoCreateProposalCtrl'}).
+            when('/create/proposal/:param*', {templateUrl: '/static/partials/create/proposalWizzard.html', controller: 'FindecoCreateProposalCtrl'}).
             otherwise({templateUrl: '/static/partials/default.html', controller: 'FindecoDefaultCtrl'});
     }]);
 

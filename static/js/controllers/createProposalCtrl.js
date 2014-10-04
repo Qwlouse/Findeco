@@ -29,8 +29,15 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
         return Navigator.nodePath;
     };
     $scope.step = 1;
+    console.log(Navigator.type);
     $scope.setProposalType = function (type) {
         $scope.proposalType = type;
+        var paragraphs = [];
+        if (type == 'refinement') {
+            Backend.loadText(paragraphs, Navigator.nodePath).success(function () {
+                console.log(paragraphs);
+            });
+        }
         $scope.step++;
     };
     $scope.nextStep = function () {
