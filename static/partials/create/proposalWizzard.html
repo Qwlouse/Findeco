@@ -35,7 +35,7 @@
                     <textarea style="width: 100%; height: 250px;" ng-model="text"></textarea>
 
                     <ul>
-                        <li ng-repeat="subsection in subsections" style="border: 1px solid red; margin: 1em;">
+                        <li ng-repeat="subsection in subsections" style="border: 1px solid red; margin: 1em 0 1em 1em;">
                             <label for="subsection{{ $index }}Heading" data-i18n="_subsectionHeading_"></label>
                             <input id="subsection{{ $index }}Heading" type="text" ng-model="subsection.heading" />
                             <div class="tipp" style="text-align: left;">
