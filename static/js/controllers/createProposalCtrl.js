@@ -35,7 +35,24 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
         var paragraphs = [];
         if (type == 'refinement') {
             Backend.loadText(paragraphs, Navigator.nodePath).success(function () {
-                console.log(paragraphs);
+                var headingRegex = /^.*=+\s*\[\[.+\|(.*)\]\]\s*=+((?:\n|\r|.)*)$/;
+                var matches = headingRegex.exec(paragraphs[0].wikiText);
+                $scope.heading = matches[1];
+                $scope.text = matches[2];
+                paragraphs.splice(0, 1);
+                $scope.subsections = [];
+                for (var i = 0; i < paragraphs.length; i++) {
+                    if (RegExp("^" + Navigator.nodePath.replace(/\./g, "\\.") +
+                        "/?[A-Za-z0-9-_]+\\.\\d+$").test(paragraphs[i].path)) {
+                        matches = RegExp("^" + Navigator.nodePath.replace(/\./g, "\\.") +
+                            "/?([A-Za-z0-9-_]+)\\.\\d+$").exec(paragraphs[i].path);
+                        $scope.subsections.push({
+                            heading: headingRegex.exec(paragraphs[i].wikiText)[1],
+                            shorttitle: matches[1]
+                        });
+                    }
+                }
+                console.log($scope.subsections);
             });
         }
         $scope.step++;

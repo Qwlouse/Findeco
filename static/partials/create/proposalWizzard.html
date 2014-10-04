@@ -1,7 +1,7 @@
 <div class="row" style="margin-bottom: 1em;">
     <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
         <div style="position: relative; left: 50%;">
-            <div class="textColumn backgroundBox" ng-if="step == 1">
+            <div class="textColumn backgroundBox" style="max-width: 42em;" ng-if="step == 1">
 
                 <h2 data-i18n="_proposalTypeQuestion_"></h2>
 
@@ -25,14 +25,24 @@
             </div>
 
             <div ng-if="step == 2">
-                <div class="textColumn backgroundBox" style="margin-right: 1em;">
+                <div class="textColumn backgroundBox" style="margin-right: 1em; max-width: 42em;">
 
                     <h2 data-i18n="_proposalTextQuestion_"></h2>
 
                     <label for="proposalHeading" data-i18n="_proposalHeading_"></label>
-                    <input id="proposalHeading" type="text" class="proposal-heading" />
+                    <input id="proposalHeading" type="text" ng-model="heading" />
 
                     <textarea style="width: 100%; height: 250px;" ng-model="text"></textarea>
+
+                    <ul>
+                        <li ng-repeat="subsection in subsections" style="border: 1px solid red; margin: 1em;">
+                            <label for="subsection{{ $index }}Heading" data-i18n="_subsectionHeading_"></label>
+                            <input id="subsection{{ $index }}Heading" type="text" ng-model="subsection.heading" />
+                            <div class="tipp" style="text-align: left;">
+                                {{ getNodePath() }}/{{ subsection.shorttitle }}.#
+                            </div>
+                        </li>
+                    </ul>
 
                     <div style="clear: both;"></div>
 
@@ -44,7 +54,7 @@
             </div>
 
             <div ng-if="step == 3">
-                <div class="textColumn backgroundBox" style="margin-right: 1em;">
+                <div class="textColumn backgroundBox" style="margin-right: 1em; max-width: 42em;">
 
                     <h2 data-i18n="_argumentTextQuestion_"></h2>
 
@@ -62,7 +72,7 @@
                 </div>
             </div>
 
-            <div class="textColumn backgroundBox" style="margin-right: 1em;" ng-if="step == 4">
+            <div class="textColumn backgroundBox" style="margin-right: 1em; max-width: 42em;" ng-if="step == 4">
 
                     <h2 data-i18n="_summaryHeading_"></h2>
 
@@ -76,7 +86,7 @@
 
 
 
-            <div style="clear: both; margin-top: 1em;">
+            <div style="clear: both; margin: 1em 0 8em 0; max-width: 42em;">
                 <button class="green right" data-i18n="_nextButton_"
                      style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></button>
                 <button class="green right" data-i18n="_createButton_"
