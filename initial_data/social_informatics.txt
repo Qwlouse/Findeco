@@ -1,0 +1,57 @@
+= Social Informatics =
+Social informatics is the study of information and communication tools in cultural or institutional contexts.
+Another definition is the interdisciplinary study of the design, uses and consequences of information technologies that
+takes into account their interaction with institutional and cultural contexts. A transdisciplinary field, social
+informatics is part of a larger body of socio-economic research that examines the ways in which the technological
+artifact and human social context mutually constitute the information and communications technology (ICT) ensemble.
+Some proponents of social informatics use the relationship of a biological community to its environment as an analogy
+for the relationship of tools to people who use them. The Center for Social Informatics founded by the late Dr. Rob
+Kling, an early champion of the field’s ideas, defines the field thus:
+
+//Social Informatics (SI) refers to the body of research and study that examines social aspects of computerization –
+including the roles of information technology in social and organizational change, the uses of information technologies
+in social contexts, and the ways that the social organization of information technologies is influenced by social
+forces and social practices.//
+
+== Research ==
+Historically, social informatics research has been strong in the Scandinavian countries, the UK and Northern Europe.
+Within North America, the field is represented largely through independent research efforts at a number of diverse
+institutions.
+
+Social informatics research diverges from earlier, deterministic (both social and technological) models for measuring
+the social impacts of technology. Such technological deterministic models characterized information technologies as
+tools to be installed and used with a pre-determined set of impacts on society which are dictated by the technology’s
+stated capabilities. Similarly, the socially deterministic theory represented by some proponents of the social
+construction of technology (SCOT) or social shaping of technology theory as advocated by Williams & Edge (1996) see
+technology as the product of human social forces. In contrast, some social informatics methodologies consider the
+context surrounding technology and the material properties of the technology to be equally important: the people who
+will interact with a system, the organizational policies governing work practice, and support resources. This
+contextual inquiry produces "nuanced conceptual understanding" of systems that can be used to examine issues like
+access to technology, electronic forms of communication, and large-scale networks.
+
+Research in social informatics can be categorized into three orientations. Normative research focuses on the
+development of theories based on empirical analysis that may be used to develop organizational policies and work
+practices. The heart of such analyses lies in socio-technical interaction networks, a framework built around the idea
+that humans and the technologies they build are "co-constitutive", bound together, and that any examination of one
+must necessarily consider the other. Studies of the analytical orientation develop theory or define methodologies to
+contribute to theorizing in institutional settings.[12] Critical analysis, like Lucy Suchman’s examination of
+articulation work, examine technological solutions from non-traditional perspectives in order to influence design
+and implementation.
+
+== Future ==
+Social informatics is a young intellectual movement and its future is still being defined. However, because SST
+theorists such as Williams and Edge suggest that the amorphous boundaries between humans and technology that emerge
+in social shaping technology research indicate that technology is not a distinct social endeavor worthy of individual
+study, indicating that there is a need for social informatics research that bridges the gap between technological and
+social determinism. This observation, coupled with the many fields that contribute research, suggest a future in which
+social informatics theories and concepts settle to form a substrate, an "indispensable analytical foundation" for work
+in other disciplines.
+
+== Social Informatics in education ==
+Social Informatics is also about teaching social issues of computing to Computer Science students. Depending on
+educational traditions, social informatics is scattered in the curriculum of different disciplines, as well as in
+Computer Science, Information Science, Informatics (Europe) and Web Sociology.[18] In some instances there might be a
+lack of understanding of why teaching social issues of computing is important, both by individual lecturers and
+students, resulting in a view that Social Informatics is boring and without importance.[19] Some researchers have
+pointed out that in order to create awareness of the importance of social issues of computing, one has to focus on
+didactics of Social Informatics.

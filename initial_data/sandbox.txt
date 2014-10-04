@@ -1,0 +1,30 @@
+= Sandbox =
+Use this area to try out how Findeco works. If you want to create something meaningful use another area.
+
+== Subsections ==
+Every proposal in Findeco consists of some text and a list of subsections under this text. The list of subsections may
+be empty. Every subsection represents its own discussion with alternatives and refinements. However in the parent layer
+you will not see anything of this discussion as only the most popular text from there gets included under the heading
+of the subsection.
+
+=== Subsections of Subsections ===
+It is important to navigate to the section you want to refine or where you want to propose something new. There you
+find the relevant comments (microblogging) and arguments.
+
+== Arguments ==
+Arguments are always next to the proposal where they were created. So please make sure to navigate to the right
+proposal before creating your argument because otherwise it will be misplaced and users may ignore it.
+
+=== Arguments for Refinements ===
+For every refinement of an existing proposal you have to supply an argument which explains why the refinement was
+necessary. This argument is added at the refined proposal.
+
+Refinements also inherit copies of all arguments. If they do not match the text of the proposal anymore you can remove
+your follow mark.
+
+== Improving the Structure ==
+If you find a proposal with a bad structure you may improve the structure by creating a refinement. You can reorder
+the subsections and you can add new subsections if you need them. You can even refine a proposal from somewhere else
+to build a new subsection of your refined proposal.
+
+Every subsection marks a new topic so keep different ideas separated to increase the productivity of your discussions.
