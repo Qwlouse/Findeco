@@ -27,6 +27,7 @@ angular.module('FindecoNavigatorService', [])
         var nodePattern = "[a-zA-Z][a-zA-Z0-9_-]{0,19}\\.[0-9]+";
         // TODO: disallow duplicated slashes.
         var rootPath = new RegExp("^/*$");
+        var createProposalPath = new RegExp("/+create/proposal/(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
         var nodePath = new RegExp("/+(" + nodePattern + "/+)*(" + nodePattern + ")/*$");
         var argumentPath = new RegExp("/+(" + nodePattern + "/+)*(" + nodePattern + ")\\.(pro|neut|con)\\.[0-9]+/*$");
         var userPath = new RegExp("^/user/[a-zA-Z][a-zA-Z0-9-_]{0,19}/*$");
@@ -65,6 +66,10 @@ angular.module('FindecoNavigatorService', [])
                 location.type = "/";
             } else if (location.parts.length == 1 && location.parts[0] == 'index') {
                 location.type = 'index';
+            } else if (path.match(createProposalPath)) {
+                location.type = "create";
+                location.nodePath = normalizeSlashes(nodePath.exec(location.path)[0]);
+                location.argumentPath = location.nodePath
             } else if (path.match(nodePath)) {
                 location.type = "node";
                 location.nodePath = normalizeSlashes(nodePath.exec(location.path)[0]);

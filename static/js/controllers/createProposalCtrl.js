@@ -29,7 +29,6 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
         return Navigator.nodePath;
     };
     $scope.step = 1;
-    console.log(Navigator.type);
     $scope.setProposalType = function (type) {
         $scope.proposalType = type;
         var paragraphs = [];
@@ -52,7 +51,6 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
                         });
                     }
                 }
-                console.log($scope.subsections);
             });
         }
         $scope.step++;
