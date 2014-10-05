@@ -266,3 +266,25 @@ div.left-argument-box {
 .startBoxLink {
     float: right;
 }
+
+.add-item-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('../images/Plus-Icon.svg') no-repeat 0 0;
+}
+
+.add-item-icon:hover {
+    background-position: -20px 0;
+}
+
+.delete-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('../images/Trash-Icon.svg') no-repeat 0 0;
+}
+
+.delete-icon:hover {
+    background-position: -20px 0;
+}

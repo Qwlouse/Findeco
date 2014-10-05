@@ -1165,13 +1165,13 @@
         "description": ""
     },
     {
-        "key"        : "_proposalTextQuestion_",
-        "value"      : "Nudel",
+        "key"        : "_proposalHeading_",
+        "value"      : "Überschrift:",
         "description": ""
     },
     {
-        "key"        : "_proposalTextHelp_",
-        "value"      : "Jonny ist eine davon",
+        "key"        : "_addSubsection_",
+        "value"      : "Abschnitt hinzufügen",
         "description": ""
     }
 ]
