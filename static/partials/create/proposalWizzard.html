@@ -27,12 +27,15 @@
             <div ng-if="step == 2">
                 <div class="textColumn backgroundBox" style="margin-right: 1em; max-width: 42em;">
                     <label for="proposalHeading" data-i18n="_proposalHeading_"></label>
-                    <input id="proposalHeading" type="text" ng-model="heading" style="font-size: 200%;" />
+                    <input id="proposalHeading" type="text"
+                           ng-model="$parent.heading"
+                           style="font-size: 200%;" />
 
-                    <textarea style="width: calc(100% - 6px); height: 250px;" ng-model="text"></textarea>
+                    <textarea style="width: calc(100% - 6px); height: 250px;"
+                              ng-model="$parent.text"></textarea>
 
                     <ul>
-                        <li ng-repeat="subsection in subsections"
+                        <li ng-repeat="subsection in subsections" draggable="true"
                             style="border: 1px solid black; margin: 1em 0; padding: 0.5em;">
                             <a class="delete-icon" style="float: right; margin: 0 0 0.5em 0.5em; cursor: pointer;"></a>
                             <h2 style="font-size: 140%; margin-top: 0;" type="text">
@@ -89,15 +92,16 @@
 
 
             <div style="clear: both; margin: 1em 0 8em 0; max-width: 42em;">
-                <button class="green right" data-i18n="_nextButton_"
-                     style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></button>
+                <button class="right" data-i18n="_nextButton_"
+                        ng-class="{'green': (step != 2) || proposalIsChanged()}"
+                        style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></button>
                 <button class="green right" data-i18n="_createButton_"
-                     style="margin-left: 1em;" ng-click="submit();" ng-if="step == 4"></button>
+                        style="margin-left: 1em;" ng-click="submit();" ng-if="step == 4"></button>
                 <button class="red right" data-i18n="_backButton_"
-                     style="margin-left: 1em;" ng-click="previousStep();"
-                     ng-if="step > 1"></button>
+                        style="margin-left: 1em;" ng-click="previousStep();"
+                        ng-if="step > 1"></button>
                 <button class="red right" data-i18n="_cancelButton_"
-                     ng-if="step == 1"></button>
+                        ng-if="step == 1"></button>
             </div>
         </div>
     </div>

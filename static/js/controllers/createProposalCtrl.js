@@ -29,6 +29,15 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
         return Navigator.nodePath;
     };
     $scope.step = 1;
+    $scope.heading = "";
+    $scope.text = "";
+    $scope.subsections = [];
+    $scope.onlineState = {
+        heading: "",
+        text: "",
+        subsections: []
+    };
+
     $scope.setProposalType = function (type) {
         $scope.proposalType = type;
         var paragraphs = [];
@@ -51,22 +60,50 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
                         });
                     }
                 }
+                $scope.onlineState = {
+                    heading: angular.copy($scope.heading),
+                    text: angular.copy($scope.text),
+                    subsections: angular.copy($scope.subsections)
+                };
             });
         }
         $scope.step++;
     };
+
     $scope.nextStep = function () {
-        $scope.step++;
-        if (($scope.step == 3) && ($scope.proposalType != 'refinement')) {
+        if (($scope.step != 2) || $scope.proposalIsChanged()) {
             $scope.step++;
+            if (($scope.step == 3) && ($scope.proposalType != 'refinement')) {
+                $scope.step++;
+            }
         }
     };
+
     $scope.previousStep = function () {
         $scope.step--;
         if (($scope.step == 3) && ($scope.proposalType != 'refinement')) {
             $scope.step--;
         }
     };
+
+    $scope.proposalIsChanged = function () {
+        if (!angular.equals($scope.onlineState.heading, $scope.heading)) {
+            return true;
+        }
+        if (!angular.equals($scope.onlineState.text, $scope.text)) {
+            return true;
+        }
+        if ($scope.subsections.length != $scope.onlineState.subsections.length) {
+            return true;
+        }
+        for (var i = 0; i < $scope.subsections.length; i++) {
+            if (!angular.equals($scope.subsections[i], $scope.onlineState.subsections[i])) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     $scope.submit = function () {
         alert("_proposalSubmittedAlert_");
     };
