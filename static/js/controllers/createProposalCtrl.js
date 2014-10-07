@@ -37,6 +37,7 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
         text: "",
         subsections: []
     };
+    $scope.dragPosition = 0;
 
     $scope.setProposalType = function (type) {
         $scope.proposalType = type;
@@ -102,6 +103,66 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
             }
         }
         return false;
+    };
+
+    $scope.startDrag = function ($event, subsection, index) {
+        $event.preventDefault();
+        $scope.dragInfo = {
+            y: $event.clientY,
+            grabOffset: $event.clientY - $event.target.getBoundingClientRect().top,
+            subSection: subsection,
+            index: index
+        };
+    };
+
+    $scope.drag = function ($event, subsection) {
+        if ($scope.dragInfo) {
+            $scope.dragPosition = $event.clientY - $scope.dragInfo.y;
+            var prevTop = -1000;
+            var prevHeight = 0;
+            var nextTop = 10000;
+            var nextHeight = 0;
+            var myTop = 0;
+            var i = 0;
+            var rect;
+            angular.forEach(document.getElementById('subsection-list').childNodes, function (node) {
+                if ((node.nodeType == 1) && (i < $scope.subsections.length)) {
+                    if (i == $scope.dragInfo.index - 1) {
+                        rect = node.getBoundingClientRect();
+                        prevTop = rect.top;
+                        prevHeight = rect.bottom - rect.top;
+                    }
+                    if (i == $scope.dragInfo.index) {
+                        rect = node.getBoundingClientRect();
+                        myTop = rect.top;
+                    }
+                    if (i == $scope.dragInfo.index + 1) {
+                        rect = node.getBoundingClientRect();
+                        nextTop = rect.top;
+                        nextHeight = rect.bottom - rect.top;
+                    }
+                    i++;
+                }
+            });
+            if (myTop < prevTop + prevHeight / 2) {
+                $scope.dragPosition = myTop - prevTop;
+                $scope.dragInfo.y = prevTop + $scope.dragInfo.grabOffset;
+                $scope.subsections.splice($scope.dragInfo.index, 1);
+                $scope.dragInfo.index--;
+                $scope.subsections.splice($scope.dragInfo.index, 0, $scope.dragInfo.subSection);
+            } else if (myTop > nextTop - nextHeight / 2) {
+                $scope.dragPosition = myTop - nextTop;
+                $scope.dragInfo.y = nextTop + $scope.dragInfo.grabOffset;
+                $scope.subsections.splice($scope.dragInfo.index, 1);
+                $scope.dragInfo.index++;
+                $scope.subsections.splice($scope.dragInfo.index, 0, $scope.dragInfo.subSection);
+            }
+        }
+    };
+
+    $scope.stopDrag = function () {
+        $scope.dragInfo = undefined;
+        $scope.dragPosition = 0;
     };
 
     $scope.submit = function () {
