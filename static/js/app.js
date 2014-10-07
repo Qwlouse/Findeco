@@ -38,7 +38,7 @@ var findecoApp = angular.module(
     )
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
-            //when('/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: 'FindecoCreateCtrl'}).
+            when('/old/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: 'FindecoCreateCtrl'}).
             when('/about', {templateUrl: '/static/partials/about.html', controller: 'FindecoCustomContentCtrl'}).
             when('/diff/:param*', {templateUrl: '/static/partials/diff.html', controller: 'FindecoDiffCtrl'}).
             when('/data_privacy', {templateUrl: '/static/partials/dataPrivacy.html', controller: 'FindecoCustomContentCtrl'}).
