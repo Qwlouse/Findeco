@@ -168,5 +168,9 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
     $scope.submit = function () {
         alert("_proposalSubmittedAlert_");
     };
+
+    $scope.cancelProposal = function () {
+        Navigator.changePath(Navigator.nodePath);
+    }
 });
 
