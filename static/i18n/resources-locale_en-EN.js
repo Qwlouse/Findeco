@@ -1149,5 +1149,20 @@
         "key"        : "_headerProposal5_",
         "value"      : ".",
         "description": ""
+    },
+    {
+        "key"        : "_summaryHeading_",
+        "value"      : "Summary",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText_",
+        "value"      : "Your proposal:",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentText_",
+        "value"      : "Your argument:",
+        "description": ""
     }
 ]

@@ -1147,5 +1147,20 @@
         "key"        : "_headerProposal5_",
         "value"      : "見せる。",
         "description": ""
+    },
+    {
+        "key"        : "_summaryHeading_",
+        "value"      : "概説",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText_",
+        "value"      : "テキスト：",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentText_",
+        "value"      : "議論:",
+        "description": ""
     }
 ]

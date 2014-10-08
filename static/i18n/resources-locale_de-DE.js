@@ -1173,5 +1173,20 @@
         "key"        : "_addSubsection_",
         "value"      : "Abschnitt hinzufügen",
         "description": ""
+    },
+    {
+        "key"        : "_summaryHeading_",
+        "value"      : "Zusammenfassung",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText_",
+        "value"      : "Dein Vorschlag:",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentText_",
+        "value"      : "Dein Argument:",
+        "description": ""
     }
 ]
