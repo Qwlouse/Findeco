@@ -57,7 +57,8 @@ userSettings_schema = {
     'rsskey': string,
     'emailChangeRequested': integer,
     'wantsMailNotification': boolean,
-    'helpEnabled': boolean
+    'helpEnabled': boolean,
+    'preferredLanguage': string,
 }
 authorGroup_schema = [userInfo_schema]
 originGroup_schema = ["path", None]
