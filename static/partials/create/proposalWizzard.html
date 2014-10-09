@@ -42,7 +42,7 @@
                             class="backgroundBox"
                             style="border: 1px solid black; margin: 1em 0; padding: 0.5em; cursor: move; position: relative;"
                             ng-style="{'top': dragInfo.subSection == subsection ? dragPosition + 'px' : '0', 'z-index': dragInfo.subSection == subsection ? '1000' : 'inherited'}">
-                            <a class="delete-icon" style="float: right; margin: 0 0 0.5em 0.5em; cursor: pointer;"></a>
+                            <a class="delete-icon" style="float: right; margin: 0 0 0.5em 0.5em; cursor: pointer;" ng-click="deleteSubSection($index)"></a>
                             <h2 style="font-size: 140%; margin-top: 0;" type="text">
                                 {{ subsection.heading }}
                             </h2>

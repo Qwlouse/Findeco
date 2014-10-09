@@ -165,6 +165,10 @@ findecoApp.controller('FindecoCreateProposalCtrl', function ($scope, $routeParam
         $scope.dragPosition = 0;
     };
 
+    $scope.deleteSubSection = function (index) {
+        $scope.subsections.splice(index, 1);
+    };
+
     $scope.submit = function () {
         alert("_proposalSubmittedAlert_");
     };
