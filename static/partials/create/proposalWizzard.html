@@ -43,16 +43,29 @@
                             style="border: 1px solid black; margin: 1em 0; padding: 0.5em; cursor: move; position: relative;"
                             ng-style="{'top': dragInfo.subSection == subsection ? dragPosition + 'px' : '0', 'z-index': dragInfo.subSection == subsection ? '1000' : 'inherited'}">
                             <a class="delete-icon" style="float: right; margin: 0 0 0.5em 0.5em; cursor: pointer;" ng-click="deleteSubSection($index)"></a>
-                            <h2 style="font-size: 140%; margin-top: 0;" type="text">
+                            <h2 style="font-size: 140%; margin-top: 0;" type="text" ng-hide="subsection.newSection">
                                 {{ subsection.heading }}
                             </h2>
+                            <label for="proposalHeadingSubsection{{ $index }}" ng-show="subsection.newSection"
+                                   data-i18n="_proposalHeading_"></label>
+                            <input id="proposalHeadingSubsection{{ $index }}" type="text"
+                                   ng-show="subsection.newSection" ng-model="subsection.heading"
+                                   onmousedown="event.stopPropagation()"
+                                   style="font-size: 150%;" />
                             <div class="tipp" style="text-align: left;">
-                                {{ getNodePath() }}/{{ subsection.shorttitle }}.#
+                                {{ getNodePath() }}/<span ng-hide="subsection.newSection">{{ subsection.shorttitle }}.#
+                                </span><input type="text" onmousedown="event.stopPropagation()"
+                                              placeholder="{{ createShortTitle(subsection.heading) }}"
+                                              ng-show="subsection.newSection"
+                                              ng-model="subsection.shorttitle" />
                             </div>
+                            <textarea style="width: calc(100% - 6px); height: 150px;"
+                                      ng-show="subsection.newSection" onmousedown="event.stopPropagation()"
+                                      ng-model="subsection.text"></textarea>
                             <div style="clear: both;"></div>
                         </li>
                         <li>
-                            <a ng-click="" style="cursor: pointer;">
+                            <a ng-click="addSubSection()" style="cursor: pointer;">
                                 <div class="add-item-icon" style="position: relative; top: 5px;"></div>
                                 <span data-i18n="_addSubsection_"></span>
                             </a>
