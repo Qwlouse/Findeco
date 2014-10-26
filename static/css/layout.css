@@ -288,3 +288,26 @@ div.left-argument-box {
 .delete-icon:hover {
     background-position: -20px 0;
 }
+
+/* Registration Form */
+
+.registration-form .form-group {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.registration-form input {
+    display: inline-block;
+}
+
+.registration-form input.ng-invalid.ng-dirty {
+    border-color: #680500;
+}
+
+.registration-form input.ng-valid.ng-dirty {
+    border-color: #00510A;
+}
+
+.registration-form .help-error {
+    color: #8E0700;
+}

@@ -3,16 +3,55 @@
         <div class="textColumn backgroundBox">
             <h1> {{'_accountRegistrationFormTitle_'|i18n}} </h1>
             {{'_accountRegistrationText_'|i18n}}
-            <form ng-submit="register()">
-                <input type="text" placeholder="{{'_accountUsername_'|i18n}}" ng-model="username"><br/>
-                <input type="password" placeholder="{{'_accountPassword_'|i18n}}" ng-model="password"><br/>
-                <input type="password" placeholder="{{'_accountPasswordRepeat_'|i18n}}" ng-model="password2"><br/>
-                <input type="text" placeholder="{{'_accountEmail_'|i18n}}" ng-model="mail"><br/>
-                <input type="checkbox" ng-model="TOS" id="TOS_checkbox">
-                <label for="TOS_checkbox">{{ '_accountReadTOSBeginning_'|i18n }}<a href="/terms_of_use">{{ '_accountReadTOSLink_'|i18n }}</a>{{ '_accountReadTOSEnd_'|i18n }}</label><br/>
-                <input type="checkbox" ng-model="DPR" id="DPR_Checkbox">
-                <label for="DPR_Checkbox">{{ '_accountReadDPRBeginning_'|i18n }}<a href="/data_privacy">{{ '_accountReadDPRLink_'|i18n }}</a>{{ '_accountReadDPREnd_'|i18n }}</label><br/>
-                <input type="submit" value="{{'_accountRegistrationBtn_'|i18n}}">
+            <form name="userRegistration" ng-submit="register()" class="registration-form" novalidate>
+
+                <!-- USERNAME -->
+                <div class="form-group">
+                    <label>{{'_accountUsername_'|i18n}}</label><br>
+                    <input type="text" name="username" class="form-control"
+                           ng-model="username"
+                           ng-minlength="2" ng-maxlength="20"
+                           ng-pattern="/^[a-zA-Z][a-zA-Z0-9-_]*$/"
+                           required>
+                    <p ng-show="userRegistration.username.$error.minlength" class="help-block">Username is too short.</p>
+                    <p ng-show="userRegistration.username.$error.maxlength" class="help-block">Username is too long.</p>
+                    <p ng-show="userRegistration.username.$error.pattern" class="help-block">Username has to start with a letter and can only contain the special characters - and _.</p>
+                    <span ng-show="attemptedRegister && userRegistration.username.$error.required" class="help-error"> Required</span>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="form-group">
+                    <label>{{'_accountPassword_'|i18n}}</label><br>
+                    <input name="password" type="password" placeholder="{{'_accountPassword_'|i18n}}" ng-model="password" required>
+                    <span ng-show="attemptedRegister && userRegistration.password.$error.required" class="help-error"> Required</span>
+                    <br/>
+                    <input name="passwordConfirm" type="password" placeholder="{{'_accountPasswordRepeat_'|i18n}}" ng-model="password2" match="password" required>
+                    <span ng-show="attemptedRegister && userRegistration.passwordConfirm.$error.required" class="help-error"> Required</span>
+                    <br/>
+
+                    <p ng-show="userRegistration.passwordConfirm.$error.match" class="help-block">Passwords don't match.</p>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label>{{'_accountEmail_'|i18n}}</label><br>
+                    <input name='email' type="email" placeholder="{{'_accountEmail_'|i18n}}" ng-model="mail" required>
+                    <span ng-show="attemptedRegister && userRegistration.email.$error.required" class="help-error"> Required</span>
+                </div>
+
+                <!-- TERMS OF SERVICE AND DATA PRIVACY -->
+                <div class="form-group">
+                    <input type="checkbox" ng-model="TOS" name="TOS_checkbox" required>
+                    <label for="TOS_checkbox">{{ '_accountReadTOSBeginning_'|i18n }}<a href="/terms_of_use">{{ '_accountReadTOSLink_'|i18n }}</a>{{ '_accountReadTOSEnd_'|i18n }}</label>
+                    <span ng-show="attemptedRegister && userRegistration.TOS_checkbox.$error.required" class="help-error"> Required</span>
+                    <br/>
+                    <input type="checkbox" ng-model="DPR" name="DPR_Checkbox" required>
+                    <label for="DPR_Checkbox">{{ '_accountReadDPRBeginning_'|i18n }}<a href="/data_privacy">{{ '_accountReadDPRLink_'|i18n }}</a>{{ '_accountReadDPREnd_'|i18n }}</label>
+                    <span ng-show="attemptedRegister && userRegistration.DPR_Checkbox.$error.required" class="help-error"> Required</span>
+                </div>
+
+                <input ng-show="!attemptedRegister || !allFieldsFilledCorrectly" type="submit" value="{{'_accountRegistrationBtn_'|i18n}}">
+                <p ng-show="attemptedRegister && allFieldsFilledCorrectly"> Sucessfully filled: Processing your request...</p>
             </form>
         </div>
     </div>
