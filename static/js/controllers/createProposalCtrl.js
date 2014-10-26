@@ -125,36 +125,36 @@ findecoApp.controller(
                 var nextTop = 10000;
                 var nextHeight = 0;
                 var myTop = 0;
+                var myHeight = 0;
                 var i = 0;
                 var rect;
                 angular.forEach(document.getElementById('subsection-list').childNodes, function (node) {
                     if ((node.nodeType == 1) && (i < $scope.subsections.length)) {
+                        rect = node.getBoundingClientRect();
                         if (i == $scope.dragInfo.index - 1) {
-                            rect = node.getBoundingClientRect();
                             prevTop = rect.top;
                             prevHeight = rect.bottom - rect.top;
                         }
                         if (i == $scope.dragInfo.index) {
-                            rect = node.getBoundingClientRect();
                             myTop = rect.top;
+                            myHeight = rect.bottom - rect.top;
                         }
                         if (i == $scope.dragInfo.index + 1) {
-                            rect = node.getBoundingClientRect();
                             nextTop = rect.top;
                             nextHeight = rect.bottom - rect.top;
                         }
                         i++;
                     }
                 });
-                if (myTop < prevTop + prevHeight / 2) {
+                if (myTop < prevTop + Math.min(myHeight, prevHeight) / 2) {
                     $scope.dragPosition = myTop - prevTop;
                     $scope.dragInfo.y = prevTop + $scope.dragInfo.grabOffset;
                     $scope.subsections.splice($scope.dragInfo.index, 1);
                     $scope.dragInfo.index--;
                     $scope.subsections.splice($scope.dragInfo.index, 0, $scope.dragInfo.subSection);
-                } else if (myTop > nextTop - nextHeight / 2) {
+                } else if (myTop > nextTop - Math.min(myHeight, nextHeight) / 2) {
                     $scope.dragPosition = myTop - nextTop;
-                    $scope.dragInfo.y = nextTop + $scope.dragInfo.grabOffset;
+                    $scope.dragInfo.y = nextTop + $scope.dragInfo.grabOffset + nextHeight - myHeight;
                     $scope.subsections.splice($scope.dragInfo.index, 1);
                     $scope.dragInfo.index++;
                     $scope.subsections.splice($scope.dragInfo.index, 0, $scope.dragInfo.subSection);
