@@ -35,6 +35,9 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
     $scope.mail = "";
     $scope.TOS = false;
     $scope.DPR = false;
+    $scope.attemptedRegister = false;
+    $scope.allFieldsFilledCorrectly = false;
+    $scope.serverError = false;
 
     $scope.force_get_username_password = function() {
         // HACK to make autofill of browsers work.
@@ -53,31 +56,22 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
     };
 
     $scope.register = function () {
-        var fields_filled_correctly = true;
-        if (($scope.password == '') || ($scope.mail == '') || ($scope.username == '')) {
-            Message.send("error", "_accountFieldsMissing_");
-            fields_filled_correctly = false;
-        }
-        if ($scope.password != $scope.password2) {
-            Message.send("error", "_accountPasswordsNotMatching_");
-            fields_filled_correctly = false;
-        }
+        $scope.attemptedRegister = true;
+        $scope.serverError = false;
+        $scope.allFieldsFilledCorrectly =
+            ($scope.password != '') &&
+            ($scope.mail != '') &&
+            ($scope.username != '') &&
+            ($scope.password == $scope.password2) &&
+            ($scope.TOS == true) &&
+            ($scope.DPR == true);
 
-        if ($scope.TOS != true) {
-            Message.send("error", "_accountTosNotChecked_");
-            fields_filled_correctly = false;
-        }
-        if ($scope.DPR != true) {
-            Message.send("error", "_accountDprNotChecked_");
-            fields_filled_correctly = false;
-        }
-        if (fields_filled_correctly) {
+        if ($scope.allFieldsFilledCorrectly) {
             User.register($scope.username, $scope.password, $scope.mail).success(function () {
-                var msg = $rootScope.$on('$routeChangeSuccess', function() {
-                    Message.send("success", "_accountCheckEmails_");
-                    msg();
-                });
-                Navigator.changePath('/');
+                Navigator.changePath('/'); // TODO: Special site
+            }).error(function(d, e, f) {
+                $scope.serverError = d.errorResponse;
+                $scope.allFieldsFilledCorrectly = false;
             });
         }
     };

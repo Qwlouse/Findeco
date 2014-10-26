@@ -51,8 +51,7 @@ angular.module('FindecoServices', [])
                 },
                 function (response) {
                     if (response.data.errorResponse != undefined) {
-                        Message.send("error", response.data.errorResponse.errorID);
-                        delete response.data.errorResponse;
+                        Message.send("error", response.data.errorResponse.errorID);  // TODO: what to do with this?
                     }
                     return $q.reject(response);
                 }
