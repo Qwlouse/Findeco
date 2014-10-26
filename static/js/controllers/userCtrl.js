@@ -37,6 +37,7 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
     $scope.DPR = false;
     $scope.attemptedRegister = false;
     $scope.allFieldsFilledCorrectly = false;
+    $scope.serverError = false;
 
     $scope.force_get_username_password = function() {
         // HACK to make autofill of browsers work.
@@ -56,6 +57,7 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
 
     $scope.register = function () {
         $scope.attemptedRegister = true;
+        $scope.serverError = false;
         $scope.allFieldsFilledCorrectly =
             ($scope.password != '') &&
             ($scope.mail != '') &&
@@ -66,12 +68,9 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
 
         if ($scope.allFieldsFilledCorrectly) {
             User.register($scope.username, $scope.password, $scope.mail).success(function () {
-                var msg = $rootScope.$on('$routeChangeSuccess', function() {
-                    msg();
-                });
-                Navigator.changePath('/');
-            }).error(function() {
-                alert('Something went wrong! ;-(');
+                Navigator.changePath('/'); // TODO: Special site
+            }).error(function(d, e, f) {
+                $scope.serverError = d.errorResponse;
                 $scope.allFieldsFilledCorrectly = false;
             });
         }

@@ -1188,5 +1188,35 @@
         "key"        : "_argumentText_",
         "value"      : "Dein Argument:",
         "description": ""
+    },
+    {
+        "key"        : "_usernameTooLong_",
+        "value"      : "Benutzername ist zu lang.",
+        "description": ""
+    },
+    {
+        "key"        : "_usernameTooShort_",
+        "value"      : "Benutzername ist zu kurz.",
+        "description": ""
+    },
+    {
+        "key"        : "_usernameInvalidFormat_",
+        "value"      : "Benutzername muss mit einem Buchstaben beginnen und darf nur die Sonderzeichen - und _ enthalten.",
+        "description": ""
+    },
+    {
+        "key"        : "_required_",
+        "value"      : "benötigt",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordMismatch_",
+        "value"      : "Passwörter stimmen nicht überein!",
+        "description": ""
+    },
+    {
+        "key"        : "_registrationProcessing_",
+        "value"      : "Erfolgreich ausgefüllt: Anfrage wird bearbeitet...",
+        "description": ""
     }
 ]
