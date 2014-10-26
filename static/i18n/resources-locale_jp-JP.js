@@ -1162,5 +1162,35 @@
         "key"        : "_argumentText_",
         "value"      : "議論:",
         "description": ""
+    },
+    {
+        "key"        : "_usernameTooLong_",
+        "value"      : "Username is too long.",
+        "description": ""
+    },
+    {
+        "key"        : "_usernameTooShort_",
+        "value"      : "Username is too short.",
+        "description": ""
+    },
+    {
+        "key"        : "_usernameInvalidFormat_",
+        "value"      : "Username has to start with a letter and can only contain the special characters - and _.",
+        "description": ""
+    },
+    {
+        "key"        : "_required_",
+        "value"      : "required",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordMismatch_",
+        "value"      : "Passwords don't match!",
+        "description": ""
+    },
+    {
+        "key"        : "_registrationProcessing_",
+        "value"      : "Sucessfully filled: Processing your request...",
+        "description": ""
     }
 ]
