@@ -1,0 +1,15 @@
+<div class="textColumn backgroundBox" style="margin-right: 1em; max-width: 42em;">
+
+    <label for="argumentHeading" data-i18n="_argumentHeading_"></label>
+    <input id="argumentHeading" type="text"
+           ng-model="$parent.$parent.argumentHeading" style="font-size: 200%;" />
+
+    <textarea style="width: calc(100% - 6px); height: 250px;" ng-model="$parent.$parent.argumentText"></textarea>
+
+    <div style="clear: both;"></div>
+
+    <p ng-if="isRefinement()" class="tipp" data-i18n="_refinementArgumentTextHelp_" style="margin-top: 1em;"></p>
+    <p ng-if="!isRefinement()" class="tipp" data-i18n="_argumentTextHelp_" style="margin-top: 1em;"></p>
+
+    <div style="clear: both;"></div>
+</div>

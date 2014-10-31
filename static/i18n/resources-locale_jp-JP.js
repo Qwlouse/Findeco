@@ -1149,6 +1149,16 @@
         "description": ""
     },
     {
+        "key"        : "_proposalHeading_",
+        "value"      : "Heading:",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentHeading_",
+        "value"      : "Heading:",
+        "description": ""
+    },
+    {
         "key"        : "_summaryHeading_",
         "value"      : "概説",
         "description": ""
@@ -1161,6 +1171,16 @@
     {
         "key"        : "_argumentText_",
         "value"      : "議論:",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentTextHelp_",
+        "value"      : "Choose pro if your argument supports the proposal. Choose con if it opposes the proposal. If you just want to annotate some references or links to the proposal choose neut. Please write factual and without emotion. Do not mix different arguments. If you have more to say than one argument then create as many as you like one at a time.",
+        "description": ""
+    },
+    {
+        "key"        : "_refinementArgumentTextHelp_",
+        "value"      : "Please describe in this argument why the proposal had to be refined. Mention only the most relevant defect of the previous proposal because this argument will get displayed at the old proposal. If you denounce an aspect of the old proposal choose con for the type. If the refinement was necessary only because of formal reasons without a contentual defect of the previous proposal choose neut for the type. Only describe defects which are corrected by the refinement.",
         "description": ""
     },
     {

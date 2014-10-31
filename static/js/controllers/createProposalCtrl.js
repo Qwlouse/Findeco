@@ -30,6 +30,9 @@ findecoApp.controller(
         $scope.getNodePath = function () {
             return Navigator.nodePath;
         };
+        $scope.isRefinement = function () {
+            return $scope.proposalType == 'refinement';
+        };
         $scope.step = 1;
         $scope.heading = "";
         $scope.text = "";

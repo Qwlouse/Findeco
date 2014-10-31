@@ -1170,6 +1170,11 @@
         "description": ""
     },
     {
+        "key"        : "_argumentHeading_",
+        "value"      : "Überschrift:",
+        "description": ""
+    },
+    {
         "key"        : "_addSubsection_",
         "value"      : "Abschnitt hinzufügen",
         "description": ""
@@ -1187,6 +1192,16 @@
     {
         "key"        : "_argumentText_",
         "value"      : "Dein Argument:",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentTextHelp_",
+        "value"      : "Wähle pro, wenn dein Argument den Vorschlag unterstützt und con, wenn es den Vorschlag ablehnt. Falls dein Argument nur eine neutrale Ergänzung wie eine Quellenangabe ist, kannst du neut auswählen. Achte darauf sachlich zu argumentieren und nur ein Argument zu beschreiben. Wenn du mehrere Argumente äußern willst solltest du auch mehrere Argumente einzeln anlegen.",
+        "description": ""
+    },
+    {
+        "key"        : "_refinementArgumentTextHelp_",
+        "value"      : "Beschreibe in diesem Argument warum die Weiterentwicklung notwendig war. Nenne dafür nur den wesentlichsten Punkt. Wenn dein Argument inhaltliche Kritik enthält, solltest du den typ con wählen. Wenn es wegen formaler Kriterien weiterentwickelt werden musste kannst du auch den Typ neut verwenden. Das Argument wird beim vorherigen Vorschlag angezeigt, nucht jedoch beim weiterentwickelten Vorschlag. Achte also darauf im Argument das Problem des ursprünglichen Vorschlags zu beschreiben, das durch die Weiterentwicklung behoben wurde.",
         "description": ""
     },
     {
