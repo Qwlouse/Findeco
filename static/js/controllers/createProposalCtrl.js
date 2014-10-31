@@ -107,18 +107,22 @@ findecoApp.controller(
             return false;
         };
 
-        $scope.startDrag = function ($event, subsection, index) {
+        $scope.startDrag = function ($event, subsection, subsections, index) {
             $event.preventDefault();
+            $event.stopPropagation();
             $scope.dragInfo = {
                 y: $event.clientY,
                 grabOffset: $event.clientY - $event.target.getBoundingClientRect().top,
                 subSection: subsection,
+                subSections: subsections,
                 index: index
             };
         };
 
-        $scope.drag = function ($event, subsection) {
+        $scope.drag = function ($event) {
+            $event.stopPropagation();
             if ($scope.dragInfo) {
+                var subsections = $scope.dragInfo.subSections;
                 $scope.dragPosition = $event.clientY - $scope.dragInfo.y;
                 var prevTop = -1000;
                 var prevHeight = 0;
@@ -128,8 +132,12 @@ findecoApp.controller(
                 var myHeight = 0;
                 var i = 0;
                 var rect;
-                angular.forEach(document.getElementById('subsection-list').childNodes, function (node) {
-                    if ((node.nodeType == 1) && (i < $scope.subsections.length)) {
+                var parentUl = $event.target.parentNode;
+                while (parentUl.nodeName != 'UL') {
+                    parentUl = parentUl.parentNode;
+                }
+                angular.forEach(parentUl.childNodes, function (node) {
+                    if ((node.nodeType == 1) && (i < subsections.length)) {
                         rect = node.getBoundingClientRect();
                         if (i == $scope.dragInfo.index - 1) {
                             prevTop = rect.top;
@@ -149,15 +157,15 @@ findecoApp.controller(
                 if (myTop < prevTop + Math.min(myHeight, prevHeight) / 2) {
                     $scope.dragPosition = myTop - prevTop;
                     $scope.dragInfo.y = prevTop + $scope.dragInfo.grabOffset;
-                    $scope.subsections.splice($scope.dragInfo.index, 1);
+                    subsections.splice($scope.dragInfo.index, 1);
                     $scope.dragInfo.index--;
-                    $scope.subsections.splice($scope.dragInfo.index, 0, $scope.dragInfo.subSection);
+                    subsections.splice($scope.dragInfo.index, 0, $scope.dragInfo.subSection);
                 } else if (myTop > nextTop - Math.min(myHeight, nextHeight) / 2) {
                     $scope.dragPosition = myTop - nextTop;
                     $scope.dragInfo.y = nextTop + $scope.dragInfo.grabOffset + nextHeight - myHeight;
-                    $scope.subsections.splice($scope.dragInfo.index, 1);
+                    subsections.splice($scope.dragInfo.index, 1);
                     $scope.dragInfo.index++;
-                    $scope.subsections.splice($scope.dragInfo.index, 0, $scope.dragInfo.subSection);
+                    subsections.splice($scope.dragInfo.index, 0, $scope.dragInfo.subSection);
                 }
             }
         };
@@ -167,12 +175,12 @@ findecoApp.controller(
             $scope.dragPosition = 0;
         };
 
-        $scope.deleteSubSection = function (index) {
-            $scope.subsections.splice(index, 1);
+        $scope.deleteSubSection = function (subsections, index) {
+            subsections.splice(index, 1);
         };
 
-        $scope.addSubSection = function () {
-            $scope.subsections.push({
+        $scope.addSubSection = function (subsections) {
+            subsections.push({
                 newSection: true,
                 shorttitle: "",
                 heading: "",
