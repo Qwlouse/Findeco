@@ -1194,5 +1194,15 @@
         "key"        : "_registrationProcessing_",
         "value"      : "Sucessfully filled: Processing your request...",
         "description": ""
+    },
+    {
+        "key"        : "_registerSuccessTitle_",
+        "value"      : "Registration successful",
+        "description": ""
+    },
+    {
+        "key"        : "_registerSuccessText_",
+        "value"      : "We've sent you an e-mail with activation-code. Please check your inbox and follow the instructions to activate your account.",
+        "description": ""
     }
 ]

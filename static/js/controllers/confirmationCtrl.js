@@ -26,8 +26,9 @@
 
 findecoApp.controller('FindecoConfirmationCtrl', function ($scope, $routeParams, Navigator, User) {
     $scope.user = User;
-    $scope.activationKey = $routeParams.param.replace('/', '');
-    $scope.manualEntry = $scope.activationKey.length == 0;
+    $scope.activationKey = $routeParams.param != undefined ? $routeParams.param.replace('/', '') : '';
+    $scope.completed = $scope.activationKey.length > 0;
+    $scope.error = false;
 
     if (Navigator.type == "activate") {
         $scope.title = "_accountActivationFormTitle_";
@@ -44,29 +45,36 @@ findecoApp.controller('FindecoConfirmationCtrl', function ($scope, $routeParams,
     }
 
     $scope.activate = function () {
+        $scope.error = false;
         if (Navigator.type == "activate") {
             User.activate($scope.activationKey).success(function () {
                 $scope.text = "_accountActivationFinished_";
-            }).error(function () {
-                $scope.manualEntry = true;
+                $scope.completed = true;
+            }).error(function (d) {
+                $scope.error = d.errorResponse;
+                $scope.completed = false;
             });
 
         } else if (Navigator.type == "confirm") {
             User.confirm($scope.activationKey).success(function () {
                 $scope.text = "_accountRecoveryConfirmed_";
-            }).error(function () {
-                $scope.manualEntry = true;
+                $scope.completed = true;
+            }).error(function (d) {
+                $scope.error = d.errorResponse;
+                $scope.completed = false;
             });
         } else if (Navigator.type == "confirm_email") {
             User.confirmEmail($scope.activationKey).success(function () {
                 $scope.text = "_accountEmailConfirmed_";
-            }).error(function () {
-                $scope.manualEntry = true;
+                $scope.completed = true;
+            }).error(function (d) {
+                $scope.error = d.errorResponse;
+                $scope.completed = false;
             });
         }
     };
 
-    if (!$scope.manualEntry) {
+    if ($scope.completed) {
         $scope.activate();
     }
 });

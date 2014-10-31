@@ -1218,5 +1218,15 @@
         "key"        : "_registrationProcessing_",
         "value"      : "Erfolgreich ausgefüllt: Anfrage wird bearbeitet...",
         "description": ""
+    },
+    {
+        "key"        : "_registerSuccessTitle_",
+        "value"      : "Registrierung erfolgreich",
+        "description": ""
+    },
+    {
+        "key"        : "_registerSuccessText_",
+        "value"      : "Ihnen wurde ein E-Mail mit Aktivierungscode zugesandt. Bitte prüfen sie ihr Postfach und folgen sie den Anweisungen um ihr Benutzerkonto zu aktivieren.",
+        "description": ""
     }
 ]
