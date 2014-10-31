@@ -1,11 +1,14 @@
-<div id="contentContainer" class="centeringContainer">
-    <div id="centerColumn" class="shadowed">
-    <h1> {{ title | i18n}} </h1>
+<div class="preCentering">
+    <div class="centered backgroundBox textContainer">
+        <h1> {{ title | i18n}} </h1>
     	{{ text | i18n}}
 
-        <form ng-submit="activate()" ng-show='manualEntry'>
-            <input type="text" placeholder="{{'_accountActivationKey_'| i18n}}" ng-model="activationKey" style="width:100%;"><br>
+        <div class='help-error' ng-show="error"> {{ error.errorID | i18n }} </div>
+
+        <form ng-submit="activate()" ng-show='!completed'>
+            <input type="text" placeholder="{{'_accountActivationKey_'| i18n}}" ng-model="activationKey" style="width:40em;"><br>
             <input type="submit" value="{{ submitButton | i18n}}">
         </form>
+
     </div>
 </div>

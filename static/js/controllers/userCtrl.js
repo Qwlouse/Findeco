@@ -68,7 +68,7 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
 
         if ($scope.allFieldsFilledCorrectly) {
             User.register($scope.username, $scope.password, $scope.mail).success(function () {
-                Navigator.changePath('/'); // TODO: Special site
+                Navigator.changePath('/registerSuccess');
             }).error(function(d, e, f) {
                 $scope.serverError = d.errorResponse;
                 $scope.allFieldsFilledCorrectly = false;
