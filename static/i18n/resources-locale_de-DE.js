@@ -1205,6 +1205,11 @@
         "description": ""
     },
     {
+        "key"        : "_refinementArgumentHeading_",
+        "value"      : "Gegenargument gegen den weiterentwickelten Vorschlag",
+        "description": ""
+    },
+    {
         "key"        : "_usernameTooLong_",
         "value"      : "Benutzername ist zu lang.",
         "description": ""

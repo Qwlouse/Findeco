@@ -77,7 +77,8 @@ findecoApp.controller(
         };
 
         $scope.nextStep = function () {
-            if (($scope.step != 2) || $scope.proposalIsChanged()) {
+            if ((($scope.step == 2) && $scope.proposalIsChanged()) ||
+                (($scope.step == 3) && $scope.argumentHasText())) {
                 $scope.step++;
                 if (($scope.step == 3) && ($scope.proposalType != 'refinement')) {
                     $scope.step++;
@@ -108,6 +109,11 @@ findecoApp.controller(
                 }
             }
             return false;
+        };
+
+        $scope.argumentHasText = function () {
+            return ((angular.isString($scope.argumentHeading)) && (angular.isString($scope.argumentText)) &&
+                    ($scope.argumentHeading.length > 2) && ($scope.argumentText.length > 2));
         };
 
         $scope.startDrag = function ($event, subsection, subsections, index) {

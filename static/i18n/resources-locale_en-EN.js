@@ -1186,6 +1186,11 @@
         "description": ""
     },
     {
+        "key"        : "_refinementArgumentHeading_",
+        "value"      : "Argument for Denouncing the Refined Proposal",
+        "description": ""
+    },
+    {
         "key"        : "_usernameTooLong_",
         "value"      : "Username is too long.",
         "description": ""
