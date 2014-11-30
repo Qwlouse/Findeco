@@ -1242,5 +1242,15 @@
         "key"        : "_noConnectionToBackend_",
         "value"      : "Could not connect to the backend. Is your internet connection working?",
         "description": ""
+    },
+    {
+        "key"        : "_user_",
+        "value"      : "User",
+        "description": "First part of the title in the profile"
+    },
+    {
+        "key"        : "_usernameChanged_",
+        "value"      : "Username change successful",
+        "description": "Message informing about a successful change of username"
     }
 ]

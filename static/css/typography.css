@@ -167,6 +167,12 @@ input[type=reset], button.red {
     background-color: #680500;
 }
 
+input[type=submit]:disabled, button:disabled {
+    cursor: default;
+    background: #69696b;
+    box-shadow: none;
+}
+
 /*Special elements*/
 .tipp {
     color: gray;
