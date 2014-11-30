@@ -51,10 +51,19 @@
                     <div creole wiki-text="createWikiText()" update-interval="50000"></div>
                 </div>
 
-                <h3 data-i18n="_argumentText_"></h3>
-                <div class="backgroundBox">
+                <h3 data-i18n="_argumentText_" ng-show="proposalType == 'refinement'"></h3>
+                <div class="backgroundBox" ng-show="proposalType == 'refinement'">
                     <h1>{{ argumentHeading }}</h1>
                     <div creole wiki-text="argumentText" update-interval="50000"></div>
+                </div>
+
+                <div ng-show="submitting">
+                    <span data-i18n="_submittingNewProposal_"></span>
+                </div>
+
+                <div ng-show="error">
+                    <span class="help-error" data-i18n="{{ error.errorID }}"></span>
+                    <div class="help-error">{{ error.additionalInfo }}</div>
                 </div>
 
                 <div style="clear: both;"></div>
@@ -65,8 +74,10 @@
                 <button class="right" data-i18n="_nextButton_"
                         ng-class="{'green': ((step == 2) && proposalIsChanged()) || ((step == 3) && argumentHasText())}"
                         style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></button>
-                <button class="green right" data-i18n="_createButton_"
-                        style="margin-left: 1em;" ng-click="submit();" ng-if="step == 4"></button>
+                <button class="right green" data-i18n="_createButton_"
+                        style="margin-left: 1em;" ng-click="submit();" ng-if="(step == 4) && (!submitting)"></button>
+                <button class="right" data-i18n="_submitting_" style="margin-left: 1em;"
+                        ng-if="(step == 4) && submitting"></button>
                 <button class="red right" data-i18n="_backButton_"
                         style="margin-left: 1em;" ng-click="previousStep();"
                         ng-if="step > 1"></button>

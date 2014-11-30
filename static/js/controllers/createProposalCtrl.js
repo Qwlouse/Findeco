@@ -235,7 +235,33 @@ findecoApp.controller(
         };
 
         $scope.submit = function () {
-            alert("_proposalSubmittedAlert_");
+            var submitData = {
+                proposal: {
+                    heading: $scope.heading,
+                    text: $scope.text,
+                    subsections: $scope.subsections
+                },
+                argument: {
+                    heading: $scope.argumentHeading,
+                    text: $scope.argumentText
+                }
+            };
+            $scope.submitting = true;
+            Backend.storeRefinement(Navigator.nodePath, submitData).success(function (data) {
+                $scope.submitting = undefined;
+                if (data.storeRefinementResponse != undefined) {
+                    Navigator.changePath(data.storeRefinementResponse.path);
+                }
+                if (data.errorResponse != undefined) {
+                    $scope.error = data.errorResponse;
+                }
+            }).error(function (response) {
+                $scope.submitting = undefined;
+                $scope.error = {
+                    errorID: "_noConnectionToBackend_",
+                    additionalInfo: ""
+                };
+            });
         };
 
         $scope.cancelProposal = function () {

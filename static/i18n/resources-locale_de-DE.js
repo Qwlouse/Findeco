@@ -1248,5 +1248,20 @@
         "key"        : "_registerSuccessText_",
         "value"      : "Ihnen wurde ein E-Mail mit Aktivierungscode zugesandt. Bitte prüfen sie ihr Postfach und folgen sie den Anweisungen um ihr Benutzerkonto zu aktivieren.",
         "description": ""
+    },
+    {
+        "key"        : "_submittingNewProposal_",
+        "value"      : "Der neue Vorschlag wird gespeichert...",
+        "description": ""
+    },
+    {
+        "key"        : "_submitting_",
+        "value"      : "Übertragung...",
+        "description": ""
+    },
+    {
+        "key"        : "_noConnectionToBackend_",
+        "value"      : "Es konnte keine Verbindung zum Backend aufgebaut werden. Ist das Internet ausgefallen?",
+        "description": ""
     }
 ]

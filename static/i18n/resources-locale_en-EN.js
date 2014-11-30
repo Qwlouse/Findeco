@@ -1229,5 +1229,20 @@
         "key"        : "_registerSuccessText_",
         "value"      : "We've sent you an e-mail with activation-code. Please check your inbox and follow the instructions to activate your account.",
         "description": ""
+    },
+    {
+        "key"        : "_submittingNewProposal_",
+        "value"      : "Saving the new proposal...",
+        "description": ""
+    },
+    {
+        "key"        : "_submitting_",
+        "value"      : "submitting...",
+        "description": ""
+    },
+    {
+        "key"        : "_noConnectionToBackend_",
+        "value"      : "Could not connect to the backend. Is your internet connection working?",
+        "description": ""
     }
 ]
