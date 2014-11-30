@@ -44,16 +44,21 @@
 
             <div class="textColumn backgroundBox" style="margin-right: 1em; max-width: 42em;" ng-if="step == 4">
 
-                    <h2 data-i18n="_summaryHeading_"></h2>
+                <h2 data-i18n="_summaryHeading_"></h2>
 
-                    <h3 data-i18n="_proposalText_"></h3>
-                    <div creole wiki-text="text" update-interval="5000"></div>
-                    <h3 data-i18n="_argumentText_"></h3>
-                    <div creole wiki-text="argumentText" update-interval="5000"></div>
+                <h3 data-i18n="_proposalText_"></h3>
+                <div class="backgroundBox">
+                    <div creole wiki-text="createWikiText()" update-interval="50000"></div>
+                </div>
 
-                    <div style="clear: both;"></div>
+                <h3 data-i18n="_argumentText_"></h3>
+                <div class="backgroundBox">
+                    <h1>{{ argumentHeading }}</h1>
+                    <div creole wiki-text="argumentText" update-interval="50000"></div>
+                </div>
+
+                <div style="clear: both;"></div>
             </div>
-
 
 
             <div style="clear: both; margin: 1em 0 8em 0; max-width: 42em;">

@@ -202,6 +202,38 @@ findecoApp.controller(
             return CVST.createValidShortTitle(longTitle);
         };
 
+        $scope.createWikiText = function () {
+            var createWikiTextSubsections = function(headingLevel, subsections) {
+                var i, j;
+                var wikiText = "";
+                for (i = 0; i < subsections.length; i++) {
+                    for (j = 0; j < headingLevel; j++) {
+                        wikiText = wikiText + "=";
+                    }
+                    wikiText = wikiText + " " + subsections[i].heading + " ";
+                    for (j = 0; j < headingLevel; j++) {
+                        wikiText = wikiText + "=";
+                    }
+                    wikiText = wikiText + "\n";
+                    if (subsections[i].newSection) {
+                        wikiText = wikiText + subsections[i].text + "\n";
+                        if (subsections[i].subsections.length > 0) {
+                            wikiText = wikiText +
+                                createWikiTextSubsections(headingLevel + 1, subsections[i].subsections) + "\n\n";
+                        }
+                    } else {
+                        wikiText = wikiText + "...\n\n";
+                    }
+                }
+                return wikiText;
+            };
+            var wikiText = "";
+            wikiText = wikiText + "= " + $scope.heading + " =\n";
+            wikiText = wikiText + $scope.text + "\n";
+            wikiText = wikiText + createWikiTextSubsections(2, $scope.subsections) + "\n\n";
+            return wikiText;
+        };
+
         $scope.submit = function () {
             alert("_proposalSubmittedAlert_");
         };
