@@ -1,6 +1,39 @@
 <div class="row" style="margin-bottom: 1em;">
     <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
         <div style="position: relative; left: 50%;">
+            <div style="margin: 1em 0 2em 0;" ng-if="proposalType != 'refinement'">
+                <div class="wizzard-progress-icon" style="background-position-x: 0px"
+                     ng-class="{'wizzard-progress-clickable': step > 1}"
+                     ng-style="{'background-position-y': (-150 - (step == 1) * 50 - (step < 1) * 100) + 'px'}"
+                     ng-click="setStep(1)"></div>
+                <div class="wizzard-progress-icon" style="background-position-x: -50px"
+                     ng-class="{'wizzard-progress-clickable': step > 2}"
+                     ng-style="{'background-position-y': (-150 - (step == 2) * 50 - (step < 2) * 100) + 'px'}"
+                     ng-click="setStep(2)"></div>
+                <div class="wizzard-progress-icon" style="background-position-x: -100px"
+                     ng-class="{'wizzard-progress-clickable': step > 4}"
+                     ng-style="{'background-position-y': (-150 - (step == 4) * 50 - (step < 4) * 100) + 'px'}"
+                     ng-click="setStep(4)"></div>
+            </div>
+            <div style="margin: 1em 0 2em 0;" ng-if="proposalType == 'refinement'">
+                <div class="wizzard-progress-icon" style="background-position-x: 0px"
+                     ng-class="{'wizzard-progress-clickable': step > 1}"
+                     ng-style="{'background-position-y': (-300 - (step == 1) * 50 - (step < 1) * 100) + 'px'}"
+                     ng-click="setStep(1)"></div>
+                <div class="wizzard-progress-icon" style="background-position-x: -50px"
+                     ng-class="{'wizzard-progress-clickable': step > 2}"
+                     ng-style="{'background-position-y': (-300 - (step == 2) * 50 - (step < 2) * 100) + 'px'}"
+                     ng-click="setStep(2)"></div>
+                <div class="wizzard-progress-icon" style="background-position-x: -100px"
+                     ng-class="{'wizzard-progress-clickable': step > 3}"
+                     ng-style="{'background-position-y': (-300 - (step == 3) * 50 - (step < 3) * 100) + 'px'}"
+                     ng-click="setStep(3)"></div>
+                <div class="wizzard-progress-icon" style="background-position-x: -150px"
+                     ng-class="{'wizzard-progress-clickable': step > 4}"
+                     ng-style="{'background-position-y': (-300 - (step == 4) * 50 - (step < 4) * 100) + 'px'}"
+                     ng-click="setStep(4)"></div>
+            </div>
+
             <div class="textColumn backgroundBox" style="max-width: 42em;" ng-if="step == 1">
 
                 <h2 data-i18n="_proposalTypeQuestion_"></h2>

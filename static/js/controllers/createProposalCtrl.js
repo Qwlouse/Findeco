@@ -86,6 +86,12 @@ findecoApp.controller(
             }
         };
 
+        $scope.setStep = function (step) {
+            if ((step < $scope.step) && (step > 0)) {
+                $scope.step = step;
+            }
+        };
+
         $scope.previousStep = function () {
             $scope.step--;
             if (($scope.step == 3) && ($scope.proposalType != 'refinement')) {

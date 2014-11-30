@@ -311,3 +311,16 @@ div.left-argument-box {
 .help-error {
     color: #8E0700;
 }
+
+/* Wizzard progress indicator */
+
+.wizzard-progress-icon {
+    background: url('../images/Wizzard-Progress.svg') no-repeat;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+
+.wizzard-progress-clickable {
+    cursor: pointer;
+}
