@@ -1182,7 +1182,7 @@
     },
     {
         "key"        : "_refinementArgumentTextHelp_",
-        "value"      : "Please describe in this argument why the proposal had to be refined. Mention only the most relevant defect of the previous proposal because this argument will get displayed at the old proposal. If you denounce an aspect of the old proposal choose con for the type. If the refinement was necessary only because of formal reasons without a contentual defect of the previous proposal choose neut for the type. Only describe defects which are corrected by the refinement.",
+        "value"      : "Please describe in this argument why the proposal had to be refined. Mention only the most relevant defect of the previous proposal because this argument will get displayed at the old proposal. Please name the main aspect of the old proposal you want to denounce. Only describe defects which are corrected by the refinement.",
         "description": ""
     },
     {

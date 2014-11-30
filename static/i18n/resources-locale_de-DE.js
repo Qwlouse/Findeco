@@ -1201,7 +1201,7 @@
     },
     {
         "key"        : "_refinementArgumentTextHelp_",
-        "value"      : "Beschreibe in diesem Argument warum die Weiterentwicklung notwendig war. Nenne dafür nur den wesentlichsten Punkt. Wenn dein Argument inhaltliche Kritik enthält, solltest du den typ con wählen. Wenn es wegen formaler Kriterien weiterentwickelt werden musste kannst du auch den Typ neut verwenden. Das Argument wird beim vorherigen Vorschlag angezeigt, nucht jedoch beim weiterentwickelten Vorschlag. Achte also darauf im Argument das Problem des ursprünglichen Vorschlags zu beschreiben, das durch die Weiterentwicklung behoben wurde.",
+        "value"      : "Beschreibe in diesem Argument warum die Weiterentwicklung notwendig war. Nenne dafür nur den wesentlichsten Punkt. Dein Argument sollte inhaltliche Kritik üben. Das Argument wird beim vorherigen Vorschlag angezeigt, nucht jedoch beim weiterentwickelten Vorschlag. Achte also darauf im Argument das Problem des ursprünglichen Vorschlags zu beschreiben, das durch die Weiterentwicklung behoben wurde.",
         "description": ""
     },
     {
