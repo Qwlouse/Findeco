@@ -39,6 +39,16 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
     $scope.allFieldsFilledCorrectly = false;
     $scope.serverError = false;
 
+    // used for profile
+    $scope.emailChanged = false;
+    $scope.usernameChanged = false;
+    $scope.passwordChanged = false;
+
+    $scope.changeEmailError = false;
+    $scope.changeUsernameError = false;
+    $scope.changePasswordError = false;
+
+
     $scope.force_get_username_password = function() {
         // HACK to make autofill of browsers work.
         // This is because browser autofill does not trigger an event, so
@@ -76,22 +86,58 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
         }
     };
 
-    $scope.storeUserSettings = function () {
+    $scope.storeUserDescription = function () {
+        $scope.storeUserSettings().success(function() {
+            $scope.profileDescription.$setPristine();
+        });
+    };
+
+
+    $scope.storeUserEMail = function () {
+        $scope.storeUserSettings().success(function() {
+            $scope.emailChanged = true;
+            $scope.changeEmailError = false;
+            $scope.profileEMail.$setPristine();
+        }).error(function (d) {
+            $scope.changeEmailError = d.errorResponse;
+        });
+    };
+
+    $scope.storeUserName = function() {
+        var r = window.confirm("Dein Benutzername wird im gesamten System geändert. Das kann deine Follower verwirren. Außerdem kann es eine Weile dauern bis die Änderung überall wirksam ist.\n Sicher dass du deinen Namen ändern möchtest?");
+        if (!r) { return; }
+
         User.displayName = User.newDisplayName;
-        User.storeSettings().error(User.loadSettings).success(function () {
-            Message.send("success", "_settingsChanged_");
+        $scope.storeUserSettings().success(function() {
+            $scope.usernameChanged = true;
+            $scope.changeUsernameError = false;
+            $scope.profileUsername.$setPristine();
+        }).error(function(d) {
+            $scope.changeUsernameError = d.errorResponse;
+        });
+    };
+
+    $scope.storeUserSettings = function () {
+        return User.storeSettings().error(function () {
+            User.loadSettings();
         });
     };
 
     $scope.changePassword = function () {
         if ($scope.password == $scope.password2) {
             User.changePassword($scope.password).success(function () {
-                Message.send("success", "_passwordChanged_");
+                $scope.passwordChanged = true;
+                $scope.changePasswordError = false;
                 $scope.password = "";
-                $scope.password2 = ""
+                $scope.password2 = "";
+                $scope.profilePassword.$setPristine();
+            }).error(function(d) {
+                $scope.changePasswordError = d.errorResponse;
             });
         } else {
-            Message.send("error", "_passwordsDidNotMatch_");
+            $scope.changePasswordError = {
+                errorID: "_passwordsDidNotMatch_",
+                additionalInfo: {}};
         }
     };
 

@@ -697,7 +697,7 @@
     {
         "key"        : "_passwordHints_",
         "value"      : "Passwort Hinweise",
-        "description": ""
+        "description": "Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und Kleinschreibung als auch Sonderzeichen in deinem Passwort."
     },
     {
         "key"        : "_passwordHint_",
@@ -746,7 +746,7 @@
     },
     {
         "key"        : "_changeEmailRequested_",
-        "value"      : "Die Änderung der E-Mail Adresse wurde bereits angefordert und eine Bestätigungemail an die neue Adresse versandt. Die Änderung wird wirksam, wenn der Bestätigungslink in der Mail geklickt wird.",
+        "value"      : "Die Änderung der E-Mail Adresse wurde angefordert und eine Bestätigungemail an die neue Adresse versandt. Die Änderung wird wirksam, sobald du den Bestätigungslink in der Mail geklickt hast.",
         "description": ""
     },
     {
@@ -1263,5 +1263,15 @@
         "key"        : "_noConnectionToBackend_",
         "value"      : "Es konnte keine Verbindung zum Backend aufgebaut werden. Ist das Internet ausgefallen?",
         "description": ""
+    },
+    {
+        "key"        : "_user_",
+        "value"      : "Benutzer",
+        "description": "First part of the title in the profile"
+    },
+    {
+        "key"        : "_usernameChanged_",
+        "value"      : "Benutzername erfolgreich geändert",
+        "description": "Message informing about a successful change of username"
     }
 ]
