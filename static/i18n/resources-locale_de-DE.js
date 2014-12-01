@@ -1273,5 +1273,30 @@
         "key"        : "_usernameChanged_",
         "value"      : "Benutzername erfolgreich geändert",
         "description": "Message informing about a successful change of username"
+    },
+    {
+        "key"        : "_wizzardProgressType_",
+        "value"      : "Typ",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardProgressText_",
+        "value"      : "Text",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardProgressArgument_",
+        "value"      : "Argument",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardProgressSend_",
+        "value"      : "Abschicken",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardSummaryInfo_",
+        "value"      : "Der neue Vorschlag wird mit folgendem Inhalt gespeichert. Änderungen sind zu diesem Zeitpunkt leicht möglich, indem auf die vorherigen Schritte nochmal zurückgegangen wird. Wird der Vorschlag wie angezeigt abgeschickt kann er nicht mehr geändert werden.",
+        "description": ""
     }
 ]

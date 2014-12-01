@@ -1254,5 +1254,30 @@
         "key"        : "_usernameChanged_",
         "value"      : "Username change successful",
         "description": "Message informing about a successful change of username"
+    },
+    {
+        "key"        : "_wizzardProgressType_",
+        "value"      : "Type",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardProgressText_",
+        "value"      : "Text",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardProgressArgument_",
+        "value"      : "Argument",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardProgressSend_",
+        "value"      : "Send",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardSummaryInfo_",
+        "value"      : "The new proposal will be saved with the following content. Changes can still be made by switching to one fo the previous steps. If the proposal is saved it can not be changed after that.",
+        "description": ""
     }
 ]
