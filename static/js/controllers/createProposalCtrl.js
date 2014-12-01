@@ -110,6 +110,10 @@ findecoApp.controller(
         };
 
         $scope.proposalIsChanged = function () {
+            if (!((angular.isString($scope.heading)) && (angular.isString($scope.text)) &&
+                    ($scope.heading.length > 2) && ($scope.text.length > 2))) {
+                return false;
+            }
             if (!angular.equals($scope.onlineState.heading, $scope.heading)) {
                 return true;
             }
