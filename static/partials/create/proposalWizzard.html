@@ -1,7 +1,7 @@
 <div class="row" style="margin-bottom: 1em;">
     <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
         <div style="position: relative; left: 50%;">
-            <div style="margin: 1em 0 2em 0; text-align: justify; max-width: 42em;" ng-if="proposalType != 'refinement'">
+            <div style="margin: 1em 0 2em 0; text-align: justify; max-width: 42em;" ng-if="!isRefinement()">
                 <div class="wizzard-progress-icon" style="background-position-x: 0px"
                      ng-class="{'wizzard-progress-clickable': step > 1}"
                      ng-style="{'background-position-y': (-150 - (step == 1) * 50 - (step < 1) * 100) + 'px'}"
@@ -25,7 +25,7 @@
                      data-i18n="_wizzardProgressSend_"></div>
                 <div style="width: 100%; display: inline-block;"></div>
             </div>
-            <div style="margin: 1em 0 2em 0; text-align: justify; max-width: 42em;" ng-if="proposalType == 'refinement'">
+            <div style="margin: 1em 0 2em 0; text-align: justify; max-width: 42em;" ng-if="isRefinement()">
                 <div class="wizzard-progress-icon" style="background-position-x: 0px"
                      ng-class="{'wizzard-progress-clickable': step > 1}"
                      ng-style="{'background-position-y': (-300 - (step == 1) * 50 - (step < 1) * 100) + 'px'}"

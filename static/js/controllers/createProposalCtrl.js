@@ -73,6 +73,16 @@ findecoApp.controller(
                     };
                 });
             }
+            if (type == 'proposal') {
+                $scope.heading = "";
+                $scope.text = "";
+                $scope.subsections = [];
+                $scope.onlineState = {
+                    heading: "",
+                    text: "",
+                    subsections: []
+                };
+            }
             $scope.step++;
         };
 
