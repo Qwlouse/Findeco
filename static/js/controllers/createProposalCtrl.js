@@ -326,11 +326,30 @@ findecoApp.controller(
         };
 
         $scope.submit = function () {
+            var createSubsectionStructure = function (subsections) {
+                var subsectionList = [];
+                for (var i = 0; i < subsections.length; i++) {
+                    var structure = {
+                        heading: subsections[i].heading,
+                        text: subsections[i].text
+                    };
+                    if (subsections[i].shorttitle) {
+                        structure.shorttitle = subsections[i].shorttitle;
+                    } else {
+                        structure.shorttitle = CVST.createValidShortTitle(subsections[i].heading);
+                    }
+                    if (subsections[i].subsections && angular.isArray(subsections[i].subsections)) {
+                        structure.subsections = createSubsectionStructure(subsections[i].subsections);
+                    }
+                    subsectionList.push(structure);
+                }
+                return subsectionList;
+            };
             var submitData = {
                 proposal: {
                     heading: $scope.heading,
                     text: $scope.text,
-                    subsections: $scope.subsections
+                    subsections: createSubsectionStructure($scope.subsections)
                 }
             };
             if ($scope.proposalType == 'refinement') {
