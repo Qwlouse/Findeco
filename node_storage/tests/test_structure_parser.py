@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from findeco.settings import STATICFILES_DIRS
@@ -40,10 +40,10 @@ from ..structure_parser import create_structure_from_structure_node_schema
 from ..structure_parser import create_derivate_from_structure_node_schema
 from ..structure_parser import InvalidWikiStructure
 from ..structure_parser import parse as pyparser
-from ..structure_parser import remove_unallowed_chars
-from ..structure_parser import strip_accents
-from ..structure_parser import substitute_umlauts
-from ..structure_parser import turn_into_valid_short_title
+from ..validation import remove_unallowed_chars
+from ..validation import strip_accents
+from ..validation import substitute_umlauts
+from ..validation import turn_into_valid_short_title
 import re
 
 ESCAPABLE = re.compile(r'([^\x00-\x7f])')
