@@ -2,23 +2,23 @@
     <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
         <div style="position: relative; left: 50%;">
             <div style="margin: 1em 0 2em 0; text-align: justify; max-width: 42em;" ng-if="!isRefinement()">
-                <div class="wizzard-progress-icon" style="background-position-x: 0px"
+                <div class="wizzard-progress-icon"
                      ng-class="{'wizzard-progress-clickable': step > 1}"
-                     ng-style="{'background-position-y': (-150 - (step == 1) * 50 - (step < 1) * 100) + 'px'}"
+                     ng-style="{'background-position': '0px ' + (-150 - (step == 1) * 50 - (step < 1) * 100) + 'px'}"
                      ng-click="setStep(1)"></div>
                 <div style="border-bottom: 4px solid rgb(204, 204, 204); width: calc(32% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
                      class="tipp"
                      data-i18n="_wizzardProgressType_"></div>
-                <div class="wizzard-progress-icon" style="background-position-x: -50px"
+                <div class="wizzard-progress-icon"
                      ng-class="{'wizzard-progress-clickable': step > 2}"
-                     ng-style="{'background-position-y': (-150 - (step == 2) * 50 - (step < 2) * 100) + 'px'}"
+                     ng-style="{'background-position': '-50px ' + (-150 - (step == 2) * 50 - (step < 2) * 100) + 'px'}"
                      ng-click="setStep(2)"></div>
                 <div style="border-bottom: 4px solid rgb(204, 204, 204); width: calc(32% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
                      class="tipp"
                      data-i18n="_wizzardProgressText_"></div>
-                <div class="wizzard-progress-icon" style="background-position-x: -100px"
+                <div class="wizzard-progress-icon"
                      ng-class="{'wizzard-progress-clickable': step > 4}"
-                     ng-style="{'background-position-y': (-150 - (step == 4) * 50 - (step < 4) * 100) + 'px'}"
+                     ng-style="{'background-position': '-100px ' + (-150 - (step == 4) * 50 - (step < 4) * 100) + 'px'}"
                      ng-click="setStep(4)"></div>
                 <div style="width: calc(32% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
                      class="tipp"
@@ -26,30 +26,30 @@
                 <div style="width: 100%; display: inline-block;"></div>
             </div>
             <div style="margin: 1em 0 2em 0; text-align: justify; max-width: 42em;" ng-if="isRefinement()">
-                <div class="wizzard-progress-icon" style="background-position-x: 0px"
+                <div class="wizzard-progress-icon"
                      ng-class="{'wizzard-progress-clickable': step > 1}"
-                     ng-style="{'background-position-y': (-300 - (step == 1) * 50 - (step < 1) * 100) + 'px'}"
+                     ng-style="{'background-position': '0px ' + (-300 - (step == 1) * 50 - (step < 1) * 100) + 'px'}"
                      ng-click="setStep(1)"></div>
                 <div style="border-bottom: 4px solid rgb(204, 204, 204); width: calc(24% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
                      class="tipp"
                      data-i18n="_wizzardProgressType_"></div>
-                <div class="wizzard-progress-icon" style="background-position-x: -50px"
+                <div class="wizzard-progress-icon"
                      ng-class="{'wizzard-progress-clickable': step > 2}"
-                     ng-style="{'background-position-y': (-300 - (step == 2) * 50 - (step < 2) * 100) + 'px'}"
+                     ng-style="{'background-position': '-50px ' + (-300 - (step == 2) * 50 - (step < 2) * 100) + 'px'}"
                      ng-click="setStep(2)"></div>
                 <div style="border-bottom: 4px solid rgb(204, 204, 204); width: calc(24% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
                      class="tipp"
                      data-i18n="_wizzardProgressText_"></div>
-                <div class="wizzard-progress-icon" style="background-position-x: -100px"
+                <div class="wizzard-progress-icon"
                      ng-class="{'wizzard-progress-clickable': step > 3}"
-                     ng-style="{'background-position-y': (-300 - (step == 3) * 50 - (step < 3) * 100) + 'px'}"
+                     ng-style="{'background-position': '-100px ' + (-300 - (step == 3) * 50 - (step < 3) * 100) + 'px'}"
                      ng-click="setStep(3)"></div>
                 <div style="border-bottom: 4px solid rgb(204, 204, 204); width: calc(24% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
                      class="tipp"
                      data-i18n="_wizzardProgressArgument_"></div>
-                <div class="wizzard-progress-icon" style="background-position-x: -150px"
+                <div class="wizzard-progress-icon"
                      ng-class="{'wizzard-progress-clickable': step > 4}"
-                     ng-style="{'background-position-y': (-300 - (step == 4) * 50 - (step < 4) * 100) + 'px'}"
+                     ng-style="{'background-position': '-150px ' + (-300 - (step == 4) * 50 - (step < 4) * 100) + 'px'}"
                      ng-click="setStep(4)"></div>
                 <div style="width: calc(24% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
                      class="tipp"

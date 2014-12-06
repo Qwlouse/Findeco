@@ -99,7 +99,7 @@ h1 {
     line-height: 140%;
     margin-top: 1.0em;
     margin-bottom: 0.5em;
-    color:grey;
+    color: #69696b;
 }
 
 h2 {
@@ -107,7 +107,7 @@ h2 {
     margin-bottom: 0.5em;
     font-size: 140%;
     line-height: 130%;
-    color:grey;
+    color: #69696b;
 }
 
 h3 {
@@ -115,7 +115,7 @@ h3 {
     margin-bottom: 0.5em;
     font-size: 120%;
     line-height: 110%;
-    color:grey;
+    color: #69696b;
 }
 
 h4 {
@@ -123,7 +123,7 @@ h4 {
     margin-bottom: 0.5em;
     font-size: 110%;
     line-height: 105%;
-    color:grey;
+    color: #69696b;
 }
 
 h5 {
@@ -131,7 +131,7 @@ h5 {
     margin-bottom: 0.5em;
     font-size: 100%;
     line-height: 100%;
-    color:grey;
+    color: #69696b;
 }
 
 em {
@@ -149,8 +149,9 @@ input, textarea {
 }
 
 input[type=submit], input[type=reset], button {
+    color: #000000;
     padding: 0.4em;
-    border: 0 solid black;
+    border: 0 solid #000000;
     cursor: pointer;
     box-shadow: 2px 3px 6px #000000;
 }
@@ -175,7 +176,7 @@ input[type=submit]:disabled, button:disabled {
 
 /*Special elements*/
 .tipp {
-    color: gray;
+    color: #69696b;
     font-size: 75%;
     text-align: center;
 }
