@@ -269,8 +269,8 @@ findecoApp.controller(
             $scope.submitting = true;
             Backend.storeProposal(Navigator.nodePath, submitData).success(function (data) {
                 $scope.submitting = undefined;
-                if (data.storeRefinementResponse != undefined) {
-                    Navigator.changePath(data.storeRefinementResponse.path);
+                if (data.storeProposalResponse != undefined) {
+                    Navigator.changePath(data.storeProposalResponse.path);
                 }
                 if (data.errorResponse != undefined) {
                     $scope.error = data.errorResponse;
