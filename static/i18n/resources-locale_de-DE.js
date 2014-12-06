@@ -1298,5 +1298,10 @@
         "key"        : "_wizzardSummaryInfo_",
         "value"      : "Der neue Vorschlag wird mit folgendem Inhalt gespeichert. Änderungen sind zu diesem Zeitpunkt leicht möglich, indem auf die vorherigen Schritte nochmal zurückgegangen wird. Wird der Vorschlag wie angezeigt abgeschickt kann er nicht mehr geändert werden.",
         "description": ""
+    },
+    {
+        "key"        : "_shorttitleNotUnique_",
+        "value"      : "Dieser Kurztitel kommt schon vor. Bitte wähle einen der noch nicht vorkommt.",
+        "description": ""
     }
 ]

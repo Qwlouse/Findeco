@@ -211,3 +211,7 @@ del {
     -ms-hyphens: auto;
     hyphens: auto;
 }
+
+input.error, textarea.error {
+    border-color: #8E0700;
+}

@@ -87,7 +87,7 @@ findecoApp.controller(
         };
 
         $scope.nextStep = function () {
-            if ((($scope.step == 2) && $scope.proposalIsChanged()) ||
+            if ((($scope.step == 2) && $scope.proposalIsChanged() && $scope.checkAllShorttitles()) ||
                 (($scope.step == 3) && $scope.argumentHasText())) {
                 $scope.step++;
                 if (($scope.step == 3) && ($scope.proposalType != 'refinement')) {
@@ -216,6 +216,47 @@ findecoApp.controller(
                 text: "",
                 subsections: []
             });
+        };
+
+        $scope.checkShorttitle = function (shorttitle, subsections) {
+            if (!shorttitle) {
+                return true;
+            }
+            if (angular.equals($scope.subsections, subsections)) {
+                if ($scope.onlineState) {
+                    angular.forEach($scope.onlineState.subsections, function (subsection) {
+                        if (subsection.shorttitle == shorttitle) {
+                            return false;
+                        }
+                    });
+                }
+            }
+            var count = 0;
+            angular.forEach(subsections, function(subsection) {
+                if (subsection.shorttitle == shorttitle) {
+                    count++;
+                }
+            });
+            return count <= 1;
+        };
+
+        $scope.checkAllShorttitles = function () {
+            var checkSubsections = function (subsections) {
+                for (var i = 0; i < subsections.length; i++) {
+                    if (!$scope.checkShorttitle(subsections[i].shorttitle, subsections)) {
+                        return false;
+                    }
+                    if (subsections[i].subsections &&
+                        angular.isArray(subsections[i].subsections) &&
+                        (subsections[i].subsections.length > 0)) {
+                        if (!checkSubsections(subsections[i].subsections)) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            };
+            return checkSubsections($scope.subsections);
         };
 
         $scope.createShortTitle = function (longTitle) {

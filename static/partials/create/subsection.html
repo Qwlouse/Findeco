@@ -21,7 +21,11 @@
         </span><input type="text" onmousedown="event.stopPropagation()"
                       placeholder="{{ createShortTitle(subsection.heading) }}"
                       ng-show="subsection.newSection"
+                      ng-class="{'error': !checkShorttitle(subsection.shorttitle, subsections)}"
                       ng-model="subsection.shorttitle" />
+        <div ng-hide="checkShorttitle(subsection.shorttitle, subsections)"
+             class="tipp" style="display: inline-block; color: red;"
+             data-i18n="_shorttitleNotUnique_"></div>
     </div>
     <textarea style="width: calc(100% - 6px); height: 150px;"
               ng-show="subsection.newSection" onmousedown="event.stopPropagation()"
