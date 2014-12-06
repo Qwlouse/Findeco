@@ -129,7 +129,7 @@
 
             <div style="clear: both; margin: 1em 0 8em 0; max-width: 42em;">
                 <button class="right" data-i18n="_nextButton_"
-                        ng-class="{'green': ((step == 2) && proposalIsChanged() && checkAllShorttitles()) || ((step == 3) && argumentHasText())}"
+                        ng-class="{'green': ((step == 2) && proposalIsChanged() && proposalHasSufficientText() && checkAllShorttitles()) || ((step == 3) && argumentHasText())}"
                         style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></button>
                 <button class="right green" data-i18n="_createButton_"
                         style="margin-left: 1em;" ng-click="submit();" ng-if="(step == 4) && (!submitting)"></button>

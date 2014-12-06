@@ -87,7 +87,8 @@ findecoApp.controller(
         };
 
         $scope.nextStep = function () {
-            if ((($scope.step == 2) && $scope.proposalIsChanged() && $scope.checkAllShorttitles()) ||
+            if ((($scope.step == 2) && $scope.proposalIsChanged() &&
+                $scope.proposalHasSufficientText() && $scope.checkAllShorttitles()) ||
                 (($scope.step == 3) && $scope.argumentHasText())) {
                 $scope.step++;
                 if (($scope.step == 3) && ($scope.proposalType != 'refinement')) {
@@ -109,11 +110,40 @@ findecoApp.controller(
             }
         };
 
-        $scope.proposalIsChanged = function () {
+        $scope.proposalHasSufficientText = function () {
             if (!((angular.isString($scope.heading)) && (angular.isString($scope.text)) &&
                     ($scope.heading.length > 2) && ($scope.text.length > 2))) {
                 return false;
             }
+            for (var i = 0; i < $scope.subsections.length; i++) {
+                var checkSubsectionForSufficientText = function (subsection) {
+                    if (subsection.newSection &&
+                        !(subsection.heading &&
+                        angular.isString(subsection.heading) &&
+                        (subsection.heading.length > 2) &&
+                        subsection.text &&
+                        angular.isString(subsection.text) &&
+                        (subsection.text.length > 2))) {
+                        return false;
+                    }
+                    if (subsection.newSection && subsection.subsections &&
+                        angular.isArray(subsection.subsections)) {
+                        for (var i = 0; i < subsection.subsections.length; i++) {
+                            if (!checkSubsectionForSufficientText(subsection.subsections[i])) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                };
+                if (!checkSubsectionForSufficientText($scope.subsections[i])) {
+                    return false;
+                }
+            }
+            return true;
+        };
+
+        $scope.proposalIsChanged = function () {
             if (!angular.equals($scope.onlineState.heading, $scope.heading)) {
                 return true;
             }
