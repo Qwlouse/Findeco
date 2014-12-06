@@ -320,6 +320,27 @@ def store_text(request, path):
     return json_response({'storeTextResponse': {'path': new_path}})
 
 
+@ValidPaths("StructureNode")
+@ViewErrorHandling
+def store_proposal(request, path):
+    assert_authentication(request)
+    assert_permissions(request,
+                       ['node_storage.add_node', 'node_storage.add_vote',
+                        'node_storage.add_nodeorder', 'node_storage.add_text',
+                        'node_storage.change_vote'])
+    user = request.user
+    p = request.POST
+
+    slot_path = path.rsplit('.', 1)[0]
+    slot = get_node_for_path(slot_path)
+    proposal_node = generate_proposal_node_with_subsections(slot,
+                                                            p['proposal'],
+                                                            user)
+
+    new_path = get_good_path_for_structure_node(proposal_node, slot, slot_path)
+    return json_response({'storeProposalResponse': {'path': new_path}})
+
+
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
 def flag_node(request, path):

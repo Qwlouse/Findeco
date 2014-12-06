@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
 # Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
@@ -19,13 +19,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -50,16 +50,18 @@ views = [('load_index', dict(path='')),
          ('mark_node_follow', dict(path='')),
          ('mark_node_unfollow', dict(path='')),
          ('store_settings', dict()),
-         ('store_text', dict(path=''))]
+         ('store_text', dict(path='')),
+         ('store_proposal', dict(path='')),
+         ]
 
-################# example paths ################################################
+# ################ example paths ##############################################
 structure_node_paths = ['', 'foo.1', 'foo.1/bar.2']
 slot_paths = ['foo', 'foo.1/bar']
 argument_category_paths = ['foo.1.pro', 'foo.1/bar.2.con', 'foo.1/bar.2.neut']
 argument_paths = ['foo.1.pro.3', 'foo.1/bar.2.con.4', 'foo.1/bar.2.neut.5']
 
 
-################# Tests ########################################################
+# ################ Tests ######################################################
 class ViewTest(TestCase):
     def setUp(self):
         self.ulf = create_user("ulf", password="flu")
@@ -103,7 +105,8 @@ class ViewTest(TestCase):
 
     def test_mark_node_response_is_valid(self):
         paths = structure_node_paths + argument_paths
-        view = ['flag_node', 'unflag_node', 'mark_node_follow', 'mark_node_unfollow']
+        view = ['flag_node', 'unflag_node', 'mark_node_follow',
+                'mark_node_unfollow']
         for p, v in itertools.product(paths, view):
             response = self.client.get(reverse(v, kwargs=dict(path=p)))
             validate_response(response.content, v)
@@ -124,7 +127,8 @@ class ViewTest(TestCase):
         validate_response(response.content, 'logout')
 
     def test_changePassword_response_is_valid(self):
-        response = self.client.post(reverse('change_password'), {'password': "testpassword"})
+        response = self.client.post(reverse('change_password'),
+                                    {'password': "testpassword"})
         validate_response(response.content, 'change_password')
 
     def test_deleteUser_response_is_valid(self):

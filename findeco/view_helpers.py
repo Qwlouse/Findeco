@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 import json
 import functools
@@ -49,7 +49,8 @@ from findeco.models import EmailActivation
 from .api_validation import USERNAME
 from .api_validation import validate_response
 from .error_handling import *
-from .paths import parse_suffix
+from .paths import parse_suffix, SHORT_TITLE
+from node_storage.models import Node
 
 
 def json_response(data):
@@ -454,3 +455,20 @@ def assert_valid_email(email):
         validate_email(email)
     except ValidationError:
         raise InvalidEmailAddress()
+
+
+def generate_proposal_node_with_subsections(slot, proposal, user):
+    proposal_node = create_structureNode(
+        long_title=proposal['heading'], text=proposal['text'], authors=[user])
+    slot.append_child(proposal_node)
+    create_vote(user, [proposal_node])  # auto-follow
+
+    for child in proposal['subsections']:
+        if not re.match(SHORT_TITLE, child['short_title']):
+            raise ValueError('Invalid short-title: "{}"'.format(child['short_title']))
+
+        child_slot = create_slot(child['short_title'])
+        proposal_node.append_child(child_slot)
+        generate_proposal_node_with_subsections(child_slot, child, user)
+
+    return proposal_node
