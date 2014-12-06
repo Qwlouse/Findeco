@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
 # Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
@@ -19,13 +19,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+##############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 import random
 
@@ -34,11 +34,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.core.mail import send_mail
-from django.db.models import Q, Count
+from django.db.models import Count
 from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import ensure_csrf_cookie
-from findeco.models import EmailActivation
 from findeco.project_path import project_path
 from findeco.search_tools import get_search_query
 
@@ -46,14 +45,15 @@ from .view_helpers import *
 from microblogging import search_for_microblogging
 from microblogging.system_messages import (
     post_node_was_flagged_message, post_new_derivate_for_node_message,
-    post_new_derivate_for_node_message_list, post_new_argument_for_node_message,
-    post_node_was_unflagged_message)
-from models import UserProfile, Activation, PasswordRecovery
+    post_new_derivate_for_node_message_list,
+    post_new_argument_for_node_message, post_node_was_unflagged_message)
+from findeco.models import (UserProfile, Activation, PasswordRecovery,
+                            EmailActivation)
 import node_storage as backend
 from node_storage.factory import create_user
 
 
-#################### General stuff #############################################
+# ################### General stuff ###########################################
 @ensure_csrf_cookie
 def home(request, path=""):
     with open(project_path("static/index.html"), 'r') as index_html_file:
@@ -124,7 +124,7 @@ def search(request, search_fields, search_string):
                             'microbloggingResults': microblogging_results}})
 
 
-#################### Node Infos ################################################
+# ################### Node Infos ##############################################
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def load_index(request, path):
@@ -137,7 +137,8 @@ def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     node = assert_node_for_path(prefix)
     data = [create_index_node_for_argument(a, request.user.id) for a in
-            node.arguments.annotate(num_follows=Count('votes')).order_by('-num_follows')]
+            node.arguments.annotate(num_follows=Count('votes')).
+            order_by('-num_follows')]
     return json_response({'loadArgumentIndexResponse': data})
 
 
@@ -176,20 +177,12 @@ def load_graph_data(request, path, graph_data_type):
                 .filter(spam_count__lt=2)\
                 .filter(votes__isnull=False)
 
-
         current_node = backend.get_node_for_path(path)
         nodes = list(nodes)
-        if not current_node in nodes:
+        if current_node not in nodes:
             nodes.append(current_node)
 
-        # sources = Q(derivates__in=nodes)
-        # derivates = Q(sources__in=nodes)
-        # related_nodes = backend.Node.objects.filter(sources | derivates). \
-        #     exclude(id__in=[n.id for n in nodes]).distinct().all()
-
     graph_data_children = map(create_graph_data_node_for_structure_node, nodes)
-    # graph_data_related = map(create_graph_data_node_for_structure_node,
-    #                          related_nodes)
     data = {'graphDataChildren': graph_data_children,
             'graphDataRelated': []}
     return json_response({'loadGraphDataResponse': data})
@@ -226,7 +219,8 @@ def load_text(request, path):
 @ViewErrorHandling
 def load_argument_news(request):
     cards = []
-    for argument in Argument.objects.filter(sources__isnull=True).order_by("-id")[:20]:
+    for argument in Argument.objects.filter(sources__isnull=True)\
+                            .order_by("-id")[:20]:
         node = argument.concerns
         cards.append({
             'argument': {
@@ -237,7 +231,8 @@ def load_argument_news(request):
                 'followingCount': argument.votes.count(),
                 'isFlagging': get_is_flagging(request.user.id, argument),
                 'flaggingCount': argument.spam_flags.count(),
-                'authorGroup': [author.username for author in argument.text.authors.all()],
+                'authorGroup': [author.username
+                                for author in argument.text.authors.all()],
                 'type': argument.arg_type
             },
             'node': {
@@ -248,14 +243,15 @@ def load_argument_news(request):
                 'followingCount': node.votes.count(),
                 'isFlagging': get_is_flagging(request.user.id, node),
                 'flaggingCount': node.spam_flags.count(),
-                'authorGroup': [author.username for author in node.text.authors.all()]
+                'authorGroup': [author.username
+                                for author in node.text.authors.all()]
             }
         })
 
     return json_response({'loadArgumentNewsResponse': cards})
 
 
-###################### Store/Modify Nodes ######################################
+# ##################### Store/Modify Nodes ####################################
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def store_text(request, path):
@@ -278,8 +274,8 @@ def store_text(request, path):
         else:
             raise EmptyText
 
-    elif 'wikiText' in p and 'argumentType' in p and not \
-            'wikiTextAlternative' in p:
+    elif 'wikiText' in p and 'argumentType' in p and \
+            'wikiTextAlternative' not in p:
 
         if len(p['wikiText'].strip()) > 0:
             # store argument
@@ -301,7 +297,8 @@ def store_text(request, path):
         else:
             raise EmptyText
 
-    elif 'wikiTextAlternative' in p and 'wikiText' in p and 'argumentType' in p:
+    elif ('wikiTextAlternative' in p and 'wikiText' in p and
+          'argumentType' in p):
 
         if len(p['wikiText'].strip()) > 0 and \
                 len(p['wikiTextAlternative'].strip()) > 0:
@@ -385,7 +382,7 @@ def mark_node_unfollow(request, path):
     return json_response({'markNodeResponse': {}})
 
 
-#################### User Infos ##########################################
+# ################### User Infos ##########################################
 @ViewErrorHandling
 def load_user_info(request, name):
     user = assert_active_user(name)
@@ -406,7 +403,7 @@ def load_user_settings(request):
     }})
 
 
-#################### User Interactions #########################################
+# ################### User Interactions #######################################
 @ViewErrorHandling
 def login(request):
     username = request.POST['username']
@@ -534,10 +531,11 @@ def delete_user(request):
     return json_response({'deleteUserResponse': {}})
 
 
-####################### Registration ###########################################
+# ###################### Registration #########################################
 @ViewErrorHandling
 def account_registration(request):
-    assert_post_parameters(request, ['displayName', 'password', 'emailAddress'])
+    assert_post_parameters(request,
+                           ['displayName', 'password', 'emailAddress'])
 
     email_address = request.POST['emailAddress']
     password = request.POST['password']
