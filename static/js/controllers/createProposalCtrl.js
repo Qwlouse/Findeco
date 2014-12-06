@@ -330,9 +330,11 @@ findecoApp.controller(
                 var subsectionList = [];
                 for (var i = 0; i < subsections.length; i++) {
                     var structure = {
-                        heading: subsections[i].heading,
-                        text: subsections[i].text
+                        heading: subsections[i].heading
                     };
+                    if (subsections[i].newSection) {
+                        structure.text = subsections[i].text;
+                    }
                     if (subsections[i].shorttitle) {
                         structure.shorttitle = subsections[i].shorttitle;
                     } else {
