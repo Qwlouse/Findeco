@@ -329,10 +329,9 @@ findecoApp.controller(
             var createSubsectionStructure = function (subsections) {
                 var subsectionList = [];
                 for (var i = 0; i < subsections.length; i++) {
-                    var structure = {
-                        heading: subsections[i].heading
-                    };
+                    var structure = {};
                     if (subsections[i].newSection) {
+                        structure.heading = subsections[i].heading;
                         structure.text = subsections[i].text;
                     }
                     if (subsections[i].shorttitle) {
