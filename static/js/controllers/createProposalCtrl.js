@@ -115,16 +115,21 @@ findecoApp.controller(
                     ($scope.heading.length > 2) && ($scope.text.length > 2))) {
                 return false;
             }
+            if ($scope.text.match(/^\s*(={1,6}[^=]+=*)\s*$/m)) {
+                return false;
+            }
             for (var i = 0; i < $scope.subsections.length; i++) {
                 var checkSubsectionForSufficientText = function (subsection) {
-                    if (subsection.newSection &&
-                        !(subsection.heading &&
-                        angular.isString(subsection.heading) &&
-                        (subsection.heading.length > 2) &&
-                        subsection.text &&
-                        angular.isString(subsection.text) &&
-                        (subsection.text.length > 2))) {
-                        return false;
+                    if (subsection.newSection) {
+                        if (!(angular.isString(subsection.heading) &&
+                             (subsection.heading.length > 2) &&
+                             angular.isString(subsection.text) &&
+                             (subsection.text.length > 2))) {
+                            return false;
+                        }
+                        if (subsection.text.match(/^\s*(={1,6}[^=]+=*)\s*$/m)) {
+                            return false;
+                        }
                     }
                     if (subsection.newSection && subsection.subsections &&
                         angular.isArray(subsection.subsections)) {
