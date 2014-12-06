@@ -267,7 +267,7 @@ findecoApp.controller(
                 }
             };
             $scope.submitting = true;
-            Backend.storeRefinement(Navigator.nodePath, submitData).success(function (data) {
+            Backend.storeProposal(Navigator.nodePath, submitData).success(function (data) {
                 $scope.submitting = undefined;
                 if (data.storeRefinementResponse != undefined) {
                     Navigator.changePath(data.storeRefinementResponse.path);
