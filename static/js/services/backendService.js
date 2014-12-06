@@ -159,6 +159,13 @@ angular.module('FindecoBackendService', [])
                 return $http.post(url, data);
             },
 
+            storeRefinement: function (path, data) {
+                var pathComponents = ['/.storeRefinement', path];
+                var url = pathComponents.join('/');
+                url = url.replace("//", "/");
+                return $http.post(url, data);
+            },
+
             storeArgument: function (path, data) {
                 var pathComponents = ['/.storeArgument', path];
                 var url = pathComponents.join('/');

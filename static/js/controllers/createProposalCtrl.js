@@ -260,22 +260,40 @@ findecoApp.controller(
                     heading: $scope.heading,
                     text: $scope.text,
                     subsections: $scope.subsections
-                },
-                argument: {
-                    heading: $scope.argumentHeading,
-                    text: $scope.argumentText
                 }
             };
+            if ($scope.proposalType == 'refinement') {
+                submitData.argument = {
+                    heading: $scope.argumentHeading,
+                    text: $scope.argumentText
+                };
+            }
             $scope.submitting = true;
-            Backend.storeProposal(Navigator.nodePath, submitData).success(function (data) {
-                $scope.submitting = undefined;
-                if (data.storeProposalResponse != undefined) {
-                    Navigator.changePath(data.storeProposalResponse.path);
-                }
-                if (data.errorResponse != undefined) {
-                    $scope.error = data.errorResponse;
-                }
-            }).error(function (response) {
+            var promise;
+            if ($scope.proposalType == 'refinement') {
+                promise = Backend.storeRefinement(Navigator.nodePath, submitData);
+                promise.success(function (data) {
+                    $scope.submitting = undefined;
+                    if (data.storeRefinementResponse != undefined) {
+                        Navigator.changePath(data.storeRefinementResponse.path);
+                    }
+                    if (data.errorResponse != undefined) {
+                        $scope.error = data.errorResponse;
+                    }
+                });
+            } else {
+                promise = Backend.storeProposal(Navigator.nodePath, submitData);
+                promise.success(function (data) {
+                    $scope.submitting = undefined;
+                    if (data.storeProposalResponse != undefined) {
+                        Navigator.changePath(data.storeProposalResponse.path);
+                    }
+                    if (data.errorResponse != undefined) {
+                        $scope.error = data.errorResponse;
+                    }
+                });
+            }
+            promise.error(function (response) {
                 $scope.submitting = undefined;
                 $scope.error = {
                     errorID: "_noConnectionToBackend_",
