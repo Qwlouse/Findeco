@@ -119,9 +119,9 @@ def assert_permissions(request, permissions):
             raise PermissionDenied()
 
 
-def assert_post_parameters(request, parameters):
+def assert_request_data_parameters(request_data, parameters):
     for p in parameters:
-        if not p in request.POST:
+        if p not in request_data:
             raise MissingPOSTParameter(p)
 
 

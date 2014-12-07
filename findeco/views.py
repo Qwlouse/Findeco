@@ -266,7 +266,7 @@ def store_text(request, path):
                         'node_storage.add_derivation', 'node_storage.add_text',
                         'node_storage.change_vote'])
     user = request.user
-    p = request.POST
+    p = json.loads(request.body)
     if 'wikiText' in p and not \
             ('argumentType' in p or 'wikiTextAlternative' in p):
 
@@ -278,8 +278,8 @@ def store_text(request, path):
         else:
             raise EmptyText
 
-    elif 'wikiText' in p and 'argumentType' in p and not \
-            'wikiTextAlternative' in p:
+    elif 'wikiText' in p and 'argumentType' in p and \
+            'wikiTextAlternative' not in p:
 
         if len(p['wikiText'].strip()) > 0:
             # store argument
@@ -409,8 +409,9 @@ def load_user_settings(request):
 #################### User Interactions #########################################
 @ViewErrorHandling
 def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
+    request_data = json.loads(request.body)
+    username = request_data['username']
+    password = request_data['password']
     user = assert_active_user(username)
     user = authenticate(username=user.username, password=password)
     if user is not None:
@@ -443,12 +444,13 @@ def logout(request):
 @ViewErrorHandling
 def store_settings(request):
     assert_authentication(request)
+    request_data = json.loads(request.body)
     user = User.objects.get(id=request.user.id)
-    assert_post_parameters(request, ['description', 'displayName'])
-    if check_username_sanity(request.POST['displayName']):
-        display_name = request.POST['displayName']
+    assert_request_data_parameters(request_data, ['description', 'displayName'])
+    if check_username_sanity(request_data['displayName']):
+        display_name = request_data['displayName']
     else:
-        raise InvalidUsername(request.POST['displayName'])
+        raise InvalidUsername(request_data['displayName'])
     if display_name != user.username:
         try:
             u = User.objects.get(username__iexact=display_name)
@@ -458,8 +460,8 @@ def store_settings(request):
             pass
         user.username = display_name
 
-    user.profile.description = escape(request.POST['description'])
-    email = request.POST['email']
+    user.profile.description = escape(request_data['description'])
+    email = request_data['email']
     if email != user.email:
         assert_valid_email(email)
         eact = EmailActivation.create(user, email)
@@ -476,16 +478,16 @@ def store_settings(request):
             # This means we can't send mails, so we can't change the mail
             eact.delete()
             raise
-    if 'wantsMailNotification' in request.POST:
+    if 'wantsMailNotification' in request_data:
         user.profile.wants_mail_notification = (
-            request.POST['wantsMailNotification'].lower() == 'true')
+            request_data['wantsMailNotification'].lower() == 'true')
 
-    if 'helpEnabled' in request.POST:
+    if 'helpEnabled' in request_data:
         user.profile.help_enabled = (
-            request.POST['helpEnabled'].lower() == 'true')
+            request_data['helpEnabled'].lower() == 'true')
 
-    if 'preferredLanguage' in request.POST:
-        user.profile.preferred_language = request.POST['preferredLanguage']
+    if 'preferredLanguage' in request_data:
+        user.profile.preferred_language = request_data['preferredLanguage']
 
     user.save()
     return json_response({'storeSettingsResponse': {}})
@@ -516,7 +518,7 @@ def mark_user_unfollow(request, name):
 def change_password(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
-    user.set_password(request.POST['password'])
+    user.set_password(json.loads(request.body)['password'])
     user.save()
     return json_response({'changePasswordResponse': {}})
 
@@ -537,14 +539,15 @@ def delete_user(request):
 ####################### Registration ###########################################
 @ViewErrorHandling
 def account_registration(request):
-    assert_post_parameters(request, ['displayName', 'password', 'emailAddress'])
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['displayName', 'password', 'emailAddress'])
 
-    email_address = request.POST['emailAddress']
-    password = request.POST['password']
-    if check_username_sanity(request.POST['displayName']):
-        display_name = request.POST['displayName']
+    email_address = request_data['emailAddress']
+    password = request_data['password']
+    if check_username_sanity(request_data['displayName']):
+        display_name = request_data['displayName']
     else:
-        raise InvalidUsername(request.POST['displayName'])
+        raise InvalidUsername(request_data['displayName'])
 
     assert_valid_email(email_address)
 
@@ -588,8 +591,9 @@ def account_registration(request):
 
 @ViewErrorHandling
 def account_activation(request):
-    assert_post_parameters(request, ['activationKey'])
-    activation_key = request.POST['activationKey']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['activationKey'])
+    activation_key = request_data['activationKey']
     try:
         act = Activation.objects.get(key=activation_key)
         act.resolve()
@@ -600,8 +604,9 @@ def account_activation(request):
 
 @ViewErrorHandling
 def account_reset_request_by_name(request):
-    assert_post_parameters(request, ['displayName'])
-    display_name = request.POST['displayName']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['displayName'])
+    display_name = request_data['displayName']
 
     user = assert_active_user(display_name)
     recovery = PasswordRecovery.create(user)
@@ -623,8 +628,9 @@ def account_reset_request_by_name(request):
 
 @ViewErrorHandling
 def account_reset_request_by_mail(request):
-    assert_post_parameters(request, ['emailAddress'])
-    email_address = request.POST['emailAddress']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['emailAddress'])
+    email_address = request_data['emailAddress']
     user = assert_active_user(email=email_address)
     recovery = PasswordRecovery.create(user)
     try:
@@ -644,8 +650,9 @@ def account_reset_request_by_mail(request):
 
 @ViewErrorHandling
 def account_reset_confirmation(request):
-    assert_post_parameters(request, ['activationKey'])
-    recovery_key = request.POST['activationKey']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['activationKey'])
+    recovery_key = request_data['activationKey']
     try:
         rec = PasswordRecovery.objects.get(key=recovery_key)
         new_password = rec.resolve()
@@ -661,8 +668,9 @@ def account_reset_confirmation(request):
 
 @ViewErrorHandling
 def email_change_confirmation(request):
-    assert_post_parameters(request, ['activationKey'])
-    email_verify_key = request.POST['activationKey']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['activationKey'])
+    email_verify_key = request_data['activationKey']
     try:
         eac = EmailActivation.objects.get(key=email_verify_key)
         eac.resolve()
