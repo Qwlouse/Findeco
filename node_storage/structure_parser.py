@@ -214,7 +214,7 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, author,
                                   authors=[author])
 
         # auto-follow argument
-        create_vote(author, [arg])
+        #create_vote(author, [arg])
         # data for microblogging message
         new_path_couples.append(
             (get_good_path_for_structure_node(origin, parent_slot),
