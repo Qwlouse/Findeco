@@ -1295,8 +1295,13 @@
         "description": ""
     },
     {
-        "key"        : "_wizzardSummaryInfo_",
-        "value"      : "Der neue Vorschlag wird mit folgendem Inhalt gespeichert. Änderungen sind zu diesem Zeitpunkt leicht möglich, indem auf die vorherigen Schritte nochmal zurückgegangen wird. Wird der Vorschlag wie angezeigt abgeschickt kann er nicht mehr geändert werden.",
+        "key"        : "_proposalWizzardSummaryInfo_",
+        "value"      : "Der neue Vorschlag wird mit folgendem Inhalt gespeichert. Änderungen sind jetzt noch möglich, indem auf die vorherigen Schritte nochmal zurückgegangen wird. Wird der Vorschlag wie angezeigt abgeschickt kann er nicht mehr geändert werden.",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentWizzardSummaryInfo_",
+        "value"      : "Das neue Argument wird mit folgendem Inhalt gespeichert. Änderungen sind jetzt noch möglich, indem auf die vorherigen Schritte nochmal zurückgegangen wird. Wird das Agrument wie angezeigt abgeschickt kann es nicht mehr geändert werden.",
         "description": ""
     },
     {

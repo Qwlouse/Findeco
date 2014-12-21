@@ -1274,8 +1274,13 @@
         "description": ""
     },
     {
-        "key"        : "_wizzardSummaryInfo_",
+        "key"        : "_proposalWizzardSummaryInfo_",
         "value"      : "The new proposal will be saved with the following content. Changes can still be made by switching to one fo the previous steps. If the proposal is saved it can not be changed after that.",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentWizzardSummaryInfo_",
+        "value"      : "The new argument will be saved with the following content. Changes can still be made by switching to one fo the previous steps. If the argument is saved it can not be changed after that.",
         "description": ""
     },
     {

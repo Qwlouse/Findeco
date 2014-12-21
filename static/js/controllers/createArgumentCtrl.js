@@ -32,8 +32,13 @@ findecoApp.controller(
         };
 
         $scope.step = 1;
-        $scope.heading = "";
-        $scope.text = "";
+        $scope.argumentHeading = "";
+        $scope.argumentText = "";
+
+        $scope.setArgumentType = function (type) {
+            $scope.argumentType = type;
+            $scope.step++;
+        };
 
         $scope.nextStep = function () {
             if (($scope.step == 2) && $scope.argumentHasText()) {
@@ -52,15 +57,16 @@ findecoApp.controller(
         };
 
         $scope.argumentHasText = function () {
-            return ((angular.isString($scope.heading)) && (angular.isString($scope.text)) &&
-                    ($scope.heading.length > 2) && ($scope.text.length > 2));
+            return ((angular.isString($scope.argumentHeading)) && (angular.isString($scope.argumentText)) &&
+                    ($scope.argumentHeading.length > 2) && ($scope.argumentText.length > 2));
         };
 
         $scope.submit = function () {
             var submitData = {
                 argument: {
                     heading: $scope.heading,
-                    text: $scope.text
+                    text: $scope.text,
+                    type: $scope.argumentType
                 }
             };
             $scope.submitting = true;
@@ -81,7 +87,7 @@ findecoApp.controller(
             });
         };
 
-        $scope.cancelProposal = function () {
+        $scope.cancelArgument = function () {
             Navigator.changePath(Navigator.nodePath);
         }
     });

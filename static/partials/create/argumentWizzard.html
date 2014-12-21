@@ -18,7 +18,7 @@
                      data-i18n="_wizzardProgressText_"></div>
                 <div class="wizzard-progress-icon"
                      ng-class="{'wizzard-progress-clickable': step > 3}"
-                     ng-style="{'background-position': '-100px ' + (-150 - (step == 4) * 50 - (step < 4) * 100) + 'px'}"
+                     ng-style="{'background-position': '-100px ' + (-150 - (step == 3) * 50 - (step < 3) * 100) + 'px'}"
                      ng-click="setStep(3)"></div>
                 <div style="width: calc(32% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
                      class="tipp"
@@ -52,10 +52,10 @@
 
             <div ng-if="step == 2" ng-include="'/static/partials/create/argument.html'"></div>
 
-            <div class="textColumn backgroundBox" style="margin-right: 1em; max-width: 42em;" ng-if="step == 4">
+            <div class="textColumn backgroundBox" style="margin-right: 1em; max-width: 42em;" ng-if="step == 3">
 
                 <h2 data-i18n="_summaryHeading_"></h2>
-                <p class="tipp" data-i18n="_wizzardSummaryInfo_"></p>
+                <p class="tipp" data-i18n="_argumentWizzardSummaryInfo_"></p>
 
                 <h3 data-i18n="_argumentText_"></h3>
                 <div class="backgroundBox">
@@ -79,7 +79,7 @@
             <div style="clear: both; margin: 1em 0 8em 0; max-width: 42em;">
                 <button class="right" data-i18n="_nextButton_"
                         ng-class="{'green': ((step == 2) && argumentHasText())}"
-                        style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></button>
+                        style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 3)"></button>
                 <button class="right green" data-i18n="_createButton_"
                         style="margin-left: 1em;" ng-click="submit();" ng-if="(step == 3) && (!submitting)"></button>
                 <button class="right" data-i18n="_submitting_" style="margin-left: 1em;"
@@ -88,7 +88,7 @@
                         style="margin-left: 1em;" ng-click="previousStep();"
                         ng-if="step > 1"></button>
                 <button class="red right" data-i18n="_cancelButton_"
-                        ng-if="step == 1" ng-click="cancelProposal();"></button>
+                        ng-if="step == 1" ng-click="cancelArgument();"></button>
             </div>
         </div>
     </div>
