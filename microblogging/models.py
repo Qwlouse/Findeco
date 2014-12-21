@@ -3,8 +3,8 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# #############################################################################
+# Copyright (c) 2014 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 import re
 from django.contrib.auth.models import User
@@ -133,7 +133,7 @@ class Post(models.Model):
         if self.post_type == self.USER_POST:
             template = preprocess_userpost_template(self.text_template)
         else:
-            template = SYSTEM_MESSAGE_TEMPLATES[self.post_type]
+            template = ugettext(SYSTEM_MESSAGE_TEMPLATES[self.post_type])
 
         # insert references and mentions
         try:
@@ -186,11 +186,11 @@ def preprocess_userpost_template(template):
 
 
 SYSTEM_MESSAGE_TEMPLATES = {
-    Post.NODE_CREATED: ugettext('node_created_message'),
-    Post.NODE_REFINED: ugettext('node_refined_message'),
-    Post.SPAM_MARKED: ugettext('node_flagged_as_spam_message'),
-    Post.SPAM_UNMARKED: ugettext('node_unflagged_as_spam_message'),
-    Post.NODE_FOLLOWED: ugettext('node_followed_message'),
-    Post.NODE_UNFOLLOWED: ugettext('node_unfollowed_message'),
-    Post.ARGUMENT_CREATED: ugettext('argument_created_message'),
-}
+    Post.NODE_CREATED: 'node_created_message',
+    Post.NODE_REFINED: 'node_refined_message',
+    Post.SPAM_MARKED: 'node_flagged_as_spam_message',
+    Post.SPAM_UNMARKED: 'node_unflagged_as_spam_message',
+    Post.NODE_FOLLOWED: 'node_followed_message',
+    Post.NODE_UNFOLLOWED: 'node_unfollowed_message',
+    Post.ARGUMENT_CREATED: 'argument_created_message'
+    }

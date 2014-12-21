@@ -3,8 +3,8 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# #############################################################################
+# Copyright (c) 2014 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 """
 This file contains models for the basic Project structure:
   * Add a UserProfile to every User
@@ -34,8 +34,7 @@ from __future__ import division, print_function, unicode_literals
 from datetime import datetime
 import random
 
-from django.contrib.auth import models as auth_models
-from django.contrib.auth.management import create_superuser
+from django.contrib.auth import models as auth_models, create_superuser
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models import signals
@@ -52,7 +51,7 @@ def generate_key(nr_of_chars=64):
                    for _ in range(nr_of_chars))
 
 
-####################### Add profile to each user ###############################
+# ###################### Add profile to each user #############################
 class UserProfile(models.Model):
     """
     Contains a textual description and a list of Users this User follows.
@@ -119,7 +118,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 signals.post_save.connect(create_user_profile, sender=User)
 
 
-####################### Activation Models ######################################
+# ###################### Activation Models ####################################
 class Activation(models.Model):
     key = models.CharField(max_length=100, default=generate_key)
     key_valid_until = models.DateTimeField()
@@ -229,7 +228,7 @@ class PasswordRecovery(models.Model):
     def __unicode__(self):
         return "<PasswordRecovery for %s>" % self.user.username
 
-############################ Automatic superuser creation ######################
+# ########################### Automatic superuser creation ####################
 # From http://stackoverflow.com/questions/1466827/
 #
 # Prevent interactive question about wanting a superuser created.
@@ -247,7 +246,8 @@ def create_admin():
         print('*' * 80)
         print('Creating admin -- login: admin, password: ' + ADMIN_PASS)
         print('*' * 80)
-        auth_models.User.objects.create_superuser('admin', 'a@b.de', ADMIN_PASS)
+        auth_models.User.objects.create_superuser('admin', 'a@b.de',
+                                                  ADMIN_PASS)
     else:
         print('Admin user already exists.')
 
@@ -303,7 +303,8 @@ def create_anonymous_user():
 
 def get_permission(name):
     a, _, n = name.partition('.')
-    return auth_models.Permission.objects.get(content_type__app_label=a, codename=n)
+    return auth_models.Permission.objects.get(content_type__app_label=a,
+                                              codename=n)
 
 
 def create_groups():
@@ -314,7 +315,7 @@ def create_groups():
     print('*' * 80)
     print('Creating groups -- texters, voters, bloggers ')
     print('*' * 80)
-    #### Create a group of Texters
+    # ### Create a group of Texters
     g = Group.objects.create(name="texters")
     perms = ['node_storage.add_node', 'node_storage.add_argument',
              'node_storage.add_derivation', 'node_storage.add_nodeorder',
@@ -322,7 +323,7 @@ def create_groups():
     for p in perms:
         g.permissions.add(get_permission(p))
     g.save()
-    #### Create a group of Voters
+    # ### Create a group of Voters
     g = Group.objects.create(name="voters")
     perms = ['node_storage.add_vote', 'node_storage.add_spamflag',
              'node_storage.change_vote', 'node_storage.change_spamflag',
@@ -331,7 +332,7 @@ def create_groups():
     for p in perms:
         g.permissions.add(get_permission(p))
     g.save()
-    #### Create a group of Bloggers
+    # ### Create a group of Bloggers
     g = Group.objects.create(name="bloggers")
     perms = ['microblogging.add_post']
     for p in perms:
