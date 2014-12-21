@@ -1303,5 +1303,30 @@
         "key"        : "_shorttitleNotUnique_",
         "value"      : "Dieser Kurztitel kommt schon vor. Bitte wähle einen der noch nicht vorkommt.",
         "description": ""
+    },
+    {
+        "key"        : "_argumentTypeQuestion_",
+        "value"      : "Ist dein Argument für oder gegen den Vorschlag?",
+        "description": ""
+    },
+    {
+        "key"        : "_proArgumentButton_",
+        "value"      : "Dafür",
+        "description": ""
+    },
+    {
+        "key"        : "_conArgumentButton_",
+        "value"      : "Dagegen",
+        "description": ""
+    },
+    {
+        "key"        : "_neutArgumentButton_",
+        "value"      : "Neutrale Information",
+        "description": ""
+    },
+    {
+        "key"        : "_ArgumentTypeHelp_",
+        "value"      : "Für jeden Typ, den dein Argument haben kann gibt es neben dem Vorschlag eine eigene Liste. Andere Benutzer können bei deinem Argument auf den Stern klicken - oder nicht - und je nachdem wie viel Unterstützung dein Argument bekommt wird es weiter oben in der Liste angezeigt. Wenn dein Argument in der falschen Kategorie eingetragen wird, werden andere Nutzer es natürlich nicht unterstützen.",
+        "description": ""
     }
 ]
