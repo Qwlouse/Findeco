@@ -65,19 +65,10 @@
                         <div creole wiki-text="paragraph.wikiText"></div>
                     </div>
                 </div>
-                <button ng-show="user.isLoggedIn" ng-click="relocate('create/proposal')">Edit</button>
-                <div class="btnBar">
-                    <a ng-show="user.isLoggedIn" ng-click="relocate('old/create/topic')"
-                         data-i18n="_createNewText_" style="cursor: pointer;"></a><br />
 
-                    <a ng-show="user.isLoggedIn" ng-click="relocate('old/create/derivate')"
-                         data-i18n="_createDerivativeText_" style="cursor: pointer;"></a><br />
-
-                    <a ng-show="user.isLoggedIn" ng-click="relocate('old/create/opposing')"
-                         data-i18n="_createOpposingText_" style="cursor: pointer;"></a><br />
-
-                    <div ng-show="nodeInfo.derivate != undefined && nodeInfo.derivate != '' " class="btn btn-primary"
-                         ng-click="relocateToDerivate()" data-i18n="_goToDerivateNode_"></div>
+                <div style="padding: 3em 0 2em 0;">
+                    <a ng-click="relocate('create/proposal')" ng-href="/create/proposal/{{ nav.nodePath }}"
+                       class="button-green" data-i18n="_createProposalOrRefinement_">Edit</a>
                 </div>
 
                 <div ng-show="isLoading()" class="deactivateDiv">

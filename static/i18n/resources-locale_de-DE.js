@@ -1333,5 +1333,10 @@
         "key"        : "_ArgumentTypeHelp_",
         "value"      : "Der Typ des Arguments wird neben jedem Argument in der linken Seitenleiste neben dem Vorschlag angezeigt. Andere Benutzer können bei deinem Argument auf den Stern klicken - oder nicht - und je nachdem wie viel Unterstützung dein Argument bekommt, wird es weiter oben in der Liste angezeigt. Wenn dein Argument in der falschen Kategorie eingetragen wird, werden andere Nutzer es natürlich nicht unterstützen.",
         "description": ""
+    },
+    {
+        "key"        : "_createProposalOrRefinement_",
+        "value"      : "Gegenvorschlag oder Weiterentwicklung erstellen",
+        "description": ""
     }
 ]

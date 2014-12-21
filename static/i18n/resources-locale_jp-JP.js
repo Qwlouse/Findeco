@@ -1312,5 +1312,10 @@
         "key"        : "_ArgumentTypeHelp_",
         "value"      : "The argument type will be displayed left of the argument heading. Other users can click the star right of the heading of your argument which influeces the sorting of the arguments in the list. The most liked arguments are sorted to the top. Make sure to choose the right category for your argument because it will not get this support if it is in the wrong category.",
         "description": ""
+    },
+    {
+        "key"        : "_createProposalOrRefinement_",
+        "value"      : "Create a Proposal or Refinement",
+        "description": ""
     }
 ]

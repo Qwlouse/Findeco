@@ -148,7 +148,7 @@ input, textarea {
     border: 1px solid black;
 }
 
-input[type=submit], input[type=reset], button {
+input[type=submit], input[type=reset], button, a.button-green, a.button-red {
     color: #000000;
     padding: 0.4em;
     border: 0 solid #000000;
@@ -156,15 +156,15 @@ input[type=submit], input[type=reset], button {
     box-shadow: 2px 3px 6px #000000;
 }
 
-input[type=submit]:active, input[type=reset]:active, button:active {
+input[type=submit]:active, input[type=reset]:active, button:active, a.button-green:active, a.button-red:active {
     box-shadow: 0 0 2px #000000;
 }
 
-input[type=submit], button.green {
+input[type=submit], button.green, a.button-green {
     background-color: #00510A;
 }
 
-input[type=reset], button.red {
+input[type=reset], button.red, a.button-red {
     background-color: #680500;
 }
 
