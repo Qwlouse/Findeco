@@ -1,0 +1,95 @@
+<div class="row" style="margin-bottom: 1em;">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
+        <div style="position: relative; left: 50%;">
+            <div style="margin: 1em 0 2em 0; text-align: justify; max-width: 42em;">
+                <div class="wizzard-progress-icon"
+                     ng-class="{'wizzard-progress-clickable': step > 1}"
+                     ng-style="{'background-position': '0px ' + (-150 - (step == 1) * 50 - (step < 1) * 100) + 'px'}"
+                     ng-click="setStep(1)"></div>
+                <div style="border-bottom: 4px solid rgb(204, 204, 204); width: calc(32% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
+                     class="tipp"
+                     data-i18n="_wizzardProgressType_"></div>
+                <div class="wizzard-progress-icon"
+                     ng-class="{'wizzard-progress-clickable': step > 2}"
+                     ng-style="{'background-position': '-50px ' + (-150 - (step == 2) * 50 - (step < 2) * 100) + 'px'}"
+                     ng-click="setStep(2)"></div>
+                <div style="border-bottom: 4px solid rgb(204, 204, 204); width: calc(32% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
+                     class="tipp"
+                     data-i18n="_wizzardProgressText_"></div>
+                <div class="wizzard-progress-icon"
+                     ng-class="{'wizzard-progress-clickable': step > 3}"
+                     ng-style="{'background-position': '-100px ' + (-150 - (step == 4) * 50 - (step < 4) * 100) + 'px'}"
+                     ng-click="setStep(3)"></div>
+                <div style="width: calc(32% - 52px); display: inline-block; position: relative; top: -31px; overflow: visible; margin: 0; padding: 0; text-align: left;"
+                     class="tipp"
+                     data-i18n="_wizzardProgressSend_"></div>
+                <div style="width: 100%; display: inline-block;"></div>
+            </div>
+
+            <div class="textColumn backgroundBox" style="max-width: 42em;" ng-if="step == 1">
+
+                <h2 data-i18n="_argumentTypeQuestion_"></h2>
+
+                <div style="clear: both; text-align: justify; margin-top: 2em;">
+                    <button class="green" data-i18n="_proArgumentButton_"
+                            style="margin-right: 1em; display: inline-block;"
+                            ng-click="setArgumentType('pro')"></button>
+                    <button class="green" data-i18n="_neutArgumentButton_"
+                            style="display: inline-block;"
+                            ng-click="setArgumentType('neut')"></button>
+                    <button class="green" data-i18n="_conArgumentButton_"
+                            style="display: inline-block;"
+                            ng-click="setArgumentType('con')"></button>
+                    <div style="display: inline-block; width: 100%; height: 0;"></div>
+                </div>
+
+                <div style="clear: both;"></div>
+
+                <p class="tipp" data-i18n="_ArgumentTypeHelp_" style="margin-top: 1em;"></p>
+
+                <div style="clear: both;"></div>
+            </div>
+
+            <div ng-if="step == 2" ng-include="'/static/partials/create/argument.html'"></div>
+
+            <div class="textColumn backgroundBox" style="margin-right: 1em; max-width: 42em;" ng-if="step == 4">
+
+                <h2 data-i18n="_summaryHeading_"></h2>
+                <p class="tipp" data-i18n="_wizzardSummaryInfo_"></p>
+
+                <h3 data-i18n="_argumentText_"></h3>
+                <div class="backgroundBox">
+                    <h1>{{ argumentHeading }}</h1>
+                    <div creole wiki-text="argumentText" update-interval="50000"></div>
+                </div>
+
+                <div ng-show="submitting">
+                    <span data-i18n="_submittingNewArgument_"></span>
+                </div>
+
+                <div ng-show="error">
+                    <span class="help-error" data-i18n="{{ error.errorID }}"></span>
+                    <div class="help-error">{{ error.additionalInfo }}</div>
+                </div>
+
+                <div style="clear: both;"></div>
+            </div>
+
+
+            <div style="clear: both; margin: 1em 0 8em 0; max-width: 42em;">
+                <button class="right" data-i18n="_nextButton_"
+                        ng-class="{'green': ((step == 2) && argumentHasText())}"
+                        style="margin-left: 1em;" ng-click="nextStep();" ng-if="(step > 1) && (step < 4)"></button>
+                <button class="right green" data-i18n="_createButton_"
+                        style="margin-left: 1em;" ng-click="submit();" ng-if="(step == 3) && (!submitting)"></button>
+                <button class="right" data-i18n="_submitting_" style="margin-left: 1em;"
+                        ng-if="(step == 3) && submitting"></button>
+                <button class="red right" data-i18n="_backButton_"
+                        style="margin-left: 1em;" ng-click="previousStep();"
+                        ng-if="step > 1"></button>
+                <button class="red right" data-i18n="_cancelButton_"
+                        ng-if="step == 1" ng-click="cancelProposal();"></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -65,6 +65,7 @@ var findecoApp = angular.module(
             when('/index.htm', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
             when('/index.html', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
             when('/create/proposal/:param*', {templateUrl: '/static/partials/create/proposalWizzard.html', controller: 'FindecoCreateProposalCtrl'}).
+            when('/create/argument/:param*', {templateUrl: '/static/partials/create/argumentWizzard.html', controller: 'FindecoCreateArgumentCtrl'}).
             otherwise({templateUrl: '/static/partials/default.html', controller: 'FindecoDefaultCtrl'});
     }]);
 
