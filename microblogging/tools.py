@@ -75,9 +75,6 @@ def change_microblogging_authorship(old_user, new_user):
             else:
                 permutation.append(new_order.index(user_id))
 
-        print(old_order)
-        print(new_order)
-        print(permutation)
         for i in range(len(permutation)):
             post.text_template = post.text_template.replace('{u%d}' % i,
                                                             '{P%d}' % i)
