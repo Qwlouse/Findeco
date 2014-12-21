@@ -50,30 +50,30 @@ angular.module('FindecoUserService', [])
             preferredLanguage: ""
         };
         userInfo.register = function (displayName, password, emailAddress) {
-            return $http.post('/.accountRegistration/', {
+            return $http.post('/.accountRegistration/', angular.toJson({
                 displayName: displayName,
                 password: password,
-                emailAddress: emailAddress});
+                emailAddress: emailAddress}));
         };
         userInfo.activate = function (activationKey) {
-            return $http.post('/.accountActivation/', {activationKey: activationKey});
+            return $http.post('/.accountActivation/', angular.toJson({activationKey: activationKey}));
         };
         userInfo.confirm = function (activationKey) {
-            return $http.post('/.accountResetConfirmation/', {activationKey: activationKey});
+            return $http.post('/.accountResetConfirmation/', angular.toJson({activationKey: activationKey}));
         };
         userInfo.confirmEmail = function (activationKey) {
-            return $http.post('/.emailChangeConfirmation/', {activationKey: activationKey});
+            return $http.post('/.emailChangeConfirmation/', angular.toJson({activationKey: activationKey}));
         };
         userInfo.recoverByMail = function (emailAddress) {
             return $http.post('/.accountResetRequestByMail/',
-                {emailAddress: emailAddress});
+                angular.toJson({emailAddress: emailAddress}));
         };
         userInfo.recoverByUsername = function (displayName) {
             return $http.post('/.accountResetRequestByName/',
-                {displayName: displayName});
+                angular.toJson({displayName: displayName}));
         };
         userInfo.login = function (username, password) {
-            var promise = $http.post('/.login/', {username: username, password: password});
+            var promise = $http.post('/.login/', angular.toJson({username: username, password: password}));
             promise.success(function (d) {
                 data = d.loginResponse;
                 userInfo.isLoggedIn = true;
@@ -177,7 +177,7 @@ angular.module('FindecoUserService', [])
             }
         };
         userInfo.storeSettings = function () {
-            return $http.post('/.storeSettings/', {
+            return $http.post('/.storeSettings/', angular.toJson({
                 displayName: userInfo.displayName,
                 description: userInfo.description,
                 wantsMailNotification: userInfo.wantsMailNotification,
@@ -199,10 +199,10 @@ angular.module('FindecoUserService', [])
                             $rootScope.language = Fesettings.activatedLanguages[0];
                         }
                     }
-            });
+            }));
         };
         userInfo.changePassword = function (newPassword) {
-            return $http.post('/.changePassword/', {password: newPassword});
+            return $http.post('/.changePassword/', angular.toJson({password: newPassword}));
         };
         userInfo.deleteAccount = function () {
             return $http.post('/.deleteUser/');
