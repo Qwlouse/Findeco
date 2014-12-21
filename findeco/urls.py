@@ -161,6 +161,10 @@ urlpatterns = patterns(
         'store_proposal',
         name='store_proposal'),
 
+    url(r'^\.storeRefinement/' + PATH + '$',
+        'store_refinement',
+        name='store_refinement'),
+
     # ----- Search  -----
     url(r'^\.search/'+SEARCH_FIELDS+'/(?P<search_string>(.*))$',
         'search',

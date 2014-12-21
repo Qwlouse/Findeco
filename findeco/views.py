@@ -341,6 +341,33 @@ def store_proposal(request, path):
     return json_response({'storeProposalResponse': {'path': new_path}})
 
 
+@ValidPaths("StructureNode")
+@ViewErrorHandling
+def store_proposal(request, path):
+    assert_authentication(request)
+    assert_permissions(request,
+                       ['node_storage.add_node', 'node_storage.add_vote',
+                        'node_storage.add_nodeorder', 'node_storage.add_text',
+                        'node_storage.change_vote'])
+    user = request.user
+    p = json.loads(request.body)
+
+    slot_path = path.rsplit('.', 1)[0]
+    slot = get_node_for_path(slot_path)
+    proposal_node = generate_proposal_node_with_subsections(slot,
+                                                            p['proposal'],
+                                                            user)
+
+    new_path = get_good_path_for_structure_node(proposal_node, slot, slot_path)
+    return json_response({'storeProposalResponse': {'path': new_path}})
+
+
+@ValidPaths("StructureNode")
+@ViewErrorHandling
+def store_refinement(request, path):
+    pass
+
+
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
 def flag_node(request, path):
@@ -497,8 +524,10 @@ def store_settings(request):
             eact.delete()
             raise
     if 'wantsMailNotification' in request_data:
-        user.profile.wants_mail_notification = (
-            request_data['wantsMailNotification'].lower() == 'true')
+        wants = request_data['wantsMailNotification']
+        if isinstance(wants, str):
+            wants = wants.lower() == 'true'
+        user.profile.wants_mail_notification = wants
 
     if 'helpEnabled' in request_data:
         user.profile.help_enabled = (

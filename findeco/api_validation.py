@@ -191,6 +191,11 @@ storeProposalResponse_schema = {
         'path': "path"
     }
 }
+storeRefinementResponse_schema = {
+    'storeRefinementResponse': {
+        'path': "path"
+    }
+}
 errorResponse_schema = {
     'errorResponse': {
         'errorID': string,
@@ -244,6 +249,7 @@ markNodeResponseValidator = JSONValidator(markNodeResponse_schema)
 storeSettingsResponseValidator = JSONValidator(storeSettingsResponse_schema)
 storeTextResponseValidator = JSONValidator(storeTextResponse_schema)
 storeProposalResponseValidator = JSONValidator(storeProposalResponse_schema)
+storeRefinementResponseValidator = JSONValidator(storeRefinementResponse_schema)
 
 
 class ErrorResponseValidator(object):
@@ -277,7 +283,8 @@ view_validators = {
     'mark_node_unfollow': markNodeResponseValidator,
     'store_settings': storeSettingsResponseValidator,
     'store_text': storeTextResponseValidator,
-    'store_proposal': storeProposalResponseValidator
+    'store_proposal': storeProposalResponseValidator,
+    'store_refinement': storeRefinementResponseValidator
 }
 
 

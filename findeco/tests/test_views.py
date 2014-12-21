@@ -74,7 +74,8 @@ class ViewTest(TestCase):
     def test_all_api_views_return_json(self):
         for v, kwargs in views:
             self.assertTrue(self.client.login(username="ulf", password="flu"))
-            response = self.client.get(reverse(v, kwargs=kwargs))
+            response = self.client.post(reverse(v, kwargs=kwargs), "{}",
+                                        content_type="application/json")
             res = json.loads(response.content)
             self.assertIsNotNone(res)
 
@@ -128,7 +129,8 @@ class ViewTest(TestCase):
 
     def test_changePassword_response_is_valid(self):
         response = self.client.post(reverse('change_password'),
-                                    {'password': "testpassword"})
+                                    json.dumps({'password': "testpassword"}),
+                                    content_type="application_json")
         validate_response(response.content, 'change_password')
 
     def test_deleteUser_response_is_valid(self):
