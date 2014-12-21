@@ -22,8 +22,8 @@
                ng-click="updateArgumentsWikiText(argument.index)" class="moreLink">... mehr</a>
         </li>
 
-        <li ng-show="user.isLoggedIn">
-            <a class="btn btn-primary" href="/create/argument/{{ nav.nodePath }}"
+        <li ng-show="user.isLoggedIn" style="padding: 2em 0 2em 0;">
+            <a class="button-green" ng-href="/create/argument/{{ nav.nodePath }}"
                ng-click="tmp.argumentType = 'Neut'" data-i18n="_argumentsNew_"></a>
         </li>
     </ul>
