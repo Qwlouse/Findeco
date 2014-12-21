@@ -60,11 +60,19 @@ describe('FindecoBackendService', function () {
 
         it('should call the right path', function () {
             httpBackend.expectGET('/.loadMicrobloggingForFollowedNodes/hugo/?id=-1&type=newer')
-                .respond(200, {'loadMicrobloggingResponse': [1]});
+                .respond(200, {'loadMicrobloggingResponse': [{'authorGroup': ['x']}]});
             var results = [];
             backendService.loadMicrobloggingForFollowedNodes(results, 'hugo').success(function (data) {
-                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
-                expect(results[0]).toBe(1);
+                expect(data['loadMicrobloggingResponse'].length).toBeGreaterThan(0);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'].length).toBe(1);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBe('x');
+                expect(results.length).toBeGreaterThan(0);
+                expect(results[0]['authorGroup']).toBeDefined();
+                expect(results[0]['authorGroup'].length).toBe(1);
+                expect(results[0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(results[0]['authorGroup'][0]['displayName']).toBe('x');
             });
             httpBackend.flush();
         });
@@ -78,11 +86,19 @@ describe('FindecoBackendService', function () {
 
         it('should call the right path', function () {
             httpBackend.expectGET('/.loadMicrobloggingAll/?id=-1&type=newer')
-                .respond(200, {'loadMicrobloggingResponse': [1]});
+                .respond(200, {'loadMicrobloggingResponse': [{'authorGroup': ['x']}]});
             var results = [];
             backendService.loadMicrobloggingForAllNodes(results).success(function (data) {
-                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
-                expect(results[0]).toBe(1);
+                expect(data['loadMicrobloggingResponse'].length).toBeGreaterThan(0);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'].length).toBe(1);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBe('x');
+                expect(results.length).toBeGreaterThan(0);
+                expect(results[0]['authorGroup']).toBeDefined();
+                expect(results[0]['authorGroup'].length).toBe(1);
+                expect(results[0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(results[0]['authorGroup'][0]['displayName']).toBe('x');
             });
             httpBackend.flush();
         });
@@ -96,11 +112,19 @@ describe('FindecoBackendService', function () {
 
         it('should call the right path', function () {
             httpBackend.expectGET('/.loadMicrobloggingForAuthoredNodes/hugo/?id=-1&type=newer')
-                .respond(200, {'loadMicrobloggingResponse': [1]});
+                .respond(200, {'loadMicrobloggingResponse': [{'authorGroup': ['x']}]});
             var results = [];
             backendService.loadMicrobloggingForAuthoredNodes(results, 'hugo').success(function (data) {
-                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
-                expect(results[0]).toBe(1);
+                expect(data['loadMicrobloggingResponse'].length).toBeGreaterThan(0);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'].length).toBe(1);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBe('x');
+                expect(results.length).toBeGreaterThan(0);
+                expect(results[0]['authorGroup']).toBeDefined();
+                expect(results[0]['authorGroup'].length).toBe(1);
+                expect(results[0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(results[0]['authorGroup'][0]['displayName']).toBe('x');
             });
             httpBackend.flush();
         });
@@ -114,11 +138,19 @@ describe('FindecoBackendService', function () {
 
         it('should call the right path', function () {
             httpBackend.expectGET('/.loadMicrobloggingMentions/hugo/?id=-1&type=newer')
-                .respond(200, {'loadMicrobloggingResponse': [1]});
+                .respond(200, {'loadMicrobloggingResponse': [{'authorGroup': ['x']}]});
             var results = [];
             backendService.loadMicrobloggingMentions(results, 'hugo').success(function (data) {
-                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
-                expect(results[0]).toBe(1);
+                expect(data['loadMicrobloggingResponse'].length).toBeGreaterThan(0);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'].length).toBe(1);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBe('x');
+                expect(results.length).toBeGreaterThan(0);
+                expect(results[0]['authorGroup']).toBeDefined();
+                expect(results[0]['authorGroup'].length).toBe(1);
+                expect(results[0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(results[0]['authorGroup'][0]['displayName']).toBe('x');
             });
             httpBackend.flush();
         });
@@ -132,11 +164,19 @@ describe('FindecoBackendService', function () {
 
         it('should call the right path', function () {
             httpBackend.expectGET('/.loadMicrobloggingTimeline/hugo/?id=-1&type=newer')
-                .respond(200, {'loadMicrobloggingResponse': [1]});
+                .respond(200, {'loadMicrobloggingResponse': [{'authorGroup': ['x']}]});
             var results = [];
             backendService.loadMicrobloggingTimeline(results, 'hugo').success(function (data) {
-                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
-                expect(results[0]).toBe(1);
+                expect(data['loadMicrobloggingResponse'].length).toBeGreaterThan(0);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'].length).toBe(1);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBe('x');
+                expect(results.length).toBeGreaterThan(0);
+                expect(results[0]['authorGroup']).toBeDefined();
+                expect(results[0]['authorGroup'].length).toBe(1);
+                expect(results[0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(results[0]['authorGroup'][0]['displayName']).toBe('x');
             });
             httpBackend.flush();
         });
@@ -150,11 +190,19 @@ describe('FindecoBackendService', function () {
 
         it('should call the right path', function () {
             httpBackend.expectGET('/.loadMicrobloggingFromUser/hugo/?id=-1&type=newer')
-                .respond(200, {'loadMicrobloggingResponse': [1]});
+                .respond(200, {'loadMicrobloggingResponse': [{'authorGroup': ['x']}]});
             var results = [];
             backendService.loadMicrobloggingFromUser(results, 'hugo').success(function (data) {
-                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
-                expect(results[0]).toBe(1);
+                expect(data['loadMicrobloggingResponse'].length).toBeGreaterThan(0);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'].length).toBe(1);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBe('x');
+                expect(results.length).toBeGreaterThan(0);
+                expect(results[0]['authorGroup']).toBeDefined();
+                expect(results[0]['authorGroup'].length).toBe(1);
+                expect(results[0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(results[0]['authorGroup'][0]['displayName']).toBe('x');
             });
             httpBackend.flush();
         });
@@ -168,11 +216,19 @@ describe('FindecoBackendService', function () {
 
         it('should call the right path', function () {
             httpBackend.expectGET('/.loadMicrobloggingForNode/pa.1/th.2?id=-1&type=newer')
-                .respond(200, {'loadMicrobloggingResponse': [1]});
+                .respond(200, {'loadMicrobloggingResponse': [{'authorGroup': ['x']}]});
             var results = [];
             backendService.loadMicrobloggingForNode(results, 'pa.1/th.2').success(function (data) {
-                expect(data['loadMicrobloggingResponse'][0]).toBe(1);
-                expect(results[0]).toBe(1);
+                expect(data['loadMicrobloggingResponse'].length).toBeGreaterThan(0);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'].length).toBe(1);
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(data['loadMicrobloggingResponse'][0]['authorGroup'][0]['displayName']).toBe('x');
+                expect(results.length).toBeGreaterThan(0);
+                expect(results[0]['authorGroup']).toBeDefined();
+                expect(results[0]['authorGroup'].length).toBe(1);
+                expect(results[0]['authorGroup'][0]['displayName']).toBeDefined();
+                expect(results[0]['authorGroup'][0]['displayName']).toBe('x');
             });
             httpBackend.flush();
         });
