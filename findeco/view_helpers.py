@@ -465,10 +465,43 @@ def generate_proposal_node_with_subsections(slot, proposal, user):
 
     for child in proposal['subsections']:
         if not re.match(SHORT_TITLE, child['shorttitle']):
-            raise ValueError('Invalid short-title: "{}"'.format(child['shorttitle']))
+            raise InvalidShortTitle('Invalid short-title: "{}"'.
+                                    format(child['shorttitle']))
 
         child_slot = create_slot(child['shorttitle'])
         proposal_node.append_child(child_slot)
         generate_proposal_node_with_subsections(child_slot, child, user)
 
     return proposal_node
+
+
+def generate_refinement(origin, proposal, argument, slot, user):
+    derivate = create_structureNode(
+        long_title=proposal['heading'], text=proposal['text'], authors=[user])
+    slot.append_child(derivate)
+
+    create_vote(user, [derivate])  # auto-follow
+
+    for child in proposal['subsections']:
+        if not re.match(SHORT_TITLE, child['shorttitle']):
+            raise InvalidShortTitle('Invalid short-title: "{}"'.
+                                    format(child['shorttitle']))
+        if 'text' in child:
+            if origin.children.filter(title=child['shorttitle']).count() > 0:
+                raise InvalidShortTitle('ShortTitle {} is already taken'.
+                                        format(child['shorttitle']))
+            child_slot = create_slot(child['shorttitle'])
+            derivate.append_child(child_slot)
+            generate_proposal_node_with_subsections(child_slot, child, user)
+        else:
+            child_slots = origin.children.filter(title=child['shorttitle'])
+            if child_slots.count() == 0:
+                raise InvalidShortTitle('Unknown short title {}'.
+                                        format(child['shorttitle']))
+            derivate.append_child(child_slots[0])
+    origin.add_derivate(derivate,
+                        arg_type="con",
+                        title=argument['heading'],
+                        text=argument['text'],
+                        authors=[user])
+    return derivate

@@ -90,6 +90,14 @@ class Node(models.Model):
 
     def add_derivate(self, derivate, arg_type=None, title="", text="",
                      authors=()):
+        """
+        Adds the given StructureNode as a derivative of this node.
+        It takes care of transitive votes (but make sure to add the autofollow
+        to the derivate BEFORE calling this function)
+        It also copies all the arguments and generates a new derivation
+        argument if the corresponding values are provided.
+        Lastly it adds all the authors of this node to the derivate node.
+        """
         for vote in self.votes.all():
             if derivate.votes.filter(user=vote.user).count() == 0:
                 vote.nodes.add(derivate)
@@ -105,6 +113,10 @@ class Node(models.Model):
                 copy_argument_text_obj.authors.add(author)
             copy_argument_text_obj.save()
             argument.add_derivate(copy_argument)
+
+        for a in self.text.authors.all():
+            derivate.text.authors.add(a)
+
         derivate.update_favorite_for_all_parents()
         if arg_type or title or text or len(authors) > 0:
             arg_type = Argument.short_arg_type(arg_type)

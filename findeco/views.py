@@ -343,29 +343,25 @@ def store_proposal(request, path):
 
 @ValidPaths("StructureNode")
 @ViewErrorHandling
-def store_proposal(request, path):
+def store_refinement(request, path):
     assert_authentication(request)
     assert_permissions(request,
-                       ['node_storage.add_node', 'node_storage.add_vote',
-                        'node_storage.add_nodeorder', 'node_storage.add_text',
+                       ['node_storage.add_node', 'node_storage.add_argument',
+                        'node_storage.add_vote', 'node_storage.add_nodeorder',
+                        'node_storage.add_derivation', 'node_storage.add_text',
                         'node_storage.change_vote'])
     user = request.user
     p = json.loads(request.body)
 
+    origin = get_node_for_path(path)
     slot_path = path.rsplit('.', 1)[0]
     slot = get_node_for_path(slot_path)
-    proposal_node = generate_proposal_node_with_subsections(slot,
-                                                            p['proposal'],
-                                                            user)
 
-    new_path = get_good_path_for_structure_node(proposal_node, slot, slot_path)
-    return json_response({'storeProposalResponse': {'path': new_path}})
+    derivate = generate_refinement(origin, p['proposal'], p['argument'], slot,
+                                   user)
 
-
-@ValidPaths("StructureNode")
-@ViewErrorHandling
-def store_refinement(request, path):
-    pass
+    new_path = get_good_path_for_structure_node(derivate, slot, slot_path)
+    return json_response({'storeRefinementResponse': {'path': new_path}})
 
 
 @ValidPaths("StructureNode", "Argument")

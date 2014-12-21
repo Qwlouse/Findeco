@@ -76,6 +76,7 @@ InvalidRecoveryKey = functools.partial(ViewError, '_InvalidRecoveryKey')
 InvalidURL = functools.partial(ViewError, '_InvalidURL')
 InvalidMicrobloggingOptions = functools.partial(ViewError,
                                                 '_InvalidMircobloggingOptions')
+InvalidShortTitle = functools.partial(ViewError, '_InvalidShortTitle')
 
 
 ################### ErrorHandling Decorator ####################################
