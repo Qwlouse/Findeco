@@ -329,7 +329,7 @@ def store_proposal(request, path):
                         'node_storage.add_nodeorder', 'node_storage.add_text',
                         'node_storage.change_vote'])
     user = request.user
-    p = request.POST
+    p = json.loads(request.body)
 
     slot_path = path.rsplit('.', 1)[0]
     slot = get_node_for_path(slot_path)

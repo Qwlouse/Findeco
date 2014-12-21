@@ -464,10 +464,10 @@ def generate_proposal_node_with_subsections(slot, proposal, user):
     create_vote(user, [proposal_node])  # auto-follow
 
     for child in proposal['subsections']:
-        if not re.match(SHORT_TITLE, child['short_title']):
-            raise ValueError('Invalid short-title: "{}"'.format(child['short_title']))
+        if not re.match(SHORT_TITLE, child['shorttitle']):
+            raise ValueError('Invalid short-title: "{}"'.format(child['shorttitle']))
 
-        child_slot = create_slot(child['short_title'])
+        child_slot = create_slot(child['shorttitle'])
         proposal_node.append_child(child_slot)
         generate_proposal_node_with_subsections(child_slot, child, user)
 
