@@ -149,35 +149,35 @@ angular.module('FindecoBackendService', [])
                 var pathComponents = ['/.storeMicroblogging', path];
                 var url = pathComponents.join('/');
                 //url = url.replace("//","/");
-                return $http.post(url, {microblogText: microblogText});
+                return $http.post(url, angular.toJson({microblogText: microblogText}));
             },
 
             storeProposal: function (path, data) {
                 var pathComponents = ['/.storeProposal', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
-                return $http.post(url, data);
+                return $http.post(url, angular.toJson(data));
             },
 
             storeRefinement: function (path, data) {
                 var pathComponents = ['/.storeRefinement', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
-                return $http.post(url, data);
+                return $http.post(url, angular.toJson(data));
             },
 
             storeArgument: function (path, data) {
                 var pathComponents = ['/.storeArgument', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
-                return $http.post(url, data);
+                return $http.post(url, angular.toJson(data));
             },
 
             storeText: function (path, params) {
                 var pathComponents = ['/.storeText', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
-                return $http.post(url, params);
+                return $http.post(url, angular.toJson(params));
             },
 
             loadArgument: function (indexNodes_out, path) {
