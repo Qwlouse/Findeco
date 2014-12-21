@@ -106,44 +106,46 @@ class StoreSettingsTest(TestCase):
     def setUp(self):
         self.hans = create_user('hans', description='noneSoFar',
                                 password="1234")
+        self.post = lambda a, b: self.client.post(
+            a, json.dumps(b), content_type='application/json')
 
     def test_response_validates(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'),
+        response = self.post(reverse('store_settings'),
                                     dict(description="", displayName='hans', email='a@bc.de'))
         parsed = json.loads(response.content)
         self.assertTrue(storeSettingsResponseValidator.validate(parsed))
 
     def test_missing_description_parameter_returns_error(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'),
-                                    dict(displayName='hans'))
+        response = self.post(reverse('store_settings'),
+                             dict(displayName='hans'))
         assert_is_error_response(response, "_MissingPOSTParameter")
 
     def test_missing_displayname_parameter_returns_error(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'),
-                                    dict(description=''))
+        response = self.post(reverse('store_settings'),
+                             dict(description=''))
         assert_is_error_response(response, "_MissingPOSTParameter")
 
     def test_unavailable_displayname_returns_error(self):
         self.hugo = create_user('hugo', description='notHulk', password="1234")
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'),
-                                    dict(displayName='hugo', description=''))
+        response = self.post(reverse('store_settings'),
+                             dict(displayName='hugo', description=''))
         assert_is_error_response(response, "_UsernameNotAvailable")
 
     def test_change_description_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans', email='a@bc.de'))
+        _ = self.post(reverse('store_settings'),
+                      dict(description="foo", displayName='hans', email='a@bc.de'))
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.profile.description, "foo")
 
     def test_change_username_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans2', email='a@bc.de'))
+        _ = self.post(reverse('store_settings'),
+                      dict(description="foo", displayName='hans2', email='a@bc.de'))
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.username, "hans2")
 
@@ -151,9 +153,9 @@ class StoreSettingsTest(TestCase):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         self.assertEqual(self.hans.profile.wants_mail_notification, False)
 
-        _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans',
-                                  email='a@bc.de', wantsMailNotification=True))
+        _ = self.post(reverse('store_settings'),
+                      dict(description="foo", displayName='hans',
+                           email='a@bc.de', wantsMailNotification=True))
 
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.profile.wants_mail_notification, True)
@@ -162,9 +164,9 @@ class StoreSettingsTest(TestCase):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         self.assertEqual(self.hans.profile.wants_mail_notification, False)
 
-        _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans',
-                                  email='a@bc.de', wantsMailNotification=False))
+        _ = self.post(reverse('store_settings'),
+                      dict(description="foo", displayName='hans',
+                           email='a@bc.de', wantsMailNotification=False))
 
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.profile.wants_mail_notification, False)
@@ -177,7 +179,10 @@ class ChangePasswordTest(TestCase):
 
     def test_change_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('change_password'), dict(password="foo"))
+        response = self.client.post(
+            reverse('change_password'),
+            json.dumps(dict(password="foo")),
+            content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.client.logout()
         self.assertTrue(self.client.login(username="hans", password='foo'))

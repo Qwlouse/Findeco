@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 
 
 from __future__ import division, print_function, unicode_literals
@@ -35,7 +35,7 @@ from findeco.jsonvalidator import JSONValidator, JSONValidationError
 USERNAME = r'(?P<name>[a-zA-Z][a-zA-Z0-9-_]{0,19})'
 RSSKEY = r'(?P<rsskey>[a-zA-Z0-9]{16})'
 
-################# JSON Schemas #################################################
+# ################ JSON Schemas ###############################################
 # The JSON responses are validated by example
 
 integer = 1
@@ -186,6 +186,16 @@ storeTextResponse_schema = {
         'path': "path"
     }
 }
+storeProposalResponse_schema = {
+    'storeProposalResponse': {
+        'path': "path"
+    }
+}
+storeRefinementResponse_schema = {
+    'storeRefinementResponse': {
+        'path': "path"
+    }
+}
 errorResponse_schema = {
     'errorResponse': {
         'errorID': string,
@@ -214,7 +224,7 @@ ERROR_LIST = [
 ]
 
 
-################################################################################
+# #############################################################################
 
 userInfoValidator = JSONValidator(userInfo_schema)
 userSettingsValidator = JSONValidator(userSettings_schema)
@@ -226,7 +236,8 @@ loadNodeResponseValidator = JSONValidator(loadNodeResponse_schema)
 loadArgumentIndexResponseValidator = JSONValidator(
     loadArgumentIndexResponse_schema)
 loadTextResponseValidator = JSONValidator(loadTextResponse_schema)
-loadArgumentNewsResponseValidator = JSONValidator(loadArgumentNewsResponse_schema)
+loadArgumentNewsResponseValidator = JSONValidator(
+    loadArgumentNewsResponse_schema)
 loadUserInfoResponseValidator = JSONValidator(loadUserInfoResponse_schema)
 loadUserSettingsResponseValidator = JSONValidator(
     loadUserSettingsResponse_schema)
@@ -237,6 +248,8 @@ deleteUserValidator = JSONValidator(deleteUser_schema)
 markNodeResponseValidator = JSONValidator(markNodeResponse_schema)
 storeSettingsResponseValidator = JSONValidator(storeSettingsResponse_schema)
 storeTextResponseValidator = JSONValidator(storeTextResponse_schema)
+storeProposalResponseValidator = JSONValidator(storeProposalResponse_schema)
+storeRefinementResponseValidator = JSONValidator(storeRefinementResponse_schema)
 
 
 class ErrorResponseValidator(object):
@@ -269,7 +282,9 @@ view_validators = {
     'mark_node_follow': markNodeResponseValidator,
     'mark_node_unfollow': markNodeResponseValidator,
     'store_settings': storeSettingsResponseValidator,
-    'store_text': storeTextResponseValidator
+    'store_text': storeTextResponseValidator,
+    'store_proposal': storeProposalResponseValidator,
+    'store_refinement': storeRefinementResponseValidator
 }
 
 

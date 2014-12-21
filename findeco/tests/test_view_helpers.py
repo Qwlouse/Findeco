@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from findeco.view_helpers import get_is_following
@@ -66,7 +66,8 @@ class CreateUsersInfoTest(TestCase):
     def test_create_user_info_contains_correct_description(self):
         for user in self.users:
             user_info = create_user_info(user)
-            self.assertEqual(user_info['description'], user.profile.description)
+            self.assertEqual(user_info['description'],
+                             user.profile.description)
 
 
 class CreateUserSettingsTest(TestCase):
@@ -228,8 +229,8 @@ class CreateIndexNodeForArgumentTest(TestCase):
         # add arguments
         self.foo_pro = create_argument(self.foo1, arg_type='pro', title="geil",
                                        authors=[self.hugo])
-        self.foo_neut = create_argument(self.foo1, arg_type='neut', title="ist",
-                                        authors=[self.hans])
+        self.foo_neut = create_argument(self.foo1, arg_type='neut',
+                                        title="ist", authors=[self.hans])
         self.foo_con = create_argument(self.foo1, arg_type='con', title="geiz",
                                        authors=[self.hugo, self.hans])
         # summary variables
@@ -499,9 +500,10 @@ class StoreDerivateTest(TestCase):
         create_vote(self.mustermann, [self.text1])
 
     def test_store_derivate(self):
-        path, couples = store_derivate("Flopp.1", "= Avast =\nAgainst it!", "con",
-                           "= Bla =\nText\n== Blubb ==\nText 2",
-                           self.mustermann)
+        path, couples = store_derivate("Flopp.1", "= Avast =\nAgainst it!",
+                                       "con",
+                                       "= Bla =\nText\n== Blubb ==\nText 2",
+                                       self.mustermann)
         self.assertEqual(path, "Flopp.2")
         self.assertSequenceEqual(couples, [("Flopp.1", "Flopp.2")])
         self.assertEqual(self.text1.derivates.count(), 1)
@@ -510,9 +512,10 @@ class StoreDerivateTest(TestCase):
         self.assertEqual(self.text1.derivates.all()[0].votes.count(), 1)
 
     def test_auto_follows(self):
-        path, couples = store_derivate("Flopp.1", "= Avast =\nAgainst it!", "con",
-                           "= Bla =\nText\n== Blubb ==\nText 2",
-                           self.mustermann)
+        path, couples = store_derivate("Flopp.1", "= Avast =\nAgainst it!",
+                                       "con",
+                                       "= Bla =\nText\n== Blubb ==\nText 2",
+                                       self.mustermann)
         self.assertEqual(path, "Flopp.2")
         self.assertSequenceEqual(couples, [("Flopp.1", "Flopp.2")])
         self.assertEqual(Node.objects.filter(title="Bla").count(), 1)
