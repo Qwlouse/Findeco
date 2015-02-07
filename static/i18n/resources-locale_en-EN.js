@@ -1334,5 +1334,10 @@
         "key"        : "_404MessageEnd_",
         "value"      : "\" was not found.",
         "description": ""
+    },
+    {
+        "key"        : "_submittingNewArgument_",
+        "value"      : "Saving the new argument...",
+        "description": ""
     }
 ]
