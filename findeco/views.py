@@ -321,7 +321,7 @@ def store_argument(request, path):
         path=path, arg_type=arg_type, index=arg.index)
 
     # microblog alert
-    post_new_argument_for_node_message(user, path, p['argumentType'],
+    post_new_argument_for_node_message(user, path, p['argument']['type'],
                                        new_path)
     return json_response({'storeArgumentResponse': {'path': new_path}})
 
