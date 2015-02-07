@@ -37,12 +37,10 @@ class Node(models.Model):
     ARGUMENT = 'a'
     STRUCTURE_NODE = 'l'
     SLOT = 's'
-    TEXTNODE = 't'
     NODETYPE = (
         (ARGUMENT, 'Argument'),
         (STRUCTURE_NODE, 'StructureNode'),
-        (SLOT, 'Slot'),
-        (TEXTNODE, 'TextNode')
+        (SLOT, 'Slot')
     )
 
     parents = models.ManyToManyField(
