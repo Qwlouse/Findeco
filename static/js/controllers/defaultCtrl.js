@@ -69,7 +69,12 @@ findecoApp.controller('FindecoDefaultCtrl',
                     indexNode.isExpanded = false;
                 }
                 $scope.isLoadingNode = false;
-
+                if ($scope.nav.type == "argument") {
+                    $scope.showArguments = true;
+                }
+            }).error(function () {
+                $scope.nav.type = "other";
+                $scope.pathNotFound = true;
             });
         };
 
@@ -115,5 +120,8 @@ findecoApp.controller('FindecoDefaultCtrl',
             return $scope.isLoadingNode;
         };
 
+        if (!($scope.nav.type in {"index": 1, "node": 1, "argument": 1})) {
+            $scope.pathNotFound = true;
+        }
         $scope.updateNode();
     });

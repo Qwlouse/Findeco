@@ -1,5 +1,4 @@
-
-<div class="toggleRow">
+<div class="toggleRow" ng-hide="pathNotFound">
     <div class="toggleArguments" ng-click="showArguments = !showArguments">
         <a href="" class="left">
             <span ng-if="!showArguments" data-i18n="_showArguments_">Argumente zeigen</span>
@@ -15,8 +14,7 @@
     <div style="clear: both;"></div>
 </div>
 
-
-<div class="contentRow fullwidthBox">
+<div class="contentRow fullwidthBox" ng-hide="pathNotFound">
     <div class="smallColumn backgroundBox argumentAnimate"
          ng-show="showArguments"
          ng-include src="'/static/partials/argument.html'">
@@ -88,3 +86,12 @@
     <div style="clear: both;"></div>
 </div>
 <div style="clear: both; margin-bottom: 3em;"></div>
+
+<div style="position: relative; left: -50%; float: right; overflow: visible; margin: 2em 0;">
+    <div style="position: relative; left: 50%;">
+        <div ng-show="pathNotFound" class="backgroundBox textContainer">
+            <h1 data-i18n="_404Heading_">404 - Page not found.</h1>
+            <p><span data-i18n="_404MessageBeginning_"></span>{{ nav.path }}<span data-i18n="_404MessageEnd_"></span></p>
+        </div>
+    </div>
+</div>

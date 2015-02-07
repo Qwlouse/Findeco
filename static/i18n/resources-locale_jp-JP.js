@@ -1317,5 +1317,20 @@
         "key"        : "_createProposalOrRefinement_",
         "value"      : "Create a Proposal or Refinement",
         "description": ""
+    },
+    {
+        "key"        : "_404Heading_",
+        "value"      : "404 - Page not found.",
+        "description": ""
+    },
+    {
+        "key"        : "_404MessageBeginning_",
+        "value"      : "The path \"",
+        "description": ""
+    },
+    {
+        "key"        : "_404MessageEnd_",
+        "value"      : "\" was not found.",
+        "description": ""
     }
 ]

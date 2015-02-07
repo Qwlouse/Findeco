@@ -1338,5 +1338,20 @@
         "key"        : "_createProposalOrRefinement_",
         "value"      : "Gegenvorschlag oder Weiterentwicklung erstellen",
         "description": ""
+    },
+    {
+        "key"        : "_404Heading_",
+        "value"      : "404 - Seite nicht gefunden.",
+        "description": ""
+    },
+    {
+        "key"        : "_404MessageBeginning_",
+        "value"      : "Der Pfad \"",
+        "description": ""
+    },
+    {
+        "key"        : "_404MessageEnd_",
+        "value"      : "\" wurde nicht gefunden.",
+        "description": ""
     }
 ]

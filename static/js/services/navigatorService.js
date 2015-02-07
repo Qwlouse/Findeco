@@ -82,7 +82,7 @@ angular.module('FindecoNavigatorService', [])
                 location.type = "user";
                 location.userName = location.parts[1];
             }  else {
-                location.type = location.parts[0];
+                location.type = "other";
             }
             // calculate entries
             var nodes = location.nodePath.split('/');
