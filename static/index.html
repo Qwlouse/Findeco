@@ -78,7 +78,7 @@
 <div ng-include="'/static/partials/header.html'" id="header" class="row" ng-controller="FindecoMenuCtrl" ></div>
 
 <div class="row" id="graph" ng-controller="FindecoGraphRowCtrl" >
-    <div ng-if="nav.type=='node'">
+    <div ng-if="nav.type=='node' || nav.type=='argument'">
         <div id="navigationBar"
              ng-include src="'/static/partials/navigationBar.html'"
              ng-controller="FindecoMenuCtrl"></div>
