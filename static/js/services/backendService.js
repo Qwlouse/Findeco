@@ -170,6 +170,7 @@ angular.module('FindecoBackendService', [])
                 var pathComponents = ['/.storeArgument', path];
                 var url = pathComponents.join('/');
                 url = url.replace("//", "/");
+                alert('storeArgument', data);
                 return $http.post(url, angular.toJson(data));
             },
 

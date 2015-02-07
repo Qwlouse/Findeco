@@ -167,8 +167,8 @@ findecoApp.controller(
         };
 
         $scope.argumentHasText = function () {
-            return ((angular.isString($scope.argumentHeading)) && (angular.isString($scope.argumentText)) &&
-                    ($scope.argumentHeading.length > 2) && ($scope.argumentText.length > 2));
+            return ((angular.isString($scope.argumentTitle)) && (angular.isString($scope.argumentText)) &&
+                    ($scope.argumentTitle.length > 2) && ($scope.argumentText.length > 2));
         };
 
         $scope.startDrag = function ($event, subsection, subsections, index) {
@@ -360,7 +360,7 @@ findecoApp.controller(
             };
             if ($scope.proposalType == 'refinement') {
                 submitData.argument = {
-                    heading: $scope.argumentHeading,
+                    heading: $scope.argumentTitle,
                     text: $scope.argumentText
                 };
             }

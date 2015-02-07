@@ -1156,7 +1156,7 @@
         "description": ""
     },
     {
-        "key"        : "_argumentHeading_",
+        "key"        : "_argumentTitle_",
         "value"      : "Heading:",
         "description": ""
     },
@@ -1186,7 +1186,7 @@
         "description": ""
     },
     {
-        "key"        : "_refinementArgumentHeading_",
+        "key"        : "_refinementArgumentTitle_",
         "value"      : "Argument for Denouncing the Refined Proposal",
         "description": ""
     },

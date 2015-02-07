@@ -1170,7 +1170,7 @@
         "description": ""
     },
     {
-        "key"        : "_argumentHeading_",
+        "key"        : "_argumentTitle_",
         "value"      : "Überschrift:",
         "description": ""
     },
@@ -1205,7 +1205,7 @@
         "description": ""
     },
     {
-        "key"        : "_refinementArgumentHeading_",
+        "key"        : "_refinementArgumentTitle_",
         "value"      : "Gegenargument gegen den weiterentwickelten Vorschlag",
         "description": ""
     },

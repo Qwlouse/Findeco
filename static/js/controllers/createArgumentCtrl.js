@@ -32,8 +32,9 @@ findecoApp.controller(
         };
 
         $scope.step = 1;
-        $scope.argumentHeading = "";
+        $scope.argumentTitle = "";
         $scope.argumentText = "";
+        $scope.argumentType = "";
 
         $scope.setArgumentType = function (type) {
             $scope.argumentType = type;
@@ -57,15 +58,15 @@ findecoApp.controller(
         };
 
         $scope.argumentHasText = function () {
-            return ((angular.isString($scope.argumentHeading)) && (angular.isString($scope.argumentText)) &&
-                    ($scope.argumentHeading.length > 2) && ($scope.argumentText.length > 2));
+            return ((angular.isString($scope.argumentTitle)) && (angular.isString($scope.argumentText)) &&
+                    ($scope.argumentTitle.length > 2) && ($scope.argumentText.length > 2));
         };
 
         $scope.submit = function () {
             var submitData = {
                 argument: {
-                    heading: $scope.heading,
-                    text: $scope.text,
+                    title: $scope.argumentTitle,
+                    text: $scope.argumentText,
                     type: $scope.argumentType
                 }
             };

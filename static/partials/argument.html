@@ -1,6 +1,6 @@
 <div ng-controller="FindecoArgumentCtrl">
     <help hid='ARG' htype=1></help>
-    <h2 class="argumentHeading" data-i18n="_arguments_">Arguments</h2>
+    <h2 class="argumentTitle" data-i18n="_arguments_">Arguments</h2>
 
     <div style="clear: both"></div>
 
@@ -11,7 +11,7 @@
     <ul class="argumentList">
         <li ng-repeat="argument in argumentList" id="argument{{ argument.index }}">
             <span class="argumentIcon argument_{{ argument.argType }}"></span>
-            <a href="/{{ argument.path }}" class="argumentHeading">
+            <a href="/{{ argument.path }}" class="argumentTitle">
                 {{ argument.fullTitle }}
             </a>
             <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
