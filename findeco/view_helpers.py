@@ -274,20 +274,6 @@ def store_structure_node(path, wiki_text, author):
                                                             slot, slot_path)
 
 
-def store_argument(path, arg_text, arg_type, author):
-    node = get_node_for_path(path)
-    title, arg_text = backend.split_title_from_text(arg_text)
-    original_argument = create_argument(node, arg_type, title, arg_text,
-                                        [author])
-    # add auto follow
-    create_vote(author, [original_argument])
-    # copy argument for all derivates
-    for d in node.traverse_derivates():
-        new_argument = create_argument(d, arg_type, title, arg_text, [author])
-        original_argument.add_derivate(new_argument)
-    return path + "." + arg_type + "." + str(node.arguments.count())
-
-
 def build_score_tree(origin, schema):
     score_tree = {
         'id': origin.id,

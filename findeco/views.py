@@ -45,7 +45,6 @@ from .view_helpers import *
 from microblogging import search_for_microblogging
 from microblogging.system_messages import (
     post_node_was_flagged_message, post_new_derivate_for_node_message,
-    post_new_derivate_for_node_message_list,
     post_new_argument_for_node_message, post_node_was_unflagged_message)
 from findeco.models import (UserProfile, Activation, PasswordRecovery,
                             EmailActivation)
@@ -254,74 +253,6 @@ def load_argument_news(request):
 # ##################### Store/Modify Nodes ####################################
 @ValidPaths("StructureNode")
 @ViewErrorHandling
-def store_text(request, path):
-    assert_authentication(request)
-    assert_permissions(request,
-                       ['node_storage.add_node', 'node_storage.add_argument',
-                        'node_storage.add_vote', 'node_storage.add_nodeorder',
-                        'node_storage.add_derivation', 'node_storage.add_text',
-                        'node_storage.change_vote'])
-    user = request.user
-    p = json.loads(request.body)
-    if 'wikiText' in p and not \
-            ('argumentType' in p or 'wikiTextAlternative' in p):
-
-        if len(p['wikiText'].strip()) > 0:
-            # fork for additional slot
-            new_path = fork_node_and_add_slot(path, user, p['wikiText'])
-            # microblog alert and mail notification
-            post_new_derivate_for_node_message(user, path, new_path)
-        else:
-            raise EmptyText
-
-    elif 'wikiText' in p and 'argumentType' in p and \
-            'wikiTextAlternative' not in p:
-
-        if len(p['wikiText'].strip()) > 0:
-            # store argument
-            new_path = store_argument(path, p['wikiText'], p['argumentType'],
-                                      user)
-            # microblog alert
-            post_new_argument_for_node_message(user, path, p['argumentType'],
-                                               new_path)
-        else:
-            raise EmptyText
-
-    elif 'wikiTextAlternative' in p and not \
-            ('wikiText' in p or 'argumentType' in p):
-
-        if len(p['wikiTextAlternative'].strip()) > 0:
-            # store alternative
-            _, new_path = store_structure_node(path, p['wikiTextAlternative'],
-                                               user)
-        else:
-            raise EmptyText
-
-    elif ('wikiTextAlternative' in p and 'wikiText' in p and
-          'argumentType' in p):
-
-        if len(p['wikiText'].strip()) > 0 and \
-                len(p['wikiTextAlternative'].strip()) > 0:
-            # store Argument and Derivate of structure Node as alternative
-            arg_text = p['wikiText']
-            arg_type = p['argumentType']
-            derivate_wiki_text = p['wikiTextAlternative']
-            new_path, path_couples = store_derivate(path, arg_text, arg_type,
-                                                    derivate_wiki_text, user)
-            # microblog alert
-            post_new_derivate_for_node_message_list(user, path_couples)
-        else:
-            raise EmptyText
-
-    else:
-        # wrong usage of API
-        raise MissingPOSTParameter('fooo')
-
-    return json_response({'storeTextResponse': {'path': new_path}})
-
-
-@ValidPaths("StructureNode")
-@ViewErrorHandling
 def store_proposal(request, path):
     assert_authentication(request)
     assert_permissions(request,
@@ -361,6 +292,10 @@ def store_refinement(request, path):
                                    user)
 
     new_path = get_good_path_for_structure_node(derivate, slot, slot_path)
+
+    # microblog alert
+    post_new_derivate_for_node_message(user, path, new_path)
+
     return json_response({'storeRefinementResponse': {'path': new_path}})
 
 
@@ -384,6 +319,10 @@ def store_argument(request, path):
     create_vote(user, [arg])  # auto-follow
     new_path = "{path}.{arg_type}.{index}".format(
         path=path, arg_type=arg_type, index=arg.index)
+
+    # microblog alert
+    post_new_argument_for_node_message(user, path, p['argumentType'],
+                                       new_path)
     return json_response({'storeArgumentResponse': {'path': new_path}})
 
 
@@ -512,7 +451,8 @@ def store_settings(request):
     assert_authentication(request)
     request_data = json.loads(request.body)
     user = User.objects.get(id=request.user.id)
-    assert_request_data_parameters(request_data, ['description', 'displayName'])
+    assert_request_data_parameters(request_data, ['description',
+                                                  'displayName'])
     if check_username_sanity(request_data['displayName']):
         display_name = request_data['displayName']
     else:
@@ -608,7 +548,8 @@ def delete_user(request):
 @ViewErrorHandling
 def account_registration(request):
     request_data = json.loads(request.body)
-    assert_request_data_parameters(request_data, ['displayName', 'password', 'emailAddress'])
+    assert_request_data_parameters(request_data, ['displayName', 'password',
+                                                  'emailAddress'])
 
     email_address = request_data['emailAddress']
     password = request_data['password']

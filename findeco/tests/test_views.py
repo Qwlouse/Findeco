@@ -50,8 +50,9 @@ views = [('load_index', dict(path='')),
          ('mark_node_follow', dict(path='')),
          ('mark_node_unfollow', dict(path='')),
          ('store_settings', dict()),
-         ('store_text', dict(path='')),
          ('store_proposal', dict(path='')),
+         ('store_refinement', dict(path='')),
+         ('store_argument', dict(path='')),
          ]
 
 # ################ example paths ##############################################

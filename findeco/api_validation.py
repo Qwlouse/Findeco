@@ -265,7 +265,6 @@ view_validators = {
     'mark_node_follow': validators['markNodeResponse'],
     'mark_node_unfollow': validators['markNodeResponse'],
     'store_settings': validators['storeSettingsResponse'],
-    'store_text': validators['storeTextResponse'],
     'store_proposal': validators['storeProposalResponse'],
     'store_refinement': validators['storeRefinementResponse'],
     'store_argument': validators['storeArgumentResponse']

@@ -153,10 +153,6 @@ urlpatterns = patterns(
         name='unflag_node'),
 
     # ----- Store Nodes  -----
-    url(r'^\.storeText/' + PATH + '$',
-        'store_text',
-        name='store_text'),
-
     url(r'^\.storeProposal/' + PATH + '$',
         'store_proposal',
         name='store_proposal'),
