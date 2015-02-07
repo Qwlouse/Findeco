@@ -36,6 +36,7 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
     $scope.TOS = false;
     $scope.DPR = false;
     $scope.attemptedRegister = false;
+    $scope.attemptedLogin = false;
     $scope.allFieldsFilledCorrectly = false;
     $scope.serverError = false;
 
@@ -60,9 +61,18 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
 
     $scope.login = function () {
         $scope.force_get_username_password();
-        User.login($scope.username, $scope.password).success(function () {
-            Navigator.changePath('/');
-        });
+        $scope.attemptedLogin = true;
+        $scope.serverError = false;
+        $scope.allFieldsFilledCorrectly =
+            ($scope.password != '') &&
+            ($scope.username != '');
+        if ($scope.allFieldsFilledCorrectly) {
+            User.login($scope.username, $scope.password).success(function () {
+                Navigator.changePath('/');
+            }).error(function (d) {
+                $scope.serverError = d['errorResponse'];
+            });
+        }
     };
 
     $scope.register = function () {
@@ -80,7 +90,7 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
             User.register($scope.username, $scope.password, $scope.mail).success(function () {
                 Navigator.changePath('/registerSuccess');
             }).error(function(d, e, f) {
-                $scope.serverError = d.errorResponse;
+                $scope.serverError = d['errorResponse'];
                 $scope.allFieldsFilledCorrectly = false;
             });
         }
