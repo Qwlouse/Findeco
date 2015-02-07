@@ -29,11 +29,11 @@ from __future__ import division, print_function, unicode_literals
 from django.core.urlresolvers import resolve, Resolver404
 from django.test import TestCase
 
-from ..views import (load_user_settings, load_index, load_graph_data,
-                     load_text, load_user_info, load_argument_index, login,
-                     logout, flag_node, unflag_node, store_text,
-                     mark_node_follow, mark_node_unfollow, store_settings,
-                     store_proposal, store_refinement)
+from findeco.views import \
+    (load_user_settings, load_index, load_graph_data, load_text,
+     load_user_info, load_argument_index, login, logout, flag_node,
+     unflag_node, mark_node_follow, mark_node_unfollow, store_settings,
+     store_proposal, store_refinement)
 
 
 # ########################## Test the API calls ###############################
@@ -211,27 +211,6 @@ valid_routes = [
          func=store_settings,
          url_name='store_settings',
          kwargs=dict()),
-
-    # ### storeText
-    dict(url='/.storeText/some.1/path.2',
-         func=store_text,
-         url_name='store_text',
-         kwargs=dict(path='some.1/path.2')),
-
-    dict(url='/.storeText/some.1/path.2.neut.5',
-         func=store_text,
-         url_name='store_text',
-         kwargs=dict(path='some.1/path.2.neut.5')),
-
-    dict(url='/.storeText/some.1/path.2.con.995',
-         func=store_text,
-         url_name='store_text',
-         kwargs=dict(path='some.1/path.2.con.995')),
-
-    dict(url='/.storeText/some.1/path.2.pro.1',
-         func=store_text,
-         url_name='store_text',
-         kwargs=dict(path='some.1/path.2.pro.1')),
 
     # ### storeProposal
     dict(url='/.storeProposal/some.1/path.2',

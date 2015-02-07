@@ -50,8 +50,9 @@ views = [('load_index', dict(path='')),
          ('mark_node_follow', dict(path='')),
          ('mark_node_unfollow', dict(path='')),
          ('store_settings', dict()),
-         ('store_text', dict(path='')),
          ('store_proposal', dict(path='')),
+         ('store_refinement', dict(path='')),
+         ('store_argument', dict(path='')),
          ]
 
 # ################ example paths ##############################################
@@ -68,7 +69,7 @@ class ViewTest(TestCase):
         self.assertTrue(self.client.login(username="ulf", password="flu"))
 
     def test_home_view_status_ok(self):
-        response = self.client.get(reverse('home', kwargs=dict(path='')))
+        response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
 
     def test_all_api_views_return_json(self):

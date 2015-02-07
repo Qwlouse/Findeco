@@ -58,7 +58,7 @@ def create_structureNode(long_title, text="", authors=(), validate=False):
 
 def create_textNode(long_title, text="", authors=()):
     text_node = Node()
-    text_node.node_type = Node.TEXTNODE
+    text_node.node_type = Node.STRUCTURE_NODE
     text_node.title = long_title
     text_node.save()
     text_obj = Text()

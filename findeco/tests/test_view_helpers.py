@@ -30,17 +30,15 @@ from django.test import TestCase
 from findeco.view_helpers import get_is_following
 
 from node_storage import get_root_node, Node
-from node_storage.factory import create_user, create_slot, create_textNode
-from node_storage.factory import create_vote, create_structureNode
-from node_storage.factory import create_argument, create_spam_flag
-from ..api_validation import userInfoValidator, indexNodeValidator
-from ..api_validation import userSettingsValidator, argumentIndexNodeValidator
-from ..view_helpers import create_index_node_for_slot, create_user_settings
-from ..view_helpers import create_index_node_for_argument, create_user_info
-from ..view_helpers import create_graph_data_node_for_structure_node
-from ..view_helpers import store_structure_node, store_argument, store_derivate
-from ..view_helpers import check_username_sanity
-from ..models import EmailActivation
+from node_storage.factory import (
+    create_user, create_slot, create_textNode, create_vote,
+    create_structureNode, create_argument, create_spam_flag)
+from findeco.api_validation import validators
+from findeco.view_helpers import (
+    create_index_node_for_slot, create_user_settings,
+    create_index_node_for_argument, create_user_info,
+    create_graph_data_node_for_structure_node, check_username_sanity)
+from findeco.models import EmailActivation
 
 
 class CreateUsersInfoTest(TestCase):
@@ -56,7 +54,7 @@ class CreateUsersInfoTest(TestCase):
     def test_create_user_info_validates(self):
         for user in self.users:
             user_info = create_user_info(user)
-            self.assertTrue(userInfoValidator.validate(user_info))
+            self.assertTrue(validators['userInfo'].validate(user_info))
 
     def test_create_user_info_contains_correct_username(self):
         for user in self.users:
@@ -85,7 +83,7 @@ class CreateUserSettingsTest(TestCase):
     def test_return_value_validates(self):
         for user in self.users:
             user_settings = create_user_settings(user)
-            self.assertTrue(userSettingsValidator.validate(user_settings))
+            self.assertTrue(validators['userSettings'].validate(user_settings))
 
     def test_contains_correct_blocked_users(self):
         user_settings = create_user_settings(self.hans)
@@ -187,7 +185,7 @@ class CreateIndexNodeForSlotTest(TestCase):
     def test_index_node_validates(self):
         for slot in self.top_slots:
             index_node = create_index_node_for_slot(slot)
-            self.assertTrue(indexNodeValidator.validate(index_node))
+            self.assertTrue(validators['indexNode'].validate(index_node))
 
     def test_index_node_contains_correct_short_title(self):
         for slot, short_title in zip(self.top_slots, self.short_titles):
@@ -241,7 +239,7 @@ class CreateIndexNodeForArgumentTest(TestCase):
     def test_index_node_validates(self):
         for arg in self.foo_arguments:
             index_node = create_index_node_for_argument(arg, self.hugo.id)
-            self.assertTrue(argumentIndexNodeValidator.validate(index_node))
+            self.assertTrue(validators['argumentIndexNode'].validate(index_node))
 
     def test_index_node_contains_arg_type(self):
         for arg, arg_type in zip(self.foo_arguments, ['pro', 'neut', 'con']):
@@ -385,143 +383,6 @@ class CreateGraphDataNodeForStructureNodeTest(TestCase):
             self.assertEqual(data['unFollows'], self.unFollows[i])
             self.assertEqual(data['newFollows'], self.newFollows[i])
             self.assertEqual(data['originGroup'], self.originGroups[i])
-
-
-class StoreStructureNodeTest(TestCase):
-    def setUp(self):
-        self.root = get_root_node()
-        self.mustermann = create_user("Mustermann")
-        self.slot = create_slot("Flopp")
-        self.root.append_child(self.slot)
-        self.text1 = create_textNode("Initial Text", "Dumdidum",
-                                     [self.mustermann])
-        self.slot.append_child(self.text1)
-
-    def test_store_valid_path(self):
-        node, path = store_structure_node("Flopp.1",
-                                          "= Bla =\nText\n== Blubb ==\nText 2",
-                                          self.mustermann)
-        self.assertEqual(node.title, "Bla")
-        self.assertEqual(path, "Flopp.2")
-        self.assertEqual(len(self.slot.children.all()), 2)
-        self.assertEqual(self.slot.children.all()[1].title, "Bla")
-        self.assertEqual(self.slot.children.all()[1].text.text, "Text")
-        self.assertEqual(self.slot.children.all()[1].children.all()[0].title,
-                         "Blubb")
-        self.assertEqual(
-            self.slot.children.all()[1].children.all()[0].children.all()[
-                0].title, "Blubb")
-        self.assertEqual(
-            self.slot.children.all()[1].children.all()[0].children.all()[
-                0].text.text, "Text 2")
-        self.assertIn(self.mustermann,
-                      self.slot.children.all()[1].text.authors.all())
-        self.assertEqual(node.votes.count(), 1)
-
-    def test_store_non_existent_path(self):
-        node, path = store_structure_node("Flopp.4576",
-                                          "= Bla =\nText\n== Blubb ==\nText 2",
-                                          self.mustermann)
-        self.assertEqual(node.title, "Bla")
-        self.assertEqual(path, "Flopp.2")
-        self.assertEqual(len(self.slot.children.all()), 2)
-        self.assertEqual(self.slot.children.all()[1].title, "Bla")
-        self.assertEqual(self.slot.children.all()[1].text.text, "Text")
-        self.assertEqual(self.slot.children.all()[1].children.all()[0].title,
-                         "Blubb")
-        self.assertEqual(
-            self.slot.children.all()[1].children.all()[0].children.all()[
-                0].title, "Blubb")
-        self.assertEqual(
-            self.slot.children.all()[1].children.all()[0].children.all()[
-                0].text.text, "Text 2")
-        self.assertIn(self.mustermann,
-                      self.slot.children.all()[1].text.authors.all())
-
-
-class StoreArgumentTest(TestCase):
-    def setUp(self):
-        self.root = get_root_node()
-        self.mustermann = create_user("Mustermann")
-        self.slot = create_slot("Flopp")
-        self.root.append_child(self.slot)
-        self.text1 = create_textNode("Initial Text", "Dumdidum",
-                                     [self.mustermann])
-        self.slot.append_child(self.text1)
-        self.text2 = create_textNode("Secondary Text", "Dudelda",
-                                     [self.mustermann])
-        self.slot.append_child(self.text2)
-        self.text1.add_derivate(self.text2)
-
-    def test_store_con(self):
-        self.assertEqual(
-            store_argument("Flopp.1", "= Avast =\nAgainst it!", "con",
-                           self.mustermann), "Flopp.1.con.1")
-        self.assertEqual(self.text1.arguments.count(), 1)
-        self.assertEqual(self.text1.arguments.all()[0].title, "Avast")
-        self.assertEqual(self.text1.arguments.all()[0].text.text,
-                         "Against it!")
-        self.assertEqual(self.text1.arguments.all()[0].arg_type, "c")
-        self.assertIn(self.mustermann,
-                      self.text1.arguments.all()[0].text.authors.all())
-
-    def test_derivation(self):
-        self.assertEqual(
-            store_argument("Flopp.1", "= Avast =\nAgainst it!", "con",
-                           self.mustermann), "Flopp.1.con.1")
-        self.assertEqual(self.text1.arguments.count(), 1)
-        self.assertEqual(self.text2.arguments.count(), 1)
-        self.assertEqual(self.text2.arguments.all()[0].title, "Avast")
-        self.assertEqual(self.text2.arguments.all()[0].sources.count(), 1)
-        self.assertEqual(self.text2.arguments.all()[0].sources.all()[0].pk,
-                         self.text1.arguments.all()[0].pk)
-
-    def test_auto_follow(self):
-        self.assertEqual(
-            store_argument("Flopp.1", "= Avast =\nAgainst it!", "con",
-                           self.mustermann), "Flopp.1.con.1")
-        self.assertEqual(self.text1.arguments.count(), 1)
-        self.assertEqual(self.text1.arguments.all()[0].votes.count(), 1)
-        self.assertEqual(self.text2.arguments.count(), 1)
-        self.assertEqual(self.text2.arguments.all()[0].votes.count(), 1)
-        self.assertEqual(self.text1.arguments.all()[0].votes.all()[0].pk,
-                         self.text2.arguments.all()[0].votes.all()[0].pk)
-
-
-class StoreDerivateTest(TestCase):
-    def setUp(self):
-        self.root = get_root_node()
-        self.mustermann = create_user("Mustermann")
-        self.slot = create_slot("Flopp")
-        self.root.append_child(self.slot)
-        self.text1 = create_textNode("Initial Text", "Dumdidum",
-                                     [self.mustermann])
-        self.slot.append_child(self.text1)
-        create_vote(self.mustermann, [self.text1])
-
-    def test_store_derivate(self):
-        path, couples = store_derivate("Flopp.1", "= Avast =\nAgainst it!",
-                                       "con",
-                                       "= Bla =\nText\n== Blubb ==\nText 2",
-                                       self.mustermann)
-        self.assertEqual(path, "Flopp.2")
-        self.assertSequenceEqual(couples, [("Flopp.1", "Flopp.2")])
-        self.assertEqual(self.text1.derivates.count(), 1)
-        self.assertEqual(self.text1.derivates.all()[0].title, "Bla")
-        self.assertEqual(self.text1.arguments.all()[0].title, "Avast")
-        self.assertEqual(self.text1.derivates.all()[0].votes.count(), 1)
-
-    def test_auto_follows(self):
-        path, couples = store_derivate("Flopp.1", "= Avast =\nAgainst it!",
-                                       "con",
-                                       "= Bla =\nText\n== Blubb ==\nText 2",
-                                       self.mustermann)
-        self.assertEqual(path, "Flopp.2")
-        self.assertSequenceEqual(couples, [("Flopp.1", "Flopp.2")])
-        self.assertEqual(Node.objects.filter(title="Bla").count(), 1)
-        self.assertEqual(Node.objects.get(title="Bla").votes.count(), 1)
-        self.assertEqual(self.text1.arguments.count(), 1)
-        self.assertEqual(self.text1.arguments.all()[0].votes.count(), 1)
 
 
 class GetIsFollowingTest(TestCase):
