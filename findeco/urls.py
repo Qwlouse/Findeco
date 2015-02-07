@@ -30,7 +30,7 @@ from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from findeco.api_validation import USERNAME
-from findeco.paths import PATH, RESTRICTED_PATH
+from findeco.paths import PATH, UNNAMED_PATH, RESTRICTED_PATH
 from microblogging.urls import microblogging_patterns
 import sys
 
@@ -193,10 +193,9 @@ urlpatterns += patterns(
     # admin interface
     url(r'^\.admin/?', include(admin.site.urls)),
 
-    url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
+    url(r'^' + UNNAMED_PATH + '$', 'findeco.views.home', name='home'),
 
-    url(r'^[^.].*', 'findeco.views.home', name='home',
-        kwargs={'path': 'wildcard'}),
+    url(r'^[^.].*', 'findeco.views.home', name='home'),
 )
 
 

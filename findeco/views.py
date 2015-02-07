@@ -54,12 +54,12 @@ from node_storage.factory import create_user
 
 # ################### General stuff ###########################################
 @ensure_csrf_cookie
-def home(request, path=""):
+def home(request):
     with open(project_path("static/index.html"), 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), content_type='text/html')
 
 
-def jasmine(request, path=""):
+def jasmine(request):
     with open(project_path("static/jasmine.html"), 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), content_type='text/html')
 
