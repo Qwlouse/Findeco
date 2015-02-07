@@ -78,7 +78,7 @@
 
 
 .help-small-icon {
-    background: url("/static/images/help.png") no-repeat;
+    background: url("/static/images/help.svg") no-repeat;
     height: 19px;
     width: 19px;
     cursor: help;

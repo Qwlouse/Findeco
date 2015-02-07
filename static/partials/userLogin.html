@@ -3,14 +3,41 @@
         <div class="textColumn backgroundBox">
             <h1> {{ '_accountLoginFormTitle_'|i18n }} </h1>
 
-            <form ng-submit="login()">
+            <form ng-submit="login()" name="loginForm">
                 <p>{{ '_accountLoginText_'|i18n }}</p>
-                <input type="text" placeholder="{{ '_accountUsernameBtn_'|i18n }}"
-                       ng-model="username" id="usernameInput"><br/>
-                <input type="password" placeholder="{{ '_accountPasswordBtn_'|i18n }}"
-                       ng-model="password" id="passwordInput"><br/>
-                <input class="btn btn-primary" type="submit" value="{{ '_accountLoginBtn_'|i18n }}">
+                <!-- USERNAME -->
+                <div class="form-group">
+                    <input type="text" placeholder="{{ '_accountUsernameBtn_'|i18n }}"
+                           ng-model="username" name="username" id="usernameInput"
+                           ng-minlength="2" ng-maxlength="20"
+                           ng-pattern="/^[a-zA-Z][a-zA-Z0-9-_]*$/" required>
+                    <p ng-show="loginForm.username.$error.minlength" class="help-error">
+                        {{ '_usernameTooShort_'|i18n }}
+                    </p>
+                    <p ng-show="loginForm.username.$error.maxlength" class="help-error">
+                        {{ '_usernameTooLong_'|i18n }}
+                    </p>
+                    <p ng-show="loginForm.username.$error.pattern" class="help-error">
+                        {{ '_usernameInvalidFormat_'|i18n }}
+                    </p>
+                    <span ng-show="attemptedLogin && loginForm.username.$error.required" class="help-error">
+                        {{ '_required_' | i18n }}
+                    </span>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="form-group">
+                    <input type="password" placeholder="{{ '_accountPasswordBtn_'|i18n }}"
+                           ng-model="password" name="password" id="passwordInput" required>
+                    <span ng-show="attemptedLogin && loginForm.password.$error.required" class="help-error">
+                        {{ '_required_' | i18n }}
+                    </span>
+                </div>
+                <input type="submit" value="{{ '_accountLoginBtn_'|i18n }}">
             </form>
+            <div ng-if="serverError" class="help-error">
+                {{serverError.errorID | i18n}}
+            </div>
             <a href="/register">{{ '_accountRegistrationFormLink_'|i18n }}</a><br/>
             <a href="/recoverByMail">{{ '_accountRecoverPasswordByMailLink_'|i18n }}</a><br/>
             <a href="/recoverByUsername">{{ '_accountRecoverPasswordByUsernameLink_'|i18n }}</a>

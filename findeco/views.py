@@ -476,6 +476,8 @@ def login(request):
     request_data = json.loads(request.body)
     username = request_data['username']
     password = request_data['password']
+    if not username or not password:
+        raise InvalidLogin()
     user = assert_active_user(username)
     user = authenticate(username=user.username, password=password)
     if user is not None:

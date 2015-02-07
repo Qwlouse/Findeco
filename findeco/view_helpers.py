@@ -98,7 +98,7 @@ def assert_authentication(request):
 
 
 def assert_active_user(username=None, email=None):
-    assert username or email
+    assert username or email, "No username or email."
     if username:
         users = User.objects.filter(username__iexact=username)
     else:
