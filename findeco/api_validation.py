@@ -39,20 +39,23 @@ RSSKEY = r'(?P<rsskey>[a-zA-Z0-9]{16})'
 # The JSON responses are validated by example
 
 integer = 1
-string = "string"
+string = 'string'
 boolean = True
-user_schema = {
+
+schema = dict()
+
+schema['user'] = {
     'displayName': string
 }
-userInfo_schema = {
+schema['userInfo'] = {
     'displayName': string,
     'description': string
 }
-userSettings_schema = {
-    'blockedUsers': [user_schema, None],
+schema['userSettings'] = {
+    'blockedUsers': [schema['user'], None],
     'userRights': integer,
-    'followers': [user_schema, None],
-    'followees': [user_schema, None],
+    'followers': [schema['user'], None],
+    'followees': [schema['user'], None],
     'email': string,
     'rsskey': string,
     'emailChangeRequested': integer,
@@ -60,25 +63,25 @@ userSettings_schema = {
     'helpEnabled': boolean,
     'preferredLanguage': string,
 }
-authorGroup_schema = [userInfo_schema]
-originGroup_schema = ["path", None]
-graphDataNode_schema = {
+schema['authorGroup'] = [schema['userInfo']]
+schema['originGroup'] = ["path", None]
+schema['graphDataNode'] = {
     'path': string,
-    'authorGroup': authorGroup_schema,
+    'authorGroup': schema['authorGroup'],
     'follows': integer,
     'spamFlags': integer,
     'unFollows': integer,
     'newFollows': integer,
     'title': string,
-    'originGroup': originGroup_schema
+    'originGroup': schema['originGroup']
 }
-indexNode_schema = {
+schema['indexNode'] = {
     'shortTitle': string,
     'fullTitle': string,
     'index': integer,
-    'authorGroup': authorGroup_schema
+    'authorGroup': schema['authorGroup']
 }
-argumentIndexNode_schema = {
+schema['argumentIndexNode'] = {
     'argType': string,
     'fullTitle': string,
     'text': string,
@@ -86,16 +89,16 @@ argumentIndexNode_schema = {
     'isFollowing': integer,
     'followingCount': integer,
     'isFlagging': integer,
-    'authorGroup': authorGroup_schema
+    'authorGroup': schema['authorGroup']
 }
-textNode_schema = {
+schema['textNode'] = {
     'wikiText': string,
     'path': string,
     'isFollowing': integer,
     'isFlagging': integer,
-    'authorGroup': authorGroup_schema
+    'authorGroup': schema['authorGroup']
 }
-argumentNewsNode_schema = {
+schema['argumentNewsNode'] = {
     'text': string,
     'fullTitle': string,
     'path': string,
@@ -103,23 +106,23 @@ argumentNewsNode_schema = {
     'followingCount': integer,
     'isFlagging': integer,
     'flaggingCount': integer,
-    'authorGroup': authorGroup_schema,
+    'authorGroup': schema['authorGroup'],
     'type': string
 }
-argumentNewsCard_schema = {
-    'argument': argumentNewsNode_schema,
-    'node': argumentNewsNode_schema
+schema['argumentNewsCard'] = {
+    'argument': schema['argumentNewsNode'],
+    'node': schema['argumentNewsNode']
 }
-loadGraphDataResponse_schema = {
+schema['loadGraphDataResponse'] = {
     'loadGraphDataResponse': {
-        'graphDataChildren': [graphDataNode_schema],
-        'graphDataRelated': [graphDataNode_schema, None]
+        'graphDataChildren': [schema['graphDataNode']],
+        'graphDataRelated': [schema['graphDataNode'], None]
     }
 }
-loadIndexResponse_schema = {
-    'loadIndexResponse': [indexNode_schema, None]
+schema['loadIndexResponse'] = {
+    'loadIndexResponse': [schema['indexNode'], None]
 }
-loadNodeResponse_schema = {
+schema['loadNodeResponse'] = {
     'loadNodeResponse': {
         'fullTitle': string,
         'nodeID': integer,
@@ -127,81 +130,81 @@ loadNodeResponse_schema = {
         'isFlagging': integer,
         'wikiText': string,
         'authors': [string, None],
-        'indexList': [indexNode_schema, None]
+        'indexList': [schema['indexNode'], None]
     }
 }
-loadArgumentIndexResponse_schema = {
-    'loadArgumentIndexResponse': [argumentIndexNode_schema, None]
+schema['loadArgumentIndexResponse'] = {
+    'loadArgumentIndexResponse': [schema['argumentIndexNode'], None]
 }
-loadTextResponse_schema = {
+schema['loadTextResponse'] = {
     'loadTextResponse': {
-        'paragraphs': [textNode_schema],
+        'paragraphs': [schema['textNode']],
         'isFollowing': integer,
         'isFlagging': integer
     }
 }
-loadArgumentNewsResponse_schema = {
-    'loadArgumentNewsResponse': [argumentNewsCard_schema, None]
+schema['loadArgumentNewsResponse'] = {
+    'loadArgumentNewsResponse': [schema['argumentNewsCard'], None]
 }
-loadUserInfoResponse_schema = {
+schema['loadUserInfoResponse'] = {
     'loadUserInfoResponse': {
-        'userInfo': userInfo_schema
+        'userInfo': schema['userInfo']
     }
 }
-loadUserSettingsResponse_schema = {
+schema['loadUserSettingsResponse'] = {
     'loadUserSettingsResponse': {
-        'userInfo': userInfo_schema,
-        'userSettings': userSettings_schema
+        'userInfo': schema['userInfo'],
+        'userSettings': schema['userSettings']
     }
 }
-loginResponse_schema = {
+schema['loginResponse'] = {
     'loginResponse': {
-        'userInfo': userInfo_schema,
-        'userSettings': userSettings_schema
+        'userInfo': schema['userInfo'],
+        'userSettings': schema['userSettings']
     }
 }
-logoutResponse_schema = {
+schema['logoutResponse'] = {
     'logoutResponse': {
         'farewellMessage': string
     }
 }
-changePassword_schema = {
+schema['changePasswordResponse'] = {
     'changePasswordResponse': {
     }
 }
-deleteUser_schema = {
+schema['deleteUserResponse'] = {
     'deleteUserResponse': {
     }
 }
-markNodeResponse_schema = {
+schema['markNodeResponse'] = {
     'markNodeResponse': {
     }
 }
-storeSettingsResponse_schema = {
+schema['storeSettingsResponse'] = {
     'storeSettingsResponse': {
     }
 }
-storeTextResponse_schema = {
+schema['storeTextResponse'] = {
     'storeTextResponse': {
         'path': "path"
     }
 }
-storeProposalResponse_schema = {
+schema['storeProposalResponse'] = {
     'storeProposalResponse': {
         'path': "path"
     }
 }
-storeRefinementResponse_schema = {
+schema['storeRefinementResponse'] = {
     'storeRefinementResponse': {
         'path': "path"
     }
 }
-storeArgumentResponse_schema = {
+schema['storeArgumentResponse'] = {
     'storeArgumentResponse': {
         'path': "path"
     }
 }
-errorResponse_schema = {
+schema['errorResponse'] = {
     'errorResponse': {
         'errorID': string,
         'additionalInfo': [string, None]
@@ -228,39 +231,13 @@ ERROR_LIST = [
     "_ServerError"
 ]
 
+validators = {name: JSONValidator(s) for name, s in schema.items()}
+
 
 # #############################################################################
-
-userInfoValidator = JSONValidator(userInfo_schema)
-userSettingsValidator = JSONValidator(userSettings_schema)
-indexNodeValidator = JSONValidator(indexNode_schema)
-argumentIndexNodeValidator = JSONValidator(argumentIndexNode_schema)
-loadGraphDataResponseValidator = JSONValidator(loadGraphDataResponse_schema)
-loadIndexResponseValidator = JSONValidator(loadIndexResponse_schema)
-loadNodeResponseValidator = JSONValidator(loadNodeResponse_schema)
-loadArgumentIndexResponseValidator = JSONValidator(
-    loadArgumentIndexResponse_schema)
-loadTextResponseValidator = JSONValidator(loadTextResponse_schema)
-loadArgumentNewsResponseValidator = JSONValidator(
-    loadArgumentNewsResponse_schema)
-loadUserInfoResponseValidator = JSONValidator(loadUserInfoResponse_schema)
-loadUserSettingsResponseValidator = JSONValidator(
-    loadUserSettingsResponse_schema)
-loginResponseValidator = JSONValidator(loginResponse_schema)
-logoutResponseValidator = JSONValidator(logoutResponse_schema)
-changePasswordValidator = JSONValidator(changePassword_schema)
-deleteUserValidator = JSONValidator(deleteUser_schema)
-markNodeResponseValidator = JSONValidator(markNodeResponse_schema)
-storeSettingsResponseValidator = JSONValidator(storeSettingsResponse_schema)
-storeTextResponseValidator = JSONValidator(storeTextResponse_schema)
-storeProposalResponseValidator = JSONValidator(storeProposalResponse_schema)
-storeRefinementResponseValidator = JSONValidator(storeRefinementResponse_schema)
-storeArgumentResponseValidator = JSONValidator(storeArgumentResponse_schema)
-
-
 class ErrorResponseValidator(object):
     def __init__(self):
-        self.validator = JSONValidator(errorResponse_schema)
+        self.validator = validators['errorResponse']
 
     def validate(self, data):
         self.validator.validate(data)
@@ -271,27 +248,27 @@ class ErrorResponseValidator(object):
 errorResponseValidator = ErrorResponseValidator()
 
 view_validators = {
-    'load_graph_data': loadGraphDataResponseValidator,
-    'load_index': loadIndexResponseValidator,
-    'load_argument_index': loadArgumentIndexResponseValidator,
-    'load_text': loadTextResponseValidator,
-    'load_argument_news': loadArgumentNewsResponseValidator,
-    'load_node': loadNodeResponseValidator,
-    'load_user_info': loadUserInfoResponseValidator,
-    'load_user_settings': loadUserSettingsResponseValidator,
-    'login': loginResponseValidator,
-    'logout': logoutResponseValidator,
-    'change_password': changePasswordValidator,
-    'delete_user': deleteUserValidator,
-    'flag_node': markNodeResponseValidator,
-    'unflag_node': markNodeResponseValidator,
-    'mark_node_follow': markNodeResponseValidator,
-    'mark_node_unfollow': markNodeResponseValidator,
-    'store_settings': storeSettingsResponseValidator,
-    'store_text': storeTextResponseValidator,
-    'store_proposal': storeProposalResponseValidator,
-    'store_refinement': storeRefinementResponseValidator,
-    'store_argument': storeArgumentResponseValidator
+    'load_graph_data': validators['loadGraphDataResponse'],
+    'load_index': validators['loadIndexResponse'],
+    'load_argument_index': validators['loadArgumentIndexResponse'],
+    'load_text': validators['loadTextResponse'],
+    'load_argument_news': validators['loadArgumentNewsResponse'],
+    'load_node': validators['loadNodeResponse'],
+    'load_user_info': validators['loadUserInfoResponse'],
+    'load_user_settings': validators['loadUserSettingsResponse'],
+    'login': validators['loginResponse'],
+    'logout': validators['logoutResponse'],
+    'change_password': validators['changePasswordResponse'],
+    'delete_user': validators['deleteUserResponse'],
+    'flag_node': validators['markNodeResponse'],
+    'unflag_node': validators['markNodeResponse'],
+    'mark_node_follow': validators['markNodeResponse'],
+    'mark_node_unfollow': validators['markNodeResponse'],
+    'store_settings': validators['storeSettingsResponse'],
+    'store_text': validators['storeTextResponse'],
+    'store_proposal': validators['storeProposalResponse'],
+    'store_refinement': validators['storeRefinementResponse'],
+    'store_argument': validators['storeArgumentResponse']
 }
 
 

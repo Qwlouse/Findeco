@@ -30,17 +30,16 @@ from django.test import TestCase
 from findeco.view_helpers import get_is_following
 
 from node_storage import get_root_node, Node
-from node_storage.factory import create_user, create_slot, create_textNode
-from node_storage.factory import create_vote, create_structureNode
-from node_storage.factory import create_argument, create_spam_flag
-from ..api_validation import userInfoValidator, indexNodeValidator
-from ..api_validation import userSettingsValidator, argumentIndexNodeValidator
-from ..view_helpers import create_index_node_for_slot, create_user_settings
-from ..view_helpers import create_index_node_for_argument, create_user_info
-from ..view_helpers import create_graph_data_node_for_structure_node
-from ..view_helpers import store_structure_node, store_argument, store_derivate
-from ..view_helpers import check_username_sanity
-from ..models import EmailActivation
+from node_storage.factory import (
+    create_user, create_slot, create_textNode, create_vote,
+    create_structureNode, create_argument, create_spam_flag)
+from findeco.api_validation import validators
+from findeco.view_helpers import (
+    create_index_node_for_slot, create_user_settings,
+    create_index_node_for_argument, create_user_info,
+    create_graph_data_node_for_structure_node, store_structure_node,
+    store_argument, store_derivate, check_username_sanity)
+from findeco.models import EmailActivation
 
 
 class CreateUsersInfoTest(TestCase):
@@ -56,7 +55,7 @@ class CreateUsersInfoTest(TestCase):
     def test_create_user_info_validates(self):
         for user in self.users:
             user_info = create_user_info(user)
-            self.assertTrue(userInfoValidator.validate(user_info))
+            self.assertTrue(validators['userInfo'].validate(user_info))
 
     def test_create_user_info_contains_correct_username(self):
         for user in self.users:
@@ -85,7 +84,7 @@ class CreateUserSettingsTest(TestCase):
     def test_return_value_validates(self):
         for user in self.users:
             user_settings = create_user_settings(user)
-            self.assertTrue(userSettingsValidator.validate(user_settings))
+            self.assertTrue(validators['userSettings'].validate(user_settings))
 
     def test_contains_correct_blocked_users(self):
         user_settings = create_user_settings(self.hans)
@@ -187,7 +186,7 @@ class CreateIndexNodeForSlotTest(TestCase):
     def test_index_node_validates(self):
         for slot in self.top_slots:
             index_node = create_index_node_for_slot(slot)
-            self.assertTrue(indexNodeValidator.validate(index_node))
+            self.assertTrue(validators['indexNode'].validate(index_node))
 
     def test_index_node_contains_correct_short_title(self):
         for slot, short_title in zip(self.top_slots, self.short_titles):
@@ -241,7 +240,7 @@ class CreateIndexNodeForArgumentTest(TestCase):
     def test_index_node_validates(self):
         for arg in self.foo_arguments:
             index_node = create_index_node_for_argument(arg, self.hugo.id)
-            self.assertTrue(argumentIndexNodeValidator.validate(index_node))
+            self.assertTrue(validators['argumentIndexNode'].validate(index_node))
 
     def test_index_node_contains_arg_type(self):
         for arg, arg_type in zip(self.foo_arguments, ['pro', 'neut', 'con']):
