@@ -364,6 +364,29 @@ def store_refinement(request, path):
     return json_response({'storeRefinementResponse': {'path': new_path}})
 
 
+@ValidPaths("StructureNode")
+@ViewErrorHandling
+def store_argument(request, path):
+    assert_authentication(request)
+    assert_permissions(request,
+                       ['node_storage.add_node', 'node_storage.add_argument',
+                        'node_storage.add_vote', 'node_storage.add_nodeorder',
+                        'node_storage.add_text', 'node_storage.change_vote'])
+    user = request.user
+    p = json.loads(request.body)
+
+    node = get_node_for_path(path)
+    title = p['argument']['title']
+    text = p['argument']['text']
+    arg_type = p['argument']['type']
+    arg = create_argument(node, arg_type=arg_type, title=title, text=text,
+                          authors=[user])
+    create_vote(user, [arg])  # auto-follow
+    new_path = "{path}.{arg_type}.{index}".format(
+        path=path, arg_type=arg_type, index=arg.index)
+    return json_response({'storeArgumentResponse': {'path': new_path}})
+
+
 @ValidPaths("StructureNode", "Argument")
 @ViewErrorHandling
 def flag_node(request, path):
