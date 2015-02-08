@@ -5,7 +5,7 @@
                   ng-model="microblogText" style="width: 100%;"></textarea>
         <input class="btn btn-primary" style="display: block;" type="submit" value="{{ '_microblogSendBtn_'|i18n }}"/>
     </form>
-    <div ng-show="error">
+    <div ng-if="error">
         <span class="help-error" data-i18n="{{ error.errorID }}"></span>
         <div class="help-error">{{ error.additionalInfo }}</div>
     </div>

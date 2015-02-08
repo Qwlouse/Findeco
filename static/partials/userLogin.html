@@ -20,19 +20,20 @@
                     <p ng-show="loginForm.username.$error.pattern" class="help-error">
                         {{ '_usernameInvalidFormat_'|i18n }}
                     </p>
-                    <span ng-show="attemptedLogin && loginForm.username.$error.required" class="help-error">
-                        {{ '_required_' | i18n }}
-                    </span>
+                    <span ng-show="attemptedLogin && loginForm.username.$error.required"
+                          class="help-error" data-i18n="_required_"></span>
                 </div>
 
                 <!-- PASSWORD -->
                 <div class="form-group">
                     <input type="password" placeholder="{{ '_accountPasswordBtn_'|i18n }}"
                            ng-model="password" name="password" id="passwordInput" required>
-                    <span ng-show="attemptedLogin && loginForm.password.$error.required" class="help-error">
-                        {{ '_required_' | i18n }}
+                    <span ng-show="attemptedLogin && loginForm.password.$error.required"
+                          class="help-error" data-i18n="_required_">
                     </span>
                 </div>
+
+                <!-- SUBMIT -->
                 <input type="submit" value="{{ '_accountLoginBtn_'|i18n }}">
             </form>
             <div ng-if="serverError" class="help-error">

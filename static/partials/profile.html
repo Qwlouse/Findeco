@@ -111,7 +111,8 @@
                 <input type="password" name="password" ng-model="password" /><br />
                 <input type="password" name="password2" match="password" ng-model="password2" /><br/>
 
-                <p ng-show="profilePassword.password2.$error.match" class="help-error">{{ '_passwordMismatch_' | i18n }}</p>
+                <p ng-show="profilePassword.password2.$error.match"
+                   class="help-error" data-i18n="_passwordMismatch_"></p>
 
                 <input type="submit" value="{{'_save_'|i18n}}" ng-disabled="!profilePassword.password.$dirty">
                 <p ng-show="passwordChanged && !serverError"
