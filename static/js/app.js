@@ -29,6 +29,7 @@ var findecoApp = angular.module(
         ['ngAnimate',
          'ngRoute',
          'FindecoServices',
+         'FindecoSettings',
          'FindecoBackendService',
          'FindecoUserService',
          'FindecoNavigatorService',
@@ -81,5 +82,3 @@ findecoApp.run(function ($rootScope, localize, Fesettings) {
         $rootScope.language = Fesettings.activatedLanguages[0];
     }
 });
-
-findecoApp.constant('Version','0.5.0');
