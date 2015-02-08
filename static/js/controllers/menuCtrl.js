@@ -24,9 +24,9 @@
 
 'use strict';
 
-findecoApp.controller('FindecoMenuCtrl', function($scope, User, Navigator, Fesettings) {
+findecoApp.controller('FindecoMenuCtrl', function($scope, User, Navigator, FeSettings) {
     $scope.user = User;
-    $scope.fesettings = Fesettings;
+    $scope.fesettings = FeSettings;
     $scope.navigation = Navigator;
 
     $scope.logout = function () {

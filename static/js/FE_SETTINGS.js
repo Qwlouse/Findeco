@@ -77,7 +77,7 @@ angular.module('FindecoSettings', [])
            link:'http://www.findeco.de/hilfe/',
            link_title:'zur Hilfe (findeco.de)'
         }})
-    .factory('Fesettings', function (Disclaimer, Boxes, Version, Sidebar, Greetingbox, ActivatedLanguages) {
+    .factory('FeSettings', function (Disclaimer, Boxes, Version, Sidebar, Greetingbox, ActivatedLanguages) {
         var settings = {};
         settings.version = Version;
         settings.disclaimer = Disclaimer;

@@ -25,9 +25,9 @@
 'use strict';
 /* Controllers */
 
-findecoApp.controller('FindecoArgumentNewsCtrl', function ($scope, Backend, User, Fesettings, $location) {
+findecoApp.controller('FindecoArgumentNewsCtrl', function ($scope, Backend, User, FeSettings, $location) {
     $scope.user = User;
-    $scope.fesettings = Fesettings;
+    $scope.fesettings = FeSettings;
 
     $scope.markNode = function(markType, nodePath) {
         var markedNode = $scope.cards[0]['argument'];

@@ -23,7 +23,7 @@
 
 'use strict';
 angular.module('FindecoUserService', [])
-    .factory('User', function ($http, $rootScope, Fesettings) {
+    .factory('User', function ($http, $rootScope, FeSettings) {
         var empty_data = {
             userInfo    : {description: "", displayName: ""},
             userSettings: {
@@ -89,9 +89,9 @@ angular.module('FindecoUserService', [])
                 if (userInfo.preferredLanguage) {
                     $rootScope.language = userInfo.preferredLanguage;
                 } else {
-                    if (angular.isArray(Fesettings.activatedLanguages) &&
-                        (Fesettings.activatedLanguages.length > 0)) {
-                        $rootScope.language = Fesettings.activatedLanguages[0];
+                    if (angular.isArray(FeSettings.activatedLanguages) &&
+                        (FeSettings.activatedLanguages.length > 0)) {
+                        $rootScope.language = FeSettings.activatedLanguages[0];
                     }
                 }
                 if (userInfo.displayName == "admin") {
@@ -172,9 +172,9 @@ angular.module('FindecoUserService', [])
             if (userInfo.preferredLanguage) {
                 $rootScope.language = userInfo.preferredLanguage;
             } else {
-                if (angular.isArray(Fesettings.activatedLanguages) &&
-                    (Fesettings.activatedLanguages.length > 0)) {
-                    $rootScope.language = Fesettings.activatedLanguages[0];
+                if (angular.isArray(FeSettings.activatedLanguages) &&
+                    (FeSettings.activatedLanguages.length > 0)) {
+                    $rootScope.language = FeSettings.activatedLanguages[0];
                 }
             }
         };
@@ -197,9 +197,9 @@ angular.module('FindecoUserService', [])
                     if (userInfo.preferredLanguage) {
                         $rootScope.language = userInfo.preferredLanguage;
                     } else {
-                        if (angular.isArray(Fesettings.activatedLanguages) &&
-                            (Fesettings.activatedLanguages.length > 0)) {
-                            $rootScope.language = Fesettings.activatedLanguages[0];
+                        if (angular.isArray(FeSettings.activatedLanguages) &&
+                            (FeSettings.activatedLanguages.length > 0)) {
+                            $rootScope.language = FeSettings.activatedLanguages[0];
                         }
                     }
             });

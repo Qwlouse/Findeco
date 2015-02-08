@@ -70,15 +70,15 @@ var findecoApp = angular.module(
             otherwise({templateUrl: '/static/partials/default.html', controller: 'FindecoDefaultCtrl'});
     }]);
 
-findecoApp.run(function ($rootScope, localize, Fesettings) {
+findecoApp.run(function ($rootScope, localize, FeSettings) {
     $rootScope.$watch('language', function (newLang) {
         localize.setLanguage(newLang);
         $rootScope.$broadcast('langChange', newLang);
     });
     // initialization
     if (!$rootScope.language &&
-        angular.isArray(Fesettings.activatedLanguages) &&
-        (Fesettings.activatedLanguages.length > 0)) {
-        $rootScope.language = Fesettings.activatedLanguages[0];
+        angular.isArray(FeSettings.activatedLanguages) &&
+        (FeSettings.activatedLanguages.length > 0)) {
+        $rootScope.language = FeSettings.activatedLanguages[0];
     }
 });

@@ -25,11 +25,11 @@
 'use strict';
 
 findecoApp.controller('FindecoDefaultCtrl',
-    function ($scope, $controller, $interval, Backend, Fesettings, GraphData, Navigator, User) {
+    function ($scope, $controller, $interval, Backend, FeSettings, GraphData, Navigator, User) {
 
         $scope.nav = Navigator;
         $scope.user = User;
-        $scope.fesettings = Fesettings;
+        $scope.fesettings = FeSettings;
         $scope.allExpanded = false;
         $scope.showArguments = false;
         $scope.showMicroblogging = false;
