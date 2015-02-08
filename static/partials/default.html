@@ -37,10 +37,12 @@
 
 
                 <h1>{{ nodeInfo.fullTitle }}
-                    <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo"
-                         mark-func="markNode" width="21" height="21"></div>
-                    <div follow-star show-if="user.isLoggedIn" entity="nodeInfo"
-                         mark-func="markMainNode" width="21" height="21"></div>
+                    <div style="float: right; min-width: 42px;">
+                        <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo"
+                             mark-func="markNode" width="21" height="21"></div>
+                        <div follow-star show-if="user.isLoggedIn" entity="nodeInfo"
+                             mark-func="markMainNode" width="21" height="21"></div>
+                    </div>
                 </h1>
 
                 <p creole wiki-text="nodeInfo.wikiText"></p>
