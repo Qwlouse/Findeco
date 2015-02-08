@@ -26,7 +26,7 @@
 
 findecoApp.controller(
     'FindecoCreateProposalCtrl',
-    function ($scope, $routeParams, Backend, Message, Navigator, CVST) {
+    function ($scope, $routeParams, $location, Backend, Message, Navigator, CVST, User) {
         $scope.getNodePath = function () {
             return Navigator.nodePath;
         };
@@ -43,6 +43,10 @@ findecoApp.controller(
             subsections: []
         };
         $scope.dragPosition = 0;
+
+        if (!User.isLoggedIn) {
+            $location.path(Navigator.nodePath);
+        }
 
         $scope.setProposalType = function (type) {
             $scope.proposalType = type;

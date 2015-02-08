@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                <div style="padding: 3em 0 2em 0;">
+                <div style="padding: 3em 0 2em 0;" ng-show="user.isLoggedIn">
                     <a ng-click="relocate('create/proposal')" ng-href="/create/proposal/{{ nav.nodePath }}"
                        class="button-green" data-i18n="_createProposalOrRefinement_">Edit</a>
                 </div>
