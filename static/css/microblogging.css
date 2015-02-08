@@ -30,7 +30,7 @@
 
 .microblogColumn .rss {
     position: absolute;
-    top: 1.5em;
+    top: 2.5em;
     right: 1.5em;
     background-image: url("../images/feed-icon.svg");
     background-size: 16px 16px;
@@ -70,8 +70,7 @@ span.microblogText {
     background: url("../images/location.png") no-repeat;
     height: 12px;
     width: 8px;
-    margin-top: 2px;
-    margin-left: 3px;
+    margin: 2px 3px 0 3px;
     display: inline-block;
 }
 
