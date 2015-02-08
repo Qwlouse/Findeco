@@ -137,7 +137,7 @@ findecoApp
                         x = -Math.max(scope.width, scope.height);
                     }
                     var y = 0;
-                    if (scope.entity.isFlagging) {
+                    if (!scope.entity.isFlagging) {
                         y = -Math.max(scope.width, scope.height);
                     }
                     element.css({'background-position': x + 'px ' + y + 'px'});
