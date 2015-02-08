@@ -16,9 +16,11 @@
             <a href="/{{ argument.path }}" class="argumentTitle">
                 {{ argument.fullTitle }}
             </a>
-            <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode" width="16"
-                  style="float:none; top: 0;"></span>
-            <span class="followerCount">{{ argument.followingCount }}</span>
+            <div style="float: right; width: 30px;">
+                <span follow-star show-if="user.isLoggedIn" entity="argument" mark-func="markNode"
+                      width="16" height="16"></span>
+                <span class="followerCount">{{ argument.followingCount }}</span>
+            </div>
             <p creole wiki-text="argument.wikiText"></p>
             <a ng-show="argument.index != fullyShow && argument.text.length > 140"
                ng-click="updateArgumentsWikiText(argument.index)" class="moreLink">... mehr</a>
