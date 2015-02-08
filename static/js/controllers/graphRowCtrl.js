@@ -33,7 +33,7 @@ findecoApp.controller('FindecoGraphRowCtrl',
     $scope.graphType = 'full';
 
     $scope.updateGraph = function () {
-        if ($scope.nav.type == 'node') {
+        if ($scope.nav.type == 'node' || $scope.nav.type == 'argument') {
             GraphData.loadGraphData($scope.nav.nodePath, $scope.graphType);
         }
     };
