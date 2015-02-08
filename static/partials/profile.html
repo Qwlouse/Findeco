@@ -77,7 +77,7 @@
             <!-- LANGUAGE SETTINGS -->
             <h2 data-i18n="_languageSettings_">Spracheinstellungen</h2>
             <form ng-submit="storeUserSettings()">
-                <select ng-model="user.preferredLanguage" ng-change="storeUserSettings()"
+                <select ng-model="user.preferredLanguage"
                         ng-options="lang for lang in fesettings.activatedLanguages">
                     <option value="" data-i18n="_default_"></option>
                 </select>

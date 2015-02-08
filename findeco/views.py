@@ -491,8 +491,7 @@ def store_settings(request):
         user.profile.wants_mail_notification = wants
 
     if 'helpEnabled' in request_data:
-        user.profile.help_enabled = (
-            request_data['helpEnabled'].lower() == 'true')
+        user.profile.help_enabled = request_data['helpEnabled']
 
     if 'preferredLanguage' in request_data:
         user.profile.preferred_language = request_data['preferredLanguage']

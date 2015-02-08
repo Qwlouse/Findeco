@@ -102,6 +102,9 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
         });
     };
 
+    $scope.$watch('user.preferredLanguage', function(newLanguage) {
+        $scope.storeUserSettings();
+    });
 
     $scope.storeUserEMail = function () {
         $scope.storeUserSettings().success(function() {
@@ -109,12 +112,14 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
             $scope.changeEmailError = false;
             $scope.profileEMail.$setPristine();
         }).error(function (d) {
-            $scope.changeEmailError = d.errorResponse;
+            $scope.changeEmailError = d['errorResponse'];
         });
     };
 
     $scope.storeUserName = function() {
-        var r = window.confirm("Dein Benutzername wird im gesamten System geändert. Das kann deine Follower verwirren. Außerdem kann es eine Weile dauern bis die Änderung überall wirksam ist.\n Sicher dass du deinen Namen ändern möchtest?");
+        var r = window.confirm("Dein Benutzername wird im gesamten System geändert. " +
+        "Das kann deine Follower verwirren. Außerdem kann es eine Weile dauern bis die " +
+        "Änderung überall wirksam ist.\n Sicher dass du deinen Namen ändern möchtest?");
         if (!r) { return; }
 
         User.displayName = User.newDisplayName;
@@ -123,7 +128,7 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
             $scope.changeUsernameError = false;
             $scope.profileUsername.$setPristine();
         }).error(function(d) {
-            $scope.changeUsernameError = d.errorResponse;
+            $scope.changeUsernameError = d['errorResponse'];
         });
     };
 
@@ -142,7 +147,7 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
                 $scope.password2 = "";
                 $scope.profilePassword.$setPristine();
             }).error(function(d) {
-                $scope.changePasswordError = d.errorResponse;
+                $scope.changePasswordError = d['errorResponse'];
             });
         } else {
             $scope.changePasswordError = {
@@ -176,7 +181,8 @@ findecoApp.controller('FindecoUserCtrl', function ($scope, $rootScope, Navigator
 
     $scope.$on('$locationChangeStart', function(event) {
         if (!event.defaultPrevented && $scope.user.hasUnsavedChanges()) {
-            var r = window.confirm("Du hast Dinge geändert, aber noch nicht gespeichert\n Wenn du die Seite verlässt gehen dese verloren.\n Verlassen?");
+            var r = window.confirm("Du hast Dinge geändert, aber noch nicht gespeichert\n " +
+            "Wenn du die Seite verlässt gehen dese verloren.\n Verlassen?");
             if (r) {
                 $scope.user.resetChanges();
             } else {

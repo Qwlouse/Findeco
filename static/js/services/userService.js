@@ -183,7 +183,7 @@ angular.module('FindecoUserService', [])
                 wantsMailNotification: userInfo.wantsMailNotification,
                 helpEnabled: userInfo.helpEnabled,
                 preferredLanguage: userInfo.preferredLanguage,
-                email: userInfo.email}).success(function () {
+                email: userInfo.email})).success(function () {
                     data.userInfo.displayName = userInfo.displayName;
                     userInfo.newDisplayName = userInfo.displayName;
                     data.userInfo.description = userInfo.description;
@@ -199,7 +199,7 @@ angular.module('FindecoUserService', [])
                             $rootScope.language = Fesettings.activatedLanguages[0];
                         }
                     }
-            }));
+            });
         };
         userInfo.changePassword = function (newPassword) {
             return $http.post('/.changePassword/', angular.toJson({password: newPassword}));
