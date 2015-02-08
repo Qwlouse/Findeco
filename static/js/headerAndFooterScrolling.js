@@ -25,7 +25,7 @@
 function headerPosition() {
     var navigationBar = document.getElementById('navigationBar');
     if (navigationBar) {
-        if (window.scrollY > document.getElementById('header').scrollHeight - 27) {
+        if (window.scrollY > document.getElementById('header').scrollHeight - 28) {
             navigationBar.style.position = 'fixed';
             navigationBar.style.top = '0';
             navigationBar.style.width = '100%';

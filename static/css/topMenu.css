@@ -90,7 +90,6 @@
     top: 4px;
     height: 65px;
     width: 200px;
-    z-index: 1001;
 }
 
 #header .userControls {
@@ -177,6 +176,11 @@
     top: -3px;
     background: #333333;
     z-index: 1000;
+}
+
+#navigationBar .row {
+    background: url("../images/Logo.svg") no-repeat 6px -39px;
+    background-size: 400px;
 }
 
 #navigationBar img {
