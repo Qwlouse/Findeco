@@ -1363,5 +1363,10 @@
         "key"        : "_PermissionDenied",
         "value"      : "Zugriff verweigert! Sie haben nicht die erforderlichen Rechte.",
         "description": ""
+    },
+    {
+        "key"        : "_noMicroblogging_",
+        "value"      : "Noch kein Microblogging.",
+        "description": ""
     }
 ]

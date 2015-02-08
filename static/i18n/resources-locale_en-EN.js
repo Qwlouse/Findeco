@@ -1344,5 +1344,10 @@
         "key"        : "_PermissionDenied",
         "value"      : "Permission denied! You do not have the required permission.",
         "description": ""
+    },
+    {
+        "key"        : "_noMicroblogging_",
+        "value"      : "There is no microblogging yet.",
+        "description": ""
     }
 ]

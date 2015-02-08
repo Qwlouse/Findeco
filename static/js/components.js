@@ -221,8 +221,11 @@ findecoApp
                         '<br/>' +
                         '<span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>' +
                     '</li>' +
-                    '<li ng-show="bloglist.length % 20 == 0">' +
+                    '<li ng-show="bloglist.length % 20 == 0 && bloglist.length > 0">' +
                         '<a ng-click="updatecall()" data-i18n="_loadMoreMicroblogging_"></a>' +
+                    '</li>' +
+                    '<li ng-show="bloglist.length == 0">' +
+                        '<span class="tipp" data-i18n="_noMicroblogging_"></span>' +
                     '</li>' +
                 '</ul>',
             controller: function ($scope, $element, User) {
