@@ -7,7 +7,15 @@
                        ng-model="microblogText"></textarea>
                 <help hid='MBL_col' htype=1 />
                 <input class="btn btn-primary" type="submit" value="{{'_microblogSendBtn_'|i18n}}"/>
+                <div ng-show="error">
+                    <span class="help-error" data-i18n="{{ error.errorID }}"></span>
+                    <div class="help-error">{{ error.additionalInfo }}</div>
+                </div>
             </form>
+            <div ng-show="error">
+                <span class="help-error" data-i18n="{{ error.errorID }}"></span>
+                <div class="help-error">{{ error.additionalInfo }}</div>
+            </div>
             <div ng-show="user.isLoggedIn && showspinner" class="deactivateDiv"
                  style="width: 115%; height: 125%; left: -5%; top: -5px; border-radius: 5px 5px 5px 5px;"></div>
             <div ng-show="user.isLoggedIn && showspinner" class="deactivateSpinner"></div>

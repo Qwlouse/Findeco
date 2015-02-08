@@ -43,6 +43,7 @@ findecoApp.controller(
             subsections: []
         };
         $scope.dragPosition = 0;
+        $scope.error = undefined;
 
         if (!User.isLoggedIn) {
             Navigator.changePath(Navigator.nodePath);
@@ -370,6 +371,7 @@ findecoApp.controller(
             }
             $scope.submitting = true;
             var promise;
+            $scope.error = undefined;
             if ($scope.proposalType == 'refinement') {
                 promise = Backend.storeRefinement(Navigator.nodePath, submitData);
                 promise.success(function (data) {

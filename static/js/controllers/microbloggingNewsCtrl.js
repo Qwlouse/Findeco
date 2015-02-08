@@ -31,6 +31,7 @@ findecoApp.controller('FindecoMicrobloggingNewsCtrl', function ($scope, $locatio
 
     $scope.user = User;
     $scope.username = User.displayName;
+    $scope.error = undefined;
 
     function setAuthorForAllBlogs(list) {
         for (var i = 0; i < list.length; ++i ) {
@@ -120,13 +121,15 @@ findecoApp.controller('FindecoMicrobloggingNewsCtrl', function ($scope, $locatio
     $scope.submit = function () {
         // todo: on which path to microblog?
         var path = "";
-
+        $scope.error = undefined;
         if ($scope.microblogText.length <= 0) return;
         Backend.storeMicroblogging(path, $scope.microblogText).success(function () {
             $scope.updateTimeline();
             $scope.updateMentions();
             $scope.updateOwnPosts();
             $scope.microblogText = '';
+        }).error(function (response) {
+            $scope.error = response['errorResponse'];
         });
     };
 
