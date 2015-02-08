@@ -26,7 +26,7 @@
 
 findecoApp.controller(
     'FindecoCreateArgumentCtrl',
-    function ($scope, $routeParams, $location, Backend, Message, Navigator, User) {
+    function ($scope, $routeParams, Backend, Message, Navigator, User) {
         $scope.getNodePath = function () {
             return Navigator.nodePath;
         };
@@ -37,7 +37,7 @@ findecoApp.controller(
         $scope.argumentType = "";
 
         if (!User.isLoggedIn) {
-            $location.path(Navigator.nodePath);
+            Navigator.changePath(Navigator.nodePath);
         }
 
         $scope.setArgumentType = function (type) {
