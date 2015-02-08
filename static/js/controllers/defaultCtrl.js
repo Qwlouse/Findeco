@@ -25,7 +25,7 @@
 'use strict';
 
 findecoApp.controller('FindecoDefaultCtrl',
-    function ($scope, $location, $controller, $interval, Backend, Fesettings, GraphData, Navigator, User) {
+    function ($scope, $controller, $interval, Backend, Fesettings, GraphData, Navigator, User) {
 
         $scope.nav = Navigator;
         $scope.user = User;
@@ -42,7 +42,7 @@ findecoApp.controller('FindecoDefaultCtrl',
         $scope.sections = [];
 
         $scope.relocate = function (target) {
-            $location.path(target + '/' + $scope.nav.nodePath);
+            Navigator.setPath(target + '/' + $scope.nav.nodePath);
         };
 
         $scope.markNode = Backend.markNode;
