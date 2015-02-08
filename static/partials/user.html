@@ -1,7 +1,7 @@
 <div class="preCentering" style="padding-bottom: 3em;">
     <div class="centered backgroundBox" style="width:45em;">
         <div follow-star show-if="user.isLoggedIn && displayUser.name != user.displayName"
-             entity="displayUser" mark-func="user.markUser" width="40" style="float:right"></div>
+             entity="displayUser" mark-func="user.markUser" width="40" height="40" style="float:right"></div>
         <h1 ng-if="displayUser.exists">{{displayUser.name}}</h1>
         <h1 ng-if="!displayUser.exists" data-i18n="_userDoesNotExist|{{ displayUser.name }}"></h1>
 

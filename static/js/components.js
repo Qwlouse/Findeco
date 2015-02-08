@@ -38,13 +38,7 @@ findecoApp
                 height  : '@'
             },
             replace : true,
-            template: '<a class="follow-star">' +
-                '<img ng-src="/static/images/star{{entity.isFollowing}}.png" ' +
-                'alt="Follow" title="Folgen" width="{{width}}" height="{{height}}" ' + '/>' +
-                '</a>',
-            //       'onmouseover="this.src=\'/static/images/star{{entity.isFollowing}}_hover.png\';" ' +
-            //     'onmouseout="this.src=\'/static/images/star{{entity.isFollowing}}.png\';" ' +
-            // todo: Reimplemnt without Angularerror-->
+            template: '<a class="follow-star" ng-mouseenter="startHover()" ng-mouseleave="stopHover()"></a>',
             link: function (scope, element, attrs) {
                 if (scope.entity.isFollowing != 0 &&
                     scope.entity.isFollowing != 1 &&
@@ -55,6 +49,38 @@ findecoApp
                 scope.$watch('showIf', function (value) {
                     link.css('display', scope.showIf ? '' : 'none');
                 });
+                scope.$watch('width', function (newWidth) {
+                    if (newWidth) {
+                        console.log(element);
+                        element.width(newWidth + 'px');
+                    }
+                    element.css({'background-size': Math.max(scope.width, scope.height) * 2 + 'px'});
+                });
+                scope.$watch('height', function (newHeight) {
+                    if (newHeight) {
+                        element.height(newHeight + 'px');
+                    }
+                    element.css({'background-size': Math.max(scope.width, scope.height) * 2 + 'px'});
+                });
+                scope.setBackgroundPosition = function () {
+                    var x = 0;
+                    if (scope.hover) {
+                        x = -Math.max(scope.width, scope.height);
+                    }
+                    var y = scope.entity.isFollowing * -Math.max(scope.width, scope.height);
+                    element.css({'background-position': x + 'px ' + y + 'px'});
+                };
+                scope.$watch('entity.isFollowing', function () {
+                    scope.setBackgroundPosition();
+                });
+                scope.startHover = function () {
+                    scope.hover = true;
+                    scope.setBackgroundPosition();
+                };
+                scope.stopHover = function () {
+                    scope.hover = false;
+                    scope.setBackgroundPosition();
+                };
                 link.bind('click', toggle);
                 function toggle() {
                     var markType = "follow";
