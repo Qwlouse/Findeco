@@ -222,7 +222,7 @@ findecoApp
                 htype: '=',
                 hid: '@hid'
             },
-            template: '<div>Platzhalter</div>',
+            template: '<div style="float: left;">Platzhalter</div>',
             replace: true,
             link: function (scope, elem, attr) {
                 $rootScope.$watch('helpIsActive', function (newVal, oldVal) {

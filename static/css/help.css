@@ -79,14 +79,18 @@
 
 .help-small-icon {
     background: url("/static/images/help.svg") no-repeat;
-    height: 19px;
-    width: 19px;
+    background-size: 42px;
+    height: 14px;
+    width: 14px;
+    margin: 1em 0.5em 0 0;
+    position: relative;
+    top: 7px;
     cursor: help;
     display: inline-block;
 }
 
 .help-small-icon:hover {
-    background-position: -38px 0;
+    background-position: -28px 0;
 }
 
 .help-small-b {
@@ -94,5 +98,5 @@
 }
 
 .help-small-a  {
-    background-position: -19px 0;
+    background-position: -14px 0;
 }
