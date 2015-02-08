@@ -1181,6 +1181,11 @@
         "description": ""
     },
     {
+        "key"        : "_addSubsection_",
+        "value"      : "Add Subsection",
+        "description": ""
+    },
+    {
         "key"        : "_summaryHeading_",
         "value"      : "Summary",
         "description": ""
