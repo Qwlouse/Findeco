@@ -149,7 +149,8 @@ input, textarea {
 }
 
 input[type=submit], input[type=reset], button, a.button-green, a.button-red {
-    color: #000000;
+    color: #ffffff;
+    background-color: #69696b;
     padding: 0.4em;
     border: 0 solid #000000;
     cursor: pointer;
