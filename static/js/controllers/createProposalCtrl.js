@@ -374,31 +374,18 @@ findecoApp.controller(
                 promise = Backend.storeRefinement(Navigator.nodePath, submitData);
                 promise.success(function (data) {
                     $scope.submitting = undefined;
-                    if (data.storeRefinementResponse != undefined) {
-                        Navigator.changePath(data.storeRefinementResponse.path);
-                    }
-                    if (data.errorResponse != undefined) {
-                        $scope.error = data.errorResponse;
-                    }
+                    Navigator.changePath(data.storeRefinementResponse.path);
                 });
             } else {
                 promise = Backend.storeProposal(Navigator.nodePath, submitData);
                 promise.success(function (data) {
                     $scope.submitting = undefined;
-                    if (data.storeProposalResponse != undefined) {
-                        Navigator.changePath(data.storeProposalResponse.path);
-                    }
-                    if (data.errorResponse != undefined) {
-                        $scope.error = data.errorResponse;
-                    }
+                    Navigator.changePath(data.storeProposalResponse.path);
                 });
             }
             promise.error(function (response) {
                 $scope.submitting = undefined;
-                $scope.error = {
-                    errorID: "_noConnectionToBackend_",
-                    additionalInfo: ""
-                };
+                $scope.error = response['errorResponse'];
             });
         };
 

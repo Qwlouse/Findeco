@@ -85,10 +85,7 @@ findecoApp.controller(
                 }
             }).error(function (response) {
                 $scope.submitting = undefined;
-                $scope.error = {
-                    errorID: "_noConnectionToBackend_",
-                    additionalInfo: ""
-                };
+                $scope.error = response['errorResponse'];
             });
         };
 

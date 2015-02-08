@@ -27,7 +27,8 @@
 #endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 
-from findeco.view_helpers import assert_node_for_path, assert_active_user
+from findeco.view_helpers import assert_node_for_path, assert_active_user, \
+    assert_permissions
 from findeco.view_helpers import assert_authentication, assert_request_data_parameters
 from findeco.view_helpers import ViewErrorHandling
 from .factory import create_post
@@ -103,6 +104,7 @@ def load_microblogging_for_authored_nodes(request, name):
 def store_microblogging(request, path):
     request_data = json.loads(request.body)
     assert_authentication(request)
+    assert_permissions(request, ['microblogging.add_post'])
     assert_request_data_parameters(request_data, ['microblogText'])
     post_text = convert_long_urls(request_data['microblogText'],
                                   request.get_host())
