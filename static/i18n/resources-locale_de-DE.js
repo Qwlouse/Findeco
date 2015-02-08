@@ -1358,5 +1358,10 @@
         "key"        : "_submittingNewArgument_",
         "value"      : "Das neue Argument wird gespeichert...",
         "description": ""
+    },
+    {
+        "key"        : "_PermissionDenied",
+        "value"      : "Zugriff verweigert! Sie haben nicht die erforderlichen Rechte.",
+        "description": ""
     }
 ]

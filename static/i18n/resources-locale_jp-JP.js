@@ -1337,5 +1337,10 @@
         "key"        : "_submittingNewArgument_",
         "value"      : "Saving the new argument...",
         "description": ""
+    },
+    {
+        "key"        : "_PermissionDenied",
+        "value"      : "Permission denied! You do not have the required permission.",
+        "description": ""
     }
 ]

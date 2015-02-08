@@ -47,6 +47,7 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
     $scope.submitting = false;
     $scope.showspinner = false;
     $scope.showLoadindicator = false;
+    $scope.error = undefined;
 
     $scope.followUser = function (type, path) {
         return User.markUser(type, path);
@@ -110,6 +111,8 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
             $scope.microblogText = '';
             $scope.showspinner = false;
             $scope.submitting = false;
+        }).error(function (response) {
+            $scope.error = response['errorResponse'];
         });
     };
 

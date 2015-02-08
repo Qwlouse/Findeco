@@ -35,6 +35,7 @@ findecoApp.controller(
         $scope.argumentTitle = "";
         $scope.argumentText = "";
         $scope.argumentType = "";
+        $scope.error = undefined;
 
         if (!User.isLoggedIn) {
             Navigator.changePath(Navigator.nodePath);
@@ -75,6 +76,7 @@ findecoApp.controller(
                 }
             };
             $scope.submitting = true;
+            $scope.error = undefined;
             Backend.storeArgument(Navigator.nodePath, submitData).success(function (data) {
                 $scope.submitting = undefined;
                 if (data.storeArgumentResponse != undefined) {
@@ -85,10 +87,7 @@ findecoApp.controller(
                 }
             }).error(function (response) {
                 $scope.submitting = undefined;
-                $scope.error = {
-                    errorID: "_noConnectionToBackend_",
-                    additionalInfo: ""
-                };
+                $scope.error = response['errorResponse'];
             });
         };
 
