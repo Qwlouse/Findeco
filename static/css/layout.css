@@ -317,6 +317,10 @@ div.left-argument-box {
     color: #8E0700;
 }
 
+.success {
+    color: #00510A;
+}
+
 /* Wizzard progress indicator */
 
 .wizzard-progress-icon {

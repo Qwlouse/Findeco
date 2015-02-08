@@ -1,27 +1,31 @@
-<div class="row" xmlns="http://www.w3.org/1999/html">
-    <div style="position: relative; left: -50%; float: right; overflow: visible; margin: 2em 0;">
-        <div style="position: relative; left: 50%;">
+<div class="preCentering" style="padding-bottom: 3em;">
+    <div class="centered backgroundBox" style="width:45em;">
+        <div follow-star show-if="user.isLoggedIn && displayUser.name != user.displayName"
+             entity="displayUser" mark-func="user.markUser" width="40" style="float:right"></div>
+        <h1 ng-if="displayUser.exists">{{displayUser.name}}</h1>
+        <h1 ng-if="!displayUser.exists" data-i18n="_userDoesNotExist|{{ displayUser.name }}"></h1>
 
-            <div class="textColumn backgroundBox" style="max-width: 42em;">
-                <div follow-star show-if="user.isLoggedIn && displayUser.name != user.displayName"
-                     entity="displayUser" mark-func="user.markUser"></div>
-                <h1 ng-if="displayUser.exists">{{displayUser.name}}</h1>
-                <h1 ng-if="!displayUser.exists" data-i18n="_userDoesNotExist|{{ displayUser.name }}"></h1>
+        <div ng-if="displayUser.exists">
+            <h2 data-i18n="_description_">Description</h2>
+            <div creole wiki-text="displayUser.description"></div>
 
-                <div ng-if="displayUser.exists">
-                    <h2 data-i18n="_description_">Description</h2>
-                    <div creole wiki-text="displayUser.description"></div>
+            <div ng-controller="FindecoMicroblogCtrl">
+                <h2 data-i18n="_microbloggingUser_">Microblogging dieses Nutzers</h2>
+                <div microblog-list bloglist="microbloggingList" updatecall="extendOwnPostsList" follow-user="followUser"></div>
+                <h2 data-i18n="_microblogToUser_|{{ displayUser.name }}">Öffentliche Nachricht für diesen Benutzer hinterlassen</h2>
+                <form ng-submit="submit()" ng-show="user.isLoggedIn">
+                    <textarea class="microblogInput" type="text" placeholder="{{ '_microblogToUserPlaceholder_'|i18n }}"
+                              ng-model="microblogText" style="width: 100%;"></textarea>
+                    <input class="btn btn-primary" style="display: block;" type="submit" value="{{ '_microblogSendBtn_'|i18n }}"/>
+                </form>
+                <div ng-show="error">
+                    <span class="help-error" data-i18n="{{ error.errorID }}"></span>
+                    <div class="help-error">{{ error.additionalInfo }}</div>
                 </div>
-
-
-                <div ng-if="displayUser.exists">
-                    <h2 data-i18n="_microbloggingNews_">Microblogging</h2>
-                    <div ng-include="'/static/partials/microblogging.html'"></div>
+                <div ng-show="submissionSuccess">
+                    <span class="success" data-i18n="_microblogSuccess_">Nachricht erfolgreich abgeschickt!</span>
                 </div>
-
-                <div style="clear: both; width: 100%;"></div>
             </div>
-
         </div>
     </div>
     <div style="clear: both;"></div>

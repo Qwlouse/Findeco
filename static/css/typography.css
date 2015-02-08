@@ -97,7 +97,7 @@ body {
 h1 {
     font-size: 200%;
     line-height: 140%;
-    margin-top: 1.0em;
+    margin-top: 0.5em;
     margin-bottom: 0.5em;
     color: #69696b;
 }
@@ -197,7 +197,6 @@ ins {
 del {
     color: #8E0700;
 }
-
 
 .textContainer ul {
     list-style: disc inside;
