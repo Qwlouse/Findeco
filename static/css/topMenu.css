@@ -159,15 +159,16 @@
 #searchButton {
 	float:right;
     border: 0;
-    height: 14px;
-    width: 14px;
+    height: 12px;
+    width: 12px;
     background: url("../images/search.svg") no-repeat 0 0;
+    background-size: 24px, 12px;
     position: relative;
     top: 2px;
 }
 
 #searchButton:hover {
-    background-position: -14px 0;
+    background-position: -12px 0;
 }
 
  /* Rootline */
