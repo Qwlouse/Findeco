@@ -31,7 +31,7 @@ describe('FindecoMenuCtrl', function(){
         scope = $rootScope.$new();
         ctrl = $controller('FindecoMenuCtrl', {
             $scope: scope,
-            Fesettings: {}
+            FeSettings: {}
         });
     }));
 

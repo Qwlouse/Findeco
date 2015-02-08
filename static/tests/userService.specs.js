@@ -48,15 +48,15 @@ describe('FindecoUserService', function() {
         }
     };
 
-    beforeEach(function (){
-        angular.mock.module('FindecoUserService');
-        angular.mock.inject(function($httpBackend, $rootScope, User) {
-            userService = User;
-            httpBackend = $httpBackend;
-            rootScope = $rootScope;
-        });
-        spyOn(rootScope, '$broadcast');
-    });
+    beforeEach(module('FindecoSettings'));
+    beforeEach(module('FindecoUserService'));
+
+    beforeEach(inject(function($httpBackend, $rootScope, User){
+        httpBackend = $httpBackend;
+        rootScope = $rootScope;
+        userService = User;
+    }));
+
 
     afterEach(function() {
         httpBackend.verifyNoOutstandingExpectation();
@@ -486,7 +486,9 @@ describe('FindecoUserService', function() {
                     displayName: 'mightyHugo',
                     description: 'beschreibung',
                     email: 'hugo@abc.de',
-                    wantsMailNotification: true})
+                    wantsMailNotification: true,
+                    helpEnabled:false
+                })
                     .respond(storeSettingsResponse);
                 userService.storeSettings();
                 httpBackend.flush();

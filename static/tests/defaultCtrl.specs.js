@@ -9,7 +9,7 @@ describe('FindecoDefaultCtrl', function () {
             scope = $rootScope.$new();
             ctrl = $controller('FindecoDefaultCtrl', {
                 $scope: scope,
-                Fesettings: {}
+                FeSettings: {}
             });
         });
     });

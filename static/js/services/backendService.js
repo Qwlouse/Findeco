@@ -230,5 +230,4 @@ angular.module('FindecoBackendService', [])
                 return promise;
             }
         };
-    })
-;
+    });
