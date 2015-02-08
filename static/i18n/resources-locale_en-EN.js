@@ -655,6 +655,26 @@
         "description": ""
     },
     {
+        "key"        : "_microbloggingUser_",
+        "value"      : "This Users Microblogging",
+        "description": ""
+    },
+    {
+        "key"        : "_microblogToUser_",
+        "value"      : "Leave a public message for {0}",
+        "description": ""
+    },
+    {
+        "key"        : "_microblogToUserPlaceholder_",
+        "value"      : "Deine öffentliche Nachricht für diesen Benutzer eingeben",
+        "description": ""
+    },
+    {
+        "key"        : "_microblogSuccess_",
+        "value"      : "Message sent successfully",
+        "description": ""
+    },
+    {
         "key"        : "_newsForAllNode_",
         "value"      : "News to all proposals",
         "description": ""

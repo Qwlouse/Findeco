@@ -48,6 +48,7 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
     $scope.showspinner = false;
     $scope.showLoadindicator = false;
     $scope.error = undefined;
+    $scope.submissionSuccess = false;
 
     $scope.followUser = function (type, path) {
         return User.markUser(type, path);
@@ -95,6 +96,8 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
     };
 
     $scope.submit = function () {
+        $scope.submissionSuccess = false;
+        $scope.error = undefined;
         if ($scope.microblogText.length <= 0) return;
         var text = $scope.microblogText;
         if (Navigator.type == 'user') {
@@ -111,6 +114,7 @@ findecoApp.controller('FindecoMicroblogCtrl', function ($scope, $routeParams, $l
             $scope.microblogText = '';
             $scope.showspinner = false;
             $scope.submitting = false;
+            $scope.submissionSuccess = true;
         }).error(function (response) {
             $scope.error = response['errorResponse'];
         });
