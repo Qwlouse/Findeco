@@ -168,8 +168,8 @@ findecoApp
             template: '<div>Platzhalter</div>',
             replace: true,
             link: function (scope, elem, attr) {
-                $rootScope.$watch('helpIsActive', function (oldVal) {
-                    if (oldVal) {
+                $rootScope.$watch('helpIsActive', function (newVal, oldVal) {
+                    if (newVal) {
                         elem.html('<div class="help-small-icon help-small-b "></div>');
                         if (scope.htype == 1) {
                             elem.html('<div class="help-small-icon help-small-b " ></div>');

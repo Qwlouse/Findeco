@@ -135,6 +135,7 @@ angular.module('FindecoUserService', [])
                 userInfo.followees = data.userSettings.followees;
                 userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
                 userInfo.helpEnabled = data.userSettings.helpEnabled;
+                $rootScope.helpIsActive = userInfo.helpEnabled;
                 userInfo.preferredLanguage = data.userSettings.preferredLanguage;
                 if (userInfo.preferredLanguage) {
                     $rootScope.language = userInfo.preferredLanguage;
@@ -166,6 +167,7 @@ angular.module('FindecoUserService', [])
             userInfo.email = data.userSettings.email;
             userInfo.wantsMailNotification = data.userSettings.wantsMailNotification;
             userInfo.helpEnabled = data.userSettings.helpEnabled;
+            $rootScope.helpIsActive = userInfo.helpEnabled;
             userInfo.preferredLanguage = data.userSettings.preferredLanguage;
             if (userInfo.preferredLanguage) {
                 $rootScope.language = userInfo.preferredLanguage;
@@ -190,6 +192,7 @@ angular.module('FindecoUserService', [])
                     data.userSettings.email = userInfo.email;
                     data.userSettings.wantsMailNotification = userInfo.wantsMailNotification;
                     data.userSettings.helpEnabled = userInfo.helpEnabled;
+                    $rootScope.helpIsActive = userInfo.helpEnabled;
                     data.userSettings.preferredLanguage = userInfo.preferredLanguage;
                     if (userInfo.preferredLanguage) {
                         $rootScope.language = userInfo.preferredLanguage;
