@@ -486,7 +486,9 @@ describe('FindecoUserService', function() {
                     displayName: 'mightyHugo',
                     description: 'beschreibung',
                     email: 'hugo@abc.de',
-                    wantsMailNotification: true})
+                    wantsMailNotification: true,
+                    helpEnabled:false
+                })
                     .respond(storeSettingsResponse);
                 userService.storeSettings();
                 httpBackend.flush();
