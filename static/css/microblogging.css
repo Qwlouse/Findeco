@@ -67,7 +67,8 @@ span.microblogText {
 }
 
 .location-icon {
-    background: url("../images/location.png") no-repeat;
+    background: url("../images/location.svg") no-repeat;
+    background-size: 16px;
     height: 12px;
     width: 8px;
     margin: 2px 3px 0 3px;
