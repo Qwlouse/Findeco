@@ -1,15 +1,8 @@
 <div class="row">
     <ul>
-        <li><a href="/index">
-            <img ng-show="navigation.entries"
-                 src="/static/images/home.png"
-                 alt="Home"
-                 onmouseover="this.src='/static/images/home_hover.png';"
-                 onmouseout="this.src='/static/images/home.png';"/>
-            <img ng-show="navigation.entries.length == 0"
-                 src="/static/images/home_hover.png"
-                 alt="Home"/>
-        </a></li>
+        <li>
+            <a href="/index" class="home-icon" ng-class="{'home-active': navigation.entries.length == 0}"></a>
+        </li>
 
         <li ng-repeat="nav in navigation.entries">
             <a href="{{ nav.path }}">{{ nav.name }}</a>
