@@ -76,6 +76,17 @@
 .follow-star {
     background: url('../images/stars.svg') no-repeat 0 0;
     background-size: 28px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.spam-mark {
+    background: url('../images/spams.svg') no-repeat 0 0;
+    background-size: 28px;
+    width: 14px;
+    height: 14px;
     cursor: pointer;
     display: inline-block;
 }

@@ -51,7 +51,6 @@ findecoApp
                 });
                 scope.$watch('width', function (newWidth) {
                     if (newWidth) {
-                        console.log(element);
                         element.width(newWidth + 'px');
                     }
                     element.css({'background-size': Math.max(scope.width, scope.height) * 2 + 'px'});
@@ -109,9 +108,7 @@ findecoApp
                 height  : '@'
             },
             replace : true,
-            template: '<a class="spam-mark">' +
-                '<img ng-src="/static/images/spam{{entity.isFlagging}}.png" alt="SpamFlag" title="Als Spam markieren" width="{{width}}" height="{{height}}"/>' +
-                '</a>',
+            template: '<a class="spam-mark" ng-mouseenter="startHover()" ng-mouseleave="stopHover()"></a>',
             link    : function (scope, element, attrs) {
                 if (scope.entity.isFlagging != 0 &&
                     scope.entity.isFlagging != 1 &&
@@ -122,6 +119,40 @@ findecoApp
                 scope.$watch('showIf', function (value) {
                     link.css('display', scope.showIf ? '' : 'none');
                 });
+                scope.$watch('width', function (newWidth) {
+                    if (newWidth) {
+                        element.width(newWidth + 'px');
+                    }
+                    element.css({'background-size': Math.max(scope.width, scope.height) * 2 + 'px'});
+                });
+                scope.$watch('height', function (newHeight) {
+                    if (newHeight) {
+                        element.height(newHeight + 'px');
+                    }
+                    element.css({'background-size': Math.max(scope.width, scope.height) * 2 + 'px'});
+                });
+                scope.setBackgroundPosition = function () {
+                    var x = 0;
+                    if (scope.hover) {
+                        x = -Math.max(scope.width, scope.height);
+                    }
+                    var y = 0;
+                    if (scope.entity.isFlagging) {
+                        y = -Math.max(scope.width, scope.height);
+                    }
+                    element.css({'background-position': x + 'px ' + y + 'px'});
+                };
+                scope.$watch('entity.isFollowing', function () {
+                    scope.setBackgroundPosition();
+                });
+                scope.startHover = function () {
+                    scope.hover = true;
+                    scope.setBackgroundPosition();
+                };
+                scope.stopHover = function () {
+                    scope.hover = false;
+                    scope.setBackgroundPosition();
+                };
                 link.bind('click', toggle);
                 function toggle() {
                     var markType = "spam";
