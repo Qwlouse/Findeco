@@ -79,6 +79,7 @@
                 <div ng-if="serverError" class="help-error">
                     <div data-i18n="{{serverError.errorID}}"></div>
                     <div data-i18n="{{serverError.additionalInfo}}"></div>
+                </div>
                 <input ng-show="!attemptedRegister || !allFieldsFilledCorrectly"
                        type="submit" value="{{'_accountRegistrationBtn_'|i18n}}">
 
