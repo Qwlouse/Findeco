@@ -81,6 +81,12 @@ angular.module('FindecoNavigatorService', [])
             } else if (path.match(userPath)) {
                 location.type = "user";
                 location.userName = location.parts[1];
+            } else if (location.parts[0] == "activate") {
+                location.type = "activate";
+            } else if (location.parts[0] == "confirm") {
+                location.type = "confirm";
+            } else if (location.parts[0] == "confirm_email") {
+                location.type = "confirm_email";
             }  else {
                 location.type = "other";
             }
