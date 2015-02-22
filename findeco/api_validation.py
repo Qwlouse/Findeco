@@ -221,7 +221,7 @@ ERROR_LIST = [
     "_PermissionDenied",
     "_DisabledAccount",
     "_UsernameNotAvailable",
-    "_EmailAddressNotAvailiable",
+    "_EmailAddressNotAvailable",
     "_InvalidUsername",
     "_InvalidLogin",
     "_InvalidEmailAddress",

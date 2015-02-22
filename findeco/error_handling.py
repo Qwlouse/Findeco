@@ -66,8 +66,8 @@ NotAuthenticated = functools.partial(ViewError, '_NotAuthenticated')
 PermissionDenied = functools.partial(ViewError, '_PermissionDenied')
 DisabledAccount = functools.partial(ViewError, '_DisabledAccount')
 UsernameNotAvailable = functools.partial(ViewError, '_UsernameNotAvailable')
-EmailAddressNotAvailiable = functools.partial(ViewError,
-                                              '_EmailAddressNotAvailiable')
+EmailAddressNotAvailable = functools.partial(ViewError,
+                                              '_EmailAddressNotAvailable')
 InvalidUsername = functools.partial(ViewError, '_InvalidUsername')
 InvalidLogin = functools.partial(ViewError, '_InvalidLogin')
 InvalidEmailAddress = functools.partial(ViewError, '_InvalidEmailAddress')
