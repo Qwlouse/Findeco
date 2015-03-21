@@ -65,36 +65,39 @@ class Migration(DataMigration):
             return path
 
     def post_render(self, post):
-        user_dict = {
-            'u' + str(i): u'<a href="/user/{0}">@{0}</a>'.format(u.username)
-            for i, u in enumerate(post.mentions.order_by('id'))
-        }
-        node_dict = {
-            'n' + str(i): u'<a href="/{}">{}</a>'.format(self.node_get_a_path(n), n.title)
-            for i, n in enumerate(post.node_references.order_by('id'))
-        }
-        print(node_dict)
-        format_dict = collections.defaultdict(warn_then_missing_string)
-        format_dict.update(user_dict)
-        format_dict.update(node_dict)
-        # escape html
-        text = escape(post.text_template)
-        # insert references and mentions
-        text = text.format(**format_dict)
-        # replace #hashtags by links to search
-        split_text = tag_pattern.split(text)
-        for i in range(1, len(split_text), 2):
-            tagname = split_text[i]
-            split_text[i] = u'<a href="/search/{0}">#{0}</a>'.format(tagname)
-        text = "".join(split_text)
-        # replace external links
-        split_text = url_pattern.split(text)
-        for i in range(1, len(split_text), 2):
-            link = split_text[i]
-            split_text[i] = u'<a href="{0}">{0}</a>'.format(link)
-        text = "".join(split_text)
+        try:
+            user_dict = {
+                'u' + str(i): u'<a href="/user/{0}">@{0}</a>'.format(u.username)
+                for i, u in enumerate(post.mentions.order_by('id'))
+            }
+            node_dict = {
+                'n' + str(i): u'<a href="/{}">{}</a>'.format(self.node_get_a_path(n), n.title)
+                for i, n in enumerate(post.node_references.order_by('id'))
+            }
+            print(node_dict)
+            format_dict = collections.defaultdict(warn_then_missing_string)
+            format_dict.update(user_dict)
+            format_dict.update(node_dict)
+            # escape html
+            text = escape(post.text_template)
+            # insert references and mentions
+            text = text.format(**format_dict)
+            # replace #hashtags by links to search
+            split_text = tag_pattern.split(text)
+            for i in range(1, len(split_text), 2):
+                tagname = split_text[i]
+                split_text[i] = u'<a href="/search/{0}">#{0}</a>'.format(tagname)
+            text = "".join(split_text)
+            # replace external links
+            split_text = url_pattern.split(text)
+            for i in range(1, len(split_text), 2):
+                link = split_text[i]
+                split_text[i] = u'<a href="{0}">{0}</a>'.format(link)
+            text = "".join(split_text)
 
-        post.text_cache = text
+            post.text_cache = text
+        except KeyError:
+            post.text_cache = "Post had wrong format."
         post.save()
 
     def get_location_and_references(self, candidates, references):
