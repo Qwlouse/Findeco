@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+###############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+###############################################################################
 #
-################################################################################
+###############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from microblogging.factory import create_post
@@ -66,7 +66,7 @@ class ToolsTest(TestCase):
                                              'verfassungswiedriger text')
         self.slot2.append_child(self.derivate)
         self.source.add_derivate(self.derivate, arg_type='con',
-                                 title="zu schwach", text="muss fieser werden",
+                                 title="zuSchwach", text="muss fieser werden",
                                  authors=[self.udo])
 
         self.source_path = 'verfassungswiedrig.1'
@@ -85,10 +85,10 @@ class ToolsTest(TestCase):
         self.assertRaises(IllegalPath, get_node_for_path, self.path)
 
     def test_delete_node_removes_votes(self):
-        self.assertEqual(self.udo.vote_set.count(), 1)
+        self.assertEqual(self.udo.vote_set.count(), 2)
         node = get_node_for_path(self.path)
         delete_node(node)
-        self.assertEqual(self.udo.vote_set.count(), 0)
+        self.assertEqual(self.udo.vote_set.count(), 1)
 
     def test_delete_node_removes_spam_flags(self):
         self.assertEqual(self.horst.spamflag_set.count(), 1)
@@ -141,10 +141,10 @@ class ToolsTest(TestCase):
         self.assertEqual(Argument.objects.filter(title='no').count(), 0)
 
     def test_delete_node_on_derivate_removes_derivation_argument(self):
-        self.assertEqual(Argument.objects.filter(title='zu schwach').count(), 1)
+        self.assertEqual(Argument.objects.filter(title='zuSchwach').count(), 1)
         node = get_node_for_path(self.derivate_path)
         delete_node(node)
-        self.assertEqual(Argument.objects.filter(title='zu schwach').count(), 0)
+        self.assertEqual(Argument.objects.filter(title='zuSchwach').count(), 0)
 
     def test_delete_node_removes_path_cache_entry(self):
         self.assertEqual(PathCache.objects.filter(path=self.path).count(), 1)

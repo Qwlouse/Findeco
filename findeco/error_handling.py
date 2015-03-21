@@ -66,8 +66,8 @@ NotAuthenticated = functools.partial(ViewError, '_NotAuthenticated')
 PermissionDenied = functools.partial(ViewError, '_PermissionDenied')
 DisabledAccount = functools.partial(ViewError, '_DisabledAccount')
 UsernameNotAvailable = functools.partial(ViewError, '_UsernameNotAvailable')
-EmailAddressNotAvailiable = functools.partial(ViewError,
-                                              '_EmailAddressNotAvailiable')
+EmailAddressNotAvailable = functools.partial(ViewError,
+                                              '_EmailAddressNotAvailable')
 InvalidUsername = functools.partial(ViewError, '_InvalidUsername')
 InvalidLogin = functools.partial(ViewError, '_InvalidLogin')
 InvalidEmailAddress = functools.partial(ViewError, '_InvalidEmailAddress')
@@ -76,6 +76,7 @@ InvalidRecoveryKey = functools.partial(ViewError, '_InvalidRecoveryKey')
 InvalidURL = functools.partial(ViewError, '_InvalidURL')
 InvalidMicrobloggingOptions = functools.partial(ViewError,
                                                 '_InvalidMircobloggingOptions')
+InvalidShortTitle = functools.partial(ViewError, '_InvalidShortTitle')
 
 
 ################### ErrorHandling Decorator ####################################
@@ -90,11 +91,11 @@ def ViewErrorHandling(f):
     def wrapped(*args, **kwargs):
         try:
             return f(*args, **kwargs)
-        except ViewError, e:
+        except ViewError as e:
             return json_error_response(e.identifier, *e.additional_info)
-        except InvalidWikiStructure, e:
+        except InvalidWikiStructure as e:
             return json_error_response('_InvalidWikiStructure', e.args[0])
-        except SMTPException, e:
+        except SMTPException as e:
             return json_error_response('_ServerError', 'SMTPError', e.args[0])
 
     return wrapped

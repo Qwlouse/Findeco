@@ -22,18 +22,28 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.                             *
  ****************************************************************************************/
 
-div.graph {
+#graph {
     overflow: visible;
-    position: relative;
+}
+
+#graph svg {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
 }
 
 svg .link {
-    stroke: #6d6d6d;
+    stroke: #3D3D3D;
     stroke-width: 2px;
 }
 
 svg .linkHead {
-    fill: #6d6d6d;
+    fill: #3D3D3D;
+}
+
+svg .nodeBackgroundCircle {
+    transition: fill 0.5s;
+    -webkit-transition: fill 0.5s;
 }
 
 svg .active .nodeBackgroundCircle {
@@ -42,6 +52,10 @@ svg .active .nodeBackgroundCircle {
 
 svg .inactive .nodeBackgroundCircle {
     fill: #DDD;
+}
+
+svg .compared-to .nodeBackgroundCircle {
+    fill: #8E0700;
 }
 
 svg .inactive .nodeBackgroundCircle.spamCandidate {
@@ -54,10 +68,20 @@ svg .inactive .nodeBackgroundCircle.spamNode {
 
 
 svg .nodeShadow {
-    fill: #999;
+    fill: #4B505E;
+}
+
+svg .nodeLabel {
+    transition: fill 0.5s;
+    -webkit-transition: fill 0.5s;
 }
 
 svg .inactive .nodeLabel {
+    fill: #e07b01;
+    font-weight: bold;
+}
+
+svg .compared-to .nodeLabel {
     fill: #e07b01;
     font-weight: bold;
 }
@@ -79,11 +103,11 @@ svg .nodeGroup {
 }
 
 div #tooltip {
-    padding: 5px;
+    padding: 1em;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    background: rgba(255, 255, 255, 1);
+    background: rgba(33, 33, 33, 0.85);
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
     width: 20em;
@@ -165,5 +189,17 @@ div #tooltip {
 }
 
 .inactive .pieChartPart.unfollow {
+    fill: #555555;
+}
+
+.compared-to .pieChartPart.newFollow {
+    fill: #EEEEEE;
+}
+
+.compared-to .pieChartPart.follow {
+    fill: #BBBBBB;
+}
+
+.compared-to .pieChartPart.unfollow {
     fill: #555555;
 }

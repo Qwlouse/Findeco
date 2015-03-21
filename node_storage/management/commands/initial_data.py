@@ -48,7 +48,12 @@ else:
 @atomic
 def create_initial_data():
     root = get_root_node()
-    decided = create_user("Beschlossenes Programm")
+    decided = create_user("Beschluss_Programm",
+                          description="Diese Vorschläge wurden in ihrer urspünglichen "
+                                      "Fassung schon von einem Parteitag beschlossen. "
+                                      "Weiterentwicklungen dieser Vorschläge sind "
+                                      "natürlich kein beschlossenes Programm.",
+                          groups=['texters', 'voters', 'bloggers'])
 
     with open(project_path("initial_data/root.txt"), 'r') as f:
         lines = f.readlines()

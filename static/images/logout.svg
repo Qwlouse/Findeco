@@ -9,11 +9,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="15.12255"
-   height="14.579401"
+   width="30"
+   height="15"
    id="svg3820"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="logout.svg"
    inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout.png"
    inkscape:export-xdpi="148.78491"
@@ -28,18 +28,18 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.313709"
-     inkscape:cx="4.4503412"
-     inkscape:cy="8.6960547"
+     inkscape:cx="-24.995355"
+     inkscape:cy="3.7784551"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3758"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1863"
-     inkscape:window-height="1176"
-     inkscape:window-x="57"
+     inkscape:window-width="1871"
+     inkscape:window-height="1056"
+     inkscape:window-x="49"
      inkscape:window-y="24"
      inkscape:window-maximized="1" />
   <metadata
@@ -50,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -58,43 +58,51 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-272.43745,-525.06152)">
-    <path
-       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ecb40d;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-       d="m 0,0 0,12.25 0,0.03125 6.921875,1.8125 0,-11.96875 L 2.34375,1 8.875,1 l 0,4.9375 1,0 0,-5.9375 z m 8.875,8.28125 0,3.46875 -1.96875,0 0,1 2.96875,0 0,-4.46875 z"
-       transform="translate(272.43745,525.06152)"
-       id="rect6009"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccccccccccc"
-       inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout.png"
-       inkscape:export-xdpi="153.87"
-       inkscape:export-ydpi="153.87" />
-    <path
-       style="fill:#ecb40d;stroke:none;display:inline"
-       d="m 280.0534,531.47268 4.7767,0 0,-1.43115 2.2299,2.07787 -2.2299,2.07787 0,-1.33051 -4.7767,0 z"
-       id="path6014"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccc"
-       inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout.png"
-       inkscape:export-xdpi="153.87"
-       inkscape:export-ydpi="153.87" />
-    <path
-       inkscape:export-ydpi="153.87"
-       inkscape:export-xdpi="153.87"
-       inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout_hover.png"
-       sodipodi:nodetypes="cccccccccccccccccc"
-       inkscape:connector-curvature="0"
-       id="path3776"
-       d="m 288.70091,525.06152 0,12.25 0,0.0312 6.92187,1.8125 0,-11.96875 -4.57812,-1.125 6.53125,0 0,4.9375 1,0 0,-5.9375 z m 8.875,8.28125 0,3.46875 -1.96875,0 0,1 2.96875,0 0,-4.46875 z"
-       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#2d7cc4;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans" />
-    <path
-       inkscape:export-ydpi="153.87"
-       inkscape:export-xdpi="153.87"
-       inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout_hover.png"
-       sodipodi:nodetypes="cccccccc"
-       inkscape:connector-curvature="0"
-       id="path3778"
-       d="m 296.31686,531.47268 4.7767,0 0,-1.43115 2.2299,2.07787 -2.2299,2.07787 0,-1.33051 -4.7767,0 z"
-       style="fill:#2d7cc4;stroke:none;display:inline;fill-opacity:1" />
+     transform="translate(-272.43745,-524.15527)">
+    <g
+       id="g3754"
+       transform="translate(0,-0.87499996)">
+      <path
+         inkscape:export-ydpi="153.87"
+         inkscape:export-xdpi="153.87"
+         inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout.png"
+         sodipodi:nodetypes="cccccccccccccccccc"
+         inkscape:connector-curvature="0"
+         id="rect6009"
+         transform="translate(272.43745,525.06152)"
+         d="m 0,0 0,12.25 0,0.03125 6.921875,1.8125 0,-11.96875 L 2.34375,1 8.875,1 l 0,4.9375 1,0 0,-5.9375 z m 8.875,8.28125 0,3.46875 -1.96875,0 0,1 2.96875,0 0,-4.46875 z"
+         style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff9500;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans" />
+      <path
+         inkscape:export-ydpi="153.87"
+         inkscape:export-xdpi="153.87"
+         inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout.png"
+         sodipodi:nodetypes="cccccccc"
+         inkscape:connector-curvature="0"
+         id="path6014"
+         d="m 280.0534,531.47268 4.7767,0 0,-1.43115 2.2299,2.07787 -2.2299,2.07787 0,-1.33051 -4.7767,0 z"
+         style="fill:#ff9500;fill-opacity:1;stroke:none;display:inline" />
+    </g>
+    <g
+       id="g3758"
+       transform="translate(-1.26346,-0.87499996)">
+      <path
+         style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#589cda;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+         d="m 288.70091,525.06152 0,12.25 0,0.0312 6.92187,1.8125 0,-11.96875 -4.57812,-1.125 6.53125,0 0,4.9375 1,0 0,-5.9375 z m 8.875,8.28125 0,3.46875 -1.96875,0 0,1 2.96875,0 0,-4.46875 z"
+         id="path3776"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccccccccccc"
+         inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout_hover.png"
+         inkscape:export-xdpi="153.87"
+         inkscape:export-ydpi="153.87" />
+      <path
+         style="fill:#589cda;fill-opacity:1;stroke:none;display:inline"
+         d="m 296.31686,531.47268 4.7767,0 0,-1.43115 2.2299,2.07787 -2.2299,2.07787 0,-1.33051 -4.7767,0 z"
+         id="path3778"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccc"
+         inkscape:export-filename="/home/greff/Programming/Findeco/static/images/logout_hover.png"
+         inkscape:export-xdpi="153.87"
+         inkscape:export-ydpi="153.87" />
+    </g>
   </g>
 </svg>

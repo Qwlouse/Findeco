@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
 #
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 import json
 import re
@@ -142,7 +142,6 @@ def send_notification_to(subject, post, mailing_list):
                          body,
                          settings.EMAIL_HOST_USER,
                          to=[], bcc=mailing_list)
-    print('sending to ', mailing_list)
     email.send(fail_silently=True)
 
 
@@ -160,10 +159,12 @@ def notify_derivate(node, post):
 
 
 def notify_new_argument(node, post):
-    follows_for_notifying = node.votes.filter(user__profile__wants_mail_notification=True).all()
+    follows_for_notifying = node.votes.filter(
+        user__profile__wants_mail_notification=True).all()
     mailing_list = [vote.user.email for vote in follows_for_notifying]
     send_new_argument_notification(post, mailing_list)
 
 
 def convert_local_links_to_absolute(html):
-    return html.replace(' href="/', ' href="' + settings.FINDECO_BASE_URL + '/')
+    return html.replace(' href="/',
+                        ' href="' + settings.FINDECO_BASE_URL + '/')

@@ -213,7 +213,9 @@ class ViewTest(TestCase):
         self.assertTrue(self.client.login(username="hugo", password="oguh"))
         response = self.client.post(
             reverse('store_microblogging', kwargs={'path': 'foo.1'}),
-            {'microblogText': 'test stuff on http://testserver/foo.1/ and reference /foo.1 and also @hugo'})
+            json.dumps(
+                {'microblogText': 'test stuff on http://testserver/foo.1/ and reference /foo.1 and also @hugo'}
+            ), content_type="application/json")
         res = json.loads(response.content)
         self.assertIn("storeMicrobloggingResponse", res)
 

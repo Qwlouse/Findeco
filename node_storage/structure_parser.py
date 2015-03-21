@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Johannes Merkert <jonny@pinae.net>,
 # Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
@@ -19,89 +19,21 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 import re
-import unicodedata
+
 from path_helpers import get_good_path_for_structure_node
 from factory import create_structureNode, create_slot, create_vote
 from node_storage import Node
-
-h1_start = re.compile(r"^\s*=(?P<title>[^=]+)=*[ \t]*")
-general_h = re.compile(r"^\s*(={2,6}(?P<title>[^=]+)=*)\s*",
-                       flags=re.MULTILINE)
-invalid_symbols = re.compile(r"[^\w\-_\s]+")
-
-
-def strip_accents(s):
-    return ''.join(
-        (c for c in unicodedata.normalize('NFD', s) if unicodedata.category(
-            c) != 'Mn'))
-
-
-REPLACEMENTS = {
-    ord('ä'): 'ae',
-    ord('ö'): 'oe',
-    ord('ü'): 'ue',
-    ord('ß'): 'ss',
-    ord('Ä'): 'Ae',
-    ord('Ö'): 'Oe',
-    ord('Ü'): 'Ue',
-    ord('ẞ'): 'SS'
-}
-
-
-def substitute_umlauts(s):
-    return s.translate(REPLACEMENTS)
-
-
-def remove_unallowed_chars(s):
-    s = invalid_symbols.sub('', s)
-    return s
-
-
-def remove_and_compress_whitespaces(s):
-    return '_'.join(s.split()).strip('_')
-
-
-def turn_into_valid_short_title(title, short_title_set=(), max_length=20):
-    st = substitute_umlauts(title)
-    st = strip_accents(st)
-    st = remove_unallowed_chars(st)
-    st = remove_and_compress_whitespaces(st)
-    st = st.lstrip('1234567890-_')
-    st = st[:min(len(st), max_length)]
-    if not st:
-        st = 'sub'
-    if st not in short_title_set:
-        return st
-    else:
-        i = 0
-        while True:
-            i += 1
-            suffix = str(i)
-            new_st = st[:min(max_length - len(suffix), len(st))] + suffix
-            if new_st not in short_title_set:
-                return new_st
-
-
-def getHeadingMatcher(level=0):
-    if 0 < level < 7:
-        s = "%d" % level
-    elif level == 0:
-        s = "1, 6"
-    else:
-        raise ValueError(
-            "level must be between 1 and 6 or 0, but was %d." % level)
-    pattern = r"^\s*={%s}(?P<title>[^=§]+)" \
-              r"(?:§\s*(?P<short_title>[^=§\s][^=§]*))?=*\s*$"
-    return re.compile(pattern % s, flags=re.MULTILINE)
+from validation import (h1_start, general_heading, get_heading_matcher,
+                        turn_into_valid_short_title)
 
 
 def validate_structure_schema(structure):
@@ -137,7 +69,7 @@ class InvalidWikiStructure(Exception):
 
 
 def parse(s, short_title):
-    #make sure we start with a heading 1
+    # make sure we start with a heading 1
     m = h1_start.match(s)
     if m:
         title = m.groups("title")[0]
@@ -156,7 +88,7 @@ def parse(s, short_title):
     }
 
     # do we need a StructureNode or will a TextNode do?
-    if not general_h.search(s):
+    if not general_heading.search(s):
         # TextNode
         node['text'] = s.strip()
         return node
@@ -165,7 +97,7 @@ def parse(s, short_title):
     # determine used header depth:
     level = 0
     for i in range(2, 7):
-        m = getHeadingMatcher(i)
+        m = get_heading_matcher(i)
         if m.search(s):
             level = i
             break
@@ -179,17 +111,8 @@ def parse(s, short_title):
     # leading text is used to set text of structure node
     node['text'] = split_doc[0].strip()
     # assert that no headings are in that text
-    if general_h.search(node['text']):
+    if general_heading.search(node['text']):
         raise InvalidWikiStructure("Cannot have headers in Node text")
-        #Exception Textvorschlag: Du hast eine kleine Überschrift in den
-        # Einleitungsabsatz geschrieben. Findeco kann nur Überschriften in
-        # absteigender Reihenfolge darstellen. Eine kleine Überschrift vor der
-        # ersten nächstgrößeren Überschrift ergibt keinen Sinn und kann nicht
-        # verarbeitet werden. Bitte ändere deinen Text so, dass die
-        # Überschriften in absteigender Größe vorkommen.\n\nBeispiel:\n=
-        # einzigartige Gesamtüberschrift =\nEinleitungstext\n== Überschrift 2
-        # ==\n=== Überschrift 3 ===\nEtwas Text.\n==== Überschrift 4 ====\n
-        # Weiterer Text.\n== Überschrift 2 nochmal ==\nText auf Ebene zwei.
 
     # iterate the headings, short_titles, and corresponding texts:
     short_title_set = set()
@@ -220,7 +143,7 @@ def split_title_from_text(text):
 
 
 def get_title_from_text(text):
-    #make sure we start with a heading 1
+    # make sure we start with a heading 1
     m = h1_start.match(text)
     if m:
         title = m.groups("title")[0]
@@ -286,14 +209,16 @@ def create_derivate_from_structure_node_schema(schema, parent_slot, author,
         create_vote(author, [structure])
         # append node
         parent_slot.append_child(structure)
-        arg = origin.add_derivate(structure, arg_type=arg_type, title=arg_title,
-                            text=arg_text, authors=[author])
+        arg = origin.add_derivate(structure, arg_type=arg_type,
+                                  title=arg_title, text=arg_text,
+                                  authors=[author])
 
         # auto-follow argument
-        create_vote(author, [arg])
+        #create_vote(author, [arg])
         # data for microblogging message
-        new_path_couples.append((get_good_path_for_structure_node(origin, parent_slot),
-                                 get_good_path_for_structure_node(structure, parent_slot)))
+        new_path_couples.append(
+            (get_good_path_for_structure_node(origin, parent_slot),
+             get_good_path_for_structure_node(structure, parent_slot)))
 
     for child in schema['children']:
         if clone_found:

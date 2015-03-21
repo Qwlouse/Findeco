@@ -88,6 +88,8 @@ class UserProfile(models.Model):
     api_key = models.CharField(max_length=16, default=lambda: generate_key(16))
 
     wants_mail_notification = models.BooleanField(default=False)
+    help_enabled = models.BooleanField(default=True)
+    preferred_language = models.CharField(max_length=20, default="")
 
     # Override the save method to prevent integrity errors
     # These happen because both the post_save signal and the inlined admin

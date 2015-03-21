@@ -1,10 +1,9 @@
-<div id="leftColumn"  class="contentBox" ng-controller="FindecoSyschangeCtrl">
-    <h3 class="argumentHeading" data-i18n="_SystemNews_"></h3>
-    <h5 class="argumentHeading" data-i18n="_externalLink_"></h5>
+<div id="leftColumn"  class="shadowed" ng-controller="FindecoSyschangeCtrl">
+    <h3 class="argumentTitle" data-i18n="_SystemNews_"></h3>
+    <h5 class="argumentTitle" data-i18n="_externalLink_"></h5>
 
     <ul class="newsList">
         <li ng-repeat="news in newsList">
-           
             <a href="{{ news.url }}">{{news.title}}</a>
         </li>
     </ul>

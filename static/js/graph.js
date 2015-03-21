@@ -109,12 +109,12 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
             //scope.nodes = GraphData.nodes;
 
             var svg = d3.select(element[0].children[0])
-                .attr('height', GraphData.svg_height)
-                .attr('width', GraphData.svg_width);
+                .attr('height', GraphData.svg_height);
+//                .attr('width', GraphData.svg_width);
 
             var tooltip = d3.select(element[0].children[1]);
 
-            scope.$on('updateGraphEvent', function () {
+            function updateGraph() {
                 // start the force layout
                 var force = d3.layout.force()
                     .charge(-300)
@@ -133,86 +133,7 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                     .attr("marker-end", "url(#arrowHead)");
 
                 link.exit().remove();
-                // add a svg:group for all nodes
-                var node = svg.select('#nodes').selectAll(".nodeGroup")
-                    .data(GraphData.nodes);
 
-                var nodegroup = node.enter().append("g")
-                    .attr("class", function (d) {
-                        if (d.path == Navigator.nodePath) {
-                            return "nodeGroup active";
-                        }
-                        else return "nodeGroup inactive";
-                    })
-                    .call(force.drag)
-                    .on("mouseover", function(d){
-                        tooltip.html("<b>" + d.title + "</b>" +
-                        	"<br/>Follows Gesamt: <span id='followsColorBox'> " + d.follows + "</span>" +
-                            "<br/>direkt: <span id='directFollowColorBox'>" + d.newFollows + "</span>"+
-                            "<br/>vererbt: <span id='transitiveFollowColorBox'>" + (d.follows - d.newFollows) + "</span>"+
-                            "<br/>Entfolgungen: <span id='unfollowColorBox'>" + d.unFollows + "</span>");
-                        return tooltip.style("visibility", "visible");
-                    })
-                    .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
-                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
-
-                nodegroup.append("circle")  // shadow
-                    .attr("r", node_radius)
-                    .attr("class", "nodeShadow")
-                    .attr("filter", "url(#blur)")
-                    .attr('transform', "translate(2, 2)");
-
-                var diff_button_group = nodegroup.append("svg:a")  // diff-button
-                    .attr("xlink:href", function (d) {return '/diff/' + scope.path + '?compare=' + d.path; })
-                    .append("g")
-                    .attr('transform', "translate(-" + (node_radius-3) + ", -" + (node_radius-3) + ")");
-
-                diff_button_group
-                    .append("circle")
-                    .attr("r", 13)
-                    .attr("class", "diffButton")
-                    .on('click', function() {alert('ha!');});
-
-                diff_button_group
-                    .append("text")
-                    .attr("text-anchor", "middle")
-                    .attr("class", "diffButtonText")
-                    .text('diff');
-
-                var g = nodegroup.append("g").append("svg:a")  // Node Center Group
-                  .attr("xlink:href", function (d) {return '/' + d.path; });
-
-                g.append("circle")  // Center Circle
-                    .attr("class", function(d) {
-                        if (d.spamFlags == 1 || d.follows == 0) {
-                            return "nodeBackgroundCircle spamCandidate";
-                        } else if (d.spamFlags >= 2 ) {
-                            return "nodeBackgroundCircle spamNode";
-                        } else {
-                            return "nodeBackgroundCircle";
-                        }
-
-                    })
-                    .attr("r", node_radius);
-
-                g.append("text")  // Node number
-                    .attr("class", "nodeLabel")
-                    .attr("dy", ".35em")
-                    .attr("text-anchor", "middle")
-                    .text(function(d) {           // display only index as text
-                        var s = d.path.split(".");
-                        return s[s.length - 1]; });
-
-                var pieChart = node.selectAll("path")
-                    .data(function(d) {
-                        return pie(d.pieChart);
-                    });
-
-                pieChart.enter().append("svg:path")
-                    .attr("class", function(d, i) {
-                        return "pieChartPart " + pie_chart_classes[i];
-                    })
-                    .each(function(d) { this._current = d; });
 
                 // Animate the pie chart
                 // taken from here: http://bl.ocks.org/mbostock/1346410
@@ -224,10 +145,131 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
                     };
                 }
 
-                pieChart.transition().duration(1000)
-                    .attrTween("d", arcTween);
+                // add a svg:group for all nodes
+                var node = svg.select('#nodes').selectAll(".nodeGroup")
+                    .data(GraphData.nodes, function(d) { return d.path; })
+                    .each(function(node_data) {
+                        var group = d3.select(this);
+                        // update active or not
+                        if (node_data.path == Navigator.nodePath) {
+                            group.attr("class", "nodeGroup active");
+                        }
+                        else if (node_data.path == Navigator.segments.compare) {
+                            group.attr("class", "nodeGroup compared-to");
+                        } else {
+                            group.attr("class", "nodeGroup inactive");
+                        }
+
+                        // update background circle
+                        var c = group.select('.nodeBackgroundCircle');
+                        if (node_data.spamFlags == 1 || node_data.follows == 0) {
+                            c.attr('class', "nodeBackgroundCircle spamCandidate")
+                        } else if (node_data.spamFlags >= 2 ) {
+                            c.attr('class', "nodeBackgroundCircle spamNode")
+                        } else {
+                            c.attr('class', "nodeBackgroundCircle")
+                        }
+
+                        // update Pie Chart
+                        group.selectAll("path")
+                            .data(pie(node_data.pieChart))
+                            .attr("class", function(d, i) {
+                                return "pieChartPart " + pie_chart_classes[i];
+                            })
+                            .transition().duration(1000)
+                            .attrTween("d", arcTween);
+
+                        group.select("a")
+                            .attr("xlink:href", '/diff/' + Navigator.nodePath + '?compare=' + node_data.path);
+                    });
+
+                var nodegroup = node.enter().append("g")
+                    .attr("class", function (d) {
+                        if (d.path == Navigator.nodePath) {
+                            return "nodeGroup active";
+                        }
+                        else if (d.path == Navigator.segments.compare) {
+                            return "nodeGroup compared-to";
+                        } else {
+                            return "nodeGroup inactive";
+                        }
+                    })
+                    .call(force.drag)
+                    .on("mouseover", function(d){
+                        tooltip.html("<b>" + d.title + "</b>" +
+                        	"<br/>Follows Gesamt: <span id='followsColorBox'> " + d.follows + "</span>" +
+                            "<br/>direkt: <span id='directFollowColorBox'>" + d.newFollows + "</span>"+
+                            "<br/>vererbt: <span id='transitiveFollowColorBox'>" + (d.follows - d.newFollows) + "</span>"+
+                            "<br/>Entfolgungen: <span id='unfollowColorBox'>" + d.unFollows + "</span>");
+                        return tooltip.style("visibility", "visible");
+                    })
+                    .on("mousemove", function(d){return tooltip.style("top", ((d.y + node_radius * scale(d.follows) )+ "px")).style("left",((d.x + node_radius * scale(d.follows))+ "px"));})
+                    .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+                    .each(function(node_data) {
+                        var group = d3.select(this);
+                        // ------------  shadow  ---------------
+                        group.append("circle")
+                            .attr("r", node_radius)
+                            .attr("class", "nodeShadow")
+                            .attr("filter", "url(#blur)")
+                            .attr('transform', "translate(2, 2)");
+
+                        // ------------  diff-button  -----------
+                        var diff_button_group = group.append("svg:a")
+                            .attr("xlink:href", '/diff/' + Navigator.nodePath + '?compare=' + node_data.path)
+                            .append("g")
+                            .attr('transform', "translate(-" + (node_radius-3) + ", -" + (node_radius-3) + ")");
+
+                        diff_button_group
+                            .append("circle")
+                            .attr("r", 13)
+                            .attr("class", "diffButton");
+
+                        diff_button_group
+                            .append("text")
+                            .attr("text-anchor", "middle")
+                            .attr("class", "diffButtonText")
+                            .text('diff');
+
+                        // ------------  Node Center  -----------
+                        var g = group.append("g").append("svg:a")
+                          .attr("xlink:href", '/' + node_data.path);
+
+                        var c = g.append("circle").attr("r", node_radius);
+
+                        if (node_data.spamFlags == 1 || node_data.follows == 0) {
+                            c.attr('class', "nodeBackgroundCircle spamCandidate")
+                        } else if (node_data.spamFlags >= 2 ) {
+                            c.attr('class', "nodeBackgroundCircle spamNode")
+                        } else {
+                            c.attr('class', "nodeBackgroundCircle")
+                        }
+
+                        var path_split = node_data.path.split(".");
+                        var node_nr = path_split[path_split.length - 1];
+
+                        // -----------  Node number  -------------
+                        g.append("text")
+                            .attr("class", "nodeLabel")
+                            .attr("dy", ".35em")
+                            .attr("text-anchor", "middle")
+                            .text(node_nr);
+
+
+                        // -----------  Pie Chart  -------------
+                        group.selectAll("path")
+                            .data(pie(node_data.pieChart))
+                            .enter().append("svg:path")
+                            .attr("class", function(d, i) {
+                                return "pieChartPart " + pie_chart_classes[i];
+                            })
+                            .each(function(d) { this._current = d; })
+                            .transition().duration(1000)
+                            .attrTween("d", arcTween);
+                    });
 
                 node.exit().style("opacity", 1).transition().duration(1000).style("opacity", 0).remove();
+
 
                 force.on("tick", function() {
                     var svg_height_new = GraphData.svg_height;
@@ -267,7 +309,9 @@ findecoApp.directive('findecoGraph', function(GraphData, Navigator) {
 
 
                 });
-            });
+            }
+
+            scope.$on('updateGraphEvent', updateGraph);
         }
     }
 });

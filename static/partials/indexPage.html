@@ -1,0 +1,52 @@
+<div class="row" xmlns="http://www.w3.org/1999/html" style="margin-bottom: 2em;"
+     ng-if="fesettings.greetingbox.enabled">
+    <div style="position: relative; left: -50%; float: right; overflow: visible; margin-bottom: 1em;">
+        <div style="position: relative; left: 50%;">
+            <div class="textColumn backgroundBox">
+                <h1 data-i18n="_greetingboxHeading_"></h1>
+                <p>
+                    <span data-i18n="_greetingboxParagraph1Text1_">
+                    </span><a href="http://www.findeco.de/hilfe/vorschlage/"
+                       data-i18n="_greetingboxProposalsHelpLink_">
+                    </a><span data-i18n="_greetingboxParagraph1Text2_">
+                    </span><a href="http://www.findeco.de/hilfe/microblogging/"
+                       data-i18n="_greetingboxMicrobloggingHelpLink_">
+                    </a><span data-i18n="_greetingboxParagraph1Text3_">
+                    </span><a href="http://www.findeco.de/hilfe/argumente/"
+                       data-i18n="_greetingboxArgumentsHelpLink_">
+                    </a><span data-i18n="_greetingboxParagraph1Text4_"></span>
+                </p>
+                <p>
+                    <span data-i18n="_greetingboxParagraph2Text1_">
+                    </span><a href="http://www.findeco.de/hilfe/verortung-von-vorschlagen/"
+                       data-i18n="_greetingboxPlaceHelpLink_">
+                    </a><span data-i18n="_greetingboxParagraph2Text2_"></span>
+                </p>
+                <p>
+                    <span data-i18n="_greetingboxParagraph3Text1_">
+                    </span><em data-i18n="_greetingboxFollowEmphasized_">
+                    </em><span data-i18n="_greetingboxParagraph3Text2_">
+                    </span><a ng-href="/news" data-i18n="_news_">
+                    </a><span data-i18n="_greetingboxParagraph3Text3_">
+                    </span><a ng-href="/microblogging" data-i18n="_microbloggingNews_">
+                    </a><span data-i18n="_greetingboxParagraph3Text4_">
+                    </span><a href="http://www.findeco.de/extern/unser-manifest/"
+                       data-i18n="_greetingboxManifestLink_">
+                    </a><span data-i18n="_greetingboxParagraph3Text5_"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear: both;"></div>
+<div class="row headingBox">
+    <div style="position: relative; left: -50%; float: right; overflow: visible;">
+        <div style="position: relative; left: 50%;">
+            <h1 data-i18n="_argumentNews_">New Arguments</h1>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+<div class="row">
+    <div ng-include="'/static/partials/argumentNews.html'"></div>
+</div>

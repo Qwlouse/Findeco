@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 import json
 import functools
@@ -49,7 +49,8 @@ from findeco.models import EmailActivation
 from .api_validation import USERNAME
 from .api_validation import validate_response
 from .error_handling import *
-from .paths import parse_suffix
+from .paths import parse_suffix, SHORT_TITLE
+from node_storage.models import Node
 
 
 def json_response(data):
@@ -97,7 +98,7 @@ def assert_authentication(request):
 
 
 def assert_active_user(username=None, email=None):
-    assert username or email
+    assert username or email, "No username or email."
     if username:
         users = User.objects.filter(username__iexact=username)
     else:
@@ -119,9 +120,9 @@ def assert_permissions(request, permissions):
             raise PermissionDenied()
 
 
-def assert_post_parameters(request, parameters):
+def assert_request_data_parameters(request_data, parameters):
     for p in parameters:
-        if not p in request.POST:
+        if p not in request_data:
             raise MissingPOSTParameter(p)
 
 
@@ -167,7 +168,9 @@ def create_user_settings(user):
         rsskey=user.profile.api_key,
         email=user.email,
         emailChangeRequested=EmailActivation.objects.filter(user=user).count(),
-        wantsMailNotification=user.profile.wants_mail_notification
+        wantsMailNotification=user.profile.wants_mail_notification,
+        helpEnabled=user.profile.help_enabled,
+        preferredLanguage=user.profile.preferred_language
     )
     return user_settings
 
@@ -259,105 +262,6 @@ def create_graph_data_node_for_structure_node(node, slot=None, path=None,
         originGroup=[o.rstrip('/') for o in origin_group]
     )
     return graph_data_node
-
-
-def store_structure_node(path, wiki_text, author):
-    slot_path = path.rsplit('.', 1)[0]
-    slot = get_node_for_path(slot_path)
-    structure_schema = backend.parse(wiki_text, None)
-    structure_node = backend.create_structure_from_structure_node_schema(
-        structure_schema, slot, author)
-    return structure_node, get_good_path_for_structure_node(structure_node,
-                                                            slot, slot_path)
-
-
-def store_argument(path, arg_text, arg_type, author):
-    node = get_node_for_path(path)
-    title, arg_text = backend.split_title_from_text(arg_text)
-    original_argument = create_argument(node, arg_type, title, arg_text,
-                                        [author])
-    # add auto follow
-    create_vote(author, [original_argument])
-    # copy argument for all derivates
-    for d in node.traverse_derivates():
-        new_argument = create_argument(d, arg_type, title, arg_text, [author])
-        original_argument.add_derivate(new_argument)
-    return path + "." + arg_type + "." + str(node.arguments.count())
-
-
-def build_score_tree(origin, schema):
-    score_tree = {
-        'id': origin.id,
-        'score': 0,
-        'slots': {}
-    }
-    if origin.title == schema['title']:
-        score_tree['score'] += 1
-
-    if origin.text.text == schema['text']:
-        score_tree['score'] += 2
-
-    for slot in origin.children.all():
-        for schema_child in schema['children']:
-            if slot.title == schema_child['short_title']:
-                schema_slot = []
-                score_tree['slots'][schema_child['short_title']] = schema_slot
-                child_scores = []
-                for child in slot.children.all():
-                    child_score_tree = build_score_tree(child, schema_child)
-                    schema_slot.append(child_score_tree)
-                    child_scores.append(child_score_tree['score'])
-                score_tree['score'] += max(child_scores)
-                break
-
-    return score_tree
-
-
-def store_derivate(path, arg_text, arg_type, derivate_wiki_text, author):
-    node = get_node_for_path(path)
-    arg_title, arg_text = backend.split_title_from_text(arg_text)
-
-    slot_path = path.rsplit('.', 1)[0]
-    slot = get_node_for_path(slot_path)
-    structure_schema = backend.parse(derivate_wiki_text, None)
-
-    score_tree = build_score_tree(node, structure_schema)
-
-    new_node, path_couples = backend.create_derivate_from_structure_node_schema(
-        structure_schema, slot, author,  node, score_tree, arg_type, arg_title,
-        arg_text)
-
-    new_path = get_good_path_for_structure_node(new_node, slot, slot_path)
-    return new_path, path_couples
-
-
-def fork_node_and_add_slot(path, user, wiki_text):
-    source_node = assert_node_for_path(path)
-    authors = list(source_node.text.authors.all()) + [user]
-    title = source_node.title
-    # create fork
-    fork = create_structureNode(title,
-                                source_node.text.text,
-                                authors)
-    parent_slot_path = path.rsplit('.', 1)[0]
-    parent_slot = get_node_for_path(parent_slot_path)
-    parent_slot.append_child(fork)
-    fork_path = parent_slot_path + '.' + str(fork.get_index(parent_slot))
-    short_titles = set()
-    for slot in get_ordered_children_for(source_node):
-        fork.append_child(slot)
-        short_titles.add(slot.title)
-    # create new slot plus node
-    schema = parse(wiki_text, 'foo')
-    short_title = turn_into_valid_short_title(schema['title'], short_titles)
-    new_slot = create_slot(short_title)
-    fork.append_child(new_slot)
-    create_structure_from_structure_node_schema(schema, new_slot, user)
-    arg_title = "Abschnitt über '{0}' fehlt.".format(schema['title'])
-    source_node.add_derivate(fork, 'con', arg_title, authors=[user])
-    # auto follow
-    follow_node(fork, user.id)
-    return fork_path
 
 
 def get_is_following(user_id, node):
@@ -452,3 +356,53 @@ def assert_valid_email(email):
         validate_email(email)
     except ValidationError:
         raise InvalidEmailAddress()
+
+
+def generate_proposal_node_with_subsections(slot, proposal, user):
+    proposal_node = create_structureNode(
+        long_title=proposal['heading'], text=proposal['text'], authors=[user])
+    slot.append_child(proposal_node)
+    create_vote(user, [proposal_node])  # auto-follow
+
+    for child in proposal['subsections']:
+        if not re.match(SHORT_TITLE, child['shorttitle']):
+            raise InvalidShortTitle('Invalid short-title: "{}"'.
+                                    format(child['shorttitle']))
+
+        child_slot = create_slot(child['shorttitle'])
+        proposal_node.append_child(child_slot)
+        generate_proposal_node_with_subsections(child_slot, child, user)
+
+    return proposal_node
+
+
+def generate_refinement(origin, proposal, argument, slot, user):
+    derivate = create_structureNode(
+        long_title=proposal['heading'], text=proposal['text'], authors=[user])
+    slot.append_child(derivate)
+
+    create_vote(user, [derivate])  # auto-follow
+
+    for child in proposal['subsections']:
+        if not re.match(SHORT_TITLE, child['shorttitle']):
+            raise InvalidShortTitle('Invalid short-title: "{}"'.
+                                    format(child['shorttitle']))
+        if 'text' in child:
+            if origin.children.filter(title=child['shorttitle']).count() > 0:
+                raise InvalidShortTitle('ShortTitle {} is already taken'.
+                                        format(child['shorttitle']))
+            child_slot = create_slot(child['shorttitle'])
+            derivate.append_child(child_slot)
+            generate_proposal_node_with_subsections(child_slot, child, user)
+        else:
+            child_slots = origin.children.filter(title=child['shorttitle'])
+            if child_slots.count() == 0:
+                raise InvalidShortTitle('Unknown short title {}'.
+                                        format(child['shorttitle']))
+            derivate.append_child(child_slots[0])
+    origin.add_derivate(derivate,
+                        arg_type="con",
+                        title=argument['heading'],
+                        text=argument['text'],
+                        authors=[user])
+    return derivate

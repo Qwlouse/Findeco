@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,17 +18,18 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from django.contrib.auth.models import User, Group
 from findeco.paths import parse_path
 from models import Node, Text, Vote, Argument, SpamFlag
 from node_storage import get_node_for_path, IllegalPath, get_root_node
+from validation import valid_title, general_heading
 
 
 def create_slot(short_title):
@@ -37,7 +38,14 @@ def create_slot(short_title):
     return slot
 
 
-def create_structureNode(long_title, text="", authors=()):
+def create_structureNode(long_title, text="", authors=(), validate=False):
+    if validate and not valid_title.match(long_title):
+        raise ValueError('Invalid title "{}"'.format(long_title))
+    if validate:
+        head = general_heading.match(text)
+        if head is not None:
+            raise ValueError('Headings are not allowed in text: {}'
+                             .format(head.group()))
     structure = Node(node_type=Node.STRUCTURE_NODE, title=long_title)
     structure.save()
     text_obj = Text(node=structure, text=text)
@@ -50,7 +58,7 @@ def create_structureNode(long_title, text="", authors=()):
 
 def create_textNode(long_title, text="", authors=()):
     text_node = Node()
-    text_node.node_type = Node.TEXTNODE
+    text_node.node_type = Node.STRUCTURE_NODE
     text_node.title = long_title
     text_node.save()
     text_obj = Text()

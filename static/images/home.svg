@@ -9,11 +9,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="9.8747396"
-   height="11.5401"
+   width="20"
+   height="12"
    id="svg3812"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="0.91 r"
    sodipodi:docname="home.svg"
    inkscape:export-filename="/home/greff/Programming/Findeco/static/images/home.png"
    inkscape:export-xdpi="127.5983"
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.839192"
-     inkscape:cx="-4.3787156"
+     inkscape:cx="-16.216441"
      inkscape:cy="2.3681312"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -37,11 +37,11 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="898"
-     inkscape:window-height="716"
-     inkscape:window-x="335"
-     inkscape:window-y="275"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1871"
+     inkscape:window-height="1056"
+     inkscape:window-x="49"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata3817">
     <rdf:RDF>
@@ -58,16 +58,16 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-232.20549,-398.0318)">
+     transform="translate(-232.20549,-397.5719)">
     <path
        sodipodi:nodetypes="cccccccccccc"
        inkscape:connector-curvature="0"
        id="path4267"
        d="m 233.0537,409.5719 0,-6.69793 -0.84821,0 4.93737,-4.84217 4.93737,4.84217 -0.75893,0 0,6.69793 -2.77526,0 0,-3.95765 -2.82471,0 0,3.95765 z"
-       style="fill:#ecb40d;fill-opacity:1;stroke:none;display:inline" />
+       style="display:inline;fill:#ecb40d;fill-opacity:1;stroke:none" />
     <path
-       style="fill:#2d7ccd;fill-opacity:1;stroke:none;display:inline"
-       d="m 220.42679,409.5719 0,-6.69793 -0.84821,0 4.93737,-4.84217 4.93737,4.84217 -0.75893,0 0,6.69793 -2.77526,0 0,-3.95765 -2.82471,0 0,3.95765 z"
+       style="display:inline;fill:#2d7ccd;fill-opacity:1;stroke:none"
+       d="m 243.0537,409.5719 0,-6.69793 -0.84821,0 4.93737,-4.84217 4.93737,4.84217 -0.75893,0 0,6.69793 -2.77526,0 0,-3.95765 -2.82471,0 0,3.95765 z"
        id="path3753"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccccccc"

@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,26 +18,27 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 from django.core.urlresolvers import resolve, Resolver404
 from django.test import TestCase
 
-from ..views import load_user_settings, load_index, load_graph_data, load_text
-from ..views import load_user_info, load_argument_index
-from ..views import login, logout, flag_node, unflag_node, store_text
-from ..views import mark_node_follow, mark_node_unfollow, store_settings
+from findeco.views import \
+    (load_user_settings, load_index, load_graph_data, load_text,
+     load_user_info, load_argument_index, login, logout, flag_node,
+     unflag_node, mark_node_follow, mark_node_unfollow, store_settings,
+     store_proposal, store_refinement)
 
 
-########################### Test the API calls #################################
+# ########################## Test the API calls ###############################
 valid_routes = [
-    #### loadGraphData
+    # ### loadGraphData
     dict(url='/.loadGraphData/default/some.1/path.2',
          func=load_graph_data,
          url_name='load_graph_data',
@@ -53,7 +54,7 @@ valid_routes = [
          url_name='load_graph_data',
          kwargs=dict(graph_data_type='withSpam', path='some.1/path.2')),
 
-    #### loadIndex
+    # ### loadIndex
     dict(url='/.loadIndex/some.1/path.2',
          func=load_index,
          url_name='load_index',
@@ -64,7 +65,7 @@ valid_routes = [
          url_name='load_argument_index',
          kwargs=dict(path='some.1/path.2')),
 
-    #### loadText
+    # ### loadText
     dict(url='/.loadText/some.1/path.2',
          func=load_text,
          url_name='load_text',
@@ -90,7 +91,7 @@ valid_routes = [
          url_name='load_text',
          kwargs=dict(path='some.1/path.2.pro.144')),
 
-    #### loadUserInfo
+    # ### loadUserInfo
     dict(url='/.loadUserInfo/somebody',
          func=load_user_info,
          url_name='load_user_info',
@@ -101,7 +102,7 @@ valid_routes = [
          url_name='load_user_info',
          kwargs=dict(name='somebody')),
 
-    #### loadUserSettings
+    # ### loadUserSettings
     dict(url='/.loadUserSettings/',
          func=load_user_settings,
          url_name='load_user_settings',
@@ -112,19 +113,19 @@ valid_routes = [
          url_name='load_user_settings',
          kwargs=dict()),
 
-    #### login
+    # ### login
     dict(url='/.login/',
          func=login,
          url_name='login',
          kwargs=dict()),
 
-    #### logout
+    # ### logout
     dict(url='/.logout/',
          func=logout,
          url_name='logout',
          kwargs=dict()),
 
-    #### markNode
+    # ### markNode
     dict(url='/.markNode/spam/some.1/path.2',
          func=flag_node,
          url_name='flag_node',
@@ -205,62 +206,53 @@ valid_routes = [
          url_name='mark_node_unfollow',
          kwargs=dict(path='some.1/path.2.neut.8437569384')),
 
-    #### storeSettings
+    # ### storeSettings
     dict(url='/.storeSettings/',
          func=store_settings,
          url_name='store_settings',
          kwargs=dict()),
 
-    #### storeText
-    dict(url='/.storeText/some.1/path.2',
-         func=store_text,
-         url_name='store_text',
+    # ### storeProposal
+    dict(url='/.storeProposal/some.1/path.2',
+         func=store_proposal,
+         url_name='store_proposal',
          kwargs=dict(path='some.1/path.2')),
 
-    dict(url='/.storeText/some.1/path.2.neut.5',
-         func=store_text,
-         url_name='store_text',
-         kwargs=dict(path='some.1/path.2.neut.5')),
-
-    dict(url='/.storeText/some.1/path.2.con.995',
-         func=store_text,
-         url_name='store_text',
-         kwargs=dict(path='some.1/path.2.con.995')),
-
-    dict(url='/.storeText/some.1/path.2.pro.1',
-         func=store_text,
-         url_name='store_text',
-         kwargs=dict(path='some.1/path.2.pro.1')),
+    # ### storeRefinement
+    dict(url='/.storeRefinement/some.1/path.2',
+         func=store_refinement,
+         url_name='store_refinement',
+         kwargs=dict(path='some.1/path.2')),
 ]
 
 invalid_routes = [
-    #### loadGraphData
+    # ### loadGraphData
     dict(url='/.loadGraphData/defualt/some.1/path.2'),
     dict(url='/.loadGraphData/fuell/some.1/path.2'),
     dict(url='/.loadGraphData/witSpam/some.1/path.2'),
-    #### loadIndex
+    # ### loadIndex
     dict(url='/.loadIndex/some.1\path.2'),
     dict(url='/.loadIndex/some.1/path.2.proo'),
     dict(url='/.loadIndex/some.1/path.2.newt'),
     dict(url='/.loadIndex/some.1/path.2.bon'),
     dict(url='/.loadIndex/some.1/path.2.ill'),
-    #### loadText
+    # ### loadText
     dict(url='/.loadText/1.some/path.2'),
     dict(url='/.loadText/some.1/2.path'),
     dict(url='/.loadText/some.1/path.2.17'),
     dict(url='/.loadText/some.1/path.2.conn.1/'),
     dict(url='/.loadText/some.1/path.2.pro.name.144'),
-    #### loadUserInfo
+    # ### loadUserInfo
     dict(url='/.loadUserInfo/somebody/some.1/path.2'),
     dict(url='/.loadUserInfo/'),
-    #### loadUserSettings
+    # ### loadUserSettings
     dict(url='/.loadUserSettings/some.1/path.2'),
     dict(url='/.loadUserSettings/username'),
-    #### login
+    # ### login
     dict(url='/.login/some.1/path.2'),
-    #### logout
+    # ### logout
     dict(url='/.logout/some.1/path.2'),
-    #### markNode
+    # ### markNode
     dict(url='/.markNode/spamm/some.1/path.2'),
     dict(url='/.markNode/nospam/some.1/path.2'),
     dict(url='/.markNode/follows/some.1/path.2'),
@@ -277,13 +269,13 @@ invalid_routes = [
     dict(url='/.markNode/notspam/some.1/path.2.8437569384'),
     dict(url='/.markNode/follow/some.1/path.2.neut.name.8437569384'),
     dict(url='/.markNode/unfollow/some.1/path.2.num.8437569384'),
-    #### storeSettings
+    # ### storeSettings
     dict(url='/.storeSettings/some.1/path.2'),
-    #### storeText
+    # ### storeText
     dict(url='/.storeText/some.1/path.2.5'),
     dict(url='/.storeText/bla/some.1/path.2.neut.5'),
     dict(url='/.storeText/some.1/path.2.con.995.77'),
-    dict(url='/.storeText/some.1/path.2.prow.1'),
+    dict(url='/.storeText/some.1/path.2.prow.1')
 ]
 
 

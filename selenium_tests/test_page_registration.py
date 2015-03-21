@@ -55,11 +55,11 @@ class TestFePageRegistration(LiveServerTestCase):
         self.driver.get(self.live_server_url + '/register')
         self.driver.find_element_by_css_selector("input[type=\"submit\"]").click()
         tmp = self.driver.find_element_by_tag_name('body').text
-        self.assertIn('alle Felder ausgef', tmp , "Message fill all fields is missing - when submitting without filled forms")
+        self.assertIn('alle Felder ausgef', tmp, "Message fill all fields is missing - when submitting without filled forms")
         tmp = self.driver.find_element_by_tag_name('body').text
-        self.assertIn('Du musst die Nutzungsbedingungen', tmp , "Message check tos is missing - when submitting without filled forms")
+        self.assertIn('Du musst die Nutzungsbedingungen', tmp, "Message check tos is missing - when submitting without filled forms")
         tmp = self.driver.find_element_by_tag_name('body').text
-        self.assertIn('Du musst die Datenschutzbestimmung', tmp , "Message check DPR is missing - when submitting without filled forms")
+        self.assertIn('Du musst die Datenschutzbestimmung', tmp, "Message check DPR is missing - when submitting without filled forms")
         self.assertNotRegexpMatches(self.driver.find_element_by_css_selector("BODY").text, r"^[\s\S]*_[\s\S]*$")
 
         # non matching password
@@ -74,7 +74,7 @@ class TestFePageRegistration(LiveServerTestCase):
         self.driver.find_element_by_css_selector("input[type=\"submit\"]").click()
         self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert")))
         tmp = self.driver.find_element_by_tag_name('body').text
-        self.assertIn('Die eingegebenen Pass', tmp , "Message - Non matching Passwords missing")
+        self.assertIn('Die eingegebenen Pass', tmp, "Message - Non matching Passwords missing")
         self.assertNotRegexpMatches(self.driver.find_element_by_css_selector("BODY").text, r"^[\s\S]*_[\s\S]*$")
 
         # Invalid mailaddress

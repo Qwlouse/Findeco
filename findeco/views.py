@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
 # Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
@@ -19,13 +19,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+##############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 import random
 
@@ -34,11 +34,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
 from django.core.mail import send_mail
-from django.db.models import Q, Count
+from django.db.models import Count
 from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import ensure_csrf_cookie
-from findeco.models import EmailActivation
 from findeco.project_path import project_path
 from findeco.search_tools import get_search_query
 
@@ -46,21 +45,21 @@ from .view_helpers import *
 from microblogging import search_for_microblogging
 from microblogging.system_messages import (
     post_node_was_flagged_message, post_new_derivate_for_node_message,
-    post_new_derivate_for_node_message_list, post_new_argument_for_node_message,
-    post_node_was_unflagged_message)
-from models import UserProfile, Activation, PasswordRecovery
+    post_new_argument_for_node_message, post_node_was_unflagged_message)
+from findeco.models import (UserProfile, Activation, PasswordRecovery,
+                            EmailActivation)
 import node_storage as backend
 from node_storage.factory import create_user
 
 
-#################### General stuff #############################################
+# ################### General stuff ###########################################
 @ensure_csrf_cookie
-def home(request, path=""):
+def home(request):
     with open(project_path("static/index.html"), 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), content_type='text/html')
 
 
-def jasmine(request, path=""):
+def jasmine(request):
     with open(project_path("static/jasmine.html"), 'r') as index_html_file:
         return HttpResponse(index_html_file.read(), content_type='text/html')
 
@@ -124,7 +123,7 @@ def search(request, search_fields, search_string):
                             'microbloggingResults': microblogging_results}})
 
 
-#################### Node Infos ################################################
+# ################### Node Infos ##############################################
 @ValidPaths("StructureNode")
 @ViewErrorHandling
 def load_index(request, path):
@@ -137,7 +136,8 @@ def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
     node = assert_node_for_path(prefix)
     data = [create_index_node_for_argument(a, request.user.id) for a in
-            node.arguments.annotate(num_follows=Count('votes')).order_by('-num_follows')]
+            node.arguments.annotate(num_follows=Count('votes')).
+            order_by('-num_follows')]
     return json_response({'loadArgumentIndexResponse': data})
 
 
@@ -176,20 +176,12 @@ def load_graph_data(request, path, graph_data_type):
                 .filter(spam_count__lt=2)\
                 .filter(votes__isnull=False)
 
-
         current_node = backend.get_node_for_path(path)
         nodes = list(nodes)
-        if not current_node in nodes:
+        if current_node not in nodes:
             nodes.append(current_node)
 
-        # sources = Q(derivates__in=nodes)
-        # derivates = Q(sources__in=nodes)
-        # related_nodes = backend.Node.objects.filter(sources | derivates). \
-        #     exclude(id__in=[n.id for n in nodes]).distinct().all()
-
     graph_data_children = map(create_graph_data_node_for_structure_node, nodes)
-    # graph_data_related = map(create_graph_data_node_for_structure_node,
-    #                          related_nodes)
     data = {'graphDataChildren': graph_data_children,
             'graphDataRelated': []}
     return json_response({'loadGraphDataResponse': data})
@@ -226,7 +218,8 @@ def load_text(request, path):
 @ViewErrorHandling
 def load_argument_news(request):
     cards = []
-    for argument in Argument.objects.filter(sources__isnull=True).order_by("-id")[:20]:
+    for argument in Argument.objects.filter(sources__isnull=True)\
+                            .order_by("-id")[:20]:
         node = argument.concerns
         cards.append({
             'argument': {
@@ -237,7 +230,9 @@ def load_argument_news(request):
                 'followingCount': argument.votes.count(),
                 'isFlagging': get_is_flagging(request.user.id, argument),
                 'flaggingCount': argument.spam_flags.count(),
-                'authorGroup': [author.username for author in argument.text.authors.all()]
+                'authorGroup': [author.username
+                                for author in argument.text.authors.all()],
+                'type': argument.arg_type
             },
             'node': {
                 'text': node.text.text,
@@ -247,17 +242,39 @@ def load_argument_news(request):
                 'followingCount': node.votes.count(),
                 'isFlagging': get_is_flagging(request.user.id, node),
                 'flaggingCount': node.spam_flags.count(),
-                'authorGroup': [author.username for author in node.text.authors.all()]
+                'authorGroup': [author.username
+                                for author in node.text.authors.all()]
             }
         })
 
     return json_response({'loadArgumentNewsResponse': cards})
 
 
-###################### Store/Modify Nodes ######################################
+# ##################### Store/Modify Nodes ####################################
 @ValidPaths("StructureNode")
 @ViewErrorHandling
-def store_text(request, path):
+def store_proposal(request, path):
+    assert_authentication(request)
+    assert_permissions(request,
+                       ['node_storage.add_node', 'node_storage.add_vote',
+                        'node_storage.add_nodeorder', 'node_storage.add_text',
+                        'node_storage.change_vote'])
+    user = request.user
+    p = json.loads(request.body)
+
+    slot_path = path.rsplit('.', 1)[0]
+    slot = get_node_for_path(slot_path)
+    proposal_node = generate_proposal_node_with_subsections(slot,
+                                                            p['proposal'],
+                                                            user)
+
+    new_path = get_good_path_for_structure_node(proposal_node, slot, slot_path)
+    return json_response({'storeProposalResponse': {'path': new_path}})
+
+
+@ValidPaths("StructureNode")
+@ViewErrorHandling
+def store_refinement(request, path):
     assert_authentication(request)
     assert_permissions(request,
                        ['node_storage.add_node', 'node_storage.add_argument',
@@ -265,61 +282,48 @@ def store_text(request, path):
                         'node_storage.add_derivation', 'node_storage.add_text',
                         'node_storage.change_vote'])
     user = request.user
-    p = request.POST
-    if 'wikiText' in p and not \
-            ('argumentType' in p or 'wikiTextAlternative' in p):
+    p = json.loads(request.body)
 
-        if len(p['wikiText'].strip()) > 0:
-            # fork for additional slot
-            new_path = fork_node_and_add_slot(path, user, p['wikiText'])
-            # microblog alert and mail notification
-            post_new_derivate_for_node_message(user, path, new_path)
-        else:
-            raise EmptyText
+    origin = get_node_for_path(path)
+    slot_path = path.rsplit('.', 1)[0]
+    slot = get_node_for_path(slot_path)
 
-    elif 'wikiText' in p and 'argumentType' in p and not \
-            'wikiTextAlternative' in p:
+    derivate = generate_refinement(origin, p['proposal'], p['argument'], slot,
+                                   user)
 
-        if len(p['wikiText'].strip()) > 0:
-            # store argument
-            new_path = store_argument(path, p['wikiText'], p['argumentType'],
-                                      user)
-            # microblog alert
-            post_new_argument_for_node_message(user, path, p['argumentType'],
-                                               new_path)
-        else:
-            raise EmptyText
+    new_path = get_good_path_for_structure_node(derivate, slot, slot_path)
 
-    elif 'wikiTextAlternative' in p and not \
-            ('wikiText' in p or 'argumentType' in p):
+    # microblog alert
+    post_new_derivate_for_node_message(user, path, new_path)
 
-        if len(p['wikiTextAlternative'].strip()) > 0:
-            # store alternative
-            _, new_path = store_structure_node(path, p['wikiTextAlternative'],
-                                               user)
-        else:
-            raise EmptyText
+    return json_response({'storeRefinementResponse': {'path': new_path}})
 
-    elif 'wikiTextAlternative' in p and 'wikiText' in p and 'argumentType' in p:
 
-        if len(p['wikiText'].strip()) > 0 and \
-                len(p['wikiTextAlternative'].strip()) > 0:
-            # store Argument and Derivate of structure Node as alternative
-            arg_text = p['wikiText']
-            arg_type = p['argumentType']
-            derivate_wiki_text = p['wikiTextAlternative']
-            new_path, path_couples = store_derivate(path, arg_text, arg_type,
-                                                    derivate_wiki_text, user)
-            # microblog alert
-            post_new_derivate_for_node_message_list(user, path_couples)
-        else:
-            raise EmptyText
+@ValidPaths("StructureNode")
+@ViewErrorHandling
+def store_argument(request, path):
+    assert_authentication(request)
+    assert_permissions(request,
+                       ['node_storage.add_node', 'node_storage.add_argument',
+                        'node_storage.add_vote', 'node_storage.add_nodeorder',
+                        'node_storage.add_text', 'node_storage.change_vote'])
+    user = request.user
+    p = json.loads(request.body)
 
-    else:
-        # wrong usage of API
-        raise MissingPOSTParameter('fooo')
+    node = get_node_for_path(path)
+    title = p['argument']['title']
+    text = p['argument']['text']
+    arg_type = p['argument']['type']
+    arg = create_argument(node, arg_type=arg_type, title=title, text=text,
+                          authors=[user])
+    create_vote(user, [arg])  # auto-follow
+    new_path = "{path}.{arg_type}.{index}".format(
+        path=path, arg_type=arg_type, index=arg.index)
 
-    return json_response({'storeTextResponse': {'path': new_path}})
+    # microblog alert
+    post_new_argument_for_node_message(user, path, p['argument']['type'],
+                                       new_path)
+    return json_response({'storeArgumentResponse': {'path': new_path}})
 
 
 @ValidPaths("StructureNode", "Argument")
@@ -384,7 +388,7 @@ def mark_node_unfollow(request, path):
     return json_response({'markNodeResponse': {}})
 
 
-#################### User Infos ##########################################
+# ################### User Infos ##########################################
 @ViewErrorHandling
 def load_user_info(request, name):
     user = assert_active_user(name)
@@ -405,11 +409,14 @@ def load_user_settings(request):
     }})
 
 
-#################### User Interactions #########################################
+# ################### User Interactions #######################################
 @ViewErrorHandling
 def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
+    request_data = json.loads(request.body)
+    username = request_data['username']
+    password = request_data['password']
+    if not username or not password:
+        raise InvalidLogin()
     user = assert_active_user(username)
     user = authenticate(username=user.username, password=password)
     if user is not None:
@@ -442,12 +449,14 @@ def logout(request):
 @ViewErrorHandling
 def store_settings(request):
     assert_authentication(request)
+    request_data = json.loads(request.body)
     user = User.objects.get(id=request.user.id)
-    assert_post_parameters(request, ['description', 'displayName'])
-    if check_username_sanity(request.POST['displayName']):
-        display_name = request.POST['displayName']
+    assert_request_data_parameters(request_data, ['description',
+                                                  'displayName'])
+    if check_username_sanity(request_data['displayName']):
+        display_name = request_data['displayName']
     else:
-        raise InvalidUsername(request.POST['displayName'])
+        raise InvalidUsername(request_data['displayName'])
     if display_name != user.username:
         try:
             u = User.objects.get(username__iexact=display_name)
@@ -457,8 +466,8 @@ def store_settings(request):
             pass
         user.username = display_name
 
-    user.profile.description = escape(request.POST['description'])
-    email = request.POST['email']
+    user.profile.description = escape(request_data['description'])
+    email = request_data['email']
     if email != user.email:
         assert_valid_email(email)
         eact = EmailActivation.create(user, email)
@@ -475,9 +484,17 @@ def store_settings(request):
             # This means we can't send mails, so we can't change the mail
             eact.delete()
             raise
-    if 'wantsMailNotification' in request.POST:
-        user.profile.wants_mail_notification = (
-            request.POST['wantsMailNotification'].lower() == 'true')
+    if 'wantsMailNotification' in request_data:
+        wants = request_data['wantsMailNotification']
+        if isinstance(wants, str):
+            wants = wants.lower() == 'true'
+        user.profile.wants_mail_notification = wants
+
+    if 'helpEnabled' in request_data:
+        user.profile.help_enabled = request_data['helpEnabled']
+
+    if 'preferredLanguage' in request_data:
+        user.profile.preferred_language = request_data['preferredLanguage']
 
     user.save()
     return json_response({'storeSettingsResponse': {}})
@@ -508,7 +525,7 @@ def mark_user_unfollow(request, name):
 def change_password(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
-    user.set_password(request.POST['password'])
+    user.set_password(json.loads(request.body)['password'])
     user.save()
     return json_response({'changePasswordResponse': {}})
 
@@ -526,17 +543,19 @@ def delete_user(request):
     return json_response({'deleteUserResponse': {}})
 
 
-####################### Registration ###########################################
+# ###################### Registration #########################################
 @ViewErrorHandling
 def account_registration(request):
-    assert_post_parameters(request, ['displayName', 'password', 'emailAddress'])
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['displayName', 'password',
+                                                  'emailAddress'])
 
-    email_address = request.POST['emailAddress']
-    password = request.POST['password']
-    if check_username_sanity(request.POST['displayName']):
-        display_name = request.POST['displayName']
+    email_address = request_data['emailAddress']
+    password = request_data['password']
+    if check_username_sanity(request_data['displayName']):
+        display_name = request_data['displayName']
     else:
-        raise InvalidUsername(request.POST['displayName'])
+        raise InvalidUsername(request_data['displayName'])
 
     assert_valid_email(email_address)
 
@@ -550,7 +569,7 @@ def account_registration(request):
 
     # Check for already existing Mail
     if User.objects.filter(email__iexact=email_address).count():
-        raise EmailAddressNotAvailiable(email_address)
+        raise EmailAddressNotAvailable(email_address)
 
     user = create_user(display_name,
                        description="",
@@ -580,8 +599,9 @@ def account_registration(request):
 
 @ViewErrorHandling
 def account_activation(request):
-    assert_post_parameters(request, ['activationKey'])
-    activation_key = request.POST['activationKey']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['activationKey'])
+    activation_key = request_data['activationKey']
     try:
         act = Activation.objects.get(key=activation_key)
         act.resolve()
@@ -592,8 +612,9 @@ def account_activation(request):
 
 @ViewErrorHandling
 def account_reset_request_by_name(request):
-    assert_post_parameters(request, ['displayName'])
-    display_name = request.POST['displayName']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['displayName'])
+    display_name = request_data['displayName']
 
     user = assert_active_user(display_name)
     recovery = PasswordRecovery.create(user)
@@ -615,8 +636,9 @@ def account_reset_request_by_name(request):
 
 @ViewErrorHandling
 def account_reset_request_by_mail(request):
-    assert_post_parameters(request, ['emailAddress'])
-    email_address = request.POST['emailAddress']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['emailAddress'])
+    email_address = request_data['emailAddress']
     user = assert_active_user(email=email_address)
     recovery = PasswordRecovery.create(user)
     try:
@@ -636,8 +658,9 @@ def account_reset_request_by_mail(request):
 
 @ViewErrorHandling
 def account_reset_confirmation(request):
-    assert_post_parameters(request, ['activationKey'])
-    recovery_key = request.POST['activationKey']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['activationKey'])
+    recovery_key = request_data['activationKey']
     try:
         rec = PasswordRecovery.objects.get(key=recovery_key)
         new_password = rec.resolve()
@@ -653,8 +676,9 @@ def account_reset_confirmation(request):
 
 @ViewErrorHandling
 def email_change_confirmation(request):
-    assert_post_parameters(request, ['activationKey'])
-    email_verify_key = request.POST['activationKey']
+    request_data = json.loads(request.body)
+    assert_request_data_parameters(request_data, ['activationKey'])
+    email_verify_key = request_data['activationKey']
     try:
         eac = EmailActivation.objects.get(key=email_verify_key)
         eac.resolve()

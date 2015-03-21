@@ -1,48 +1,28 @@
-<div id="rightColumn" class="contentBox" ng-controller="FindecoMicroblogCtrl" style="position: relative;">
+<div ng-controller="FindecoMicroblogCtrl">
     <div class="characterCountdown" ng-show="microblogText.length">{{ 200 - microblogText.length }}</div>
-    <ul class="microblogList" >
-        <li style="margin: 0; padding: 0; position: relative;">
-            <form ng-show="user.isLoggedIn" ng-submit="submit()">
-                <textarea class="microblogInput" type="text" placeholder="{{'_microblogPlaceholder_'|i18n}}"
-                       ng-model="microblogText"></textarea>
-                <help hid='MBL_col' htype=1 />
-                <input class="btn btn-primary" type="submit" value="{{'_microblogSendBtn_'|i18n}}"/>
-            </form>
-            <div ng-show="user.isLoggedIn && showspinner" class="deactivateDiv"
-                 style="width: 115%; height: 125%; left: -5%; top: -5px; border-radius: 5px 5px 5px 5px;"></div>
-            <div ng-show="user.isLoggedIn && showspinner" class="deactivateSpinner"></div>
-        </li>
-        <li ng-repeat="microblogNode in microbloggingList">
-            <div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName"
-                 entity="microblogNode.authorGroup[0]" mark-func="followUser"
-                 style="float:left; top: -2px; width: 17px;" width="14" height="14"></div>
-            <a class="microblogAuthor" href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{
-                microblogNode.authorGroup[0].displayName }}</a>
-            <div ng-if="microblogNode.location != 1" ng-switch on="microblogNode.location == nav.nodeID">
-                <div ng-switch-when="true">
-                    <span class="location-icon location-here"></span>
-                </div>
-                <div ng-switch-when="false">
-                    <a href="/{{ microblogNode.locationPath }}" class="location-icon location-there"></a>
-                </div>
-            </div>
-            <span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span><br/>
-            <span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>
-        </li>
-        <li><a ng-show="microbloggingList.length >= 20" class="btn btn-primary" ng-click="updateMicrobloggingList('older',microbloggingList[microbloggingList.length-1].microblogID)"
-               data-i18n="_loadMoreMicroblogging_"></a></li>
-    </ul>
-   	<div ng-show="isLoading()" class="deactivateDiv">
+    <form ng-submit="submit()" ng-show="user.isLoggedIn">
+        <textarea class="microblogInput" type="text" placeholder="{{ '_microblogPlaceholder_'|i18n }}"
+                  ng-model="microblogText" style="width: 100%;"></textarea>
+        <input class="btn btn-primary" style="display: block;" type="submit" value="{{ '_microblogSendBtn_'|i18n }}"/>
+    </form>
+    <div ng-if="error">
+        <span class="help-error" data-i18n="{{ error.errorID }}"></span>
+        <div class="help-error">{{ error.additionalInfo }}</div>
     </div>
-   	<div ng-show="isLoading()" class="deactivateSpinner">
-    </div>
-    <div ng-show="!user.isLoggedIn && microbloggingList.length < 5"><h3 class="argumentHeading" >Mitmachen?</h3></div>
+
+    <a class="rss" target="_new" href="/feeds/rss/newsAuthor/{{ user.displayName }}/{{ user.rsskey }}"></a>
+
+    <div microblog-list bloglist="microbloggingList" updatecall="extendOwnPostsList" follow-user="followUser"></div>
+
+   	<div ng-show="isLoading()" class="deactivateDiv"></div>
+   	<div ng-show="isLoading()" class="deactivateSpinner"></div>
+    <div ng-show="!user.isLoggedIn && microbloggingList.length < 5"><h3 class="argumentTitle" data-i18n="_headingMicroblogging_">Mitmachen?</h3></div>
     <div ng-show="!user.isLoggedIn && microbloggingList.length < 5" class="tipp" style="text-align: center">
-        Melde dich an und du kannst die Themen bearbeiten, Argumente einbringen oder auch zu den
-        bestehenden Vorschlägen Microbloggen.
+        <span data-i18n="_microbloggingPanel_">Melde dich an und du kannst die Themen bearbeiten, Argumente einbringen oder auch zu den
+        bestehenden Vorschlägen Microbloggen.</span>
         <br />
-         <a class="link" href="/register/"
-   >anmelden</a> oder hier <a class="link" href="/register/"
+         <a class="link" href="/register/" data-i18n="_loginMicrobloggingPanel_"
+   >anmelden</a> <span data-i18n="_microbloggingPanel2_">oder hier </span><a class="link" href="/register/" data-i18n="_registerMicrobloggingPanel_"
    >registrieren</a>
     </div>
 </div>

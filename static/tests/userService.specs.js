@@ -37,7 +37,8 @@ describe('FindecoUserService', function() {
         rsskey: 'abcdefg',
         email: 'hugo@abc.de',
         followees: [{displayName: 'ben'}],
-        wantsMailNotification:true
+        wantsMailNotification:true,
+        helpEnabled: false
     };
 
     var loadUserSettingsResponse = {
@@ -47,15 +48,15 @@ describe('FindecoUserService', function() {
         }
     };
 
-    beforeEach(function (){
-        angular.mock.module('FindecoUserService');
-        angular.mock.inject(function($httpBackend, $rootScope, User) {
-            userService = User;
-            httpBackend = $httpBackend;
-            rootScope = $rootScope;
-        });
-        spyOn(rootScope, '$broadcast');
-    });
+    beforeEach(module('FindecoSettings'));
+    beforeEach(module('FindecoUserService'));
+
+    beforeEach(inject(function($httpBackend, $rootScope, User){
+        httpBackend = $httpBackend;
+        rootScope = $rootScope;
+        userService = User;
+    }));
+
 
     afterEach(function() {
         httpBackend.verifyNoOutstandingExpectation();
@@ -128,6 +129,7 @@ describe('FindecoUserService', function() {
                 expect(userService.email).toBe(userSettings.email);
                 expect(userService.followees).toEqual(userSettings.followees);
                 expect(userService.wantsMailNotification).toBe(userSettings.wantsMailNotification);
+                expect(userService.helpEnabled).toBe(userSettings.helpEnabled);
             });
 
             it('should set the userInfo details after successful admin login', function () {
@@ -297,6 +299,7 @@ describe('FindecoUserService', function() {
                     path:'ben'
                 }]);
                 expect(userService.wantsMailNotification).toBe(userSettings.wantsMailNotification);
+                expect(userService.helpEnabled).toBe(userSettings.helpEnabled);
             });
 
             it('should initialize isAdmin if loadUserSettings for admin succeeds', function () {
@@ -374,6 +377,14 @@ describe('FindecoUserService', function() {
                 userService.wantsMailNotification = false;
                 expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
+
+            it('should return true for logged-in user with changed helpEnabled', function() {
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.helpEnabled = true;
+                expect(userService.hasUnsavedChanges()).toBeFalsy();
+            });
         });
 
         describe('resetChanges function', function() {
@@ -413,6 +424,14 @@ describe('FindecoUserService', function() {
                 expect(userService.wantsMailNotification).toBeTruthy();
             });
 
+            it('should undo changes to helpEnabled', function() {
+                httpBackend.expectGET('/.loadUserSettings/').respond(loadUserSettingsResponse);
+                userService.loadSettings();
+                httpBackend.flush();
+                userService.helpEnabled = true;
+                userService.resetChanges();
+                expect(userService.helpEnabled).toBeFalsy();
+            });
         });
 
         describe('deleteAccount function', function() {
@@ -467,7 +486,9 @@ describe('FindecoUserService', function() {
                     displayName: 'mightyHugo',
                     description: 'beschreibung',
                     email: 'hugo@abc.de',
-                    wantsMailNotification: true})
+                    wantsMailNotification: true,
+                    helpEnabled:false
+                })
                     .respond(storeSettingsResponse);
                 userService.storeSettings();
                 httpBackend.flush();

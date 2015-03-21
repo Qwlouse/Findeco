@@ -29,16 +29,18 @@ var findecoApp = angular.module(
         ['ngAnimate',
          'ngRoute',
          'FindecoServices',
+         'FindecoSettings',
          'FindecoBackendService',
          'FindecoUserService',
          'FindecoNavigatorService',
          'FindecoGraphDataService',
+         'FindecoCreateValidShortTitle',
          'localization',
          'ui.bootstrap']
     )
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
-            when('/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: 'FindecoCreateCtrl'}).
+            when('/old/create/:type/:param*', {templateUrl: '/static/partials/create.html', controller: 'FindecoCreateCtrl'}).
             when('/about', {templateUrl: '/static/partials/about.html', controller: 'FindecoCustomContentCtrl'}).
             when('/diff/:param*', {templateUrl: '/static/partials/diff.html', controller: 'FindecoDiffCtrl'}).
             when('/data_privacy', {templateUrl: '/static/partials/dataPrivacy.html', controller: 'FindecoCustomContentCtrl'}).
@@ -46,27 +48,37 @@ var findecoApp = angular.module(
             when('/user/:name*', {templateUrl: '/static/partials/user.html', controller: 'FindecoUserInfoCtrl'}).
             when('/login', {templateUrl: '/static/partials/userLogin.html', controller: 'FindecoUserCtrl'}).
             when('/register', {templateUrl: '/static/partials/userRegistration.html', controller: 'FindecoUserCtrl'}).
-            when('/activate/:param*', {templateUrl: '/static/partials/activate.html', controller: 'FindecoConfirmationCtrl'}).
-            when('/confirm_email/:param*', {templateUrl: '/static/partials/activate.html', controller: 'FindecoConfirmationCtrl'}).
-            when('/confirm/:param*', {templateUrl: '/static/partials/activate.html', controller: 'FindecoConfirmationCtrl'}).
+            when('/registerSuccess', {templateUrl: '/static/partials/registerSuccess.html'}).
+            when('/activate/:param?', {templateUrl: '/static/partials/activate.html', controller: 'FindecoConfirmationCtrl'}).
+            when('/confirm_email/:param?', {templateUrl: '/static/partials/activate.html', controller: 'FindecoConfirmationCtrl'}).
+            when('/confirm/:param?', {templateUrl: '/static/partials/activate.html', controller: 'FindecoConfirmationCtrl'}).
             when('/recoverByMail', {templateUrl: '/static/partials/userRecoverByMail.html', controller: 'FindecoUserCtrl'}).
             when('/recoverByUsername', {templateUrl: '/static/partials/userRecoverByUsername.html', controller: 'FindecoUserCtrl'}).
             when('/terms_of_use', {templateUrl: '/static/partials/termsOfUse.html', controller: 'FindecoCustomContentCtrl'}).
-            when('/profile', {templateUrl: '/static/partials/profile/profile.html', controller: 'FindecoUserCtrl'}).
-            when('/profile/account', {templateUrl: '/static/partials/profile/profile.html', controller: 'FindecoUserCtrl'}).
-            when('/profile/password', {templateUrl: '/static/partials/profile/profilePassword.html', controller: 'FindecoUserCtrl'}).
-            when('/profile/mail', {templateUrl: '/static/partials/profile/profileMailSettings.html', controller: 'FindecoUserCtrl'}).
-            when('/profile/delete', {templateUrl: '/static/partials/profile/profileDelete.html', controller: 'FindecoUserCtrl'}).
+            when('/profile', {templateUrl: '/static/partials/profile.html', controller: 'FindecoUserCtrl'}).
             when('/news', {templateUrl: '/static/partials/news.html', controller: 'FindecoNewsCtrl'}).
             when('/microblogging', {templateUrl: '/static/partials/microbloggingNews.html', controller: 'FindecoMicrobloggingNewsCtrl'}).
             when('/arguments', {templateUrl: '/static/partials/argumentNews.html', controller: 'FindecoArgumentNewsCtrl'}).
-            when('/', {templateUrl: '/static/partials/argumentNews.html', controller: 'FindecoArgumentNewsCtrl'}).
+            when('/', {templateUrl: '/static/partials/indexPage.html', controller: 'FindecoArgumentNewsCtrl'}).
             when('/search/:searchString*', {templateUrl: '/static/partials/searchResults.html', controller: 'FindecoSearchCtrl'}).
             when('/start', {templateUrl: '/static/partials/start.html', controller: 'FindecoDefaultCtrl'}).
             when('/index', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
             when('/index.htm', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
             when('/index.html', {templateUrl: '/static/partials/startDefault.html', controller: 'FindecoDefaultCtrl'}).
+            when('/create/proposal/:param*', {templateUrl: '/static/partials/create/proposalWizzard.html', controller: 'FindecoCreateProposalCtrl'}).
+            when('/create/argument/:param*', {templateUrl: '/static/partials/create/argumentWizzard.html', controller: 'FindecoCreateArgumentCtrl'}).
             otherwise({templateUrl: '/static/partials/default.html', controller: 'FindecoDefaultCtrl'});
     }]);
 
-findecoApp.constant('Version','0.4.0');
+findecoApp.run(function ($rootScope, localize, FeSettings) {
+    $rootScope.$watch('language', function (newLang) {
+        localize.setLanguage(newLang);
+        $rootScope.$broadcast('langChange', newLang);
+    });
+    // initialization
+    if (!$rootScope.language &&
+        angular.isArray(FeSettings.activatedLanguages) &&
+        (FeSettings.activatedLanguages.length > 0)) {
+        $rootScope.language = FeSettings.activatedLanguages[0];
+    }
+});

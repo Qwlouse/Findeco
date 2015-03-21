@@ -3,8 +3,8 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+###############################################################################
+# Copyright (c) 2015 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -18,26 +18,23 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+###############################################################################
 #
-################################################################################
+###############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 import json
-from findeco.api_validation import storeSettingsResponseValidator
+from findeco.api_validation import view_validators
 from findeco.tests.helpers import assert_is_error_response
+from findeco.view_helpers import create_user_info, create_user_settings
 
 from node_storage.factory import create_user, create_slot, create_textNode
-
-from ..api_validation import loadUserInfoResponseValidator
-from ..api_validation import loadUserSettingsResponseValidator
-from ..view_helpers import create_user_info, create_user_settings
 
 
 class LoadUserInfoTest(TestCase):
@@ -52,7 +49,7 @@ class LoadUserInfoTest(TestCase):
             response = self.client.get(
                 reverse('load_user_info', kwargs=dict(name=u.username)))
             parsed = json.loads(response.content)
-            self.assertTrue(loadUserInfoResponseValidator.validate(parsed))
+            self.assertTrue(view_validators['load_user_info'].validate(parsed))
             user_info = create_user_info(u)
             self.assertEqual(parsed['loadUserInfoResponse']['userInfo'],
                              user_info)
@@ -77,7 +74,8 @@ class LoadUserSettingsTest(TestCase):
                 self.client.login(username=u.username, password='1234'))
             response = self.client.get(reverse('load_user_settings'))
             parsed = json.loads(response.content)
-            self.assertTrue(loadUserSettingsResponseValidator.validate(parsed))
+            self.assertTrue(
+                view_validators['load_user_settings'].validate(parsed))
 
     def test_returns_correct_user_info_for_logged_in_user(self):
         for u in self.users:
@@ -94,8 +92,9 @@ class LoadUserSettingsTest(TestCase):
                 self.client.login(username=u.username, password='1234'))
             response = self.client.get(reverse('load_user_settings'))
             parsed = json.loads(response.content)
-            self.assertEqual(parsed['loadUserSettingsResponse']['userSettings'],
-                             create_user_settings(u))
+            self.assertEqual(
+                parsed['loadUserSettingsResponse']['userSettings'],
+                create_user_settings(u))
 
     def test_not_logged_in_returns_error_response(self):
         response = self.client.get(reverse('load_user_settings'))
@@ -106,44 +105,49 @@ class StoreSettingsTest(TestCase):
     def setUp(self):
         self.hans = create_user('hans', description='noneSoFar',
                                 password="1234")
+        self.post = lambda a, b: self.client.post(
+            a, json.dumps(b), content_type='application/json')
 
     def test_response_validates(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'),
-                                    dict(description="", displayName='hans', email='a@bc.de'))
+        response = self.post(reverse('store_settings'),
+                             dict(description="", displayName='hans',
+                                  email='a@bc.de'))
         parsed = json.loads(response.content)
-        self.assertTrue(storeSettingsResponseValidator.validate(parsed))
+        self.assertTrue(view_validators['store_settings'].validate(parsed))
 
     def test_missing_description_parameter_returns_error(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'),
-                                    dict(displayName='hans'))
+        response = self.post(reverse('store_settings'),
+                             dict(displayName='hans'))
         assert_is_error_response(response, "_MissingPOSTParameter")
 
     def test_missing_displayname_parameter_returns_error(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'),
-                                    dict(description=''))
+        response = self.post(reverse('store_settings'),
+                             dict(description=''))
         assert_is_error_response(response, "_MissingPOSTParameter")
 
     def test_unavailable_displayname_returns_error(self):
         self.hugo = create_user('hugo', description='notHulk', password="1234")
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('store_settings'),
-                                    dict(displayName='hugo', description=''))
+        response = self.post(reverse('store_settings'),
+                             dict(displayName='hugo', description=''))
         assert_is_error_response(response, "_UsernameNotAvailable")
 
     def test_change_description_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans', email='a@bc.de'))
+        _ = self.post(reverse('store_settings'),
+                      dict(description="foo", displayName='hans',
+                           email='a@bc.de'))
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.profile.description, "foo")
 
     def test_change_username_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans2', email='a@bc.de'))
+        _ = self.post(reverse('store_settings'),
+                      dict(description="foo", displayName='hans2',
+                           email='a@bc.de'))
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.username, "hans2")
 
@@ -151,9 +155,9 @@ class StoreSettingsTest(TestCase):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         self.assertEqual(self.hans.profile.wants_mail_notification, False)
 
-        _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans',
-                                  email='a@bc.de', wantsMailNotification=True))
+        _ = self.post(reverse('store_settings'),
+                      dict(description="foo", displayName='hans',
+                           email='a@bc.de', wantsMailNotification=True))
 
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.profile.wants_mail_notification, True)
@@ -162,9 +166,9 @@ class StoreSettingsTest(TestCase):
         self.assertTrue(self.client.login(username="hans", password='1234'))
         self.assertEqual(self.hans.profile.wants_mail_notification, False)
 
-        _ = self.client.post(reverse('store_settings'),
-                             dict(description="foo", displayName='hans',
-                                  email='a@bc.de', wantsMailNotification=False))
+        _ = self.post(reverse('store_settings'),
+                      dict(description="foo", displayName='hans',
+                           email='a@bc.de', wantsMailNotification=False))
 
         hans = User.objects.get(id=self.hans.id)
         self.assertEqual(hans.profile.wants_mail_notification, False)
@@ -177,7 +181,10 @@ class ChangePasswordTest(TestCase):
 
     def test_change_works(self):
         self.assertTrue(self.client.login(username="hans", password='1234'))
-        response = self.client.post(reverse('change_password'), dict(password="foo"))
+        response = self.client.post(
+            reverse('change_password'),
+            json.dumps(dict(password="foo")),
+            content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.client.logout()
         self.assertTrue(self.client.login(username="hans", password='foo'))
@@ -191,12 +198,18 @@ class DeleteUserTest(TestCase):
                                 password="blubb")
         self.anon = User.objects.filter(username='anonymous').all()[0]
         self.slot = create_slot("test")
-        self.text1 = create_textNode("Hans Text", "Ich werde anonymisiert", [self.hans])
-        self.text2 = create_textNode("Karls Text", "Ich werde nicht anonymisiert", [self.karl])
-        self.text3 = create_textNode("Gemeinsamer Text", "Anonymous wird dabei geholfen haben diesen Text zu erstellen",
+        self.text1 = create_textNode("Hans Text", "Ich werde anonymisiert",
+                                     [self.hans])
+        self.text2 = create_textNode("Karls Text",
+                                     "Ich werde nicht anonymisiert",
+                                     [self.karl])
+        self.text3 = create_textNode("Gemeinsamer Text",
+                                     "Anonymous wird dabei geholfen haben "
+                                     "diesen Text zu erstellen",
                                      [self.hans, self.karl])
         self.text4 = create_textNode("Gemeinsamer Text mit anonymous",
-                                     "Anonymous wird dabei geholfen haben diesen Text zu erstellen",
+                                     "Anonymous wird dabei geholfen haben "
+                                     "diesen Text zu erstellen",
                                      [self.hans, self.karl, self.anon])
 
     def test_delete_works(self):
@@ -219,4 +232,4 @@ class DeleteUserTest(TestCase):
         self.assertIn(self.anon, self.text4.text.authors.all())
         self.assertIn(self.karl, self.text3.text.authors.all())
         self.assertIn(self.karl, self.text4.text.authors.all())
-        self.assertEqual(len(self.text4.text.authors.all()),2)
+        self.assertEqual(len(self.text4.text.authors.all()), 2)

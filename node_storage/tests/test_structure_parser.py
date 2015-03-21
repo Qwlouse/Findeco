@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,17 +18,16 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 from django.test import TestCase
 from findeco.settings import STATICFILES_DIRS
-from findeco.view_helpers import build_score_tree
 from node_storage.structure_parser import validate_structure_schema
 import os.path as path
 
@@ -37,13 +36,12 @@ from ..factory import create_textNode, create_user
 from ..path_helpers import get_root_node
 from ..models import Node
 from ..structure_parser import create_structure_from_structure_node_schema
-from ..structure_parser import create_derivate_from_structure_node_schema
 from ..structure_parser import InvalidWikiStructure
 from ..structure_parser import parse as pyparser
-from ..structure_parser import remove_unallowed_chars
-from ..structure_parser import strip_accents
-from ..structure_parser import substitute_umlauts
-from ..structure_parser import turn_into_valid_short_title
+from ..validation import remove_unallowed_chars
+from ..validation import strip_accents
+from ..validation import substitute_umlauts
+from ..validation import turn_into_valid_short_title
 import re
 
 ESCAPABLE = re.compile(r'([^\x00-\x7f])')
@@ -99,8 +97,9 @@ class StructureParserTest(TestCase):
         self.assertEqual(substitute_umlauts("Ärger"), "Aerger")
 
     def test_remove_unallowed_chars(self):
-        self.assertEqual(remove_unallowed_chars("abc()[]{}<>?!.,:;+^`~|$#%def"),
-                         "abcdef")
+        self.assertEqual(
+            remove_unallowed_chars("abc()[]{}<>?!.,:;+^`~|$#%def"),
+            "abcdef")
 
     def test_remove_unallowde_chars_keeps_allowed_chars(self):
         valid = "abcdefghijklmnopqrstuvwxyz-1234567890" \
@@ -366,93 +365,6 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                                      "Layer 2 text 2.", [self.hugo])
         self.slot12.append_child(self.text2)
 
-    def test_create_derivate_from_structure_node_schema_with_origin_group(
-            self):
-        schema = {'short_title': "Ignored",
-                  'title': "Layer 1",
-                  'text': "text",
-                  'children': [
-                      {'short_title': "SubSlot1",
-                       'title': "Layer 2",
-                       'text': "Layer 2 text.",
-                       'children': []},
-                      {'short_title': "SubSlot2",
-                       'title': "Layer 2 second heading",
-                       'text': "Layer 2 text 2.",
-                       'children': []},
-                  ]}
-        score_tree = build_score_tree(self.structure1, schema)
-        create_derivate_from_structure_node_schema(
-            schema, self.slot1, self.hugo,
-            self.structure1, score_tree, arg_type='n')
-        node_list = Node.objects.filter(title="Layer 1").all()
-        self.assertEqual(len(node_list), 1)
-        n = node_list[0]
-        self.assertEqual(n, self.structure1)
-        self.assertEqual(n.text.text, "text")
-        slots = n.children.all()
-        self.assertEqual(len(slots), 2)
-        self.assertEqual(slots[0], self.slot11)
-        self.assertEqual(slots[0].title, "SubSlot1")
-        self.assertEqual(slots[1], self.slot12)
-        self.assertEqual(slots[1].title, "SubSlot2")
-        self.assertEqual(len(slots[0].children.all()), 1)
-        sub_structure1 = slots[0].children.all()[0]
-        self.assertEqual(sub_structure1, self.text1)
-        self.assertEqual(sub_structure1.title, "Layer 2")
-        self.assertEqual(sub_structure1.text.text, "Layer 2 text.")
-        self.assertEqual(len(sub_structure1.children.all()), 0)
-        self.assertEqual(len(slots[1].children.all()), 1)
-        sub_structure2 = slots[1].children.all()[0]
-        self.assertEqual(sub_structure2, self.text2)
-        self.assertEqual(sub_structure2.title, "Layer 2 second heading")
-        self.assertEqual(sub_structure2.text.text, "Layer 2 text 2.")
-        self.assertEqual(len(sub_structure2.children.all()), 0)
-
-    def test_create_derivate_from_structure_node_schema_with_origin_group_difference_in_second_layer(
-            self):
-        schema = {'short_title': "Ignored",
-                  'title': "Layer 1",
-                  'text': "text",
-                  'children': [
-                      {'short_title': "SubSlot1",
-                       'title': "Layer 2",
-                       'text': "Layer 2 text.",
-                       'children': []},
-                      {'short_title': "SubSlot2",
-                       'title': "Layer 2 second heading",
-                       'text': "Layer 2 text 2 but changed.",
-                       'children': []},
-                  ]}
-        score_tree = build_score_tree(self.structure1, schema)
-        create_derivate_from_structure_node_schema(
-            schema, self.slot1, self.hugo,
-            self.structure1, score_tree, arg_type='n')
-        n = Node.objects.get(title="Layer 1")
-        self.assertEqual(n, self.structure1)
-        self.assertEqual(n.text.text, "text")
-        slots = n.children.all()
-        self.assertEqual(len(slots), 2)
-        self.assertEqual(slots[0], self.slot11)
-        self.assertEqual(slots[0].title, "SubSlot1")
-        self.assertEqual(slots[1], self.slot12)
-        self.assertEqual(slots[1].title, "SubSlot2")
-        self.assertEqual(len(slots[0].children.all()), 1)
-        sub_structure1 = slots[0].children.all()[0]
-        self.assertEqual(sub_structure1, self.text1)
-        self.assertEqual(sub_structure1.title, "Layer 2")
-        self.assertEqual(sub_structure1.text.text, "Layer 2 text.")
-        self.assertEqual(len(sub_structure1.children.all()), 0)
-        self.assertEqual(len(slots[1].children.all()), 2)
-        sub_structure2 = slots[1].children.all()[1]
-        self.assertNotEqual(sub_structure2, self.text2)
-        self.assertEqual(sub_structure2.title, "Layer 2 second heading")
-        self.assertEqual(sub_structure2.text.text,
-                         "Layer 2 text 2 but changed.")
-        self.assertEqual(len(sub_structure2.children.all()), 0)
-        self.assertEqual(len(sub_structure2.sources.all()), 1)
-        self.assertEqual(sub_structure2.sources.all()[0], self.text2)
-
     def test_create_structure_from_structure_node_schema_without_origin_group(
             self):
         schema = {'short_title': "Ignored",
@@ -468,7 +380,8 @@ class CreateStructureFromStructureNodeSchemaTest(TestCase):
                        'text': "Layer 1, second text.",
                        'children': []},
                   ]}
-        create_structure_from_structure_node_schema(schema, self.slot1, self.hugo)
+        create_structure_from_structure_node_schema(schema, self.slot1,
+                                                    self.hugo)
         node_list = Node.objects.filter(title="My first structure Node").all()
         self.assertEqual(len(node_list), 1)
         n = node_list[0]

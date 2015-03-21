@@ -1,0 +1,11 @@
+<div class="row">
+    <ul>
+        <li>
+            <a href="/index" class="home-icon" ng-class="{'home-active': navigation.entries.length == 0}"></a>
+        </li>
+
+        <li ng-repeat="nav in navigation.entries">
+            <a href="{{ nav.path }}">{{ nav.name }}</a>
+        </li>
+    </ul>
+</div>

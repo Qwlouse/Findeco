@@ -655,6 +655,26 @@
         "description": ""
     },
     {
+        "key"        : "_microbloggingUser_",
+        "value"      : "Microblogging dieses Benutzers",
+        "description": ""
+    },
+    {
+        "key"        : "_microblogToUser_",
+        "value"      : "Öffentliche Nachricht für {0} hinterlassen",
+        "description": ""
+    },
+    {
+        "key"        : "_microblogToUserPlaceholder_",
+        "value"      : "Deine öffentliche Nachricht für diesen Benutzer eingeben",
+        "description": ""
+    },
+    {
+        "key"        : "_microblogSuccess_",
+        "value"      : "Nachricht erfolgreich abgeschickt",
+        "description": ""
+    },
+    {
         "key"        : "_newsForAllNode_",
         "value"      : "News zu allen Vorschlägen",
         "description": ""
@@ -697,7 +717,7 @@
     {
         "key"        : "_passwordHints_",
         "value"      : "Passwort Hinweise",
-        "description": ""
+        "description": "Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und Kleinschreibung als auch Sonderzeichen in deinem Passwort."
     },
     {
         "key"        : "_passwordHint_",
@@ -746,12 +766,632 @@
     },
     {
         "key"        : "_changeEmailRequested_",
-        "value"      : "Die Änderung der E-Mail Adresse wurde bereits angefordert und eine Bestätigungemail an die neue Adresse versandt. Die Änderung wird wirksam, wenn der Bestätigungslink in der Mail geklickt wird.",
+        "value"      : "Die Änderung der E-Mail Adresse wurde angefordert und eine Bestätigungemail an die neue Adresse versandt. Die Änderung wird wirksam, sobald du den Bestätigungslink in der Mail geklickt hast.",
         "description": ""
     },
     {
         "key"        : "_userDoesNotExist",
         "value"      : "Der Benutzer '{0}' existiert nicht!",
         "description": "wird im partial user.html benutzt"
+    },
+    {
+        "key"        : "_invalidPathHeading_",
+        "value"      : "Ungültiger Pfad",
+        "description": "Überschrift der Fehlerseite falls ein ungültiger Pfad aufgerufen wurde."
+    },
+    {
+        "key"        : "_invalidPathText_",
+        "value"      : "Diese Seite wurde nicht gefunden. Überprüfen Sie bitte die URL.",
+        "description": "Überschrift der Fehlerseite falls ein ungültiger Pfad aufgerufen wurde."
+    },
+    {
+        "key"        : "_proposalTypeQuestion_",
+        "value"      : "Welchen Typ hat deine Änderung?",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newParagraphButton_",
+        "value"      : "Abschnitt einfügen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newRefinementButton_",
+        "value"      : "Vorschlag weiterentwickeln",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_newProposalButton_",
+        "value"      : "Gegenvorschlag erstellen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_backButton_",
+        "value"      : "Zurück",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_cancelButton_",
+        "value"      : "Abbrechen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_nextButton_",
+        "value"      : "Weiter",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_createButton_",
+        "value"      : "Erstellen",
+        "description": "Is used in the proposal wizzard"
+    },
+    {
+        "key"        : "_changeUsername_",
+        "value"      : "Benutzername Ändern",
+        "description": ""
+    },
+    {
+        "key"        : "_preview_",
+        "value"      : "Vorschau",
+        "description": "Heading vom Preview"
+    },
+    {
+        "key"        : "_searchNoContentResults_",
+        "value"      : "Keine Ergebnisse für die Suche nach '{0}' gefunden",
+        "description": "Notice informing the user that no microblogging could be found for the search"
+    },
+    {
+        "key"        : "_searchNoMicrobloggingResults_",
+        "value"      : "Keine Microbloggingbeiträge gefunden",
+        "description": "Notice informing the user that no microblogging could be found for the search"
+    },
+    {
+        "key"        : "_searchNuUserResults_",
+        "value"      : "Kein Benutzer gefunden",
+        "description": "Notice informing the user that no users could be found matching the search"
+    },
+    {
+        "key"        : "_ProposalTypeHelp_",
+        "value"      : "Egal ob du eine Weiterentwicklung oder einen Gegenvorschlag erstellst, der neue Vorschlag wird immer mit den anderen Vorschlägen konkurrieren. Gegenvorschläge erscheinen als eigenständige Kreise im Graphen, während es bei Weiterentwicklungen einen Pfeil vom Original zur Weiterentwicklung gibt.",
+        "description": "Help text about when to write a new proposal and when to refine an existing one"
+    },
+    {
+        "key"        : "_ProposalTypeHelpTactics_",
+        "value"      : "Bei Weiterentwicklungen werden Unterstützer des Originals davon ausgehen, dass der neue Vorschlag die gleiche Idee verbessert. Erstellst du eine Weiterentwicklung, übernimmt diese die Folgen-Markierungen des Originals, was deinem Vorschlag zunächst viel Zustimmung gibt. Schlägt dein neuer Vorschlag aber eine Idee vor, die deutlich vom Original abweicht, solltest du einen Gegenvorschlag erstellen. Da die Unterstützer des Originals dich im Fall eines als Weiterentwicklung getarnten Gegenvorschlags mit Entfolgungen abstrafen würden und dein Vorschlag durch diese schnell ausgeblendet wird, ist es in so einem Fall besser, mit einem Gegenvorschlag einen neuen Kreis von Unterstützern aufzubauen.",
+        "description": "Help text about when to write a new proposal and when to refine an existing one"
+    },
+    {
+        "key"        : "_siteNoticeFooter_",
+        "value"      : "Impressum",
+        "description": ""
+    },
+    {
+        "key"        : "_termsOfUseFooter_",
+        "value"      : "Nutzungsbedingungen",
+        "description": ""
+    },
+    {
+        "key"        : "_privacyPolicyFooter_",
+        "value"      : "Datenschutzerklärung",
+        "description": ""
+    },
+    {
+        "key"        : "_aboutFooter_",
+        "value"      : "Über Findeco",
+        "description": ""
+    },
+    {
+        "key"        : "_textAuthorHint_",
+        "value"      : "Die Texte wurden von einzelnen Benutzern eingestellt und sind keine offizielle Aussage des Betreibers.",
+        "description": ""
+    },
+    {
+        "key"        : "_helpIndexSite_",
+        "value"      : "Mehr Hilfe zu diesem Thema (Link führt zu Findeco.de)",
+        "description": ""
+    },
+    {
+        "key"        : "_showArguments_",
+        "value"      : "Argumente zeigen",
+        "description": ""
+    },
+    {
+        "key"        : "_hideArguments_",
+        "value"      : "Argumente verbergen",
+        "description": ""
+    },
+    {
+        "key"        : "_showAllKnots_",
+        "value"      : "alle",
+        "description": ""
+    },
+    {
+        "key"        : "_showNoSpam_",
+        "value"      : "Alle außer Spam",
+        "description": ""
+    },
+    {
+        "key"        : "_showRelevant_",
+        "value"      : "nur relevante",
+        "description": ""
+    },
+    {
+        "key"        : "_showRelevant_",
+        "value"      : "nur relevante",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxHeading_",
+        "value"      : "Willkommen bei Findeco",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text1_",
+        "value"      : "Findeco ist eine Diskussionsplattform und dient der Meinungsfindung. Du kannst hier Ideen in Form von ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxProposalsHelpLink_",
+        "value"      : "Vorschlägen",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text2_",
+        "value"      : " abspeichern. Du und alle anderen können dann Kommentare in Form von ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxMicrobloggingHelpLink_",
+        "value"      : "Microblogging",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text3_",
+        "value"      : " dazu schreiben und ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxArgumentsHelpLink_",
+        "value"      : "Argumente",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph1Text4_",
+        "value"      : " dazu verfassen.",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph2Text1_",
+        "value"      : "Die Diskussion zu einem Thema hat immer einen ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxPlaceHelpLink_",
+        "value"      : "Ort",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph2Text2_",
+        "value"      : ". Der Ort wird durch den Pfad am oberen Bildschirmrand immer angezeigt. Bitte achte darauf dir immer zuerst den richtigen Ort für deine Idee, dein Argument oder deinen Kommentar zu suchen. Die Faustregel dafür ist: Wenn du dich zu etwas äußern willst, was unter einer Überschrift steht, die man anklicken kann, dann klicke dort zuerst.",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text1_",
+        "value"      : "Du kannst Vorschlägen, Benutzern und Argumenten ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxFollowEmphasized_",
+        "value"      : "folgen",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text2_",
+        "value"      : ". Das bedeutet, dass du über Neuigkeiten dazu in ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text3_",
+        "value"      : " (Vorschläge und Argumente denen du folgst) und ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text4_",
+        "value"      : " (User denen du folgst) informiert wirst. Außerdem sprichst du Vorschlägen und Argumenten damit deine Unterstützung aus. Folgen kannst du jeweils über den Stern neben einem Beitrag oder User. Beiträge kannst du auch als Spam markieren. Wenn genug Leute das machen werden sie ausgeblendet. Infos dazu, wie du diese Funktionen für produktive Diskussionen nutzen solltest, findest du im ",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxManifestLink_",
+        "value"      : "Manifest",
+        "description": ""
+    },
+    {
+        "key"        : "_greetingboxParagraph3Text5_",
+        "value"      : ".",
+        "description": ""
+    },
+    {
+        "key"        : "_default_",
+        "value"      : "Standardeinstellung",
+        "description": ""
+    },
+    {
+        "key"        : "_helpSettings_",
+        "value"      : "Hilfeeinstellungen",
+        "description": ""
+    },
+    {
+        "key"        : "_helpActivated_",
+        "value"      : "Hilfe-Symbole anzeigen",
+        "description": ""
+    },
+    {
+        "key"        : "_languageSettings_",
+        "value"      : "Spracheinstellungen",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText_",
+        "value"      : "In dieser Spalte werden alle ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText2_",
+        "value"      : "Argumente",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText3_",
+        "value"      : " zum ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText4_",
+        "value"      : "Thema",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentPanelText5_",
+        "value"      : " gesammelt. ",
+        "description": ""
+    },
+    {
+        "key"        : "_noArgumentsYet_",
+        "value"      : "Es gibt noch keine",
+        "description": ""
+    },
+    {
+        "key"        : "_noArgumentsYet2_",
+        "value"      : "Argumente",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn_",
+        "value"      : "Wenn du selbst ein Argument hinzufügen möchtest, kannst du dich hier ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn2_",
+        "value"      : "anmelden",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn3_",
+        "value"      : "oder hier ",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentLogIn4_",
+        "value"      : "registieren",
+        "description": ""
+    },
+    {
+        "key"        : "_microbloggingPanel_",
+        "value"      : "Melde dich an und du kannst die Themen bearbeiten, Argumente einbringen oder auch zu den bestehenden Vorschlägen Microbloggen.",
+        "description": ""
+    },
+    {
+        "key"        : "_loginMicrobloggingPanel_",
+        "value"      : "anmelden",
+        "description": ""
+    },
+    {
+        "key"        : "_microbloggingPanel2_",
+        "value"      : " oder hier ",
+        "description": ""
+    },
+    {
+        "key"        : "_registerMicrobloggingPanel_",
+        "value"      : "registieren",
+        "description": ""
+    },
+    {
+        "key"        : "_headingMicroblogging_",
+        "value"      : "Wanna participate?",
+        "description": ""
+    },
+    {
+        "key"        : "_showMicroblogging_",
+        "value"      : "Microblogging zeigen",
+        "description": ""
+    },
+    {
+        "key"        : "_hideMicroblogging_",
+        "value"      : "Microblogging ausblenden",
+        "description": ""
+    },
+    {
+        "key"        : "_authors_",
+        "value"      : "Autoren des Vorschlags: ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText1_",
+        "value"      : "Dieser ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText2_",
+        "value"      : "Vorschlag",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText3_",
+        "value"      : " hat ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText4_",
+        "value"      : "Abschnitte. ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText5_",
+        "value"      : "Du kannst hier alle Abschnitte ",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText6_",
+        "value"      : "ausklappen",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText7_",
+        "value"      : "einklappen",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal1_",
+        "value"      : "Es gibt zu diesem Thema ",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal2_",
+        "value"      : " konkurrierende ",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal3_",
+        "value"      : "Vorschläge",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal4_",
+        "value"      : "Es werden ",
+        "description": ""
+    },
+    {
+        "key"        : "_headerProposal5_",
+        "value"      : "angezeigt.",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalHeading_",
+        "value"      : "Überschrift:",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentTitle_",
+        "value"      : "Überschrift:",
+        "description": ""
+    },
+    {
+        "key"        : "_addSubsection_",
+        "value"      : "Abschnitt hinzufügen",
+        "description": ""
+    },
+    {
+        "key"        : "_summaryHeading_",
+        "value"      : "Zusammenfassung",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalText_",
+        "value"      : "Dein Vorschlag:",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentText_",
+        "value"      : "Dein Argument:",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentTextHelp_",
+        "value"      : "Wähle pro, wenn dein Argument den Vorschlag unterstützt und con, wenn es den Vorschlag ablehnt. Falls dein Argument nur eine neutrale Ergänzung wie eine Quellenangabe ist, kannst du neut auswählen. Achte darauf sachlich zu argumentieren und nur ein Argument zu beschreiben. Wenn du mehrere Argumente äußern willst solltest du auch mehrere Argumente einzeln anlegen.",
+        "description": ""
+    },
+    {
+        "key"        : "_refinementArgumentTextHelp_",
+        "value"      : "Beschreibe in diesem Argument warum die Weiterentwicklung notwendig war. Nenne dafür nur den wesentlichsten Punkt. Dein Argument sollte inhaltliche Kritik üben. Das Argument wird beim vorherigen Vorschlag angezeigt, nucht jedoch beim weiterentwickelten Vorschlag. Achte also darauf im Argument das Problem des ursprünglichen Vorschlags zu beschreiben, das durch die Weiterentwicklung behoben wurde.",
+        "description": ""
+    },
+    {
+        "key"        : "_refinementArgumentTitle_",
+        "value"      : "Gegenargument gegen den weiterentwickelten Vorschlag",
+        "description": ""
+    },
+    {
+        "key"        : "_usernameTooLong_",
+        "value"      : "Benutzername ist zu lang.",
+        "description": ""
+    },
+    {
+        "key"        : "_usernameTooShort_",
+        "value"      : "Benutzername ist zu kurz.",
+        "description": ""
+    },
+    {
+        "key"        : "_usernameInvalidFormat_",
+        "value"      : "Benutzername muss mit einem Buchstaben beginnen und darf nur die Sonderzeichen - und _ enthalten.",
+        "description": ""
+    },
+    {
+        "key"        : "_required_",
+        "value"      : "benötigt",
+        "description": ""
+    },
+    {
+        "key"        : "_passwordMismatch_",
+        "value"      : "Passwörter stimmen nicht überein!",
+        "description": ""
+    },
+    {
+        "key"        : "_registrationProcessing_",
+        "value"      : "Erfolgreich ausgefüllt: Anfrage wird bearbeitet...",
+        "description": ""
+    },
+    {
+        "key"        : "_registerSuccessTitle_",
+        "value"      : "Registrierung erfolgreich",
+        "description": ""
+    },
+    {
+        "key"        : "_registerSuccessText_",
+        "value"      : "Ihnen wurde ein E-Mail mit Aktivierungscode zugesandt. Bitte prüfen sie ihr Postfach und folgen sie den Anweisungen um ihr Benutzerkonto zu aktivieren.",
+        "description": ""
+    },
+    {
+        "key"        : "_submittingNewProposal_",
+        "value"      : "Der neue Vorschlag wird gespeichert...",
+        "description": ""
+    },
+    {
+        "key"        : "_submitting_",
+        "value"      : "Übertragung...",
+        "description": ""
+    },
+    {
+        "key"        : "_noConnectionToBackend_",
+        "value"      : "Es konnte keine Verbindung zum Backend aufgebaut werden. Ist das Internet ausgefallen?",
+        "description": ""
+    },
+    {
+        "key"        : "_user_",
+        "value"      : "Benutzer",
+        "description": "First part of the title in the profile"
+    },
+    {
+        "key"        : "_usernameChanged_",
+        "value"      : "Benutzername erfolgreich geändert",
+        "description": "Message informing about a successful change of username"
+    },
+    {
+        "key"        : "_wizzardProgressType_",
+        "value"      : "Typ",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardProgressText_",
+        "value"      : "Text",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardProgressArgument_",
+        "value"      : "Argument",
+        "description": ""
+    },
+    {
+        "key"        : "_wizzardProgressSend_",
+        "value"      : "Abschicken",
+        "description": ""
+    },
+    {
+        "key"        : "_proposalWizzardSummaryInfo_",
+        "value"      : "Der neue Vorschlag wird mit folgendem Inhalt gespeichert. Änderungen sind jetzt noch möglich, indem auf die vorherigen Schritte nochmal zurückgegangen wird. Wird der Vorschlag wie angezeigt abgeschickt kann er nicht mehr geändert werden.",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentWizzardSummaryInfo_",
+        "value"      : "Das neue Argument wird mit folgendem Inhalt gespeichert. Änderungen sind jetzt noch möglich, indem auf die vorherigen Schritte nochmal zurückgegangen wird. Wird das Agrument wie angezeigt abgeschickt kann es nicht mehr geändert werden.",
+        "description": ""
+    },
+    {
+        "key"        : "_shorttitleNotUnique_",
+        "value"      : "Dieser Kurztitel kommt schon vor. Bitte wähle einen der noch nicht vorkommt.",
+        "description": ""
+    },
+    {
+        "key"        : "_argumentTypeQuestion_",
+        "value"      : "Ist dein Argument für oder gegen den Vorschlag?",
+        "description": ""
+    },
+    {
+        "key"        : "_proArgumentButton_",
+        "value"      : "Dafür",
+        "description": ""
+    },
+    {
+        "key"        : "_conArgumentButton_",
+        "value"      : "Dagegen",
+        "description": ""
+    },
+    {
+        "key"        : "_neutArgumentButton_",
+        "value"      : "Neutrale Information",
+        "description": ""
+    },
+    {
+        "key"        : "_ArgumentTypeHelp_",
+        "value"      : "Der Typ des Arguments wird neben jedem Argument in der linken Seitenleiste neben dem Vorschlag angezeigt. Andere Benutzer können bei deinem Argument auf den Stern klicken - oder nicht - und je nachdem wie viel Unterstützung dein Argument bekommt, wird es weiter oben in der Liste angezeigt. Wenn dein Argument in der falschen Kategorie eingetragen wird, werden andere Nutzer es natürlich nicht unterstützen.",
+        "description": ""
+    },
+    {
+        "key"        : "_createProposalOrRefinement_",
+        "value"      : "Gegenvorschlag oder Weiterentwicklung erstellen",
+        "description": ""
+    },
+    {
+        "key"        : "_404Heading_",
+        "value"      : "404 - Seite nicht gefunden.",
+        "description": ""
+    },
+    {
+        "key"        : "_404MessageBeginning_",
+        "value"      : "Der Pfad \"",
+        "description": ""
+    },
+    {
+        "key"        : "_404MessageEnd_",
+        "value"      : "\" wurde nicht gefunden.",
+        "description": ""
+    },
+    {
+        "key"        : "_submittingNewArgument_",
+        "value"      : "Das neue Argument wird gespeichert...",
+        "description": ""
+    },
+    {
+        "key"        : "_PermissionDenied",
+        "value"      : "Zugriff verweigert! Sie haben nicht die erforderlichen Rechte.",
+        "description": ""
+    },
+    {
+        "key"        : "_noMicroblogging_",
+        "value"      : "Noch kein Microblogging.",
+        "description": ""
+    },
+    {
+        "key"        : "_EmailAddressNotAvailable",
+        "value"      : "Diese E-Mail Adresse ist leider schon vergeben.",
+        "description": ""
     }
 ]

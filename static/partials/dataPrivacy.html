@@ -1,18 +1,9 @@
-<div id="contentContainer" class="centeringContainer">
-    <div id="leftColumn" class="contentBoxInvisible">
-
-    </div>
-
-    <div id="centerColumn" class="contentBox">
+<div class="preCentering">
+    <div class="centered backgroundBox textContainer">
         <div ng-show="content!=undefined" ng-bind-html-unsafe="content"></div>
         <div ng-show="content==undefined">
             <h1>Hier sollten Datenschutzbestimmungen stehen!</h1>
             Falls nicht, fehlt auf dem Server vermutlich die Datei <a href="{{ path }}">"{{ path }}"</a>.
         </div>
     </div>
-
-    <div id="rightColumn" class="contentBoxInvisible">
-
-    </div>
-
 </div>

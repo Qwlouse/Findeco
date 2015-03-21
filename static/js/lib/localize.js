@@ -68,7 +68,7 @@ angular.module('localization', [])
 
                     // check for localized string found
                     if (entry == undefined){
-                    	console.log("Nicht lokalisierter String:" + value)
+                    	console.log("Nicht lokalisierter String:" + value);
                     	return value;
                     }
                     
@@ -116,7 +116,7 @@ angular.module('localization', [])
                         }
                         // insert the text into the element
                         elm.text(tag);
-                    };
+                    }
                 }
             },
 

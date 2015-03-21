@@ -38,13 +38,7 @@ findecoApp
                 height  : '@'
             },
             replace : true,
-            template: '<a class="follow-star">' +
-                '<img ng-src="/static/images/star{{entity.isFollowing}}.png" ' +
-                'alt="Follow" title="Folgen" width="{{width}}" height="{{height}}" ' + '/>' +
-                '</a>',
-            //       'onmouseover="this.src=\'/static/images/star{{entity.isFollowing}}_hover.png\';" ' +
-            //     'onmouseout="this.src=\'/static/images/star{{entity.isFollowing}}.png\';" ' +
-            // todo: Reimplemnt without Angularerror-->
+            template: '<a class="follow-star" ng-mouseenter="startHover()" ng-mouseleave="stopHover()"></a>',
             link: function (scope, element, attrs) {
                 if (scope.entity.isFollowing != 0 &&
                     scope.entity.isFollowing != 1 &&
@@ -55,6 +49,37 @@ findecoApp
                 scope.$watch('showIf', function (value) {
                     link.css('display', scope.showIf ? '' : 'none');
                 });
+                scope.$watch('width', function (newWidth) {
+                    if (newWidth) {
+                        element.width(newWidth + 'px');
+                    }
+                    element.css({'background-size': Math.max(scope.width, scope.height) * 2 + 'px'});
+                });
+                scope.$watch('height', function (newHeight) {
+                    if (newHeight) {
+                        element.height(newHeight + 'px');
+                    }
+                    element.css({'background-size': Math.max(scope.width, scope.height) * 2 + 'px'});
+                });
+                scope.setBackgroundPosition = function () {
+                    var x = 0;
+                    if (scope.hover) {
+                        x = -Math.max(scope.width, scope.height);
+                    }
+                    var y = scope.entity.isFollowing * -Math.max(scope.width, scope.height);
+                    element.css({'background-position': x + 'px ' + y + 'px'});
+                };
+                scope.$watch('entity.isFollowing', function () {
+                    scope.setBackgroundPosition();
+                });
+                scope.startHover = function () {
+                    scope.hover = true;
+                    scope.setBackgroundPosition();
+                };
+                scope.stopHover = function () {
+                    scope.hover = false;
+                    scope.setBackgroundPosition();
+                };
                 link.bind('click', toggle);
                 function toggle() {
                     var markType = "follow";
@@ -83,9 +108,7 @@ findecoApp
                 height  : '@'
             },
             replace : true,
-            template: '<a class="spam-mark">' +
-                '<img ng-src="/static/images/spam{{entity.isFlagging}}.png" alt="SpamFlag" title="Als Spam markieren" width="{{width}}" height="{{height}}"/>' +
-                '</a>',
+            template: '<a class="spam-mark" ng-mouseenter="startHover()" ng-mouseleave="stopHover()"></a>',
             link    : function (scope, element, attrs) {
                 if (scope.entity.isFlagging != 0 &&
                     scope.entity.isFlagging != 1 &&
@@ -96,6 +119,40 @@ findecoApp
                 scope.$watch('showIf', function (value) {
                     link.css('display', scope.showIf ? '' : 'none');
                 });
+                scope.$watch('width', function (newWidth) {
+                    if (newWidth) {
+                        element.width(newWidth + 'px');
+                    }
+                    element.css({'background-size': Math.max(scope.width, scope.height) * 2 + 'px'});
+                });
+                scope.$watch('height', function (newHeight) {
+                    if (newHeight) {
+                        element.height(newHeight + 'px');
+                    }
+                    element.css({'background-size': Math.max(scope.width, scope.height) * 2 + 'px'});
+                });
+                scope.setBackgroundPosition = function () {
+                    var x = 0;
+                    if (scope.hover) {
+                        x = -Math.max(scope.width, scope.height);
+                    }
+                    var y = 0;
+                    if (!scope.entity.isFlagging) {
+                        y = -Math.max(scope.width, scope.height);
+                    }
+                    element.css({'background-position': x + 'px ' + y + 'px'});
+                };
+                scope.$watch('entity.isFollowing', function () {
+                    scope.setBackgroundPosition();
+                });
+                scope.startHover = function () {
+                    scope.hover = true;
+                    scope.setBackgroundPosition();
+                };
+                scope.stopHover = function () {
+                    scope.hover = false;
+                    scope.setBackgroundPosition();
+                };
                 link.bind('click', toggle);
                 function toggle() {
                     var markType = "spam";
@@ -165,11 +222,11 @@ findecoApp
                 htype: '=',
                 hid: '@hid'
             },
-            template: '<div>Platzhalter</div>',
+            template: '<div style="float: left;">Platzhalter</div>',
             replace: true,
             link: function (scope, elem, attr) {
-                $rootScope.$watch('helpIsActive', function (oldVal) {
-                    if (oldVal) {
+                $rootScope.$watch('helpIsActive', function (newVal, oldVal) {
+                    if (newVal) {
                         elem.html('<div class="help-small-icon help-small-b "></div>');
                         if (scope.htype == 1) {
                             elem.html('<div class="help-small-icon help-small-b " ></div>');
@@ -197,5 +254,64 @@ findecoApp
                 element.html(value || '');
             });
         }
-    }]);
+    }])
+    .directive('microblogList', function () {
+        return {
+            restrict: 'A',
+            scope   : {
+                bloglist  : '=',
+                updatecall : '=',
+                followUser: '='
+            },
+            replace : true,
+            template:
+                '<ul class="microblogList">' +
+                    '<li ng-repeat="microblogNode in bloglist">' +
+                        '<div class="microblogAuthor">' +
+                            '<div follow-star show-if="user.isLoggedIn && microblogNode.author.displayName != user.displayName" entity="microblogNode.author" mark-func="followUser" width="14" height="14"></div>' +
+                            '<a href="/user/{{ microblogNode.authorGroup[0].displayName }}">{{microblogNode.authorGroup[0].displayName }}</a>' +
+                        '</div>' +
+                        '<div style="float:right;">' +
+                            '<a ng-if="microblogNode.location != 1" href="{{ microblogNode.locationPath }}" class="location-icon location-there"></a>' +
+                            '<span class="microblogDate">{{microblogNode.microblogTime*1000 | timeFromNow}}</span>' +
+                        '</div>' +
+                        '<br/>' +
+                        '<span class="microblogText" ng-bind-html-unsafe="microblogNode.microblogText"></span>' +
+                    '</li>' +
+                    '<li ng-show="bloglist.length % 20 == 0 && bloglist.length > 0">' +
+                        '<a ng-click="updatecall()" data-i18n="_loadMoreMicroblogging_"></a>' +
+                    '</li>' +
+                    '<li ng-show="bloglist.length == 0">' +
+                        '<span class="tipp" data-i18n="_noMicroblogging_"></span>' +
+                    '</li>' +
+                '</ul>',
+            controller: function ($scope, $element, User) {
+                $scope.user = User;
+            }
+        }
+    });
+
+
+findecoApp.directive('match', function () {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        scope: {
+            match: '='
+        },
+        link: function (scope, elem, attrs, ctrl) {
+            scope.$watch(function () {
+                var modelValue = ctrl.$modelValue || ctrl.$$invalidModelValue;
+                return (ctrl.$pristine && angular.isUndefined(modelValue)) || scope.match === modelValue;
+            }, function (currentValue) {
+                ctrl.$setValidity('match', currentValue);
+            });
+        }
+    };
+});
+
+
+
+
+
 

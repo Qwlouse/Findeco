@@ -13,7 +13,7 @@ Es können Nach der ersten Überschrift mehrere H2 (==) bis H5 (=====) vorkommen
 werden darf. Wenn also z.B. ein H4 (====) definiert werden soll, muss zuvor ein H2 und ein H3 angegeben worden sein.
 
 == Argumente ==
-Argumente können zu vorschlägen auf jeder Ebene angegeben werden. Sie gelten jeweils nur für den auf dieser Ebene
+Argumente können zu Vorschlägen auf jeder Ebene angegeben werden. Sie gelten jeweils nur für den auf dieser Ebene
 angezeigten Gesamttext.
 
 === Weiterentwicklungen ===

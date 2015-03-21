@@ -1,0 +1,142 @@
+<div style="position: relative; left: -50%; float: right; overflow: visible; margin: 2em 0;">
+    <div style="position: relative; left: 50%;">
+        <div class="backgroundBox textColumn" ng-show="user.isLoggedIn">
+            <h1>{{'_user_'|i18n}}: {{ user.displayName }}</h1>
+
+            <!-- DESCRIPTION -->
+            <form name="profileDescription" ng-submit="storeUserDescription()">
+                <h2 data-i18n="_description_">Beschreibung</h2>
+                <textarea ng-model="user.description"
+                          name="description"
+                          placeholder="Beschreibung"
+                          style="width: 100%; resize: vertical;"
+                          rows="8">
+                </textarea>
+
+                <h3 data-i18n="_preview_">Vorschau</h3>
+                <div creole wiki-text="user.description" update-interval="2000"></div>
+
+                <div style="clear: both;"></div>
+                <input type="submit" style="margin-top: 1em;"
+                       value="{{'_save_'|i18n}}"
+                       ng-disabled="!profileDescription.description.$dirty"/>
+            </form>
+
+            <!-- FOLLOWEES -->
+            <h2 data-i18n="_followees_">Ich folge:</h2>
+            <ul>
+                <li ng-repeat="followee in user.followees">
+                    <a href="/user/{{ followee.path }}">{{ followee.displayName }}</a>
+                    <div follow-star show-if="true" entity="followee" mark-func="user.markUser"
+                         style="float: none; top: 0;" width="12pt" height="12pt"></div>
+                </li>
+            </ul>
+
+            <!-- E-MAIL -->
+            <form name="profileEMail" ng-submit="storeUserEMail()">
+                <h2 data-i18n="_email_" >E-Mail</h2>
+                <input type="text" name="email" ng-model="user.email"/><br/>
+                <input type="submit" value="{{ '_save_'|i18n }}"
+                       ng-disabled="!profileEMail.email.$dirty">
+                <p ng-show="emailChanged"
+                   data-i18n="_changeEmailRequested_">
+                    Die Änderung der E-Mail Adresse wurde angefordert
+                    und eine Bestätigungsmail an die neue Adresse versandt.
+                    Die Änderung wird wirksam, sobald du den Bestätigungslink in
+                    der Mail geklickt hast.
+                </p>
+                <div ng-if="changeEmailError" class="help-error">
+                    {{changeEmailError.errorID | i18n}} <br>
+                    {{changeEmailError.additionalInfo | json}} </div>
+            </form>
+
+            <!-- NOTIFICATIONS -->
+            <h2 data-i18n="_notificationSettings_">Benachrichtigungseinstellungen</h2>
+            <form ng-submit="storeUserSettings()">
+                <input type="checkbox"
+                       id="wantsEMail"
+                       ng-model="user.wantsMailNotification"
+                       ng-change="storeUserSettings()" />
+                <label for="wantsEMail" data-i18n="_wantEMailLabel_">
+                    Ich möchte per E-Mail über Neuigkeiten in Findeco informiert werden.
+                </label>
+            </form>
+
+            <!-- HELP SETTINGS -->
+            <h2 data-i18n="_helpSettings_">Hilfeeinstellungen</h2>
+            <form ng-submit="storeUserSettings()">
+                <input type="checkbox"
+                       id="helpActivated"
+                       ng-model="user.helpEnabled"
+                       ng-change="storeUserSettings()" />
+                <label for="helpActivated" data-i18n="_helpActivated_">
+                    Hilfe-Symbole anzeigen
+                </label>
+            </form>
+
+            <!-- LANGUAGE SETTINGS -->
+            <h2 data-i18n="_languageSettings_">Spracheinstellungen</h2>
+            <form ng-submit="storeUserSettings()">
+                <select ng-model="user.preferredLanguage"
+                        ng-options="lang for lang in fesettings.activatedLanguages">
+                    <option value="" data-i18n="_default_"></option>
+                </select>
+            </form>
+
+            <!-- USERNAME -->
+            <form name="profileUsername" ng-submit="storeUserName()">
+                <h2 data-i18n="_changeUsername_">Username</h2>
+                <p><span data-i18n="_currentUsername_">aktueller Benutzername</span>: {{ user.displayName }}</p>
+                <input name="username" type="text" ng-model="user.newDisplayName"/><br/>
+                <input type="submit" value="{{'_save_'|i18n}}"
+                        ng-disabled="!profileUsername.username.$dirty"/>
+                <p ng-show="usernameChanged && !serverError"
+                   data-i18n="_usernameChanged_">
+                    Benutzername erfolgreich geändert.
+                </p>
+                <div ng-if="changeUsernameError" class="help-error">
+                    {{changeUsernameError.errorID | i18n}} <br>
+                    {{changeUsernameError.additionalInfo | json}} </div>
+            </form>
+
+            <!-- PASSWORD -->
+            <form name="profilePassword" ng-submit="changePassword()">
+                <h2 data-i18n="_changePassword_">change Password</h2>
+                <p data-i18n="_changePasswordDescription_" ></p>
+                <div data-i18n="_passwordHints_" class="passwordHint" >
+                    Wir empfehlen ein Passwort mit 8 oder mehr Zeichen. Bitte verwende sowohl Groß- und
+                    Kleinschreibung als auch Sonderzeichen in deinem Passwort.
+                </div>
+
+                <input type="password" name="password" ng-model="password" /><br />
+                <input type="password" name="password2" match="password" ng-model="password2" /><br/>
+
+                <p ng-show="profilePassword.password2.$error.match"
+                   class="help-error" data-i18n="_passwordMismatch_"></p>
+
+                <input type="submit" value="{{'_save_'|i18n}}" ng-disabled="!profilePassword.password.$dirty">
+                <p ng-show="passwordChanged && !serverError"
+                   data-i18n="_passwordChanged_">
+                    Passwort erfolgreich geändert.
+                </p>
+
+                <p ng-if="changePasswordError" class="help-error">
+                    {{changePasswordError.errorID | i18n}} <br>
+                    {{changePasswordError.additionalInfo | json}} </p>
+            </form>
+
+
+            <!-- DELETE ACCOUNT -->
+            <h2 data-i18n="_deleteAccount_" style="margin-top: 3em;">delete Account</h2>
+            <p data-i18n="_deleteAccountExplanation_"></p>
+            <form ng-submit="deleteAccount()">
+                <input type="submit" value="{{'_deleteAccount_'|i18n}}">
+            </form>
+
+        </div>
+        <div class="backgroundBox" ng-if="!user.isLoggedIn">
+            <h1 data-i18n="_notLoggedIn_"></h1>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>

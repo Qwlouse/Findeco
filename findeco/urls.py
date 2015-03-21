@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,24 +18,24 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from findeco import settings
 from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from findeco.api_validation import USERNAME
-from findeco.paths import PATH, RESTRICTED_PATH
+from findeco.paths import PATH, UNNAMED_PATH, RESTRICTED_PATH
 from microblogging.urls import microblogging_patterns
 import sys
 
 admin.autodiscover()
-if not 'test' in sys.argv:
+if 'test' not in sys.argv:
     django_cron.autodiscover()
 
 
@@ -44,7 +44,7 @@ SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)' \
                 r'(_(user|content|microblogging))*))'
 
 
-########### Findeco API Calls ###########
+# ########## Findeco API Calls ###########
 urlpatterns = patterns(
     'findeco.views',
 
@@ -153,9 +153,17 @@ urlpatterns = patterns(
         name='unflag_node'),
 
     # ----- Store Nodes  -----
-    url(r'^\.storeText/' + PATH + '$',
-        'store_text',
-        name='store_text'),
+    url(r'^\.storeProposal/' + PATH + '$',
+        'store_proposal',
+        name='store_proposal'),
+
+    url(r'^\.storeRefinement/' + PATH + '$',
+        'store_refinement',
+        name='store_refinement'),
+
+    url(r'^\.storeArgument/' + PATH + '$',
+        'store_argument',
+        name='store_argument'),
 
     # ----- Search  -----
     url(r'^\.search/'+SEARCH_FIELDS+'/(?P<search_string>(.*))$',
@@ -164,7 +172,7 @@ urlpatterns = patterns(
 )
 
 
-########### Frontend Testing URLs ###########
+# ########## Frontend Testing URLs ###########
 if settings.DEBUG:
     urlpatterns += patterns(
         '',
@@ -172,10 +180,10 @@ if settings.DEBUG:
             name='jasmine_test_runner')
     )
 
-########### Microblogging API ###########
+# ########## Microblogging API ###########
 urlpatterns += microblogging_patterns
 
-########### Other urls ###########
+# ########## Other urls ###########
 urlpatterns += patterns(
     '',
 
@@ -185,10 +193,9 @@ urlpatterns += patterns(
     # admin interface
     url(r'^\.admin/?', include(admin.site.urls)),
 
-    url(r'^' + PATH + '$', 'findeco.views.home', name='home'),
+    url(r'^' + UNNAMED_PATH + '$', 'findeco.views.home', name='home'),
 
-    url(r'^[^.].*', 'findeco.views.home', name='home',
-        kwargs={'path': 'wildcard'}),
+    url(r'^[^.].*', 'findeco.views.home', name='home'),
 )
 
 

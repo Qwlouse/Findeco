@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+# #############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,30 +18,29 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# #############################################################################
 #
-################################################################################
+# #############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 from __future__ import division, print_function, unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Max, Count
 
 
-###################### Nodes, Arguments and Texts ##############################
+# ##################### Nodes, Arguments and Texts ############################
+
 class Node(models.Model):
     ARGUMENT = 'a'
     STRUCTURE_NODE = 'l'
     SLOT = 's'
-    TEXTNODE = 't'
     NODETYPE = (
         (ARGUMENT, 'Argument'),
         (STRUCTURE_NODE, 'StructureNode'),
-        (SLOT, 'Slot'),
-        (TEXTNODE, 'TextNode')
+        (SLOT, 'Slot')
     )
 
     parents = models.ManyToManyField(
@@ -65,7 +64,7 @@ class Node(models.Model):
 
     def append_child(self, child):
         assert PathCache.objects.filter(node=self).count() > 0, \
-            "You cannot add children to nodes that are not descendants of root."
+            "You cannot add children to nodes that are not descendants of root"
 
         no = NodeOrder()
         no.parent = self
@@ -90,6 +89,14 @@ class Node(models.Model):
 
     def add_derivate(self, derivate, arg_type=None, title="", text="",
                      authors=()):
+        """
+        Adds the given StructureNode as a derivative of this node.
+        It takes care of transitive votes (but make sure to add the autofollow
+        to the derivate BEFORE calling this function)
+        It also copies all the arguments and generates a new derivation
+        argument if the corresponding values are provided.
+        Lastly it adds all the authors of this node to the derivate node.
+        """
         for vote in self.votes.all():
             if derivate.votes.filter(user=vote.user).count() == 0:
                 vote.nodes.add(derivate)
@@ -105,12 +112,24 @@ class Node(models.Model):
                 copy_argument_text_obj.authors.add(author)
             copy_argument_text_obj.save()
             argument.add_derivate(copy_argument)
+
+        for a in self.text.authors.all():
+            derivate.text.authors.add(a)
+
         derivate.update_favorite_for_all_parents()
         if arg_type or title or text or len(authors) > 0:
             arg_type = Argument.short_arg_type(arg_type)
             source_argument = Argument(arg_type=arg_type, title=title,
                                        node_type=Node.ARGUMENT, concerns=self)
             source_argument.save()
+            for a in authors:
+                # auto-follow
+                v = Vote()
+                v.user = a
+                v.save()
+                v.nodes.add(source_argument)
+                v.save()
+
             source_argument_text_obj = Text(node=source_argument, text=text)
             source_argument_text_obj.save()
             for author in authors:
@@ -118,7 +137,8 @@ class Node(models.Model):
             source_argument_text_obj.save()
         else:
             source_argument = None
-        d = Derivation(argument=source_argument, source=self, derivate=derivate)
+        d = Derivation(argument=source_argument, source=self,
+                       derivate=derivate)
         d.save()
         return source_argument
 
@@ -279,10 +299,11 @@ class Text(models.Model):
     )
 
     def __unicode__(self):
-        return "id=%d, text=%s" % (self.id, self.text[:min(len(self.text), 30)])
+        return "id=%d, text=%s" % (self.id,
+                                   self.text[:min(len(self.text), 30)])
 
 
-############################# Relations ########################################
+# ############################ Relations ######################################
 class Derivation(models.Model):
     derivate = models.ForeignKey(Node, related_name='source_order_set')
     source = models.ForeignKey(Node, related_name='derivative_order_set')
@@ -310,7 +331,7 @@ class NodeOrder(models.Model):
                                                       self.parent_id)
 
 
-################################# Votes ########################################
+# ################################ Votes ######################################
 class Vote(models.Model):
     user = models.ForeignKey(User)
     nodes = models.ManyToManyField(
@@ -333,7 +354,7 @@ class SpamFlag(models.Model):
         return "id=%d, user=%s" % (self.id, self.user.username)
 
 
-################################# Caches #######################################
+# ################################ Caches #####################################
 class TextCache(models.Model):
     path = models.CharField(max_length=250, primary_key=True)
     paragraphs = models.TextField()
