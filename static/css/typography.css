@@ -182,6 +182,11 @@ input[type=submit]:disabled, button:disabled {
     text-align: center;
 }
 
+.white-on-shadow {
+    color: #ffffff;
+    text-shadow: 0 0 5px #000;
+}
+
 /* Styling for the diff page */
 
 pre.diff {

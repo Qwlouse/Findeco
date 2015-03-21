@@ -33,12 +33,12 @@
 }
 
 svg .link {
-    stroke: #6d6d6d;
+    stroke: #3D3D3D;
     stroke-width: 2px;
 }
 
 svg .linkHead {
-    fill: #6d6d6d;
+    fill: #3D3D3D;
 }
 
 svg .nodeBackgroundCircle {
@@ -68,7 +68,7 @@ svg .inactive .nodeBackgroundCircle.spamNode {
 
 
 svg .nodeShadow {
-    fill: #999;
+    fill: #4B505E;
 }
 
 svg .nodeLabel {
