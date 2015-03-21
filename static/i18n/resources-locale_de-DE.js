@@ -1388,5 +1388,10 @@
         "key"        : "_noMicroblogging_",
         "value"      : "Noch kein Microblogging.",
         "description": ""
+    },
+    {
+        "key"        : "_EmailAddressNotAvailable",
+        "value"      : "Diese E-Mail Adresse ist leider schon vergeben.",
+        "description": ""
     }
 ]

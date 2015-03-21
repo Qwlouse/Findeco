@@ -569,7 +569,7 @@ def account_registration(request):
 
     # Check for already existing Mail
     if User.objects.filter(email__iexact=email_address).count():
-        raise EmailAddressNotAvailiable(email_address)
+        raise EmailAddressNotAvailable(email_address)
 
     user = create_user(display_name,
                        description="",
