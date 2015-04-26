@@ -27,7 +27,7 @@
 #endregion #####################################################################
 
 from django.core.exceptions import ObjectDoesNotExist
-from microblogging import delete_posts_referring_to
+from microblogging.tools import delete_posts_referring_to
 from node_storage.models import TextCache, Vote, Argument
 from node_storage.models import IndexCache, Node
 from node_storage.path_helpers import get_all_paths_for_node

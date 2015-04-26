@@ -29,7 +29,7 @@
 from django.contrib.auth.models import User, Group
 from findeco.paths import parse_path
 from node_storage.models import Node, Text, Vote, Argument, SpamFlag
-from node_storage import get_node_for_path, IllegalPath, get_root_node
+from node_storage.path_helpers import get_node_for_path, IllegalPath, get_root_node
 from node_storage.validation import valid_title, general_heading
 
 

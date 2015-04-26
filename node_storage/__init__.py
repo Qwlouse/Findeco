@@ -25,12 +25,3 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #endregion #####################################################################
-
-from node_storage.models import Node, Vote, SpamFlag, Argument, Text, NodeOrder, TextCache
-from node_storage.models import IndexCache
-from node_storage.path_helpers import get_node_for_path, get_favorite_if_slot
-from node_storage.path_helpers import get_ordered_children_for
-from node_storage.path_helpers import IllegalPath, get_root_node
-from node_storage.structure_parser import parse, create_structure_from_structure_node_schema
-from node_storage.structure_parser import get_title_from_text, split_title_from_text
-from node_storage.structure_parser import create_derivate_from_structure_node_schema

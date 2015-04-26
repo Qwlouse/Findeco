@@ -33,7 +33,7 @@ from django.db import models
 from django.utils.html import escape
 from django.utils.translation import ugettext
 
-import node_storage
+import node_storage.models as node_storage_models
 
 WORDSTART = r"(?:(?<=\s)|\A)"
 WORDEND = r"\b"
@@ -71,12 +71,12 @@ class Post(models.Model):
     )
 
     node_references = models.ManyToManyField(
-        node_storage.Node,
+        node_storage_models.Node,
         symmetrical=False,
         related_name='microblogging_references',
         blank=True)
     location = models.ForeignKey(
-        node_storage.Node,
+        node_storage_models.Node,
         related_name='microblogging_from_here',
         blank=False,
         null=False)

@@ -43,7 +43,7 @@ from findeco.settings import ACTIVATION_KEY_VALID_FOR, ADMIN_PASS
 from findeco.settings import RECOVERY_KEY_VALID_FOR
 import microblogging.models as microblogging_models
 import node_storage.models as node_storage_models
-from node_storage import Node, Text
+from node_storage.models import Node, Text
 
 
 def generate_key(nr_of_chars=64):
@@ -338,7 +338,7 @@ def create_groups():
 
 
 # noinspection PyUnusedLocal
-def initialize_database(*sender, **kwargs):
+def initialize_database(sender, **kwargs):
     create_admin()
     create_system_user()
     create_anonymous_user()
@@ -350,10 +350,10 @@ def initialize_groups(sender, **kwargs):
     create_groups()
 
 
-signals.post_syncdb.connect(initialize_database,
-                            sender=node_storage_models,
-                            dispatch_uid='findeco.models.initialize_database')
+signals.post_migrate.connect(initialize_database,
+                             sender=node_storage_models,
+                             dispatch_uid='findeco.models.initialize_database')
 
-signals.post_syncdb.connect(initialize_groups,
-                            sender=microblogging_models,
-                            dispatch_uid='findeco.models.initialize_groups')
+signals.post_migrate.connect(initialize_groups,
+                             sender=microblogging_models,
+                             dispatch_uid='findeco.models.initialize_groups')

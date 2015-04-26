@@ -31,7 +31,7 @@ import re
 
 from node_storage.path_helpers import get_good_path_for_structure_node
 from node_storage.factory import create_structureNode, create_slot, create_vote
-from node_storage import Node
+from node_storage.models import Node
 from node_storage.validation import (h1_start, general_heading, get_heading_matcher,
                                      turn_into_valid_short_title)
 

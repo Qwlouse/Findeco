@@ -26,31 +26,25 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
 
-import json
-import functools
 import re
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
-from django.http import HttpResponse
 
-from microblogging import change_microblogging_authorship
-import node_storage as backend
-from node_storage import get_node_for_path, get_ordered_children_for, parse
-from node_storage import create_structure_from_structure_node_schema
-from node_storage.factory import create_argument, create_vote
+from microblogging.tools import change_microblogging_authorship
+import node_storage.models as backend_models
+from node_storage.path_helpers import get_node_for_path, get_ordered_children_for
+from node_storage.factory import create_vote
 from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
 from node_storage.path_helpers import get_good_path_for_structure_node
-from node_storage.structure_parser import turn_into_valid_short_title
 from findeco.models import EmailActivation
 
 from .api_validation import USERNAME
 from .api_validation import validate_response
 from .error_handling import *
 from .paths import parse_suffix, SHORT_TITLE
-from node_storage.models import Node
 
 
 def json_response(data):
@@ -58,7 +52,7 @@ def json_response(data):
                         content_type='application/json')
 
 
-def ValidPaths(*allowed_path_types):
+def valid_paths(*allowed_path_types):
     def wrapper(f):
         @functools.wraps(f)
         def wrapped(request, path, *args, **kwargs):
@@ -74,7 +68,7 @@ def ValidPaths(*allowed_path_types):
                 path_type = 'StructureNode'
             if path_type not in allowed_path_types:
                 return json_error_response('_IllegalPath', path)
-                #noinspection PyCallingNonCallable
+                # noinspection PyCallingNonCallable
             response = f(request, path, *args, **kwargs)
             validate_response(response.content, f.__name__)
             return response
@@ -86,8 +80,8 @@ def ValidPaths(*allowed_path_types):
 
 def assert_node_for_path(path):
     try:
-        node = backend.get_node_for_path(path)
-    except backend.IllegalPath:
+        node = get_node_for_path(path)
+    except IllegalPath:
         raise UnknownNode(path)
     return node
 
@@ -129,15 +123,15 @@ def assert_request_data_parameters(request_data, parameters):
 def get_index_nodes_for_path(path):
     path = path.strip().strip('/')
     try:  # to get from cache
-        index_cache = backend.IndexCache.objects.get(path=path)
+        index_cache = backend_models.IndexCache.objects.get(path=path)
         index_nodes = json.loads(index_cache.index_nodes)
-    except backend.IndexCache.DoesNotExist:
+    except backend_models.IndexCache.DoesNotExist:
         node = assert_node_for_path(path)
-        slot_list = backend.get_ordered_children_for(node)
+        slot_list = get_ordered_children_for(node)
         index_nodes = [create_index_node_for_slot(slot) for slot in slot_list]
         # write to cache
         index_cache = json.dumps(index_nodes)
-        backend.IndexCache.objects.create(path=path, index_nodes=index_cache)
+        backend_models.IndexCache.objects.create(path=path, index_nodes=index_cache)
     return index_nodes
 
 
@@ -223,7 +217,7 @@ def create_paragraph_for_node(node, path, depth=1):
 
 def create_paragraph_list_for_node(node, path, depth=1):
     paragraphs = [create_paragraph_for_node(node, path, depth=depth)]
-    for slot in backend.get_ordered_children_for(node):
+    for slot in get_ordered_children_for(node):
         favorite = slot.favorite
         slot_path = path + "/" + slot.title
         fav_path = get_good_path_for_structure_node(favorite, slot, slot_path)
@@ -285,7 +279,7 @@ def follow_node(node, user_id):
         mark = marks[0]
         if mark.head() != node:
             mark.nodes.remove(node)
-            new_mark = backend.Vote()
+            new_mark = backend_models.Vote()
             new_mark.user_id = user_id
             new_mark.save()
             new_mark.nodes.add(node)
@@ -298,7 +292,7 @@ def follow_node(node, user_id):
             for n in node.traverse_derivates(subset=mark.nodes.all()):
                 n.update_favorite_for_all_parents()
     else:
-        mark = backend.Vote()
+        mark = backend_models.Vote()
         mark.user_id = user_id
         mark.save()
         mark.nodes.add(node)
@@ -337,7 +331,7 @@ def change_authorship_to(old_user, new_user):
     # Changing authorship in texts
     for text in old_user.author_in.all():
         text.authors.remove(old_user)
-        if not new_user in text.authors.all():
+        if new_user not in text.authors.all():
             text.authors.add(new_user)
         text.save()
     # Changing authorship in microblogging

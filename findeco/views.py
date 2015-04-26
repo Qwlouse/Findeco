@@ -42,13 +42,14 @@ from findeco.project_path import project_path
 from findeco.search_tools import get_search_query
 
 from .view_helpers import *
-from microblogging import search_for_microblogging
+from microblogging.tools import search_for_microblogging
 from microblogging.system_messages import (
     post_node_was_flagged_message, post_new_derivate_for_node_message,
     post_new_argument_for_node_message, post_node_was_unflagged_message)
 from findeco.models import (UserProfile, Activation, PasswordRecovery,
                             EmailActivation)
-import node_storage as backend
+import node_storage.models as backend_models
+from node_storage.path_helpers import get_root_node, get_node_for_path, get_ordered_children_for
 from node_storage.factory import create_user
 
 
@@ -99,15 +100,15 @@ def search(request, search_fields, search_string):
     content_results = []
     if 'content' in things_to_search_for:
         node_query = get_search_query(search_string, ['title', ])
-        found_titles = backend.Node.objects.filter(node_query).exclude(
-            node_type=backend.Node.SLOT).order_by("-id")
+        found_titles = backend_models.Node.objects.filter(node_query).exclude(
+            node_type=backend_models.Node.SLOT).order_by("-id")
         for node in found_titles:
             content_results.append({
                 "url": node.get_a_path(),
                 "title": node.title,
                 "snippet": node.text.text[:min(len(node.text.text), 140)]})
         text_query = get_search_query(search_string, ['text', ])
-        found_texts = backend.Text.objects.filter(text_query).order_by("-id")
+        found_texts = backend_models.Text.objects.filter(text_query).order_by("-id")
         for text_node in found_texts:
             content_results.append({
                 "url": text_node.node.get_a_path(),
@@ -124,13 +125,13 @@ def search(request, search_fields, search_string):
 
 
 # ################### Node Infos ##############################################
-@ValidPaths("StructureNode")
+@valid_paths("StructureNode")
 @ViewErrorHandling
 def load_index(request, path):
     return json_response({'loadIndexResponse': get_index_nodes_for_path(path)})
 
 
-@ValidPaths("StructureNode")
+@valid_paths("StructureNode")
 @ViewErrorHandling
 def load_argument_index(request, path):
     prefix, path_type = parse_suffix(path)
@@ -141,7 +142,7 @@ def load_argument_index(request, path):
     return json_response({'loadArgumentIndexResponse': data})
 
 
-@ValidPaths("StructureNode", "Argument")
+@valid_paths("StructureNode", "Argument")
 @ViewErrorHandling
 def load_node(request, path):
     node = assert_node_for_path(path)
@@ -158,25 +159,25 @@ def load_node(request, path):
     }})
 
 
-@ValidPaths("StructureNode")
+@valid_paths("StructureNode")
 @ViewErrorHandling
 def load_graph_data(request, path, graph_data_type):
     if not path.strip('/'):  # root node!
-        nodes = [backend.get_root_node()]
+        nodes = [get_root_node()]
         # related_nodes = []
     else:
         slot_path = path.rsplit('.', 1)[0]
         slot = assert_node_for_path(slot_path)
         if graph_data_type == "withSpam":
             # This means display ALL nodes
-            nodes = backend.get_ordered_children_for(slot)
+            nodes = get_ordered_children_for(slot)
         else:  # if graph_data_type == 'full':
-            nodes = backend.Node.objects.filter(parents=slot)\
+            nodes = backend_models.Node.objects.filter(parents=slot)\
                 .annotate(spam_count=Count('spam_flags', distinct=True))\
                 .filter(spam_count__lt=2)\
                 .filter(votes__isnull=False)
 
-        current_node = backend.get_node_for_path(path)
+        current_node = get_node_for_path(path)
         nodes = list(nodes)
         if current_node not in nodes:
             nodes.append(current_node)
@@ -187,23 +188,23 @@ def load_graph_data(request, path, graph_data_type):
     return json_response({'loadGraphDataResponse': data})
 
 
-@ValidPaths("StructureNode", "Argument")
+@valid_paths("StructureNode", "Argument")
 @ViewErrorHandling
 def load_text(request, path):
     path = path.strip().strip('/')
     try:
         # try to load from cache
-        t = backend.TextCache.objects.get(path=path)
+        t = backend_models.TextCache.objects.get(path=path)
         paragraphs = json.loads(t.paragraphs)
-    except backend.TextCache.DoesNotExist:
+    except backend_models.TextCache.DoesNotExist:
         node = assert_node_for_path(path)
         paragraphs = create_paragraph_list_for_node(node, path, depth=2)
         # write to cache
         t = json.dumps(paragraphs)
-        backend.TextCache.objects.create(path=path, paragraphs=t)
+        backend_models.TextCache.objects.create(path=path, paragraphs=t)
 
     for p in paragraphs:
-        node = backend.Node.objects.get(id=p['_node_id'])
+        node = backend_models.Node.objects.get(id=p['_node_id'])
         p['isFollowing'] = get_is_following(request.user.id, node)
         p['isFlagging'] = get_is_flagging(request.user.id, node)
         del p['_node_id']
@@ -251,7 +252,7 @@ def load_argument_news(request):
 
 
 # ##################### Store/Modify Nodes ####################################
-@ValidPaths("StructureNode")
+@valid_paths("StructureNode")
 @ViewErrorHandling
 def store_proposal(request, path):
     assert_authentication(request)
@@ -272,7 +273,7 @@ def store_proposal(request, path):
     return json_response({'storeProposalResponse': {'path': new_path}})
 
 
-@ValidPaths("StructureNode")
+@valid_paths("StructureNode")
 @ViewErrorHandling
 def store_refinement(request, path):
     assert_authentication(request)
@@ -299,7 +300,7 @@ def store_refinement(request, path):
     return json_response({'storeRefinementResponse': {'path': new_path}})
 
 
-@ValidPaths("StructureNode")
+@valid_paths("StructureNode")
 @ViewErrorHandling
 def store_argument(request, path):
     assert_authentication(request)
@@ -326,7 +327,7 @@ def store_argument(request, path):
     return json_response({'storeArgumentResponse': {'path': new_path}})
 
 
-@ValidPaths("StructureNode", "Argument")
+@valid_paths("StructureNode", "Argument")
 @ViewErrorHandling
 def flag_node(request, path):
     assert_authentication(request)
@@ -336,7 +337,7 @@ def flag_node(request, path):
 
     marks = node.spam_flags.filter(user=user.id).all()
     if marks.count() == 0:
-        new_mark = backend.SpamFlag()
+        new_mark = backend_models.SpamFlag()
         new_mark.node = node
         new_mark.user_id = request.user.id
         new_mark.save()
@@ -347,7 +348,7 @@ def flag_node(request, path):
     return json_response({'markNodeResponse': {}})
 
 
-@ValidPaths("StructureNode", "Argument")
+@valid_paths("StructureNode", "Argument")
 @ViewErrorHandling
 def unflag_node(request, path):
     assert_authentication(request)
@@ -365,7 +366,7 @@ def unflag_node(request, path):
     return json_response({'markNodeResponse': {}})
 
 
-@ValidPaths("StructureNode", "Argument")
+@valid_paths("StructureNode", "Argument")
 @ViewErrorHandling
 def mark_node_follow(request, path):
     assert_authentication(request)
@@ -377,7 +378,7 @@ def mark_node_follow(request, path):
     return json_response({'markNodeResponse': {}})
 
 
-@ValidPaths("StructureNode", "Argument")
+@valid_paths("StructureNode", "Argument")
 @ViewErrorHandling
 def mark_node_unfollow(request, path):
     assert_authentication(request)
