@@ -34,8 +34,7 @@ This file contains models for the basic Project structure:
 from datetime import datetime
 import random
 
-from django.contrib.auth import models as auth_models
-from django.contrib.auth.management import create_superuser
+from django.contrib.auth import models as auth_models, create_superuser
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models import signals
