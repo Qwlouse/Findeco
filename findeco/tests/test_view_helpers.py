@@ -29,7 +29,7 @@
 from django.test import TestCase
 from findeco.view_helpers import get_is_following
 
-from node_storage import get_root_node, Node
+from node_storage.path_helpers import get_root_node
 from node_storage.factory import (
     create_user, create_slot, create_textNode, create_vote,
     create_structureNode, create_argument, create_spam_flag)
