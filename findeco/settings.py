@@ -165,7 +165,7 @@ INSTALLED_APPS = (
     'findeco',
     'node_storage',
     'microblogging',
-    'libs.django_cron'     # Cron Jobs
+    'django_cron'     # Cron Jobs
 )
 
 # A sample logging configuration. The only tangible logging
