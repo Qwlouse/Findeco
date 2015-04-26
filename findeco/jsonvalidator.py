@@ -100,7 +100,7 @@ class BaseHandler(object):
 class StringHandler(BaseHandler):
     def validate(self, data):
         data = super(StringHandler, self).validate(data)
-        if data and not isinstance(data, basestring):
+        if data and not isinstance(data, str):
             raise JSONValidationError("data is not a string: %s" % str(data))
         return data
 
@@ -108,7 +108,7 @@ class StringHandler(BaseHandler):
 class NumberHandler(BaseHandler):
     def validate(self, data):
         data = super(NumberHandler, self).validate(data)
-        if data and not isinstance(data, (int, long, float)):
+        if data and not isinstance(data, (int, float)):
             raise JSONValidationError("data is not a number: %s" % str(data))
         return data
 
@@ -123,7 +123,7 @@ class BooleanHandler(BaseHandler):
 
 class NullHandler(BaseHandler):
     def validate(self, data):
-        if not isinstance(data, types.NoneType):
+        if data is not None:
             raise JSONValidationError("data is not null: %s" % str(data))
         return data
 
@@ -168,7 +168,7 @@ class ArrayHandler(BaseHandler):
         data = super(ArrayHandler, self).validate(data)
         if not isinstance(data, list):
             raise JSONValidationError("data is not an array")
-        if self.handlers and not self.handlers.get(types.NoneType,
+        if self.handlers and not self.handlers.get(type(None),
                                                    False) and not data:
             raise JSONValidationError("this array should not be empty")
         for value in data:
@@ -181,9 +181,7 @@ class ArrayHandler(BaseHandler):
 
 
 HANDLERS_BY_TYPE = {str: StringHandler,
-                    unicode: StringHandler,
                     int: NumberHandler,
-                    long: NumberHandler,
                     float: NumberHandler,
                     dict: ObjectHandler,
                     list: ArrayHandler,
@@ -194,7 +192,7 @@ HANDLERS_BY_TYPE = {str: StringHandler,
 def getValidator(schema):
     required = True
     _type = type(schema)
-    if _type in types.StringTypes:
+    if _type is str:
         if schema.startswith("number"):
             _type = int
         elif schema.startswith("bool"):
@@ -211,13 +209,13 @@ class JSONValidator(object):
     validator = None
 
     def __init__(self, schema):
-        if isinstance(schema, basestring):
+        if isinstance(schema, str):
             schema = json.loads(schema)
         _type, self.validator = getValidator(schema)
 
     def validate(self, data):
         if self.validator:
-            if isinstance(data, basestring):
+            if isinstance(data, str):
                 parsedData = json.loads(data)
                 data = parsedData
             return self.validator(data)
