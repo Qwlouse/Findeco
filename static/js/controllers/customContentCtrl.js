@@ -26,7 +26,7 @@
 
 findecoApp.controller('FindecoCustomContentCtrl', function ($scope, $http, Navigator) {
     $scope.content = undefined;
-    $scope.path = '/static/customContent/' + Navigator.prefix + '.html';
+    $scope.path = '/static/customContent/' + Navigator.path + '.html';
 
     $http.get($scope.path).success(function (d) {
         $scope.content = d;
