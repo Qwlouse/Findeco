@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
@@ -25,6 +25,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
+
 from django.contrib.auth.models import User, Group
 from findeco.paths import parse_path
 from node_storage.models import Node, Text, Vote, Argument, SpamFlag

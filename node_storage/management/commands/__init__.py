@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.

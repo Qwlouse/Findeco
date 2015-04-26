@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
@@ -25,11 +25,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #endregion #####################################################################
+
 from django.core import mail
 from django.test import LiveServerTestCase
 from nose.plugins.attrib import attr
 from selenium import webdriver
 import time
+
 
 @attr('selenium')
 class TestFePageRegistration(LiveServerTestCase):

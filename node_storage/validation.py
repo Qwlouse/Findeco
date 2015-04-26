@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
-from __future__ import division, print_function, unicode_literals
+
 import re
 import unicodedata
 
