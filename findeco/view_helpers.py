@@ -36,7 +36,7 @@ from findeco.jsonvalidator import json_decode
 
 from microblogging.tools import change_microblogging_authorship
 import node_storage.models as backend_models
-from node_storage.path_helpers import get_node_for_path, get_ordered_children_for
+from node_storage.path_helpers import get_node_for_path, get_ordered_children_for, IllegalNodePath
 from node_storage.factory import create_vote
 from node_storage.factory import create_structureNode, create_slot
 from node_storage.models import Argument
@@ -83,7 +83,7 @@ def valid_paths(*allowed_path_types):
 def assert_node_for_path(path):
     try:
         node = get_node_for_path(path)
-    except IllegalPath:
+    except IllegalNodePath:
         raise UnknownNode(path)
     return node
 

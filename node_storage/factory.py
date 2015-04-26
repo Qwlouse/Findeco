@@ -29,7 +29,7 @@
 from django.contrib.auth.models import User, Group
 from findeco.paths import parse_path
 from node_storage.models import Node, Text, Vote, Argument, SpamFlag
-from node_storage.path_helpers import get_node_for_path, IllegalPath, get_root_node
+from node_storage.path_helpers import get_node_for_path, IllegalNodePath, get_root_node
 from node_storage.validation import valid_title, general_heading
 
 
@@ -133,7 +133,7 @@ def create_nodes_for_path(path, authors=()):
         current_path += '/' + short_title
         try:
             current_slot = get_node_for_path(current_path)
-        except IllegalPath:
+        except IllegalNodePath:
             current_slot = create_slot(short_title)
             current_node.append_child(current_slot)
 
@@ -141,7 +141,7 @@ def create_nodes_for_path(path, authors=()):
         current_path += '.' + str(index)
         try:
             current_node = get_node_for_path(current_path)
-        except IllegalPath:
+        except IllegalNodePath:
             if current_slot.child_order_set.count() == 0:
                 highest_index = 0
             else:

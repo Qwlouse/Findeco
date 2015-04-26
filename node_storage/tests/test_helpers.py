@@ -32,7 +32,7 @@ from node_storage.models import Node
 from node_storage.path_helpers import get_root_node
 from ..path_helpers import get_favorite_if_slot, get_ordered_children_for, get_node_for_path
 from ..path_helpers import get_good_path_for_structure_node
-from ..path_helpers import IllegalPath
+from ..path_helpers import IllegalNodePath
 from ..factory import create_slot, create_structureNode, create_textNode, create_vote, create_argument, create_user
 
 class HelpersTest(TestCase):
@@ -134,9 +134,9 @@ class HelpersTest(TestCase):
         self.assertEqual(node, self.subsubslot1)
         node = get_node_for_path("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.1")
         self.assertEqual(node, self.argument1)
-        self.assertRaises(IllegalPath, get_node_for_path, ("Slot_4.1/SubSlot_1.1/BlubbBlubbSlot_1.1.pro.1"))
-        self.assertRaises(IllegalPath, get_node_for_path, ("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.77"))
-        self.assertRaises(IllegalPath, get_node_for_path, ("Slot_4.1/SubSlot_1.8437256/SubSubSlot_1.1.pro.1"))
+        self.assertRaises(IllegalNodePath, get_node_for_path, ("Slot_4.1/SubSlot_1.1/BlubbBlubbSlot_1.1.pro.1"))
+        self.assertRaises(IllegalNodePath, get_node_for_path, ("Slot_4.1/SubSlot_1.1/SubSubSlot_1.1.pro.77"))
+        self.assertRaises(IllegalNodePath, get_node_for_path, ("Slot_4.1/SubSlot_1.8437256/SubSubSlot_1.1.pro.1"))
 
     def test_get_good_path_for_structure_node(self):
         path = get_good_path_for_structure_node(self.subsubtext1)

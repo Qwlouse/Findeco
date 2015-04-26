@@ -30,12 +30,12 @@
 from findeco.models import get_system_user
 from microblogging.models import Post
 from microblogging.view_helpers import notify_derivate, notify_new_argument
-import node_storage
+from node_storage.path_helpers import get_node_for_path
 
 
 def post_node_was_flagged_message(path, user):
     post = Post()
-    post.location = node_storage.get_node_for_path(path)
+    post.location = get_node_for_path(path)
     post.author = get_system_user()
     post.post_type = Post.SPAM_MARKED
     post.save()
@@ -47,7 +47,7 @@ def post_node_was_flagged_message(path, user):
 
 def post_node_was_unflagged_message(path, user):
     post = Post()
-    post.location = node_storage.get_node_for_path(path)
+    post.location = get_node_for_path(path)
     post.author = get_system_user()
     post.post_type = Post.SPAM_UNMARKED
     post.save()
@@ -60,8 +60,8 @@ def post_node_was_unflagged_message(path, user):
 def post_new_derivate_for_node_message(user, original_path, derivate_path):
     post = Post()
 
-    original_node = node_storage.get_node_for_path(original_path)
-    derivate_node = node_storage.get_node_for_path(derivate_path)
+    original_node = get_node_for_path(original_path)
+    derivate_node = get_node_for_path(derivate_path)
 
     post.location = original_node
     post.post_type = Post.NODE_REFINED
@@ -86,12 +86,12 @@ def post_new_derivate_for_node_message_list(user, path_couples):
 
 def post_new_argument_for_node_message(user, path, arg_type, arg_path):
     post = Post()
-    post.location = node_storage.get_node_for_path(path)
+    post.location = get_node_for_path(path)
     post.author = get_system_user()
     post.post_type = Post.ARGUMENT_CREATED
     post.save()
     post.mentions = [user]
-    post.node_references = [node_storage.get_node_for_path(arg_path),
+    post.node_references = [get_node_for_path(arg_path),
                             post.location]
     post.render()
 

@@ -31,7 +31,7 @@ from node_storage.models import Node, NodeOrder, PathCache, Argument
 import re
 
 
-class IllegalPath(Exception):
+class IllegalNodePath(Exception):
     pass
 
 
@@ -49,7 +49,7 @@ def get_node_for_path(path):
     """
     nodes = PathCache.objects.filter(path=path.strip('/'))
     if nodes.count() == 0:
-        raise IllegalPath(path)
+        raise IllegalNodePath(path)
 
     node = nodes[0].node
     if is_argument(path):

@@ -28,14 +28,14 @@
 
 from django.test import TestCase
 from microblogging.factory import create_post
-from node_storage import Text, Node, Argument, TextCache, IndexCache
+from node_storage.models import Text, Node, Argument, TextCache, IndexCache
 from node_storage.factory import create_slot, create_structureNode
 from node_storage.factory import create_vote, create_user, create_spam_flag
 from node_storage.factory import create_argument
 from node_storage.models import PathCache
 from node_storage.tools import delete_node
 from node_storage.path_helpers import get_root_node, get_node_for_path
-from node_storage.path_helpers import IllegalPath
+from node_storage.path_helpers import IllegalNodePath
 
 
 class ToolsTest(TestCase):
@@ -82,7 +82,7 @@ class ToolsTest(TestCase):
     def test_delete_node_removes_node(self):
         node = get_node_for_path(self.path)
         delete_node(node)
-        self.assertRaises(IllegalPath, get_node_for_path, self.path)
+        self.assertRaises(IllegalNodePath, get_node_for_path, self.path)
 
     def test_delete_node_removes_votes(self):
         self.assertEqual(self.udo.vote_set.count(), 2)

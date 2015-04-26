@@ -32,7 +32,7 @@ from django.contrib.auth.models import User
 from findeco.api_validation import USERNAME
 from findeco.paths import RESTRICTED_PATH
 from microblogging.models import Post
-from node_storage.path_helpers import get_node_for_path, IllegalPath
+from node_storage.path_helpers import get_node_for_path, IllegalNodePath
 
 
 def keyword(pattern):
@@ -50,7 +50,7 @@ def extract_references(text):
         try:
             get_node_for_path(r)
             references.add(r)
-        except IllegalPath:
+        except IllegalNodePath:
             pass
     references = sorted(references)
 
