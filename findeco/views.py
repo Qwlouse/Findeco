@@ -38,6 +38,7 @@ from django.db.models import Count
 from django.utils.html import escape
 from django.utils.translation import ugettext
 from django.views.decorators.csrf import ensure_csrf_cookie
+from findeco.jsonvalidator import json_decode
 from findeco.project_path import project_path
 from findeco.search_tools import get_search_query
 
@@ -196,7 +197,7 @@ def load_text(request, path):
     try:
         # try to load from cache
         t = backend_models.TextCache.objects.get(path=path)
-        paragraphs = json.loads(t.paragraphs)
+        paragraphs = json_decode(t.paragraphs)
     except backend_models.TextCache.DoesNotExist:
         node = assert_node_for_path(path)
         paragraphs = create_paragraph_list_for_node(node, path, depth=2)
@@ -262,7 +263,7 @@ def store_proposal(request, path):
                         'node_storage.add_nodeorder', 'node_storage.add_text',
                         'node_storage.change_vote'])
     user = request.user
-    p = json.loads(request.body)
+    p = json_decode(request.body)
 
     slot_path = path.rsplit('.', 1)[0]
     slot = get_node_for_path(slot_path)
@@ -284,7 +285,7 @@ def store_refinement(request, path):
                         'node_storage.add_derivation', 'node_storage.add_text',
                         'node_storage.change_vote'])
     user = request.user
-    p = json.loads(request.body)
+    p = json_decode(request.body)
 
     origin = get_node_for_path(path)
     slot_path = path.rsplit('.', 1)[0]
@@ -310,7 +311,7 @@ def store_argument(request, path):
                         'node_storage.add_vote', 'node_storage.add_nodeorder',
                         'node_storage.add_text', 'node_storage.change_vote'])
     user = request.user
-    p = json.loads(request.body)
+    p = json_decode(request.body)
 
     node = get_node_for_path(path)
     title = p['argument']['title']
@@ -414,7 +415,7 @@ def load_user_settings(request):
 # ################### User Interactions #######################################
 @ViewErrorHandling
 def login(request):
-    request_data = json.loads(request.body.decode('utf-8'))
+    request_data = json_decode(request.body)
     username = request_data['username']
     password = request_data['password']
     if not username or not password:
@@ -451,7 +452,7 @@ def logout(request):
 @ViewErrorHandling
 def store_settings(request):
     assert_authentication(request)
-    request_data = json.loads(request.body)
+    request_data = json_decode(request.body)
     user = User.objects.get(id=request.user.id)
     assert_request_data_parameters(request_data, ['description',
                                                   'displayName'])
@@ -527,7 +528,7 @@ def mark_user_unfollow(request, name):
 def change_password(request):
     assert_authentication(request)
     user = User.objects.get(id=request.user.id)
-    user.set_password(json.loads(request.body)['password'])
+    user.set_password(json_decode(request.body)['password'])
     user.save()
     return json_response({'changePasswordResponse': {}})
 
@@ -548,7 +549,7 @@ def delete_user(request):
 # ###################### Registration #########################################
 @ViewErrorHandling
 def account_registration(request):
-    request_data = json.loads(request.body)
+    request_data = json_decode(request.body)
     assert_request_data_parameters(request_data, ['displayName', 'password',
                                                   'emailAddress'])
 
@@ -601,7 +602,7 @@ def account_registration(request):
 
 @ViewErrorHandling
 def account_activation(request):
-    request_data = json.loads(request.body)
+    request_data = json_decode(request.body)
     assert_request_data_parameters(request_data, ['activationKey'])
     activation_key = request_data['activationKey']
     try:
@@ -614,7 +615,7 @@ def account_activation(request):
 
 @ViewErrorHandling
 def account_reset_request_by_name(request):
-    request_data = json.loads(request.body)
+    request_data = json_decode(request.body)
     assert_request_data_parameters(request_data, ['displayName'])
     display_name = request_data['displayName']
 
@@ -638,7 +639,7 @@ def account_reset_request_by_name(request):
 
 @ViewErrorHandling
 def account_reset_request_by_mail(request):
-    request_data = json.loads(request.body)
+    request_data = json_decode(request.body)
     assert_request_data_parameters(request_data, ['emailAddress'])
     email_address = request_data['emailAddress']
     user = assert_active_user(email=email_address)
@@ -660,7 +661,7 @@ def account_reset_request_by_mail(request):
 
 @ViewErrorHandling
 def account_reset_confirmation(request):
-    request_data = json.loads(request.body)
+    request_data = json_decode(request.body)
     assert_request_data_parameters(request_data, ['activationKey'])
     recovery_key = request_data['activationKey']
     try:
@@ -678,7 +679,7 @@ def account_reset_confirmation(request):
 
 @ViewErrorHandling
 def email_change_confirmation(request):
-    request_data = json.loads(request.body)
+    request_data = json_decode(request.body)
     assert_request_data_parameters(request_data, ['activationKey'])
     email_verify_key = request_data['activationKey']
     try:

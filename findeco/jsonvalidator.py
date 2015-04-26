@@ -73,7 +73,13 @@ Raise JSONError on invalid JSON (that can not be parsed), or JSONValidationError
 """
 
 import json
-import types
+
+
+def json_decode(bytes_or_string):
+    if isinstance(bytes_or_string, bytes):
+        return json.loads(bytes_or_string.decode('utf-8'))
+    else:
+        return json.loads(bytes_or_string)
 
 
 class JSONValidationError(Exception):

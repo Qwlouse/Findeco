@@ -33,6 +33,7 @@ import itertools
 import json
 
 from ..api_validation import validate_response
+from findeco.jsonvalidator import json_decode
 from node_storage.factory import create_user
 
 views = [('load_index', dict(path='')),
@@ -77,7 +78,7 @@ class ViewTest(TestCase):
             self.assertTrue(self.client.login(username="ulf", password="flu"))
             response = self.client.post(reverse(v, kwargs=kwargs), "{}",
                                         content_type="application/json")
-            res = json.loads(response.content)
+            res = json_decode(response.content)
             self.assertIsNotNone(res)
 
     def test_load_index_response_is_valid(self):

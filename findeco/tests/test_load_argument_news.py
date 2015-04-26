@@ -29,6 +29,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 import json
+from findeco.jsonvalidator import json_decode
 from findeco.tests.helpers import assert_is_error_response
 
 from node_storage import get_root_node
@@ -74,7 +75,7 @@ class LoadArgumentNewsTest(TestCase):
 
     def test_returns_last_arguments(self):
         response = self.client.get(reverse('load_argument_news'))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertIn('loadArgumentNewsResponse', parsed)
         self.assertEqual(len(parsed['loadArgumentNewsResponse']), 20)
         for number, resultEntry in enumerate(parsed['loadArgumentNewsResponse']):
@@ -100,7 +101,7 @@ class LoadArgumentNewsTest(TestCase):
         self.arguments[9].add_derivate(self.arguments[10])
 
         response = self.client.get(reverse('load_argument_news'))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertIn('loadArgumentNewsResponse', parsed)
         self.assertEqual(len(parsed['loadArgumentNewsResponse']), 18)
         numbers = [24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 10, 8, 6, 4, 1]

@@ -30,6 +30,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext
 from django.test import TestCase
 import json
+from findeco.jsonvalidator import json_decode
 from findeco.tests.helpers import assert_is_error_response
 
 from node_storage import get_root_node
@@ -136,7 +137,7 @@ class LoadTextTest(TestCase):
             reverse('load_text',
                     kwargs=dict(path="Wahlprogramm.1/Datenschutz.1")))
         self.assertEqual(response.status_code, 200)
-        data = json.loads(response.content)
+        data = json_decode(response.content)
         self.assertEqual(data['loadTextResponse']['paragraphs'][0]['wikiText'],
                          "== [[/Wahlprogramm.1/Datenschutz.1|Daaatenschutz]] ==\nBlubb.")
 
@@ -144,7 +145,7 @@ class LoadTextTest(TestCase):
         response = self.client.get(
             reverse('load_text', kwargs=dict(path="Wahlprogramm.1")))
         self.assertEqual(response.status_code, 200)
-        data = json.loads(response.content)
+        data = json_decode(response.content)
         paragraphs = data['loadTextResponse']['paragraphs']
         self.assertEqual(paragraphs[0]['wikiText'],
                          "== [[/Wahlprogramm.1|LangerWahlprogrammTitel]] ==\nEinleitungstext")
@@ -164,7 +165,7 @@ class LoadTextTest(TestCase):
             reverse('load_text',
                     kwargs=dict(path="Wahlprogramm.1/Datenschutz.1.con.1")))
         self.assertEqual(response.status_code, 200)
-        data = json.loads(response.content)
+        data = json_decode(response.content)
         expected_response = {
             'loadTextResponse': {
                 'paragraphs': [{
@@ -187,10 +188,10 @@ class LoadTextTest(TestCase):
         url = reverse('load_text',
                       kwargs=dict(path="Wahlprogramm.1/Datenschutz.1"))
         response = self.client.get(url)
-        data_first = json.loads(response.content)
+        data_first = json_decode(response.content)
         for i in range(3):
             response = self.client.get(url)
-            data = json.loads(response.content)
+            data = json_decode(response.content)
             self.assertEqual(data, data_first)
 
     def test_on_illegal_path_gives_error_response(self):

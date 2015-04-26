@@ -26,8 +26,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
 
-import json
-from findeco.jsonvalidator import JSONValidator, JSONValidationError
+from findeco.jsonvalidator import (
+    JSONValidator, JSONValidationError, json_decode)
 
 
 USERNAME = r'(?P<name>[a-zA-Z][a-zA-Z0-9-_]{0,19})'
@@ -270,7 +270,7 @@ view_validators = {
 
 
 def validate_response(response, view):
-    response = json.loads(response.decode('utf-8'))
+    response = json_decode(response)
     if 'errorResponse' in response:
         errorResponseValidator.validate(response)
         return False

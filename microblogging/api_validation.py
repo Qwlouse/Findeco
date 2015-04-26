@@ -29,6 +29,7 @@
 from findeco.api_validation import string, integer, JSONValidator
 from findeco.api_validation import errorResponseValidator
 import json
+from findeco.jsonvalidator import json_decode
 
 microblogNode_schema = {
     'microblogText': string,
@@ -60,7 +61,7 @@ view_validators = {
 
 
 def validate_response(response, view):
-    response = json.loads(response.decode('utf-8'))
+    response = json_decode(response)
     if 'errorResponse' in response:
         errorResponseValidator.validate(response)
         return False

@@ -31,6 +31,7 @@ import json
 from django.test import TestCase
 
 from django.core.urlresolvers import reverse
+from findeco.jsonvalidator import json_decode
 from microblogging.factory import create_post
 from node_storage import get_root_node
 from node_storage.factory import create_textNode, create_slot, create_user
@@ -51,40 +52,40 @@ class SearchTest(TestCase):
     def test_username_found(self):
         response = self.client.post(reverse('search', kwargs=dict(search_fields="user",search_string="Hugo")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.content)['searchResponse']['userResults']), 1)
-        self.assertEqual(json.loads(response.content)['searchResponse']['userResults'][0]['title'], "Hugo")
+        self.assertEqual(len(json_decode(response.content)['searchResponse']['userResults']), 1)
+        self.assertEqual(json_decode(response.content)['searchResponse']['userResults'][0]['title'], "Hugo")
 
     def test_username_notfound(self):
         response = self.client.post(reverse('search', kwargs=dict(search_fields="user",search_string="Gerda")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.content)['searchResponse']['userResults']), 0)
+        self.assertEqual(len(json_decode(response.content)['searchResponse']['userResults']), 0)
 
     def test_single_word_content_found(self):
         response = self.client.post(reverse('search', kwargs=dict(search_fields="content",search_string="Giraffe")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.content)['searchResponse']['contentResults']), 1)
-        self.assertEqual(json.loads(response.content)['searchResponse']['contentResults'][0]['title'], "Bla")
+        self.assertEqual(len(json_decode(response.content)['searchResponse']['contentResults']), 1)
+        self.assertEqual(json_decode(response.content)['searchResponse']['contentResults'][0]['title'], "Bla")
 
     def test_single_word_content_notfound(self):
         response = self.client.post(reverse('search', kwargs=dict(search_fields="content",search_string="Auto")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.content)['searchResponse']['contentResults']), 0)
+        self.assertEqual(len(json_decode(response.content)['searchResponse']['contentResults']), 0)
 
     def test_single_word_content_found_title(self):
         response = self.client.post(reverse('search', kwargs=dict(search_fields="content",search_string="Bla")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.content)['searchResponse']['contentResults']), 1)
-        self.assertEqual(json.loads(response.content)['searchResponse']['contentResults'][0]['title'], "Bla")
+        self.assertEqual(len(json_decode(response.content)['searchResponse']['contentResults']), 1)
+        self.assertEqual(json_decode(response.content)['searchResponse']['contentResults'][0]['title'], "Bla")
 
     def test_single_word_microblogging_found(self):
         response = self.client.post(reverse('search', kwargs=dict(search_fields="microblogging",search_string="Giraffe")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.content)['searchResponse']['microbloggingResults']), 1)
+        self.assertEqual(len(json_decode(response.content)['searchResponse']['microbloggingResults']), 1)
         response = self.client.post(reverse('search', kwargs=dict(search_fields="microblogging",search_string="Huhn")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.content)['searchResponse']['microbloggingResults']), 2)
+        self.assertEqual(len(json_decode(response.content)['searchResponse']['microbloggingResults']), 2)
 
     def test_single_word_microblogging_notfound(self):
         response = self.client.post(reverse('search', kwargs=dict(search_fields="microblogging",search_string="Auto")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.content)['searchResponse']['microbloggingResults']), 0)
+        self.assertEqual(len(json_decode(response.content)['searchResponse']['microbloggingResults']), 0)

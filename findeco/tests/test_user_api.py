@@ -31,6 +31,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 import json
 from findeco.api_validation import view_validators
+from findeco.jsonvalidator import json_decode
 from findeco.tests.helpers import assert_is_error_response
 from findeco.view_helpers import create_user_info, create_user_settings
 
@@ -48,7 +49,7 @@ class LoadUserInfoTest(TestCase):
         for u in self.users:
             response = self.client.get(
                 reverse('load_user_info', kwargs=dict(name=u.username)))
-            parsed = json.loads(response.content)
+            parsed = json_decode(response.content)
             self.assertTrue(view_validators['load_user_info'].validate(parsed))
             user_info = create_user_info(u)
             self.assertEqual(parsed['loadUserInfoResponse']['userInfo'],
@@ -73,7 +74,7 @@ class LoadUserSettingsTest(TestCase):
             self.assertTrue(
                 self.client.login(username=u.username, password='1234'))
             response = self.client.get(reverse('load_user_settings'))
-            parsed = json.loads(response.content)
+            parsed = json_decode(response.content)
             self.assertTrue(
                 view_validators['load_user_settings'].validate(parsed))
 
@@ -82,7 +83,7 @@ class LoadUserSettingsTest(TestCase):
             self.assertTrue(
                 self.client.login(username=u.username, password='1234'))
             response = self.client.get(reverse('load_user_settings'))
-            parsed = json.loads(response.content)
+            parsed = json_decode(response.content)
             self.assertEqual(parsed['loadUserSettingsResponse']['userInfo'],
                              create_user_info(u))
 
@@ -91,7 +92,7 @@ class LoadUserSettingsTest(TestCase):
             self.assertTrue(
                 self.client.login(username=u.username, password='1234'))
             response = self.client.get(reverse('load_user_settings'))
-            parsed = json.loads(response.content)
+            parsed = json_decode(response.content)
             self.assertEqual(
                 parsed['loadUserSettingsResponse']['userSettings'],
                 create_user_settings(u))
@@ -113,7 +114,7 @@ class StoreSettingsTest(TestCase):
         response = self.post(reverse('store_settings'),
                              dict(description="", displayName='hans',
                                   email='a@bc.de'))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertTrue(view_validators['store_settings'].validate(parsed))
 
     def test_missing_description_parameter_returns_error(self):

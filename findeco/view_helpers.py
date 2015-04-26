@@ -31,6 +31,8 @@ import re
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.http import HttpResponse
+from findeco.jsonvalidator import json_decode
 
 from microblogging.tools import change_microblogging_authorship
 import node_storage.models as backend_models
@@ -124,7 +126,7 @@ def get_index_nodes_for_path(path):
     path = path.strip().strip('/')
     try:  # to get from cache
         index_cache = backend_models.IndexCache.objects.get(path=path)
-        index_nodes = json.loads(index_cache.index_nodes)
+        index_nodes = json_decode(index_cache.index_nodes)
     except backend_models.IndexCache.DoesNotExist:
         node = assert_node_for_path(path)
         slot_list = get_ordered_children_for(node)

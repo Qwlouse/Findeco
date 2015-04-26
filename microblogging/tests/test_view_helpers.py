@@ -31,6 +31,7 @@ import json
 from django.core import mail
 from django.db.models import Q
 from django.test import TestCase
+from findeco.jsonvalidator import json_decode
 from microblogging.api_validation import validate_response
 from findeco.error_handling import ViewError
 from microblogging.factory import create_post
@@ -84,7 +85,7 @@ class ViewHelpersTest(TestCase):
         response = microblogging_response(Q(), {})
         self.assertTrue(validate_response(response.content,
                                           "load_microblogging"))
-        result = json.loads(response.content.decode('utf-8'))[
+        result = json_decode(response.content)[
             "loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
         self.assertEqual([p['microblogID'] for p in result], range(25, 5, -1))
@@ -96,7 +97,7 @@ class ViewHelpersTest(TestCase):
         response = microblogging_response(Q(), {"type": "newer", "id": 3})
         self.assertTrue(validate_response(response.content,
                                           "load_microblogging"))
-        result = json.loads(response.content.decode('utf-8'))[
+        result = json_decode(response.content)[
             "loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
         self.assertEqual([p['microblogID'] for p in result], range(23, 3, -1))
@@ -108,7 +109,7 @@ class ViewHelpersTest(TestCase):
         response = microblogging_response(Q(), {"type": "older", "id": 24})
         self.assertTrue(validate_response(response.content,
                                           "load_microblogging"))
-        result = json.loads(response.content.decode('utf-8'))[
+        result = json_decode(response.content)[
             "loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
         self.assertEqual([p['microblogID'] for p in result], range(23, 3, -1))

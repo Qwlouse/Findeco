@@ -29,6 +29,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 import json
+from findeco.jsonvalidator import json_decode
 from findeco.view_helpers import create_graph_data_node_for_structure_node
 from node_storage import get_root_node
 from node_storage.factory import create_user, create_slot, create_structureNode
@@ -73,7 +74,7 @@ class LoadGraphDataTest(TestCase):
         response = self.client.get(
             reverse('load_graph_data',
                     kwargs=dict(path='', graph_data_type='withSpam')))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertTrue('loadGraphDataResponse' in parsed)
         self.assertTrue('graphDataChildren' in parsed['loadGraphDataResponse'])
         self.assertTrue('graphDataRelated' in parsed['loadGraphDataResponse'])
@@ -87,7 +88,7 @@ class LoadGraphDataTest(TestCase):
             reverse('load_graph_data',
                     kwargs=dict(path='Bla.1/Blubb.2',
                                 graph_data_type='withSpam')))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
 
         # self.assertEqual(parsed['loadGraphDataResponse']['graphDataRelated'],
         #                  [create_graph_data_node_for_structure_node(self.bla2),
@@ -103,7 +104,7 @@ class LoadGraphDataTest(TestCase):
         response = self.client.get(
             reverse('load_graph_data',
                     kwargs=dict(path='Bla.4', graph_data_type='withSpam')))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         # self.assertEqual(parsed['loadGraphDataResponse']['graphDataRelated'],
         #                  [create_graph_data_node_for_structure_node(
         #                      self.blubb2)])

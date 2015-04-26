@@ -28,12 +28,13 @@
 
 from findeco.api_validation import errorResponseValidator
 import json
+from findeco.jsonvalidator import json_decode
 
 
 def assert_is_error_response(response, identifier):
     assert response.status_code == 406, \
         "Expected status code OK (200) but was %d" % response.status_code
-    e = json.loads(response.content)
+    e = json_decode(response.content)
     errorResponseValidator.validate(e)
     assert e['errorResponse']['errorID'] == identifier, \
         "expected %s but got %s" % (identifier, e['errorResponse']['errorID'])

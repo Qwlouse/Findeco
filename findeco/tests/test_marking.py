@@ -29,6 +29,7 @@
 import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from findeco.jsonvalidator import json_decode
 from findeco.tests.helpers import assert_is_error_response
 from node_storage import get_root_node, Vote, SpamFlag
 from node_storage.factory import create_textNode, create_slot, create_user
@@ -76,7 +77,7 @@ class UnFollowTest(TestCase):
         response = self.client.get(
             reverse('mark_node_unfollow', kwargs=dict(path="Slot.3")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 1)
         for n in [self.text, self.mid, self.mid2, self.leaf2]:
             self.assertIn(n, self.follow.nodes.all())
@@ -87,7 +88,7 @@ class UnFollowTest(TestCase):
         response = self.client.get(
             reverse('mark_node_unfollow', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 0)
 
     def test_unfollow_middle_of_derivate_tree(self):
@@ -95,7 +96,7 @@ class UnFollowTest(TestCase):
         response = self.client.get(
             reverse('mark_node_unfollow', kwargs=dict(path="Slot.2")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 1)
         self.assertIn(self.text, self.follow.nodes.all())
         for n in [self.leaf1, self.mid, self.mid2, self.leaf2]:
@@ -146,7 +147,7 @@ class FollowTest(TestCase):
         response = self.client.get(
             reverse('mark_node_follow', kwargs=dict(path="Slot.3")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 2)
         self.assertIn(self.leaf1,
                       Vote.objects.filter(user=self.ulf).all()[0].nodes.all())
@@ -159,7 +160,7 @@ class FollowTest(TestCase):
         response = self.client.get(
             reverse('mark_node_follow', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 2)
         for n in [self.text, self.leaf1, self.mid, self.mid2, self.leaf2]:
             self.assertIn(n, Vote.objects.filter(user=self.ulf).all()[
@@ -170,7 +171,7 @@ class FollowTest(TestCase):
         response = self.client.get(
             reverse('mark_node_follow', kwargs=dict(path="Slot.2")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(Vote.objects.count(), 2)
         self.assertNotIn(self.text, Vote.objects.filter(user=self.ulf).all()[
             0].nodes.all())
@@ -211,7 +212,7 @@ class MarkSpamTest(TestCase):
         response = self.client.post(
             reverse('flag_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(SpamFlag.objects.count(), 1)
         self.assertIn(SpamFlag.objects.all()[0], self.text.spam_flags.all())
         for n in [self.mid, self.leaf]:
@@ -222,7 +223,7 @@ class MarkSpamTest(TestCase):
         response = self.client.post(
             reverse('flag_node', kwargs=dict(path="Slot.3")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(SpamFlag.objects.count(), 1)
         self.assertIn(SpamFlag.objects.all()[0], self.leaf.spam_flags.all())
         for n in [self.mid, self.text]:
@@ -264,7 +265,7 @@ class UnMarkSpamTest(TestCase):
         response = self.client.post(
             reverse('unflag_node', kwargs=dict(path="Slot.1")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(SpamFlag.objects.count(), 2)
         self.assertEqual(SpamFlag.objects.filter(node=self.text).count(), 0)
         for n in [self.mid, self.leaf]:
@@ -275,7 +276,7 @@ class UnMarkSpamTest(TestCase):
         response = self.client.post(
             reverse('unflag_node', kwargs=dict(path="Slot.3")))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content)['markNodeResponse'], {})
+        self.assertEqual(json_decode(response.content)['markNodeResponse'], {})
         self.assertEqual(SpamFlag.objects.count(), 2)
         self.assertEqual(SpamFlag.objects.filter(node=self.leaf).count(), 0)
         for n in [self.mid, self.text]:

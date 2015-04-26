@@ -29,6 +29,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 import json
+from findeco.jsonvalidator import json_decode
 from findeco.tests.helpers import assert_is_error_response
 
 from node_storage import get_root_node
@@ -88,7 +89,7 @@ class LoadNodeTest(TestCase):
 
     def test_on_root_node_yields_top_level_slots(self):
         response = self.client.get(reverse('load_node', kwargs=dict(path='')))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertIn('loadNodeResponse', parsed)
         indexNodes = parsed['loadNodeResponse']['indexList']
         self.assertEqual(len(indexNodes), len(self.top_slots))
@@ -97,14 +98,14 @@ class LoadNodeTest(TestCase):
 
     def test_on_root_node_yields_correct_text_title(self):
         response = self.client.get(reverse('load_node', kwargs=dict(path='')))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertEqual(parsed['loadNodeResponse']['fullTitle'], "ROOT")
         self.assertEqual(parsed['loadNodeResponse']['wikiText'], "This is the root node.")
 
     def test_on_structure_node_yields_child_slots(self):
         response = self.client.get(
             reverse('load_node', kwargs=dict(path='Wahlprogramm.1')))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertIn('loadNodeResponse', parsed)
         index_nodes = parsed['loadNodeResponse']['indexList']
         self.assertEqual(len(index_nodes), len(self.child_slots))

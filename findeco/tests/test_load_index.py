@@ -29,6 +29,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 import json
+from findeco.jsonvalidator import json_decode
 from findeco.tests.helpers import assert_is_error_response
 
 from node_storage import get_root_node
@@ -90,7 +91,7 @@ class LoadIndexTest(TestCase):
 
     def test_on_root_node_yields_top_level_slots(self):
         response = self.client.get(reverse('load_index', kwargs=dict(path='')))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertIn('loadIndexResponse', parsed)
         indexNodes = parsed['loadIndexResponse']
         self.assertEqual(len(indexNodes), len(self.top_slots))
@@ -100,7 +101,7 @@ class LoadIndexTest(TestCase):
     def test_on_structure_node_yields_child_slots(self):
         response = self.client.get(
             reverse('load_index', kwargs=dict(path='Wahlprogramm.1')))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertIn('loadIndexResponse', parsed)
         index_nodes = parsed['loadIndexResponse']
         self.assertEqual(len(index_nodes), len(self.child_slots))
@@ -146,7 +147,7 @@ class LoadArgumentIndexTest(TestCase):
     def test_on_foo_returns_foo_arguments(self):
         response = self.client.get(
             reverse('load_argument_index', kwargs=dict(path='foo.1')))
-        parsed = json.loads(response.content)
+        parsed = json_decode(response.content)
         self.assertIn('loadArgumentIndexResponse', parsed)
         indexNodes = parsed['loadArgumentIndexResponse']
         self.assertEqual(len(indexNodes), 3)

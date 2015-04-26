@@ -204,9 +204,6 @@ CRON_CLASSES = [
     "findeco.cron.ActivationKeyPruning"
 ]
 
-# uncomment this if you don't want unittests to run migrations
-SOUTH_TESTS_MIGRATE = False
-
 # try to import secret_settings and overwrite some of the default values
 try:
     from local_settings import *
