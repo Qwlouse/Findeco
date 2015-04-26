@@ -27,7 +27,8 @@
 #endregion #####################################################################
 
 from django.test import TestCase
-from node_storage import Node, get_root_node
+from node_storage.models import Node
+from node_storage.path_helpers import get_root_node
 from node_storage.factory import create_structureNode, create_user, create_vote
 from node_storage.factory import create_argument, create_slot
 from node_storage.models import NodeOrder, Derivation
