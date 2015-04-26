@@ -27,7 +27,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
-from models import Node, NodeOrder, PathCache, Argument
+from node_storage.models import Node, NodeOrder, PathCache, Argument
 import re
 
 

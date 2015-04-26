@@ -28,7 +28,7 @@
 from __future__ import division, print_function, unicode_literals
 from time import mktime
 from findeco.search_tools import get_search_query
-from .models import Post
+from microblogging.models import Post
 
 
 def convert_to_response_list(post_list):

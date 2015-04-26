@@ -165,8 +165,6 @@ INSTALLED_APPS = (
     'findeco',
     'node_storage',
     'microblogging',
-    'south',               # Database Migration
-    'django_nose',         # Testrunner
     'libs.django_cron'     # Cron Jobs
 )
 

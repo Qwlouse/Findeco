@@ -27,11 +27,11 @@
 #endregion #####################################################################
 from __future__ import division, print_function, unicode_literals
 
-from models import Node, Vote, SpamFlag, Argument, Text, NodeOrder, TextCache
-from models import IndexCache
-from path_helpers import get_node_for_path, get_favorite_if_slot
-from path_helpers import get_ordered_children_for
-from path_helpers import IllegalPath, get_root_node
-from structure_parser import parse, create_structure_from_structure_node_schema
-from structure_parser import get_title_from_text, split_title_from_text
-from structure_parser import create_derivate_from_structure_node_schema
+from node_storage.models import Node, Vote, SpamFlag, Argument, Text, NodeOrder, TextCache
+from node_storage.models import IndexCache
+from node_storage.path_helpers import get_node_for_path, get_favorite_if_slot
+from node_storage.path_helpers import get_ordered_children_for
+from node_storage.path_helpers import IllegalPath, get_root_node
+from node_storage.structure_parser import parse, create_structure_from_structure_node_schema
+from node_storage.structure_parser import get_title_from_text, split_title_from_text
+from node_storage.structure_parser import create_derivate_from_structure_node_schema

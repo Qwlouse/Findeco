@@ -29,11 +29,11 @@
 from __future__ import division, print_function, unicode_literals
 import re
 
-from path_helpers import get_good_path_for_structure_node
-from factory import create_structureNode, create_slot, create_vote
+from node_storage.path_helpers import get_good_path_for_structure_node
+from node_storage.factory import create_structureNode, create_slot, create_vote
 from node_storage import Node
-from validation import (h1_start, general_heading, get_heading_matcher,
-                        turn_into_valid_short_title)
+from node_storage.validation import (h1_start, general_heading, get_heading_matcher,
+                                     turn_into_valid_short_title)
 
 
 def validate_structure_schema(structure):

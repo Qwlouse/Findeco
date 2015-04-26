@@ -27,9 +27,9 @@
 # endregion ###################################################################
 from django.contrib.auth.models import User, Group
 from findeco.paths import parse_path
-from models import Node, Text, Vote, Argument, SpamFlag
+from node_storage.models import Node, Text, Vote, Argument, SpamFlag
 from node_storage import get_node_for_path, IllegalPath, get_root_node
-from validation import valid_title, general_heading
+from node_storage.validation import valid_title, general_heading
 
 
 def create_slot(short_title):

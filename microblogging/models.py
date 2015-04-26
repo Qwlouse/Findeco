@@ -30,7 +30,6 @@ import re
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.html import escape
-from django.utils.translation import ugettext
 
 import node_storage as backend
 
@@ -186,11 +185,11 @@ def preprocess_userpost_template(template):
 
 
 SYSTEM_MESSAGE_TEMPLATES = {
-    Post.NODE_CREATED: ugettext('node_created_message'),
-    Post.NODE_REFINED: ugettext('node_refined_message'),
-    Post.SPAM_MARKED: ugettext('node_flagged_as_spam_message'),
-    Post.SPAM_UNMARKED: ugettext('node_unflagged_as_spam_message'),
-    Post.NODE_FOLLOWED: ugettext('node_followed_message'),
-    Post.NODE_UNFOLLOWED: ugettext('node_unfollowed_message'),
-    Post.ARGUMENT_CREATED: ugettext('argument_created_message'),
+    Post.NODE_CREATED: 'node_created_message',
+    Post.NODE_REFINED: 'node_refined_message',
+    Post.SPAM_MARKED: 'node_flagged_as_spam_message',
+    Post.SPAM_UNMARKED: 'node_unflagged_as_spam_message',
+    Post.NODE_FOLLOWED: 'node_followed_message',
+    Post.NODE_UNFOLLOWED: 'node_unfollowed_message',
+    Post.ARGUMENT_CREATED: 'argument_created_message',
 }
