@@ -50,33 +50,87 @@ class ViewError(Exception):
     Holds an identifier that should start with a single underscore that will get
     internationalized in the frontend.
     """
-    def __init__(self, identifier, *args):
-        super(Exception, self).__init__(identifier)
-        self.identifier = identifier
+    def __init__(self, *args):
+        self.identifier = '_{}'.format(self.__class__.__name__)
+        super(Exception, self).__init__(self.identifier)
         self.additional_info = args
 
 
-UnknownNode = functools.partial(ViewError, '_UnknownNode')
-UnknownUser = functools.partial(ViewError, '_UnknownUser')
-UnknownEmailAddress = functools.partial(ViewError, '_UnknownEmailAddress')
-MissingPOSTParameter = functools.partial(ViewError, '_MissingPOSTParameter')
-IllegalPath = functools.partial(ViewError, '_IllegalPath')
-EmptyText = functools.partial(ViewError, '_EmptyText')
-NotAuthenticated = functools.partial(ViewError, '_NotAuthenticated')
-PermissionDenied = functools.partial(ViewError, '_PermissionDenied')
-DisabledAccount = functools.partial(ViewError, '_DisabledAccount')
-UsernameNotAvailable = functools.partial(ViewError, '_UsernameNotAvailable')
-EmailAddressNotAvailable = functools.partial(ViewError,
-                                             '_EmailAddressNotAvailable')
-InvalidUsername = functools.partial(ViewError, '_InvalidUsername')
-InvalidLogin = functools.partial(ViewError, '_InvalidLogin')
-InvalidEmailAddress = functools.partial(ViewError, '_InvalidEmailAddress')
-InvalidActivationKey = functools.partial(ViewError, '_InvalidActivationKey')
-InvalidRecoveryKey = functools.partial(ViewError, '_InvalidRecoveryKey')
-InvalidURL = functools.partial(ViewError, '_InvalidURL')
-InvalidMicrobloggingOptions = functools.partial(ViewError,
-                                                '_InvalidMircobloggingOptions')
-InvalidShortTitle = functools.partial(ViewError, '_InvalidShortTitle')
+class UnknownNode(ViewError):
+    pass
+
+
+class UnknownUser(ViewError):
+    pass
+
+
+class UnknownEmailAddress(ViewError):
+    pass
+
+
+class MissingPOSTParameter(ViewError):
+    pass
+
+
+class IllegalPath(ViewError):
+    pass
+
+
+class EmptyText(ViewError):
+    pass
+
+
+class NotAuthenticated(ViewError):
+    pass
+
+
+class PermissionDenied(ViewError):
+    pass
+
+
+class DisabledAccount(ViewError):
+    pass
+
+
+class UsernameNotAvailable(ViewError):
+    pass
+
+
+class EmailAddressNotAvailable(ViewError):
+    pass
+
+
+class InvalidUsername(ViewError):
+    pass
+
+
+class InvalidLogin(ViewError):
+    pass
+
+
+class InvalidEmailAddress(ViewError):
+    pass
+
+
+class InvalidActivationKey(ViewError):
+    pass
+
+
+class InvalidRecoveryKey(ViewError):
+    pass
+
+
+class InvalidURL(ViewError):
+    pass
+
+
+class InvalidMicrobloggingOptions(ViewError):
+    pass
+
+
+class InvalidShortTitle(ViewError):
+    pass
+
 
 
 # ################## ErrorHandling Decorator ##################################
