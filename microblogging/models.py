@@ -31,7 +31,6 @@ import re
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.html import escape
-from django.utils.translation import ugettext
 
 import node_storage
 
@@ -134,7 +133,7 @@ class Post(models.Model):
         if self.post_type == self.USER_POST:
             template = preprocess_userpost_template(self.text_template)
         else:
-            template = ugettext(SYSTEM_MESSAGE_TEMPLATES[self.post_type])
+            template = SYSTEM_MESSAGE_TEMPLATES[self.post_type]
 
         # insert references and mentions
         try:
