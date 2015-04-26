@@ -3,7 +3,7 @@
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+###############################################################################
 # Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
@@ -18,13 +18,13 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+###############################################################################
 #
-################################################################################
+###############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
+# endregion ###################################################################
 
 import functools
 import json
@@ -43,7 +43,7 @@ def json_error_response(identifier, *args):
                         status=406)
 
 
-################### Custom View Exceptions #####################################
+# ################## Custom View Exceptions ###################################
 class ViewError(Exception):
     """
     Base class for all custom view exceptions.
@@ -67,7 +67,7 @@ PermissionDenied = functools.partial(ViewError, '_PermissionDenied')
 DisabledAccount = functools.partial(ViewError, '_DisabledAccount')
 UsernameNotAvailable = functools.partial(ViewError, '_UsernameNotAvailable')
 EmailAddressNotAvailable = functools.partial(ViewError,
-                                              '_EmailAddressNotAvailable')
+                                             '_EmailAddressNotAvailable')
 InvalidUsername = functools.partial(ViewError, '_InvalidUsername')
 InvalidLogin = functools.partial(ViewError, '_InvalidLogin')
 InvalidEmailAddress = functools.partial(ViewError, '_InvalidEmailAddress')
@@ -79,7 +79,7 @@ InvalidMicrobloggingOptions = functools.partial(ViewError,
 InvalidShortTitle = functools.partial(ViewError, '_InvalidShortTitle')
 
 
-################### ErrorHandling Decorator ####################################
+# ################## ErrorHandling Decorator ##################################
 def ViewErrorHandling(f):
     """
     This decorator is meant to decorate views, and will catch any ViewError

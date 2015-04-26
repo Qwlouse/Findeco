@@ -181,7 +181,8 @@ def load_graph_data(request, path, graph_data_type):
         if current_node not in nodes:
             nodes.append(current_node)
 
-    graph_data_children = map(create_graph_data_node_for_structure_node, nodes)
+    graph_data_children = [create_graph_data_node_for_structure_node(n)
+                           for n in nodes]
     data = {'graphDataChildren': graph_data_children,
             'graphDataRelated': []}
     return json_response({'loadGraphDataResponse': data})
@@ -412,7 +413,7 @@ def load_user_settings(request):
 # ################### User Interactions #######################################
 @ViewErrorHandling
 def login(request):
-    request_data = json.loads(request.body)
+    request_data = json.loads(request.body.decode('utf-8'))
     username = request_data['username']
     password = request_data['password']
     if not username or not password:

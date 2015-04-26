@@ -109,7 +109,7 @@ def load_microblogging_for_authored_nodes(request, name):
 
 @ViewErrorHandling
 def store_microblogging(request, path):
-    request_data = json.loads(request.body)
+    request_data = json.loads(request.body.decode('utf-8'))
     assert_authentication(request)
     assert_permissions(request, ['microblogging.add_post'])
     assert_request_data_parameters(request_data, ['microblogText'])

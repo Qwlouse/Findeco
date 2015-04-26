@@ -60,7 +60,7 @@ view_validators = {
 
 
 def validate_response(response, view):
-    response = json.loads(response)
+    response = json.loads(response.decode('utf-8'))
     if 'errorResponse' in response:
         errorResponseValidator.validate(response)
         return False
