@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
@@ -33,7 +33,6 @@
 #vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
 # do not change the following three lines
-from __future__ import division, print_function, unicode_literals
 import datetime
 from findeco.project_path import project_path
 

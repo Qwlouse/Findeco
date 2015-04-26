@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
@@ -30,7 +30,6 @@ This file provides the convenience function project_path to specify paths
 relative to the project path.
 """
 
-from __future__ import division, print_function, unicode_literals
 import os
 
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),

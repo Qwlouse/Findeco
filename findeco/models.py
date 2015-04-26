@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
@@ -30,7 +30,7 @@ This file contains models for the basic Project structure:
   * Add a UserProfile to every User
   * automatize admin creation for every syncdb
 """
-from __future__ import division, print_function, unicode_literals
+
 from datetime import datetime
 import random
 

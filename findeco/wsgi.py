@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2015 Klaus Greff <klaus.greff@gmx.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -40,7 +40,7 @@ middleware here, or combine a Django application with an application of another
 framework.
 
 """
-from __future__ import division, print_function, unicode_literals
+
 import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "findeco.settings")

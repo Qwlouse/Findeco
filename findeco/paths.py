@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
@@ -48,7 +48,7 @@ Examples:
   Transparenz.2.pro
   Transparenz.2.con.12
 """
-from __future__ import division, print_function, unicode_literals
+
 import re
 
 SHORT_TITLE = r'(?:[a-zA-Z][a-zA-Z0-9-_]{0,19})'

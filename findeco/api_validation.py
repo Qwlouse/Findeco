@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
@@ -26,8 +26,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
 
-
-from __future__ import division, print_function, unicode_literals
 import json
 from findeco.jsonvalidator import JSONValidator, JSONValidationError
 
