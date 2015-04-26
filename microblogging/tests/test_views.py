@@ -46,7 +46,8 @@ class ViewTest(TestCase):
                  create_post("text3", hugo, location='foo.1'),
                  create_post("text2", herbert, location='foo.1')]
         response = self.client.get(reverse('load_microblogging_all'))
-        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        res = json.loads(response.content.decode('utf-8'))[
+            "loadMicrobloggingResponse"]
 
         ids = [m["microblogID"] for m in res]
         for p in posts:
@@ -67,7 +68,8 @@ class ViewTest(TestCase):
                              location='')]
         response = self.client.get(reverse('load_microblogging_for_node',
                                            kwargs={'path': 'foo.1'}))
-        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        res = json.loads(response.content.decode('utf-8'))[
+            "loadMicrobloggingResponse"]
 
         self.assertNotIn(wrong_post.id, [m["microblogID"] for m in res])
         for post in posts:
@@ -89,7 +91,8 @@ class ViewTest(TestCase):
 
         response = self.client.get(reverse('load_microblogging_timeline',
                                            kwargs={'name': 'hugo'}))
-        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        res = json.loads(response.content.decode('utf-8'))[
+            "loadMicrobloggingResponse"]
 
         response_id_list = [m["microblogID"] for m in res]
         for post in posts:
@@ -113,7 +116,8 @@ class ViewTest(TestCase):
 
         response = self.client.get(reverse('load_microblogging_mentions',
                                            kwargs={'name': 'hugo'}))
-        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        res = json.loads(response.content.decode('utf-8'))[
+            "loadMicrobloggingResponse"]
 
         response_id_list = [m["microblogID"] for m in res]
         for post in posts:
@@ -137,7 +141,8 @@ class ViewTest(TestCase):
 
         response = self.client.get(reverse('load_microblogging_from_user',
                                            kwargs={'name': 'herbert'}))
-        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        res = json.loads(response.content.decode('utf-8'))[
+            "loadMicrobloggingResponse"]
 
         response_id_list = [m["microblogID"] for m in res]
         for post in posts:
@@ -169,7 +174,8 @@ class ViewTest(TestCase):
         response = self.client.get(
             reverse('load_microblogging_for_followed_nodes',
                     kwargs={'name': 'hugo'}))
-        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        res = json.loads(response.content.decode('utf-8'))[
+            "loadMicrobloggingResponse"]
 
         response_id_list = [m["microblogID"] for m in res]
         for post in posts:
@@ -200,7 +206,8 @@ class ViewTest(TestCase):
         response = self.client.get(
             reverse('load_microblogging_for_authored_nodes',
                     kwargs={'name': 'hugo'}))
-        res = json.loads(response.content)["loadMicrobloggingResponse"]
+        res = json.loads(response.content.decode('utf-8'))[
+            "loadMicrobloggingResponse"]
 
         response_id_list = [m["microblogID"] for m in res]
         for post in posts:
@@ -219,7 +226,7 @@ class ViewTest(TestCase):
                 {'microblogText': 'test stuff on http://testserver/foo.1/ and '
                                   'reference /foo.1 and also @hugo'}
             ), content_type="application/json")
-        res = json.loads(response.content)
+        res = json.loads(response.content.decode('utf-8'))
         self.assertIn("storeMicrobloggingResponse", res)
 
         self.assertEqual(hugo.microblogging_posts.count(), 1)
