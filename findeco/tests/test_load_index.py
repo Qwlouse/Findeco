@@ -32,7 +32,7 @@ import json
 from findeco.jsonvalidator import json_decode
 from findeco.tests.helpers import assert_is_error_response
 
-from node_storage import get_root_node
+from node_storage.path_helpers import get_root_node
 from node_storage.factory import create_slot, create_user, create_textNode
 from node_storage.factory import create_vote, create_structureNode
 from node_storage.factory import create_argument

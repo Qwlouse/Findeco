@@ -31,7 +31,7 @@ from django.core.urlresolvers import reverse
 import json
 from findeco.jsonvalidator import json_decode
 from findeco.view_helpers import create_graph_data_node_for_structure_node
-from node_storage import get_root_node
+from node_storage.path_helpers import get_root_node
 from node_storage.factory import create_user, create_slot, create_structureNode
 from node_storage.factory import create_textNode
 

@@ -33,7 +33,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from findeco.jsonvalidator import json_decode
 from microblogging.factory import create_post
-from node_storage import get_root_node
+from node_storage.path_helpers import get_root_node
 from node_storage.factory import create_textNode, create_slot, create_user
 
 

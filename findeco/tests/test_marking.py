@@ -31,7 +31,8 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from findeco.jsonvalidator import json_decode
 from findeco.tests.helpers import assert_is_error_response
-from node_storage import get_root_node, Vote, SpamFlag
+from node_storage.path_helpers import get_root_node
+from node_storage.models import Vote, SpamFlag
 from node_storage.factory import create_textNode, create_slot, create_user
 from node_storage.factory import create_vote, create_argument, create_spam_flag
 
