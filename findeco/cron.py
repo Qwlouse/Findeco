@@ -27,21 +27,21 @@
 #endregion #####################################################################
 
 from datetime import datetime
-from libs.django_cron import cronScheduler, Job
-from .models import Activation, PasswordRecovery
+from findeco.models import Activation, PasswordRecovery
 
 
-class ActivationKeyPruning(Job):
-    run_every = 3600  # seconds
+from django_cron import CronJobBase, Schedule
 
-    def job(self):
+
+class ActivationKeyPruning(CronJobBase):
+    RUN_EVERY_MINS = 60  # every hour
+
+    schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
+    code = 'findeco.activation_key_pruning'    # a unique code
+
+    def do(self):
         now = datetime.now()
         for act in Activation.objects.filter(key_valid_until__lt=now):
             act.user.delete()
             act.delete()
         PasswordRecovery.objects.filter(key_valid_until__lt=now).delete()
-
-    def __unicode__(self):
-        return "<ActivationKeyPruningJob>"
-
-cronScheduler.register(ActivationKeyPruning)
