@@ -200,6 +200,10 @@ APPEND_SLASH = False
 
 CRON_POLLING_FREQUENCY = 300  # in seconds
 
+CRON_CLASSES = [
+    "findeco.cron.ActivationKeyPruning"
+]
+
 # uncomment this if you don't want unittests to run migrations
 SOUTH_TESTS_MIGRATE = False
 

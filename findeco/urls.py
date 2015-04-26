@@ -26,18 +26,13 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
 from findeco import settings
-from libs import django_cron
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from findeco.api_validation import USERNAME
 from findeco.paths import PATH, UNNAMED_PATH, RESTRICTED_PATH
 from microblogging.urls import microblogging_patterns
-import sys
 
 admin.autodiscover()
-if 'test' not in sys.argv:
-    django_cron.autodiscover()
-
 
 GRAPH_TYPE = r'(?P<graph_data_type>(default)|(full)|(withSpam))'
 SEARCH_FIELDS = r'(?P<search_fields>((user|content|microblogging)' \
