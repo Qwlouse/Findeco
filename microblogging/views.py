@@ -1,9 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
+###############################################################################
 # Copyright (c) 2012 Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
 #
@@ -18,22 +18,29 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+###############################################################################
 #
-################################################################################
+###############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
-from __future__ import division, print_function, unicode_literals
+# endregion ###################################################################
+import json
 
-from findeco.view_helpers import assert_node_for_path, assert_active_user, \
-    assert_permissions
-from findeco.view_helpers import assert_authentication, assert_request_data_parameters
+from django.db.models import Q
+
+from findeco.view_helpers import (
+    assert_node_for_path, assert_active_user, assert_permissions)
+from findeco.view_helpers import (assert_authentication,
+                                  assert_request_data_parameters)
 from findeco.view_helpers import ViewErrorHandling
-from .factory import create_post
-from .view_helpers import *
-from .view_helpers import get_microblogging_for_followed_nodes_query
+from microblogging.factory import create_post
+from microblogging.view_helpers import (
+    get_microblogging_for_followed_nodes_query, microblogging_response,
+    get_microblogging_for_node_query, get_timeline_query, get_mentions_query,
+    get_microblogging_from_user_query,
+    get_microblogging_for_authored_nodes_query, convert_long_urls,
+    notify_users, json_response)
 
 
 @ViewErrorHandling

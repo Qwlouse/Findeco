@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+###############################################################################
+# Copyright (c) 2015 Klaus Greff <qwlouse@gmail.com>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -18,25 +18,25 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+###############################################################################
 #
-################################################################################
+###############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
-from __future__ import division, print_function, unicode_literals
+# endregion ###################################################################
+
 import json
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from microblogging.factory import create_post
 from microblogging.models import Post
-from node_storage.factory import create_user, create_nodes_for_path, create_vote
+from node_storage.factory import (
+    create_user, create_nodes_for_path, create_vote)
 
 
 class ViewTest(TestCase):
-
-    ################# Load Microblogging All ###################################
+    # ################ Load Microblogging All #################################
 
     def test_load_microblogging_all_loads_all_microblogging(self):
         hugo = create_user("hugo")
@@ -53,7 +53,7 @@ class ViewTest(TestCase):
             self.assertIn(p.id, ids)
         self.assertEqual(len(res), 3)
 
-    ################# Load Microblogging For Node ##############################
+    # ################ Load Microblogging For Node ############################
 
     def test_load_microblogging_for_node(self):
         hugo = create_user("hugo")
@@ -74,7 +74,7 @@ class ViewTest(TestCase):
             self.assertIn(post.id, [m["microblogID"] for m in res])
         self.assertEqual(len(res), 3)
 
-    ################# Load Microblogging Timeline ##############################
+    # ################ Load Microblogging Timeline ############################
 
     def test_load_microblogging_timeline(self):
         hugo = create_user("hugo")
@@ -97,7 +97,7 @@ class ViewTest(TestCase):
         self.assertNotIn(wrong_post.id, response_id_list)
         self.assertEqual(len(res), 2)
 
-    ################# Load Microblogging Mentions ##############################
+    # ################ Load Microblogging Mentions ############################
 
     def test_load_microblogging_mentions(self):
         hugo = create_user("hugo")
@@ -122,7 +122,7 @@ class ViewTest(TestCase):
             self.assertNotIn(post.id, response_id_list)
         self.assertEqual(len(res), 2)
 
-    ################# Load Microblogging From User  ############################
+    # ################ Load Microblogging From User  ##########################
 
     def test_load_microblogging_from_user(self):
         hugo = create_user("hugo")
@@ -146,7 +146,7 @@ class ViewTest(TestCase):
             self.assertNotIn(post.id, response_id_list)
         self.assertEqual(len(res), 2)
 
-    ################# Load Microblogging For Followed Nodes ####################
+    # ################ Load Microblogging For Followed Nodes ##################
 
     def test_load_microblogging_for_followed_nodes(self):
         create_nodes_for_path("foo.1")
@@ -161,9 +161,10 @@ class ViewTest(TestCase):
                  create_post("reference /foo.2", hugo, location=''),
                  create_post("reference /foo.1/bar.1", hugo, location='foo.2')]
 
-        wrong_posts = [create_post("posted somewhere", hugo, location='foo.1'),
-                       create_post("reference wrong /foo.1", hugo, location=''),
-                       create_post("neither", hugo, location='')]
+        wrong_posts = [
+            create_post("posted somewhere", hugo, location='foo.1'),
+            create_post("reference wrong /foo.1", hugo, location=''),
+            create_post("neither", hugo, location='')]
 
         response = self.client.get(
             reverse('load_microblogging_for_followed_nodes',
@@ -177,7 +178,7 @@ class ViewTest(TestCase):
             self.assertNotIn(post.id, response_id_list)
         self.assertEqual(len(res), 3)
 
-    ################# Load Microblogging For Authored Nodes ####################
+    # ################ Load Microblogging For Authored Nodes ##################
 
     def test_load_microblogging_for_authored_nodes(self):
         hugo = create_user('hugo')
@@ -191,9 +192,10 @@ class ViewTest(TestCase):
                  create_post("reference /foo.2", hugo, location=''),
                  create_post("reference /foo.1/bar.1", hugo, location='foo.2')]
 
-        wrong_posts = [create_post("posted somewhere", hugo, location='foo.1'),
-                       create_post("reference wrong /foo.1", hugo, location=''),
-                       create_post("neither", hugo, location='')]
+        wrong_posts = [
+            create_post("posted somewhere", hugo, location='foo.1'),
+            create_post("reference wrong /foo.1", hugo, location=''),
+            create_post("neither", hugo, location='')]
 
         response = self.client.get(
             reverse('load_microblogging_for_authored_nodes',
@@ -214,7 +216,8 @@ class ViewTest(TestCase):
         response = self.client.post(
             reverse('store_microblogging', kwargs={'path': 'foo.1'}),
             json.dumps(
-                {'microblogText': 'test stuff on http://testserver/foo.1/ and reference /foo.1 and also @hugo'}
+                {'microblogText': 'test stuff on http://testserver/foo.1/ and '
+                                  'reference /foo.1 and also @hugo'}
             ), content_type="application/json")
         res = json.loads(response.content)
         self.assertIn("storeMicrobloggingResponse", res)
@@ -226,7 +229,7 @@ class ViewTest(TestCase):
         self.assertEqual(p.post_type, Post.USER_POST)
         self.assertIn(hugo, p.mentions.all())
         self.assertIn(foo1, p.node_references.all())
-        self.assertEqual(p.text_template,
-                         "test stuff on {n0}/ and reference {n0} and also {u0}")
+        self.assertEqual(
+            p.text_template,
+            "test stuff on {n0}/ and reference {n0} and also {u0}")
         self.assertTrue(p.text_cache != "")
-

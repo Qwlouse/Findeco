@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
@@ -25,20 +25,21 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
-from __future__ import division, print_function, unicode_literals
+
 import json
 import re
+
 from django.core.mail import EmailMessage
 from django.db.models import Q
 from django.utils.translation import ugettext
+
 from findeco import settings
 from findeco.api_validation import USERNAME
 from findeco.error_handling import InvalidMicrobloggingOptions
 from findeco.paths import RESTRICTED_NONROOT_PATH
 from findeco.view_helpers import json_response
-
-from .models import Post
-from .tools import convert_to_response_list
+from microblogging.models import Post
+from microblogging.tools import convert_to_response_list
 
 
 def convert_long_urls(text, hostname):

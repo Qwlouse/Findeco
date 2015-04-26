@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ###############################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+# Copyright (c) 2015 Klaus Greff <qwlouse@gmail.com>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -25,13 +25,15 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
-from __future__ import division, print_function, unicode_literals
+
 import re
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.html import escape
+from django.utils.translation import ugettext
 
-import node_storage as backend
+import node_storage
 
 WORDSTART = r"(?:(?<=\s)|\A)"
 WORDEND = r"\b"
@@ -69,12 +71,12 @@ class Post(models.Model):
     )
 
     node_references = models.ManyToManyField(
-        backend.Node,
+        node_storage.Node,
         symmetrical=False,
         related_name='microblogging_references',
         blank=True)
     location = models.ForeignKey(
-        backend.Node,
+        node_storage.Node,
         related_name='microblogging_from_here',
         blank=False,
         null=False)
@@ -132,7 +134,7 @@ class Post(models.Model):
         if self.post_type == self.USER_POST:
             template = preprocess_userpost_template(self.text_template)
         else:
-            template = SYSTEM_MESSAGE_TEMPLATES[self.post_type]
+            template = ugettext(SYSTEM_MESSAGE_TEMPLATES[self.post_type])
 
         # insert references and mentions
         try:

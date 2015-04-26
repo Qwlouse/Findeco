@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # coding=utf-8
 # region License
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
-################################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>
+###############################################################################
+# Copyright (c) 2015 Klaus Greff <qwlouse@gmail.com>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -18,14 +18,14 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # Findeco. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+###############################################################################
 #
-################################################################################
+###############################################################################
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#endregion #####################################################################
-from __future__ import division, print_function, unicode_literals
+# endregion ###################################################################
+
 import hashlib
 
 from django.contrib.auth.models import User
@@ -35,7 +35,10 @@ from django.db.models import Q
 from findeco.settings import FINDECO_BASE_URL
 from findeco.view_helpers import assert_active_user
 from microblogging.models import Post
-from microblogging.view_helpers import *
+from microblogging.view_helpers import (
+    get_posts, get_timeline_query, get_mentions_query,
+    get_microblogging_from_user_query,
+    get_microblogging_for_followed_nodes_query)
 
 
 def rsskey_is_valid(rsskey, name):
@@ -47,13 +50,13 @@ def rsskey_is_valid(rsskey, name):
 
 
 class MicrobloggingFeed(Feed):
-    #item_guid_is_permalink = False
+    # item_guid_is_permalink = False
 
     def item_title(self, item):
         return item.author.username
 
     def item_link(self, item):
-        return FINDECO_BASE_URL +"/" + item.location.get_a_path()
+        return FINDECO_BASE_URL + "/" + item.location.get_a_path()
 
     def item_guid(self, item):
         return str(item.id)
@@ -104,4 +107,3 @@ class MicrobloggingFeed(Feed):
 
     def items(self, obj):
         return obj
-
