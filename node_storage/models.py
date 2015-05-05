@@ -161,7 +161,7 @@ class Node(models.Model):
         for p in self.parents.all():
             p.update_favorite_and_invalidate_cache()
 
-    def __unicode__(self):
+    def __str__(self):
         return "id=%d, title=%s" % (self.id, self.title)
 
     def get_index(self, parent):
@@ -213,7 +213,8 @@ class Node(models.Model):
             exclude(vote__nodes__in=[self]).distinct().count()
 
     def get_newfollows(self):
-        return self.votes.exclude(nodes__in=self.sources.all()).count()
+        return Vote.objects.filter(nodes__in=[self]). \
+            exclude(nodes__in=self.sources.all()).count()
 
     def traverse_derivates(self, subset=None, condition=lambda n: True):
         if subset:
@@ -286,7 +287,7 @@ class Argument(Node):
                                      self.index)
                 PathCache.objects.create(path=path, node=self)
 
-    def __unicode__(self):
+    def __str__(self):
         return "id=%d, type=%s" % (self.id, self.arg_type)
 
 
@@ -298,7 +299,7 @@ class Text(models.Model):
         related_name='author_in'
     )
 
-    def __unicode__(self):
+    def __str__(self):
         return "id=%d, text=%s" % (self.id,
                                    self.text[:min(len(self.text), 30)])
 
@@ -312,7 +313,7 @@ class Derivation(models.Model):
     class Meta:
         unique_together = (('source', 'derivate'), )
 
-    def __unicode__(self):
+    def __str__(self):
         return "source_id=%d, derivate_id=%d, argument_id=%d" % \
                (self.source_id, self.derivate_id, self.argument_id)
 
@@ -325,7 +326,7 @@ class NodeOrder(models.Model):
     class Meta:
         unique_together = (('parent', 'child'), )
 
-    def __unicode__(self):
+    def __str__(self):
         return "pos=%d, child_id=%d, parent_id=%d" % (self.position,
                                                       self.child_id,
                                                       self.parent_id)
@@ -342,7 +343,7 @@ class Vote(models.Model):
     def head(self):
         return self.nodes.order_by('id').all()[0]
 
-    def __unicode__(self):
+    def __str__(self):
         return "id=%d, user=%s" % (self.id, self.user.username)
 
 
@@ -350,7 +351,7 @@ class SpamFlag(models.Model):
     user = models.ForeignKey(User)
     node = models.ForeignKey(Node, related_name='spam_flags')
 
-    def __unicode__(self):
+    def __str__(self):
         return "id=%d, user=%s" % (self.id, self.user.username)
 
 
