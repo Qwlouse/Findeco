@@ -218,7 +218,7 @@ class ViewTest(TestCase):
         self.assertEqual(len(res), 3)
 
     def test_store_microblogging(self):
-        hugo = create_user('hugo', password='oguh')
+        hugo = create_user('hugo', password='oguh', groups=['bloggers'])
         foo1 = create_nodes_for_path('foo.1')
         self.assertTrue(self.client.login(username="hugo", password="oguh"))
         response = self.client.post(
