@@ -40,9 +40,7 @@ def helper_login_admin(self):
     self.assertIn('Mit dem Login', body.text, "Partial not loaded")
     self.driver.find_element_by_xpath("//input[@type='password']").send_keys("1234")
     self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("admin")
-    self.driver.find_element_by_css_selector("input.btn.btn-primary").click()
+    self.driver.find_element_by_xpath("//input[@type='submit']").click()
     time.sleep(1)
     body = self.driver.find_element_by_tag_name('body')
     self.assertIn('admin', body.text, "Login without success")
-    
-    
