@@ -1,20 +1,21 @@
 language: python
-#services:
-#– postgresql
 python:
 – 3.4
+install:
+  - pip install tox
+script:
+  - tox
+branches:
+  only:
+    - master
+    - feature/django18py3  # todo: remove after travis works
+    - develop
+    - /^release.*$/
 
 #before_script:
 #– cp capomastro/local_settings.py.example capomastro/local_settings.py
 #– psql -c 'create database capomastro;' -U postgres
 #– sed -i -e 's/getpass.getuser()/"postgres"/g' capomastro/local_settings.py
-install:
-  - pip install tox
-script:
-  - tox
+#services:
+#– postgresql
 
-
-#branches:
-#  only:
-#    - master
-#    - /^release.*$/
