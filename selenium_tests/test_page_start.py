@@ -43,5 +43,4 @@ class TestFePageStart(StaticLiveServerTestCase):
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('DisQussion', body.text, "defaut Json file for external content not loaded")
         self.assertNotIn("{", body.text, "Angular not loaded")
-        self.assertIs(self.driver.find_element_by_css_selector(".deactivateSpinner").is_displayed(), False, "A Spinner stays displayed")
 
