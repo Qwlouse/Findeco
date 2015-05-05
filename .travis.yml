@@ -1,0 +1,19 @@
+language: python
+#services:
+#– postgresql
+python:
+– 3.4
+
+#before_script:
+#– cp capomastro/local_settings.py.example capomastro/local_settings.py
+#– psql -c 'create database capomastro;' -U postgres
+#– sed -i -e 's/getpass.getuser()/"postgres"/g' capomastro/local_settings.py
+install:
+  - pip install tox
+script:
+  - tox
+
+#branches:
+#  only:
+#    - master
+#    - /^release.*$/
