@@ -1,8 +1,14 @@
 language: python
 python:
   - "3.4"
+services:
+  - postgres
 install:
   - pip install tox
+before_script:
+  – cp findeco/tests/local_settings.py.postgrestest findeco/local_settings.py
+  – psql -c 'create database findeco;' -U postgres
+  – python manage.py migrate
 script:
   - tox
 branches:
@@ -11,3 +17,9 @@ branches:
     - feature/django18py3  # todo: remove after travis works
     - develop
     - /^release.*$/
+notifications:
+  email:
+    - jonny@pinae.net
+    - qwlouse@gmail.com
+
+

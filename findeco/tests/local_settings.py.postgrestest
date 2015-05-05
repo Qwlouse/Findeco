@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+# coding=utf-8
+# do not change the following three lines
+import datetime
+from findeco.project_path import project_path
+
+# You should turn debug off on public machines.
+# This is helpful for development and setup
+DEBUG = True
+
+# We will send Exceptions created by the Api to this Email
+ADMINS = ()
+
+# The password used for the auto-created 'admin' user on first database sync.
+# Make sure to change your password after first login
+ADMIN_PASS = "1234"
+
+# You can define your database here. The default configuration (sqlite) works
+# fine for testing and development environments
+DATABASES = {
+    'default': {
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # DBName of path to database file if using sqlite3.
+        'NAME': 'findeco',
+        'USER': 'postgres',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': 'localhost',
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
+    }
+}
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = 'MQ4DNT74V5FFRZNFKC01CI6DYELALALALALALALALA6OFGFPGJGKRT'
+
+# Local time zone for this installation. Choices can be found here:
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# although not all choices may be available on all operating systems.
+# In a Windows environment this must be set to your system time zone.
+TIME_ZONE = 'Europe/Berlin'
+
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGE_CODE = 'de-DE'
+
+# Settings for sending registration and other mails to users
+EMAIL_HOST = ''
+EMAIL_PORT = 25
+EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = ''
+EMAIL_SUBJECT_PREFIX = '[Findeco]'
+EMAIL_USE_TLS = True
+
+# This url is used in mails and similar things for pointing to
+# your Findeco system
+FINDECO_BASE_URL = 'http://127.0.0.1:8000'
+
+
+# Drop activation keys and password recovery keys after the configured times
+ACTIVATION_KEY_VALID_FOR = datetime.timedelta(hours=24)
+RECOVERY_KEY_VALID_FOR = datetime.timedelta(hours=24)

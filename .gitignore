@@ -38,7 +38,7 @@ Database.sqlite3
 
 *.log
 *.pot
-local_settings.py
+findeco/local_settings.py
 
 #Eclipse Files
 .pydevproject

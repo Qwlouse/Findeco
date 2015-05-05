@@ -204,13 +204,6 @@ CRON_CLASSES = [
     "findeco.cron.ActivationKeyPruning"
 ]
 
-# try to import secret_settings and overwrite some of the default values
-try:
-    from local_settings import *
-except ImportError:
-    pass
-
-
 # if manage.py test was called, use test settings
 import sys
 if 'test' in sys.argv:
@@ -225,3 +218,10 @@ if 'test' in sys.argv:
         'django.contrib.auth.hashers.MD5PasswordHasher',
         'django.contrib.auth.hashers.SHA1PasswordHasher',
     )
+
+
+# try to import secret_settings and overwrite some of the default values
+try:
+    from .local_settings import *
+except ImportError:
+    pass
