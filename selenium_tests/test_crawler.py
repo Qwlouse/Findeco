@@ -25,7 +25,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
 from selenium_tests.test_helper import helper_login_admin
 from selenium import webdriver
 import lxml.html
@@ -35,7 +36,7 @@ from node_storage.factory import create_textNode, create_slot, create_user
 from node_storage.factory import create_vote
 
 
-class TestCrawler(LiveServerTestCase):
+class TestCrawler(StaticLiveServerTestCase):
     #fixtures = ['test.json']
     def setUp(self):
         self.root = get_root_node()

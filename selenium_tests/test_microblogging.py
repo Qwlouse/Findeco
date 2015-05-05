@@ -26,12 +26,13 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
 
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+#from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium_tests.test_helper import helper_login_admin
 
 
-class TestFeMicroblogging(LiveServerTestCase):
+class TestFeMicroblogging(StaticLiveServerTestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(1)

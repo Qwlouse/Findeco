@@ -27,12 +27,12 @@
 # endregion ###################################################################
 
 from django.core import mail
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 import time
 
 
-class TestFePageRegistration(LiveServerTestCase):
+class TestFePageRegistration(StaticLiveServerTestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(1)
