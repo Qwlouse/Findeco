@@ -27,13 +27,10 @@
 # endregion ###################################################################
 
 from django.test import LiveServerTestCase
-from nose.plugins.attrib import attr
 from selenium import webdriver
-from test_helper import helper_login_admin
-import time
+from selenium_tests.test_helper import helper_login_admin
 
 
-@attr('selenium')
 class TestFeMicroblogging(LiveServerTestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()

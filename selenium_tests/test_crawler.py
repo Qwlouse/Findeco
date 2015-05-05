@@ -26,17 +26,15 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
 from django.test import LiveServerTestCase
-from nose.plugins.attrib import attr
-from test_helper import helper_login_admin
+from selenium_tests.test_helper import helper_login_admin
 from selenium import webdriver
 import lxml.html
 import time
-from node_storage import get_root_node
+from node_storage.path_helpers import get_root_node
 from node_storage.factory import create_textNode, create_slot, create_user
 from node_storage.factory import create_vote
 
 
-@attr('selenium')
 class TestCrawler(LiveServerTestCase):
     #fixtures = ['test.json']
     def setUp(self):

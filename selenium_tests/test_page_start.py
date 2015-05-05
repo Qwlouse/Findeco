@@ -27,11 +27,9 @@
 # endregion ###################################################################
 
 from django.test import LiveServerTestCase
-from nose.plugins.attrib import attr
 from selenium import webdriver
 
 
-@attr('selenium')
 class TestFePageStart(LiveServerTestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
@@ -44,6 +42,6 @@ class TestFePageStart(LiveServerTestCase):
         self.driver.get(self.live_server_url + '/start')
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('DisQussion', body.text, "defaut Json file for external content not loaded")
-        self.assertNotIn("{", body.text , "Angular not loaded")
+        self.assertNotIn("{", body.text, "Angular not loaded")
         self.assertIs(self.driver.find_element_by_css_selector(".deactivateSpinner").is_displayed(), False, "A Spinner stays displayed")
 
