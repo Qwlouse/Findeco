@@ -88,7 +88,7 @@ class ViewHelpersTest(TestCase):
         result = json_decode(response.content)[
             "loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
-        self.assertEqual([p['microblogID'] for p in result], range(25, 5, -1))
+        self.assertEqual([p['microblogID'] for p in result], list(range(25, 5, -1)))
 
     def test_microblogging_response_limited_to_newer_sorted(self):
         hugo = create_user("hugo")
@@ -100,7 +100,7 @@ class ViewHelpersTest(TestCase):
         result = json_decode(response.content)[
             "loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
-        self.assertEqual([p['microblogID'] for p in result], range(23, 3, -1))
+        self.assertEqual([p['microblogID'] for p in result], list(range(23, 3, -1)))
 
     def test_microblogging_response_limited_to_older_sorted(self):
         hugo = create_user("hugo")
@@ -112,7 +112,7 @@ class ViewHelpersTest(TestCase):
         result = json_decode(response.content)[
             "loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
-        self.assertEqual([p['microblogID'] for p in result], range(23, 3, -1))
+        self.assertEqual([p['microblogID'] for p in result], list(range(23, 3, -1)))
 
     ################## convert_long_urls #######################################
 
