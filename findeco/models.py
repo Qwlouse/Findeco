@@ -51,6 +51,9 @@ def generate_key(nr_of_chars=64):
                    for _ in range(nr_of_chars))
 
 
+def generate_api_key():
+    return generate_key(16)
+
 # ###################### Add profile to each user #############################
 class UserProfile(models.Model):
     """
@@ -84,7 +87,7 @@ class UserProfile(models.Model):
     is_verified_until = models.DateTimeField(default=datetime.min)
     last_seen = models.DateTimeField(default=datetime.min)
     verification_key = models.CharField(max_length=64, default=generate_key)
-    api_key = models.CharField(max_length=16, default=lambda: generate_key(16))
+    api_key = models.CharField(max_length=16, default=generate_api_key)
 
     wants_mail_notification = models.BooleanField(default=False)
     help_enabled = models.BooleanField(default=True)
