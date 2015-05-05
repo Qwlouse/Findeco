@@ -45,9 +45,9 @@ def validate_structure_schema(structure):
         'children':[structure_node_schema,None]
     }
     """
-    entries = [('short_title', unicode),
-               ('title', unicode),
-               ('text', unicode),
+    entries = [('short_title', str),
+               ('title', str),
+               ('text', str),
                ('children', list)]
     for n, t in entries:
         assert n in structure, "Required field '%s' is missing." % n
