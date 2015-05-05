@@ -1,96 +1,61 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import findeco.models
+from django.conf import settings
 import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'UserProfile'
-        db.create_table('findeco_userprofile', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name=u'profile', unique=True, to=orm['auth.User'])),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('activationKey', self.gf('django.db.models.fields.TextField')(blank=True)),
-        ))
-        db.send_create_signal('findeco', ['UserProfile'])
+    dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
 
-        # Adding M2M table for field followees on 'UserProfile'
-        db.create_table('findeco_userprofile_followees', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('from_userprofile', models.ForeignKey(orm['findeco.userprofile'], null=False)),
-            ('to_userprofile', models.ForeignKey(orm['findeco.userprofile'], null=False))
-        ))
-        db.create_unique('findeco_userprofile_followees', ['from_userprofile_id', 'to_userprofile_id'])
-
-        # Adding M2M table for field blocked on 'UserProfile'
-        db.create_table('findeco_userprofile_blocked', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('from_userprofile', models.ForeignKey(orm['findeco.userprofile'], null=False)),
-            ('to_userprofile', models.ForeignKey(orm['findeco.userprofile'], null=False))
-        ))
-        db.create_unique('findeco_userprofile_blocked', ['from_userprofile_id', 'to_userprofile_id'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'UserProfile'
-        db.delete_table('findeco_userprofile')
-
-        # Removing M2M table for field followees on 'UserProfile'
-        db.delete_table('findeco_userprofile_followees')
-
-        # Removing M2M table for field blocked on 'UserProfile'
-        db.delete_table('findeco_userprofile_blocked')
-
-
-    models = {
-        'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        'auth.permission': {
-            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
-        },
-        'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        'findeco.userprofile': {
-            'Meta': {'object_name': 'UserProfile'},
-            'activationKey': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'blocked': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'blocked_by'", 'blank': 'True', 'to': "orm['findeco.UserProfile']"}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'followees': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'followers'", 'blank': 'True', 'to': "orm['findeco.UserProfile']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "u'profile'", 'unique': 'True', 'to': "orm['auth.User']"})
-        }
-    }
-
-    complete_apps = ['findeco']
+    operations = [
+        migrations.CreateModel(
+            name='Activation',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('key', models.CharField(default=findeco.models.generate_key, max_length=100)),
+                ('key_valid_until', models.DateTimeField()),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='EmailActivation',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('key', models.CharField(default=findeco.models.generate_key, max_length=100)),
+                ('new_email', models.EmailField(max_length=254)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='PasswordRecovery',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('key', models.CharField(default=findeco.models.generate_key, max_length=100)),
+                ('key_valid_until', models.DateTimeField()),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='UserProfile',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('description', models.TextField(blank=True, help_text='Self-description')),
+                ('is_verified_until', models.DateTimeField(default=datetime.datetime(1, 1, 1, 0, 0))),
+                ('last_seen', models.DateTimeField(default=datetime.datetime(1, 1, 1, 0, 0))),
+                ('verification_key', models.CharField(default=findeco.models.generate_key, max_length=64)),
+                ('api_key', models.CharField(default=findeco.models.generate_api_key, max_length=16)),
+                ('wants_mail_notification', models.BooleanField(default=False)),
+                ('help_enabled', models.BooleanField(default=True)),
+                ('preferred_language', models.CharField(default='', max_length=20)),
+                ('blocked', models.ManyToManyField(related_name='blocked_by', blank=True, help_text='Profiles of users this user blocked.', to='findeco.UserProfile')),
+                ('followees', models.ManyToManyField(related_name='followers', blank=True, help_text='Profiles of users this user follows.', to='findeco.UserProfile')),
+                ('user', models.OneToOneField(related_name='profile', to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+    ]
