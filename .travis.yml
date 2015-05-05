@@ -6,9 +6,9 @@ services:
 install:
   - pip install tox
 before_script:
-  – cp findeco/tests/local_settings.py.postgrestest findeco/local_settings.py
-  – psql -c 'create database findeco;' -U postgres
-  – python manage.py migrate
+  - cp findeco/tests/local_settings.py.postgrestest findeco/local_settings.py
+  - psql -c 'create database findeco;' -U postgres
+  - python manage.py migrate
 script:
   - tox
 branches:
