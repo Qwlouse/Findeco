@@ -109,7 +109,7 @@ def get_mentions_query(named_user):
 
 def get_timeline_query(named_user):
     return (Q(author=named_user) |
-            Q(author__in=named_user.profile.followees.all()))
+            Q(author__profile__in=named_user.profile.followees.all()))
 
 
 def get_microblogging_for_node_query(node):
