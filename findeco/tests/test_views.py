@@ -4,7 +4,7 @@
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 # #############################################################################
-# Copyright (c) 2012 Klaus Greff <klaus.greff@gmx.net>,
+# Copyright (c) 2015 Klaus Greff <qwlouse@gmail.com>,
 # Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
 #
