@@ -73,7 +73,7 @@ class MicrobloggingFeed(Feed):
         if rsskey_is_valid(rsskey, name):
             self.link = FINDECO_BASE_URL + "/feeds/rss/timeline/" + name + "/rsskey/"
             self.feed_url = self.link
-            self.feed_guid = hashlib.md5(self.link)
+            self.feed_guid = hashlib.md5(self.link.encode('utf-8'))
             options = {}
             user = assert_active_user(name)
             if rsstype == "timeline":
