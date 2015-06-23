@@ -44,7 +44,7 @@ from node_storage.factory import create_user, create_nodes_for_path, create_vote
 
 
 class ViewHelpersTest(TestCase):
-    ################## get_load_type_query #####################################
+    # ################# get_load_type_query ###################################
 
     def test_get_load_type_query_without_options(self):
         t, i = get_load_type({})
@@ -70,7 +70,7 @@ class ViewHelpersTest(TestCase):
         self.assertEqual(t, "older")
         self.assertEqual(i, 5)
 
-    ################## microblogging_response ##################################
+    # ################# microblogging_response ################################
 
     def test_microblogging_response_empty(self):
         response = microblogging_response(Q(), {})
@@ -80,41 +80,42 @@ class ViewHelpersTest(TestCase):
 
     def test_microblogging_response_limited_to_20_newest_sorted(self):
         hugo = create_user("hugo")
-        for i in range(25):
-            create_post("text%d" % i, hugo)
+        posts = [create_post("text%d" % i, hugo) for i in range(25)]
         response = microblogging_response(Q(), {})
         self.assertTrue(validate_response(response.content,
                                           "load_microblogging"))
         result = json_decode(response.content)[
             "loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
-        self.assertEqual([p['microblogID'] for p in result], list(range(25, 5, -1)))
+        self.assertEqual([p['microblogID'] for p in result],
+                         [p.id for p in reversed(posts[5:])])
 
     def test_microblogging_response_limited_to_newer_sorted(self):
         hugo = create_user("hugo")
-        for i in range(25):
-            create_post("text%d" % i, hugo)
-        response = microblogging_response(Q(), {"type": "newer", "id": 3})
+        posts = [create_post("text%d" % i, hugo) for i in range(25)]
+
+        response = microblogging_response(Q(), {"type": "newer", "id": posts[3].id})
         self.assertTrue(validate_response(response.content,
                                           "load_microblogging"))
         result = json_decode(response.content)[
             "loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
-        self.assertEqual([p['microblogID'] for p in result], list(range(23, 3, -1)))
+        self.assertEqual([p['microblogID'] for p in result],
+                         [p.id for p in reversed(posts[4:24])])
 
     def test_microblogging_response_limited_to_older_sorted(self):
         hugo = create_user("hugo")
-        for i in range(25):
-            create_post("text%d" % i, hugo)
-        response = microblogging_response(Q(), {"type": "older", "id": 24})
+        posts = [create_post("text%d" % i, hugo) for i in range(25)]
+        response = microblogging_response(Q(), {"type": "older", "id": posts[24].id})
         self.assertTrue(validate_response(response.content,
                                           "load_microblogging"))
         result = json_decode(response.content)[
             "loadMicrobloggingResponse"]
         self.assertEqual(len(result), 20)
-        self.assertEqual([p['microblogID'] for p in result], list(range(23, 3, -1)))
+        self.assertEqual([p['microblogID'] for p in result],
+                         [p.id for p in reversed(posts[4:24])])
 
-    ################## convert_long_urls #######################################
+    # ################# convert_long_urls #####################################
 
     def test_convert_long_urls_removes_hostname_from_structure_node_path(self):
         text = convert_long_urls("text http://www.hostname.de/foo.1/ text",
@@ -155,7 +156,7 @@ class ViewHelpersTest(TestCase):
                                  "www.hostname.de")
         self.assertEqual(text, "text http://www.hostname.de/ text")
 
-    ################## send_notification_to ####################################
+    # ################# send_notification_to ##################################
 
     def test_send_notification_to_sends_mail_via_bcc(self):
         hugo = create_user("hugo")
