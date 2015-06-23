@@ -139,7 +139,7 @@ def load_argument_index(request, path):
     node = assert_node_for_path(prefix)
     data = [create_index_node_for_argument(a, request.user.id) for a in
             node.arguments.annotate(num_follows=Count('votes')).
-            order_by('-num_follows')]
+            order_by('-num_follows', 'id')]
     return json_response({'loadArgumentIndexResponse': data})
 
 
