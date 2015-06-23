@@ -181,7 +181,7 @@ class Node(models.Model):
         """
         Returns a path which needn't be the only valid path to the node.
         """
-        paths = PathCache.objects.filter(node=self)
+        paths = PathCache.objects.filter(node=self).order_by('path')
         if paths.count() > 0:
             return paths[0].path
         else:
