@@ -27,9 +27,7 @@
 # endregion ###################################################################
 
 from django.test import TestCase
-from findeco.settings import STATICFILES_DIRS
 from node_storage.structure_parser import validate_structure_schema
-import os.path as path
 
 from ..factory import create_slot, create_structureNode
 from ..factory import create_textNode, create_user
@@ -42,32 +40,6 @@ from ..validation import remove_unallowed_chars
 from ..validation import strip_accents
 from ..validation import substitute_umlauts
 from ..validation import turn_into_valid_short_title
-import re
-
-ESCAPABLE = re.compile(r'([^\x00-\x7f])')
-HAS_UTF8 = re.compile(r'[\x80-\xff]')
-
-
-def _js_escape_unicode_re_callack(match):
-    s = match.group(0)
-    n = ord(s)
-    if n < 0x10000:
-        return '\\u%04x' % (n,)
-    else:
-        # surrogate pair
-        n -= 0x10000
-        s1 = 0xd800 | ((n >> 10) & 0x3ff)
-        s2 = 0xdc00 | (n & 0x3ff)
-        return '\\u%04x\\u%04x' % (s1, s2)
-
-
-def js_escape_unicode(s):
-    """Return an ASCII-only representation of a JavaScript string"""
-    if isinstance(s, str):
-        if HAS_UTF8.search(s) is None:
-            return s
-        s = s.decode('utf-8')
-    return str(ESCAPABLE.sub(_js_escape_unicode_re_callack, s))
 
 
 class StructureParserTest(TestCase):
@@ -160,25 +132,24 @@ class StructureParserTest(TestCase):
         self.assertTrue(validate_structure_schema(s))
         self.assertEqual(s, schema)
 
-    # TODO unskip this test
-    # def test_structure_parser_turns_title_into_short_title(self):
-    #     wiki = """=Titel=
-    #     == ..::Very(!) long, slot title with special characters::..  ==
-    #     """
-    #     schema = {
-    #         'short_title': "foo", 'title': "Titel", 'text': "",
-    #         'children': [
-    #             {'short_title': "Very_long_slot_title",
-    #              'title': "..::Very(!) long, title with special characters::..",
-    #              'text': "",
-    #              'children': []
-    #              }
-    #         ]
-    #     }
-    #     for pname, parse in self.parser.items():
-    #         s = parse(wiki, "foo")
-    #         self.assertTrue(validate_structure_schema(s), "fail in " + pname)
-    #         self.assertEqual(s, schema, "fail in " + pname)
+    def test_structure_parser_turns_title_into_short_title(self):
+        wiki = """=Titel=
+        == ..::Very(!) long, slot title with special characters::..  ==
+        """
+        schema = {
+            'short_title': "foo", 'title': "Titel", 'text': "",
+            'children': [
+                {'short_title': "Very_long_slot_title",
+                 'title': "..::Very(!) long, slot title with special "
+                          "characters::..",
+                 'text': "",
+                 'children': []
+                 }
+            ]
+        }
+        s = self.parse(wiki, "foo")
+        self.assertTrue(validate_structure_schema(s))
+        self.assertEqual(s, schema)
 
     def test_structure_parser_with_single_node_example_strips_whitespace(self):
         wiki = """

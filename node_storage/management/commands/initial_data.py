@@ -4,7 +4,8 @@
 # Findeco is dually licensed under GPLv3 or later and MPLv2.
 #
 ###############################################################################
-# Copyright (c) 2012 Johannes Merkert <jonny@pinae.net>
+# Copyright (c) 2015 Klaus Greff <qwlouse@gmail.com>,
+# Johannes Merkert <jonny@pinae.net>
 # This file is part of Findeco.
 #
 # Findeco is free software; you can redistribute it and/or modify it under
@@ -24,8 +25,9 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-###############################################################################
-
+# endregion ###################################################################
+import re
+import os
 import django
 from django.core.management import BaseCommand
 from django.db import transaction
@@ -33,9 +35,8 @@ from findeco.paths import SHORT_TITLE
 from findeco.project_path import project_path
 from node_storage.factory import create_user, create_slot
 from node_storage.path_helpers import get_root_node
-from node_storage.structure_parser import parse, create_structure_from_structure_node_schema
-import re
-import os
+from node_storage.structure_parser import (
+    parse, create_structure_from_structure_node_schema)
 
 comment_line_pattern = re.compile(r"^\s*#")
 
@@ -74,7 +75,7 @@ def create_initial_data():
             slot = create_slot(slot_name)
             root.append_child(slot)
             with open(src_path, 'r') as src:
-                schema = parse(unicode(src.read(), encoding='utf-8'), slot.title)
+                schema = parse(src.read(), slot.title)
                 create_structure_from_structure_node_schema(schema, slot, decided)
 
 

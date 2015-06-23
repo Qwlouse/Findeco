@@ -48,7 +48,7 @@ def create_topic(src_path, topic_name):
         slot = create_slot(topic_name)
         root.append_child(slot)
         with open(src_path, 'r') as src:
-            schema = parse(unicode(src.read(), encoding='utf-8'), slot.title)
+            schema = parse(src.read(), slot.title)
             create_structure_from_structure_node_schema(schema, slot, decided)
 
 
