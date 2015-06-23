@@ -24,23 +24,26 @@
 describe('FindecoGraphDataService', function () {
     var graphDataService, httpBackend;
 
-    //excuted before each "it" is run.
-    beforeEach(function () {
-        //load the module.
-        angular.mock.module('Findeco');  // For Navigator
-        angular.mock.module('FindecoGraphDataService');
+    beforeEach(module('Findeco'));
+    beforeEach(module('FindecoGraphDataService'));
 
-        //inject your service for testing.
-        angular.mock.inject(function ($httpBackend, GraphData) {
-            graphDataService = GraphData;
-            httpBackend = $httpBackend
-        });
+    beforeEach(inject(function($httpBackend, GraphData){
+        httpBackend = $httpBackend;
+        // ignore get requests on static files
+        httpBackend.when('GET', /\/static\/.*/).respond(200);
+        graphDataService = GraphData;
+    }));
+
+    afterEach(function() {
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
     });
 
 /////////////////////////// loadGraphData /////////////////////////////
     describe('loadGraphData', function () {
         it('should have a loadGraphData function', function () {
             expect(angular.isFunction(graphDataService.loadGraphData)).toBe(true);
+            httpBackend.flush();
         });
 
         it('should call the right path', function () {

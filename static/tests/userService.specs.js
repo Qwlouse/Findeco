@@ -54,6 +54,7 @@ describe('FindecoUserService', function() {
     beforeEach(inject(function($httpBackend, $rootScope, User){
         httpBackend = $httpBackend;
         rootScope = $rootScope;
+        spyOn(rootScope, '$broadcast');
         userService = User;
     }));
 
@@ -383,7 +384,7 @@ describe('FindecoUserService', function() {
                 userService.loadSettings();
                 httpBackend.flush();
                 userService.helpEnabled = true;
-                expect(userService.hasUnsavedChanges()).toBeFalsy();
+                expect(userService.hasUnsavedChanges()).toBeTruthy();
             });
         });
 
