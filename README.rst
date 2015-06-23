@@ -29,10 +29,10 @@ This project is dually licensed under the terms of the
 `GPL3 <http://opensource.org/licenses/GPL-3.0>`_ and the 
 `MPL2 <https://www.mozilla.org/MPL/2.0/>`_.
 
-.. |unix_build| image:: https://img.shields.io/travis/qwlouse/findeco.svg?branch=master&style=flat
-    :target: https://travis-ci.org/qwlouse/findeco
+.. |unix_build| image:: https://img.shields.io/travis/Qwlouse/Findeco.svg?branch=master&style=flat
+    :target: https://travis-ci.org/Qwlouse/Findeco
     :alt: Travis-CI Status
 
-.. |coverage| image:: https://coveralls.io/repos/qwlouse/findeco/badge.svg?branch=master&style=flat
-    :target: https://coveralls.io/r/qwlouse/findeco
+.. |coverage| image:: https://coveralls.io/repos/Qwlouse/Findeco/badge.svg?branch=master&style=flat
+    :target: https://coveralls.io/r/Qwlouse/Findeco
     :alt: Coverage Report
