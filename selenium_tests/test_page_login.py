@@ -51,20 +51,20 @@ class TestFePageLogin(StaticLiveServerTestCase):
         self.driver.implicitly_wait(1)
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('Mit dem Login', body.text, "Partial not loaded")
-        self.driver.find_element_by_xpath("//input[@type='password']").send_keys("password")
-        self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("benutzer")
-        self.driver.find_element_by_css_selector("input.btn.btn-primary").click()
-        tmp = self.driver.find_element_by_tag_name('span').text
-        self.assertIn('Der Benutzer ist dem System nicht bekannt', tmp , "No Message on wrong Login")
+        self.driver.find_element_by_xpath("//input[@id='passwordInput']").send_keys("password")
+        self.driver.find_element_by_xpath("//input[@id='usernameInput']").send_keys("benutzer")
+        self.driver.find_element_by_xpath("//input[@type='submit']").click()
+        tmp = self.driver.find_element_by_xpath("//*[@id='passwordInput']/parent::*/parent::*/following::*").text
+        self.assertIn('Der Benutzer ist dem System nicht bekannt', tmp, "No Message on wrong Login")
 
     def test_check_login(self):
         self.driver.get(self.live_server_url + '/login')
         self.driver.implicitly_wait(1)
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('Mit dem Login', body.text, "Partial not loaded")
-        self.driver.find_element_by_xpath("//input[@type='password']").send_keys("1234")
-        self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("admin")
-        self.driver.find_element_by_css_selector("input.btn.btn-primary").click()
+        self.driver.find_element_by_xpath("//input[@id='passwordInput']").send_keys("1234")
+        self.driver.find_element_by_xpath("//input[@id='usernameInput']").send_keys("admin")
+        self.driver.find_element_by_xpath("//input[@type='submit']").click()
         time.sleep(2)
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('admin', body.text, "Login without success")

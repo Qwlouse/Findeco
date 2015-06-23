@@ -42,8 +42,8 @@ class TestFePageProfile(StaticLiveServerTestCase):
     def login(self):
         self.driver.get(self.live_server_url + '/login')
         self.driver.implicitly_wait(1)
-        self.driver.find_element_by_xpath("//input[@type='password']").send_keys("1234")
-        self.driver.find_element_by_xpath("//input[@ng-model='username']").send_keys("admin")
+        self.driver.find_element_by_xpath("//input[@id='passwordInput']").send_keys("1234")
+        self.driver.find_element_by_xpath("//input[@id='usernameInput']").send_keys("admin")
         self.driver.find_element_by_xpath("//input[@type='submit']").click()
         time.sleep(1)
         body = self.driver.find_element_by_tag_name('body')
@@ -54,13 +54,16 @@ class TestFePageProfile(StaticLiveServerTestCase):
         self.login()
         self.driver.find_element_by_link_text("admin").click()
         time.sleep(1)
-        self.driver.find_element_by_xpath("//textarea[@ng-model='user.description']").send_keys("Dies ist die Userbeschreibung")
+        self.driver.find_element_by_xpath("//textarea[@name='description']").send_keys("Dies ist die Userbeschreibung")
         time.sleep(2)
         body = self.driver.find_element_by_tag_name('body')
         self.assertIn('Dies ist die Userbeschreibung', body.text, "Preview does not work")
         self.driver.find_element_by_css_selector("input[type='submit']").click()
-        self.driver.find_elements_by_css_selector(".alert-success")
-        self.driver.find_element_by_css_selector("button.close").click()
+        time.sleep(2)
+        text = self.driver.find_element_by_xpath("//div[@wiki-text='user.description']/p").text
+        self.assertEqual("Dies ist die Userbeschreibung", text, "Wiki text not found")
+        disabled = self.driver.find_element_by_css_selector("input[type='submit']").get_attribute("disabled")
+        self.assertEqual("true", disabled, "Save button is not disabled")
     
     def test_change_user_email(self):
         self.login()
@@ -79,16 +82,21 @@ class TestFePageProfile(StaticLiveServerTestCase):
     def test_change_user_name(self):
         self.login()
         self.driver.get(self.live_server_url + '/profile')
-        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").clear()
-        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("")
-        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("admin")
-        self.driver.find_element_by_xpath("(//input[@value='Speichern'])[1]").click()
-        self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert")))
-        self.driver.find_element_by_css_selector("button.close").click()
-        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("")
-        self.driver.find_element_by_xpath("(//input[@type='text'])[1]").send_keys("admin2")
-        self.driver.find_element_by_xpath("(//input[@value='Speichern'])[1]").click()
-        self.assertEqual(1, len(self.driver.find_elements_by_css_selector(".alert-success")))
+        self.driver.find_element_by_xpath("//form[@name='profileUsername']/input[@type='text']").clear()
+        self.driver.find_element_by_xpath("//form[@name='profileUsername']/input[@type='text']").send_keys("")
+        self.driver.find_element_by_xpath("//form[@name='profileUsername']/input[@type='text']").send_keys("admin")
+        self.driver.find_element_by_xpath("//form[@name='profileUsername']/input[@type='submit']").click()
+        self.driver.switch_to.alert.accept()
+        disabled = self.driver.find_element_by_xpath(
+            "//form[@name='profileUsername']/input[@type='submit']").get_attribute("disabled")
+        self.assertEqual("true", disabled, "Save button is not disabled")
+        self.driver.find_element_by_xpath("//form[@name='profileUsername']/input[@type='text']").send_keys("")
+        self.driver.find_element_by_xpath("//form[@name='profileUsername']/input[@type='text']").send_keys("admin2")
+        self.driver.find_element_by_xpath("//form[@name='profileUsername']/input[@type='submit']").click()
+        self.driver.switch_to.alert.accept()
+        disabled = self.driver.find_element_by_xpath(
+            "//form[@name='profileUsername']/input[@type='submit']").get_attribute("disabled")
+        self.assertEqual("true", disabled, "Save button is not disabled")
         
     def test_change_password(self):
         self.login()
