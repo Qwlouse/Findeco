@@ -5,16 +5,15 @@ services:
   - postgres
 install:
   - pip install -rrequirements.txt
-  - pip install psycopg2
+  - pip install psycopg2 coverage
 before_script:
   - cp findeco/tests/local_settings.py.postgrestest findeco/local_settings.py
   - psql -c 'create database findeco;' -U postgres
   - python manage.py migrate
   - python manage.py compilemessages
 script:
-  - python manage.py test findeco
-  - python manage.py test node_storage
-  - python manage.py test microblogging
+  - coverage run --source='.' manage.py test findeco node_storage microblogging
+  - coveralls
 
 branches:
   only:
