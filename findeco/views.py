@@ -51,7 +51,7 @@ from findeco.models import (UserProfile, Activation, PasswordRecovery,
                             EmailActivation)
 import node_storage.models as backend_models
 from node_storage.path_helpers import get_root_node, get_node_for_path, get_ordered_children_for
-from node_storage.factory import create_user
+from node_storage.factory import create_user, create_argument
 
 
 # ################### General stuff ###########################################
