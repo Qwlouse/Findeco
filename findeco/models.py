@@ -37,11 +37,12 @@ import random
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.models import User, Group
 from django.db import models
-from django.db.models import signals
+from django.db.models.signals import post_migrate, post_save
+from django.dispatch import receiver
+from django.apps import apps
 
 from findeco.settings import ACTIVATION_KEY_VALID_FOR, ADMIN_PASS
 from findeco.settings import RECOVERY_KEY_VALID_FOR
-import microblogging.models as microblogging_models
 import node_storage.models as node_storage_models
 from node_storage.models import Node, Text
 
@@ -53,6 +54,7 @@ def generate_key(nr_of_chars=64):
 
 def generate_api_key():
     return generate_key(16)
+
 
 # ###################### Add profile to each user #############################
 class UserProfile(models.Model):
@@ -112,15 +114,13 @@ class UserProfile(models.Model):
 # Use post_save signal to ensure the profile will be created automatically
 # when a user is created (saved for the first time)
 # noinspection PyUnusedLocal
+@receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.get_or_create(user=instance)
     else:
         # also save the profile when the user is saved
         instance.profile.save()
-
-
-signals.post_save.connect(create_user_profile, sender=User)
 
 
 # ###################### Activation Models ####################################
@@ -315,7 +315,7 @@ def create_groups():
     print('*' * 80)
     print('Creating groups -- texters, voters, bloggers ')
     print('*' * 80)
-    #### Create a group of Texters
+    # ### Create a group of Texters
     g = Group.objects.create(name="texters")
     perms = ['node_storage.add_node', 'node_storage.add_argument',
              'node_storage.add_derivation', 'node_storage.add_nodeorder',
@@ -323,7 +323,7 @@ def create_groups():
     for p in perms:
         g.permissions.add(get_permission(p))
     g.save()
-    #### Create a group of Voters
+    # ### Create a group of Voters
     g = Group.objects.create(name="voters")
     perms = ['node_storage.add_vote', 'node_storage.add_spamflag',
              'node_storage.change_vote', 'node_storage.change_spamflag',
@@ -332,7 +332,7 @@ def create_groups():
     for p in perms:
         g.permissions.add(get_permission(p))
     g.save()
-    #### Create a group of Bloggers
+    # ### Create a group of Bloggers
     g = Group.objects.create(name="bloggers")
     perms = ['microblogging.add_post']
     for p in perms:
@@ -341,6 +341,7 @@ def create_groups():
 
 
 # noinspection PyUnusedLocal
+@receiver(post_migrate, sender=apps.get_app_config('node_storage'))
 def initialize_database(sender, **kwargs):
     create_admin()
     create_system_user()
@@ -348,15 +349,25 @@ def initialize_database(sender, **kwargs):
     create_root()
 
 
+auth_initialized = False
+microblogging_initialized = False
+
+
 # noinspection PyUnusedLocal
+@receiver(post_migrate, sender=apps.get_app_config('auth'))
 def initialize_groups(sender, **kwargs):
-    create_groups()
+    global auth_initialized
+    global microblogging_initialized
+    auth_initialized = True
+    if auth_initialized and microblogging_initialized:
+        create_groups()
 
 
-signals.post_migrate.connect(initialize_database,
-                             sender=node_storage_models,
-                             dispatch_uid='findeco.models.initialize_database')
-
-signals.post_migrate.connect(initialize_groups,
-                             sender=microblogging_models,
-                             dispatch_uid='findeco.models.initialize_groups')
+# noinspection PyUnusedLocal
+@receiver(post_migrate, sender=apps.get_app_config('microblogging'))
+def initialize_groups(sender, **kwargs):
+    global auth_initialized
+    global microblogging_initialized
+    microblogging_initialized = True
+    if auth_initialized and microblogging_initialized:
+        create_groups()
