@@ -116,7 +116,7 @@ def create_user(username, description="", mail="a@bc.de", password=None,
         new_user = User(username=username, email=mail)
         new_user.save()
     for group in groups:
-        Group.objects.get(name=group).user_set.add(new_user)
+        Group.objects.get_or_create(name=group)[0].user_set.add(new_user)
 
     new_user.profile.description = description
     new_user.profile.save()
