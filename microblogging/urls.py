@@ -26,48 +26,52 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # endregion ###################################################################
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from findeco.api_validation import USERNAME
 from findeco.paths import RESTRICTED_PATH
 from findeco.api_validation import RSSKEY
 from microblogging.feeds import MicrobloggingFeed
+from microblogging.views import load_microblogging_all, load_microblogging_for_node, load_microblogging_timeline
+from microblogging.views import load_microblogging_mentions, load_microblogging_from_user
+from microblogging.views import load_microblogging_for_followed_nodes, load_microblogging_for_authored_nodes
+from microblogging.views import store_microblogging
 
 RSSTYPE = r'(?P<rsstype>(timeline)|(mention)|(news)|(newsAuthor)|(newsFollow))'
 
-microblogging_patterns = patterns('microblogging.views',
+microblogging_patterns = [
     url(r'^\.loadMicrobloggingAll/$',
-        'load_microblogging_all',
+        load_microblogging_all,
         name='load_microblogging_all'),
 
     url(r'^\.loadMicrobloggingForNode/' + RESTRICTED_PATH + '$',
-        'load_microblogging_for_node',
+        load_microblogging_for_node,
         name='load_microblogging_for_node'),
 
     url(r'^\.loadMicrobloggingTimeline/' + USERNAME + '/$',
-        'load_microblogging_timeline',
+        load_microblogging_timeline,
         name='load_microblogging_timeline'),
 
     url(r'^\.loadMicrobloggingMentions/' + USERNAME + '/$',
-        'load_microblogging_mentions',
+        load_microblogging_mentions,
         name='load_microblogging_mentions'),
 
     url(r'^\.loadMicrobloggingFromUser/' + USERNAME + '/$',
-        'load_microblogging_from_user',
+        load_microblogging_from_user,
         name='load_microblogging_from_user'),
 
     url(r'^\.loadMicrobloggingForFollowedNodes/' + USERNAME + '/$',
-        'load_microblogging_for_followed_nodes',
+        load_microblogging_for_followed_nodes,
         name='load_microblogging_for_followed_nodes'),
 
     url(r'^\.loadMicrobloggingForAuthoredNodes/' + USERNAME + '/$',
-        'load_microblogging_for_authored_nodes',
+        load_microblogging_for_authored_nodes,
         name='load_microblogging_for_authored_nodes'),
 
     url(r'^\.storeMicroblogging/' + RESTRICTED_PATH + '$',
-        'store_microblogging',
+        store_microblogging,
         name='store_microblogging'),
 
     # RSS Feed
     url(r'^feeds/rss/' + RSSTYPE + '/' + USERNAME + '/' + RSSKEY + '$',
         MicrobloggingFeed()),
-)
+]
