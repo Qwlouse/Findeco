@@ -353,10 +353,10 @@ def initialize_groups(sender, **kwargs):
     create_groups()
 
 
-signals.post_syncdb.connect(initialize_database,
+signals.post_migrate.connect(initialize_database,
                              sender=node_storage_models,
                              dispatch_uid='findeco.models.initialize_database')
 
-signals.post_syncdb.connect(initialize_groups,
+signals.post_migrate.connect(initialize_groups,
                              sender=microblogging_models,
                              dispatch_uid='findeco.models.initialize_groups')
