@@ -16,6 +16,7 @@ Set Up
 After cloning the repo run from the Findeco directory:
 
     python manage.py migrate
+    
     python manage.py initial_data
 
 And after each git pull run the following commands to migrate the database:
