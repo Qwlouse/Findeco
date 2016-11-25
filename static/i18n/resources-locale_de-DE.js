@@ -1393,5 +1393,10 @@
         "key"        : "_EmailAddressNotAvailable",
         "value"      : "Diese E-Mail Adresse ist leider schon vergeben.",
         "description": ""
+    },
+    {
+        "key"        : "_accountConfirmFormTitle_",
+        "value"      : "Bestätige deinen Account",
+        "description": ""
     }
 ]

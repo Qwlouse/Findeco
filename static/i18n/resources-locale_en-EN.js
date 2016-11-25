@@ -1379,5 +1379,10 @@
         "key"        : "_EmailAddressNotAvailable",
         "value"      : "This e-mail address is already taken.",
         "description": ""
+    },
+    {
+        "key"        : "_accountConfirmFormTitle_",
+        "value"      : "Confirm your account",
+        "description": ""
     }
 ]
