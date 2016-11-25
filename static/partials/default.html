@@ -38,8 +38,9 @@
 
                 <h1>{{ nodeInfo.fullTitle }}
                     <div style="float: right; min-width: 42px;">
-                        <div spam-mark show-if="user.isLoggedIn" entity="nodeInfo"
-                             mark-func="markNode" width="21" height="21"></div>
+                        <!-- Deactivated because of several problems and no need for it. See #355
+						<div spam-mark show-if="user.isLoggedIn" entity="nodeInfo"
+                             mark-func="markNode" width="21" height="21"></div>-->
                         <div follow-star show-if="user.isLoggedIn" entity="nodeInfo"
                              mark-func="markMainNode" width="21" height="21"></div>
                     </div>
