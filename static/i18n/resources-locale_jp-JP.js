@@ -1170,12 +1170,12 @@
     },
     {
         "key"        : "_proposalHeading_",
-        "value"      : "Heading:",
+        "value"      : "タイトル:",
         "description": ""
     },
     {
         "key"        : "_argumentTitle_",
-        "value"      : "Heading:",
+        "value"      : "タイトル:",
         "description": ""
     },
     {
@@ -1215,27 +1215,27 @@
     },
     {
         "key"        : "_usernameTooLong_",
-        "value"      : "Username is too long.",
+        "value"      : "ユーザー名は長すぎる。",
         "description": ""
     },
     {
         "key"        : "_usernameTooShort_",
-        "value"      : "Username is too short.",
+        "value"      : "ユーザー名は短すぎます。",
         "description": ""
     },
     {
         "key"        : "_usernameInvalidFormat_",
-        "value"      : "Username has to start with a letter and can only contain the special characters - and _.",
+        "value"      : "ユーザー名はレターで始まらなければならないで、特殊記号は”-”と”_”に限られています.",
         "description": ""
     },
     {
         "key"        : "_required_",
-        "value"      : "required",
+        "value"      : "必要",
         "description": ""
     },
     {
         "key"        : "_passwordMismatch_",
-        "value"      : "Passwords don't match!",
+        "value"      : "パスワードが一致しません。もう一度入力してください。",
         "description": ""
     },
     {
@@ -1260,7 +1260,7 @@
     },
     {
         "key"        : "_submitting_",
-        "value"      : "submitting...",
+        "value"      : "送信...",
         "description": ""
     },
     {
@@ -1270,7 +1270,7 @@
     },
     {
         "key"        : "_user_",
-        "value"      : "User",
+        "value"      : "ユーザー",
         "description": "First part of the title in the profile"
     },
     {
@@ -1280,22 +1280,22 @@
     },
     {
         "key"        : "_wizzardProgressType_",
-        "value"      : "Type",
+        "value"      : "タイプ",
         "description": ""
     },
     {
         "key"        : "_wizzardProgressText_",
-        "value"      : "Text",
+        "value"      : "テキスト",
         "description": ""
     },
     {
         "key"        : "_wizzardProgressArgument_",
-        "value"      : "Argument",
+        "value"      : "議論",
         "description": ""
     },
     {
         "key"        : "_wizzardProgressSend_",
-        "value"      : "Send",
+        "value"      : "送信",
         "description": ""
     },
     {
@@ -1315,22 +1315,22 @@
     },
     {
         "key"        : "_argumentTypeQuestion_",
-        "value"      : "Does your argument support or oppose the proposal?",
+        "value"      : "議論はサポートか相反ですか。",
         "description": ""
     },
     {
         "key"        : "_proArgumentButton_",
-        "value"      : "Support",
+        "value"      : "サポート",
         "description": ""
     },
     {
         "key"        : "_conArgumentButton_",
-        "value"      : "Oppose",
+        "value"      : "相反",
         "description": ""
     },
     {
         "key"        : "_neutArgumentButton_",
-        "value"      : "Neutral Information",
+        "value"      : "不偏なじょうほう ",
         "description": ""
     },
     {
@@ -1360,7 +1360,7 @@
     },
     {
         "key"        : "_submittingNewArgument_",
-        "value"      : "Saving the new argument...",
+        "value"      : "新しい議論を保存する...",
         "description": ""
     },
     {
